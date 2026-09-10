@@ -1,0 +1,1068 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<functions>
+	<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+		<description />
+		<name>Dispense Chunk</name>
+		<edittime>1788237251</edittime>
+		<expanded>1</expanded>
+		<functiondata>
+			<inputs>
+				<count>7</count>
+				<item0>
+					<id>{3B7CD913-08E7-47E6-88EF-108DC40ADE7A}</id>
+					<name>end_dispense_vol</name>
+					<variablename>end_dispense_vol</variablename>
+					<variabletype>volume</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item0>
+				<item1>
+					<id>{3A3E812D-F9C1-4DC6-BF5B-35EFF4E332F3}</id>
+					<name>dispense_zone</name>
+					<variablename>dispense_zone</variablename>
+					<variabletype>zone</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item1>
+				<item2>
+					<id>{CF0DAB43-BEBA-49E3-B853-F0646CD44DA4}</id>
+					<name>array_vol</name>
+					<variablename>array_vol</variablename>
+					<variabletype>volume</variabletype>
+					<isarray>1</isarray>
+					<expression />
+				</item2>
+				<item3>
+					<id>{1973A17D-18AD-4B53-9A97-F471E0479409}</id>
+					<name>end_idx</name>
+					<variablename>end_idx</variablename>
+					<variabletype>integer</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item3>
+				<item4>
+					<id>{4C27CF9E-C91C-4D0B-A7B2-F95AE874004A}</id>
+					<name>start_idx</name>
+					<variablename>start_idx</variablename>
+					<variabletype>integer</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item4>
+				<item5>
+					<id>{4EB7F9AA-500C-4FA0-8BA4-22DA14F282FA}</id>
+					<name>start_residual_vol</name>
+					<variablename>start_residual_vol</variablename>
+					<variabletype>volume</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item5>
+				<item6>
+					<id>{F4B540E7-57A2-477B-93C7-55CFE0C4B665}</id>
+					<name>syringe_ch</name>
+					<variablename>syringe_ch</variablename>
+					<variabletype>integer</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item6>
+				<sortType>0</sortType>
+			</inputs>
+			<outputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</outputs>
+		</functiondata>
+		<id>{8B7809ED-EF34-400E-A0A9-EFCB54162DA2}</id>
+		<components>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description />
+				<name>Macro Task</name>
+				<edittime>1788327547</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif />
+				<conditionwhile />
+				<conditiontype>0</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>0</executionmode>
+				<sequentialzones>
+					<count>0</count>
+				</sequentialzones>
+				<multicondition>0</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="1">
+					<variable>
+						<name>dispense_vol</name>
+						<value>
+							<type>5</type>
+							<value>0</value>
+						</value>
+						<siunit>m^3</siunit>
+						<unit>m^3</unit>
+						<array>0</array>
+						<creationtime>1788236421</creationtime>
+						<constant>0</constant>
+					</variable>
+					<variable>
+						<name>idx</name>
+						<value>
+							<type>3</type>
+							<value>0</value>
+						</value>
+						<siunit>1</siunit>
+						<unit>s</unit>
+						<array>0</array>
+						<creationtime>1788236451</creationtime>
+						<constant>0</constant>
+					</variable>
+					<variable>
+						<name>well_zone</name>
+						<value>
+							<type>8</type>
+							<value />
+						</value>
+						<siunit>zone</siunit>
+						<unit>s</unit>
+						<array>0</array>
+						<creationtime>1788327547</creationtime>
+						<constant>0</constant>
+					</variable>
+				</variables>
+				<id>{9DDA870B-8D94-4793-B744-E5A16AF8C5CD}</id>
+				<tasks>
+					<task typeid="Chemspeed.SAMacroTask.1">
+						<description />
+						<name>Macro Task</name>
+						<edittime>1788236609</edittime>
+						<expanded>1</expanded>
+						<conditionloop>1</conditionloop>
+						<conditionif>start_idx &lt; 0 or end_idx &lt; start_idx or end_idx &gt;= ArraySize(array_vol)</conditionif>
+						<conditionwhile />
+						<conditiontype>1</conditiontype>
+						<loopvariable>loop</loopvariable>
+						<fragmentvariable>fragment</fragmentvariable>
+						<executionmode>0</executionmode>
+						<sequentialzones>
+							<count>0</count>
+						</sequentialzones>
+						<multicondition>0</multicondition>
+						<multiloop>0</multiloop>
+						<variables sortingType="1" />
+						<id>{A96A504C-EFAC-4432-9B1D-43814F86B249}</id>
+						<tasks>
+							<task typeid="Chemspeed.SATaskExecuteFunction.1">
+								<description />
+								<name>Execute Function</name>
+								<edittime>1788236645</edittime>
+								<functiondata>
+									<inputs>
+										<count>3</count>
+										<item0>
+											<id>{BFF25E17-0D98-4F71-B8B0-2C7EA8B4BDD3}</id>
+											<name>source_func_txt</name>
+											<variablename />
+											<variabletype>text</variabletype>
+											<isarray>0</isarray>
+											<expression>'Dispense Chunk'</expression>
+										</item0>
+										<item1>
+											<id>{1442921E-18AC-455A-A1AB-34FD4E0417C5}</id>
+											<name>error_code_int</name>
+											<variablename />
+											<variabletype>integer</variabletype>
+											<isarray>0</isarray>
+											<expression>9999</expression>
+										</item1>
+										<item2>
+											<id>{490EB9AD-0F69-4DDE-8561-F082250C52F4}</id>
+											<name>message_txt</name>
+											<variablename />
+											<variabletype>text</variabletype>
+											<isarray>0</isarray>
+											<expression>'Invalid chunk index range.'</expression>
+										</item2>
+										<sortType>0</sortType>
+									</inputs>
+									<outputs>
+										<count>0</count>
+										<sortType>0</sortType>
+									</outputs>
+								</functiondata>
+								<functionid>{05B2984D-BC3F-45CB-8A02-D3E5BF5ABC4B}</functionid>
+								<id>{3D2A4611-3CC7-4CA9-827D-36F7CE20F249}</id>
+							</task>
+						</tasks>
+					</task>
+					<task typeid="Chemspeed.SAMacroTask.1">
+						<description />
+						<name>Macro Task</name>
+						<edittime>1788236799</edittime>
+						<expanded>1</expanded>
+						<conditionloop>1</conditionloop>
+						<conditionif>start_residual_vol&lt; 0 or end_dispense_vol &lt; 0</conditionif>
+						<conditionwhile />
+						<conditiontype>1</conditiontype>
+						<loopvariable>loop</loopvariable>
+						<fragmentvariable>fragment</fragmentvariable>
+						<executionmode>0</executionmode>
+						<sequentialzones>
+							<count>0</count>
+						</sequentialzones>
+						<multicondition>0</multicondition>
+						<multiloop>0</multiloop>
+						<variables sortingType="1" />
+						<id>{A59E6868-BEA9-433D-80D2-86B92061154D}</id>
+						<tasks>
+							<task typeid="Chemspeed.SATaskExecuteFunction.1">
+								<description />
+								<name>Execute Function</name>
+								<edittime>1788236645</edittime>
+								<functiondata>
+									<inputs>
+										<count>3</count>
+										<item0>
+											<id>{BFF25E17-0D98-4F71-B8B0-2C7EA8B4BDD3}</id>
+											<name>source_func_txt</name>
+											<variablename />
+											<variabletype>text</variabletype>
+											<isarray>0</isarray>
+											<expression>'Dispense Chunk'</expression>
+										</item0>
+										<item1>
+											<id>{1442921E-18AC-455A-A1AB-34FD4E0417C5}</id>
+											<name>error_code_int</name>
+											<variablename />
+											<variabletype>integer</variabletype>
+											<isarray>0</isarray>
+											<expression>9999</expression>
+										</item1>
+										<item2>
+											<id>{490EB9AD-0F69-4DDE-8561-F082250C52F4}</id>
+											<name>message_txt</name>
+											<variablename />
+											<variabletype>text</variabletype>
+											<isarray>0</isarray>
+											<expression>'Invalid chunk index range.'</expression>
+										</item2>
+										<sortType>0</sortType>
+									</inputs>
+									<outputs>
+										<count>0</count>
+										<sortType>0</sortType>
+									</outputs>
+								</functiondata>
+								<functionid>{05B2984D-BC3F-45CB-8A02-D3E5BF5ABC4B}</functionid>
+								<id>{95F361F3-428C-43A1-A51E-C7D19D440FDC}</id>
+							</task>
+						</tasks>
+					</task>
+					<task typeid="Chemspeed.SAMacroTask.1">
+						<description />
+						<name>Macro Task</name>
+						<edittime>1788236811</edittime>
+						<expanded>1</expanded>
+						<conditionloop>1</conditionloop>
+						<conditionif>not g_error_latched</conditionif>
+						<conditionwhile />
+						<conditiontype>1</conditiontype>
+						<loopvariable>loop</loopvariable>
+						<fragmentvariable>fragment</fragmentvariable>
+						<executionmode>0</executionmode>
+						<sequentialzones>
+							<count>0</count>
+						</sequentialzones>
+						<multicondition>0</multicondition>
+						<multiloop>0</multiloop>
+						<variables sortingType="1" />
+						<id>{8CAC66B1-8B82-4E1B-A930-FFEBE952DBBC}</id>
+						<tasks>
+							<task typeid="Chemspeed.SATaskSetVariable.1">
+								<description />
+								<name>Set Variable</name>
+								<edittime>1788236820</edittime>
+								<variablename>idx</variablename>
+								<expressiontext>start_idx</expressiontext>
+								<elementselectmode>0</elementselectmode>
+								<elementnumber />
+								<numberofelements />
+								<startindex>0</startindex>
+								<clearvariable>0</clearvariable>
+								<sortwells>0</sortwells>
+								<enumerationtype>0</enumerationtype>
+								<wellsenumeration>0</wellsenumeration>
+								<elementsenumeration>0</elementsenumeration>
+								<id>{CB1AC974-8043-4DFF-9FAC-E4FF33BF8557}</id>
+							</task>
+						</tasks>
+					</task>
+					<task typeid="Chemspeed.SAMacroTask.1">
+						<description />
+						<name>Macro Task</name>
+						<edittime>1788327495</edittime>
+						<expanded>1</expanded>
+						<conditionloop>1</conditionloop>
+						<conditionif />
+						<conditionwhile>idx &lt;= end_idx and not g_error_latched</conditionwhile>
+						<conditiontype>2</conditiontype>
+						<loopvariable>loop</loopvariable>
+						<fragmentvariable>fragment</fragmentvariable>
+						<executionmode>0</executionmode>
+						<sequentialzones>
+							<count>0</count>
+						</sequentialzones>
+						<multicondition>0</multicondition>
+						<multiloop>0</multiloop>
+						<variables sortingType="1" />
+						<id>{286A5627-1D3F-4E37-9F85-6EF09B1C4D1C}</id>
+						<tasks>
+							<task typeid="Chemspeed.SAMacroTask.1">
+								<description />
+								<name>Macro Task</name>
+								<edittime>1788236866</edittime>
+								<expanded>1</expanded>
+								<conditionloop>1</conditionloop>
+								<conditionif />
+								<conditionwhile />
+								<conditiontype>1</conditiontype>
+								<loopvariable>loop</loopvariable>
+								<fragmentvariable>fragment</fragmentvariable>
+								<executionmode>0</executionmode>
+								<sequentialzones>
+									<count>0</count>
+								</sequentialzones>
+								<multicondition>1</multicondition>
+								<multiloop>0</multiloop>
+								<variables sortingType="1" />
+								<id>{B1C32C50-A082-4EAD-8FEA-6457ACD98D99}</id>
+								<tasks>
+									<task typeid="Chemspeed.SATaskCondition.1">
+										<description />
+										<name>If</name>
+										<edittime>1788236866</edittime>
+										<expanded>1</expanded>
+										<conditiontype>0</conditiontype>
+										<condition>idx = end_idx</condition>
+										<id>{78BF6393-0128-42CB-AB84-BF31B1CCCAED}</id>
+										<components>
+											<component typeid="Chemspeed.SATaskSetVariable.1">
+												<description />
+												<name>Set Variable</name>
+												<edittime>1788236861</edittime>
+												<variablename>dispense_vol</variablename>
+												<expressiontext>end_dispense_vol</expressiontext>
+												<elementselectmode>0</elementselectmode>
+												<elementnumber />
+												<numberofelements />
+												<startindex>0</startindex>
+												<clearvariable>0</clearvariable>
+												<sortwells>0</sortwells>
+												<enumerationtype>0</enumerationtype>
+												<wellsenumeration>0</wellsenumeration>
+												<elementsenumeration>0</elementsenumeration>
+												<id>{C7ABA723-D3CE-498B-90BC-9E6DB2679FA2}</id>
+											</component>
+										</components>
+									</task>
+									<task typeid="Chemspeed.SATaskCondition.1">
+										<description />
+										<name>Else</name>
+										<edittime>1788236866</edittime>
+										<expanded>1</expanded>
+										<conditiontype>2</conditiontype>
+										<condition />
+										<id>{B6B88AB7-91C3-4012-B25D-96F13EFA0181}</id>
+										<components>
+											<component typeid="Chemspeed.SAMacroTask.1">
+												<description />
+												<name>Macro Task</name>
+												<edittime>1788236876</edittime>
+												<expanded>1</expanded>
+												<conditionloop>1</conditionloop>
+												<conditionif />
+												<conditionwhile />
+												<conditiontype>1</conditiontype>
+												<loopvariable>loop</loopvariable>
+												<fragmentvariable>fragment</fragmentvariable>
+												<executionmode>0</executionmode>
+												<sequentialzones>
+													<count>0</count>
+												</sequentialzones>
+												<multicondition>1</multicondition>
+												<multiloop>0</multiloop>
+												<variables sortingType="1" />
+												<id>{4E44DC08-9FA4-421C-BD07-288FBDE584BB}</id>
+												<tasks>
+													<task typeid="Chemspeed.SATaskCondition.1">
+														<description />
+														<name>If</name>
+														<edittime>1788236888</edittime>
+														<expanded>1</expanded>
+														<conditiontype>0</conditiontype>
+														<condition>idx = start_idx and start_residual_vol &gt; 0</condition>
+														<id>{61E303EC-D194-4A6D-9C41-E176F65545BA}</id>
+														<components>
+															<component typeid="Chemspeed.SATaskSetVariable.1">
+																<description />
+																<name>Set Variable</name>
+																<edittime>1788236900</edittime>
+																<variablename>dispense_vol</variablename>
+																<expressiontext>start_residual_vol</expressiontext>
+																<elementselectmode>0</elementselectmode>
+																<elementnumber />
+																<numberofelements />
+																<startindex>0</startindex>
+																<clearvariable>0</clearvariable>
+																<sortwells>0</sortwells>
+																<enumerationtype>0</enumerationtype>
+																<wellsenumeration>0</wellsenumeration>
+																<elementsenumeration>0</elementsenumeration>
+																<id>{2C11B802-0C68-4244-9646-33EABC26A2A4}</id>
+															</component>
+														</components>
+													</task>
+													<task typeid="Chemspeed.SATaskCondition.1">
+														<description />
+														<name>Else</name>
+														<edittime>1788236876</edittime>
+														<expanded>1</expanded>
+														<conditiontype>2</conditiontype>
+														<condition />
+														<id>{70B5CFA3-B74A-4919-9910-4052EBDCC44F}</id>
+														<components>
+															<component typeid="Chemspeed.SATaskSetVariable.1">
+																<description />
+																<name>Set Variable</name>
+																<edittime>1788236910</edittime>
+																<variablename>dispense_vol</variablename>
+																<expressiontext>array_vol[idx]</expressiontext>
+																<elementselectmode>0</elementselectmode>
+																<elementnumber />
+																<numberofelements />
+																<startindex>0</startindex>
+																<clearvariable>0</clearvariable>
+																<sortwells>0</sortwells>
+																<enumerationtype>0</enumerationtype>
+																<wellsenumeration>0</wellsenumeration>
+																<elementsenumeration>0</elementsenumeration>
+																<id>{4F619B9C-3CE0-4025-B2C5-C24669829557}</id>
+															</component>
+														</components>
+													</task>
+												</tasks>
+											</component>
+										</components>
+									</task>
+								</tasks>
+							</task>
+							<task typeid="Chemspeed.SAMacroTask.1">
+								<description />
+								<name>Macro Task</name>
+								<edittime>1788236936</edittime>
+								<expanded>1</expanded>
+								<conditionloop>1</conditionloop>
+								<conditionif>dispense_vol &lt; 0</conditionif>
+								<conditionwhile />
+								<conditiontype>1</conditiontype>
+								<loopvariable>loop</loopvariable>
+								<fragmentvariable>fragment</fragmentvariable>
+								<executionmode>0</executionmode>
+								<sequentialzones>
+									<count>0</count>
+								</sequentialzones>
+								<multicondition>0</multicondition>
+								<multiloop>0</multiloop>
+								<variables sortingType="1" />
+								<id>{CDED5649-27C2-41F0-AAF5-5ABFA92E37E8}</id>
+								<tasks>
+									<task typeid="Chemspeed.SATaskExecuteFunction.1">
+										<description />
+										<name>Execute Function</name>
+										<edittime>1788237141</edittime>
+										<functiondata>
+											<inputs>
+												<count>3</count>
+												<item0>
+													<id>{BFF25E17-0D98-4F71-B8B0-2C7EA8B4BDD3}</id>
+													<name>source_func_txt</name>
+													<variablename />
+													<variabletype>text</variabletype>
+													<isarray>0</isarray>
+													<expression>'Dispense Chunk'</expression>
+												</item0>
+												<item1>
+													<id>{1442921E-18AC-455A-A1AB-34FD4E0417C5}</id>
+													<name>error_code_int</name>
+													<variablename />
+													<variabletype>integer</variabletype>
+													<isarray>0</isarray>
+													<expression>9999</expression>
+												</item1>
+												<item2>
+													<id>{490EB9AD-0F69-4DDE-8561-F082250C52F4}</id>
+													<name>message_txt</name>
+													<variablename />
+													<variabletype>text</variabletype>
+													<isarray>0</isarray>
+													<expression>'Negative volume in dispense chunk.'</expression>
+												</item2>
+												<sortType>0</sortType>
+											</inputs>
+											<outputs>
+												<count>0</count>
+												<sortType>0</sortType>
+											</outputs>
+										</functiondata>
+										<functionid>{05B2984D-BC3F-45CB-8A02-D3E5BF5ABC4B}</functionid>
+										<id>{B10C09FF-80E6-435F-B5AB-DC8C2AAF9F7C}</id>
+									</task>
+								</tasks>
+							</task>
+							<task typeid="Chemspeed.SAMacroTask.1">
+								<description />
+								<name>Macro Task</name>
+								<edittime>1788237160</edittime>
+								<expanded>1</expanded>
+								<conditionloop>1</conditionloop>
+								<conditionif>not g_error_latched</conditionif>
+								<conditionwhile />
+								<conditiontype>1</conditiontype>
+								<loopvariable>loop</loopvariable>
+								<fragmentvariable>fragment</fragmentvariable>
+								<executionmode>0</executionmode>
+								<sequentialzones>
+									<count>0</count>
+								</sequentialzones>
+								<multicondition>0</multicondition>
+								<multiloop>0</multiloop>
+								<variables sortingType="1" />
+								<id>{B2B93929-2689-4D01-8E7A-AA08C1B4FF8C}</id>
+								<tasks>
+									<task typeid="Chemspeed.SATaskExecuteFunction.1">
+										<description />
+										<name>Execute Function</name>
+										<edittime>1788237211</edittime>
+										<functiondata>
+											<inputs>
+												<count>2</count>
+												<item0>
+													<id>{C3E3DA85-E02B-4D29-A2CB-3151AEDB625D}</id>
+													<name>well_idx</name>
+													<variablename />
+													<variabletype>integer</variabletype>
+													<isarray>0</isarray>
+													<expression>idx</expression>
+												</item0>
+												<item1>
+													<id>{FAB5C7D5-0C30-45E0-B7AF-FA2B7B122FA0}</id>
+													<name>multi_zone</name>
+													<variablename />
+													<variabletype>zone</variabletype>
+													<isarray>0</isarray>
+													<expression>dispense_zone</expression>
+												</item1>
+												<sortType>0</sortType>
+											</inputs>
+											<outputs>
+												<count>1</count>
+												<item0>
+													<id>{2FD32304-F772-4241-AF38-F3870C78C739}</id>
+													<name>well_zone</name>
+													<variablename>well_zone</variablename>
+													<variabletype>zone</variabletype>
+													<isarray>0</isarray>
+													<expression />
+												</item0>
+												<sortType>0</sortType>
+											</outputs>
+										</functiondata>
+										<functionid>{6086071D-452C-4B4F-BDE6-91BBDD62E23A}</functionid>
+										<id>{E057DE29-F253-4B68-996E-D4AE673AB918}</id>
+									</task>
+								</tasks>
+							</task>
+							<task typeid="Chemspeed.SAMacroTask.1">
+								<description />
+								<name>Macro Task</name>
+								<edittime>1788237741</edittime>
+								<expanded>1</expanded>
+								<conditionloop>1</conditionloop>
+								<conditionif>syringe_ch &lt;&gt; 1 and syringe_ch &lt;&gt; 2 and syringe_ch &lt;&gt; 3 and syringe_ch &lt;&gt; 4</conditionif>
+								<conditionwhile />
+								<conditiontype>1</conditiontype>
+								<loopvariable>loop</loopvariable>
+								<fragmentvariable>fragment</fragmentvariable>
+								<executionmode>0</executionmode>
+								<sequentialzones>
+									<count>0</count>
+								</sequentialzones>
+								<multicondition>0</multicondition>
+								<multiloop>0</multiloop>
+								<variables sortingType="1" />
+								<id>{1BC7D3F2-19C0-4FAB-B832-E1665DBC6E6B}</id>
+								<tasks>
+									<task typeid="Chemspeed.SATaskExecuteFunction.1">
+										<description />
+										<name>Execute Function</name>
+										<edittime>1788237770</edittime>
+										<functiondata>
+											<inputs>
+												<count>3</count>
+												<item0>
+													<id>{BFF25E17-0D98-4F71-B8B0-2C7EA8B4BDD3}</id>
+													<name>source_func_txt</name>
+													<variablename />
+													<variabletype>text</variabletype>
+													<isarray>0</isarray>
+													<expression>'Dispense Chunk'</expression>
+												</item0>
+												<item1>
+													<id>{1442921E-18AC-455A-A1AB-34FD4E0417C5}</id>
+													<name>error_code_int</name>
+													<variablename />
+													<variabletype>integer</variabletype>
+													<isarray>0</isarray>
+													<expression>9999</expression>
+												</item1>
+												<item2>
+													<id>{490EB9AD-0F69-4DDE-8561-F082250C52F4}</id>
+													<name>message_txt</name>
+													<variablename />
+													<variabletype>text</variabletype>
+													<isarray>0</isarray>
+													<expression>'Invalid syringe channel.'</expression>
+												</item2>
+												<sortType>0</sortType>
+											</inputs>
+											<outputs>
+												<count>0</count>
+												<sortType>0</sortType>
+											</outputs>
+										</functiondata>
+										<functionid>{05B2984D-BC3F-45CB-8A02-D3E5BF5ABC4B}</functionid>
+										<id>{45849671-01E3-4909-8DE3-741FEE5F92EB}</id>
+									</task>
+								</tasks>
+							</task>
+							<task typeid="Chemspeed.SAMacroTask.1">
+								<description />
+								<name>Macro Task</name>
+								<edittime>1788237160</edittime>
+								<expanded>1</expanded>
+								<conditionloop>1</conditionloop>
+								<conditionif>not g_error_latched</conditionif>
+								<conditionwhile />
+								<conditiontype>1</conditiontype>
+								<loopvariable>loop</loopvariable>
+								<fragmentvariable>fragment</fragmentvariable>
+								<executionmode>0</executionmode>
+								<sequentialzones>
+									<count>0</count>
+								</sequentialzones>
+								<multicondition>0</multicondition>
+								<multiloop>0</multiloop>
+								<variables sortingType="1" />
+								<id>{E777986E-1D6A-4C41-BE33-E0CF31F032C3}</id>
+								<tasks>
+									<task typeid="Chemspeed.SAMacroTask.1">
+										<description />
+										<name>Macro Task</name>
+										<edittime>1788237331</edittime>
+										<expanded>1</expanded>
+										<conditionloop>1</conditionloop>
+										<conditionif>syringe_ch = 1</conditionif>
+										<conditionwhile />
+										<conditiontype>1</conditiontype>
+										<loopvariable>loop</loopvariable>
+										<fragmentvariable>fragment</fragmentvariable>
+										<executionmode>0</executionmode>
+										<sequentialzones>
+											<count>0</count>
+										</sequentialzones>
+										<multicondition>0</multicondition>
+										<multiloop>0</multiloop>
+										<variables sortingType="1" />
+										<id>{4912C539-FFFE-47AE-AC5C-B8C5119BE356}</id>
+										<tasks>
+											<task typeid="Chemspeed.SATaskExecuteFunction.1">
+												<description />
+												<name>Execute Function</name>
+												<edittime>1788323828</edittime>
+												<functiondata>
+													<inputs>
+														<count>5</count>
+														<item0>
+															<id>{68861319-561B-4CC9-B105-8C36908DEB9D}</id>
+															<name>dispense_zone</name>
+															<variablename />
+															<variabletype>zone</variabletype>
+															<isarray>0</isarray>
+															<expression>well_zone</expression>
+														</item0>
+														<item1>
+															<id>{FD00F25A-FF56-44AA-A614-2D3DF3DB5D16}</id>
+															<name>ch1_vol</name>
+															<variablename />
+															<variabletype>volume</variabletype>
+															<isarray>0</isarray>
+															<expression>dispense_vol</expression>
+														</item1>
+														<item2>
+															<id>{301A0393-9DD7-40BE-8518-060ECF0F2056}</id>
+															<name>ch2_vol</name>
+															<variablename />
+															<variabletype>volume</variabletype>
+															<isarray>0</isarray>
+															<expression>0</expression>
+														</item2>
+														<item3>
+															<id>{7A5BFA99-0DD4-43AD-AE5E-8D1C9C35AD16}</id>
+															<name>ch3_vol</name>
+															<variablename />
+															<variabletype>volume</variabletype>
+															<isarray>0</isarray>
+															<expression>0</expression>
+														</item3>
+														<item4>
+															<id>{CD3F93B8-8019-4993-8179-5A1C04C245F3}</id>
+															<name>ch4_vol</name>
+															<variablename />
+															<variabletype>volume</variabletype>
+															<isarray>0</isarray>
+															<expression>0</expression>
+														</item4>
+														<sortType>0</sortType>
+													</inputs>
+													<outputs>
+														<count>0</count>
+														<sortType>0</sortType>
+													</outputs>
+												</functiondata>
+												<functionid>{2C04EDD2-CFF7-4636-88DB-240DA51711A2}</functionid>
+												<id>{A68387F0-19EB-45C2-A0BC-F5A7049D41CC}</id>
+											</task>
+										</tasks>
+									</task>
+									<task typeid="Chemspeed.SAMacroTask.1">
+										<description />
+										<name>Macro Task</name>
+										<edittime>1788237362</edittime>
+										<expanded>1</expanded>
+										<conditionloop>1</conditionloop>
+										<conditionif>syringe_ch = 2</conditionif>
+										<conditionwhile />
+										<conditiontype>1</conditiontype>
+										<loopvariable>loop</loopvariable>
+										<fragmentvariable>fragment</fragmentvariable>
+										<executionmode>0</executionmode>
+										<sequentialzones>
+											<count>0</count>
+										</sequentialzones>
+										<multicondition>0</multicondition>
+										<multiloop>0</multiloop>
+										<variables sortingType="1" />
+										<id>{F4CA2D12-C98C-4CD2-BC53-DD0E50C65C11}</id>
+										<tasks>
+											<task typeid="Chemspeed.SATaskExecuteFunction.1">
+												<description />
+												<name>Execute Function</name>
+												<edittime>1788323831</edittime>
+												<functiondata>
+													<inputs>
+														<count>5</count>
+														<item0>
+															<id>{68861319-561B-4CC9-B105-8C36908DEB9D}</id>
+															<name>dispense_zone</name>
+															<variablename />
+															<variabletype>zone</variabletype>
+															<isarray>0</isarray>
+															<expression>well_zone</expression>
+														</item0>
+														<item1>
+															<id>{FD00F25A-FF56-44AA-A614-2D3DF3DB5D16}</id>
+															<name>ch1_vol</name>
+															<variablename />
+															<variabletype>volume</variabletype>
+															<isarray>0</isarray>
+															<expression>0</expression>
+														</item1>
+														<item2>
+															<id>{301A0393-9DD7-40BE-8518-060ECF0F2056}</id>
+															<name>ch2_vol</name>
+															<variablename />
+															<variabletype>volume</variabletype>
+															<isarray>0</isarray>
+															<expression>dispense_vol</expression>
+														</item2>
+														<item3>
+															<id>{7A5BFA99-0DD4-43AD-AE5E-8D1C9C35AD16}</id>
+															<name>ch3_vol</name>
+															<variablename />
+															<variabletype>volume</variabletype>
+															<isarray>0</isarray>
+															<expression>0</expression>
+														</item3>
+														<item4>
+															<id>{CD3F93B8-8019-4993-8179-5A1C04C245F3}</id>
+															<name>ch4_vol</name>
+															<variablename />
+															<variabletype>volume</variabletype>
+															<isarray>0</isarray>
+															<expression>0</expression>
+														</item4>
+														<sortType>0</sortType>
+													</inputs>
+													<outputs>
+														<count>0</count>
+														<sortType>0</sortType>
+													</outputs>
+												</functiondata>
+												<functionid>{2C04EDD2-CFF7-4636-88DB-240DA51711A2}</functionid>
+												<id>{685A6764-2E94-475E-A674-EAAC2C77A6FA}</id>
+											</task>
+										</tasks>
+									</task>
+									<task typeid="Chemspeed.SAMacroTask.1">
+										<description />
+										<name>Macro Task</name>
+										<edittime>1788237365</edittime>
+										<expanded>1</expanded>
+										<conditionloop>1</conditionloop>
+										<conditionif>syringe_ch = 3</conditionif>
+										<conditionwhile />
+										<conditiontype>1</conditiontype>
+										<loopvariable>loop</loopvariable>
+										<fragmentvariable>fragment</fragmentvariable>
+										<executionmode>0</executionmode>
+										<sequentialzones>
+											<count>0</count>
+										</sequentialzones>
+										<multicondition>0</multicondition>
+										<multiloop>0</multiloop>
+										<variables sortingType="1" />
+										<id>{E5CE2C2A-EB0A-4BD4-86DB-6533467812BD}</id>
+										<tasks>
+											<task typeid="Chemspeed.SATaskExecuteFunction.1">
+												<description />
+												<name>Execute Function</name>
+												<edittime>1788323833</edittime>
+												<functiondata>
+													<inputs>
+														<count>5</count>
+														<item0>
+															<id>{68861319-561B-4CC9-B105-8C36908DEB9D}</id>
+															<name>dispense_zone</name>
+															<variablename />
+															<variabletype>zone</variabletype>
+															<isarray>0</isarray>
+															<expression>well_zone</expression>
+														</item0>
+														<item1>
+															<id>{FD00F25A-FF56-44AA-A614-2D3DF3DB5D16}</id>
+															<name>ch1_vol</name>
+															<variablename />
+															<variabletype>volume</variabletype>
+															<isarray>0</isarray>
+															<expression>0</expression>
+														</item1>
+														<item2>
+															<id>{301A0393-9DD7-40BE-8518-060ECF0F2056}</id>
+															<name>ch2_vol</name>
+															<variablename />
+															<variabletype>volume</variabletype>
+															<isarray>0</isarray>
+															<expression>0</expression>
+														</item2>
+														<item3>
+															<id>{7A5BFA99-0DD4-43AD-AE5E-8D1C9C35AD16}</id>
+															<name>ch3_vol</name>
+															<variablename />
+															<variabletype>volume</variabletype>
+															<isarray>0</isarray>
+															<expression>dispense_vol</expression>
+														</item3>
+														<item4>
+															<id>{CD3F93B8-8019-4993-8179-5A1C04C245F3}</id>
+															<name>ch4_vol</name>
+															<variablename />
+															<variabletype>volume</variabletype>
+															<isarray>0</isarray>
+															<expression>0</expression>
+														</item4>
+														<sortType>0</sortType>
+													</inputs>
+													<outputs>
+														<count>0</count>
+														<sortType>0</sortType>
+													</outputs>
+												</functiondata>
+												<functionid>{2C04EDD2-CFF7-4636-88DB-240DA51711A2}</functionid>
+												<id>{125951C8-2E22-4EB2-A34A-88622C2D72EB}</id>
+											</task>
+										</tasks>
+									</task>
+									<task typeid="Chemspeed.SAMacroTask.1">
+										<description />
+										<name>Macro Task</name>
+										<edittime>1788237366</edittime>
+										<expanded>1</expanded>
+										<conditionloop>1</conditionloop>
+										<conditionif>syringe_ch = 4</conditionif>
+										<conditionwhile />
+										<conditiontype>1</conditiontype>
+										<loopvariable>loop</loopvariable>
+										<fragmentvariable>fragment</fragmentvariable>
+										<executionmode>0</executionmode>
+										<sequentialzones>
+											<count>0</count>
+										</sequentialzones>
+										<multicondition>0</multicondition>
+										<multiloop>0</multiloop>
+										<variables sortingType="1" />
+										<id>{284C8A84-141B-47CE-B4F1-D681A7461DDE}</id>
+										<tasks>
+											<task typeid="Chemspeed.SATaskExecuteFunction.1">
+												<description />
+												<name>Execute Function</name>
+												<edittime>1788323835</edittime>
+												<functiondata>
+													<inputs>
+														<count>5</count>
+														<item0>
+															<id>{68861319-561B-4CC9-B105-8C36908DEB9D}</id>
+															<name>dispense_zone</name>
+															<variablename />
+															<variabletype>zone</variabletype>
+															<isarray>0</isarray>
+															<expression>well_zone</expression>
+														</item0>
+														<item1>
+															<id>{FD00F25A-FF56-44AA-A614-2D3DF3DB5D16}</id>
+															<name>ch1_vol</name>
+															<variablename />
+															<variabletype>volume</variabletype>
+															<isarray>0</isarray>
+															<expression>0</expression>
+														</item1>
+														<item2>
+															<id>{301A0393-9DD7-40BE-8518-060ECF0F2056}</id>
+															<name>ch2_vol</name>
+															<variablename />
+															<variabletype>volume</variabletype>
+															<isarray>0</isarray>
+															<expression>0</expression>
+														</item2>
+														<item3>
+															<id>{7A5BFA99-0DD4-43AD-AE5E-8D1C9C35AD16}</id>
+															<name>ch3_vol</name>
+															<variablename />
+															<variabletype>volume</variabletype>
+															<isarray>0</isarray>
+															<expression>0</expression>
+														</item3>
+														<item4>
+															<id>{CD3F93B8-8019-4993-8179-5A1C04C245F3}</id>
+															<name>ch4_vol</name>
+															<variablename />
+															<variabletype>volume</variabletype>
+															<isarray>0</isarray>
+															<expression>dispense_vol</expression>
+														</item4>
+														<sortType>0</sortType>
+													</inputs>
+													<outputs>
+														<count>0</count>
+														<sortType>0</sortType>
+													</outputs>
+												</functiondata>
+												<functionid>{2C04EDD2-CFF7-4636-88DB-240DA51711A2}</functionid>
+												<id>{B06C268F-08BF-4174-85A4-C82228A30081}</id>
+											</task>
+										</tasks>
+									</task>
+								</tasks>
+							</task>
+							<task typeid="Chemspeed.SAMacroTask.1">
+								<description />
+								<name>Macro Task</name>
+								<edittime>1788237160</edittime>
+								<expanded>1</expanded>
+								<conditionloop>1</conditionloop>
+								<conditionif>not g_error_latched</conditionif>
+								<conditionwhile />
+								<conditiontype>1</conditiontype>
+								<loopvariable>loop</loopvariable>
+								<fragmentvariable>fragment</fragmentvariable>
+								<executionmode>0</executionmode>
+								<sequentialzones>
+									<count>0</count>
+								</sequentialzones>
+								<multicondition>0</multicondition>
+								<multiloop>0</multiloop>
+								<variables sortingType="1" />
+								<id>{17B8E570-7896-401D-8CC8-297FF40C196B}</id>
+								<tasks>
+									<task typeid="Chemspeed.SATaskSetVariable.1">
+										<description />
+										<name>Set Variable</name>
+										<edittime>1788237408</edittime>
+										<variablename>idx</variablename>
+										<expressiontext>idx + 1</expressiontext>
+										<elementselectmode>0</elementselectmode>
+										<elementnumber />
+										<numberofelements />
+										<startindex>0</startindex>
+										<clearvariable>0</clearvariable>
+										<sortwells>0</sortwells>
+										<enumerationtype>0</enumerationtype>
+										<wellsenumeration>0</wellsenumeration>
+										<elementsenumeration>0</elementsenumeration>
+										<id>{E950829E-8D78-4345-A58C-431178CE4778}</id>
+									</task>
+								</tasks>
+							</task>
+						</tasks>
+					</task>
+				</tasks>
+			</component>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description />
+				<name>Macro Task</name>
+				<edittime>1788337099</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif>g_debug_mode = 1</conditionif>
+				<conditionwhile />
+				<conditiontype>1</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>0</executionmode>
+				<sequentialzones>
+					<count>0</count>
+				</sequentialzones>
+				<multicondition>0</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="1" />
+				<id>{6C032F4B-E4AD-4396-8724-38AA9D1CA307}</id>
+				<tasks>
+					<task typeid="Chemspeed.SATaskSetVariable.1">
+						<description />
+						<name>Set Variable</name>
+						<edittime>1788337111</edittime>
+						<variablename>g_despense_id</variablename>
+						<expressiontext>g_despense_id + 1</expressiontext>
+						<elementselectmode>0</elementselectmode>
+						<elementnumber />
+						<numberofelements />
+						<startindex>0</startindex>
+						<clearvariable>0</clearvariable>
+						<sortwells>0</sortwells>
+						<enumerationtype>0</enumerationtype>
+						<wellsenumeration>0</wellsenumeration>
+						<elementsenumeration>0</elementsenumeration>
+						<id>{CF0D9A70-006E-48F1-839A-55F6991FC634}</id>
+					</task>
+				</tasks>
+			</component>
+		</components>
+	</function>
+</functions>

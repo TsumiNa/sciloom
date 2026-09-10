@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<zone typeid="Chemspeed.SAZone.1" virtualVial="0" readOnly="0" enumerationScheme="1" elementEnumerationScheme="1" enumerationType="0" isvisible="-1">
+  <name>MONO_MMA</name>
+  <edittime>1787790893</edittime>
+  <id>{EF92639B-FD33-46CE-B915-39DEF6ADC99F}</id>
+  <well id="0" deviceID="1" progID="Chemspeed.SAModuleRack.1" index="0" />
+  <variables sortingType="1" />
+</zone>

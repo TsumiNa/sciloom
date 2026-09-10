@@ -1,0 +1,9 @@
+{
+  "view": "xyflow",
+  "nodes": [
+    {"node_id": "fn:dynamic-transfer", "x": 80, "y": 40, "width": 360, "collapsed": false},
+    {"node_id": "stmt:while-1", "x": 120, "y": 170, "width": 300, "collapsed": false},
+    {"node_id": "stmt:if-1", "x": 160, "y": 300, "width": 240, "collapsed": false}
+  ],
+  "viewport": {"x": 0, "y": 0, "zoom": 1.0}
+}

@@ -1,0 +1,112 @@
+--- Test04_ExecuteFunction.asfp
++++ Test04_FIXED_ExecuteFunction.asfp
+@@ -1,67 +1,92 @@
+ <functions>
+   <function typeid="Chemspeed.SATaskFunctionDefinition.1">
+-    <name>TEST04_Callee</name>
+     <description />
+-    <functionid>&lt;GUID&gt;</functionid>
++    <name>TEST04_FIXED_Callee</name>
++    <edittime>&lt;TIME&gt;</edittime>
++    <expanded>1</expanded>
+     <functiondata>
+       <inputs>
+         <count>0</count>
++        <sortType>0</sortType>
+       </inputs>
+       <outputs>
+         <count>0</count>
++        <sortType>0</sortType>
+       </outputs>
+     </functiondata>
++    <id>&lt;GUID&gt;</id>
+     <components>
+       <component typeid="Chemspeed.SAMacroTask.1">
+-        <name>TEST04_Callee</name>
+         <description />
+-        <variables>
+-          <count>0</count>
+-        </variables>
++        <name>Macro Task</name>
++        <edittime>&lt;TIME&gt;</edittime>
++        <expanded>1</expanded>
+         <conditionloop>1</conditionloop>
++        <conditionif />
++        <conditionwhile />
+         <conditiontype>0</conditiontype>
+         <loopvariable>loop</loopvariable>
++        <fragmentvariable>fragment</fragmentvariable>
++        <executionmode>0</executionmode>
++        <sequentialzones>
++          <count>0</count>
++        </sequentialzones>
+         <multicondition>0</multicondition>
+-        <tasks>
+-          <count>0</count>
+-        </tasks>
++        <multiloop>0</multiloop>
++        <variables sortingType="1" />
++        <id>&lt;GUID&gt;</id>
++        <tasks />
+       </component>
+     </components>
+   </function>
+   <function typeid="Chemspeed.SATaskFunctionDefinition.1">
+-    <name>TEST04_Caller</name>
+     <description />
+-    <functionid>&lt;GUID&gt;</functionid>
++    <name>TEST04_FIXED_Caller</name>
++    <edittime>&lt;TIME&gt;</edittime>
++    <expanded>1</expanded>
+     <functiondata>
+       <inputs>
+         <count>0</count>
++        <sortType>0</sortType>
+       </inputs>
+       <outputs>
+         <count>0</count>
++        <sortType>0</sortType>
+       </outputs>
+     </functiondata>
++    <id>&lt;GUID&gt;</id>
+     <components>
+       <component typeid="Chemspeed.SAMacroTask.1">
+-        <name>TEST04_Caller</name>
+         <description />
+-        <variables>
+-          <count>0</count>
+-        </variables>
++        <name>Macro Task</name>
++        <edittime>&lt;TIME&gt;</edittime>
++        <expanded>1</expanded>
+         <conditionloop>1</conditionloop>
++        <conditionif />
++        <conditionwhile />
+         <conditiontype>0</conditiontype>
+         <loopvariable>loop</loopvariable>
++        <fragmentvariable>fragment</fragmentvariable>
++        <executionmode>0</executionmode>
++        <sequentialzones>
++          <count>0</count>
++        </sequentialzones>
+         <multicondition>0</multicondition>
++        <multiloop>0</multiloop>
++        <variables sortingType="1" />
++        <id>&lt;GUID&gt;</id>
+         <tasks>
+-          <count>1</count>
+           <task typeid="Chemspeed.SATaskExecuteFunction.1">
+             <name>Execute Function</name>
+             <functionid>&lt;GUID&gt;</functionid>
+-            <functionname>TEST04_Callee</functionname>
++            <functionname>TEST04_FIXED_Callee</functionname>
+             <inputs>
+               <count>0</count>
++              <sortType>0</sortType>
+             </inputs>
+             <outputs>
+               <count>0</count>
++              <sortType>0</sortType>
+             </outputs>
+           </task>
+         </tasks>

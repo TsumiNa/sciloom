@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<task typeid="Chemspeed.SATaskInterrupt.1">
+  <description />
+  <name>Interrupt Application</name>
+  <edittime>1725371496</edittime>
+  <expanded>0</expanded>
+  <isunlockhood>1</isunlockhood>
+  <isunlockgloveboxorlid>0</isunlockgloveboxorlid>
+  <shouldshowprompt>1</shouldshowprompt>
+  <id>{FABA4E02-3AED-4E0E-BC9F-7DD2DC268B76}</id>
+  <tasks>
+    <task typeid="Chemspeed.SATaskUserDialog.1">
+      <highlightzone />
+      <destzone />
+      <description />
+      <name>Show Dialog</name>
+      <edittime>1725371557</edittime>
+      <resultvariablename>dialoge_</resultvariablename>
+      <targetamountvariable />
+      <sourcematerial />
+      <maxwaittimeexpression>0</maxwaittimeexpression>
+      <dialogtype>showmessage</dialogtype>
+      <resultunit />
+      <interpretmessageasexpressionflag>1</interpretmessageasexpressionflag>
+      <message>' Please place reference weight '</message>
+      <initialvalue />
+      <buttonoption>okstop</buttonoption>
+      <timeoutanswerexpression>0</timeoutanswerexpression>
+      <yesokresultexpression>1</yesokresultexpression>
+      <noresultexpression />
+      <maxwaittimeunit>s</maxwaittimeunit>
+      <picturepathexpression />
+      <validateinput>0</validateinput>
+      <minvalidationvalueexpression />
+      <maxvalidationvalueexpression />
+      <fontsize>24</fontsize>
+      <usemonospacedfont>0</usemonospacedfont>
+      <defaultpauseafterdialog>0</defaultpauseafterdialog>
+      <softstopping>1</softstopping>
+      <autodialogheight>1</autodialogheight>
+      <dialogwidth>480</dialogwidth>
+      <dialogheight>240</dialogheight>
+      <hlrootelementname />
+      <hlzonecolor>0</hlzonecolor>
+      <hldescriptioncount>0</hldescriptioncount>
+      <logtoserver>0</logtoserver>
+      <messagetype>0</messagetype>
+      <severity>1</severity>
+      <runid />
+      <experimentid />
+      <trialnumber />
+      <productid />
+      <id>{8B41A13D-A298-4C76-BE39-2D25376B9031}</id>
+    </task>
+  </tasks>
+</task>

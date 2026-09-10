@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<functions>
+	<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+		<description />
+		<name>TEST11_C_RealInOut_DirectSet</name>
+		<edittime>1788012646</edittime>
+		<expanded>1</expanded>
+		<functiondata>
+			<inputs>
+				<count>1</count>
+				<item0>
+					<name>x</name>
+					<value>
+						<type>5</type>
+						<value>0</value>
+					</value>
+					<array>0</array>
+					<variablename>x</variablename>
+				</item0>
+				<sortType>0</sortType>
+			</inputs>
+			<outputs>
+				<count>1</count>
+				<item0>
+					<name>y</name>
+					<value>
+						<type>5</type>
+						<value>0</value>
+					</value>
+					<array>0</array>
+					<variablename>y</variablename>
+				</item0>
+				<sortType>0</sortType>
+			</outputs>
+		</functiondata>
+		<id>{BD9BA28D-CA94-4DBC-9391-A880C3351C6C}</id>
+		<components>
+			<component typeid="Chemspeed.SATaskSetVariable.1">
+				<description />
+				<name>Set Variable</name>
+				<edittime>1788012646</edittime>
+				<variablename>y</variablename>
+				<expressiontext>x</expressiontext>
+				<id>{BB00D285-1497-475A-ADC7-507682837AD2}</id>
+			</component>
+		</components>
+	</function>
+</functions>

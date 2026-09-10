@@ -1,0 +1,546 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<functions>
+	<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+		<description />
+		<name>__GPC_InjectPort</name>
+		<edittime>1787708960</edittime>
+		<expanded>1</expanded>
+		<functiondata>
+			<inputs>
+				<count>3</count>
+				<item0>
+					<id>{08A07324-A904-4B70-9DA1-9869F67CAF39}</id>
+					<name>sample_zone</name>
+					<variablename>sample_zone</variablename>
+					<variabletype>zone</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item0>
+				<item1>
+					<id>{11FB6D9B-B7A7-41E7-8CAF-4A4764F15C05}</id>
+					<name>premix_bool</name>
+					<variablename>premix_bool</variablename>
+					<variabletype>bool</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item1>
+				<item2>
+					<id>{3F26D9BB-A5AE-4FF1-A7BA-D82F5049845E}</id>
+					<name>priming_vol</name>
+					<variablename>priming_vol</variablename>
+					<variabletype>volume</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item2>
+				<sortType>0</sortType>
+			</inputs>
+			<outputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</outputs>
+		</functiondata>
+		<id>{74A16D54-E959-4E1E-B06C-C893F679C5EC}</id>
+		<components>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description />
+				<name>Definition of internal variables</name>
+				<edittime>1785378372</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif />
+				<conditionwhile />
+				<conditiontype>0</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>0</executionmode>
+				<sequentialzones>
+					<count>0</count>
+				</sequentialzones>
+				<multicondition>0</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="1">
+					<variable>
+						<name>sample_loop_vol</name>
+						<value>
+							<type>5</type>
+							<value>0.00000002</value>
+						</value>
+						<siunit>m^3</siunit>
+						<unit>ul</unit>
+						<array>0</array>
+						<creationtime>1784103435</creationtime>
+						<constant>1</constant>
+					</variable>
+					<variable>
+						<name>valve_pos</name>
+						<value>
+							<type>5</type>
+							<value>0.0214</value>
+						</value>
+						<siunit>m</siunit>
+						<unit>mm</unit>
+						<array>0</array>
+						<creationtime>1776072610</creationtime>
+						<constant>1</constant>
+					</variable>
+				</variables>
+				<id>{63EB2BE5-C2CF-44F2-B73B-5FD9B3AA4E5C}</id>
+				<tasks>
+					<task typeid="Chemspeed.SATaskLiquidTransfer.1">
+						<sourcezone>valve ports F #2</sourcezone>
+						<destzone>Waste 1 #1</destzone>
+						<tipszone />
+						<rinsezone />
+						<wastezone>Waste 1</wastezone>
+						<airgapdestzone />
+						<extravoldestzone />
+						<description>priming</description>
+						<name>Transfer Volumetrically</name>
+						<edittime>1787710623</edittime>
+						<transferdatas>
+							<count>1</count>
+							<transferdata0>
+								<quantity>priming_vol</quantity>
+								<underrun>0</underrun>
+								<overrun>0</overrun>
+								<adjustquantity>0</adjustquantity>
+								<sourcewell>0</sourcewell>
+								<destwell>0</destwell>
+								<molarfactor>0</molarfactor>
+								<extravolume>0</extravolume>
+								<airgapvolume>0</airgapvolume>
+								<sourcespeed>1.33333333333e-07</sourcespeed>
+								<destspeed>1.33333333333e-07</destspeed>
+							</transferdata0>
+						</transferdatas>
+						<flowrateunit>ml/min</flowrateunit>
+						<multipleaspiration>0</multipleaspiration>
+						<sourceequitime>1</sourceequitime>
+						<sourceneedledistancemode>bottom up</sourceneedledistancemode>
+						<sourceneedledistance>0</sourceneedledistance>
+						<destequitime>1</destequitime>
+						<destneedledistancemode>top down</destneedledistancemode>
+						<destneedledistance>0.013</destneedledistance>
+						<rinseinsidevolume>2e-06</rinseinsidevolume>
+						<rinseoutsidevolume>2e-06</rinseoutsidevolume>
+						<rinseflowrate>1.66666666667e-07</rinseflowrate>
+						<rinsealways>0</rinsealways>
+						<rinseatend>0</rinseatend>
+						<unmounttoolatend>0</unmounttoolatend>
+						<limitbydest>1</limitbydest>
+						<autofillvolume>1</autofillvolume>
+						<autofillquantityoffset>1</autofillquantityoffset>
+						<autofillairgapvolume>1</autofillairgapvolume>
+						<autofillsourcespeed>1</autofillsourcespeed>
+						<autofilldestinationspeed>1</autofilldestinationspeed>
+						<autofillunderrun>1</autofillunderrun>
+						<autofilloverrun>1</autofilloverrun>
+						<autofilladjustquantity>1</autofilladjustquantity>
+						<enabledsyringesmask>2</enabledsyringesmask>
+						<selectedsyringesmask>2</selectedsyringesmask>
+						<airgapforeachtransfer>1</airgapforeachtransfer>
+						<extravolumeforeachtransfer>1</extravolumeforeachtransfer>
+						<volumeunit>ml</volumeunit>
+						<extravolumeunit>ml</extravolumeunit>
+						<airgapvolumeunit>ul</airgapvolumeunit>
+						<aspiratespeedunit>ml/min</aspiratespeedunit>
+						<dipensespeedunit>ml/min</dipensespeedunit>
+						<openposition>1</openposition>
+						<rinseneedledistancemode>bottom up</rinseneedledistancemode>
+						<rinseneedledistance>0.04</rinseneedledistance>
+						<needlehead>4Needle Head</needlehead>
+						<tipsdisposalstation>ioniser front right</tipsdisposalstation>
+						<activeneedletype>NeedleTypeStandard</activeneedletype>
+						<ispiercingactive>0</ispiercingactive>
+						<sourceequitimemode>0</sourceequitimemode>
+						<destequitimemode>0</destequitimemode>
+						<postairgapvolume>0</postairgapvolume>
+						<postairgapvolumeunit>ml</postairgapvolumeunit>
+						<airgapdestmode>0</airgapdestmode>
+						<extravoldestmode>0</extravoldestmode>
+						<extravolsrcmode>0</extravolsrcmode>
+						<id>{63F9C03B-8C72-4E0D-B339-B1FE37D7C4A7}</id>
+					</task>
+					<task typeid="Chemspeed.SATaskExecuteOperation.1">
+						<description>make airgap</description>
+						<name>Execute Operation</name>
+						<edittime>1787709016</edittime>
+						<device>Diluter 02 1ml</device>
+						<operation>Aspirate</operation>
+						<operationid>{5E601C68-830A-4FEC-9AB5-EFC0EBFB7AB9}</operationid>
+						<arguments>
+							<argument>
+								<name>Amount</name>
+								<id>{D1C7B3D7-727C-4042-8DE2-3E18D4198C4E}</id>
+								<value>0.00000001</value>
+								<unit>ul</unit>
+							</argument>
+							<argument>
+								<name>Speed</name>
+								<id>{4385CD90-1BB5-465E-8CD8-FA7F34B915F0}</id>
+								<value>8.33333333333333E-09</value>
+								<unit>ml/min</unit>
+							</argument>
+							<argument>
+								<name>Port</name>
+								<id>{911276D2-2B6C-4BAC-9FF8-3B369D20039A}</id>
+								<value>'A'</value>
+								<unit />
+							</argument>
+						</arguments>
+						<results />
+						<id>{688ED295-53A1-43CA-BBE3-0E55252A3538}</id>
+					</task>
+					<task typeid="Chemspeed.SATaskExecuteOperation.1">
+						<description />
+						<name>Execute Operation</name>
+						<edittime>1787639513</edittime>
+						<device>4Needle Head</device>
+						<operation>Move and Extend</operation>
+						<operationid>{89549A41-DE4B-4A2F-AB47-210C1403FD46}</operationid>
+						<arguments>
+							<argument>
+								<name>Destination Zone</name>
+								<id>{C4A4B41A-FD3A-482C-96A2-E70B1355BF37}</id>
+								<value>sample_zone</value>
+								<unit />
+							</argument>
+							<argument>
+								<name>Used Needles</name>
+								<id>{25DAE15A-E657-485A-9CD2-2063B0E53ADD}</id>
+								<value>N2</value>
+								<unit />
+							</argument>
+							<argument>
+								<name>Height of Extension</name>
+								<id>{C16E1994-4E1E-4C1D-9A31-00AB90C753F3}</id>
+								<value>0</value>
+								<unit>mm</unit>
+							</argument>
+							<argument>
+								<name>Bottom up/Top down</name>
+								<id>{A9412033-FF22-4891-8C24-84C372092922}</id>
+								<value>bottom up</value>
+								<unit />
+							</argument>
+						</arguments>
+						<results />
+						<id>{F29A80FF-7966-4D16-9CBB-24FBB5422EB1}</id>
+					</task>
+					<task typeid="Chemspeed.SAMacroTask.1">
+						<description />
+						<name>Macro Task</name>
+						<edittime>1787708974</edittime>
+						<expanded>1</expanded>
+						<conditionloop>1</conditionloop>
+						<conditionif>premix_bool</conditionif>
+						<conditionwhile />
+						<conditiontype>1</conditiontype>
+						<loopvariable>loop</loopvariable>
+						<fragmentvariable>fragment</fragmentvariable>
+						<executionmode>0</executionmode>
+						<sequentialzones>
+							<count>0</count>
+						</sequentialzones>
+						<multicondition>0</multicondition>
+						<multiloop>0</multiloop>
+						<variables sortingType="1" />
+						<id>{8EB666C9-13AA-4B77-A4E0-F12225B82ACE}</id>
+						<tasks>
+							<task typeid="Chemspeed.SAMacroTask.1">
+								<description />
+								<name>Macro Task</name>
+								<edittime>1787710706</edittime>
+								<expanded>1</expanded>
+								<conditionloop>3</conditionloop>
+								<conditionif />
+								<conditionwhile />
+								<conditiontype>0</conditiontype>
+								<loopvariable>loop</loopvariable>
+								<fragmentvariable>fragment</fragmentvariable>
+								<executionmode>0</executionmode>
+								<sequentialzones>
+									<count>0</count>
+								</sequentialzones>
+								<multicondition>0</multicondition>
+								<multiloop>0</multiloop>
+								<variables sortingType="1" />
+								<id>{8BBB64AC-82F1-4450-B855-2B7F16E26759}</id>
+								<tasks>
+									<task typeid="Chemspeed.SATaskExecuteOperation.1">
+										<description>aspirate</description>
+										<name>Execute Operation</name>
+										<edittime>1787710748</edittime>
+										<device>Diluter 02 1ml</device>
+										<operation>Aspirate</operation>
+										<operationid>{5E601C68-830A-4FEC-9AB5-EFC0EBFB7AB9}</operationid>
+										<arguments>
+											<argument>
+												<name>Amount</name>
+												<id>{D1C7B3D7-727C-4042-8DE2-3E18D4198C4E}</id>
+												<value>0.0000004</value>
+												<unit>ml</unit>
+											</argument>
+											<argument>
+												<name>Speed</name>
+												<id>{4385CD90-1BB5-465E-8CD8-FA7F34B915F0}</id>
+												<value>6.66666666666667E-08</value>
+												<unit>ml/min</unit>
+											</argument>
+											<argument>
+												<name>Port</name>
+												<id>{911276D2-2B6C-4BAC-9FF8-3B369D20039A}</id>
+												<value>'A'</value>
+												<unit />
+											</argument>
+										</arguments>
+										<results />
+										<id>{40582781-A3F1-4CF5-BDE3-6F66ACFBDD0A}</id>
+									</task>
+									<task typeid="Chemspeed.SATaskWait.1">
+										<description>equilibrium</description>
+										<name>Wait</name>
+										<edittime>1787709166</edittime>
+										<time>0.2</time>
+										<timeunit>s</timeunit>
+										<msgtodisplay />
+										<waitmode>0</waitmode>
+										<contacts />
+										<timername />
+										<cancelwait>1</cancelwait>
+										<id>{6269073F-EB14-48FB-9E95-1E22D16444D2}</id>
+									</task>
+									<task typeid="Chemspeed.SATaskExecuteOperation.1">
+										<description>inject</description>
+										<name>Execute Operation</name>
+										<edittime>1787710728</edittime>
+										<device>Diluter 02 1ml</device>
+										<operation>Dispense</operation>
+										<operationid>{ED626A2D-28B7-40FF-A401-81E6FCFF7B6A}</operationid>
+										<arguments>
+											<argument>
+												<name>Amount</name>
+												<id>{3BDEDB80-EEF3-49FF-BAB8-BCC3DD5EDDD0}</id>
+												<value>0.0000004</value>
+												<unit>ml</unit>
+											</argument>
+											<argument>
+												<name>Speed</name>
+												<id>{A60FAB60-A3E0-4191-AC17-2E6BF3437EC9}</id>
+												<value>1.33333333333333E-07</value>
+												<unit>ml/min</unit>
+											</argument>
+											<argument>
+												<name>Port</name>
+												<id>{7D694D11-B7EA-4A46-8F9B-E4603929A431}</id>
+												<value>'A'</value>
+												<unit />
+											</argument>
+										</arguments>
+										<results />
+										<id>{253A64D8-56EC-4D08-9886-0F1240D25137}</id>
+									</task>
+									<task typeid="Chemspeed.SATaskWait.1">
+										<description>equilibrium</description>
+										<name>Wait</name>
+										<edittime>1787709170</edittime>
+										<time>0.2</time>
+										<timeunit>s</timeunit>
+										<msgtodisplay />
+										<waitmode>0</waitmode>
+										<contacts />
+										<timername />
+										<cancelwait>1</cancelwait>
+										<id>{690EB24F-54E6-4DBA-83AA-1CCDD200204C}</id>
+									</task>
+								</tasks>
+							</task>
+						</tasks>
+					</task>
+					<task typeid="Chemspeed.SATaskExecuteOperation.1">
+						<description>aspirate</description>
+						<name>Execute Operation</name>
+						<edittime>1788828370</edittime>
+						<device>Diluter 02 1ml</device>
+						<operation>Aspirate</operation>
+						<operationid>{5E601C68-830A-4FEC-9AB5-EFC0EBFB7AB9}</operationid>
+						<arguments>
+							<argument>
+								<name>Amount</name>
+								<id>{D1C7B3D7-727C-4042-8DE2-3E18D4198C4E}</id>
+								<value>sample_loop_vol*10</value>
+								<unit>m^3</unit>
+							</argument>
+							<argument>
+								<name>Speed</name>
+								<id>{4385CD90-1BB5-465E-8CD8-FA7F34B915F0}</id>
+								<value>1.66666666666667E-08</value>
+								<unit>ml/min</unit>
+							</argument>
+							<argument>
+								<name>Port</name>
+								<id>{911276D2-2B6C-4BAC-9FF8-3B369D20039A}</id>
+								<value>'A'</value>
+								<unit />
+							</argument>
+						</arguments>
+						<results />
+						<id>{653FC049-C709-46C8-9310-68353B85DEFB}</id>
+					</task>
+					<task typeid="Chemspeed.SATaskWait.1">
+						<description>equilibrium</description>
+						<name>Wait</name>
+						<edittime>1788828373</edittime>
+						<time>2</time>
+						<timeunit>s</timeunit>
+						<msgtodisplay />
+						<waitmode>0</waitmode>
+						<contacts />
+						<timername />
+						<cancelwait>1</cancelwait>
+						<id>{C6319DE1-20A2-4EFE-A43A-757A69EFF957}</id>
+					</task>
+					<task typeid="Chemspeed.SATaskExecuteOperation.1">
+						<description>move</description>
+						<name>Execute Operation</name>
+						<edittime>1787710749</edittime>
+						<device>4Needle Head</device>
+						<operation>Move and Extend</operation>
+						<operationid>{89549A41-DE4B-4A2F-AB47-210C1403FD46}</operationid>
+						<arguments>
+							<argument>
+								<name>Destination Zone</name>
+								<id>{C4A4B41A-FD3A-482C-96A2-E70B1355BF37}</id>
+								<value>Injection valve 3 Inject</value>
+								<unit />
+							</argument>
+							<argument>
+								<name>Used Needles</name>
+								<id>{25DAE15A-E657-485A-9CD2-2063B0E53ADD}</id>
+								<value>N2</value>
+								<unit />
+							</argument>
+							<argument>
+								<name>Height of Extension</name>
+								<id>{C16E1994-4E1E-4C1D-9A31-00AB90C753F3}</id>
+								<value>valve_pos</value>
+								<unit>mm</unit>
+							</argument>
+							<argument>
+								<name>Bottom up/Top down</name>
+								<id>{A9412033-FF22-4891-8C24-84C372092922}</id>
+								<value>top down</value>
+								<unit />
+							</argument>
+						</arguments>
+						<results />
+						<id>{1DAB312D-3B21-4E4D-9D04-BB0369C662E5}</id>
+					</task>
+					<task typeid="Chemspeed.SATaskWait.1">
+						<description />
+						<name>Wait</name>
+						<edittime>1788828386</edittime>
+						<time>0.5</time>
+						<timeunit>s</timeunit>
+						<msgtodisplay />
+						<waitmode>0</waitmode>
+						<contacts />
+						<timername />
+						<cancelwait>1</cancelwait>
+						<id>{D1FEB68D-C29E-4D11-8AAE-206AE6B0E7CE}</id>
+					</task>
+					<task typeid="Chemspeed.SATaskExecuteFunction.1">
+						<description />
+						<name>Execute Function</name>
+						<edittime>1784854255</edittime>
+						<functiondata>
+							<inputs>
+								<count>0</count>
+								<sortType>0</sortType>
+							</inputs>
+							<outputs>
+								<count>0</count>
+								<sortType>0</sortType>
+							</outputs>
+						</functiondata>
+						<functionid>{766F368D-1AA0-4849-91C9-38EE8C58B42B}</functionid>
+						<id>{32A092EB-6E2C-48F5-A208-DF71D011DEC1}</id>
+					</task>
+					<task typeid="Chemspeed.SATaskWait.1">
+						<description />
+						<name>Wait</name>
+						<edittime>1788828390</edittime>
+						<time>0.5</time>
+						<timeunit>s</timeunit>
+						<msgtodisplay />
+						<waitmode>0</waitmode>
+						<contacts />
+						<timername />
+						<cancelwait>1</cancelwait>
+						<id>{67142A34-72F0-4173-8656-0A0CD9793458}</id>
+					</task>
+					<task typeid="Chemspeed.SATaskExecuteOperation.1">
+						<description>inject</description>
+						<name>Execute Operation</name>
+						<edittime>1787710047</edittime>
+						<device>Diluter 02 1ml</device>
+						<operation>Dispense</operation>
+						<operationid>{ED626A2D-28B7-40FF-A401-81E6FCFF7B6A}</operationid>
+						<arguments>
+							<argument>
+								<name>Amount</name>
+								<id>{3BDEDB80-EEF3-49FF-BAB8-BCC3DD5EDDD0}</id>
+								<value>sample_loop_vol*5</value>
+								<unit>m^3</unit>
+							</argument>
+							<argument>
+								<name>Speed</name>
+								<id>{A60FAB60-A3E0-4191-AC17-2E6BF3437EC9}</id>
+								<value>8.33333333333333E-09</value>
+								<unit>ml/min</unit>
+							</argument>
+							<argument>
+								<name>Port</name>
+								<id>{7D694D11-B7EA-4A46-8F9B-E4603929A431}</id>
+								<value>'A'</value>
+								<unit />
+							</argument>
+						</arguments>
+						<results />
+						<id>{2CAC7BEE-21A3-4BCB-988F-761AA294C406}</id>
+					</task>
+					<task typeid="Chemspeed.SATaskExecuteFunction.1">
+						<description />
+						<name>Execute Function</name>
+						<edittime>1784854286</edittime>
+						<functiondata>
+							<inputs>
+								<count>0</count>
+								<sortType>0</sortType>
+							</inputs>
+							<outputs>
+								<count>0</count>
+								<sortType>0</sortType>
+							</outputs>
+						</functiondata>
+						<functionid>{DE72B435-9F86-44DB-8B7D-73AC69E41C46}</functionid>
+						<id>{DF5BAB3F-6C58-49A9-B8BF-8520512E0388}</id>
+					</task>
+					<task typeid="Chemspeed.SATaskWait.1">
+						<description />
+						<name>Wait</name>
+						<edittime>1788828394</edittime>
+						<time>0.5</time>
+						<timeunit>s</timeunit>
+						<msgtodisplay />
+						<waitmode>0</waitmode>
+						<contacts />
+						<timername />
+						<cancelwait>1</cancelwait>
+						<id>{65D44C8C-1887-4BD3-9626-6385A1E65EF2}</id>
+					</task>
+				</tasks>
+			</component>
+		</components>
+	</function>
+</functions>

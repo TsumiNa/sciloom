@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<functions>
+	<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+		<description />
+		<name>TEST10_Callee</name>
+		<edittime>1788012643</edittime>
+		<expanded>1</expanded>
+		<functiondata>
+			<inputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</inputs>
+			<outputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</outputs>
+		</functiondata>
+		<id>{5D75BBF2-B27C-4308-8C18-0CB106782130}</id>
+		<components />
+	</function>
+	<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+		<description />
+		<name>TEST10_DirectIFELSE</name>
+		<edittime>1788012643</edittime>
+		<expanded>1</expanded>
+		<functiondata>
+			<inputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</inputs>
+			<outputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</outputs>
+		</functiondata>
+		<id>{8C5B7345-4D1F-4F43-B4B7-D87B2CF824F3}</id>
+		<components>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description />
+				<name>If-Else</name>
+				<edittime>1788012643</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif />
+				<conditionwhile />
+				<conditiontype>0</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>0</executionmode>
+				<sequentialzones>
+					<count>0</count>
+				</sequentialzones>
+				<multicondition>1</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="1" />
+				<id>{1173BD66-8411-46C8-BF34-308C2595FA2F}</id>
+				<tasks>
+					<task typeid="Chemspeed.SATaskCondition.1">
+						<name>If</name>
+						<conditiontype>0</conditiontype>
+						<condition>1 = 1</condition>
+					</task>
+					<task typeid="Chemspeed.SATaskExecuteFunction.1">
+						<description />
+						<name>Execute Function</name>
+						<edittime>1788012643</edittime>
+						<functiondata>
+							<inputs>
+								<count>0</count>
+								<sortType>0</sortType>
+							</inputs>
+							<outputs>
+								<count>0</count>
+								<sortType>0</sortType>
+							</outputs>
+						</functiondata>
+						<functionid>{5D75BBF2-B27C-4308-8C18-0CB106782130}</functionid>
+						<id>{590F7948-9DF6-416B-8120-4C574EC32A3B}</id>
+					</task>
+					<task typeid="Chemspeed.SATaskCondition.1">
+						<name>Else</name>
+						<conditiontype>2</conditiontype>
+					</task>
+					<task typeid="Chemspeed.SATaskExecuteFunction.1">
+						<description />
+						<name>Execute Function</name>
+						<edittime>1788012643</edittime>
+						<functiondata>
+							<inputs>
+								<count>0</count>
+								<sortType>0</sortType>
+							</inputs>
+							<outputs>
+								<count>0</count>
+								<sortType>0</sortType>
+							</outputs>
+						</functiondata>
+						<functionid>{5D75BBF2-B27C-4308-8C18-0CB106782130}</functionid>
+						<id>{C4FEEA47-3455-4B90-B9EF-6963639F01D1}</id>
+					</task>
+				</tasks>
+			</component>
+		</components>
+	</function>
+</functions>

@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<element typeid="Chemspeed.SADeviceNeedleHead.1">
+  <name>4Needle Head</name>
+  <edittime>1770285740</edittime>
+  <expanded>1</expanded>
+  <log>1</log>
+  <logdeadband>0</logdeadband>
+  <absolutedeadband>0</absolutedeadband>
+  <deadbandunit />
+  <currentrole />
+  <calibrationx>0</calibrationx>
+  <calibrationy>0</calibrationy>
+  <calibrationz>0</calibrationz>
+  <numberoftools>0</numberoftools>
+  <deviceid>0</deviceid>
+  <footprintid>needlehead parkposition</footprintid>
+  <haspiercingtips>0</haspiercingtips>
+  <mountingpinposition>0</mountingpinposition>
+  <keepneedlesextended>0</keepneedlesextended>
+  <usewelldepthoffset>1</usewelldepthoffset>
+  <id>{B673BF62-58AF-430C-86F3-F0776939EFEC}</id>
+  <elements>
+    <element typeid="Chemspeed.SADeviceNeedle.1">
+      <name>Needle #1</name>
+      <edittime>1787099489</edittime>
+      <log>1</log>
+      <logdeadband>0</logdeadband>
+      <absolutedeadband>0</absolutedeadband>
+      <deadbandunit />
+      <currentrole />
+      <calibrationx>0</calibrationx>
+      <calibrationy>0</calibrationy>
+      <calibrationz>0</calibrationz>
+      <numberoftools>0</numberoftools>
+      <deviceid>0</deviceid>
+      <footprintid>#1</footprintid>
+      <needletype>NeedleTypeStandard</needletype>
+      <visualizeunitfortemperatures>°C</visualizeunitfortemperatures>
+      <temperaturelogdeadband>0.1</temperaturelogdeadband>
+      <id>{ABF78EC6-DE56-4008-8E9C-74DA6DB111BC}</id>
+      <wells />
+    </element>
+    <element typeid="Chemspeed.SADeviceNeedle.1">
+      <name>Needle #2</name>
+      <edittime>1732205091</edittime>
+      <log>1</log>
+      <logdeadband>0</logdeadband>
+      <absolutedeadband>0</absolutedeadband>
+      <deadbandunit />
+      <currentrole />
+      <calibrationx>0</calibrationx>
+      <calibrationy>0</calibrationy>
+      <calibrationz>0</calibrationz>
+      <numberoftools>0</numberoftools>
+      <deviceid>1</deviceid>
+      <footprintid>#2</footprintid>
+      <needletype>NeedleTypeStandard</needletype>
+      <visualizeunitfortemperatures>°C</visualizeunitfortemperatures>
+      <temperaturelogdeadband>0.1</temperaturelogdeadband>
+      <id>{2146BAD5-5CE0-4DC1-9B75-848A618FE173}</id>
+      <wells />
+    </element>
+    <element typeid="Chemspeed.SADeviceNeedle.1">
+      <name>Needle #3</name>
+      <edittime>1732205091</edittime>
+      <log>1</log>
+      <logdeadband>0</logdeadband>
+      <absolutedeadband>0</absolutedeadband>
+      <deadbandunit />
+      <currentrole />
+      <calibrationx>0</calibrationx>
+      <calibrationy>0</calibrationy>
+      <calibrationz>0</calibrationz>
+      <numberoftools>0</numberoftools>
+      <deviceid>2</deviceid>
+      <footprintid>#3</footprintid>
+      <needletype>NeedleTypeStandard</needletype>
+      <visualizeunitfortemperatures>°C</visualizeunitfortemperatures>
+      <temperaturelogdeadband>0.1</temperaturelogdeadband>
+      <id>{DB1DED02-FC37-4739-BA50-13DBB675008C}</id>
+      <wells />
+    </element>
+    <element typeid="Chemspeed.SADeviceNeedle.1">
+      <name>Needle #4</name>
+      <edittime>1732205091</edittime>
+      <log>1</log>
+      <logdeadband>0</logdeadband>
+      <absolutedeadband>0</absolutedeadband>
+      <deadbandunit />
+      <currentrole />
+      <calibrationx>0</calibrationx>
+      <calibrationy>0</calibrationy>
+      <calibrationz>0</calibrationz>
+      <numberoftools>0</numberoftools>
+      <deviceid>3</deviceid>
+      <footprintid>#4</footprintid>
+      <needletype>NeedleTypeStandard</needletype>
+      <visualizeunitfortemperatures>°C</visualizeunitfortemperatures>
+      <temperaturelogdeadband>0.1</temperaturelogdeadband>
+      <id>{0D021891-54A7-43BB-AA04-2EF528B84230}</id>
+      <wells />
+    </element>
+  </elements>
+  <wells />
+</element>

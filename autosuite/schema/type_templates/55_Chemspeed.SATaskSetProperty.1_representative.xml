@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<task typeid="Chemspeed.SATaskSetProperty.1">
+  <destzonename>test</destzonename>
+  <description />
+  <name>Set Property</name>
+  <edittime>1787863665</edittime>
+  <propertytype>2</propertytype>
+  <propname>is_used</propname>
+  <valuemode>0</valuemode>
+  <variablename />
+  <propvalueexprtext>'abc'</propvalueexprtext>
+  <resulttype>text</resulttype>
+  <propertyunit />
+  <id>{CBFBD84F-BBB2-4FD3-B398-3EF17AB3DCDC}</id>
+</task>

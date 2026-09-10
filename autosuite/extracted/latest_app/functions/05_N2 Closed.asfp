@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<functions>
+	<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+		<description />
+		<name>N2 Closed</name>
+		<edittime>1785379278</edittime>
+		<expanded>1</expanded>
+		<functiondata>
+			<inputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</inputs>
+			<outputs>
+				<count>1</count>
+				<item0>
+					<id>{BB121AC7-80D4-4967-AB1B-7E2A2D2768D5}</id>
+					<name>stdout_txt</name>
+					<variablename>stdout_txt</variablename>
+					<variabletype>text</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item0>
+				<sortType>0</sortType>
+			</outputs>
+		</functiondata>
+		<id>{CD0FA38B-82D4-4C1C-8F66-015E3E8961BF}</id>
+		<components>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description />
+				<name>Macro Task</name>
+				<edittime>1785225739</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif />
+				<conditionwhile />
+				<conditiontype>0</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>0</executionmode>
+				<sequentialzones>
+					<count>0</count>
+				</sequentialzones>
+				<multicondition>0</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="1">
+					<variable>
+						<name>io_int</name>
+						<value>
+							<type>3</type>
+							<value>0</value>
+						</value>
+						<siunit>1</siunit>
+						<unit>s</unit>
+						<array>0</array>
+						<creationtime>1785225739</creationtime>
+						<constant>0</constant>
+					</variable>
+				</variables>
+				<id>{BA6CB64D-8C12-49D7-9535-81E0F2C45CBA}</id>
+				<tasks>
+					<task typeid="Chemspeed.SATaskRunExecutable.1">
+						<description />
+						<name>Run Executable</name>
+						<edittime>1787797282</edittime>
+						<execfilepath>C:\Windows\System32\cmd.exe</execfilepath>
+						<commandline>'/C C:\AutomationControl\app\N2_closed.bat'</commandline>
+						<exitcode>io_int</exitcode>
+						<stdoutput>stdout_txt</stdoutput>
+						<stdoutextended>1</stdoutextended>
+						<maxwaittimeunit>s</maxwaittimeunit>
+						<maxwaittime>60</maxwaittime>
+						<exitfailmode>0</exitfailmode>
+						<runinsimulation>0</runinsimulation>
+						<suppresswindow>1</suppresswindow>
+						<id>{0711ABF3-4890-44C2-B86F-861231DCA16E}</id>
+					</task>
+				</tasks>
+			</component>
+		</components>
+	</function>
+</functions>

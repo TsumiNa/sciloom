@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<element typeid="Chemspeed.SADeviceNeedle.1">
+  <name>Needle #4</name>
+  <edittime>1732205091</edittime>
+  <log>1</log>
+  <logdeadband>0</logdeadband>
+  <absolutedeadband>0</absolutedeadband>
+  <deadbandunit />
+  <currentrole />
+  <calibrationx>0</calibrationx>
+  <calibrationy>0</calibrationy>
+  <calibrationz>0</calibrationz>
+  <numberoftools>0</numberoftools>
+  <deviceid>3</deviceid>
+  <footprintid>#4</footprintid>
+  <needletype>NeedleTypeStandard</needletype>
+  <visualizeunitfortemperatures>°C</visualizeunitfortemperatures>
+  <temperaturelogdeadband>0.1</temperaturelogdeadband>
+  <id>{0D021891-54A7-43BB-AA04-2EF528B84230}</id>
+  <wells />
+</element>

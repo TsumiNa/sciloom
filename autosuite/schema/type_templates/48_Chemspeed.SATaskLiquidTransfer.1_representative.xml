@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<component typeid="Chemspeed.SATaskLiquidTransfer.1">
+  <sourcezone>valve ports F #2</sourcezone>
+  <destzone>Waste 1 #1</destzone>
+  <tipszone />
+  <rinsezone />
+  <wastezone>Waste 1</wastezone>
+  <airgapdestzone />
+  <extravoldestzone />
+  <description />
+  <name>Transfer Volumetrically</name>
+  <edittime>1787285694</edittime>
+  <transferdatas>
+    <count>1</count>
+    <transferdata0>
+      <quantity>4e-06</quantity>
+      <underrun>0</underrun>
+      <overrun>0</overrun>
+      <adjustquantity>0</adjustquantity>
+      <sourcewell>0</sourcewell>
+      <destwell>0</destwell>
+      <molarfactor>0</molarfactor>
+      <extravolume>0</extravolume>
+      <airgapvolume>0</airgapvolume>
+      <sourcespeed>1.66666666667e-07</sourcespeed>
+      <destspeed>1.66666666667e-07</destspeed>
+    </transferdata0>
+  </transferdatas>
+  <flowrateunit>ml/min</flowrateunit>
+  <multipleaspiration>0</multipleaspiration>
+  <sourceequitime>1</sourceequitime>
+  <sourceneedledistancemode>bottom up</sourceneedledistancemode>
+  <sourceneedledistance>0</sourceneedledistance>
+  <destequitime>1</destequitime>
+  <destneedledistancemode>top down</destneedledistancemode>
+  <destneedledistance>0.013</destneedledistance>
+  <rinseinsidevolume>2e-06</rinseinsidevolume>
+  <rinseoutsidevolume>2e-06</rinseoutsidevolume>
+  <rinseflowrate>1.66666666667e-07</rinseflowrate>
+  <rinsealways>0</rinsealways>
+  <rinseatend>0</rinseatend>
+  <unmounttoolatend>0</unmounttoolatend>
+  <limitbydest>1</limitbydest>
+  <autofillvolume>1</autofillvolume>
+  <autofillquantityoffset>1</autofillquantityoffset>
+  <autofillairgapvolume>1</autofillairgapvolume>
+  <autofillsourcespeed>1</autofillsourcespeed>
+  <autofilldestinationspeed>1</autofilldestinationspeed>
+  <autofillunderrun>1</autofillunderrun>
+  <autofilloverrun>1</autofilloverrun>
+  <autofilladjustquantity>1</autofilladjustquantity>
+  <enabledsyringesmask>2</enabledsyringesmask>
+  <selectedsyringesmask>2</selectedsyringesmask>
+  <airgapforeachtransfer>1</airgapforeachtransfer>
+  <extravolumeforeachtransfer>1</extravolumeforeachtransfer>
+  <volumeunit>ml</volumeunit>
+  <extravolumeunit>ml</extravolumeunit>
+  <airgapvolumeunit>ul</airgapvolumeunit>
+  <aspiratespeedunit>ml/min</aspiratespeedunit>
+  <dipensespeedunit>ml/min</dipensespeedunit>
+  <openposition>1</openposition>
+  <rinseneedledistancemode>bottom up</rinseneedledistancemode>
+  <rinseneedledistance>0.04</rinseneedledistance>
+  <needlehead>4Needle Head</needlehead>
+  <tipsdisposalstation>ioniser front right</tipsdisposalstation>
+  <activeneedletype>NeedleTypeStandard</activeneedletype>
+  <ispiercingactive>0</ispiercingactive>
+  <sourceequitimemode>0</sourceequitimemode>
+  <destequitimemode>0</destequitimemode>
+  <postairgapvolume>0</postairgapvolume>
+  <postairgapvolumeunit>ml</postairgapvolumeunit>
+  <airgapdestmode>0</airgapdestmode>
+  <extravoldestmode>0</extravoldestmode>
+  <extravolsrcmode>0</extravolsrcmode>
+  <id>{2F8A6B04-1250-432E-BB7E-CA51B8349A5E}</id>
+</component>

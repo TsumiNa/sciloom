@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<task typeid="Chemspeed.SATaskRunExecutable.1">
+  <description />
+  <name>Run Executable</name>
+  <edittime>1787040689</edittime>
+  <execfilepath>C:\Windows\System32\cmd.exe</execfilepath>
+  <commandline>cmd_txt</commandline>
+  <exitcode>exit_int</exitcode>
+  <stdoutput>stdio_txt</stdoutput>
+  <stdoutextended>1</stdoutextended>
+  <maxwaittimeunit>s</maxwaittimeunit>
+  <maxwaittime>5</maxwaittime>
+  <exitfailmode>1</exitfailmode>
+  <runinsimulation>1</runinsimulation>
+  <suppresswindow>1</suppresswindow>
+  <id>{9639DB0B-0AC1-4013-839E-281B9FA05CB3}</id>
+</task>

@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<functions>
+	<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+		<description />
+		<name>TEST05_FIXED_IF</name>
+		<edittime>1788010295</edittime>
+		<expanded>1</expanded>
+		<functiondata>
+			<inputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</inputs>
+			<outputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</outputs>
+		</functiondata>
+		<id>{E4275E67-3DD1-4BD2-A021-8A58028263FA}</id>
+		<components>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description />
+				<name>Macro Task</name>
+				<edittime>1788010295</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif />
+				<conditionwhile />
+				<conditiontype>0</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>0</executionmode>
+				<sequentialzones>
+					<count>0</count>
+				</sequentialzones>
+				<multicondition>0</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="1">
+					<variable>
+						<name>x</name>
+						<value>
+							<type>5</type>
+							<value>0</value>
+						</value>
+						<siunit>1</siunit>
+						<unit>1</unit>
+						<array>0</array>
+						<creationtime>1788010295</creationtime>
+						<constant>0</constant>
+					</variable>
+				</variables>
+				<id>{1A2C5DCE-E76C-4216-9BFC-5AE90F6A5980}</id>
+				<tasks>
+					<task typeid="Chemspeed.SAMacroTask.1">
+						<description />
+						<name>If</name>
+						<edittime>1788010295</edittime>
+						<expanded>1</expanded>
+						<conditionloop>1</conditionloop>
+						<conditionif>1 = 1</conditionif>
+						<conditionwhile />
+						<conditiontype>1</conditiontype>
+						<loopvariable>loop</loopvariable>
+						<fragmentvariable>fragment</fragmentvariable>
+						<executionmode>0</executionmode>
+						<sequentialzones>
+							<count>0</count>
+						</sequentialzones>
+						<multicondition>0</multicondition>
+						<multiloop>0</multiloop>
+						<variables sortingType="1" />
+						<id>{05EE0DC3-5F3C-4AD0-BACB-8B884CCA9B61}</id>
+						<tasks>
+							<task typeid="Chemspeed.SATaskSetVariable.1">
+								<name>Set Variable</name>
+								<variablename>x</variablename>
+								<expressiontext>1</expressiontext>
+							</task>
+						</tasks>
+					</task>
+				</tasks>
+			</component>
+		</components>
+	</function>
+</functions>

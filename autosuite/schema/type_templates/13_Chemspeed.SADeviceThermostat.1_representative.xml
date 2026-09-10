@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<element typeid="Chemspeed.SADeviceThermostat.1">
+  <name>UniChiller</name>
+  <edittime>1787279359</edittime>
+  <log>1</log>
+  <logdeadband>0</logdeadband>
+  <absolutedeadband>1</absolutedeadband>
+  <deadbandunit>K</deadbandunit>
+  <currentrole>reflux</currentrole>
+  <calibrationx>0</calibrationx>
+  <calibrationy>0</calibrationy>
+  <calibrationz>0</calibrationz>
+  <numberoftools>0</numberoftools>
+  <deviceid>1.0</deviceid>
+  <footprintid />
+  <lowvalue>253.16</lowvalue>
+  <highvalue>313.16</highvalue>
+  <thermostatdrvkeyname>Huber Cryostat</thermostatdrvkeyname>
+  <visualizeunitfortemperatures>°C</visualizeunitfortemperatures>
+  <id>{11FA8642-897D-441C-AA1D-EDE03C4BB133}</id>
+  <wells />
+</element>

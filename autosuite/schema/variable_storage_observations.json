@@ -1,0 +1,553 @@
+{
+  "5": {
+    "count": 3963,
+    "siunits": {
+      "m^3": 1100,
+      "m": 285,
+      "s": 854,
+      "1": 526,
+      "1/s": 26,
+      "K": 1031,
+      "m^3/s": 76,
+      "kg": 64,
+      "Pa": 1
+    },
+    "units": {
+      "ul": 420,
+      "mm": 285,
+      "min": 839,
+      "ml": 349,
+      "m^3": 331,
+      "1": 526,
+      "rpm": 26,
+      "°C": 1031,
+      "ml/min": 76,
+      "h": 15,
+      "mg": 64,
+      "mbar": 1
+    },
+    "examples": [
+      [
+        "functionsPackage_0909.asfp",
+        "sample_loop_vol",
+        "m^3",
+        "ul",
+        "0.00000002",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "valve_pos",
+        "m",
+        "mm",
+        "0.0214",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "break_time",
+        "s",
+        "min",
+        "0",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "next_prep_time",
+        "s",
+        "min",
+        "294",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "peak_end",
+        "s",
+        "min",
+        "510",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "peak_start",
+        "s",
+        "min",
+        "210",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "wait_time",
+        "s",
+        "min",
+        "480",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "break_time",
+        "s",
+        "min",
+        "0",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "next_prep_time",
+        "s",
+        "min",
+        "294",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "peak_end",
+        "s",
+        "min",
+        "510",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "peak_start",
+        "s",
+        "min",
+        "210",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "wait_time",
+        "s",
+        "min",
+        "480",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "diluting_vol",
+        "m^3",
+        "ml",
+        "0.0000004",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "mixing_vol",
+        "m^3",
+        "ml",
+        "0.0000005",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "priming_vol",
+        "m^3",
+        "ml",
+        "0.0000028",
+        "0"
+      ]
+    ]
+  },
+  "3": {
+    "count": 1213,
+    "siunits": {
+      "1": 1213
+    },
+    "units": {
+      "s": 1186,
+      "1": 27
+    },
+    "examples": [
+      [
+        "functionsPackage_0909.asfp",
+        "loop_int",
+        "1",
+        "s",
+        "3",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "exit_int",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "drawer_idx",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "exit_int",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "DynamicTransferVolumectrically_2.asfp",
+        "ch1_end_idx",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "DynamicTransferVolumectrically_2.asfp",
+        "ch2_end_idx",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "DynamicTransferVolumectrically_2.asfp",
+        "ch3_end_idx",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "DynamicTransferVolumectrically_2.asfp",
+        "ch4_end_idx",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "DynamicTransferVolumectrically_2.asfp",
+        "current_idx",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "DynamicTransferVolumectrically_2.asfp",
+        "end_idx",
+        "1",
+        "s",
+        "-1",
+        "0"
+      ],
+      [
+        "DynamicTransferVolumectrically_2.asfp",
+        "max_idx",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "DynamicTransferVolumectrically_2.asfp",
+        "ch4_start_idx",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "DynamicTransferVolumectrically_2.asfp",
+        "ch1_start_idx",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "DynamicTransferVolumectrically_2.asfp",
+        "ch2_start_idx",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "DynamicTransferVolumectrically_2.asfp",
+        "ch3_start_idx",
+        "1",
+        "s",
+        "0",
+        "0"
+      ]
+    ]
+  },
+  "8": {
+    "count": 3497,
+    "siunits": {
+      "zone": 1605,
+      "text": 1174,
+      "": 718
+    },
+    "units": {
+      "zone": 1051,
+      "K/s": 1055,
+      "": 734,
+      "s": 654,
+      "text": 3
+    },
+    "examples": [
+      [
+        "functionsPackage_0909.asfp",
+        "reactor_row",
+        "zone",
+        "zone",
+        "",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "stdio_txt",
+        "text",
+        "K/s",
+        "",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "stdio_txt",
+        "text",
+        "K/s",
+        "",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "cmd_txt",
+        "text",
+        "K/s",
+        "",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "vial_zone",
+        "zone",
+        "zone",
+        "",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "sample_zone",
+        "zone",
+        "zone",
+        "",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "well_zone",
+        "zone",
+        "zone",
+        "",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "element_name_txt",
+        "text",
+        "K/s",
+        "",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "logical_state_txt",
+        "text",
+        "",
+        "",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "well_zone",
+        "zone",
+        "zone",
+        "",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "args_txt",
+        "text",
+        "K/s",
+        "",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "script_name_txt",
+        "text",
+        "s",
+        "'C:\\Users\\Operator\\Desktop\\Akiyama\\create_empty_csv.bat'",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "std_io_txt",
+        "text",
+        "K/s",
+        "",
+        "0"
+      ],
+      [
+        "functionsPackage_0909.asfp",
+        "prev_txt",
+        "text",
+        "K/s",
+        "''",
+        "0"
+      ],
+      [
+        "DynamicTransferVolumectrically_2.asfp",
+        "dest_selected_zone",
+        "zone",
+        "s",
+        "",
+        "0"
+      ]
+    ]
+  },
+  "11": {
+    "count": 221,
+    "siunits": {
+      "1": 221
+    },
+    "units": {
+      "s": 220,
+      "1": 1
+    },
+    "examples": [
+      [
+        "functionsPackage0901.asfp",
+        "has_request",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "functionsPackage0901.asfp",
+        "is_sage",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "functionsPackage0901.asfp",
+        "has_request",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "functionsPackage0901.asfp",
+        "is_safe",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "functionsPackage_all.asfp",
+        "is_safe",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "functionsPackage_all.asfp",
+        "is_safe",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "functionsPackage_0828_2.asfp",
+        "is_safe",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "functionsPackage_0828.asfp",
+        "is_safe",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "config20260823.app.xml",
+        "end_bool",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "config20260901.app.xml",
+        "g_error_latched",
+        "1",
+        "s",
+        "-1",
+        "0"
+      ],
+      [
+        "config20260901.app.xml",
+        "end_bool",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "config20260901.app.xml",
+        "has_request",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "config20260901.app.xml",
+        "is_sage",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "config20260901.app.xml",
+        "has_request",
+        "1",
+        "s",
+        "0",
+        "0"
+      ],
+      [
+        "config20260901.app.xml",
+        "is_safe",
+        "1",
+        "s",
+        "0",
+        "0"
+      ]
+    ]
+  }
+}

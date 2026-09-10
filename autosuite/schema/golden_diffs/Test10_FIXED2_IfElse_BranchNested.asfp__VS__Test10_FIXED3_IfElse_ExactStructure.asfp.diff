@@ -1,0 +1,66 @@
+--- Test10_FIXED2_IfElse_BranchNested.asfp
++++ Test10_FIXED3_IfElse_ExactStructure.asfp
+@@ -1,7 +1,7 @@
+ <functions>
+   <function typeid="Chemspeed.SATaskFunctionDefinition.1">
+     <description />
+-    <name>TEST10_FIXED2_Callee</name>
++    <name>TEST10_FIXED3_Callee</name>
+     <edittime>&lt;TIME&gt;</edittime>
+     <expanded>1</expanded>
+     <functiondata>
+@@ -19,7 +19,7 @@
+   </function>
+   <function typeid="Chemspeed.SATaskFunctionDefinition.1">
+     <description />
+-    <name>TEST10_FIXED2_DirectIFELSE</name>
++    <name>TEST10_FIXED3_DirectIFELSE</name>
+     <edittime>&lt;TIME&gt;</edittime>
+     <expanded>1</expanded>
+     <functiondata>
+@@ -62,8 +62,8 @@
+             <conditiontype>0</conditiontype>
+             <condition>1 = 1</condition>
+             <id>&lt;GUID&gt;</id>
+-            <tasks>
+-              <task typeid="Chemspeed.SATaskExecuteFunction.1">
++            <components>
++              <component typeid="Chemspeed.SATaskExecuteFunction.1">
+                 <description />
+                 <name>Execute Function</name>
+                 <edittime>&lt;TIME&gt;</edittime>
+@@ -79,8 +79,8 @@
+                 </functiondata>
+                 <functionid>&lt;GUID&gt;</functionid>
+                 <id>&lt;GUID&gt;</id>
+-              </task>
+-            </tasks>
++              </component>
++            </components>
+           </task>
+           <task typeid="Chemspeed.SATaskCondition.1">
+             <description />
+@@ -88,9 +88,10 @@
+             <edittime>&lt;TIME&gt;</edittime>
+             <expanded>1</expanded>
+             <conditiontype>2</conditiontype>
++            <condition />
+             <id>&lt;GUID&gt;</id>
+-            <tasks>
+-              <task typeid="Chemspeed.SATaskExecuteFunction.1">
++            <components>
++              <component typeid="Chemspeed.SATaskExecuteFunction.1">
+                 <description />
+                 <name>Execute Function</name>
+                 <edittime>&lt;TIME&gt;</edittime>
+@@ -106,8 +107,8 @@
+                 </functiondata>
+                 <functionid>&lt;GUID&gt;</functionid>
+                 <id>&lt;GUID&gt;</id>
+-              </task>
+-            </tasks>
++              </component>
++            </components>
+           </task>
+         </tasks>
+       </component>

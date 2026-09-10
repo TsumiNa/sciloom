@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<task typeid="Chemspeed.SATaskSetAgitation.1">
+  <zone>reactor_zone</zone>
+  <description />
+  <name>Stir</name>
+  <edittime>1787298720</edittime>
+  <taskdatas>
+    <count>1</count>
+    <taskdata0>
+      <progid />
+      <deviceid />
+      <wellid>-1</wellid>
+      <speed>shaker_speed</speed>
+    </taskdata0>
+  </taskdatas>
+  <switchon>1</switchon>
+  <speedunit>rpm</speedunit>
+  <autofillspeed>1</autofillspeed>
+  <stirrertype>0</stirrertype>
+  <id>{EA0D86C8-FC2A-49DA-9AA8-C1A44A6B7F3B}</id>
+</task>

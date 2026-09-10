@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<task typeid="Chemspeed.SATaskLogData.1">
+  <categorynameexpression>'log'</categorynameexpression>
+  <streamnameexpression>'log'</streamnameexpression>
+  <expressiontext>'Start Sampling'</expressiontext>
+  <resulttype>text</resulttype>
+  <description />
+  <name>Log Data</name>
+  <edittime>1787299331</edittime>
+  <id>{F9B3ADC2-F10C-4ECB-9BFA-9C6E0A6831C1}</id>
+</task>

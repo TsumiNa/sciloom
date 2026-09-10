@@ -1,0 +1,226 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<functions>
+	<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+		<description />
+		<name>Dispense To Destination</name>
+		<edittime>1788230450</edittime>
+		<expanded>1</expanded>
+		<functiondata>
+			<inputs>
+				<count>5</count>
+				<item0>
+					<id>{68861319-561B-4CC9-B105-8C36908DEB9D}</id>
+					<name>dispense_zone</name>
+					<variablename>dispense_zone</variablename>
+					<variabletype>zone</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item0>
+				<item1>
+					<id>{FD00F25A-FF56-44AA-A614-2D3DF3DB5D16}</id>
+					<name>ch1_vol</name>
+					<variablename>ch1_vol</variablename>
+					<variabletype>volume</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item1>
+				<item2>
+					<id>{301A0393-9DD7-40BE-8518-060ECF0F2056}</id>
+					<name>ch2_vol</name>
+					<variablename>ch2_vol</variablename>
+					<variabletype>volume</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item2>
+				<item3>
+					<id>{7A5BFA99-0DD4-43AD-AE5E-8D1C9C35AD16}</id>
+					<name>ch3_vol</name>
+					<variablename>ch3_vol</variablename>
+					<variabletype>volume</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item3>
+				<item4>
+					<id>{CD3F93B8-8019-4993-8179-5A1C04C245F3}</id>
+					<name>ch4_vol</name>
+					<variablename>ch4_vol</variablename>
+					<variabletype>volume</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item4>
+				<sortType>0</sortType>
+			</inputs>
+			<outputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</outputs>
+		</functiondata>
+		<id>{2C04EDD2-CFF7-4636-88DB-240DA51711A2}</id>
+		<components>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description />
+				<name>Macro Task</name>
+				<edittime>1788230474</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif />
+				<conditionwhile />
+				<conditiontype>0</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>0</executionmode>
+				<sequentialzones>
+					<count>0</count>
+				</sequentialzones>
+				<multicondition>0</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="1" />
+				<id>{20E9D8C4-CCF9-40CC-A93B-32709AABCAE0}</id>
+				<tasks>
+					<task typeid="Chemspeed.SAMacroTask.1">
+						<description />
+						<name>Macro Task</name>
+						<edittime>1788323634</edittime>
+						<expanded>1</expanded>
+						<conditionloop>1</conditionloop>
+						<conditionif>ch1_vol &lt; 0 or ch2_vol &lt; 0 or ch3_vol &lt; 0 or ch4_vol &lt; 0</conditionif>
+						<conditionwhile />
+						<conditiontype>1</conditiontype>
+						<loopvariable>loop</loopvariable>
+						<fragmentvariable>fragment</fragmentvariable>
+						<executionmode>0</executionmode>
+						<sequentialzones>
+							<count>0</count>
+						</sequentialzones>
+						<multicondition>0</multicondition>
+						<multiloop>0</multiloop>
+						<variables sortingType="1" />
+						<id>{6590E4EF-D186-4ECC-B0EE-059A56F6B16F}</id>
+						<tasks>
+							<task typeid="Chemspeed.SATaskExecuteFunction.1">
+								<description />
+								<name>Execute Function</name>
+								<edittime>1788230534</edittime>
+								<functiondata>
+									<inputs>
+										<count>3</count>
+										<item0>
+											<id>{BFF25E17-0D98-4F71-B8B0-2C7EA8B4BDD3}</id>
+											<name>source_func_txt</name>
+											<variablename />
+											<variabletype>text</variabletype>
+											<isarray>0</isarray>
+											<expression>'Dispense To Destination'</expression>
+										</item0>
+										<item1>
+											<id>{1442921E-18AC-455A-A1AB-34FD4E0417C5}</id>
+											<name>error_code_int</name>
+											<variablename />
+											<variabletype>integer</variabletype>
+											<isarray>0</isarray>
+											<expression>9999</expression>
+										</item1>
+										<item2>
+											<id>{490EB9AD-0F69-4DDE-8561-F082250C52F4}</id>
+											<name>message_txt</name>
+											<variablename />
+											<variabletype>text</variabletype>
+											<isarray>0</isarray>
+											<expression>'Negative dispense volume.'</expression>
+										</item2>
+										<sortType>0</sortType>
+									</inputs>
+									<outputs>
+										<count>0</count>
+										<sortType>0</sortType>
+									</outputs>
+								</functiondata>
+								<functionid>{05B2984D-BC3F-45CB-8A02-D3E5BF5ABC4B}</functionid>
+								<id>{7BE8BDAF-9BD1-4A8E-9C1B-4BEB57183BAF}</id>
+							</task>
+						</tasks>
+					</task>
+					<task typeid="Chemspeed.SAMacroTask.1">
+						<description />
+						<name>Macro Task</name>
+						<edittime>1788323694</edittime>
+						<expanded>1</expanded>
+						<conditionloop>1</conditionloop>
+						<conditionif>not g_error_latched</conditionif>
+						<conditionwhile />
+						<conditiontype>1</conditiontype>
+						<loopvariable>loop</loopvariable>
+						<fragmentvariable>fragment</fragmentvariable>
+						<executionmode>0</executionmode>
+						<sequentialzones>
+							<count>0</count>
+						</sequentialzones>
+						<multicondition>0</multicondition>
+						<multiloop>0</multiloop>
+						<variables sortingType="1" />
+						<id>{DBC36312-9EF3-4991-802F-92273C82AE30}</id>
+						<tasks>
+							<task typeid="Chemspeed.SATaskExecuteFunction.1">
+								<description />
+								<name>Execute Function</name>
+								<edittime>1788230579</edittime>
+								<functiondata>
+									<inputs>
+										<count>5</count>
+										<item0>
+											<id>{3E9E6136-7F6B-4330-B7E6-3A5E247B217F}</id>
+											<name>dispense_zone</name>
+											<variablename />
+											<variabletype>zone</variabletype>
+											<isarray>0</isarray>
+											<expression>dispense_zone</expression>
+										</item0>
+										<item1>
+											<id>{A665CB61-2E1B-4AD3-A0E9-481DCE4CA31A}</id>
+											<name>ch4_vol</name>
+											<variablename />
+											<variabletype>volume</variabletype>
+											<isarray>0</isarray>
+											<expression>ch4_vol</expression>
+										</item1>
+										<item2>
+											<id>{0AC9F26F-5BD9-4107-88A6-47DE3ACF0DD0}</id>
+											<name>ch3_vol</name>
+											<variablename />
+											<variabletype>volume</variabletype>
+											<isarray>0</isarray>
+											<expression>ch3_vol</expression>
+										</item2>
+										<item3>
+											<id>{D101FADD-7B6D-4AF4-B83D-23921E326A03}</id>
+											<name>ch1_vol</name>
+											<variablename />
+											<variabletype>volume</variabletype>
+											<isarray>0</isarray>
+											<expression>ch1_vol</expression>
+										</item3>
+										<item4>
+											<id>{017A38EA-3910-41E4-AD2D-E529813E497F}</id>
+											<name>ch2_vol</name>
+											<variablename />
+											<variabletype>volume</variabletype>
+											<isarray>0</isarray>
+											<expression>ch2_vol</expression>
+										</item4>
+										<sortType>0</sortType>
+									</inputs>
+									<outputs>
+										<count>0</count>
+										<sortType>0</sortType>
+									</outputs>
+								</functiondata>
+								<functionid>{7D0AD58C-1C98-47C5-AC69-CD9460D372C3}</functionid>
+								<id>{5029E0DB-0C0D-4775-A1CC-43E49C95BEC3}</id>
+							</task>
+						</tasks>
+					</task>
+				</tasks>
+			</component>
+		</components>
+	</function>
+</functions>

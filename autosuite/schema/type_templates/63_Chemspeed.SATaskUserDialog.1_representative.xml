@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<component typeid="Chemspeed.SATaskUserDialog.1">
+  <highlightzone />
+  <destzone />
+  <description />
+  <name>Show Dialog</name>
+  <edittime>1787876822</edittime>
+  <resultvariablename />
+  <targetamountvariable />
+  <sourcematerial />
+  <maxwaittimeexpression>0</maxwaittimeexpression>
+  <dialogtype>showmessage</dialogtype>
+  <resultunit />
+  <interpretmessageasexpressionflag>1</interpretmessageasexpressionflag>
+  <message>message_txt</message>
+  <initialvalue />
+  <buttonoption>okstop</buttonoption>
+  <timeoutanswerexpression />
+  <yesokresultexpression />
+  <noresultexpression />
+  <maxwaittimeunit>s</maxwaittimeunit>
+  <picturepathexpression />
+  <validateinput>0</validateinput>
+  <minvalidationvalueexpression />
+  <maxvalidationvalueexpression />
+  <fontsize>11</fontsize>
+  <usemonospacedfont>0</usemonospacedfont>
+  <defaultpauseafterdialog>0</defaultpauseafterdialog>
+  <softstopping>1</softstopping>
+  <autodialogheight>0</autodialogheight>
+  <dialogwidth>480</dialogwidth>
+  <dialogheight>240</dialogheight>
+  <hlrootelementname />
+  <hlzonecolor>0</hlzonecolor>
+  <hldescriptioncount>0</hldescriptioncount>
+  <logtoserver>0</logtoserver>
+  <messagetype>0</messagetype>
+  <severity>1</severity>
+  <runid />
+  <experimentid />
+  <trialnumber />
+  <productid />
+  <id>{FCD604E8-6B14-4033-AF31-8990FFF00291}</id>
+</component>

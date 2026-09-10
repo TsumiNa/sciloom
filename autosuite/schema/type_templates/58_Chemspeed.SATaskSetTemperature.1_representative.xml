@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<task typeid="Chemspeed.SATaskSetTemperature.1">
+  <zone>reactor_zone</zone>
+  <description />
+  <name>Heat / Cool</name>
+  <edittime>1784293855</edittime>
+  <switchon>1</switchon>
+  <maxwaittime>1800</maxwaittime>
+  <internalcontrol>0</internalcontrol>
+  <autofilltemp>1</autofilltemp>
+  <temperatureunit>°C</temperatureunit>
+  <autofillgradient>1</autofillgradient>
+  <gradientunit>°C/min</gradientunit>
+  <taskdatas>
+    <count>1</count>
+    <taskdata0>
+      <progid />
+      <deviceid />
+      <wellid>-1</wellid>
+      <Temperature>343.16</Temperature>
+      <Gradient>0</Gradient>
+    </taskdata0>
+  </taskdatas>
+  <id>{2A457F3B-E174-43C6-BB77-0A5BB11EDD0F}</id>
+</task>

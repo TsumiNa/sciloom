@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<task typeid="Chemspeed.SATaskSetElectricalContact.1">
+  <description />
+  <name>Switch Contact</name>
+  <edittime>1775192097</edittime>
+  <switchon>1</switchon>
+  <contact>2</contact>
+  <id>{BFBCDF8A-E251-4C54-A9B3-13332C2244AA}</id>
+</task>

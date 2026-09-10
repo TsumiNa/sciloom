@@ -1,0 +1,201 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<functions>
+	<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+		<description />
+		<name>Set ISynth Drawer State</name>
+		<edittime>1787948268</edittime>
+		<expanded>1</expanded>
+		<functiondata>
+			<inputs>
+				<count>2</count>
+				<item0>
+					<id>{A05CF205-DFE5-4060-ACA4-A89D11068D1F}</id>
+					<name>mode_txt</name>
+					<variablename>mode_txt</variablename>
+					<variabletype>text</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item0>
+				<item1>
+					<id>{B6B0BA4D-7219-4E03-BCD1-8FB46DD3C7BA}</id>
+					<name>reactor_zone</name>
+					<variablename>reactor_zone</variablename>
+					<variabletype>zone</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item1>
+				<sortType>0</sortType>
+			</inputs>
+			<outputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</outputs>
+		</functiondata>
+		<id>{CE003A2E-D4CA-4676-84F9-B1AB60D482F3}</id>
+		<components>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description />
+				<name>Macro Task</name>
+				<edittime>1788138184</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif />
+				<conditionwhile />
+				<conditiontype>0</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>1</executionmode>
+				<sequentialzones>
+					<count>1</count>
+					<sequentialzone0>
+						<fragmentsize>1</fragmentsize>
+						<variablename>well_zone</variablename>
+						<zonename>reactor_zone</zonename>
+					</sequentialzone0>
+				</sequentialzones>
+				<multicondition>0</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="1">
+					<variable>
+						<name>drawer_idx</name>
+						<value>
+							<type>3</type>
+							<value>0</value>
+						</value>
+						<siunit>1</siunit>
+						<unit>s</unit>
+						<array>0</array>
+						<creationtime>1787948340</creationtime>
+						<constant>0</constant>
+					</variable>
+					<variable>
+						<name>well_zone</name>
+						<value>
+							<type>8</type>
+							<value />
+						</value>
+						<siunit>zone</siunit>
+						<unit>zone</unit>
+						<array>0</array>
+						<creationtime>1787948251</creationtime>
+						<constant>0</constant>
+					</variable>
+				</variables>
+				<id>{FB7CA520-BCC7-4E6D-B431-C92F2618FE95}</id>
+				<tasks>
+					<task typeid="Chemspeed.SATaskSetVariable.1">
+						<description />
+						<name>Set Variable</name>
+						<edittime>1788150822</edittime>
+						<variablename>drawer_idx</variablename>
+						<expressiontext>-1</expressiontext>
+						<elementselectmode>0</elementselectmode>
+						<elementnumber />
+						<numberofelements />
+						<startindex>0</startindex>
+						<clearvariable>0</clearvariable>
+						<sortwells>0</sortwells>
+						<enumerationtype>0</enumerationtype>
+						<wellsenumeration>0</wellsenumeration>
+						<elementsenumeration>0</elementsenumeration>
+						<id>{9F3AE571-3786-41A6-91C0-8D05874B8FF9}</id>
+					</task>
+					<task typeid="Chemspeed.SAMacroTask.1">
+						<description />
+						<name>Macro Task</name>
+						<edittime>1788224908</edittime>
+						<expanded>1</expanded>
+						<conditionloop>1</conditionloop>
+						<conditionif>not g_error_latched</conditionif>
+						<conditionwhile />
+						<conditiontype>1</conditiontype>
+						<loopvariable>loop</loopvariable>
+						<fragmentvariable>fragment</fragmentvariable>
+						<executionmode>0</executionmode>
+						<sequentialzones>
+							<count>0</count>
+						</sequentialzones>
+						<multicondition>0</multicondition>
+						<multiloop>0</multiloop>
+						<variables sortingType="1" />
+						<id>{D26DC70A-F59A-46B2-A4C3-52FC7EE8FED6}</id>
+						<tasks>
+							<task typeid="Chemspeed.SATaskExecuteFunction.1">
+								<description />
+								<name>Execute Function</name>
+								<edittime>1787948343</edittime>
+								<functiondata>
+									<inputs>
+										<count>1</count>
+										<item0>
+											<id>{A0A8B7DD-6F46-4C1B-BDB8-C50552CC394A}</id>
+											<name>well_zone</name>
+											<variablename />
+											<variabletype>zone</variabletype>
+											<isarray>0</isarray>
+											<expression>well_zone</expression>
+										</item0>
+										<sortType>0</sortType>
+									</inputs>
+									<outputs>
+										<count>1</count>
+										<item0>
+											<id>{C96DDBE1-F4EF-4C4C-A5B4-AD58AF1CAE34}</id>
+											<name>drawer_idx</name>
+											<variablename>drawer_idx</variablename>
+											<variabletype>integer</variabletype>
+											<isarray>0</isarray>
+											<expression />
+										</item0>
+										<sortType>0</sortType>
+									</outputs>
+								</functiondata>
+								<functionid>{E4913D91-7862-4BB1-8EA5-0CF2D3828384}</functionid>
+								<id>{5429F3B1-E56E-45FD-8BF3-8EDD783D581C}</id>
+							</task>
+						</tasks>
+					</task>
+					<task typeid="Chemspeed.SAMacroTask.1">
+						<description />
+						<name>Macro Task</name>
+						<edittime>1788224931</edittime>
+						<expanded>1</expanded>
+						<conditionloop>1</conditionloop>
+						<conditionif>not g_error_latched</conditionif>
+						<conditionwhile />
+						<conditiontype>1</conditiontype>
+						<loopvariable>loop</loopvariable>
+						<fragmentvariable>fragment</fragmentvariable>
+						<executionmode>0</executionmode>
+						<sequentialzones>
+							<count>0</count>
+						</sequentialzones>
+						<multicondition>0</multicondition>
+						<multiloop>0</multiloop>
+						<variables sortingType="1" />
+						<id>{F309F5D8-AD2A-43F3-AE25-4A28A7585CED}</id>
+						<tasks>
+							<task typeid="Chemspeed.SATaskSetVariable.1">
+								<description />
+								<name>Set Variable</name>
+								<edittime>1788138205</edittime>
+								<variablename>g_drawer_state</variablename>
+								<expressiontext>mode_txt</expressiontext>
+								<elementselectmode>0</elementselectmode>
+								<elementnumber>drawer_idx</elementnumber>
+								<numberofelements />
+								<startindex>0</startindex>
+								<clearvariable>0</clearvariable>
+								<sortwells>0</sortwells>
+								<enumerationtype>0</enumerationtype>
+								<wellsenumeration>0</wellsenumeration>
+								<elementsenumeration>0</elementsenumeration>
+								<id>{595A84BE-623B-47FE-A4CA-D8D60DB96A99}</id>
+							</task>
+						</tasks>
+					</task>
+				</tasks>
+			</component>
+		</components>
+	</function>
+</functions>

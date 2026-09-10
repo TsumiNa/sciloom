@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<element typeid="Chemspeed.SADeviceController.1">
+  <drivernodeid>HeaterSHK:0.1</drivernodeid>
+  <visualizeunit>°C</visualizeunit>
+  <gradienttype>realnumber</gradienttype>
+  <logdeadband>0.5</logdeadband>
+  <name>HeaterSHK:0.1</name>
+  <edittime>1773899268</edittime>
+  <log>1</log>
+  <logdeadband>0.5</logdeadband>
+  <absolutedeadband>0</absolutedeadband>
+  <deadbandunit />
+  <currentrole />
+  <calibrationx>0</calibrationx>
+  <calibrationy>0</calibrationy>
+  <calibrationz>0</calibrationz>
+  <numberoftools>0</numberoftools>
+  <deviceid>0</deviceid>
+  <footprintid />
+  <id>{0E9D3877-0E80-4FBF-8B14-7C400C25CCF2}</id>
+  <wells />
+</element>

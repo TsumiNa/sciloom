@@ -1,0 +1,95 @@
+--- Test06_IfElse.asfp
++++ Test06_FIXED_IfElse.asfp
+@@ -1,47 +1,74 @@
+ <functions>
+   <function typeid="Chemspeed.SATaskFunctionDefinition.1">
+-    <name>TEST06_IF_ELSE</name>
+     <description />
+-    <functionid>&lt;GUID&gt;</functionid>
++    <name>TEST06_FIXED_IF_ELSE</name>
++    <edittime>&lt;TIME&gt;</edittime>
++    <expanded>1</expanded>
+     <functiondata>
+       <inputs>
+         <count>0</count>
++        <sortType>0</sortType>
+       </inputs>
+       <outputs>
+         <count>0</count>
++        <sortType>0</sortType>
+       </outputs>
+     </functiondata>
++    <id>&lt;GUID&gt;</id>
+     <components>
+       <component typeid="Chemspeed.SAMacroTask.1">
+-        <name>TEST06_IF_ELSE</name>
+         <description />
+-        <variables>
+-          <count>1</count>
+-          <item0>
+-            <variablename>x</variablename>
+-            <variabletype>real number</variabletype>
+-            <isarray>0</isarray>
+-            <value>0</value>
+-          </item0>
+-        </variables>
++        <name>Macro Task</name>
++        <edittime>&lt;TIME&gt;</edittime>
++        <expanded>1</expanded>
+         <conditionloop>1</conditionloop>
++        <conditionif />
++        <conditionwhile />
+         <conditiontype>0</conditiontype>
+         <loopvariable>loop</loopvariable>
++        <fragmentvariable>fragment</fragmentvariable>
++        <executionmode>0</executionmode>
++        <sequentialzones>
++          <count>0</count>
++        </sequentialzones>
+         <multicondition>0</multicondition>
++        <multiloop>0</multiloop>
++        <variables sortingType="1">
++          <variable>
++            <name>x</name>
++            <value>
++              <type>5</type>
++              <value>0</value>
++            </value>
++            <siunit>1</siunit>
++            <unit>1</unit>
++            <array>0</array>
++            <creationtime>&lt;TIME&gt;</creationtime>
++            <constant>0</constant>
++          </variable>
++        </variables>
++        <id>&lt;GUID&gt;</id>
+         <tasks>
+-          <count>1</count>
+           <task typeid="Chemspeed.SAMacroTask.1">
+-            <name>TEST06_IF_ELSE_Block</name>
+             <description />
+-            <variables>
+-              <count>0</count>
+-            </variables>
++            <name>If-Else</name>
++            <edittime>&lt;TIME&gt;</edittime>
++            <expanded>1</expanded>
+             <conditionloop>1</conditionloop>
++            <conditionif />
++            <conditionwhile />
+             <conditiontype>0</conditiontype>
+             <loopvariable>loop</loopvariable>
++            <fragmentvariable>fragment</fragmentvariable>
++            <executionmode>0</executionmode>
++            <sequentialzones>
++              <count>0</count>
++            </sequentialzones>
+             <multicondition>1</multicondition>
++            <multiloop>0</multiloop>
++            <variables sortingType="1" />
++            <id>&lt;GUID&gt;</id>
+             <tasks>
+-              <count>4</count>
+               <task typeid="Chemspeed.SATaskCondition.1">
+                 <name>If</name>
+                 <conditiontype>0</conditiontype>

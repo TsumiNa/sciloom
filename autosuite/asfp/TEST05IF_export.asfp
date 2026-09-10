@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<functions>
+	<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+		<description></description>
+		<name>TEST05_IF</name>
+		<edittime>1787896728</edittime>
+		<expanded>1</expanded>
+		<functiondata>
+			<inputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</inputs>
+			<outputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</outputs>
+		</functiondata>
+		<id>{BD325149-FC7D-4EC0-8246-A6E039173181}</id>
+		<components>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description></description>
+				<name>TEST05_IF</name>
+				<edittime>1788010822</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif>1 = 1</conditionif>
+				<conditionwhile></conditionwhile>
+				<conditiontype>1</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>0</executionmode>
+				<sequentialzones>
+					<count>0</count>
+				</sequentialzones>
+				<multicondition>0</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="0">
+					<variable>
+						<name>x</name>
+						<value>
+							<type>5</type>
+							<value>0</value>
+						</value>
+						<siunit>1</siunit>
+						<unit>1</unit>
+						<array>0</array>
+						<creationtime>1788010783</creationtime>
+						<constant>0</constant>
+					</variable>
+				</variables>
+				<id>{E841FE80-E94B-47A5-AEF1-5B8284C2CE47}</id>
+				<tasks>
+					<task typeid="Chemspeed.SATaskSetVariable.1">
+						<description></description>
+						<name>Set Variable</name>
+						<edittime>1788010813</edittime>
+						<variablename>x</variablename>
+						<expressiontext>1</expressiontext>
+						<elementselectmode>0</elementselectmode>
+						<elementnumber></elementnumber>
+						<numberofelements></numberofelements>
+						<startindex>0</startindex>
+						<clearvariable>0</clearvariable>
+						<sortwells>0</sortwells>
+						<enumerationtype>0</enumerationtype>
+						<wellsenumeration>0</wellsenumeration>
+						<elementsenumeration>0</elementsenumeration>
+						<id>{9A65DAA8-0A9E-4FB7-9383-C9F8ED56DC86}</id>
+					</task>
+				</tasks>
+			</component>
+		</components>
+	</function>
+</functions>

@@ -1,0 +1,143 @@
+{
+  "headers": [
+    "EXP_ID",
+    "SOLV_Toluene",
+    "MONO_MMA",
+    "INIT_AIBN"
+  ],
+  "well_rows": 48,
+  "active_rows": [
+    {
+      "well_index_1based": 1,
+      "EXP_ID": "ID260909_1",
+      "total_ml": 3.0,
+      "row": {
+        "EXP_ID": "ID260909_1",
+        "SOLV_Toluene": "2.42",
+        "MONO_MMA": "0.3",
+        "INIT_AIBN": "0.28"
+      }
+    },
+    {
+      "well_index_1based": 5,
+      "EXP_ID": "ID260908_5",
+      "total_ml": 3.0,
+      "row": {
+        "EXP_ID": "ID260908_5",
+        "SOLV_Toluene": "2.42",
+        "MONO_MMA": "0.3",
+        "INIT_AIBN": "0.28"
+      }
+    },
+    {
+      "well_index_1based": 11,
+      "EXP_ID": "ID260908_11",
+      "total_ml": 3.0,
+      "row": {
+        "EXP_ID": "ID260908_11",
+        "SOLV_Toluene": "2.42",
+        "MONO_MMA": "0.3",
+        "INIT_AIBN": "0.28"
+      }
+    },
+    {
+      "well_index_1based": 15,
+      "EXP_ID": "ID260908_15",
+      "total_ml": 3.0,
+      "row": {
+        "EXP_ID": "ID260908_15",
+        "SOLV_Toluene": "2.42",
+        "MONO_MMA": "0.3",
+        "INIT_AIBN": "0.28"
+      }
+    },
+    {
+      "well_index_1based": 21,
+      "EXP_ID": "ID260908_21",
+      "total_ml": 3.0,
+      "row": {
+        "EXP_ID": "ID260908_21",
+        "SOLV_Toluene": "2.42",
+        "MONO_MMA": "0.3",
+        "INIT_AIBN": "0.28"
+      }
+    },
+    {
+      "well_index_1based": 24,
+      "EXP_ID": "ID260908_24",
+      "total_ml": 3.0,
+      "row": {
+        "EXP_ID": "ID260908_24",
+        "SOLV_Toluene": "2.42",
+        "MONO_MMA": "0.3",
+        "INIT_AIBN": "0.28"
+      }
+    },
+    {
+      "well_index_1based": 25,
+      "EXP_ID": "ID260908_25",
+      "total_ml": 3.0,
+      "row": {
+        "EXP_ID": "ID260908_25",
+        "SOLV_Toluene": "2.42",
+        "MONO_MMA": "0.3",
+        "INIT_AIBN": "0.28"
+      }
+    },
+    {
+      "well_index_1based": 28,
+      "EXP_ID": "ID260908_28",
+      "total_ml": 3.0,
+      "row": {
+        "EXP_ID": "ID260908_28",
+        "SOLV_Toluene": "2.42",
+        "MONO_MMA": "0.3",
+        "INIT_AIBN": "0.28"
+      }
+    },
+    {
+      "well_index_1based": 34,
+      "EXP_ID": "ID260908_34",
+      "total_ml": 3.0,
+      "row": {
+        "EXP_ID": "ID260908_34",
+        "SOLV_Toluene": "2.42",
+        "MONO_MMA": "0.3",
+        "INIT_AIBN": "0.28"
+      }
+    },
+    {
+      "well_index_1based": 38,
+      "EXP_ID": "ID260908_38",
+      "total_ml": 3.0,
+      "row": {
+        "EXP_ID": "ID260908_38",
+        "SOLV_Toluene": "2.42",
+        "MONO_MMA": "0.3",
+        "INIT_AIBN": "0.28"
+      }
+    },
+    {
+      "well_index_1based": 44,
+      "EXP_ID": "ID260908_44",
+      "total_ml": 3.0,
+      "row": {
+        "EXP_ID": "ID260908_44",
+        "SOLV_Toluene": "2.42",
+        "MONO_MMA": "0.3",
+        "INIT_AIBN": "0.28"
+      }
+    },
+    {
+      "well_index_1based": 48,
+      "EXP_ID": "ID260908_48",
+      "total_ml": 3.0,
+      "row": {
+        "EXP_ID": "ID260908_48",
+        "SOLV_Toluene": "2.42",
+        "MONO_MMA": "0.3",
+        "INIT_AIBN": "0.28"
+      }
+    }
+  ]
+}

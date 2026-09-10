@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+  <description />
+  <name>TEST08_Callee</name>
+  <edittime>1788012641</edittime>
+  <expanded>1</expanded>
+  <functiondata>
+    <inputs>
+      <count>0</count>
+      <sortType>0</sortType>
+    </inputs>
+    <outputs>
+      <count>0</count>
+      <sortType>0</sortType>
+    </outputs>
+  </functiondata>
+  <id>{9C2A6440-BEFB-4025-A777-58238CD6DD34}</id>
+  <components />
+</function>

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<component typeid="Chemspeed.SAMacroTask.1">
+  <name>TEST01_Empty</name>
+  <description />
+  <variables>
+    <count>0</count>
+  </variables>
+  <conditionloop>1</conditionloop>
+  <conditiontype>0</conditiontype>
+  <loopvariable>loop</loopvariable>
+  <multicondition>0</multicondition>
+  <tasks>
+    <count>0</count>
+  </tasks>
+</component>

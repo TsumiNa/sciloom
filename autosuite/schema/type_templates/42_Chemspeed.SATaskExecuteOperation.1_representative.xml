@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<component typeid="Chemspeed.SATaskExecuteOperation.1">
+  <description />
+  <name>Execute Operation</name>
+  <edittime>1782203250</edittime>
+  <device>Digital Output #1</device>
+  <operation>Set ON</operation>
+  <operationid>{F3ABBF78-4AFD-4D9F-B63B-F40434DADB43}</operationid>
+  <arguments />
+  <results />
+  <id>{5A510D59-90BF-45B5-8339-42C47E10AF05}</id>
+</component>

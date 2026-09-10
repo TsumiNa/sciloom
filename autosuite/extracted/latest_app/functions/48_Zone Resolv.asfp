@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<functions>
+	<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+		<description />
+		<name>Zone Resolv</name>
+		<edittime>1788224123</edittime>
+		<expanded>1</expanded>
+		<functiondata>
+			<inputs>
+				<count>1</count>
+				<item0>
+					<id>{6B0920C6-FFD1-4E87-924A-2159F6CA2803}</id>
+					<name>zone_name_txt</name>
+					<variablename>zone_name_txt</variablename>
+					<variabletype>text</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item0>
+				<sortType>0</sortType>
+			</inputs>
+			<outputs>
+				<count>1</count>
+				<item0>
+					<id>{B0F4AB0E-6C16-435D-B717-24F096544A5D}</id>
+					<name>resolved_zone</name>
+					<variablename>resolved_zone</variablename>
+					<variabletype>zone</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item0>
+				<sortType>0</sortType>
+			</outputs>
+		</functiondata>
+		<id>{1769AFEC-A51E-4024-BEE9-FEFB4E863C4D}</id>
+		<components>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description />
+				<name>Macro Task</name>
+				<edittime>1788224128</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif />
+				<conditionwhile />
+				<conditiontype>0</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>0</executionmode>
+				<sequentialzones>
+					<count>0</count>
+				</sequentialzones>
+				<multicondition>0</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="1" />
+				<id>{05D9F7BD-E992-4EFE-B1D9-6BFE57A14737}</id>
+				<tasks>
+					<task typeid="Chemspeed.SATaskSetVariable.1">
+						<description />
+						<name>Set Variable</name>
+						<edittime>1788224307</edittime>
+						<variablename>resolved_zone</variablename>
+						<expressiontext>FindZone(TrimText(zone_name_txt))</expressiontext>
+						<elementselectmode>0</elementselectmode>
+						<elementnumber />
+						<numberofelements />
+						<startindex>0</startindex>
+						<clearvariable>0</clearvariable>
+						<sortwells>0</sortwells>
+						<enumerationtype>0</enumerationtype>
+						<wellsenumeration>0</wellsenumeration>
+						<elementsenumeration>0</elementsenumeration>
+						<id>{02A0EA10-0F5C-4303-97AD-83F78C34AB17}</id>
+					</task>
+					<task typeid="Chemspeed.SAMacroTask.1">
+						<description />
+						<name>Macro Task</name>
+						<edittime>1788224199</edittime>
+						<expanded>1</expanded>
+						<conditionloop>1</conditionloop>
+						<conditionif>ZoneSize(resolved_zone) = 0</conditionif>
+						<conditionwhile />
+						<conditiontype>1</conditiontype>
+						<loopvariable>loop</loopvariable>
+						<fragmentvariable>fragment</fragmentvariable>
+						<executionmode>0</executionmode>
+						<sequentialzones>
+							<count>0</count>
+						</sequentialzones>
+						<multicondition>0</multicondition>
+						<multiloop>0</multiloop>
+						<variables sortingType="1" />
+						<id>{ED297E89-A745-4C38-8438-A47B9BE7EDAF}</id>
+						<tasks>
+							<task typeid="Chemspeed.SATaskExecuteFunction.1">
+								<description />
+								<name>Execute Function</name>
+								<edittime>1788224233</edittime>
+								<functiondata>
+									<inputs>
+										<count>3</count>
+										<item0>
+											<id>{BFF25E17-0D98-4F71-B8B0-2C7EA8B4BDD3}</id>
+											<name>source_func_txt</name>
+											<variablename />
+											<variabletype>text</variabletype>
+											<isarray>0</isarray>
+											<expression>'Resolve Zone'</expression>
+										</item0>
+										<item1>
+											<id>{1442921E-18AC-455A-A1AB-34FD4E0417C5}</id>
+											<name>error_code_int</name>
+											<variablename />
+											<variabletype>integer</variabletype>
+											<isarray>0</isarray>
+											<expression>9999</expression>
+										</item1>
+										<item2>
+											<id>{490EB9AD-0F69-4DDE-8561-F082250C52F4}</id>
+											<name>message_txt</name>
+											<variablename />
+											<variabletype>text</variabletype>
+											<isarray>0</isarray>
+											<expression>'resolved zone is null'</expression>
+										</item2>
+										<sortType>0</sortType>
+									</inputs>
+									<outputs>
+										<count>0</count>
+										<sortType>0</sortType>
+									</outputs>
+								</functiondata>
+								<functionid>{05B2984D-BC3F-45CB-8A02-D3E5BF5ABC4B}</functionid>
+								<id>{C7795BA6-5EC0-4AF2-A9C8-6E3BF3A4C6CA}</id>
+							</task>
+						</tasks>
+					</task>
+				</tasks>
+			</component>
+		</components>
+	</function>
+</functions>

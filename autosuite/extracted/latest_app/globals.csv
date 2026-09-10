@@ -1,0 +1,16 @@
+name,storage_type,siunit,unit,array,values,constant
+Argon_,5,1,1,False,"[""2""]",0
+g_array_vol,5,m^3,ml,True,"[""0.00000095"", ""0.00000012"", ""0"", ""0.00000033"", ""0.00000048"", ""0.00000051"", ""0.00000076"", ""0.00000095""]",0
+g_aspirated_reagent,8,text,K/s,False,"[""""]",0
+g_debug_mode,3,1,s,False,"[""0""]",0
+g_despense_id,3,1,s,False,"[""0""]",0
+g_drawer_state,8,text,K/s,True,"[""STATE_UNKNOWN"", ""STATE_UNKNOWN"", ""STATE_UNKNOWN"", ""STATE_UNKNOWN"", ""STATE_UNKNOWN"", ""STATE_UNKNOWN"", ""STATE_UNKNOWN"", ""STATE_UNKNOWN"", ""STATE_UNKNOWN"", ""STATE_UNKNOWN"", ""STATE_UNKNOWN"", ""STATE_UNKNOWN"", ""STATE_UNKNOWN"", ""STATE_UNKNOWN"", ""STATE_UNKNOWN"", ""STATE_UNKNOWN"", ""STATE_UNKNOWN"", ""STATE_UNKNOWN""]",0
+g_error_code,3,1,s,False,"[""0""]",0
+g_error_latched,11,1,s,False,"[""-1""]",0
+g_error_message,8,text,K/s,False,"[""""]",0
+g_error_source,8,text,K/s,False,"[""""]",0
+g_mock_mode,3,1,s,False,"[""0""]",0
+GV_DialogHeight,3,1,s,False,"[""700""]",0
+GV_DialogWidth,3,1,s,False,"[""2000""]",0
+GV_FontSize,3,1,s,False,"[""28""]",0
+O2_percent_start,5,1,1,False,"[""4""]",0

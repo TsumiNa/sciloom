@@ -1,0 +1,18 @@
+{
+  "kind": "FaultRegion",
+  "node_id": "fault:load-and-react",
+  "policy": "fatal",
+  "body": [
+    {"kind": "Call", "target": "load_reagents"},
+    {"kind": "Call", "target": "start_reaction"}
+  ],
+  "handler": [
+    {"kind": "Log", "value": {"kind": "ErrorRef"}},
+    {"kind": "NotifyMaintenance", "value": {"kind": "ErrorRef"}},
+    {"kind": "Rethrow"}
+  ],
+  "target_lowering_hint": {
+    "strategy": "generated_fault_scope_plus_single_OnError",
+    "status": "design hypothesis; requires runtime verification"
+  }
+}

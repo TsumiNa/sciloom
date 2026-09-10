@@ -1,0 +1,851 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<element typeid="Chemspeed.SAModuleDoubleLevelDrawer.1">
+  <name>DLH 02</name>
+  <edittime>1770288465</edittime>
+  <expanded>1</expanded>
+  <log>1</log>
+  <logdeadband>0</logdeadband>
+  <absolutedeadband>0</absolutedeadband>
+  <deadbandunit />
+  <currentrole />
+  <calibrationx>0</calibrationx>
+  <calibrationy>-0.0004</calibrationy>
+  <calibrationz>-0.0095</calibrationz>
+  <numberoftools>0</numberoftools>
+  <deviceid>0</deviceid>
+  <footprintid>#14</footprintid>
+  <id>{E0E30C39-DB77-49BB-9105-6EBFF048EAF7}</id>
+  <elements>
+    <element typeid="Chemspeed.SAModuleRack.1">
+      <name>8ml Rack</name>
+      <edittime>1770288458</edittime>
+      <log>1</log>
+      <logdeadband>0</logdeadband>
+      <absolutedeadband>0</absolutedeadband>
+      <deadbandunit />
+      <currentrole />
+      <calibrationx>-0.0005</calibrationx>
+      <calibrationy>-0.0007</calibrationy>
+      <calibrationz>0</calibrationz>
+      <numberoftools>0</numberoftools>
+      <deviceid>1</deviceid>
+      <footprintid>lower layer</footprintid>
+      <type>30 x 60 ml</type>
+      <rackHeight>0.148</rackHeight>
+      <id>{19CE5FD5-E9E9-4279-9B5E-58C9AA83D21B}</id>
+      <wells>
+        <well>
+          <id>0</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>1</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>2</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>3</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>4</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>5</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>6</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>7</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>8</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>9</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>10</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>11</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>12</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>13</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>14</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>15</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>16</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>17</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>18</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>19</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>20</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>21</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>22</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>23</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>24</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>25</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>26</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>27</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>28</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+        <well>
+          <id>29</id>
+          <substanceid />
+          <underrun>0.5</underrun>
+          <overrun>0.5</overrun>
+          <respectunderoverrun>0</respectunderoverrun>
+          <direction>0</direction>
+          <calibrationx>0</calibrationx>
+          <calibrationy>0</calibrationy>
+          <calibrationz>0</calibrationz>
+          <samplename />
+          <enabled>1</enabled>
+          <substancemolarfactor>0</substancemolarfactor>
+          <substancedensity>0</substancedensity>
+          <vialdepthoffset>0</vialdepthoffset>
+          <wellsoliddosingparams>
+            <id />
+            <finedosingspeed>0</finedosingspeed>
+            <massflow>0</massflow>
+            <filtercoefficient>0</filtercoefficient>
+            <roughthreshold>0</roughthreshold>
+            <oscilatinperiod>0</oscilatinperiod>
+          </wellsoliddosingparams>
+          <properties>
+            <variables sortingType="1" />
+          </properties>
+        </well>
+      </wells>
+    </element>
+  </elements>
+  <wells />
+</element>

@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<functions>
+	<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+		<description />
+		<name>TEST09_Callee</name>
+		<edittime>1788012642</edittime>
+		<expanded>1</expanded>
+		<functiondata>
+			<inputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</inputs>
+			<outputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</outputs>
+		</functiondata>
+		<id>{F1FA3C64-F0EA-488E-9122-B1DD5BE5C09B}</id>
+		<components />
+	</function>
+	<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+		<description />
+		<name>TEST09_DirectWHILE</name>
+		<edittime>1788012642</edittime>
+		<expanded>1</expanded>
+		<functiondata>
+			<inputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</inputs>
+			<outputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</outputs>
+		</functiondata>
+		<id>{71E8FBC8-4D30-489B-9BFB-A13115331DFB}</id>
+		<components>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description />
+				<name>While</name>
+				<edittime>1788012642</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif />
+				<conditionwhile>0 = 1</conditionwhile>
+				<conditiontype>2</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>0</executionmode>
+				<sequentialzones>
+					<count>0</count>
+				</sequentialzones>
+				<multicondition>0</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="1" />
+				<id>{94B8A7A4-F820-4EA3-AF27-ADB03B9E08B3}</id>
+				<tasks>
+					<task typeid="Chemspeed.SATaskExecuteFunction.1">
+						<description />
+						<name>Execute Function</name>
+						<edittime>1788012642</edittime>
+						<functiondata>
+							<inputs>
+								<count>0</count>
+								<sortType>0</sortType>
+							</inputs>
+							<outputs>
+								<count>0</count>
+								<sortType>0</sortType>
+							</outputs>
+						</functiondata>
+						<functionid>{F1FA3C64-F0EA-488E-9122-B1DD5BE5C09B}</functionid>
+						<id>{7F65D930-7665-4C64-9080-84429E97CE12}</id>
+					</task>
+				</tasks>
+			</component>
+		</components>
+	</function>
+</functions>

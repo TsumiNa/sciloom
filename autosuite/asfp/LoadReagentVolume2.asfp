@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<functions>
+	<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+		<description>Row 1: Reagent label [text] Column 1: Experiment ID [text]  Column &gt;=2: Reagent volume [mL]  Returns aligned Experiment ID[] and Volume[] arrays.  Blank reagent volume is interpreted as 0 mL.</description>
+		<descriptionnewlines>27;58;59;91;92;145;146</descriptionnewlines>
+		<name>Load Reagent Volume</name>
+		<edittime>1787793010</edittime>
+		<expanded>1</expanded>
+		<functiondata>
+			<inputs>
+				<count>2</count>
+				<item0>
+					<id>{80F47701-B40C-4E4D-A6D9-48F5798C8DA8}</id>
+					<name>column_idx</name>
+					<variablename>column_idx</variablename>
+					<variabletype>integer</variabletype>
+					<isarray>0</isarray>
+					<expression></expression>
+				</item0>
+				<item1>
+					<id>{ECE36230-CF4E-4280-90EB-EE9FF55FEEBB}</id>
+					<name>fullpath_txt</name>
+					<variablename>fullpath_txt</variablename>
+					<variabletype>text</variabletype>
+					<isarray>0</isarray>
+					<expression></expression>
+				</item1>
+				<sortType>0</sortType>
+			</inputs>
+			<outputs>
+				<count>4</count>
+				<item0>
+					<id>{9EFCA236-261C-4283-A020-D27BEE1596F2}</id>
+					<name>io_error_int</name>
+					<variablename>io_error_int</variablename>
+					<variabletype>integer</variabletype>
+					<isarray>0</isarray>
+					<expression></expression>
+				</item0>
+				<item1>
+					<id>{CB02979E-B686-4ACF-AEDF-B197E12E655E}</id>
+					<name>expid_array_txt</name>
+					<variablename>expid_array_txt</variablename>
+					<variabletype>text</variabletype>
+					<isarray>1</isarray>
+					<expression></expression>
+				</item1>
+				<item2>
+					<id>{6733A6D3-7164-41FD-8742-C1AC9E7DEE53}</id>
+					<name>reagent_array_vol</name>
+					<variablename>reagent_array_vol</variablename>
+					<variabletype>volume</variabletype>
+					<isarray>1</isarray>
+					<expression></expression>
+				</item2>
+				<item3>
+					<id>{474076E2-6427-40C3-8169-95339AE9970B}</id>
+					<name>reagent_name_txt</name>
+					<variablename>reagent_name_txt</variablename>
+					<variabletype>text</variabletype>
+					<isarray>0</isarray>
+					<expression></expression>
+				</item3>
+				<sortType>0</sortType>
+			</outputs>
+		</functiondata>
+		<id>{A1BC9BAA-12CC-45F9-9803-64C9C12D9E48}</id>
+		<components>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description></description>
+				<name>Macro Task</name>
+				<edittime>1787791088</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif></conditionif>
+				<conditionwhile></conditionwhile>
+				<conditiontype>0</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>0</executionmode>
+				<sequentialzones>
+					<count>0</count>
+				</sequentialzones>
+				<multicondition>0</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="1"></variables>
+				<id>{95319265-AA1E-4948-9A04-B918798D6C19}</id>
+				<tasks>
+					<task typeid="Chemspeed.SAMacroTask.1">
+						<description></description>
+						<name>Macro Task</name>
+						<edittime>1787791534</edittime>
+						<expanded>1</expanded>
+						<conditionloop>1</conditionloop>
+						<conditionif></conditionif>
+						<conditionwhile></conditionwhile>
+						<conditiontype>1</conditiontype>
+						<loopvariable>loop</loopvariable>
+						<fragmentvariable>fragment</fragmentvariable>
+						<executionmode>0</executionmode>
+						<sequentialzones>
+							<count>0</count>
+						</sequentialzones>
+						<multicondition>1</multicondition>
+						<multiloop>0</multiloop>
+						<variables sortingType="1"></variables>
+						<id>{FA4D1F90-6A47-4F0E-8F0E-7398545FA5D6}</id>
+						<tasks>
+							<task typeid="Chemspeed.SATaskCondition.1">
+								<description></description>
+								<name>If</name>
+								<edittime>1787791962</edittime>
+								<expanded>1</expanded>
+								<conditiontype>0</conditiontype>
+								<condition>column_idx &gt; 1</condition>
+								<id>{108BD9AA-ED39-4AD2-8D5E-775E9DB0BFFA}</id>
+								<components>
+									<component typeid="Chemspeed.SATaskImportCSV.1">
+										<description></description>
+										<name>Import CSV</name>
+										<edittime>1787793001</edittime>
+										<importfilepath>fullpath_txt</importfilepath>
+										<delimitermode>0</delimitermode>
+										<iswithheader>0</iswithheader>
+										<rowtoread>1</rowtoread>
+										<importresultvar>io_error_int</importresultvar>
+										<importrowmode>0</importrowmode>
+										<columns>
+											<column>
+												<columnindex>column_idx</columnindex>
+												<destinationvariable>reagent_name_txt</destinationvariable>
+												<defaultvalue>'NOTHING'</defaultvalue>
+												<unit>1</unit>
+											</column>
+										</columns>
+										<id>{4CB12641-4A45-451A-B8A7-70D9DF7C6E11}</id>
+									</component>
+									<component typeid="Chemspeed.SATaskImportCSV.1">
+										<description></description>
+										<name>Import CSV</name>
+										<edittime>1787792915</edittime>
+										<importfilepath>fullpath_txt</importfilepath>
+										<delimitermode>0</delimitermode>
+										<iswithheader>1</iswithheader>
+										<rowtoread>1</rowtoread>
+										<importresultvar>io_error_int</importresultvar>
+										<importrowmode>1</importrowmode>
+										<columns>
+											<column>
+												<columnindex>1</columnindex>
+												<destinationvariable>expid_array_txt</destinationvariable>
+												<defaultvalue>'NOTHING'</defaultvalue>
+												<unit>1</unit>
+											</column>
+											<column>
+												<columnindex>column_idx</columnindex>
+												<destinationvariable>reagent_array_vol</destinationvariable>
+												<defaultvalue>0</defaultvalue>
+												<unit>ml</unit>
+											</column>
+										</columns>
+										<id>{D8ADF34D-CB8A-449C-9ED1-A21DEEFC1241}</id>
+									</component>
+								</components>
+							</task>
+							<task typeid="Chemspeed.SATaskCondition.1">
+								<description></description>
+								<name>Else</name>
+								<edittime>1787791534</edittime>
+								<expanded>1</expanded>
+								<conditiontype>2</conditiontype>
+								<condition></condition>
+								<id>{42D822E0-F07C-472F-ACE8-5CAB19ED290E}</id>
+								<components>
+									<component typeid="Chemspeed.SATaskUserDialog.1">
+										<highlightzone></highlightzone>
+										<destzone></destzone>
+										<description></description>
+										<name>Show Dialog</name>
+										<edittime>1787792101</edittime>
+										<resultvariablename></resultvariablename>
+										<targetamountvariable></targetamountvariable>
+										<sourcematerial></sourcematerial>
+										<maxwaittimeexpression>0</maxwaittimeexpression>
+										<dialogtype>showmessage</dialogtype>
+										<resultunit></resultunit>
+										<interpretmessageasexpressionflag>1</interpretmessageasexpressionflag>
+										<message>'Error! Incorrect column_idx =' + column_idx</message>
+										<initialvalue></initialvalue>
+										<buttonoption>okstop</buttonoption>
+										<timeoutanswerexpression></timeoutanswerexpression>
+										<yesokresultexpression></yesokresultexpression>
+										<noresultexpression></noresultexpression>
+										<maxwaittimeunit>s</maxwaittimeunit>
+										<picturepathexpression></picturepathexpression>
+										<validateinput>0</validateinput>
+										<minvalidationvalueexpression></minvalidationvalueexpression>
+										<maxvalidationvalueexpression></maxvalidationvalueexpression>
+										<fontsize>11</fontsize>
+										<usemonospacedfont>0</usemonospacedfont>
+										<defaultpauseafterdialog>0</defaultpauseafterdialog>
+										<softstopping>1</softstopping>
+										<autodialogheight>0</autodialogheight>
+										<dialogwidth>480</dialogwidth>
+										<dialogheight>240</dialogheight>
+										<hlrootelementname></hlrootelementname>
+										<hlzonecolor>0</hlzonecolor>
+										<hldescriptioncount>0</hldescriptioncount>
+										<logtoserver>0</logtoserver>
+										<messagetype>0</messagetype>
+										<severity>1</severity>
+										<runid></runid>
+										<experimentid></experimentid>
+										<trialnumber></trialnumber>
+										<productid></productid>
+										<id>{9DC3B394-9D3E-49FB-8214-FA0BEDB81AF6}</id>
+									</component>
+								</components>
+							</task>
+						</tasks>
+					</task>
+					<task typeid="Chemspeed.SAMacroTask.1">
+						<description></description>
+						<name>Macro Task</name>
+						<edittime>1787792237</edittime>
+						<expanded>1</expanded>
+						<conditionloop>1</conditionloop>
+						<conditionif>io_error_int = 1</conditionif>
+						<conditionwhile></conditionwhile>
+						<conditiontype>1</conditiontype>
+						<loopvariable>loop</loopvariable>
+						<fragmentvariable>fragment</fragmentvariable>
+						<executionmode>0</executionmode>
+						<sequentialzones>
+							<count>0</count>
+						</sequentialzones>
+						<multicondition>0</multicondition>
+						<multiloop>0</multiloop>
+						<variables sortingType="1"></variables>
+						<id>{EC5CE9B6-0A39-4D14-AD8B-B3E1131B00CB}</id>
+						<tasks>
+							<task typeid="Chemspeed.SATaskUserDialog.1">
+								<highlightzone></highlightzone>
+								<destzone></destzone>
+								<description></description>
+								<name>Show Dialog</name>
+								<edittime>1787792271</edittime>
+								<resultvariablename></resultvariablename>
+								<targetamountvariable></targetamountvariable>
+								<sourcematerial></sourcematerial>
+								<maxwaittimeexpression>0</maxwaittimeexpression>
+								<dialogtype>showmessage</dialogtype>
+								<resultunit></resultunit>
+								<interpretmessageasexpressionflag>1</interpretmessageasexpressionflag>
+								<message>'Error! Variable type mismatch'</message>
+								<initialvalue></initialvalue>
+								<buttonoption>okstop</buttonoption>
+								<timeoutanswerexpression></timeoutanswerexpression>
+								<yesokresultexpression></yesokresultexpression>
+								<noresultexpression></noresultexpression>
+								<maxwaittimeunit>s</maxwaittimeunit>
+								<picturepathexpression></picturepathexpression>
+								<validateinput>0</validateinput>
+								<minvalidationvalueexpression></minvalidationvalueexpression>
+								<maxvalidationvalueexpression></maxvalidationvalueexpression>
+								<fontsize>11</fontsize>
+								<usemonospacedfont>0</usemonospacedfont>
+								<defaultpauseafterdialog>0</defaultpauseafterdialog>
+								<softstopping>1</softstopping>
+								<autodialogheight>0</autodialogheight>
+								<dialogwidth>480</dialogwidth>
+								<dialogheight>240</dialogheight>
+								<hlrootelementname></hlrootelementname>
+								<hlzonecolor>0</hlzonecolor>
+								<hldescriptioncount>0</hldescriptioncount>
+								<logtoserver>0</logtoserver>
+								<messagetype>0</messagetype>
+								<severity>1</severity>
+								<runid></runid>
+								<experimentid></experimentid>
+								<trialnumber></trialnumber>
+								<productid></productid>
+								<id>{335DD238-4056-4A17-BD54-05F8A84716DA}</id>
+							</task>
+						</tasks>
+					</task>
+					<task typeid="Chemspeed.SAMacroTask.1">
+						<description></description>
+						<name>Macro Task</name>
+						<edittime>1787792284</edittime>
+						<expanded>1</expanded>
+						<conditionloop>1</conditionloop>
+						<conditionif>io_error_int = 2</conditionif>
+						<conditionwhile></conditionwhile>
+						<conditiontype>1</conditiontype>
+						<loopvariable>loop</loopvariable>
+						<fragmentvariable>fragment</fragmentvariable>
+						<executionmode>0</executionmode>
+						<sequentialzones>
+							<count>0</count>
+						</sequentialzones>
+						<multicondition>0</multicondition>
+						<multiloop>0</multiloop>
+						<variables sortingType="1"></variables>
+						<id>{51EF9CE2-9822-4F45-9B28-E095BC350EB8}</id>
+						<tasks>
+							<task typeid="Chemspeed.SATaskUserDialog.1">
+								<highlightzone></highlightzone>
+								<destzone></destzone>
+								<description></description>
+								<name>Show Dialog</name>
+								<edittime>1787792437</edittime>
+								<resultvariablename></resultvariablename>
+								<targetamountvariable></targetamountvariable>
+								<sourcematerial></sourcematerial>
+								<maxwaittimeexpression>0</maxwaittimeexpression>
+								<dialogtype>showmessage</dialogtype>
+								<resultunit></resultunit>
+								<interpretmessageasexpressionflag>1</interpretmessageasexpressionflag>
+								<message>'Error! Column not aveilable =' + column_idx</message>
+								<initialvalue></initialvalue>
+								<buttonoption>okstop</buttonoption>
+								<timeoutanswerexpression></timeoutanswerexpression>
+								<yesokresultexpression></yesokresultexpression>
+								<noresultexpression></noresultexpression>
+								<maxwaittimeunit>s</maxwaittimeunit>
+								<picturepathexpression></picturepathexpression>
+								<validateinput>0</validateinput>
+								<minvalidationvalueexpression></minvalidationvalueexpression>
+								<maxvalidationvalueexpression></maxvalidationvalueexpression>
+								<fontsize>11</fontsize>
+								<usemonospacedfont>0</usemonospacedfont>
+								<defaultpauseafterdialog>0</defaultpauseafterdialog>
+								<softstopping>1</softstopping>
+								<autodialogheight>0</autodialogheight>
+								<dialogwidth>480</dialogwidth>
+								<dialogheight>240</dialogheight>
+								<hlrootelementname></hlrootelementname>
+								<hlzonecolor>0</hlzonecolor>
+								<hldescriptioncount>0</hldescriptioncount>
+								<logtoserver>0</logtoserver>
+								<messagetype>0</messagetype>
+								<severity>1</severity>
+								<runid></runid>
+								<experimentid></experimentid>
+								<trialnumber></trialnumber>
+								<productid></productid>
+								<id>{C95F93D6-8A37-4D33-9374-D709CB0208AF}</id>
+							</task>
+						</tasks>
+					</task>
+					<task typeid="Chemspeed.SAMacroTask.1">
+						<description></description>
+						<name>Macro Task</name>
+						<edittime>1787792288</edittime>
+						<expanded>1</expanded>
+						<conditionloop>1</conditionloop>
+						<conditionif>io_error_int = 3</conditionif>
+						<conditionwhile></conditionwhile>
+						<conditiontype>1</conditiontype>
+						<loopvariable>loop</loopvariable>
+						<fragmentvariable>fragment</fragmentvariable>
+						<executionmode>0</executionmode>
+						<sequentialzones>
+							<count>0</count>
+						</sequentialzones>
+						<multicondition>0</multicondition>
+						<multiloop>0</multiloop>
+						<variables sortingType="1"></variables>
+						<id>{35FDD702-927A-426C-80F3-2CF2E4E63A7B}</id>
+						<tasks>
+							<task typeid="Chemspeed.SATaskUserDialog.1">
+								<highlightzone></highlightzone>
+								<destzone></destzone>
+								<description></description>
+								<name>Show Dialog</name>
+								<edittime>1787792379</edittime>
+								<resultvariablename></resultvariablename>
+								<targetamountvariable></targetamountvariable>
+								<sourcematerial></sourcematerial>
+								<maxwaittimeexpression>0</maxwaittimeexpression>
+								<dialogtype>showmessage</dialogtype>
+								<resultunit></resultunit>
+								<interpretmessageasexpressionflag>1</interpretmessageasexpressionflag>
+								<message>'Error! End of file reached'</message>
+								<initialvalue></initialvalue>
+								<buttonoption>okstop</buttonoption>
+								<timeoutanswerexpression></timeoutanswerexpression>
+								<yesokresultexpression></yesokresultexpression>
+								<noresultexpression></noresultexpression>
+								<maxwaittimeunit>s</maxwaittimeunit>
+								<picturepathexpression></picturepathexpression>
+								<validateinput>0</validateinput>
+								<minvalidationvalueexpression></minvalidationvalueexpression>
+								<maxvalidationvalueexpression></maxvalidationvalueexpression>
+								<fontsize>11</fontsize>
+								<usemonospacedfont>0</usemonospacedfont>
+								<defaultpauseafterdialog>0</defaultpauseafterdialog>
+								<softstopping>1</softstopping>
+								<autodialogheight>0</autodialogheight>
+								<dialogwidth>480</dialogwidth>
+								<dialogheight>240</dialogheight>
+								<hlrootelementname></hlrootelementname>
+								<hlzonecolor>0</hlzonecolor>
+								<hldescriptioncount>0</hldescriptioncount>
+								<logtoserver>0</logtoserver>
+								<messagetype>0</messagetype>
+								<severity>1</severity>
+								<runid></runid>
+								<experimentid></experimentid>
+								<trialnumber></trialnumber>
+								<productid></productid>
+								<id>{3470E195-D571-4FC1-B27B-17D0B1702E6B}</id>
+							</task>
+						</tasks>
+					</task>
+					<task typeid="Chemspeed.SAMacroTask.1">
+						<description></description>
+						<name>Macro Task</name>
+						<edittime>1787792389</edittime>
+						<expanded>1</expanded>
+						<conditionloop>1</conditionloop>
+						<conditionif>io_error_int = 4</conditionif>
+						<conditionwhile></conditionwhile>
+						<conditiontype>1</conditiontype>
+						<loopvariable>loop</loopvariable>
+						<fragmentvariable>fragment</fragmentvariable>
+						<executionmode>0</executionmode>
+						<sequentialzones>
+							<count>0</count>
+						</sequentialzones>
+						<multicondition>0</multicondition>
+						<multiloop>0</multiloop>
+						<variables sortingType="1"></variables>
+						<id>{9D90E5C6-8F22-4D7A-B5AF-45F14778AD4E}</id>
+						<tasks>
+							<task typeid="Chemspeed.SATaskUserDialog.1">
+								<highlightzone></highlightzone>
+								<destzone></destzone>
+								<description></description>
+								<name>Show Dialog</name>
+								<edittime>1787792408</edittime>
+								<resultvariablename></resultvariablename>
+								<targetamountvariable></targetamountvariable>
+								<sourcematerial></sourcematerial>
+								<maxwaittimeexpression>0</maxwaittimeexpression>
+								<dialogtype>showmessage</dialogtype>
+								<resultunit></resultunit>
+								<interpretmessageasexpressionflag>1</interpretmessageasexpressionflag>
+								<message>'Error! File IO Error'</message>
+								<initialvalue></initialvalue>
+								<buttonoption>okstop</buttonoption>
+								<timeoutanswerexpression></timeoutanswerexpression>
+								<yesokresultexpression></yesokresultexpression>
+								<noresultexpression></noresultexpression>
+								<maxwaittimeunit>s</maxwaittimeunit>
+								<picturepathexpression></picturepathexpression>
+								<validateinput>0</validateinput>
+								<minvalidationvalueexpression></minvalidationvalueexpression>
+								<maxvalidationvalueexpression></maxvalidationvalueexpression>
+								<fontsize>11</fontsize>
+								<usemonospacedfont>0</usemonospacedfont>
+								<defaultpauseafterdialog>0</defaultpauseafterdialog>
+								<softstopping>1</softstopping>
+								<autodialogheight>0</autodialogheight>
+								<dialogwidth>480</dialogwidth>
+								<dialogheight>240</dialogheight>
+								<hlrootelementname></hlrootelementname>
+								<hlzonecolor>0</hlzonecolor>
+								<hldescriptioncount>0</hldescriptioncount>
+								<logtoserver>0</logtoserver>
+								<messagetype>0</messagetype>
+								<severity>1</severity>
+								<runid></runid>
+								<experimentid></experimentid>
+								<trialnumber></trialnumber>
+								<productid></productid>
+								<id>{E72B4097-0C04-4002-AFE7-CE061F585925}</id>
+							</task>
+						</tasks>
+					</task>
+					<task typeid="Chemspeed.SAMacroTask.1">
+						<description></description>
+						<name>Macro Task</name>
+						<edittime>1787793052</edittime>
+						<expanded>1</expanded>
+						<conditionloop>1</conditionloop>
+						<conditionif>reagent_name_txt = 'NOTHING'</conditionif>
+						<conditionwhile></conditionwhile>
+						<conditiontype>1</conditiontype>
+						<loopvariable>loop</loopvariable>
+						<fragmentvariable>fragment</fragmentvariable>
+						<executionmode>0</executionmode>
+						<sequentialzones>
+							<count>0</count>
+						</sequentialzones>
+						<multicondition>0</multicondition>
+						<multiloop>0</multiloop>
+						<variables sortingType="1"></variables>
+						<id>{CEDF5C1A-250E-41D9-AB99-9D8A469C0F69}</id>
+						<tasks>
+							<task typeid="Chemspeed.SATaskUserDialog.1">
+								<highlightzone></highlightzone>
+								<destzone></destzone>
+								<description></description>
+								<name>Show Dialog</name>
+								<edittime>1787793079</edittime>
+								<resultvariablename></resultvariablename>
+								<targetamountvariable></targetamountvariable>
+								<sourcematerial></sourcematerial>
+								<maxwaittimeexpression>0</maxwaittimeexpression>
+								<dialogtype>showmessage</dialogtype>
+								<resultunit></resultunit>
+								<interpretmessageasexpressionflag>1</interpretmessageasexpressionflag>
+								<message>'Blank reagent name detected'</message>
+								<initialvalue></initialvalue>
+								<buttonoption>okstop</buttonoption>
+								<timeoutanswerexpression></timeoutanswerexpression>
+								<yesokresultexpression></yesokresultexpression>
+								<noresultexpression></noresultexpression>
+								<maxwaittimeunit>s</maxwaittimeunit>
+								<picturepathexpression></picturepathexpression>
+								<validateinput>0</validateinput>
+								<minvalidationvalueexpression></minvalidationvalueexpression>
+								<maxvalidationvalueexpression></maxvalidationvalueexpression>
+								<fontsize>11</fontsize>
+								<usemonospacedfont>0</usemonospacedfont>
+								<defaultpauseafterdialog>0</defaultpauseafterdialog>
+								<softstopping>1</softstopping>
+								<autodialogheight>0</autodialogheight>
+								<dialogwidth>480</dialogwidth>
+								<dialogheight>240</dialogheight>
+								<hlrootelementname></hlrootelementname>
+								<hlzonecolor>0</hlzonecolor>
+								<hldescriptioncount>0</hldescriptioncount>
+								<logtoserver>0</logtoserver>
+								<messagetype>0</messagetype>
+								<severity>1</severity>
+								<runid></runid>
+								<experimentid></experimentid>
+								<trialnumber></trialnumber>
+								<productid></productid>
+								<id>{06E69A6F-4A3F-4339-A075-8BD81C2A9980}</id>
+							</task>
+						</tasks>
+					</task>
+					<task typeid="Chemspeed.SAMacroTask.1">
+						<description></description>
+						<name>Macro Task</name>
+						<edittime>1787793097</edittime>
+						<expanded>1</expanded>
+						<conditionloop>ArraySize(reagent_array_vol)</conditionloop>
+						<conditionif></conditionif>
+						<conditionwhile></conditionwhile>
+						<conditiontype>0</conditiontype>
+						<loopvariable>loop</loopvariable>
+						<fragmentvariable>fragment</fragmentvariable>
+						<executionmode>0</executionmode>
+						<sequentialzones>
+							<count>0</count>
+						</sequentialzones>
+						<multicondition>0</multicondition>
+						<multiloop>0</multiloop>
+						<variables sortingType="1"></variables>
+						<id>{EB9D5146-56E9-48BE-98C9-9ADAA4593CCD}</id>
+						<tasks>
+							<task typeid="Chemspeed.SAMacroTask.1">
+								<description></description>
+								<name>Macro Task</name>
+								<edittime>1787793149</edittime>
+								<expanded>1</expanded>
+								<conditionloop>1</conditionloop>
+								<conditionif>expid_array_txt[loop] = 'NOTHING'</conditionif>
+								<conditionwhile></conditionwhile>
+								<conditiontype>1</conditiontype>
+								<loopvariable>loop</loopvariable>
+								<fragmentvariable>fragment</fragmentvariable>
+								<executionmode>0</executionmode>
+								<sequentialzones>
+									<count>0</count>
+								</sequentialzones>
+								<multicondition>0</multicondition>
+								<multiloop>0</multiloop>
+								<variables sortingType="1"></variables>
+								<id>{3512077C-2DAD-40CA-9B14-28C3E42DA6E0}</id>
+								<tasks>
+									<task typeid="Chemspeed.SATaskUserDialog.1">
+										<highlightzone></highlightzone>
+										<destzone></destzone>
+										<description></description>
+										<name>Show Dialog</name>
+										<edittime>1787793161</edittime>
+										<resultvariablename></resultvariablename>
+										<targetamountvariable></targetamountvariable>
+										<sourcematerial></sourcematerial>
+										<maxwaittimeexpression>0</maxwaittimeexpression>
+										<dialogtype>showmessage</dialogtype>
+										<resultunit></resultunit>
+										<interpretmessageasexpressionflag>1</interpretmessageasexpressionflag>
+										<message>'Blank experimental id  detected'</message>
+										<initialvalue></initialvalue>
+										<buttonoption>okstop</buttonoption>
+										<timeoutanswerexpression></timeoutanswerexpression>
+										<yesokresultexpression></yesokresultexpression>
+										<noresultexpression></noresultexpression>
+										<maxwaittimeunit>s</maxwaittimeunit>
+										<picturepathexpression></picturepathexpression>
+										<validateinput>0</validateinput>
+										<minvalidationvalueexpression></minvalidationvalueexpression>
+										<maxvalidationvalueexpression></maxvalidationvalueexpression>
+										<fontsize>11</fontsize>
+										<usemonospacedfont>0</usemonospacedfont>
+										<defaultpauseafterdialog>0</defaultpauseafterdialog>
+										<softstopping>1</softstopping>
+										<autodialogheight>0</autodialogheight>
+										<dialogwidth>480</dialogwidth>
+										<dialogheight>240</dialogheight>
+										<hlrootelementname></hlrootelementname>
+										<hlzonecolor>0</hlzonecolor>
+										<hldescriptioncount>0</hldescriptioncount>
+										<logtoserver>0</logtoserver>
+										<messagetype>0</messagetype>
+										<severity>1</severity>
+										<runid></runid>
+										<experimentid></experimentid>
+										<trialnumber></trialnumber>
+										<productid></productid>
+										<id>{35FF56C3-0930-4E26-B418-94E6F3D6B1D5}</id>
+									</task>
+								</tasks>
+							</task>
+						</tasks>
+					</task>
+				</tasks>
+			</component>
+		</components>
+	</function>
+</functions>

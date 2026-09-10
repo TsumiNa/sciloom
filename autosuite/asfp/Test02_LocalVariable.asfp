@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<functions>
+  <function typeid="Chemspeed.SATaskFunctionDefinition.1">
+    <name>TEST02_LocalReal</name>
+    <description />
+    <functionid>{9ED57E56-5AA4-4913-A8E4-21F680E808DD}</functionid>
+    <functiondata>
+      <inputs><count>0</count></inputs>
+      <outputs><count>0</count></outputs>
+    </functiondata>
+    <components>
+      <component typeid="Chemspeed.SAMacroTask.1">
+        <name>TEST02_LocalReal</name>
+        <description />
+        <variables>
+          <count>1</count>
+          <item0>
+            <variablename>x</variablename>
+            <variabletype>real number</variabletype>
+            <isarray>0</isarray>
+            <value>0</value>
+          </item0>
+        </variables>
+        <conditionloop>1</conditionloop>
+        <conditiontype>0</conditiontype>
+        <loopvariable>loop</loopvariable>
+        <multicondition>0</multicondition>
+        <tasks>
+          <count>0</count>
+        </tasks>
+      </component>
+    </components>
+  </function>
+</functions>

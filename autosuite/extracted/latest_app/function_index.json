@@ -1,0 +1,1782 @@
+[
+  {
+    "index": 0,
+    "name": "Prime All Port E",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{4FB3F3B2-C896-4F14-BB2C-7A846E514DDF}",
+    "edittime": "1787299986",
+    "inputs": [
+      {
+        "id": "{F1636291-B09B-4743-9E41-7DCDCEC04132}",
+        "name": "priming_1mL_vol",
+        "variable_name": "priming_1mL_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{C29ED1D6-52E9-4C7A-B98E-6C77AA1D3B06}",
+        "name": "priming_10mL_vol",
+        "variable_name": "priming_10mL_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 1,
+    "name": "util Make Csv",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{08CCCC89-D643-4945-BE27-7622B8DEFC9A}",
+    "edittime": "1787285568",
+    "inputs": [
+      {
+        "id": "{4B99BA20-43F5-4F41-A5A3-655A5F8C9044}",
+        "name": "directory_pos_txt",
+        "variable_name": "directory_pos_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{C5CDDFA4-A0E5-4292-9AF4-BCA556387A10}",
+        "name": "filename_txt",
+        "variable_name": "filename_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{F60DBBB5-867D-4CC2-836C-1989830C0366}",
+        "name": "prefix_txt",
+        "variable_name": "prefix_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "{BB4CF6E3-A19D-4A81-B433-31A41D83316A}",
+        "name": "fullpath_txt",
+        "variable_name": "fullpath_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ]
+  },
+  {
+    "index": 2,
+    "name": "__GPC_SetLoad",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{766F368D-1AA0-4849-91C9-38EE8C58B42B}",
+    "edittime": "1787300117",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "index": 3,
+    "name": "__GPC_SetInject",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{DE72B435-9F86-44DB-8B7D-73AC69E41C46}",
+    "edittime": "1787300109",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "index": 4,
+    "name": "N2 Open",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{FA7FAD29-AC99-4587-91E1-FB12500B209E}",
+    "edittime": "1785379299",
+    "inputs": [],
+    "outputs": [
+      {
+        "id": "{BB121AC7-80D4-4967-AB1B-7E2A2D2768D5}",
+        "name": "stdout_txt",
+        "variable_name": "stdout_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ]
+  },
+  {
+    "index": 5,
+    "name": "N2 Closed",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{CD0FA38B-82D4-4C1C-8F66-015E3E8961BF}",
+    "edittime": "1785379278",
+    "inputs": [],
+    "outputs": [
+      {
+        "id": "{BB121AC7-80D4-4967-AB1B-7E2A2D2768D5}",
+        "name": "stdout_txt",
+        "variable_name": "stdout_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ]
+  },
+  {
+    "index": 6,
+    "name": "N2 Control",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{001DCE1D-8E2A-410A-B5E2-72081E9EE4C3}",
+    "edittime": "1785379286",
+    "inputs": [
+      {
+        "id": "{5E9519A7-3CE6-406E-9963-28D3E227F2BA}",
+        "name": "flow_real",
+        "variable_name": "flow_real",
+        "type": "realnumber",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "{BB121AC7-80D4-4967-AB1B-7E2A2D2768D5}",
+        "name": "stdout_txt",
+        "variable_name": "stdout_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ]
+  },
+  {
+    "index": 7,
+    "name": "EVENT_type_2_7",
+    "typeid": "Chemspeed.SATaskEventFunction.1",
+    "eventtype": "2",
+    "id": "{5D569849-4E6F-4B11-88C2-B0AE7D8EAD63}",
+    "edittime": "1785225606",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "index": 8,
+    "name": "EVENT_type_5_8",
+    "typeid": "Chemspeed.SATaskEventFunction.1",
+    "eventtype": "5",
+    "id": "{32BB977D-8E8A-4E7B-9C8B-13B8F9178EFA}",
+    "edittime": "1785226043",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "index": 9,
+    "name": "__GPC_InjectPort",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{74A16D54-E959-4E1E-B06C-C893F679C5EC}",
+    "edittime": "1787708960",
+    "inputs": [
+      {
+        "id": "{08A07324-A904-4B70-9DA1-9869F67CAF39}",
+        "name": "sample_zone",
+        "variable_name": "sample_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{11FB6D9B-B7A7-41E7-8CAF-4A4764F15C05}",
+        "name": "premix_bool",
+        "variable_name": "premix_bool",
+        "type": "bool",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{3F26D9BB-A5AE-4FF1-A7BA-D82F5049845E}",
+        "name": "priming_vol",
+        "variable_name": "priming_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 10,
+    "name": "__GPC_WashPortNeedle",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{2A12F404-4EF1-4EED-AABD-EFB5DA3B1E99}",
+    "edittime": "1787709655",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "index": 11,
+    "name": "Run MALS",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{884C7B17-0C79-4921-922F-C39A8536870F}",
+    "edittime": "1787038944",
+    "inputs": [
+      {
+        "id": "{EB8894D7-BEF7-4A78-8E20-25D6D96576EF}",
+        "name": "sample_ID_txt",
+        "variable_name": "sample_ID_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{9F2650E6-07AF-4A39-BA1A-C42871410DE7}",
+        "name": "analysis_time_min",
+        "variable_name": "analysis_time_min",
+        "type": "realnumber",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "{C8ADCC1B-9EF5-419D-BDBF-F158935928B4}",
+        "name": "stdio_txt",
+        "variable_name": "stdio_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ]
+  },
+  {
+    "index": 12,
+    "name": "Prime 2nd Sringe Port F",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{9E0C4A0C-8660-4DFC-B798-00FD254EC2F4}",
+    "edittime": "1787300023",
+    "inputs": [
+      {
+        "id": "{E053E991-4F01-4618-B2A2-9813554756FD}",
+        "name": "priming_vol",
+        "variable_name": "priming_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 13,
+    "name": "Run GPC Analysis",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{5B8514D7-3FB1-4F0A-84D5-876C338F8605}",
+    "edittime": "1787709317",
+    "inputs": [
+      {
+        "id": "{893FCE5E-D8A7-446C-A67A-DC7ACEEEA10D}",
+        "name": "sample_zone",
+        "variable_name": "sample_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{5E9C078B-834C-479D-8E4A-64A777DD1FBB}",
+        "name": "premix_bool",
+        "variable_name": "premix_bool",
+        "type": "bool",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{F73626B8-4CDF-48C5-B2EE-0667204EE809}",
+        "name": "delay_bool",
+        "variable_name": "delay_bool",
+        "type": "bool",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{FDF4B9BE-FA64-42CF-8D53-471BB585AD5F}",
+        "name": "priming_vol",
+        "variable_name": "priming_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{E96935D1-7364-40BB-8DFB-D519982F6006}",
+        "name": "sample_ID_txt",
+        "variable_name": "sample_ID_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 14,
+    "name": "Run HPLC",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{AA2DF4A7-59CF-4B66-A38B-B3C906FA8C28}",
+    "edittime": "1787280441",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "index": 15,
+    "name": "util Get Time Stamp",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{9648806D-EF39-459A-B982-7E2D18C96097}",
+    "edittime": "1787285521",
+    "inputs": [],
+    "outputs": [
+      {
+        "id": "{FC11F7B8-8094-4B95-89BA-4F251742B9C3}",
+        "name": "time_txt",
+        "variable_name": "time_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ]
+  },
+  {
+    "index": 16,
+    "name": "Mix With Needle2",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{4C1C2CF5-B095-44FA-BB2A-35FEE1C11396}",
+    "edittime": "1787300351",
+    "inputs": [
+      {
+        "id": "{FC5034B0-E62D-475B-A119-C56E21CA6121}",
+        "name": "wash_bool",
+        "variable_name": "wash_bool",
+        "type": "bool",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{3280B9B7-BC5B-476F-9037-8164E704FD07}",
+        "name": "mixing_zone",
+        "variable_name": "mixing_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{C429E5CF-FC64-4644-B5EA-7ACCA4774E18}",
+        "name": "mixing_vol",
+        "variable_name": "mixing_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 17,
+    "name": "Dilute and Mix",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{B76B23F3-951F-4764-970D-5A60DCAA2A52}",
+    "edittime": "1787300361",
+    "inputs": [
+      {
+        "id": "{D365BC47-3630-42EF-B9EF-40BCBF95120E}",
+        "name": "dilute_zone",
+        "variable_name": "dilute_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{C2D2E66D-F2F2-45E9-A975-3F12FD9BF351}",
+        "name": "solvent_vol",
+        "variable_name": "solvent_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{F8EB94A0-584D-4485-9F6A-5ECFCEF8B828}",
+        "name": "sample_zone",
+        "variable_name": "sample_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{C1EC41E6-4350-4411-A604-DAEC4631D0A8}",
+        "name": "sample_vol",
+        "variable_name": "sample_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 18,
+    "name": "Priming 1st 2nd Syringe",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{A70085A1-71A1-498F-96F1-76AEB259D013}",
+    "edittime": "1787300152",
+    "inputs": [
+      {
+        "id": "{EAF9FCFE-0D89-4E99-8901-09709709CAC3}",
+        "name": "priming_vol",
+        "variable_name": "priming_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 19,
+    "name": "Purge Reactor",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{3A15909C-84AF-4391-88AF-1C319503601A}",
+    "edittime": "1787299967",
+    "inputs": [
+      {
+        "id": "{4EEED0D3-A866-428A-9F99-01F088DD1609}",
+        "name": "reactor_zone",
+        "variable_name": "reactor_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 20,
+    "name": "Test Reactor Valve",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{1B04DCA2-4E5A-4BBE-AC27-3B11B1A9FC2B}",
+    "edittime": "1787300388",
+    "inputs": [
+      {
+        "id": "{B724E264-415A-4543-AAB7-A12F1CE96417}",
+        "name": "reactor_zone",
+        "variable_name": "reactor_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 21,
+    "name": "Validate Polymerization Zone",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{AF5AF007-3093-453F-8168-6A3AD46079DE}",
+    "edittime": "1787299957",
+    "inputs": [
+      {
+        "id": "{5D037522-A8BA-4CFC-AC69-9B3365E82E99}",
+        "name": "solvent_zone",
+        "variable_name": "solvent_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{6B71CD37-DF9B-448A-B4E9-8C03A226F16E}",
+        "name": "reactor_zone",
+        "variable_name": "reactor_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{5874927B-5D14-4981-979C-F893734363B6}",
+        "name": "monomer1_zone",
+        "variable_name": "monomer1_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{35CD7F9C-32F1-43D2-AE20-53E935DB5DF1}",
+        "name": "initiator_zone",
+        "variable_name": "initiator_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 22,
+    "name": "__main",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{E3E00281-F34D-43AF-92BE-D837004E0033}",
+    "edittime": "1787296408",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "index": 23,
+    "name": "Prepare GPC Sample",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{6A0760DB-D60E-4D57-AF7E-8F7A8F489A66}",
+    "edittime": "1787299928",
+    "inputs": [
+      {
+        "id": "{5ACF860F-9735-487A-8709-CCA3DC69060E}",
+        "name": "sampling_vial_zone",
+        "variable_name": "sampling_vial_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{3ABE6121-051A-44D5-B827-579A7327980F}",
+        "name": "sampling_vol",
+        "variable_name": "sampling_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{E4C97E8C-A976-455D-B7C8-30C67C6DAFD0}",
+        "name": "diluting_vol",
+        "variable_name": "diluting_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{9E0917EE-F865-424B-8FAC-6032F58FDE99}",
+        "name": "reactor_zone",
+        "variable_name": "reactor_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 24,
+    "name": "Sample and Run GPC",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{DE6D061F-54C0-46C9-920E-17C2CBB56BA4}",
+    "edittime": "1787299905",
+    "inputs": [
+      {
+        "id": "{4F3A4D0D-EE09-494B-ADE8-24035ACBBB83}",
+        "name": "shaker_speed",
+        "variable_name": "shaker_speed",
+        "type": "angularspeed",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{3CBAAB69-BA5E-426E-B9E1-7C62CFACC56B}",
+        "name": "reactor_zone",
+        "variable_name": "reactor_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{EA8C556B-6109-47A3-A92E-394FACF4A5FD}",
+        "name": "sampling_vial_zone",
+        "variable_name": "sampling_vial_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 25,
+    "name": "Import Csv Header",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{94FAEA9A-9C58-449F-BFFD-A51CCCB204C0}",
+    "edittime": "1787322939",
+    "inputs": [
+      {
+        "id": "{5F36194F-0470-4EB9-AE76-DBDCA104C5B3}",
+        "name": "header_row_idx_int",
+        "variable_name": "header_row_idx_int",
+        "type": "integer",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{11887762-B13E-4DEB-8D44-B1C8C1EA25B3}",
+        "name": "filepath_txt",
+        "variable_name": "filepath_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "{1B708990-A1BF-4943-80E7-1E311904069E}",
+        "name": "header_txt_array",
+        "variable_name": "header_txt_array",
+        "type": "text",
+        "array": true,
+        "expression": ""
+      }
+    ]
+  },
+  {
+    "index": 26,
+    "name": "__GPC_SolventInject",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{3BD18F76-7DF9-4FE3-A1F3-2F68A54EE082}",
+    "edittime": "1787645041",
+    "inputs": [
+      {
+        "id": "{3F26D9BB-A5AE-4FF1-A7BA-D82F5049845E}",
+        "name": "priming_vol",
+        "variable_name": "priming_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 27,
+    "name": "Run GPC Analysis XXX",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{6CDE63C2-F985-493C-9448-82EA027CA5CF}",
+    "edittime": "1787711012",
+    "inputs": [
+      {
+        "id": "{893FCE5E-D8A7-446C-A67A-DC7ACEEEA10D}",
+        "name": "sample_zone",
+        "variable_name": "sample_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{5E9C078B-834C-479D-8E4A-64A777DD1FBB}",
+        "name": "premix_bool",
+        "variable_name": "premix_bool",
+        "type": "bool",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{F73626B8-4CDF-48C5-B2EE-0667204EE809}",
+        "name": "delay_bool",
+        "variable_name": "delay_bool",
+        "type": "bool",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{FDF4B9BE-FA64-42CF-8D53-471BB585AD5F}",
+        "name": "priming_vol",
+        "variable_name": "priming_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{E96935D1-7364-40BB-8DFB-D519982F6006}",
+        "name": "sample_ID_txt",
+        "variable_name": "sample_ID_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 28,
+    "name": "Load Reagent Table",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{A1BC9BAA-12CC-45F9-9803-64C9C12D9E48}",
+    "edittime": "1788919390",
+    "inputs": [
+      {
+        "id": "{80F47701-B40C-4E4D-A6D9-48F5798C8DA8}",
+        "name": "column_idx",
+        "variable_name": "column_idx",
+        "type": "integer",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{ECE36230-CF4E-4280-90EB-EE9FF55FEEBB}",
+        "name": "fullpath_txt",
+        "variable_name": "fullpath_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "{A8D1F003-4CA0-4C87-9A92-2B2C4B8B2F64}",
+        "name": "is_end",
+        "variable_name": "is_end",
+        "type": "bool",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{CB02979E-B686-4ACF-AEDF-B197E12E655E}",
+        "name": "expid_array_txt",
+        "variable_name": "expid_array_txt",
+        "type": "text",
+        "array": true,
+        "expression": ""
+      },
+      {
+        "id": "{6733A6D3-7164-41FD-8742-C1AC9E7DEE53}",
+        "name": "reagent_array_vol",
+        "variable_name": "reagent_array_vol",
+        "type": "volume",
+        "array": true,
+        "expression": ""
+      },
+      {
+        "id": "{474076E2-6427-40C3-8169-95339AE9970B}",
+        "name": "reagent_name_txt",
+        "variable_name": "reagent_name_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ]
+  },
+  {
+    "index": 29,
+    "name": "Load Reagent",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{F138C597-BFBF-458B-ADF0-309FE6509480}",
+    "edittime": "1787810605",
+    "inputs": [
+      {
+        "id": "{44298B40-3D70-4CD0-A8D3-1D79E0757AE9}",
+        "name": "fullpath_txt",
+        "variable_name": "fullpath_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{0D283473-71D3-469A-B33D-10E32CFF5AED}",
+        "name": "reactor_zone",
+        "variable_name": "reactor_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "{EC0BAE38-F8DD-4011-BC27-EF42581C2482}",
+        "name": "error_msg_txt",
+        "variable_name": "error_msg_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{5E3576CF-CE64-4FA8-90A2-70773BBCE363}",
+        "name": "error_txt",
+        "variable_name": "error_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ]
+  },
+  {
+    "index": 30,
+    "name": "Dynamic Transfer Volumectrically",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{B3019C3B-CE4E-4BA9-904C-75694AEE3701}",
+    "edittime": "1788360628",
+    "inputs": [
+      {
+        "id": "{6F025B26-C0C6-46D9-A93E-A58064AAA25A}",
+        "name": "use_ch1",
+        "variable_name": "use_ch1",
+        "type": "bool",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{265CEE33-0719-44C0-90C5-2FA051432352}",
+        "name": "array_vol",
+        "variable_name": "array_vol",
+        "type": "volume",
+        "array": true,
+        "expression": ""
+      },
+      {
+        "id": "{96E8DA39-5E1D-4FEE-95E1-0F8150C2667E}",
+        "name": "dest_zone",
+        "variable_name": "dest_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{22634A3F-7838-4CF8-B7CD-18E6E6C4BFDE}",
+        "name": "airgap_vol",
+        "variable_name": "airgap_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{AD5EE143-4811-483E-BEA9-FAFDD95685F1}",
+        "name": "safe_vol",
+        "variable_name": "safe_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{1E04DB51-ED39-49D2-BBF4-CE82E148753D}",
+        "name": "source_zone",
+        "variable_name": "source_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{4D5EB357-C838-4306-A661-3D73F1FF7B1C}",
+        "name": "extra_vol",
+        "variable_name": "extra_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{697CCE7C-88E0-4DC1-8E09-3FB341BCAA40}",
+        "name": "use_ch2",
+        "variable_name": "use_ch2",
+        "type": "bool",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{F76B97C0-F320-4EBA-A0D6-1EEDA4858E95}",
+        "name": "use_ch3",
+        "variable_name": "use_ch3",
+        "type": "bool",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{9D5C8AC2-5C97-403F-A074-A9C53ED4852F}",
+        "name": "max_chunk_size",
+        "variable_name": "max_chunk_size",
+        "type": "integer",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{ECC857DB-7836-487A-8384-A0772DA49721}",
+        "name": "use_ch4",
+        "variable_name": "use_ch4",
+        "type": "bool",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{E425ACE0-5CC5-41D9-BBC0-CA9E11B7931B}",
+        "name": "source_zone_txt",
+        "variable_name": "source_zone_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 31,
+    "name": "Get Aspirate Chunk",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{92ED1B26-C340-4595-9E5F-52B7FFAD00D4}",
+    "edittime": "1788353489",
+    "inputs": [
+      {
+        "id": "{CA0D5007-5093-49E0-93EF-2795215D8AC9}",
+        "name": "start_residual_vol",
+        "variable_name": "start_residual_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{AEBEB159-5F0F-491B-8723-005E9F82E2EB}",
+        "name": "array_vol",
+        "variable_name": "array_vol",
+        "type": "volume",
+        "array": true,
+        "expression": ""
+      },
+      {
+        "id": "{2A29E674-C56E-493D-AE1B-C911BC30A6FD}",
+        "name": "start_idx",
+        "variable_name": "start_idx",
+        "type": "integer",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{082EE59C-D0B9-460A-9200-8B3DD5810C9B}",
+        "name": "syringe_vol",
+        "variable_name": "syringe_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{53640CAA-E302-4B99-ABE4-28E340228277}",
+        "name": "max_idx",
+        "variable_name": "max_idx",
+        "type": "integer",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{124299F3-FFF3-413D-990B-F66E7D1732C0}",
+        "name": "airgap_vol",
+        "variable_name": "airgap_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{D3BE0EF4-5870-4C74-8DBF-4EC930B7E5AE}",
+        "name": "safe_vol",
+        "variable_name": "safe_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{5589D4FA-92D3-4E50-9EAF-A0864A11E486}",
+        "name": "extra_vol",
+        "variable_name": "extra_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "{5CFDCD5E-52EB-4E0C-AA61-BCF50B3CC27F}",
+        "name": "next_idx",
+        "variable_name": "next_idx",
+        "type": "integer",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{D557175F-8AA7-4FF3-B5B8-1C504947EC8E}",
+        "name": "end_dispense_vol",
+        "variable_name": "end_dispense_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{512A918F-149F-49FC-97F0-D62A92FDE849}",
+        "name": "next_residual_vol",
+        "variable_name": "next_residual_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{10DD2E95-8F4F-4158-85B3-61821D129FC4}",
+        "name": "aspirate_vol",
+        "variable_name": "aspirate_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{59B38CAC-E091-4ADF-976A-8D220CA04653}",
+        "name": "end_idx",
+        "variable_name": "end_idx",
+        "type": "integer",
+        "array": false,
+        "expression": ""
+      }
+    ]
+  },
+  {
+    "index": 32,
+    "name": "Throw Error",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{05B2984D-BC3F-45CB-8A02-D3E5BF5ABC4B}",
+    "edittime": "1787876614",
+    "inputs": [
+      {
+        "id": "{BFF25E17-0D98-4F71-B8B0-2C7EA8B4BDD3}",
+        "name": "source_func_txt",
+        "variable_name": "source_func_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{1442921E-18AC-455A-A1AB-34FD4E0417C5}",
+        "name": "error_code_int",
+        "variable_name": "error_code_int",
+        "type": "integer",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{490EB9AD-0F69-4DDE-8561-F082250C52F4}",
+        "name": "message_txt",
+        "variable_name": "message_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 33,
+    "name": "Get Parent Element Name",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{F7AD817E-D46D-4CD6-89FE-CF0BF115B2C7}",
+    "edittime": "1787877115",
+    "inputs": [
+      {
+        "id": "{5EEFD3C4-7FB3-406E-A8F3-185817AE5A03}",
+        "name": "input_zone",
+        "variable_name": "input_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "{52EFC9FC-90E6-41C7-9866-F2BFCB1103A6}",
+        "name": "parent_element_name_txt",
+        "variable_name": "parent_element_name_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ]
+  },
+  {
+    "index": 34,
+    "name": "Get Single Well ID",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{E86925F4-5792-4F78-91CF-8E2F862D93A9}",
+    "edittime": "1787877310",
+    "inputs": [
+      {
+        "id": "{6072B256-78DE-4571-9AA0-B07B77F8DD7F}",
+        "name": "well_zone",
+        "variable_name": "well_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "{85357196-C0DE-4664-AA88-9C706E37D5CB}",
+        "name": "well_id_int",
+        "variable_name": "well_id_int",
+        "type": "integer",
+        "array": false,
+        "expression": ""
+      }
+    ]
+  },
+  {
+    "index": 35,
+    "name": "Get ISynth Drawer Index",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{E4913D91-7862-4BB1-8EA5-0CF2D3828384}",
+    "edittime": "1787877593",
+    "inputs": [
+      {
+        "id": "{A0A8B7DD-6F46-4C1B-BDB8-C50552CC394A}",
+        "name": "well_zone",
+        "variable_name": "well_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "{C96DDBE1-F4EF-4C4C-A5B4-AD58AF1CAE34}",
+        "name": "drawer_idx",
+        "variable_name": "drawer_idx",
+        "type": "integer",
+        "array": false,
+        "expression": ""
+      }
+    ]
+  },
+  {
+    "index": 36,
+    "name": "Check Well Interlock",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{FABCE8C0-BC2D-4108-BC1B-5F463ACE0317}",
+    "edittime": "1787883940",
+    "inputs": [
+      {
+        "id": "{2F30306D-E928-4BBC-88C1-4A07506813E1}",
+        "name": "well_zone",
+        "variable_name": "well_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "{381D035B-1049-4B7B-B695-9674AA303329}",
+        "name": "is_safe",
+        "variable_name": "is_safe",
+        "type": "bool",
+        "array": false,
+        "expression": ""
+      }
+    ]
+  },
+  {
+    "index": 37,
+    "name": "Aspirate From Source",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{718A5C44-CF4E-4560-8548-B2CF885F8DE4}",
+    "edittime": "1788228477",
+    "inputs": [
+      {
+        "id": "{7A084611-4E3D-4D82-A4DA-C30FBF8309BA}",
+        "name": "airgap_vol",
+        "variable_name": "airgap_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{5A1F1913-AD6B-4B7F-8A4A-2A80DAFD6E84}",
+        "name": "source_zone",
+        "variable_name": "source_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{E0048943-1DD7-4AF9-9940-67D05C07BD56}",
+        "name": "ch3_vol",
+        "variable_name": "ch3_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{A42CD65E-891D-4246-AF02-6E332CBA0C3B}",
+        "name": "ch4_vol",
+        "variable_name": "ch4_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{2B66FC6E-7371-466B-8422-44763F659651}",
+        "name": "ch2_vol",
+        "variable_name": "ch2_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{84D2EDA1-9BBF-4ED0-BA10-80BE0576276B}",
+        "name": "ch1_vol",
+        "variable_name": "ch1_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{59F1C9EE-291B-4B0A-B5B8-C5E69E045D3C}",
+        "name": "source_zone_txt",
+        "variable_name": "source_zone_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 38,
+    "name": "_Aspirate",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{374DF68E-9169-419F-A6FC-62A318347C5C}",
+    "edittime": "1788140053",
+    "inputs": [
+      {
+        "id": "{41F93D40-A905-4BFC-9697-9DC65C28D200}",
+        "name": "source_zone_txt",
+        "variable_name": "source_zone_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{D9347A51-108B-4C90-9A18-89636253DDBE}",
+        "name": "ch4_vol",
+        "variable_name": "ch4_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{D6D0A563-DA7D-4138-9E96-D8B95CC389FF}",
+        "name": "source_zone",
+        "variable_name": "source_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{A935D6A6-356B-4533-AE95-FCC46878A660}",
+        "name": "ch3_vol",
+        "variable_name": "ch3_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{F41CA7B9-C754-4709-93A9-9CF9F95F093C}",
+        "name": "ch2_vol",
+        "variable_name": "ch2_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{510B44C8-73F5-4F3C-8D0B-7B58E7B4A17C}",
+        "name": "airgap_vol",
+        "variable_name": "airgap_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{7B1293D5-C32F-4BBA-B403-2A215B105FBF}",
+        "name": "ch1_vol",
+        "variable_name": "ch1_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 39,
+    "name": "_Dispense",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{7D0AD58C-1C98-47C5-AC69-CD9460D372C3}",
+    "edittime": "1788230606",
+    "inputs": [
+      {
+        "id": "{3E9E6136-7F6B-4330-B7E6-3A5E247B217F}",
+        "name": "dispense_zone",
+        "variable_name": "dispense_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{A665CB61-2E1B-4AD3-A0E9-481DCE4CA31A}",
+        "name": "ch4_vol",
+        "variable_name": "ch4_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{0AC9F26F-5BD9-4107-88A6-47DE3ACF0DD0}",
+        "name": "ch3_vol",
+        "variable_name": "ch3_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{D101FADD-7B6D-4AF4-B83D-23921E326A03}",
+        "name": "ch1_vol",
+        "variable_name": "ch1_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{017A38EA-3910-41E4-AD2D-E529813E497F}",
+        "name": "ch2_vol",
+        "variable_name": "ch2_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 40,
+    "name": "Dispense To Destination",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{2C04EDD2-CFF7-4636-88DB-240DA51711A2}",
+    "edittime": "1788230450",
+    "inputs": [
+      {
+        "id": "{68861319-561B-4CC9-B105-8C36908DEB9D}",
+        "name": "dispense_zone",
+        "variable_name": "dispense_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{FD00F25A-FF56-44AA-A614-2D3DF3DB5D16}",
+        "name": "ch1_vol",
+        "variable_name": "ch1_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{301A0393-9DD7-40BE-8518-060ECF0F2056}",
+        "name": "ch2_vol",
+        "variable_name": "ch2_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{7A5BFA99-0DD4-43AD-AE5E-8D1C9C35AD16}",
+        "name": "ch3_vol",
+        "variable_name": "ch3_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{CD3F93B8-8019-4993-8179-5A1C04C245F3}",
+        "name": "ch4_vol",
+        "variable_name": "ch4_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 41,
+    "name": "Set ISynth Drawer Valve",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{7E76D1F5-D34C-4B6C-ADB1-1B117B2A3E73}",
+    "edittime": "1787899749",
+    "inputs": [
+      {
+        "id": "{EE269FA5-C8E2-48F7-9B96-394FA50C289E}",
+        "name": "mode_txt",
+        "variable_name": "mode_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{767EACCA-7419-46B4-968A-3D6951BA6E2E}",
+        "name": "reactor_zone",
+        "variable_name": "reactor_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 42,
+    "name": "Dispense Chunk",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{8B7809ED-EF34-400E-A0A9-EFCB54162DA2}",
+    "edittime": "1788237251",
+    "inputs": [
+      {
+        "id": "{3B7CD913-08E7-47E6-88EF-108DC40ADE7A}",
+        "name": "end_dispense_vol",
+        "variable_name": "end_dispense_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{3A3E812D-F9C1-4DC6-BF5B-35EFF4E332F3}",
+        "name": "dispense_zone",
+        "variable_name": "dispense_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{CF0DAB43-BEBA-49E3-B853-F0646CD44DA4}",
+        "name": "array_vol",
+        "variable_name": "array_vol",
+        "type": "volume",
+        "array": true,
+        "expression": ""
+      },
+      {
+        "id": "{1973A17D-18AD-4B53-9A97-F471E0479409}",
+        "name": "end_idx",
+        "variable_name": "end_idx",
+        "type": "integer",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{4C27CF9E-C91C-4D0B-A7B2-F95AE874004A}",
+        "name": "start_idx",
+        "variable_name": "start_idx",
+        "type": "integer",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{4EB7F9AA-500C-4FA0-8BA4-22DA14F282FA}",
+        "name": "start_residual_vol",
+        "variable_name": "start_residual_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{F4B540E7-57A2-477B-93C7-55CFE0C4B665}",
+        "name": "syringe_ch",
+        "variable_name": "syringe_ch",
+        "type": "integer",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 43,
+    "name": "Get Well Zone With Index",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{6086071D-452C-4B4F-BDE6-91BBDD62E23A}",
+    "edittime": "1787903653",
+    "inputs": [
+      {
+        "id": "{C3E3DA85-E02B-4D29-A2CB-3151AEDB625D}",
+        "name": "well_idx",
+        "variable_name": "well_idx",
+        "type": "integer",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{FAB5C7D5-0C30-45E0-B7AF-FA2B7B122FA0}",
+        "name": "multi_zone",
+        "variable_name": "multi_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "{2FD32304-F772-4241-AF38-F3870C78C739}",
+        "name": "well_zone",
+        "variable_name": "well_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      }
+    ]
+  },
+  {
+    "index": 44,
+    "name": "Set ISynth Drawer State",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{CE003A2E-D4CA-4676-84F9-B1AB60D482F3}",
+    "edittime": "1787948268",
+    "inputs": [
+      {
+        "id": "{A05CF205-DFE5-4060-ACA4-A89D11068D1F}",
+        "name": "mode_txt",
+        "variable_name": "mode_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{B6B0BA4D-7219-4E03-BCD1-8FB46DD3C7BA}",
+        "name": "reactor_zone",
+        "variable_name": "reactor_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 45,
+    "name": "Write Well Log",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{F76E9D50-1DDB-46DD-8D0B-EDFD60AA5D17}",
+    "edittime": "1787950379",
+    "inputs": [
+      {
+        "id": "{602F9E3C-BB26-4ABE-997C-9236C5DC017E}",
+        "name": "well_zone",
+        "variable_name": "well_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{393450F9-9002-40A5-83C2-574A827D8BAD}",
+        "name": "log_txt",
+        "variable_name": "log_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 46,
+    "name": "Export Wells Log",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{C97B9934-BD87-4111-AA18-BC983E583B19}",
+    "edittime": "1788333590",
+    "inputs": [
+      {
+        "id": "{776A364B-26B8-4E48-984B-FE473E938409}",
+        "name": "directory_path_txt",
+        "variable_name": "directory_path_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{D300A2F8-7DF0-47AF-AD0D-BDC941BA7413}",
+        "name": "wells_zone",
+        "variable_name": "wells_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "{A77A9E39-DFF1-41B9-85CC-0B8CAB6DBC9C}",
+        "name": "stdio_int",
+        "variable_name": "stdio_int",
+        "type": "integer",
+        "array": false,
+        "expression": ""
+      }
+    ]
+  },
+  {
+    "index": 47,
+    "name": "Report Error",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{0B90EA8D-F12D-4911-B6C3-6B62E91BAC9B}",
+    "edittime": "1788224060",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "index": 48,
+    "name": "Zone Resolv",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{1769AFEC-A51E-4024-BEE9-FEFB4E863C4D}",
+    "edittime": "1788224123",
+    "inputs": [
+      {
+        "id": "{6B0920C6-FFD1-4E87-924A-2159F6CA2803}",
+        "name": "zone_name_txt",
+        "variable_name": "zone_name_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "{B0F4AB0E-6C16-435D-B717-24F096544A5D}",
+        "name": "resolved_zone",
+        "variable_name": "resolved_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      }
+    ]
+  },
+  {
+    "index": 49,
+    "name": "Syringe Capasity",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{7F0E9267-EBD8-48A8-A6BA-ADED13DD2F2A}",
+    "edittime": "1788226316",
+    "inputs": [
+      {
+        "id": "{43112858-2A97-4008-AA1C-4DD97C79B5AF}",
+        "name": "syringe_ch",
+        "variable_name": "syringe_ch",
+        "type": "integer",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "{C7981097-9484-4A44-A6FC-4B097E97603B}",
+        "name": "syringe_vol",
+        "variable_name": "syringe_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      }
+    ]
+  },
+  {
+    "index": 50,
+    "name": "Label sample ID",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{D5036F17-9117-4B7C-A0E5-3EBD655A93C8}",
+    "edittime": "1788853233",
+    "inputs": [
+      {
+        "id": "{602F9E3C-BB26-4ABE-997C-9236C5DC017E}",
+        "name": "well_zone",
+        "variable_name": "well_zone",
+        "type": "zone",
+        "array": false,
+        "expression": ""
+      },
+      {
+        "id": "{393450F9-9002-40A5-83C2-574A827D8BAD}",
+        "name": "id_txt",
+        "variable_name": "id_txt",
+        "type": "text",
+        "array": false,
+        "expression": ""
+      }
+    ],
+    "outputs": []
+  },
+  {
+    "index": 51,
+    "name": "Non Zero Array Min",
+    "typeid": "Chemspeed.SATaskFunctionDefinition.1",
+    "eventtype": "",
+    "id": "{169BD6D7-FB46-4CA1-9529-18EE451134F5}",
+    "edittime": "1788927885",
+    "inputs": [
+      {
+        "id": "{8B9D3213-916D-4D93-B614-C6043DEA58FA}",
+        "name": "array_vol",
+        "variable_name": "array_vol",
+        "type": "volume",
+        "array": true,
+        "expression": ""
+      }
+    ],
+    "outputs": [
+      {
+        "id": "{69A3240C-FE31-4A46-8656-9FEF61616D33}",
+        "name": "min_vol",
+        "variable_name": "min_vol",
+        "type": "volume",
+        "array": false,
+        "expression": ""
+      }
+    ]
+  }
+]

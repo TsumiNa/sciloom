@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<element typeid="Chemspeed.SAModuleConfigurableHolder.1">
+  <name>ioniser back left</name>
+  <edittime>1770900231</edittime>
+  <expanded>0</expanded>
+  <log>1</log>
+  <logdeadband>0</logdeadband>
+  <absolutedeadband>0</absolutedeadband>
+  <deadbandunit />
+  <currentrole />
+  <calibrationx>0</calibrationx>
+  <calibrationy>0</calibrationy>
+  <calibrationz>0</calibrationz>
+  <numberoftools>0</numberoftools>
+  <deviceid>3</deviceid>
+  <footprintid>#7</footprintid>
+  <holderoriginpositionx>-0.05</holderoriginpositionx>
+  <holderoriginpositiony>0.365</holderoriginpositiony>
+  <holderoriginpositionz>0</holderoriginpositionz>
+  <xholder>0.14</xholder>
+  <yholder>0.14</yholder>
+  <zholder>0.15</zholder>
+  <footprintparameterss>
+    <count>0</count>
+  </footprintparameterss>
+  <id>{F10DE8EB-99F0-431C-A3E5-A4F784476DFB}</id>
+  <elements />
+  <wells />
+</element>

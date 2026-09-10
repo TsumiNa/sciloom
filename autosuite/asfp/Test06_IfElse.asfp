@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<functions>
+  <function typeid="Chemspeed.SATaskFunctionDefinition.1">
+    <name>TEST06_IF_ELSE</name>
+    <description />
+    <functionid>{C1D68ECF-3F32-4D2E-A42F-AABAF2FD19BC}</functionid>
+    <functiondata>
+      <inputs><count>0</count></inputs>
+      <outputs><count>0</count></outputs>
+    </functiondata>
+    <components>
+      <component typeid="Chemspeed.SAMacroTask.1">
+        <name>TEST06_IF_ELSE</name>
+        <description />
+        <variables>
+          <count>1</count>
+          <item0>
+            <variablename>x</variablename>
+            <variabletype>real number</variabletype>
+            <isarray>0</isarray>
+            <value>0</value>
+          </item0>
+        </variables>
+        <conditionloop>1</conditionloop>
+        <conditiontype>0</conditiontype>
+        <loopvariable>loop</loopvariable>
+        <multicondition>0</multicondition>
+        <tasks>
+          <count>1</count>
+          <task typeid="Chemspeed.SAMacroTask.1">
+            <name>TEST06_IF_ELSE_Block</name>
+            <description />
+            <variables><count>0</count></variables>
+            <conditionloop>1</conditionloop>
+            <conditiontype>0</conditiontype>
+            <loopvariable>loop</loopvariable>
+            <multicondition>1</multicondition>
+            <tasks>
+              <count>4</count>
+              <task typeid="Chemspeed.SATaskCondition.1">
+                <name>If</name>
+                <conditiontype>0</conditiontype>
+                <condition>1 = 1</condition>
+              </task>
+              <task typeid="Chemspeed.SATaskSetVariable.1">
+                <name>Set Variable</name>
+                <variablename>x</variablename>
+                <expressiontext>1</expressiontext>
+              </task>
+              <task typeid="Chemspeed.SATaskCondition.1">
+                <name>Else</name>
+                <conditiontype>2</conditiontype>
+              </task>
+              <task typeid="Chemspeed.SATaskSetVariable.1">
+                <name>Set Variable</name>
+                <variablename>x</variablename>
+                <expressiontext>2</expressiontext>
+              </task>
+            </tasks>
+          </task>
+        </tasks>
+      </component>
+    </components>
+  </function>
+</functions>

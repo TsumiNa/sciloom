@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<element typeid="Chemspeed.SADeviceDiluter.1">
+  <name>Diluter 01 1ml</name>
+  <edittime>1775104230</edittime>
+  <log>1</log>
+  <logdeadband>0</logdeadband>
+  <absolutedeadband>1</absolutedeadband>
+  <deadbandunit>ml</deadbandunit>
+  <currentrole />
+  <calibrationx>0</calibrationx>
+  <calibrationy>0</calibrationy>
+  <calibrationz>0</calibrationz>
+  <numberoftools>0</numberoftools>
+  <deviceid>0.1</deviceid>
+  <footprintid>#22</footprintid>
+  <syringevolume>9.8253e-07</syringevolume>
+  <airgapflowrate>1.66666666667e-08</airgapflowrate>
+  <pumptype>0</pumptype>
+  <id>{0A6622D4-96CF-4C98-BA7C-BA4CE1F40CFB}</id>
+  <wells />
+</element>

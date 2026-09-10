@@ -1,0 +1,314 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<functions>
+	<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+		<description />
+		<name>Validate Polymerization Zone</name>
+		<edittime>1787299957</edittime>
+		<expanded>1</expanded>
+		<functiondata>
+			<inputs>
+				<count>4</count>
+				<item0>
+					<id>{5D037522-A8BA-4CFC-AC69-9B3365E82E99}</id>
+					<name>solvent_zone</name>
+					<variablename>solvent_zone</variablename>
+					<variabletype>zone</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item0>
+				<item1>
+					<id>{6B71CD37-DF9B-448A-B4E9-8C03A226F16E}</id>
+					<name>reactor_zone</name>
+					<variablename>reactor_zone</variablename>
+					<variabletype>zone</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item1>
+				<item2>
+					<id>{5874927B-5D14-4981-979C-F893734363B6}</id>
+					<name>monomer1_zone</name>
+					<variablename>monomer1_zone</variablename>
+					<variabletype>zone</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item2>
+				<item3>
+					<id>{35CD7F9C-32F1-43D2-AE20-53E935DB5DF1}</id>
+					<name>initiator_zone</name>
+					<variablename>initiator_zone</variablename>
+					<variabletype>zone</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item3>
+				<sortType>0</sortType>
+			</inputs>
+			<outputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</outputs>
+		</functiondata>
+		<id>{AF5AF007-3093-453F-8168-6A3AD46079DE}</id>
+		<components>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description />
+				<name>Macro Task</name>
+				<edittime>1787297167</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif>ZoneSize(reactor_zone) &lt; 1</conditionif>
+				<conditionwhile />
+				<conditiontype>1</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>0</executionmode>
+				<sequentialzones>
+					<count>0</count>
+				</sequentialzones>
+				<multicondition>0</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="1" />
+				<id>{BEC039BD-5890-4CB7-AEDE-73577A766377}</id>
+				<tasks>
+					<task typeid="Chemspeed.SATaskUserDialog.1">
+						<highlightzone />
+						<destzone />
+						<description />
+						<name>Show Dialog</name>
+						<edittime>1787296327</edittime>
+						<resultvariablename />
+						<targetamountvariable />
+						<sourcematerial />
+						<maxwaittimeexpression>0</maxwaittimeexpression>
+						<dialogtype>showmessage</dialogtype>
+						<resultunit />
+						<interpretmessageasexpressionflag>1</interpretmessageasexpressionflag>
+						<message>'ERROR! incorrect reactor_zone var'</message>
+						<initialvalue />
+						<buttonoption>stop</buttonoption>
+						<timeoutanswerexpression />
+						<yesokresultexpression />
+						<noresultexpression />
+						<maxwaittimeunit>s</maxwaittimeunit>
+						<picturepathexpression />
+						<validateinput>0</validateinput>
+						<minvalidationvalueexpression />
+						<maxvalidationvalueexpression />
+						<fontsize>11</fontsize>
+						<usemonospacedfont>0</usemonospacedfont>
+						<defaultpauseafterdialog>0</defaultpauseafterdialog>
+						<softstopping>1</softstopping>
+						<autodialogheight>0</autodialogheight>
+						<dialogwidth>480</dialogwidth>
+						<dialogheight>240</dialogheight>
+						<hlrootelementname />
+						<hlzonecolor>0</hlzonecolor>
+						<hldescriptioncount>0</hldescriptioncount>
+						<logtoserver>0</logtoserver>
+						<messagetype>0</messagetype>
+						<severity>1</severity>
+						<runid />
+						<experimentid />
+						<trialnumber />
+						<productid />
+						<id>{D0F1A844-9EC2-45D4-9846-0F82807CBB90}</id>
+					</task>
+				</tasks>
+			</component>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description />
+				<name>Macro Task</name>
+				<edittime>1787297174</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif>ZoneSize(monomer1_zone) &lt; 1</conditionif>
+				<conditionwhile />
+				<conditiontype>1</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>0</executionmode>
+				<sequentialzones>
+					<count>0</count>
+				</sequentialzones>
+				<multicondition>0</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="1" />
+				<id>{1D5450EA-66CC-4FEB-9773-56710915F99D}</id>
+				<tasks>
+					<task typeid="Chemspeed.SATaskUserDialog.1">
+						<highlightzone />
+						<destzone />
+						<description />
+						<name>Show Dialog</name>
+						<edittime>1787296341</edittime>
+						<resultvariablename />
+						<targetamountvariable />
+						<sourcematerial />
+						<maxwaittimeexpression>0</maxwaittimeexpression>
+						<dialogtype>showmessage</dialogtype>
+						<resultunit />
+						<interpretmessageasexpressionflag>1</interpretmessageasexpressionflag>
+						<message>'ERROR! incorrect monomer1_zone var'</message>
+						<initialvalue />
+						<buttonoption>stop</buttonoption>
+						<timeoutanswerexpression />
+						<yesokresultexpression />
+						<noresultexpression />
+						<maxwaittimeunit>s</maxwaittimeunit>
+						<picturepathexpression />
+						<validateinput>0</validateinput>
+						<minvalidationvalueexpression />
+						<maxvalidationvalueexpression />
+						<fontsize>11</fontsize>
+						<usemonospacedfont>0</usemonospacedfont>
+						<defaultpauseafterdialog>0</defaultpauseafterdialog>
+						<softstopping>1</softstopping>
+						<autodialogheight>0</autodialogheight>
+						<dialogwidth>480</dialogwidth>
+						<dialogheight>240</dialogheight>
+						<hlrootelementname />
+						<hlzonecolor>0</hlzonecolor>
+						<hldescriptioncount>0</hldescriptioncount>
+						<logtoserver>0</logtoserver>
+						<messagetype>0</messagetype>
+						<severity>1</severity>
+						<runid />
+						<experimentid />
+						<trialnumber />
+						<productid />
+						<id>{C0D44023-CA96-459F-9FD4-AEB2936AC7B9}</id>
+					</task>
+				</tasks>
+			</component>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description />
+				<name>Macro Task</name>
+				<edittime>1787297182</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif>ZoneSize(initiator_zone) &lt; 1</conditionif>
+				<conditionwhile />
+				<conditiontype>1</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>0</executionmode>
+				<sequentialzones>
+					<count>0</count>
+				</sequentialzones>
+				<multicondition>0</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="1" />
+				<id>{98832C25-F3A9-449B-98F3-9FCE043E4D80}</id>
+				<tasks>
+					<task typeid="Chemspeed.SATaskUserDialog.1">
+						<highlightzone />
+						<destzone />
+						<description />
+						<name>Show Dialog</name>
+						<edittime>1787296352</edittime>
+						<resultvariablename />
+						<targetamountvariable />
+						<sourcematerial />
+						<maxwaittimeexpression>0</maxwaittimeexpression>
+						<dialogtype>showmessage</dialogtype>
+						<resultunit />
+						<interpretmessageasexpressionflag>1</interpretmessageasexpressionflag>
+						<message>'ERROR! incorrect initiator_zone var'</message>
+						<initialvalue />
+						<buttonoption>stop</buttonoption>
+						<timeoutanswerexpression />
+						<yesokresultexpression />
+						<noresultexpression />
+						<maxwaittimeunit>s</maxwaittimeunit>
+						<picturepathexpression />
+						<validateinput>0</validateinput>
+						<minvalidationvalueexpression />
+						<maxvalidationvalueexpression />
+						<fontsize>11</fontsize>
+						<usemonospacedfont>0</usemonospacedfont>
+						<defaultpauseafterdialog>0</defaultpauseafterdialog>
+						<softstopping>1</softstopping>
+						<autodialogheight>0</autodialogheight>
+						<dialogwidth>480</dialogwidth>
+						<dialogheight>240</dialogheight>
+						<hlrootelementname />
+						<hlzonecolor>0</hlzonecolor>
+						<hldescriptioncount>0</hldescriptioncount>
+						<logtoserver>0</logtoserver>
+						<messagetype>0</messagetype>
+						<severity>1</severity>
+						<runid />
+						<experimentid />
+						<trialnumber />
+						<productid />
+						<id>{D1860A0E-919C-4401-A536-2CCB22FC6C53}</id>
+					</task>
+				</tasks>
+			</component>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description />
+				<name>Macro Task</name>
+				<edittime>1787297187</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif>ZoneSize(solvent_zone) &lt; 1</conditionif>
+				<conditionwhile />
+				<conditiontype>1</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>0</executionmode>
+				<sequentialzones>
+					<count>0</count>
+				</sequentialzones>
+				<multicondition>0</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="1" />
+				<id>{D9C94F65-DD2E-4D51-A385-403D5C075E63}</id>
+				<tasks>
+					<task typeid="Chemspeed.SATaskUserDialog.1">
+						<highlightzone />
+						<destzone />
+						<description />
+						<name>Show Dialog</name>
+						<edittime>1787299371</edittime>
+						<resultvariablename />
+						<targetamountvariable />
+						<sourcematerial />
+						<maxwaittimeexpression>0</maxwaittimeexpression>
+						<dialogtype>showmessage</dialogtype>
+						<resultunit />
+						<interpretmessageasexpressionflag>1</interpretmessageasexpressionflag>
+						<message>'ERROR! incorrect solvent_zone var'</message>
+						<initialvalue />
+						<buttonoption>stop</buttonoption>
+						<timeoutanswerexpression />
+						<yesokresultexpression />
+						<noresultexpression />
+						<maxwaittimeunit>s</maxwaittimeunit>
+						<picturepathexpression />
+						<validateinput>0</validateinput>
+						<minvalidationvalueexpression />
+						<maxvalidationvalueexpression />
+						<fontsize>11</fontsize>
+						<usemonospacedfont>0</usemonospacedfont>
+						<defaultpauseafterdialog>0</defaultpauseafterdialog>
+						<softstopping>1</softstopping>
+						<autodialogheight>0</autodialogheight>
+						<dialogwidth>480</dialogwidth>
+						<dialogheight>240</dialogheight>
+						<hlrootelementname />
+						<hlzonecolor>0</hlzonecolor>
+						<hldescriptioncount>0</hldescriptioncount>
+						<logtoserver>0</logtoserver>
+						<messagetype>0</messagetype>
+						<severity>1</severity>
+						<runid />
+						<experimentid />
+						<trialnumber />
+						<productid />
+						<id>{DEFF7FED-9CF1-410D-B4CD-F0E0328ADB2C}</id>
+					</task>
+				</tasks>
+			</component>
+		</components>
+	</function>
+</functions>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<functions>
+	<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+		<description></description>
+		<name>TEST06_FIXED_IF_ELSE</name>
+		<edittime>1788010296</edittime>
+		<expanded>1</expanded>
+		<functiondata>
+			<inputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</inputs>
+			<outputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</outputs>
+		</functiondata>
+		<id>{9C81AE61-3F5B-4129-B618-1A229781465B}</id>
+		<components>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description></description>
+				<name>If-Else</name>
+				<edittime>1788010895</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif></conditionif>
+				<conditionwhile></conditionwhile>
+				<conditiontype>0</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>0</executionmode>
+				<sequentialzones>
+					<count>0</count>
+				</sequentialzones>
+				<multicondition>1</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="1">
+					<variable>
+						<name>x</name>
+						<value>
+							<type>5</type>
+							<value>0</value>
+						</value>
+						<siunit>1</siunit>
+						<unit>1</unit>
+						<array>0</array>
+						<creationtime>1788010895</creationtime>
+						<constant>0</constant>
+					</variable>
+				</variables>
+				<id>{BA0DC35E-2943-4749-B1EA-E4A63BFDCCEA}</id>
+				<tasks>
+					<task typeid="Chemspeed.SATaskCondition.1">
+						<description></description>
+						<name>If</name>
+						<edittime>1787896728</edittime>
+						<expanded>0</expanded>
+						<conditiontype>0</conditiontype>
+						<condition>1 = 1</condition>
+						<id>{ACD6E942-C5A0-444B-BF60-31F98384B114}</id>
+						<components></components>
+					</task>
+					<task typeid="Chemspeed.SATaskSetVariable.1">
+						<description></description>
+						<name>Set Variable</name>
+						<edittime>1787896728</edittime>
+						<variablename>x</variablename>
+						<expressiontext>1</expressiontext>
+						<elementselectmode>0</elementselectmode>
+						<elementnumber></elementnumber>
+						<numberofelements></numberofelements>
+						<startindex>0</startindex>
+						<clearvariable>0</clearvariable>
+						<sortwells>0</sortwells>
+						<enumerationtype>0</enumerationtype>
+						<wellsenumeration>0</wellsenumeration>
+						<elementsenumeration>0</elementsenumeration>
+						<id>{56392BB6-AD68-4056-B0CA-8D4315D0B51D}</id>
+					</task>
+					<task typeid="Chemspeed.SATaskCondition.1">
+						<description></description>
+						<name>Else</name>
+						<edittime>1787896728</edittime>
+						<expanded>0</expanded>
+						<conditiontype>2</conditiontype>
+						<condition></condition>
+						<id>{88382538-942A-4A47-B46E-7FA39CD553BE}</id>
+						<components></components>
+					</task>
+					<task typeid="Chemspeed.SATaskSetVariable.1">
+						<description></description>
+						<name>Set Variable</name>
+						<edittime>1787896728</edittime>
+						<variablename>x</variablename>
+						<expressiontext>2</expressiontext>
+						<elementselectmode>0</elementselectmode>
+						<elementnumber></elementnumber>
+						<numberofelements></numberofelements>
+						<startindex>0</startindex>
+						<clearvariable>0</clearvariable>
+						<sortwells>0</sortwells>
+						<enumerationtype>0</enumerationtype>
+						<wellsenumeration>0</wellsenumeration>
+						<elementsenumeration>0</elementsenumeration>
+						<id>{7F6ED5AA-FE59-45F5-BDBA-6C50EF3CE36A}</id>
+					</task>
+				</tasks>
+			</component>
+		</components>
+	</function>
+</functions>

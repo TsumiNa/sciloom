@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<task typeid="Chemspeed.SATaskExportCSV.1">
+  <description />
+  <name>Export CSV</name>
+  <edittime>1787951135</edittime>
+  <exportfilepath>fullpath_txt</exportfilepath>
+  <delimitermode>0</delimitermode>
+  <endlinecharacter>0</endlinecharacter>
+  <exportbehaviour>0</exportbehaviour>
+  <changerowvar>1</changerowvar>
+  <exportresultvar>stdio_int</exportresultvar>
+  <multiplelines>0</multiplelines>
+  <columns>
+    <column>
+      <columnindex>1</columnindex>
+      <expression>log_txt</expression>
+      <variabletype>text</variabletype>
+      <unit>1</unit>
+    </column>
+  </columns>
+  <id>{C8E3E46A-8EE5-4E2C-B3AA-62CC315EAB1F}</id>
+</task>

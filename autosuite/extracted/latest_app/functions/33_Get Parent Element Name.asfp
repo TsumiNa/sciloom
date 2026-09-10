@@ -1,0 +1,245 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<functions>
+	<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+		<description />
+		<name>Get Parent Element Name</name>
+		<edittime>1787877115</edittime>
+		<expanded>1</expanded>
+		<functiondata>
+			<inputs>
+				<count>1</count>
+				<item0>
+					<id>{5EEFD3C4-7FB3-406E-A8F3-185817AE5A03}</id>
+					<name>input_zone</name>
+					<variablename>input_zone</variablename>
+					<variabletype>zone</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item0>
+				<sortType>0</sortType>
+			</inputs>
+			<outputs>
+				<count>1</count>
+				<item0>
+					<id>{52EFC9FC-90E6-41C7-9866-F2BFCB1103A6}</id>
+					<name>parent_element_name_txt</name>
+					<variablename>parent_element_name_txt</variablename>
+					<variabletype>text</variabletype>
+					<isarray>0</isarray>
+					<expression />
+				</item0>
+				<sortType>0</sortType>
+			</outputs>
+		</functiondata>
+		<id>{F7AD817E-D46D-4CD6-89FE-CF0BF115B2C7}</id>
+		<components>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description />
+				<name>Macro Task</name>
+				<edittime>1787877048</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif />
+				<conditionwhile />
+				<conditiontype>1</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>0</executionmode>
+				<sequentialzones>
+					<count>0</count>
+				</sequentialzones>
+				<multicondition>1</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="1">
+					<variable>
+						<name>fullname_txt</name>
+						<value>
+							<type>8</type>
+							<value>''</value>
+						</value>
+						<siunit>text</siunit>
+						<unit>K/s</unit>
+						<array>0</array>
+						<creationtime>1787877048</creationtime>
+						<constant>0</constant>
+					</variable>
+					<variable>
+						<name>func_name_txt</name>
+						<value>
+							<type>8</type>
+							<value>'Get Parent Element Name'</value>
+						</value>
+						<siunit>text</siunit>
+						<unit>K/s</unit>
+						<array>0</array>
+						<creationtime>1787876939</creationtime>
+						<constant>1</constant>
+					</variable>
+				</variables>
+				<id>{00F23219-DD81-4720-BC35-15EA4EF49ECC}</id>
+				<tasks>
+					<task typeid="Chemspeed.SATaskCondition.1">
+						<description />
+						<name>If</name>
+						<edittime>1787877023</edittime>
+						<expanded>1</expanded>
+						<conditiontype>0</conditiontype>
+						<condition>ZoneSize(input_zone) &lt;&gt; 1</condition>
+						<id>{8370FEC9-608D-4BAE-9B0D-D8C4CADFC496}</id>
+						<components>
+							<component typeid="Chemspeed.SATaskExecuteFunction.1">
+								<description />
+								<name>Execute Function</name>
+								<edittime>1787877007</edittime>
+								<functiondata>
+									<inputs>
+										<count>3</count>
+										<item0>
+											<id>{BFF25E17-0D98-4F71-B8B0-2C7EA8B4BDD3}</id>
+											<name>source_func_txt</name>
+											<variablename />
+											<variabletype>text</variabletype>
+											<isarray>0</isarray>
+											<expression>func_name_txt</expression>
+										</item0>
+										<item1>
+											<id>{1442921E-18AC-455A-A1AB-34FD4E0417C5}</id>
+											<name>error_code_int</name>
+											<variablename />
+											<variabletype>integer</variabletype>
+											<isarray>0</isarray>
+											<expression>1001</expression>
+										</item1>
+										<item2>
+											<id>{490EB9AD-0F69-4DDE-8561-F082250C52F4}</id>
+											<name>message_txt</name>
+											<variablename />
+											<variabletype>text</variabletype>
+											<isarray>0</isarray>
+											<expression>'Zone must contain exactly one well.'</expression>
+										</item2>
+										<sortType>0</sortType>
+									</inputs>
+									<outputs>
+										<count>0</count>
+										<sortType>0</sortType>
+									</outputs>
+								</functiondata>
+								<functionid>{05B2984D-BC3F-45CB-8A02-D3E5BF5ABC4B}</functionid>
+								<id>{184AB3AB-DF1F-4AAD-B6D9-49A492E8B74C}</id>
+							</component>
+						</components>
+					</task>
+					<task typeid="Chemspeed.SATaskCondition.1">
+						<description />
+						<name>Else</name>
+						<edittime>1787876895</edittime>
+						<expanded>1</expanded>
+						<conditiontype>2</conditiontype>
+						<condition />
+						<id>{73BF7FE2-505A-42C7-B9E6-4CF6F272ECF1}</id>
+						<components>
+							<component typeid="Chemspeed.SATaskSetVariable.1">
+								<description />
+								<name>Set Variable</name>
+								<edittime>1787877072</edittime>
+								<variablename>fullname_txt</variablename>
+								<expressiontext>WellFullName(input_zone)</expressiontext>
+								<elementselectmode>0</elementselectmode>
+								<elementnumber />
+								<numberofelements />
+								<startindex>0</startindex>
+								<clearvariable>0</clearvariable>
+								<sortwells>0</sortwells>
+								<enumerationtype>0</enumerationtype>
+								<wellsenumeration>0</wellsenumeration>
+								<elementsenumeration>0</elementsenumeration>
+								<id>{A45FFF88-EDC2-4289-926A-9122D1C29055}</id>
+							</component>
+							<component typeid="Chemspeed.SATaskSetVariable.1">
+								<description />
+								<name>Set Variable</name>
+								<edittime>1787877172</edittime>
+								<variablename>parent_element_name_txt</variablename>
+								<expressiontext>TrimText(SplitTextAndGet(fullname_txt, ':', 0))</expressiontext>
+								<elementselectmode>0</elementselectmode>
+								<elementnumber />
+								<numberofelements />
+								<startindex>0</startindex>
+								<clearvariable>0</clearvariable>
+								<sortwells>0</sortwells>
+								<enumerationtype>0</enumerationtype>
+								<wellsenumeration>0</wellsenumeration>
+								<elementsenumeration>0</elementsenumeration>
+								<id>{80464B15-0B19-431C-B89B-214DA261459D}</id>
+							</component>
+							<component typeid="Chemspeed.SAMacroTask.1">
+								<description />
+								<name>Macro Task</name>
+								<edittime>1787877192</edittime>
+								<expanded>1</expanded>
+								<conditionloop>1</conditionloop>
+								<conditionif>parent_element_name_txt = ''</conditionif>
+								<conditionwhile />
+								<conditiontype>1</conditiontype>
+								<loopvariable>loop</loopvariable>
+								<fragmentvariable>fragment</fragmentvariable>
+								<executionmode>0</executionmode>
+								<sequentialzones>
+									<count>0</count>
+								</sequentialzones>
+								<multicondition>0</multicondition>
+								<multiloop>0</multiloop>
+								<variables sortingType="1" />
+								<id>{89B826C7-21D4-4C5A-B0C9-B436966E44C7}</id>
+								<tasks>
+									<task typeid="Chemspeed.SATaskExecuteFunction.1">
+										<description />
+										<name>Execute Function</name>
+										<edittime>1788224369</edittime>
+										<functiondata>
+											<inputs>
+												<count>3</count>
+												<item0>
+													<id>{BFF25E17-0D98-4F71-B8B0-2C7EA8B4BDD3}</id>
+													<name>source_func_txt</name>
+													<variablename />
+													<variabletype>text</variabletype>
+													<isarray>0</isarray>
+													<expression>func_name_txt</expression>
+												</item0>
+												<item1>
+													<id>{1442921E-18AC-455A-A1AB-34FD4E0417C5}</id>
+													<name>error_code_int</name>
+													<variablename />
+													<variabletype>integer</variabletype>
+													<isarray>0</isarray>
+													<expression>1001</expression>
+												</item1>
+												<item2>
+													<id>{490EB9AD-0F69-4DDE-8561-F082250C52F4}</id>
+													<name>message_txt</name>
+													<variablename />
+													<variabletype>text</variabletype>
+													<isarray>0</isarray>
+													<expression>'Parent element name is empty.'</expression>
+												</item2>
+												<sortType>0</sortType>
+											</inputs>
+											<outputs>
+												<count>0</count>
+												<sortType>0</sortType>
+											</outputs>
+										</functiondata>
+										<functionid>{05B2984D-BC3F-45CB-8A02-D3E5BF5ABC4B}</functionid>
+										<id>{89B6662A-FADE-464D-9B50-373192B73C53}</id>
+									</task>
+								</tasks>
+							</component>
+						</components>
+					</task>
+				</tasks>
+			</component>
+		</components>
+	</function>
+</functions>

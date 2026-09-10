@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<component typeid="Chemspeed.SATaskSetReactionBlockState.1">
+  <zone>reactor_zone</zone>
+  <description />
+  <name>Set Drawer Valve</name>
+  <edittime>1784397848</edittime>
+  <taskdatas>
+    <count>1</count>
+    <taskdata0>
+      <progid />
+      <deviceid />
+      <wellid>-1</wellid>
+      <gasname />
+      <mfmindividualresetsetpoint>0</mfmindividualresetsetpoint>
+      <picsetpoint>100000</picsetpoint>
+      <relativepicsetpoint>0</relativepicsetpoint>
+      <flowSetPoint>0.001 * 1 / 60</flowSetPoint>
+      <reactivegasopentime>0</reactivegasopentime>
+      <gasdensity>500</gasdensity>
+      <gasdensitych2>500</gasdensitych2>
+      <gasdensitych3>500</gasdensitych3>
+      <gasconversionfactor>1</gasconversionfactor>
+      <gasconversionfactorch2>1</gasconversionfactorch2>
+      <gasconversionfactorch3>1</gasconversionfactorch3>
+      <gasmaxvolumemaster>1</gasmaxvolumemaster>
+      <gasmaxvolumeslave>1</gasmaxvolumeslave>
+      <gasmaxvolumech3>1</gasmaxvolumech3>
+      <gasmasterslave1ratio>0.5</gasmasterslave1ratio>
+      <gasratioch1>0.5</gasratioch1>
+      <gasratioch2>0.5</gasratioch2>
+      <gasratioch3>0.5</gasratioch3>
+    </taskdata0>
+  </taskdatas>
+  <updatedstate>1</updatedstate>
+  <state>9</state>
+  <refreshmode>0</refreshmode>
+  <opentime>60</opentime>
+  <closedtime>60</closedtime>
+  <unmounttoolatend>0</unmounttoolatend>
+  <gasdensityunit>kg/m^3</gasdensityunit>
+  <gasdensityunitch2>kg/m^3</gasdensityunitch2>
+  <flowSetPointunit>ml/min</flowSetPointunit>
+  <gasmaxvolumemasterunit>ml</gasmaxvolumemasterunit>
+  <gasmaxvolumeslaveunit>ml</gasmaxvolumeslaveunit>
+  <gasmaxvolumech3unit>ml</gasmaxvolumech3unit>
+  <picsetpointunit>bar</picsetpointunit>
+  <gasmasterslaveratiounit>%</gasmasterslaveratiounit>
+  <gasratioch1unit>%</gasratioch1unit>
+  <gasratioch2unit>%</gasratioch2unit>
+  <gasratioch3unit>%</gasratioch3unit>
+  <reactivegasopentimeunit />
+  <mfmintegralresetbehavior>0</mfmintegralresetbehavior>
+  <picswitchon>1</picswitchon>
+  <picswitch2on>0</picswitch2on>
+  <picswitch3on>0</picswitch3on>
+  <masterchannel>0</masterchannel>
+  <controlmode>0</controlmode>
+  <autofillgasdensity>1</autofillgasdensity>
+  <autofillgasdensitych2>1</autofillgasdensitych2>
+  <autofillgasdensitych3>1</autofillgasdensitych3>
+  <autofillgasconversionfactor>1</autofillgasconversionfactor>
+  <autofillgasconversionfactorch2>1</autofillgasconversionfactorch2>
+  <autofillgasconversionfactorch3>1</autofillgasconversionfactorch3>
+  <autofillgasmaxvolumeflowch1>1</autofillgasmaxvolumeflowch1>
+  <autofillgasmaxvolumemaster>1</autofillgasmaxvolumemaster>
+  <autofillgasmaxvolumeslave>1</autofillgasmaxvolumeslave>
+  <autofillgasmaxvolumech3>1</autofillgasmaxvolumech3>
+  <autofillgasname>1</autofillgasname>
+  <autofillmfmindividualresetsetpoint>1</autofillmfmindividualresetsetpoint>
+  <autofillpicsetpoint>1</autofillpicsetpoint>
+  <autofillrelativepicsetpoint>1</autofillrelativepicsetpoint>
+  <autofillgasmasterslave1ratio>1</autofillgasmasterslave1ratio>
+  <autofillgasratioch1>1</autofillgasratioch1>
+  <autofillgasratioch2>1</autofillgasratioch2>
+  <autofillgasratioch3>1</autofillgasratioch3>
+  <autofillreactivegasopentime>1</autofillreactivegasopentime>
+  <id>{1F579C8F-16C6-421D-8158-0845533DEDED}</id>
+</component>

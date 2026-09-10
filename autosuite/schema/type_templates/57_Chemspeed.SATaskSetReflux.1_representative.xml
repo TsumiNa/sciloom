@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<task typeid="Chemspeed.SATaskSetReflux.1">
+  <zone>reactor_zone</zone>
+  <description />
+  <name>Reflux</name>
+  <edittime>1784298399</edittime>
+  <switchon>1</switchon>
+  <maxwaittime>0</maxwaittime>
+  <autofilltemp>1</autofilltemp>
+  <temperatureunit>°C</temperatureunit>
+  <taskdatas>
+    <count>1</count>
+    <taskdata0>
+      <progid />
+      <deviceid />
+      <wellid>-1</wellid>
+      <temperature>reflux_condenser_temp</temperature>
+    </taskdata0>
+  </taskdatas>
+  <id>{51A84090-B252-4447-BBA8-242F772DF861}</id>
+</task>

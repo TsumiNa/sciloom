@@ -1,0 +1,269 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<functions>
+	<function typeid="Chemspeed.SATaskFunctionDefinition.1">
+		<description />
+		<name>__main</name>
+		<edittime>1787296408</edittime>
+		<expanded>1</expanded>
+		<functiondata>
+			<inputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</inputs>
+			<outputs>
+				<count>0</count>
+				<sortType>0</sortType>
+			</outputs>
+		</functiondata>
+		<id>{E3E00281-F34D-43AF-92BE-D837004E0033}</id>
+		<components>
+			<component typeid="Chemspeed.SAMacroTask.1">
+				<description />
+				<name>Macro Task</name>
+				<edittime>1787817183</edittime>
+				<expanded>1</expanded>
+				<conditionloop>1</conditionloop>
+				<conditionif />
+				<conditionwhile />
+				<conditiontype>0</conditiontype>
+				<loopvariable>loop</loopvariable>
+				<fragmentvariable>fragment</fragmentvariable>
+				<executionmode>0</executionmode>
+				<sequentialzones>
+					<count>0</count>
+				</sequentialzones>
+				<multicondition>0</multicondition>
+				<multiloop>0</multiloop>
+				<variables sortingType="1">
+					<variable>
+						<name>array_vol</name>
+						<values>
+							<count>6</count>
+							<value0>
+								<type>5</type>
+								<value>0.0000001</value>
+							</value0>
+							<value1>
+								<type>5</type>
+								<value>0.0000001</value>
+							</value1>
+							<value2>
+								<type>5</type>
+								<value>0.0000006</value>
+							</value2>
+							<value3>
+								<type>5</type>
+								<value>0.0000004</value>
+							</value3>
+							<value4>
+								<type>5</type>
+								<value>0.0000003</value>
+							</value4>
+							<value5>
+								<type>5</type>
+								<value>0.0000009</value>
+							</value5>
+						</values>
+						<type>5</type>
+						<siunit>m^3</siunit>
+						<unit>ml</unit>
+						<array>1</array>
+						<creationtime>1787814587</creationtime>
+						<constant>0</constant>
+					</variable>
+					<variable>
+						<name>chunk_vol</name>
+						<value>
+							<type>5</type>
+							<value>0</value>
+						</value>
+						<siunit>m^3</siunit>
+						<unit>ml</unit>
+						<array>0</array>
+						<creationtime>1787814977</creationtime>
+						<constant>0</constant>
+					</variable>
+					<variable>
+						<name>end_idx</name>
+						<value>
+							<type>3</type>
+							<value>0</value>
+						</value>
+						<siunit>1</siunit>
+						<unit>s</unit>
+						<array>0</array>
+						<creationtime>1787814986</creationtime>
+						<constant>0</constant>
+					</variable>
+				</variables>
+				<id>{4B0C6E19-EB16-4CE4-ACCF-3D05DFDAE5C5}</id>
+				<tasks>
+					<task typeid="Chemspeed.SATaskExecuteFunction.1">
+						<description />
+						<name>Execute Function</name>
+						<edittime>1787814991</edittime>
+						<functiondata>
+							<inputs>
+								<count>8</count>
+								<item0>
+									<id>{CA0D5007-5093-49E0-93EF-2795215D8AC9}</id>
+									<name>start_residual_vol</name>
+									<variablename />
+									<variabletype>volume</variabletype>
+									<isarray>0</isarray>
+									<expression />
+								</item0>
+								<item1>
+									<id>{AEBEB159-5F0F-491B-8723-005E9F82E2EB}</id>
+									<name>array_vol</name>
+									<variablename>array_vol</variablename>
+									<variabletype>volume</variabletype>
+									<isarray>1</isarray>
+									<expression />
+								</item1>
+								<item2>
+									<id>{2A29E674-C56E-493D-AE1B-C911BC30A6FD}</id>
+									<name>start_idx</name>
+									<variablename />
+									<variabletype>integer</variabletype>
+									<isarray>0</isarray>
+									<expression>0</expression>
+								</item2>
+								<item3>
+									<id>{082EE59C-D0B9-460A-9200-8B3DD5810C9B}</id>
+									<name>syringe_vol</name>
+									<variablename />
+									<variabletype>volume</variabletype>
+									<isarray>0</isarray>
+									<expression>1 ml</expression>
+								</item3>
+								<item4>
+									<id>{53640CAA-E302-4B99-ABE4-28E340228277}</id>
+									<name>max_idx</name>
+									<variablename />
+									<variabletype>integer</variabletype>
+									<isarray>0</isarray>
+									<expression />
+								</item4>
+								<item5>
+									<id>{124299F3-FFF3-413D-990B-F66E7D1732C0}</id>
+									<name>airgap_vol</name>
+									<variablename />
+									<variabletype>volume</variabletype>
+									<isarray>0</isarray>
+									<expression>10 ul</expression>
+								</item5>
+								<item6>
+									<id>{D3BE0EF4-5870-4C74-8DBF-4EC930B7E5AE}</id>
+									<name>safe_vol</name>
+									<variablename />
+									<variabletype>volume</variabletype>
+									<isarray>0</isarray>
+									<expression />
+								</item6>
+								<item7>
+									<id>{5589D4FA-92D3-4E50-9EAF-A0864A11E486}</id>
+									<name>extra_vol</name>
+									<variablename />
+									<variabletype>volume</variabletype>
+									<isarray>0</isarray>
+									<expression>50 ul</expression>
+								</item7>
+								<sortType>0</sortType>
+							</inputs>
+							<outputs>
+								<count>5</count>
+								<item0>
+									<id>{5CFDCD5E-52EB-4E0C-AA61-BCF50B3CC27F}</id>
+									<name>next_idx</name>
+									<variablename />
+									<variabletype>integer</variabletype>
+									<isarray>0</isarray>
+									<expression />
+								</item0>
+								<item1>
+									<id>{D557175F-8AA7-4FF3-B5B8-1C504947EC8E}</id>
+									<name>end_dispense_vol</name>
+									<variablename />
+									<variabletype>volume</variabletype>
+									<isarray>0</isarray>
+									<expression />
+								</item1>
+								<item2>
+									<id>{512A918F-149F-49FC-97F0-D62A92FDE849}</id>
+									<name>next_residual_vol</name>
+									<variablename />
+									<variabletype>volume</variabletype>
+									<isarray>0</isarray>
+									<expression />
+								</item2>
+								<item3>
+									<id>{10DD2E95-8F4F-4158-85B3-61821D129FC4}</id>
+									<name>aspirate_vol</name>
+									<variablename>chunk_vol</variablename>
+									<variabletype>volume</variabletype>
+									<isarray>0</isarray>
+									<expression />
+								</item3>
+								<item4>
+									<id>{59B38CAC-E091-4ADF-976A-8D220CA04653}</id>
+									<name>end_idx</name>
+									<variablename>end_idx</variablename>
+									<variabletype>integer</variabletype>
+									<isarray>0</isarray>
+									<expression />
+								</item4>
+								<sortType>0</sortType>
+							</outputs>
+						</functiondata>
+						<functionid>{92ED1B26-C340-4595-9E5F-52B7FFAD00D4}</functionid>
+						<id>{BE62951C-A070-4088-9EF5-04A2BF9792C0}</id>
+					</task>
+					<task typeid="Chemspeed.SATaskUserDialog.1">
+						<highlightzone />
+						<destzone />
+						<description />
+						<name>Show Dialog</name>
+						<edittime>1787817638</edittime>
+						<resultvariablename />
+						<targetamountvariable />
+						<sourcematerial />
+						<maxwaittimeexpression>0</maxwaittimeexpression>
+						<dialogtype>showmessage</dialogtype>
+						<resultunit />
+						<interpretmessageasexpressionflag>1</interpretmessageasexpressionflag>
+						<message>FormatValue(chunk_vol, 'ml', 3, true, true) + ', ' + end_idx</message>
+						<initialvalue />
+						<buttonoption>ok</buttonoption>
+						<timeoutanswerexpression />
+						<yesokresultexpression />
+						<noresultexpression />
+						<maxwaittimeunit>s</maxwaittimeunit>
+						<picturepathexpression />
+						<validateinput>0</validateinput>
+						<minvalidationvalueexpression />
+						<maxvalidationvalueexpression />
+						<fontsize>11</fontsize>
+						<usemonospacedfont>0</usemonospacedfont>
+						<defaultpauseafterdialog>0</defaultpauseafterdialog>
+						<softstopping>1</softstopping>
+						<autodialogheight>0</autodialogheight>
+						<dialogwidth>480</dialogwidth>
+						<dialogheight>240</dialogheight>
+						<hlrootelementname />
+						<hlzonecolor>0</hlzonecolor>
+						<hldescriptioncount>0</hldescriptioncount>
+						<logtoserver>0</logtoserver>
+						<messagetype>0</messagetype>
+						<severity>1</severity>
+						<runid />
+						<experimentid />
+						<trialnumber />
+						<productid />
+						<id>{D6816D6F-3E82-4029-9A73-34CBCFA0703D}</id>
+					</task>
+				</tasks>
+			</component>
+		</components>
+	</function>
+</functions>
