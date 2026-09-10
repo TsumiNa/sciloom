@@ -17,11 +17,24 @@ or its test suite. XML candidates and AutoSuite-fixed counterparts remain refere
 ## Commands
 
 ```bash
+uv run pytest src/sciloom/ir
 uv run python autosuite/tools/audit_corpus.py
 uv run python autosuite/tools/smoke_test.py
 uv run python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
 uv run python -m compileall -q examples/proposed_frontend
 ```
+
+## Semantic IR stage
+
+Colocated tests cover typed/JSON round-trip, semantic occurrence IDs, source
+diagnostics, variable ownership, numeric and boolean expressions, nested control
+flow, complete call bindings and recursion rejection. CI runs those tests and the
+existing smoke/recipe checks on Python 3.12, 3.13 and 3.14. The ignored local manual
+is not required by these CI checks; a full corpus audit still requires the local
+reference materials listed in the manifest.
+
+No Python frontend or ASFP serializer is implemented in this stage, so these tests
+must not be described as Python-to-ASFP or Executor acceptance.
 
 `AutoSuiteExecutor.exe` is not available here. Static validation does not establish
 Executor acceptance; generated applications must still pass the real integration gate:

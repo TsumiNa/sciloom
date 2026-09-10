@@ -1,6 +1,6 @@
 """Design example: instance construction is host-time specialization; no @comptime."""
 
-from autosuite import Function, Input, Local, Zone, Array, Volume, Integer, runtime
+from sciloom import Function, Input, Zone, Array, Volume, Integer, runtime
 
 
 class DynamicTransfer(Function):
@@ -8,7 +8,7 @@ class DynamicTransfer(Function):
     destination: Input[Zone]
     volumes: Input[Array[Volume]]
 
-    index: Local[Integer] = 0
+    index: Integer = 0
 
     def __init__(self, machine, *, valve_group_size=None, preferred_channels=None):
         # Normal Python executes before compilation.

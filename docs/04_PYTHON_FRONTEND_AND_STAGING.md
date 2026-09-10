@@ -11,13 +11,13 @@ class DynamicTransfer(Function):
     source: Input[Zone]
     destination: Input[Zone]
     volumes: Input[Array[Volume]]
-    index: Local[Integer] = 0
+    index: Integer = 0
 
     def __init__(self, *, valve_group_size: int = 8):
         # ordinary Python / host-time specialization
         self.valve_group_size = valve_group_size
 
-    @autosuite.runtime
+    @sciloom.runtime
     def run(self):
         while self.index < len(self.volumes):
             volume = self.volumes[self.index]
@@ -87,7 +87,7 @@ No `@comptime` decorator is required in the baseline architecture.
 
 AutoSuite runtime consists of:
 
-- class-level registered runtime fields (`Input`, `Output`, `Local`, `Global`, ...);
+- class-level registered runtime fields (`Input[T]`, `Output[T]`, plain SciLoom types, and future `GlobalRef[T]` dependencies);
 - registered runtime methods / event entry points;
 - task execution;
 - runtime expressions;
@@ -100,11 +100,11 @@ Decorators should mark **entry into AutoSuite runtime semantics**, not host-time
 Illustrative names:
 
 ```python
-@autosuite.runtime
-@autosuite.main
-@autosuite.on_start
-@autosuite.on_error
-@autosuite.on_stop
+@sciloom.runtime
+@sciloom.main
+@sciloom.on_start
+@sciloom.on_error
+@sciloom.on_stop
 ```
 
 ## Class schema is static
@@ -117,7 +117,7 @@ class LoadReagent(Function):
     reactor: Input[Zone]
     volumes: Input[Array[Volume]]
     status: Output[Integer]
-    idx: Local[Integer] = 0
+    idx: Integer = 0
 ```
 
 A metaclass/`__init_subclass__`/descriptor registry can collect them into a Pydantic-like schema.
@@ -131,7 +131,22 @@ This enables, before instantiation:
 - inheritance validation;
 - function-call binding checks.
 
-First-version rule: do **not** allow `__init__` to silently create new runtime schema via assignments such as `self.x = Local[...]`. `__init__` configures a concrete instance; it does not redefine the model type.
+First-version rule: do **not** allow `__init__` to silently create new runtime schema.
+`__init__` configures a concrete instance; it does not redefine the model type.
+
+Plain class-level SciLoom types (`index: Integer = 0`) declare internal runtime
+state on Function and, in the future, global state on Application. Python types
+(`group_size: int = 8`) remain host-time data. There is no `Local[T]` wrapper.
+Declaration defaults do not imply resetting a Macro variable on each call; reset
+explicitly with a runtime assignment when required.
+
+The first frontend reads ordinary `.py` modules and reports unavailable runtime
+source explicitly. Notebook, interactive and `exec()` definitions are deferred.
+
+For future shared state, a Function declares `flag: GlobalRef[Boolean]`, then binds
+that dependency using `function.bind_globals(flag=app.ref("flag"))`. Application
+owns the declaration; the function references the same variable. Python module
+globals are never implicitly promoted to AutoSuite globals.
 
 ## Instance specialization
 
@@ -165,7 +180,7 @@ At compile time, the frontend should classify attributes using the class schema 
 
 ```mermaid
 flowchart TB
-    Index["self.index"] --> Registry["Class registry<br/>Local[Integer]"]
+    Index["self.index"] --> Registry["Class registry<br/>Integer"]
     Registry --> Runtime["AutoSuite runtime symbol reference"]
     Group["self.valve_group_size"] --> Value["Not a registered runtime field<br/>Instance value: Python int(8)"]
     Value --> Constant["Host-time constant<br/>Specialization value"]
@@ -210,7 +225,7 @@ Unsupported constructs should fail during compilation rather than silently chang
 Surface syntax can remain Pythonic while the iterable type determines target semantics.
 
 ```python
-for i in autosuite.range(n):
+for i in sciloom.range(n):
     ...
 ```
 

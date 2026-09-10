@@ -15,7 +15,7 @@ program = DynamicTransfer(
 artifact = program.compile(target=isynth)
 ```
 
-A top-level `autosuite.compile(program)` may exist internally or as convenience, but it is not the preferred public model. `.compile()` should be a built-in method inherited by AutoSuite program objects.
+A top-level `sciloom.compile(program)` may exist internally or as convenience, but it is not the preferred public model. `.compile()` should be a built-in method inherited by AutoSuite program objects.
 
 ## Why instance-first compilation
 
@@ -52,7 +52,7 @@ class DynamicTransfer(Function):
     destination: Input[Zone]
     volumes: Input[Array[Volume]]
 
-    index: Local[Integer] = 0
+    index: Integer = 0
     error_code: Output[Integer] = 0
 ```
 
@@ -66,7 +66,7 @@ This pattern should not be supported initially:
 
 ```python
 def __init__(self):
-    self.index = Local[Integer](0)  # discouraged / compile error in v1
+    self.index: Integer = 0  # not a class-level runtime declaration
 ```
 
 If runtime state only appears after instantiation, the framework loses important static properties:
@@ -82,13 +82,18 @@ Therefore:
 
 > **Class = AutoSuite runtime schema. Instance = specialized realization of that schema.**
 
+Plain SciLoom field types replace the earlier `Local[T]` syntax. Ordinary Python
+types remain host-time configuration. Application fields will own globals;
+Function `GlobalRef[T]` dependencies bind through `bind_globals(...=app.ref(...))`.
+This binding configures existing declared fields without creating new runtime schema.
+
 ## `__init__` responsibilities
 
 `__init__` may freely create ordinary Python compile-time attributes and subcomponents:
 
 ```python
 class DynamicTransfer(Function):
-    index: Local[Integer] = 0
+    index: Integer = 0
 
     def __init__(self, *, valve_group_size=8, channels=(1, 2, 3, 4)):
         self.valve_group_size = int(valve_group_size)

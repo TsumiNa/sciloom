@@ -9,7 +9,7 @@ The project moves from a language-first design to a **model-first, instance-spec
 ```mermaid
 flowchart TB
     subgraph Authoring["Authoring and editing"]
-        Class["Python class schema<br/>Input / Output / Local / Global"] --> Instance["Python instance<br/>__init__ specialization and composition"]
+        Class["Python class schema<br/>Input / Output / typed fields / GlobalRef"] --> Instance["Python instance<br/>__init__ specialization and composition"]
         Instance --> Compile["instance.compile()"]
         GUI["xyflow editor"]
         AI["AI graph tools"]
@@ -37,7 +37,7 @@ The class defines the **static AutoSuite runtime schema** and must be inspectabl
 class DynamicTransfer(Function):
     source: Input[Zone]
     volumes: Input[Array[Volume]]
-    index: Local[Integer] = 0
+    index: Integer = 0
 ```
 
 The instance defines a **specialized program**:

@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.12", "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+        with:
+          version: "0.12.10"
+          python-version: ${{ matrix.python }}
+      - run: uv sync --locked
+      - run: uv run pytest src/sciloom/ir
+      - run: uv run python autosuite/tools/smoke_test.py
+      - run: uv run python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
+      - run: uv run python -m compileall -q examples/proposed_frontend

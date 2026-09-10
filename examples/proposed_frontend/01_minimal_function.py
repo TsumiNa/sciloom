@@ -1,6 +1,6 @@
 """Design example only: proposed restricted-Python frontend, not a runnable API."""
 
-from autosuite import Function, Input, Output, Local, Zone, Volume, Integer, runtime
+from sciloom import Function, Input, Output, Zone, Volume, Integer, runtime
 
 
 class TransferOne(Function):
@@ -9,7 +9,7 @@ class TransferOne(Function):
     volume: Input[Volume]
     status: Output[Integer]
 
-    attempts: Local[Integer] = 0
+    attempts: Integer = 0
 
     def __init__(self, *, operation_profile="default"):
         # Ordinary Python: compile-time specialization of this instance.

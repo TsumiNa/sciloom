@@ -30,7 +30,7 @@ The old ASPY-like textual view can still be useful for XML reverse rendering, di
 
 The proposed Python layer should feel like a typed model/schema system:
 
-- Pydantic-like declarations for Inputs/Outputs/Locals/Globals and units;
+- Pydantic-like declarations for inputs/outputs, plain typed runtime fields and explicit global references;
 - SQLAlchemy-like object relationships for function, parameter, zone, well and device references;
 - native Python syntax for runtime control flow where semantic equivalence exists;
 - explicit decorators/roles only for staging and AutoSuite-specific lifecycle concepts.
