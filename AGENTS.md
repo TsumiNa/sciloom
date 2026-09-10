@@ -21,7 +21,7 @@ required repository rules, not optional reference material.
 ## 1. Architecture invariants
 
 1. **Typed AutoSuite Semantic IR is the semantic source of truth.**
-2. The primary code frontend is a planned **restricted Python source language**. Python AST/CST analysis is intentional; arbitrary Python compatibility is not a goal.
+2. The primary code frontend is a **restricted Python source language**. Python AST/CST analysis is intentional; arbitrary Python compatibility is not a goal. The implemented subset is documented in `docs/12_PYTHON_FRONTEND.md`.
 3. **Class-level declarations define the static AutoSuite runtime schema.** Use `Input[T]`, `Output[T]` and plain SciLoom types (`index: Integer = 0`); there is no `Local[T]` wrapper. Ordinary Python types such as `int` remain host-time data. Future Application fields declare globals; Function `GlobalRef[T]` fields explicitly reference them.
 4. **The program/function instance is the compilation unit.** `__init__` and ordinary Python specialize/compose the instance before `instance.compile()`.
 5. Python is host/generation-time by default. There is no baseline `@comptime` decorator. Explicit decorators/registered roles mark AutoSuite runtime methods and event entry points (`runtime`, `main`, `on_start`, `on_error`, `on_stop`, etc.).

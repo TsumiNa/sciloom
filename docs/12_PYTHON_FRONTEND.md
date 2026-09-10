@@ -2,7 +2,8 @@
 
 `Function` classes declare runtime schema before instantiation. Calling
 `instance.to_ir()` reads registered runtime source and instance configuration,
-then returns a validated `sciloom.ir.Package`. ASFP compilation is the next stage.
+then returns a validated `sciloom.ir.Package`. `instance.compile()` additionally
+emits ASFP; see the [compiler guide](13_ASFP_COMPILER.md).
 
 See the runnable [function-call example](../examples/function_call.py):
 
@@ -63,4 +64,4 @@ the function call graph are rejected by the shared semantic validator.
 
 Global binding, Application and hardware/event APIs remain deferred. The proposed
 examples directory illustrates that broader design; only the subset documented
-here is currently executable. `.compile()` and ASFP writing belong to PR3.
+here is currently executable. `.compile()` and ASFP writing use the same lowering.
