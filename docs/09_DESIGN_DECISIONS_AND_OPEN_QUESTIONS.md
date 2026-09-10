@@ -21,6 +21,11 @@
 17. Do not use deprecated COM integration.
 18. Keep ArkSuite outside the compiler's assumptions until its vendor manual/API docs are obtained.
 19. Treat the AutoSuite manual as semantic documentation and the real corpus as serialization evidence; the manual does not define the `.asfp/.app` XML schema.
+20. Use plain SciLoom class annotations for internal runtime fields; omit `Local[T]`. Ordinary Python annotations remain host-time data.
+21. Application fields will declare globals. Function `GlobalRef[T]` dependencies bind explicitly with `bind_globals(...=app.ref(...))`; Python module globals are not target globals.
+22. First frontend source comes from ordinary `.py` files. Notebook, interactive and `exec()` definitions are deferred.
+23. Preserve native variable initialization behavior. Reset on each invocation only through explicit runtime assignment.
+24. Semantic format v1 uses explicit occurrence IDs and owned variable references; XML IDs are assigned by the backend. JSON import/export preserves IDs and semantic order.
 
 ## Important questions still open for formal refactor
 
@@ -29,7 +34,6 @@
 - Function versus Macro Task mapping in the Python object model.
 - Inheritance vs composition details for Function/Macro/Application program construction.
 - How constrained `for` syntax maps to repeat versus sequential/fragment execution.
-- How AutoSuite's stateful Macro-local initialization behavior should be represented or normalized.
 - Whether fatal handler `raise` is mandatory or can be implicit after a fatal handler.
 - Whether nested lexical fault regions can be lowered safely.
 - Whether any local recoverable `try/except` form is worth supporting.
@@ -37,5 +41,5 @@
 - Exact Python ↔ GUI round-trip guarantees.
 - How configuration/device/zone schemas are loaded and versioned.
 - Whether APP generation initially patches a known template or constructs selected application sections from scratch.
-- Persistence strategy for semantic IDs versus target XML IDs.
-- How runtime-method source/AST is retained robustly (source module/CST capture, decorator metadata, packaging) without relying on fragile runtime `inspect.getsource` behavior.
+- How the Python frontend preserves semantic IDs across source edits; JSON already preserves supplied IDs.
+- Source-module AST capture details for the `.py` frontend; unavailable source must produce a diagnostic.

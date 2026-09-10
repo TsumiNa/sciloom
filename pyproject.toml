@@ -47,3 +47,8 @@ max-complexity = 10
 # logged that it would skip, both in functions `uv run mypy` reported as clean. Enforced per
 # commit by the mypy hook in .pre-commit-config.yaml.
 check_untyped_defs = true
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]

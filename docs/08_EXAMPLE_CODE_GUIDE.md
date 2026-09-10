@@ -1,6 +1,6 @@
 # Proposed frontend example code guide
 
-The files in `examples/proposed_frontend/` are **architecture examples**, not an implemented public API. Names such as `autosuite.runtime`, `Input`, `Local` and `Function` are placeholders used to make the intended source-language semantics concrete.
+The files in `examples/proposed_frontend/` are **architecture examples**, not an implemented public API. Names such as `sciloom.runtime`, `Input`, `Integer` and `Function` are placeholders used to make the intended source-language semantics concrete.
 
 - `01_minimal_function.py` — class-level runtime schema, instance construction and `instance.compile()`.
 - `02_dynamic_transfer.py` — native `while`/`if`, arrays, units and AutoSuite function/task calls.

@@ -1,8 +1,12 @@
-# Project state before the Semantic IR refactor
+# Project state during the Semantic IR refactor
 
 ## Current compiler direction
 
-The project has converged on a **model-first, instance-specialized compiler architecture**. The `sciloom` Python package is a scaffold; Semantic IR and the new frontends are not implemented yet.
+The project has converged on a **model-first, instance-specialized compiler architecture**.
+`sciloom.ir` now provides immutable typed Function IR, validation and versioned JSON
+interchange. Python lowering, `Function.compile()` and the ASFP backend are the next
+two stages and are not implemented yet. See the [implementation sequence](refactor/semantic-ir/00-overview.md)
+and [IR API](11_SEMANTIC_IR.md).
 
 The current target is:
 

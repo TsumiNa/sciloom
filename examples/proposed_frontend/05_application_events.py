@@ -1,10 +1,10 @@
 """Design example: application/event semantic roles."""
 
-from autosuite import Application, Global, Boolean, on_start, on_error, on_stop, main
+from sciloom import Application, Boolean, on_start, on_error, on_stop, main
 
 
 class PolymerizationApplication(Application):
-    error_latched: Global[Boolean] = False
+    error_latched: Boolean = False
 
     @on_start
     def initialize(self):

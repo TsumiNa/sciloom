@@ -1,0 +1,57 @@
+"""Typed semantic IR, validated JSON interchange and frontend-neutral diagnostics."""
+
+from .codec import from_dict, from_json, to_dict, to_json
+from .diagnostics import Diagnostic, IRValidationError
+from .model import (
+    Assignment,
+    Binary,
+    BinaryOp,
+    Call,
+    Expression,
+    FunctionIR,
+    If,
+    InputBinding,
+    Literal,
+    OutputBinding,
+    Package,
+    Reference,
+    ScalarType,
+    SourceSpan,
+    Statement,
+    Unary,
+    UnaryOp,
+    Variable,
+    VariableRole,
+    While,
+)
+from .validation import validate
+
+__all__ = [
+    "Assignment",
+    "Binary",
+    "BinaryOp",
+    "Call",
+    "Diagnostic",
+    "Expression",
+    "FunctionIR",
+    "IRValidationError",
+    "If",
+    "InputBinding",
+    "Literal",
+    "OutputBinding",
+    "Package",
+    "Reference",
+    "ScalarType",
+    "SourceSpan",
+    "Statement",
+    "Unary",
+    "UnaryOp",
+    "Variable",
+    "VariableRole",
+    "While",
+    "from_dict",
+    "from_json",
+    "to_dict",
+    "to_json",
+    "validate",
+]
