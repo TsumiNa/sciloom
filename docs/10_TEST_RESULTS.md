@@ -36,8 +36,11 @@ reference materials listed in the manifest.
 Python frontend tests additionally cover static/inherited schema, scalar instance
 specialization, composed function bindings, source locations and explicit failures
 for unsupported host/runtime forms. The runnable function-call example lowers to
-validated IR. No ASFP serializer is implemented yet, so these tests must not be
-described as Python-to-ASFP or Executor acceptance.
+validated IR and ASFP. Compiler tests compare complete structures against Test12,
+Test10_FIXED3, Test09 and Test08 with identity-preserving UUID normalization. They
+also verify deterministic output, JSON/Python equivalence, source-instance
+preservation, boolean storage, generated names and file writing. These are
+Python-to-ASFP structural checks; Executor acceptance remains untested here.
 
 `AutoSuiteExecutor.exe` is not available here. Static validation does not establish
 Executor acceptance; generated applications must still pass the real integration gate:

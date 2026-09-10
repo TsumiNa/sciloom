@@ -37,6 +37,10 @@ PR1 merged as `de23cbff28ac64fe111e65a720f6aff3a5fbe838` after Python 3.12–3.1
 CI and Copilot review. Its sole comment about dev dependencies was resolved with
 clean-runner evidence that uv installs the dev group by default.
 
+PR2 merged as `7c9ad70952121fee92d8506bf7f01792e5b9246f` after Python 3.12–3.14
+CI and Copilot review. The reported default-type validation issue was fixed at
+class registration with regression tests before the merge.
+
 ## Non-goals
 
 Application/global binding implementation, event handlers, hardware tasks, arrays,
