@@ -1,11 +1,11 @@
 """Design example: fatal AutoSuite faults versus recoverable result-style errors."""
 
-from autosuite import Function, Input, Local, Zone, Integer, AutoSuiteError, runtime
+from sciloom import Function, Input, Zone, Integer, AutoSuiteError, runtime
 
 
 class LoadAndReact(Function):
     reactor: Input[Zone]
-    csv_status: Local[Integer] = 0
+    csv_status: Integer = 0
 
     @runtime
     def run(self):

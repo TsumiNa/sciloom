@@ -22,7 +22,7 @@ required repository rules, not optional reference material.
 
 1. **Typed AutoSuite Semantic IR is the semantic source of truth.**
 2. The primary code frontend is a planned **restricted Python source language**. Python AST/CST analysis is intentional; arbitrary Python compatibility is not a goal.
-3. **Class-level declarations define the static AutoSuite runtime schema.** `Input`, `Output`, `Local`, `Global`, constants/other target state must be discoverable before instantiation.
+3. **Class-level declarations define the static AutoSuite runtime schema.** Use `Input[T]`, `Output[T]` and plain SciLoom types (`index: Integer = 0`); there is no `Local[T]` wrapper. Ordinary Python types such as `int` remain host-time data. Future Application fields declare globals; Function `GlobalRef[T]` fields explicitly reference them.
 4. **The program/function instance is the compilation unit.** `__init__` and ordinary Python specialize/compose the instance before `instance.compile()`.
 5. Python is host/generation-time by default. There is no baseline `@comptime` decorator. Explicit decorators/registered roles mark AutoSuite runtime methods and event entry points (`runtime`, `main`, `on_start`, `on_error`, `on_stop`, etc.).
 6. `__init__` must not silently create new runtime fields in v1. Runtime field schema belongs at class level; instance attributes are compile-time values/components unless explicitly modeled otherwise.
@@ -59,7 +59,7 @@ Runtime state must be statically inspectable from the class definition, e.g.:
 ```python
 class Example(Function):
     source: Input[Zone]
-    index: Local[Integer] = 0
+    index: Integer = 0
 ```
 
 `__init__` is normal Python and may specialize the program:
@@ -81,6 +81,17 @@ artifact = program.compile(target=...)
 ```
 
 During AST/CST lowering, a `self.attr` reference is resolved against the registered class runtime schema first. Registered runtime fields become target symbol references; ordinary specialized instance attributes are compile-time values/components and may be constant-folded or used during lowering.
+
+Runtime source initially comes only from ordinary `.py` files. Do not add Notebook,
+interactive or `exec()` support to the first compiler. Internal variable defaults
+are target initial values, not an implicit reset on every call; use explicit runtime
+assignment when a reset is required.
+
+Future globals are declared on Application and bound explicitly with
+`function.bind_globals(name=app.ref("name"))`. `GlobalRef[T]` denotes shared runtime
+state, not a copied host value. Python module globals never become AutoSuite globals
+implicitly. Global binding and Application compilation are outside the first
+Function compiler sequence; see `docs/refactor/semantic-ir/00-overview.md`.
 
 ## 5. Error model
 
@@ -131,6 +142,7 @@ Prefer corpus-derived templates and explicit typed adapters for device-specific 
 Run at minimum:
 
 ```bash
+uv run pytest src/sciloom/ir
 python autosuite/tools/smoke_test.py
 python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
 ```
