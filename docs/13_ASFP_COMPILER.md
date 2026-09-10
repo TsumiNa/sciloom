@@ -80,6 +80,8 @@ Source spans are excluded. Recompilation produces identical bytes; different
 specializations receive distinct target IDs. Timestamps use a fixed zero epoch.
 Unsafe expression identifiers are mapped to safe local names, with references and
 call bindings using the same mapping. Macro counters avoid declared variable names.
+The manual requires variable names to start with an ASCII letter; JSON names
+starting with an underscore are therefore mapped even though Python would allow them.
 
 Tests compare complete normalized trees against Test12, Test10_FIXED3, Test09 and
 Test08. They ignore times, selected function names, function-list order and concrete

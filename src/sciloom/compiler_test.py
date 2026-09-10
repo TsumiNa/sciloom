@@ -192,13 +192,14 @@ def test_source_locations_do_not_change_artifact_identity():
     assert compile_ir(package).artifact == compile_ir(changed).artifact
 
 
-def test_json_symbol_names_cannot_inject_expressions():
+@pytest.mark.parametrize("name", ["result + 1", "_result"])
+def test_json_symbol_names_cannot_inject_expressions(name):
     package = Caller().to_ir()
     caller = package.functions[0]
     changed = replace(
         package,
         functions=(
-            replace(caller, variables=(replace(caller.variables[0], name="result + 1"),)),
+            replace(caller, variables=(replace(caller.variables[0], name=name),)),
             *package.functions[1:],
         ),
     )

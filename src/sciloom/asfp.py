@@ -70,7 +70,8 @@ class _Writer:
         for function in package.functions:
             used: set[str] = set()
             for i, variable in enumerate(function.variables):
-                candidate = variable.name if re.fullmatch(r"[A-Za-z_][A-Za-z_0-9]*", variable.name) else f"v_{i}"
+                # The manual requires an ASCII letter as the first character.
+                candidate = variable.name if re.fullmatch(r"[A-Za-z][A-Za-z_0-9]*", variable.name) else f"v_{i}"
                 if candidate.lower() in {"true", "false", "not", "and", "or"}:
                     candidate = f"v_{i}"
                 while candidate in used:
