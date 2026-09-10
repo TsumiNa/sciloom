@@ -26,3 +26,4 @@ jobs:
       - run: uv run python autosuite/tools/smoke_test.py
       - run: uv run python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
       - run: uv run python -m compileall -q examples/proposed_frontend
+      - run: uv run python examples/function_call.py

@@ -5,9 +5,11 @@
 The project has converged on a **model-first, instance-specialized compiler architecture**.
 `sciloom.ir` provides immutable typed Function IR, validation and versioned JSON
 interchange. The restricted Python `Function` frontend now lowers configured
-instances with `.to_ir()`. `Function.compile()` and the ASFP backend are the next
-stage. See the [implementation sequence](refactor/semantic-ir/00-overview.md),
-[IR API](11_SEMANTIC_IR.md) and [Python frontend](12_PYTHON_FRONTEND.md).
+instances with `.to_ir()` or emits ASFP through `.compile()`. The first Function
+compiler sequence is implemented and structurally checked against retained fixtures.
+See the [implementation sequence](refactor/semantic-ir/00-overview.md),
+[IR API](11_SEMANTIC_IR.md), [Python frontend](12_PYTHON_FRONTEND.md) and
+[ASFP compiler](13_ASFP_COMPILER.md). Executor simulation remains an external gate.
 
 The current target is:
 

@@ -7,6 +7,8 @@ from types import MappingProxyType
 from typing import Any, Callable, ClassVar, Generic, Mapping, NoReturn, TypeVar, get_args, get_origin, get_type_hints
 
 from .ir import Diagnostic, IRValidationError, Package, ScalarType, VariableRole
+from .compiler import CompileResult, compile_ir
+from .serialization import Target
 
 
 class Integer:
@@ -136,6 +138,10 @@ class Function:
         from .lowering import lower
 
         return lower(self)
+
+    def compile(self, *, target: Target | str = Target.AUTOSUITE_2_47_1_1) -> CompileResult:
+        """Compile this specialized instance into an AutoSuite function package."""
+        return compile_ir(self.to_ir(), target=target)
 
     def __call__(self, *args: Any, **kwargs: Any) -> Any:
         raise TypeError("Function calls in @runtime methods are compiled, not executed as Python.")

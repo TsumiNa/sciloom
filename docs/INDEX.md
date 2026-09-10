@@ -17,6 +17,7 @@ Read in numeric order, from the current project state through design and validat
 - [Validation status](10_TEST_RESULTS.md)
 - [Semantic IR and JSON API](11_SEMANTIC_IR.md)
 - [Python Function frontend](12_PYTHON_FRONTEND.md)
+- [ASFP compilation](13_ASFP_COMPILER.md)
 - [Implementation sequence](refactor/semantic-ir/00-overview.md)
 
 ## AutoSuite reference

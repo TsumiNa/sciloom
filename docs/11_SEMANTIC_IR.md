@@ -2,8 +2,8 @@
 
 `sciloom.ir` implements the first stage of the compiler. It can represent and
 validate functions directly or through JSON. The [Python Function frontend](12_PYTHON_FRONTEND.md)
-also lowers into this model. `instance.compile()` and the AutoSuite XML backend
-remain the next implementation stage.
+also lowers into this model. The [ASFP compiler](13_ASFP_COMPILER.md) consumes it
+through `instance.compile()` or `compile_ir(package)`.
 
 ## Architecture
 
@@ -12,7 +12,7 @@ flowchart LR
     Typed["Typed IR construction"] --> Validate["Structure, ownership and type checks"]
     JSON["Versioned JSON"] --> Decode["Strict typed decoding"] --> Validate
     Validate --> IR["Immutable Package"] --> Encode["Deterministic JSON export"]
-    IR -. "Next stages" .-> Backend["Serialization IR and ASFP"]
+    IR --> Backend["Serialization IR and ASFP"]
 ```
 
 `ir/model.py` defines immutable dataclasses and enums. `ir/validation.py` resolves
