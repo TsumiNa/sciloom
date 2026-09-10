@@ -1,9 +1,10 @@
 """Static runtime declarations and host-time Function instances."""
 
+import math
 from dataclasses import dataclass
 from functools import wraps
 from types import MappingProxyType
-from typing import Any, Callable, ClassVar, Generic, Mapping, TypeVar, get_args, get_origin, get_type_hints
+from typing import Any, Callable, ClassVar, Generic, Mapping, NoReturn, TypeVar, get_args, get_origin, get_type_hints
 
 from .ir import Diagnostic, IRValidationError, Package, ScalarType, VariableRole
 
@@ -42,7 +43,7 @@ class RuntimeField:
     default: bool | int | float | None = None
 
 
-def _schema_error(name: str, message: str, code: str = "class_schema") -> None:
+def _schema_error(name: str, message: str, code: str = "class_schema") -> NoReturn:
     raise IRValidationError((Diagnostic(code=code, message=message, path=f"$.schema.{name}"),))
 
 
@@ -114,6 +115,10 @@ class Function:
                 default = cls.__dict__.get(name)
             if role == VariableRole.INTERNAL and type(default) not in (bool, int, float):
                 _schema_error(name, "Internal variables require a scalar literal default.")
+            if role == VariableRole.INTERNAL:
+                allowed_types = {Integer: (int,), Real: (int, float), Boolean: (bool,)}[scalar]
+                if type(default) not in allowed_types or (type(default) is float and not math.isfinite(default)):
+                    _schema_error(name, f"Default must be a finite {scalar.__name__} value.")
             if role != VariableRole.INTERNAL and name in cls.__dict__:
                 _schema_error(name, "Parameter defaults are outside the first frontend subset.")
             field = RuntimeField(name=name, role=role, type=_TYPES[scalar], default=default)
