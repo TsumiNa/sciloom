@@ -1,0 +1,24 @@
+# Python and local environments
+__pycache__/
+*.py[cod]
+.venv/
+.uv-cache/
+*.egg-info/
+
+# Build and test outputs
+/build/
+/dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Local settings and secrets
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Local AutoSuite manual
+/autosuite/manual/

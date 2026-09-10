@@ -1,0 +1,33 @@
+# Latest app call graph
+
+- **<MAIN>** -> `util Make Csv`, `Import Csv Header`, `Import Csv Header`, `__GPC_SetLoad`, `__GPC_SetLoad`, `__GPC_SetInject`, `Run GPC Analysis XXX`, `N2 Control`, `Test Reactor Valve`, `Purge Reactor`, `Load Reagent Table`, `Non Zero Array Min`, `Dynamic Transfer Volumectrically`, `Dynamic Transfer Volumectrically`, `Export Wells Log`, `Label sample ID`, `Sample and Run GPC`, `Sample and Run GPC`, `Sample and Run GPC`, `Sample and Run GPC`, `Validate Polymerization Zone`, `N2 Control`, `Test Reactor Valve`, `Purge Reactor`, `Sample and Run GPC`, `Sample and Run GPC`, `Sample and Run GPC`, `Sample and Run GPC`
+- **<event type=2>** -> `N2 Closed`
+- **<event type=5>** -> `N2 Closed`
+- **Aspirate From Source** -> `Throw Error`, `_Aspirate`
+- **Check Well Interlock** -> `Get ISynth Drawer Index`, `Throw Error`
+- **Dilute and Mix** -> `Mix With Needle2`
+- **Dispense Chunk** -> `Throw Error`, `Throw Error`, `Throw Error`, `Get Well Zone With Index`, `Throw Error`, `Dispense To Destination`, `Dispense To Destination`, `Dispense To Destination`, `Dispense To Destination`
+- **Dispense To Destination** -> `Throw Error`, `_Dispense`
+- **Dynamic Transfer Volumectrically** -> `Throw Error`, `Throw Error`, `Throw Error`, `Get Well Zone With Index`, `Set ISynth Drawer Valve`, `Syringe Capasity`, `Get Aspirate Chunk`, `Throw Error`, `Aspirate From Source`, `Syringe Capasity`, `Get Aspirate Chunk`, `Throw Error`, `Aspirate From Source`, `Syringe Capasity`, `Get Aspirate Chunk`, `Throw Error`, `Aspirate From Source`, `Syringe Capasity`, `Get Aspirate Chunk`, `Throw Error`, `Aspirate From Source`, `Dispense Chunk`, `Dispense Chunk`, `Dispense Chunk`, `Dispense Chunk`, `Set ISynth Drawer Valve`
+- **Export Wells Log** -> `util Get Time Stamp`
+- **Get Aspirate Chunk** -> `Throw Error`, `Throw Error`, `Throw Error`, `Throw Error`, `Throw Error`, `Throw Error`
+- **Get ISynth Drawer Index** -> `Get Parent Element Name`, `Throw Error`, `Get Single Well ID`
+- **Get Parent Element Name** -> `Throw Error`, `Throw Error`
+- **Get Single Well ID** -> `Throw Error`, `Throw Error`
+- **Get Well Zone With Index** -> `Throw Error`
+- **Load Reagent** -> `Load Reagent Table`
+- **Load Reagent Table** -> `Throw Error`, `Throw Error`, `Throw Error`, `Throw Error`, `Throw Error`
+- **Prepare GPC Sample** -> `Prime All Port E`, `Prime 2nd Sringe Port F`
+- **Run GPC Analysis** -> `__GPC_InjectPort`, `__GPC_WashPortNeedle`, `Run HPLC`, `Run MALS`, `Run HPLC`, `Run MALS`
+- **Run GPC Analysis XXX** -> `__GPC_InjectPort`, `Run HPLC`, `Run MALS`, `__GPC_WashPortNeedle`
+- **Run MALS** -> `util Get Time Stamp`
+- **Sample and Run GPC** -> `Prepare GPC Sample`, `Mix With Needle2`, `Run GPC Analysis`
+- **Set ISynth Drawer State** -> `Get ISynth Drawer Index`
+- **Set ISynth Drawer Valve** -> `Get Parent Element Name`, `Throw Error`, `Throw Error`, `Set ISynth Drawer State`
+- **Syringe Capasity** -> `Throw Error`
+- **Zone Resolv** -> `Throw Error`
+- **_Aspirate** -> `Throw Error`, `Throw Error`, `Throw Error`
+- **_Dispense** -> `Throw Error`, `Throw Error`, `Throw Error`, `Throw Error`, `Check Well Interlock`, `Write Well Log`, `Write Well Log`, `Write Well Log`, `Write Well Log`
+- **__GPC_InjectPort** -> `__GPC_SetLoad`, `__GPC_SetInject`
+- **__GPC_SolventInject** -> `__GPC_SetLoad`, `__GPC_SetInject`
+- **__main** -> `Get Aspirate Chunk`

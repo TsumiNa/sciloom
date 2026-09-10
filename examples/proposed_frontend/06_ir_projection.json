@@ -1,0 +1,30 @@
+{
+  "program_unit": {
+    "node_id": "fn:dynamic-transfer",
+    "kind": "Function",
+    "name": "DynamicTransfer",
+    "inputs": [
+      {"symbol_id": "p:source", "name": "source_zone", "type": "Zone"},
+      {"symbol_id": "p:dest", "name": "destination_zone", "type": "Zone"},
+      {"symbol_id": "p:volumes", "name": "volumes", "type": "Array[Volume]"}
+    ],
+    "locals": [
+      {"symbol_id": "v:index", "name": "index", "type": "Integer", "initial": 0}
+    ],
+    "body": [
+      {
+        "node_id": "stmt:while-1",
+        "kind": "While",
+        "condition": {
+          "kind": "Compare",
+          "op": "<",
+          "lhs": {"kind": "VariableRef", "symbol_id": "v:index"},
+          "rhs": {"kind": "ArraySize", "symbol_id": "p:volumes"}
+        },
+        "body": [
+          {"node_id": "stmt:if-1", "kind": "If", "condition": "...", "body": ["..."]}
+        ]
+      }
+    ]
+  }
+}

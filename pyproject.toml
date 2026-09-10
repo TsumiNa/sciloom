@@ -1,0 +1,49 @@
+[project]
+name = "SciLoom"
+version = "0.1.0"
+description = "SciLoom — programmable scientific automation from one semantic model."
+readme = "README.md"
+requires-python = ">=3.12,<3.15"
+dependencies = []
+
+[build-system]
+requires = ["uv_build>=0.12.10,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "sciloom"
+
+[tool.ruff]
+exclude = [".venv", "venv", "__pycache__", ".git"]
+line-length = 120
+indent-width = 4
+
+[tool.ruff.lint]
+# PEP8
+select = [
+    "F", # Pyflakes
+    "E", # pycodestyle
+    "W", # pycodestyle
+]
+ignore = [
+    "F841", # unused-variable
+    "E741", # ambiguous-variable-name
+    "W505", # doc-line-too-long
+    "E501", # line-too-long (handled by formatter)
+]
+fixable = ["ALL"]
+
+[tool.ruff.format]
+quote-style = "double"
+skip-magic-trailing-comma = false
+
+[tool.ruff.lint.mccabe]
+# C901
+max-complexity = 10
+
+[tool.mypy]
+# Without this, mypy does not look inside any function that lacks annotations — which is most of
+# the training loop. PR #45 shipped a float into a dict[str, Tensor] and an opt.step() the branch
+# logged that it would skip, both in functions `uv run mypy` reported as clean. Enforced per
+# commit by the mypy hook in .pre-commit-config.yaml.
+check_untyped_defs = true
