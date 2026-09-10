@@ -10,6 +10,7 @@ import pytest
 from sciloom import Boolean, Function, Integer, compile_ir, runtime
 from sciloom.frontend_test import Caller, Counter
 from sciloom.ir import IRValidationError, SourceSpan, from_json, to_json
+from sciloom.serialization import SerializationIR
 
 FIXTURES = Path(__file__).resolve().parents[2] / "autosuite/asfp"
 
@@ -216,3 +217,22 @@ def test_invalid_xml_characters_are_diagnostics():
     changed = replace(package, functions=(replace(package.functions[0], name="bad\x00name"), *package.functions[1:]))
     with pytest.raises(IRValidationError, match="xml_text"):
         compile_ir(changed)
+
+
+@pytest.mark.parametrize(
+    "failure",
+    [
+        UnicodeEncodeError("utf-8", "\ud800", 0, 1, "surrogates not allowed"),
+        ValueError("invalid XML text"),
+        TypeError("cannot serialize text"),
+    ],
+)
+def test_xml_encoder_failures_use_the_compiler_diagnostic_contract(monkeypatch, failure):
+    def fail(self):
+        raise failure
+
+    monkeypatch.setattr(SerializationIR, "to_xml", fail)
+    with pytest.raises(IRValidationError) as error:
+        Caller().compile()
+    assert error.value.diagnostics[0].code == "xml_text"
+    assert error.value.__cause__ is failure

@@ -34,9 +34,10 @@ def compile_ir(package: Package, *, target: Target | str = Target.AUTOSUITE_2_47
     if diagnostics:
         raise IRValidationError(diagnostics)
     serialization_ir = lower_asfp(package, target)
-    artifact = serialization_ir.to_xml()
     try:
+        artifact = serialization_ir.to_xml()
         ET.fromstring(artifact)
-    except ET.ParseError as error:
+    except (ET.ParseError, ValueError, TypeError) as error:
+        # ValueError includes UnicodeError from XML encoding.
         raise IRValidationError((Diagnostic(code="xml_text", message=str(error), path="$"),)) from error
     return CompileResult(semantic_ir=package, serialization_ir=serialization_ir, artifact=artifact)
