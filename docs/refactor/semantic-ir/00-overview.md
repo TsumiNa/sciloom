@@ -33,6 +33,10 @@ is another source representation.
 The plan is included with PR1. Each PR must pass its own checks, complete review,
 address feedback and be squash-merged before implementation of the next begins.
 
+PR1 merged as `de23cbff28ac64fe111e65a720f6aff3a5fbe838` after Python 3.12–3.14
+CI and Copilot review. Its sole comment about dev dependencies was resolved with
+clean-runner evidence that uv installs the dev group by default.
+
 ## Non-goals
 
 Application/global binding implementation, event handlers, hardware tasks, arrays,

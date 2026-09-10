@@ -142,7 +142,7 @@ Prefer corpus-derived templates and explicit typed adapters for device-specific 
 Run at minimum:
 
 ```bash
-uv run pytest src/sciloom/ir
+uv run pytest src/sciloom
 python autosuite/tools/smoke_test.py
 python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
 ```
