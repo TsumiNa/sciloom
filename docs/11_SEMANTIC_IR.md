@@ -1,8 +1,9 @@
 # Semantic IR and JSON API
 
 `sciloom.ir` implements the first stage of the compiler. It can represent and
-validate functions directly or through JSON. The Python `Function` DSL,
-`instance.compile()` and AutoSuite XML backend are not implemented in this stage.
+validate functions directly or through JSON. The [Python Function frontend](12_PYTHON_FRONTEND.md)
+also lowers into this model. `instance.compile()` and the AutoSuite XML backend
+remain the next implementation stage.
 
 ## Architecture
 

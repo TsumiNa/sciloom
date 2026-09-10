@@ -6,8 +6,9 @@ SciLoom aims to let scientists and engineers author automation workflows through
 Python, a visual editor, and AI tools, all sharing one typed semantic model.
 AutoSuite is the initial target for compilation.
 
-Typed Function IR, validation and JSON interchange are available through
-`sciloom.ir`. Python authoring and AutoSuite compilation are under development.
+Restricted Python Function authoring, typed IR and JSON interchange are available.
+`instance.to_ir()` lowers a configured Function into the shared semantic model.
+AutoSuite artifact compilation is under development.
 
 ## Getting started
 
@@ -35,5 +36,7 @@ organization and provenance.
 - [Project status](docs/00_PROJECT_STATE.md)
 - [Architecture and design](docs/INDEX.md)
 - [Semantic IR and JSON API](docs/11_SEMANTIC_IR.md)
+- [Python Function frontend](docs/12_PYTHON_FRONTEND.md)
+- [Runnable function-call example](examples/function_call.py)
 - [Proposed Python examples](examples/proposed_frontend/) — illustrative, not runnable yet.
 - [Contributor and agent guidelines](AGENTS.md)

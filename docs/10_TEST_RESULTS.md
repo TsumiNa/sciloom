@@ -17,7 +17,7 @@ or its test suite. XML candidates and AutoSuite-fixed counterparts remain refere
 ## Commands
 
 ```bash
-uv run pytest src/sciloom/ir
+uv run pytest src/sciloom
 uv run python autosuite/tools/audit_corpus.py
 uv run python autosuite/tools/smoke_test.py
 uv run python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
@@ -33,8 +33,11 @@ existing smoke/recipe checks on Python 3.12, 3.13 and 3.14. The ignored local ma
 is not required by these CI checks; a full corpus audit still requires the local
 reference materials listed in the manifest.
 
-No Python frontend or ASFP serializer is implemented in this stage, so these tests
-must not be described as Python-to-ASFP or Executor acceptance.
+Python frontend tests additionally cover static/inherited schema, scalar instance
+specialization, composed function bindings, source locations and explicit failures
+for unsupported host/runtime forms. The runnable function-call example lowers to
+validated IR. No ASFP serializer is implemented yet, so these tests must not be
+described as Python-to-ASFP or Executor acceptance.
 
 `AutoSuiteExecutor.exe` is not available here. Static validation does not establish
 Executor acceptance; generated applications must still pass the real integration gate:
