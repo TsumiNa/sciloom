@@ -63,6 +63,10 @@ target; `serialization.py` contains immutable XML records and encoding. The inst
 package needs no reference corpus or third-party runtime dependencies to compile.
 
 The backend owns `typeid`s, UUIDs, parameter IDs, Macro containers and XML defaults.
+It currently retains fixed `.1` type identifiers. The suffix's formal meaning and
+compatibility across vendor versions remain an
+[open confirmation item](../autosuite/docs/05_SCHEMA_EXTRACTION_AND_CONFIRMED_STRUCTURE.md#typeid-suffix-provisional-assumption-and-open-question);
+no suffix calculation or variant handling is implemented.
 Internal variables become declarations on an enclosing Macro. Parameter-only
 functions can contain assignments/calls directly. While/If become conditional
 Macros; If/Else branches own `components` inside `SATaskCondition` tasks. Else-If
