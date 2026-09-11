@@ -2,7 +2,7 @@
 
 `Function` classes declare runtime schema before instantiation. Calling
 `instance.to_ir()` reads registered runtime source and instance configuration,
-then returns a validated `sciloom.ir.Package`. `instance.compile(target=...)` additionally
+then returns a validated `sciloom.ir.Program`. `instance.compile(target=...)` additionally
 emits the selected target's artifact. AutoSuiteTarget emits ASFP; see the
 [compiler guide](13_ASFP_COMPILER.md).
 
@@ -66,3 +66,8 @@ the function call graph are representable in IR; AutoSuiteTarget rejects recursi
 Global binding, Application and hardware/event APIs remain deferred. The proposed
 examples directory illustrates that broader design; only the subset documented
 here is currently executable. `.compile()` and ASFP writing use the same lowering.
+
+See the [execution contract](14_REFERENCE_EXECUTION.md) for independent IR
+semantics. AND/OR lower into short-circuit IR; AutoSuite currently rejects these
+operators until an equivalent target lowering is verified. Use explicit If
+statements when compiling to that target.

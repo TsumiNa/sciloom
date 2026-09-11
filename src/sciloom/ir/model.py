@@ -1,4 +1,4 @@
-"""Target-independent semantics for the first AutoSuite Function compiler.
+"""Target-independent semantics for the SciLoom scientific programs.
 
 IDs identify semantic occurrences, never XML objects. Tuples and frozen records
 make a validated package safe to share between frontends without hidden mutation.
@@ -134,7 +134,7 @@ class FunctionIR(Node):
 
 
 @dataclass(frozen=True, kw_only=True)
-class Package:
+class Program:
     """A selected entry function and the functions packaged with it.
 
     Internal variables belong to functions here. The XML backend determines the
@@ -143,4 +143,4 @@ class Package:
 
     entry_function_id: str
     functions: tuple[FunctionIR, ...] = ()
-    format_version: int = 1
+    format_version: int = 2

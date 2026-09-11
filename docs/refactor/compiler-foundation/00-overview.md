@@ -70,3 +70,6 @@ errors/budgets, retained domain intent and production XML field relationships.
 
 PR1: #5 merged as `70a88f0d58b62e9bda2747e80b4bd5d5ffd342f9`; 79 tests and
 Python 3.12–3.14 CI passed. Copilot acceptance-scope feedback was addressed.
+
+PR2: #6 merged as `ae53826916ae1897dfacbe45115d0b73456d3c8a`; 86 tests, type
+checks and three-version CI passed. Documentation review feedback was addressed.

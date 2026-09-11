@@ -2,13 +2,13 @@
 
 ## Architectural invariant
 
-The compiler is **model-first**. Typed AutoSuite Semantic IR is the central program representation shared across code, GUI and AI authoring paths.
+The compiler is **model-first**. Typed SciLoom Semantic IR is the central program representation shared across code, GUI and AI authoring paths.
 
 ```mermaid
 flowchart TB
     Class["Class definition<br/>Static runtime schema"] --> Instance["Python instance / __init__<br/>Host-time specialization"]
     Instance --> Compile["instance.compile()"]
-    Compile --> IR["Typed AutoSuite Semantic IR"]
+    Compile --> IR["Typed SciLoom Semantic IR"]
     Editors["xyflow / AI Skill-MCP"] <--> IR
     IR --> Checks["Symbol, type and unit validation<br/>AutoSuite and target checks"]
     Checks --> SIR["AutoSuite Serialization IR"]
@@ -90,7 +90,7 @@ For device-specific tasks, prefer corpus-derived XML templates plus typed adapte
 6. Resolve `self` references against class runtime fields vs specialized instance attributes.
 7. Resolve symbols, function/component relationships and compile-time constants.
 8. Infer/check AutoSuite types and physical units.
-9. Lower supported Python control flow into typed AutoSuite runtime semantics.
+9. Lower supported Python control flow into typed SciLoom runtime semantics.
 10. Validate AutoSuite rules (scope, recursion, sequential constraints, task requirements, error semantics).
 11. Resolve known configuration/zone/device references.
 12. Lower Semantic IR → Serialization IR.

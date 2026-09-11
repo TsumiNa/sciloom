@@ -2,11 +2,11 @@
 
 ## One model, multiple representations
 
-The agreed design is that all authoring paths converge on the same Typed AutoSuite Semantic IR.
+The agreed design is that all authoring paths converge on the same Typed SciLoom Semantic IR.
 
 ```mermaid
 flowchart TB
-    Python["Python source / compiler"] --> IR["Typed AutoSuite Semantic IR"]
+    Python["Python source / compiler"] --> IR["Typed SciLoom Semantic IR"]
     GUI["xyflow editor"] <--> IR
     AI["AI Skill / MCP / node-graph tools"] <--> IR
     classDef core fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e;

@@ -1,7 +1,7 @@
 """Symbol, type and control-flow validation shared by every frontend."""
 
 
-from .codec import _convert
+from .schema import _convert
 from .traversal import iter_nodes
 from ..diagnostics import Diagnostic, IRValidationError
 from .model import (
@@ -12,7 +12,7 @@ from .model import (
     If,
     Literal,
     Node,
-    Package,
+    Program,
     Reference,
     ScalarType,
     Statement,
@@ -27,14 +27,14 @@ def _assignable(source: ScalarType, target: ScalarType) -> bool:
     return source == target or (source == ScalarType.INTEGER and target == ScalarType.REAL)
 
 
-def validate(package: Package) -> tuple[Diagnostic, ...]:
-    """Return errors without modifying IR. An empty tuple means valid v1 semantics.
+def validate(package: Program) -> tuple[Diagnostic, ...]:
+    """Return errors without modifying IR. An empty tuple means valid v2 semantics.
 
     This does not prove Executor acceptance, loop termination or device safety.
     Programmatic construction and JSON import receive the same structural checks.
     """
     try:
-        _convert(package, Package, "$", encode=True)
+        _convert(package, Program, "$", encode=True)
     except IRValidationError as error:
         return error.diagnostics
     except RecursionError:
@@ -53,8 +53,8 @@ def validate(package: Package) -> tuple[Diagnostic, ...]:
             )
         )
 
-    if package.format_version != 1:
-        report("format_version", "Only semantic format version 1 is supported.", "$.format_version")
+    if package.format_version != 2:
+        report("format_version", "Only semantic format version 2 is supported.", "$.format_version")
 
     seen: dict[str, str] = {}
     for node, path in iter_nodes(package):

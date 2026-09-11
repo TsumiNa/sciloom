@@ -3,7 +3,7 @@
 ## Decisions accepted for the refactor
 
 1. Retire handwritten ASPY as the primary user-facing representation.
-2. Use a shared Typed AutoSuite Semantic IR as the semantic center.
+2. Use a shared Typed SciLoom Semantic IR as the semantic center.
 3. Build a Pydantic/SQLAlchemy-like restricted-Python DSL over that model.
 4. Treat the Python DSL as a restricted source language; deliberate AST/CST lowering is part of the compiler.
 5. Reuse native Python control flow where target semantics match.

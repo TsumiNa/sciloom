@@ -11,7 +11,7 @@ through `instance.compile(target=...)` or `compile_ir(package, target=...)`.
 flowchart LR
     Typed["Typed IR construction"] --> Validate["Structure, ownership and type checks"]
     JSON["Versioned JSON"] --> Decode["Strict typed decoding"] --> Validate
-    Validate --> IR["Immutable Package"] --> Encode["Deterministic JSON export"]
+    Validate --> IR["Immutable Program"] --> Encode["Deterministic JSON export"]
     IR --> Backend["Serialization IR and ASFP"]
 ```
 
@@ -28,7 +28,7 @@ of these constructors.
 
 ```python
 from sciloom.ir import (
-    Assignment, FunctionIR, Package, Reference, ScalarType,
+    Assignment, FunctionIR, Program, Reference, ScalarType,
     Variable, VariableRole, from_json, to_json, validate,
 )
 
@@ -47,7 +47,7 @@ identity = FunctionIR(
         value=Reference(node_id="ref:x", symbol_id="var:x"),
     ),),
 )
-package = Package(entry_function_id=identity.node_id, functions=(identity,))
+package = Program(entry_function_id=identity.node_id, functions=(identity,))
 assert validate(package) == ()
 assert from_json(to_json(package)) == package
 ```
@@ -59,7 +59,7 @@ assert from_json(to_json(package)) == package
 
 ## Semantic contract
 
-- A `Package` selects an entry function and contains all referenced functions.
+- A `Program` selects an entry function and contains all referenced functions.
   Calls reference `FunctionIR.node_id`; input/output bindings reference the callee's
   variable IDs, not names or positional indexes. Every parameter is bound once.
 - Each variable has an explicit `owner_id` matching its containing function, a
@@ -67,7 +67,7 @@ assert from_json(to_json(package)) == package
   Names are unique within a function. References cannot cross function ownership.
 - Internal variables require a literal initial value. This represents target
   initialization, not an implicit assignment at function entry. Parameter default
-  values are outside v1. Assignment and output-call destinations use variable references.
+  values are outside v2. Assignment and output-call destinations use variable references.
 - Expressions include typed literals, references, unary `+`/`-`/`not`, arithmetic
   `+`/`-`/`*`/`/`, comparisons and boolean `and`/`or`. Boolean is distinct from integer;
   integer-to-real widening is allowed, narrowing is not. Division produces real.
@@ -84,8 +84,8 @@ assert from_json(to_json(package)) == package
 ## JSON contract
 
 Use `to_dict()` / `from_dict()` for Python mappings and `to_json()` / `from_json()`
-for strings. Top-level `kind` is `Package` and `format_version` must explicitly be
-`1`. Every record has a `kind` tag matching its public dataclass name, including
+for strings. Top-level `kind` is `Program` and `format_version` must explicitly be
+`2`. Every record has a `kind` tag matching its public dataclass name, including
 bindings and source spans. Enums use their string values; tuples use JSON arrays.
 Required dataclass fields must be present; defaulted fields may be omitted on
 import. Export materializes defaults and emits sorted object keys, two-space
@@ -100,3 +100,6 @@ design material with placeholders, not documents in this implemented format.
 
 This contract establishes static validity only. It does not establish loop
 termination, device safety or acceptance by AutoSuite Executor.
+
+The [reference execution contract](14_REFERENCE_EXECUTION.md) defines value, state,
+call-frame and error behavior independently of target serialization.

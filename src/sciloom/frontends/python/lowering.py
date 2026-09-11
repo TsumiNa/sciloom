@@ -20,7 +20,7 @@ from ...ir import (
     IRValidationError,
     Literal,
     OutputBinding,
-    Package,
+    Program,
     Reference,
     ScalarType,
     SourceSpan,
@@ -51,7 +51,7 @@ _UNARY = {ast.UAdd: UnaryOp.POSITIVE, ast.USub: UnaryOp.NEGATIVE, ast.Not: Unary
 _MISSING = object()
 
 
-def lower(root: Function) -> Package:
+def lower(root: Function) -> Program:
     """Build a deterministic package from source and scalar instance configuration."""
     instances: list[Function] = [root]
     ids = {id(root): "fn:0"}
@@ -63,7 +63,7 @@ def lower(root: Function) -> Package:
         function = _FunctionLowerer(instance, function_id, instances, ids).build()
         functions.append(function)
         index += 1
-    package = Package(entry_function_id="fn:0", functions=tuple(functions))
+    package = Program(entry_function_id="fn:0", functions=tuple(functions))
     diagnostics = validate(package)
     if diagnostics:
         raise IRValidationError(diagnostics)
