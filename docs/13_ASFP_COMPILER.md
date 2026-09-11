@@ -45,6 +45,7 @@ JSON authoring uses the same compiler:
 ```python
 from pathlib import Path
 from sciloom import compile_ir
+from sciloom.backends.autosuite import AutoSuiteTarget
 from sciloom.ir import from_json
 
 package = from_json(Path("dist/function_call.ir.json").read_text())

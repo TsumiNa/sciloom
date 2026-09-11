@@ -3,7 +3,8 @@
 `Function` classes declare runtime schema before instantiation. Calling
 `instance.to_ir()` reads registered runtime source and instance configuration,
 then returns a validated `sciloom.ir.Package`. `instance.compile(target=...)` additionally
-emits ASFP; see the [compiler guide](13_ASFP_COMPILER.md).
+emits the selected target's artifact. AutoSuiteTarget emits ASFP; see the
+[compiler guide](13_ASFP_COMPILER.md).
 
 See the runnable [function-call example](../examples/function_call.py):
 
