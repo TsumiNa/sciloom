@@ -20,7 +20,7 @@ the codec. Common diagnostics and SourceSpan live outside the IR dependency grap
 
 Run `uv run python -m examples.developer.agitation_ir` from the repository root.
 It reuses the Function in `examples/agitation.py`, persists its IR to
-`dist/developer/agitation.ir.json`, reloads it and verifies start/stop behavior
+`examples/developer/agitation_ir.json`, reloads it and verifies start/stop behavior
 in a reference session. The experiment-author example compiles directly to ASFP
 and does not expose these development steps.
 

@@ -4,11 +4,13 @@ Run from the repository root:
     uv run python examples/function_call.py
 
 Expected terminal output:
-    dist/function_call.asfp
+    function_call.asfp
 
 The package contains Caller and Identity. Caller passes x=2.5 to Identity and
 binds its output y to the internal variable result. Identity assigns y=x.
 Compilation writes these instructions; it does not execute them.
+
+Full generated output: function_call.asfp, beside this source file.
 
 Generated ASFP excerpts (parameter IDs and other fields omitted):
 
@@ -66,5 +68,5 @@ class Caller(Function):
 
 if __name__ == "__main__":
     result = Caller().compile(target=AutoSuiteTarget())
-    path = result.write(Path("dist") / "function_call.asfp")
-    print(path)
+    path = result.write(Path(__file__).with_suffix(".asfp"))
+    print(path.name)

@@ -24,7 +24,7 @@ uv run python examples/agitation.py
 The distribution name is `SciLoom`; the Python import name is `sciloom`.
 
 The examples show Function authoring, target configuration and `.compile()`.
-They write `dist/function_call.asfp` and `dist/agitation.asfp`. Compilation does
+They write `examples/function_call.asfp` and `examples/agitation.asfp`. Compilation does
 not send commands to hardware; no knowledge of compiler internals is required.
 See the [compiler guide](docs/13_ASFP_COMPILER.md) for the API and validation scope.
 

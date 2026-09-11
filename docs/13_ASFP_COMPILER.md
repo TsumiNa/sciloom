@@ -11,7 +11,7 @@ Application, global binding and other device tasks remain deferred.
 uv run python examples/function_call.py
 ```
 
-This writes `dist/function_call.asfp` outside the reference corpus. The example is based on `Test12_FIXED_CallBinding_RealInOut.asfp`:
+This writes `examples/function_call.asfp` outside the reference corpus. The example is based on `Test12_FIXED_CallBinding_RealInOut.asfp`:
 an identity function accepts real `x` and writes real `y`; its caller passes `2.5`
 and binds the output to internal variable `result`. Function names and generated
 IDs differ; structure and parameter binding relationships match the fixture.
@@ -41,7 +41,7 @@ The generic result has no XML-specific field. Backend developers can inspect
 
 ## Agitation example
 
-`uv run python examples/agitation.py` writes `dist/agitation.asfp` using
+`uv run python examples/agitation.py` writes `examples/agitation.asfp` using
 `function.compile(target=target)`. Both user examples focus on Python authoring
 and ASFP export; neither exposes IR or executes a reference interpreter.
 The agitation function retains speed and enabled as runtime input parameters.
@@ -59,7 +59,7 @@ uv run python -m examples.developer.agitation_ir
 ```
 
 This separate example reuses ConfigureAgitation, obtains its Program through
-`.to_ir()`, saves `dist/developer/agitation.ir.json`, reloads it with `from_json`
+`.to_ir()`, saves `examples/developer/agitation_ir.json`, reloads it with `from_json`
 and checks start/stop behavior with Interpreter. It generates no ASFP. Reference
 execution and JSON interchange are development tools, not required compilation
 steps for experiment authors.

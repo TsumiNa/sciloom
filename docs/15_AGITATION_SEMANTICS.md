@@ -80,11 +80,11 @@ configuration. The adapter supports the observed individual-shaker profile only,
 not arbitrary agitation devices or dynamic Zone parameters.
 
 Experiment authors run `uv run python examples/agitation.py` to compile the
-Function directly to `dist/agitation.asfp`.
+Function directly to `examples/agitation.asfp`.
 
 SciLoom developers run `uv run python -m examples.developer.agitation_ir` from
 the repository root to inspect the same Function's IR, save and load
-`dist/developer/agitation.ir.json`, and check conditional start/stop with the
+`examples/developer/agitation_ir.json`, and check conditional start/stop with the
 reference interpreter. Runtime inputs remain parameters in the ASFP; the separate
 interpreter inputs do not specialize or run the exported file. The target accepts typed speeds in input/
 output bindings, local declarations and expressions.

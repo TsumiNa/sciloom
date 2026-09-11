@@ -4,9 +4,13 @@ Run from the repository root:
     uv run python -m examples.developer.agitation_ir
 
 Expected terminal output:
-    dist/developer/agitation.ir.json
+    agitation_ir.json
     Started: AgitationState(enabled=True, speed=RotationalSpeed(rps=10.0))
     Stopped: AgitationState(enabled=False, speed=RotationalSpeed(rps=10.0))
+
+Full generated output: agitation_ir.json, beside this source file.
+Source paths and line numbers in JSON describe the generating checkout; these
+diagnostic fields can differ when the example is rerun elsewhere.
 
 The JSON file stores the same Function's Program. Reloading it preserves the IR.
 The first run commands 600 rpm (10 revolutions per second); the second disables
@@ -29,8 +33,7 @@ if __name__ == "__main__":
     function = ConfigureAgitation(Agitator("reaction_mixer"))
     program = function.to_ir()
 
-    path = Path("dist/developer/agitation.ir.json")
-    path.parent.mkdir(parents=True, exist_ok=True)
+    path = Path(__file__).with_suffix(".json")
     path.write_text(to_json(program), encoding="utf-8")
     restored = from_json(path.read_text(encoding="utf-8"))
     assert restored == program
@@ -41,7 +44,7 @@ if __name__ == "__main__":
     assert started.events[0].enabled and started.events[0].speed == 600 * rpm
     assert not stopped.events[0].enabled and stopped.events[0].speed == 600 * rpm
 
-    print(path)
+    print(path.name)
     resource_id = program.resources[0].node_id
     print("Started:", started.resources[resource_id])
     print("Stopped:", stopped.resources[resource_id])

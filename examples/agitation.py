@@ -4,13 +4,15 @@ Run from the repository root:
     uv run python examples/agitation.py
 
 Expected terminal output:
-    dist/agitation.asfp
+    agitation.asfp
 
 The package contains ConfigureAgitation with two runtime inputs:
 shaker_speed (angularspeed) and enabled (bool). When enabled is true, it sets
 the supplied speed on Heater Shaker 23; otherwise it disables agitation.
 The speed stays an input parameter; compiling does not choose a speed or send
 commands to hardware.
+
+Full generated output: agitation.asfp, beside this source file.
 
 Generated ASFP excerpts (metadata and other fields omitted):
 
@@ -74,5 +76,5 @@ if __name__ == "__main__":
         )
     )
     result = function.compile(target=target)
-    path = result.write(Path("dist") / "agitation.asfp")
-    print(path)
+    path = result.write(Path(__file__).with_suffix(".asfp"))
+    print(path.name)
