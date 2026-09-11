@@ -5,8 +5,8 @@ from dataclasses import dataclass
 from enum import StrEnum
 
 
-class Target(StrEnum):
-    AUTOSUITE_2_47_1_1 = "autosuite-2.47.1.1"
+class AutoSuiteVersion(StrEnum):
+    V2_47_1_1 = "autosuite-2.47.1.1"
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -25,7 +25,7 @@ class XmlNode:
 
 @dataclass(frozen=True, kw_only=True)
 class SerializationIR:
-    target: Target
+    target: AutoSuiteVersion
     root: XmlNode
 
     def to_xml(self) -> bytes:

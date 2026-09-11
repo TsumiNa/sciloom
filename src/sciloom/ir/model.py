@@ -7,6 +7,8 @@ make a validated package safe to share between frontends without hidden mutation
 from dataclasses import dataclass
 from enum import StrEnum
 
+from ..diagnostics import SourceSpan
+
 
 class ScalarType(StrEnum):
     INTEGER = "integer"
@@ -39,15 +41,6 @@ class UnaryOp(StrEnum):
     POSITIVE = "+"
     NEGATIVE = "-"
     NOT = "not"
-
-
-@dataclass(frozen=True, kw_only=True)
-class SourceSpan:
-    """Optional Python origin: one-based line, zero-based UTF-8 byte column."""
-
-    path: str
-    line: int
-    column: int = 0
 
 
 @dataclass(frozen=True, kw_only=True)

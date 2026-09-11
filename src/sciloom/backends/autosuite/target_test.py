@@ -1,0 +1,24 @@
+"""Vendor restrictions must not constrain target-independent authoring."""
+
+import pytest
+
+from sciloom import compile_ir
+from sciloom.diagnostics import CompilationError
+from sciloom.ir import Call, FunctionIR, Package, from_json, to_json, validate
+from .target import AutoSuiteTarget
+
+
+@pytest.mark.parametrize("indirect", [False, True])
+def test_recursion_is_legal_ir_but_illegal_for_autosuite(indirect):
+    first = FunctionIR(node_id="a", name="A", body=(Call(node_id="call:a", function_id="b" if indirect else "a"),))
+    second = FunctionIR(node_id="b", name="B", body=(Call(node_id="call:b", function_id="a"),))
+    program = Package(entry_function_id="a", functions=(first, second) if indirect else (first,))
+    assert validate(program) == ()
+    assert from_json(to_json(program)) == program
+    with pytest.raises(CompilationError, match="recursive_call"):
+        compile_ir(program, target=AutoSuiteTarget())
+
+
+def test_unknown_vendor_version():
+    with pytest.raises(ValueError):
+        AutoSuiteTarget(version="unknown")
