@@ -5,7 +5,18 @@ from dataclasses import dataclass
 
 from ...compiler import Artifact
 from ...diagnostics import CompilationError, Diagnostic
-from ...ir import Binary, BinaryOp, Call, Program
+from ...ir import (
+    AgitatorResource,
+    Binary,
+    BinaryOp,
+    Call,
+    Literal,
+    Program,
+    ScalarType,
+    SetAgitation,
+    StopAgitation,
+    Variable,
+)
 from ...ir.traversal import iter_nodes
 from .lowering import lower_asfp
 from .xml import AutoSuiteVersion
@@ -38,6 +49,19 @@ class AutoSuiteTarget:
             for node, path in iter_nodes(program)
             if isinstance(node, Binary) and node.op in (BinaryOp.AND, BinaryOp.OR)
         ]
+        errors.extend(
+            Diagnostic(
+                code="unsupported_domain",
+                message="AutoSuite agitation mapping is not implemented yet.",
+                path=path,
+                node_id=node.node_id,
+                source=node.source,
+            )
+            for node, path in iter_nodes(program)
+            if isinstance(node, (AgitatorResource, SetAgitation, StopAgitation))
+            or isinstance(node, (Variable, Literal))
+            and node.type == ScalarType.ROTATIONAL_SPEED
+        )
         completed: set[str] = set()
         for root in calls:
             if root in completed:

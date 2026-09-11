@@ -2,12 +2,13 @@
 
 from typing import TYPE_CHECKING, Any
 
+from .units import RotationalSpeed, rpm, rps
 from .compiler import Artifact, CompileResult, Target, compile_ir
 
 if TYPE_CHECKING:
-    from .frontends.python.model import Boolean, Function, Input, Integer, Output, Real, RuntimeField, runtime
+    from .frontends.python.model import Agitator, Boolean, Function, Input, Integer, Output, Real, RuntimeField, runtime
 
-_FRONTEND_EXPORTS = {"Boolean", "Function", "Input", "Integer", "Output", "Real", "RuntimeField", "runtime"}
+_FRONTEND_EXPORTS = {"Agitator", "Boolean", "Function", "Input", "Integer", "Output", "Real", "RuntimeField", "runtime"}
 
 
 def __getattr__(name: str) -> Any:
@@ -20,6 +21,10 @@ def __getattr__(name: str) -> Any:
 
 
 __all__ = [
+    "Agitator",
+    "RotationalSpeed",
+    "rpm",
+    "rps",
     "Artifact",
     "Boolean",
     "CompileResult",

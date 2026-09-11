@@ -6,6 +6,7 @@ from functools import wraps
 from types import MappingProxyType
 from typing import Any, Callable, ClassVar, Generic, Mapping, NoReturn, TypeVar, get_args, get_origin, get_type_hints
 
+from ...units import RotationalSpeed
 from ...ir import Diagnostic, IRValidationError, Program, ScalarType, VariableRole
 from ...compiler import CompileResult, Target, compile_ir
 
@@ -33,7 +34,12 @@ class Output(Generic[T]):
     """Typed function output declaration."""
 
 
-_TYPES = {Integer: ScalarType.INTEGER, Real: ScalarType.REAL, Boolean: ScalarType.BOOLEAN}
+_TYPES = {
+    Integer: ScalarType.INTEGER,
+    Real: ScalarType.REAL,
+    Boolean: ScalarType.BOOLEAN,
+    RotationalSpeed: ScalarType.ROTATIONAL_SPEED,
+}
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -41,7 +47,7 @@ class RuntimeField:
     name: str
     role: VariableRole
     type: ScalarType
-    default: bool | int | float | None = None
+    default: bool | int | float | RotationalSpeed | None = None
 
 
 def _schema_error(name: str, message: str, code: str = "class_schema") -> NoReturn:
@@ -99,7 +105,7 @@ class Function:
             scalar = get_args(annotation)[0] if is_parameter else annotation
             if scalar not in _TYPES:
                 if is_parameter or name in inherited:
-                    _schema_error(name, "Runtime fields require Integer, Real or Boolean.")
+                    _schema_error(name, "Runtime fields require Integer, Real, Boolean or RotationalSpeed.")
                 continue
             if name in Function.__dict__ or name.startswith("_"):
                 _schema_error(name, "Runtime field name conflicts with the model API.")
@@ -114,10 +120,15 @@ class Function:
                 default = inherited[name].default
             else:
                 default = cls.__dict__.get(name)
-            if role == VariableRole.INTERNAL and type(default) not in (bool, int, float):
+            if role == VariableRole.INTERNAL and type(default) not in (bool, int, float, RotationalSpeed):
                 _schema_error(name, "Internal variables require a scalar literal default.")
             if role == VariableRole.INTERNAL:
-                allowed_types = {Integer: (int,), Real: (int, float), Boolean: (bool,)}[scalar]
+                allowed_types = {
+                    Integer: (int,),
+                    Real: (int, float),
+                    Boolean: (bool,),
+                    RotationalSpeed: (RotationalSpeed,),
+                }[scalar]
                 if type(default) not in allowed_types or (type(default) is float and not math.isfinite(default)):
                     _schema_error(name, f"Default must be a finite {scalar.__name__} value.")
             if role != VariableRole.INTERNAL and name in cls.__dict__:
@@ -144,3 +155,20 @@ class Function:
 
     def __call__(self, *args: Any, **kwargs: Any) -> Any:
         raise TypeError("Function calls in @runtime methods are compiled, not executed as Python.")
+
+
+@dataclass(frozen=True)
+class Agitator:
+    """A named logical component, bound to hardware only by the selected target."""
+
+    resource_id: str
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.resource_id, str) or not self.resource_id.strip():
+            raise ValueError("Agitator requires a nonempty logical resource ID.")
+
+    def set_speed(self, speed: RotationalSpeed) -> NoReturn:
+        raise TypeError("Agitator operations belong in compiled @runtime methods.")
+
+    def stop(self) -> NoReturn:
+        raise TypeError("Agitator operations belong in compiled @runtime methods.")

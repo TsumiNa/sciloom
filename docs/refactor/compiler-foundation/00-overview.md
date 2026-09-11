@@ -73,3 +73,6 @@ Python 3.12–3.14 CI passed. Copilot acceptance-scope feedback was addressed.
 
 PR2: #6 merged as `ae53826916ae1897dfacbe45115d0b73456d3c8a`; 86 tests, type
 checks and three-version CI passed. Documentation review feedback was addressed.
+
+PR3: #7 merged as `287d9de9db76a19223492fe0099bd8ac52de790d`; 104 tests and
+Python 3.12–3.14 CI passed. Migration/version review feedback was addressed.

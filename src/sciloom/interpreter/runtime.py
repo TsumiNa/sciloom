@@ -7,9 +7,12 @@ from dataclasses import dataclass
 from types import MappingProxyType
 from typing import NoReturn
 
+from ..units import RotationalSpeed
 from ..diagnostics import Diagnostic, ExecutionError, IRValidationError
 from ..ir import (
     Assignment,
+    SetAgitation,
+    StopAgitation,
     BinaryOp,
     Call,
     Expression,
@@ -29,6 +32,7 @@ from ..ir import (
 from ..ir.model import Node
 
 ScalarValue = bool | int | float
+InputValue = ScalarValue | RotationalSpeed
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -44,10 +48,26 @@ class ExecutionConfig:
 
 
 @dataclass(frozen=True, kw_only=True)
+class AgitationState:
+    enabled: bool = False
+    speed: RotationalSpeed | None = None
+
+
+@dataclass(frozen=True, kw_only=True)
+class AgitationEvent:
+    node_id: str
+    resource_id: str
+    enabled: bool
+    speed: RotationalSpeed | None
+
+
+@dataclass(frozen=True, kw_only=True)
 class ExecutionResult:
-    outputs: Mapping[str, ScalarValue]
+    outputs: Mapping[str, InputValue]
     state: Mapping[str, Mapping[str, ScalarValue]]
     steps: int
+    resources: Mapping[str, AgitationState]
+    events: tuple[AgitationEvent, ...]
 
 
 class Interpreter:
@@ -67,6 +87,8 @@ class Interpreter:
         self._variables = {v.node_id: v for f in program.functions for v in f.variables}
         self._state: dict[str, dict[str, ScalarValue]] = {f.node_id: {} for f in program.functions}
         self._steps = 0
+        self._resources = {r.node_id: AgitationState() for r in program.resources}
+        self._events: list[AgitationEvent] = []
         for variable in self._variables.values():
             if variable.role == VariableRole.INTERNAL:
                 assert variable.initial is not None
@@ -97,32 +119,59 @@ class Interpreter:
             ScalarType.INTEGER: (int,),
             ScalarType.REAL: (int, float),
             ScalarType.BOOLEAN: (bool,),
+            ScalarType.ROTATIONAL_SPEED: (int, float),
         }[scalar]
         if type(value) not in allowed:
             self._fail("runtime_type", f"Expected {scalar.value}, received {type(value).__name__}.", node)
         try:
-            result = float(value) if scalar == ScalarType.REAL else value
+            result = float(value) if scalar in (ScalarType.REAL, ScalarType.ROTATIONAL_SPEED) else value
         except OverflowError:
             self._fail("numeric_error", "Value cannot be represented as a finite real.", node)
         if isinstance(result, float) and not math.isfinite(result):
             self._fail("numeric_error", "Nonfinite real value.", node)
+        if scalar == ScalarType.ROTATIONAL_SPEED and result < 0:
+            self._fail("invalid_speed", "Rotational speed must be nonnegative.", node)
         return result
 
-    def run(self, *, inputs: Mapping[str, ScalarValue] | None = None) -> ExecutionResult:
+    def run(self, *, inputs: Mapping[str, InputValue] | None = None) -> ExecutionResult:
         entry = self._functions[self.program.entry_function_id]
         values = {} if inputs is None else dict(inputs)
         parameters = [v for v in entry.variables if v.role == VariableRole.INPUT]
         if set(values) != {v.name for v in parameters}:
             self._fail("input_binding", "Supply exactly the entry function's named inputs.", entry)
-        arguments = {v.node_id: self._coerce(values[v.name], v.type, v) for v in parameters}
+        arguments = {}
+        for parameter in parameters:
+            value = values[parameter.name]
+            if parameter.type == ScalarType.ROTATIONAL_SPEED:
+                if not isinstance(value, RotationalSpeed):
+                    self._fail(
+                        "runtime_type", "A rotational-speed input requires a quantity such as 600 * rpm.", parameter
+                    )
+                value = value.rps
+            elif isinstance(value, RotationalSpeed):
+                self._fail("runtime_type", "A quantity cannot be passed to a scalar input.", parameter)
+            arguments[parameter.node_id] = self._coerce(value, parameter.type, parameter)
         self._steps = 0
+        self._events = []
         try:
             outputs = self._call(entry, arguments, 1)
         except RecursionError:
             self._fail("execution_depth", "Reference evaluation exceeded the host nesting limit.")
-        named = {v.name: outputs[v.node_id] for v in entry.variables if v.role == VariableRole.OUTPUT}
+        named = {
+            v.name: (
+                RotationalSpeed(rps=outputs[v.node_id]) if v.type == ScalarType.ROTATIONAL_SPEED else outputs[v.node_id]
+            )
+            for v in entry.variables
+            if v.role == VariableRole.OUTPUT
+        }
         snapshot = {key: MappingProxyType(dict(value)) for key, value in self._state.items()}
-        return ExecutionResult(outputs=MappingProxyType(named), state=MappingProxyType(snapshot), steps=self._steps)
+        return ExecutionResult(
+            outputs=MappingProxyType(named),
+            state=MappingProxyType(snapshot),
+            steps=self._steps,
+            resources=MappingProxyType(dict(self._resources)),
+            events=tuple(self._events),
+        )
 
     def _read(self, reference: Reference, frame: dict[str, ScalarValue]) -> ScalarValue:
         variable = self._variables[reference.symbol_id]
@@ -215,5 +264,25 @@ class Interpreter:
                 outputs = self._call(callee, arguments, depth + 1)
                 for binding in statement.outputs:
                     self._write(binding.target, outputs[binding.parameter_id], frame)
+            elif isinstance(statement, (SetAgitation, StopAgitation)):
+                previous = self._resources[statement.resource_id]
+                if isinstance(statement, SetAgitation):
+                    speed = RotationalSpeed(
+                        rps=self._coerce(
+                            self._expression(statement.speed, frame), ScalarType.ROTATIONAL_SPEED, statement
+                        )
+                    )
+                    state = AgitationState(enabled=True, speed=speed)
+                else:
+                    state = AgitationState(enabled=False, speed=previous.speed)
+                self._resources[statement.resource_id] = state
+                self._events.append(
+                    AgitationEvent(
+                        node_id=statement.node_id,
+                        resource_id=statement.resource_id,
+                        enabled=state.enabled,
+                        speed=state.speed,
+                    )
+                )
             else:
                 self._fail("unsupported_operation", f"Cannot execute {type(statement).__name__}.", statement)

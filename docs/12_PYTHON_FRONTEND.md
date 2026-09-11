@@ -63,7 +63,8 @@ IDs are deterministic for repeated lowering of an unchanged instance graph/sourc
 but are not promised stable across source edits or component reordering. Cycles in
 the function call graph are representable in IR; AutoSuiteTarget rejects recursion.
 
-Global binding, Application and hardware/event APIs remain deferred. The proposed
+Global binding, Application and event APIs remain deferred. The first supported
+domain operation is [agitation](15_AGITATION_SEMANTICS.md). The proposed
 examples directory illustrates that broader design; only the subset documented
 here is currently executable. `.compile()` and ASFP writing use the same lowering.
 

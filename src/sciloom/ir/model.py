@@ -14,6 +14,7 @@ class ScalarType(StrEnum):
     INTEGER = "integer"
     REAL = "real"
     BOOLEAN = "boolean"
+    ROTATIONAL_SPEED = "rotational_speed"
 
 
 class VariableRole(StrEnum):
@@ -123,7 +124,29 @@ class While(Node):
     body: tuple["Statement", ...] = ()
 
 
-Statement = Assignment | Call | If | While
+@dataclass(frozen=True, kw_only=True)
+class AgitatorResource(Node):
+    """A logical agitation controller, independent of zones and vendor IDs."""
+
+    logical_id: str
+
+
+@dataclass(frozen=True, kw_only=True)
+class SetAgitation(Node):
+    """Enable the resource and command its rotational-speed setpoint."""
+
+    resource_id: str
+    speed: Expression
+
+
+@dataclass(frozen=True, kw_only=True)
+class StopAgitation(Node):
+    """Disable the resource without promising any physical mixing outcome."""
+
+    resource_id: str
+
+
+Statement = Assignment | Call | If | While | SetAgitation | StopAgitation
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -143,4 +166,5 @@ class Program:
 
     entry_function_id: str
     functions: tuple[FunctionIR, ...] = ()
+    resources: tuple[AgitatorResource, ...] = ()
     format_version: int = 2

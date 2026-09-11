@@ -6,9 +6,13 @@ import tokenize
 from collections.abc import Sequence
 from typing import Any, NoReturn, cast
 
-from .model import Function
+from .model import Agitator, Function
+from ...units import RotationalSpeed, SpeedUnit
 from ...ir import (
     Assignment,
+    AgitatorResource,
+    SetAgitation,
+    StopAgitation,
     Binary,
     BinaryOp,
     Call,
@@ -56,14 +60,15 @@ def lower(root: Function) -> Program:
     instances: list[Function] = [root]
     ids = {id(root): "fn:0"}
     functions: list[FunctionIR] = []
+    resources: dict[str, AgitatorResource] = {}
     index = 0
     while index < len(instances):
         instance = instances[index]
         function_id = ids[id(instance)]
-        function = _FunctionLowerer(instance, function_id, instances, ids).build()
+        function = _FunctionLowerer(instance, function_id, instances, ids, resources).build()
         functions.append(function)
         index += 1
-    package = Program(entry_function_id="fn:0", functions=tuple(functions))
+    package = Program(entry_function_id="fn:0", functions=tuple(functions), resources=tuple(resources.values()))
     diagnostics = validate(package)
     if diagnostics:
         raise IRValidationError(diagnostics)
@@ -71,11 +76,20 @@ def lower(root: Function) -> Program:
 
 
 class _FunctionLowerer:
-    def __init__(self, instance: Function, function_id: str, instances: list[Function], ids: dict[int, str]):
+    def __init__(
+        self,
+        instance: Function,
+        function_id: str,
+        instances: list[Function],
+        ids: dict[int, str],
+        resources: dict[str, AgitatorResource],
+    ):
         self.instance = instance
         self.function_id = function_id
         self.instances = instances
         self.ids = ids
+        self.resources = resources
+        self.unit_names: dict[str, SpeedUnit] = {}
         self.filename = ""
         self.sequence = 0
 
@@ -111,6 +125,7 @@ class _FunctionLowerer:
         if len(methods) != 1:
             self.fail("runtime_method", "A Function requires exactly one @runtime instance method.")
         method = methods[0]
+        self.unit_names = {name: value for name, value in method.__globals__.items() if isinstance(value, SpeedUnit)}
         self.filename = method.__code__.co_filename
         if not self.filename.endswith(".py"):
             self.fail("source_unavailable", "Runtime source must come from an ordinary .py file.")
@@ -147,7 +162,9 @@ class _FunctionLowerer:
                 initial = Literal(
                     node_id=f"{self.symbol(field.name)}:initial",
                     type=field.type,
-                    value=cast(bool | int | float, field.default),
+                    value=field.default.rps
+                    if isinstance(field.default, RotationalSpeed)
+                    else cast(bool | int | float, field.default),
                 )
             variables.append(
                 Variable(
@@ -189,6 +206,24 @@ class _FunctionLowerer:
             if node.attr in self.instance.model_fields:
                 return Reference(**self.metadata(node), symbol_id=self.symbol(node.attr))
             value = self.host_attribute(node.attr)
+        elif (
+            isinstance(node, ast.BinOp)
+            and isinstance(node.op, ast.Mult)
+            and isinstance(node.right, ast.Name)
+            and node.right.id in self.unit_names
+        ):
+            number = self.expression(node.left)
+            if not isinstance(number, Literal) or number.type not in (ScalarType.INTEGER, ScalarType.REAL):
+                self.fail(
+                    "quantity_literal",
+                    "Unit literals require a host numeric value; use Input[RotationalSpeed] for runtime inputs.",
+                    node,
+                )
+            try:
+                speed = self.unit_names[node.right.id].__rmul__(number.value)
+            except (ValueError, TypeError) as error:
+                self.fail("quantity_literal", str(error), node)
+            return Literal(**self.metadata(node), type=ScalarType.ROTATIONAL_SPEED, value=speed.rps)
         elif isinstance(node, ast.BinOp) and type(node.op) in _BINARY:
             return Binary(
                 **self.metadata(node),
@@ -214,6 +249,8 @@ class _FunctionLowerer:
             return result
         else:
             self.fail("python_subset", f"Unsupported runtime expression: {type(node).__name__}.", node)
+        if isinstance(value, RotationalSpeed):
+            return Literal(**self.metadata(node), type=ScalarType.ROTATIONAL_SPEED, value=value.rps)
         scalar = {bool: ScalarType.BOOLEAN, int: ScalarType.INTEGER, float: ScalarType.REAL}.get(type(value))
         if scalar is None:
             self.fail("host_value", "Only scalar bool/int/float host values can enter runtime expressions.", node)
@@ -258,6 +295,38 @@ class _FunctionLowerer:
                 for field, target in zip(outputs, targets)
             ),
         )
+
+    def operation(self, node: ast.Call) -> SetAgitation | StopAgitation | None:
+        method = node.func
+        if not (
+            isinstance(method, ast.Attribute)
+            and isinstance(method.value, ast.Attribute)
+            and isinstance(method.value.value, ast.Name)
+            and method.value.value.id == "self"
+        ):
+            return None
+        component = self.host_attribute(method.value.attr)
+        if not isinstance(component, Agitator):
+            return None
+        if method.attr == "set_speed":
+            if len(node.args) == 1 and not node.keywords:
+                speed = self.expression(node.args[0])
+            elif not node.args and len(node.keywords) == 1 and node.keywords[0].arg == "speed":
+                speed = self.expression(node.keywords[0].value)
+            else:
+                self.fail("operation_binding", "set_speed requires exactly one speed argument.", node)
+        elif method.attr == "stop":
+            if node.args or node.keywords:
+                self.fail("operation_binding", "stop takes no arguments.", node)
+        else:
+            self.fail("unsupported_operation", f"Unknown agitator operation {method.attr!r}.", node)
+        resource = self.resources.setdefault(
+            component.resource_id,
+            AgitatorResource(node_id=f"resource:{component.resource_id}", logical_id=component.resource_id),
+        )
+        if method.attr == "set_speed":
+            return SetAgitation(**self.metadata(node), resource_id=resource.node_id, speed=speed)
+        return StopAgitation(**self.metadata(node), resource_id=resource.node_id)
 
     def statements(self, body: list[ast.stmt]) -> tuple[Statement, ...]:
         statements: list[Statement] = []
@@ -306,7 +375,8 @@ class _FunctionLowerer:
                     While(**self.metadata(node), condition=self.expression(node.test), body=self.statements(node.body))
                 )
             elif isinstance(node, ast.Expr) and isinstance(node.value, ast.Call):
-                statements.append(self.call(node.value, []))
+                operation = self.operation(node.value)
+                statements.append(operation if operation is not None else self.call(node.value, []))
             else:
                 self.fail("python_subset", f"Unsupported runtime statement: {type(node).__name__}.", node)
         return tuple(statements)

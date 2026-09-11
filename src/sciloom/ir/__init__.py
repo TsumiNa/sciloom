@@ -3,6 +3,9 @@
 from .codec import from_dict, from_json, to_dict, to_json
 from ..diagnostics import Diagnostic, IRValidationError
 from .model import (
+    AgitatorResource,
+    SetAgitation,
+    StopAgitation,
     Assignment,
     Binary,
     BinaryOp,
@@ -27,6 +30,9 @@ from .model import (
 from .validation import validate
 
 __all__ = [
+    "AgitatorResource",
+    "SetAgitation",
+    "StopAgitation",
     "Assignment",
     "Binary",
     "BinaryOp",
