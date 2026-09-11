@@ -20,13 +20,13 @@ required repository rules, not optional reference material.
 
 ## 1. Architecture invariants
 
-1. **Typed AutoSuite Semantic IR is the semantic source of truth.**
+1. **Typed SciLoom Semantic IR is the semantic source of truth.**
 2. The primary code frontend is a **restricted Python source language**. Python AST/CST analysis is intentional; arbitrary Python compatibility is not a goal. The implemented subset is documented in `docs/12_PYTHON_FRONTEND.md`.
-3. **Class-level declarations define the static AutoSuite runtime schema.** Use `Input[T]`, `Output[T]` and plain SciLoom types (`index: Integer = 0`); there is no `Local[T]` wrapper. Ordinary Python types such as `int` remain host-time data. Future Application fields declare globals; Function `GlobalRef[T]` fields explicitly reference them.
+3. **Class-level declarations define the static SciLoom runtime schema.** Use `Input[T]`, `Output[T]` and plain SciLoom types (`index: Integer = 0`); there is no `Local[T]` wrapper. Ordinary Python types such as `int` remain host-time data. Future Application fields declare globals; Function `GlobalRef[T]` fields explicitly reference them.
 4. **The program/function instance is the compilation unit.** `__init__` and ordinary Python specialize/compose the instance before `instance.compile()`.
 5. Python is host/generation-time by default. There is no baseline `@comptime` decorator. Explicit decorators/registered roles mark AutoSuite runtime methods and event entry points (`runtime`, `main`, `on_start`, `on_error`, `on_stop`, etc.).
 6. `__init__` must not silently create new runtime fields in v1. Runtime field schema belongs at class level; instance attributes are compile-time values/components unless explicitly modeled otherwise.
-7. `.compile()` belongs on the AutoSuite model instance (typically inherited from a common base) and should return a compile result without mutating the semantic meaning of the source instance.
+7. `.compile()` belongs on the SciLoom model instance (typically inherited from a common base) and should return a compile result without mutating the semantic meaning of the source instance.
 8. xyflow and AI tooling must operate on the same semantic IR, directly or through the deterministic Python frontend.
 9. `.app/.asfp` XML is a versioned serialization backend. Do not leak `typeid`, UUID or parameter-ID mechanics into the public DSL unless unavoidable.
 10. Keep a thin Serialization IR/backend layer between Semantic IR and XML.
@@ -152,3 +152,12 @@ Run `python autosuite/tools/audit_corpus.py` after reference changes. Syntax-che
 ## 9. Documentation location
 
 Keep project/design Markdown under `docs/` and AutoSuite-specific reference Markdown under `autosuite/docs/`. Root Markdown is limited to `README.md` and `AGENTS.md`.
+
+## 10. Compiler and reference-execution boundaries
+
+The Python frontend, IR and target backends have separate ownership. Target
+selection is explicit. Generic compilation must not import AutoSuite or assume
+XML. Program/JSON v2 is the current semantic contract; see
+[reference execution](docs/14_REFERENCE_EXECUTION.md). Keep vendor restrictions
+(such as recursion) in target validation. The reference interpreter specifies
+SciLoom behavior and is not evidence of vendor numerical or physical equivalence.

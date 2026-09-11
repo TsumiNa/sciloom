@@ -31,7 +31,7 @@ program = DynamicTransfer(valve_group_size=8)
 artifact = program.compile(target=isynth)
 ```
 
-The frontend compiler lowers Python AST/CST nodes from registered runtime methods into Typed AutoSuite Semantic IR. It does **not** execute runtime methods as ordinary Python.
+The frontend compiler lowers Python AST/CST nodes from registered runtime methods into Typed SciLoom Semantic IR. It does **not** execute runtime methods as ordinary Python.
 
 ## Why Python AST analysis is appropriate here
 

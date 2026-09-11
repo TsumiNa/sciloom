@@ -5,7 +5,7 @@ from dataclasses import dataclass
 
 from ...compiler import Artifact
 from ...diagnostics import CompilationError, Diagnostic
-from ...ir import Call, Package
+from ...ir import Binary, BinaryOp, Call, Program
 from ...ir.traversal import iter_nodes
 from .lowering import lower_asfp
 from .xml import AutoSuiteVersion
@@ -22,12 +22,22 @@ class AutoSuiteTarget:
     def target_id(self) -> str:
         return self.version.value
 
-    def validate(self, program: Package) -> tuple[Diagnostic, ...]:
+    def validate(self, program: Program) -> tuple[Diagnostic, ...]:
         calls = {
             f.node_id: [(n, p) for n, p in iter_nodes(f, f"$.functions[{i}]") if isinstance(n, Call)]
             for i, f in enumerate(program.functions)
         }
-        errors = []
+        errors = [
+            Diagnostic(
+                code="unsupported_short_circuit",
+                message="AutoSuite short-circuit equivalence is unverified; lower to explicit If statements.",
+                path=path,
+                node_id=node.node_id,
+                source=node.source,
+            )
+            for node, path in iter_nodes(program)
+            if isinstance(node, Binary) and node.op in (BinaryOp.AND, BinaryOp.OR)
+        ]
         completed: set[str] = set()
         for root in calls:
             if root in completed:
@@ -58,7 +68,7 @@ class AutoSuiteTarget:
                     stack.append((call.function_id, iter(calls[call.function_id])))
         return tuple(errors)
 
-    def emit(self, program: Package) -> Artifact:
+    def emit(self, program: Program) -> Artifact:
         serialization_ir = lower_asfp(program, self.version)
         try:
             content = serialization_ir.to_xml()

@@ -11,7 +11,7 @@ Its main value was discovering AutoSuite's semantic ontology: typed state, Funct
 ```mermaid
 flowchart TB
     Python["Python source"] --> AST["AST / CST lowering"]
-    AST --> IR["Typed AutoSuite Semantic IR"]
+    AST --> IR["Typed SciLoom Semantic IR"]
     GUI["xyflow graph"] <--> IR
     AI["AI graph / API"] <--> IR
     AI -->|"Generate source"| Python

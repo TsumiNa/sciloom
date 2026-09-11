@@ -3,7 +3,7 @@
 ## Decisions accepted for the refactor
 
 1. Retire handwritten ASPY as the primary user-facing representation.
-2. Use a shared Typed AutoSuite Semantic IR as the semantic center.
+2. Use a shared Typed SciLoom Semantic IR as the semantic center.
 3. Build a Pydantic/SQLAlchemy-like restricted-Python DSL over that model.
 4. Treat the Python DSL as a restricted source language; deliberate AST/CST lowering is part of the compiler.
 5. Reuse native Python control flow where target semantics match.
@@ -25,7 +25,7 @@
 21. Application fields will declare globals. Function `GlobalRef[T]` dependencies bind explicitly with `bind_globals(...=app.ref(...))`; Python module globals are not target globals.
 22. First frontend source comes from ordinary `.py` files. Notebook, interactive and `exec()` definitions are deferred.
 23. Preserve native variable initialization behavior. Reset on each invocation only through explicit runtime assignment.
-24. Semantic format v1 uses explicit occurrence IDs and owned variable references; XML IDs are assigned by the backend. JSON import/export preserves IDs and semantic order.
+24. Semantic format v2 uses explicit occurrence IDs and owned variable references; XML IDs are assigned by the backend. JSON import/export preserves IDs and semantic order.
 
 ## Important questions still open for formal refactor
 

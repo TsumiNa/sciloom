@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Protocol, runtime_checkable
 
 from .diagnostics import CompilationError, Diagnostic, IRValidationError
-from .ir import Package, validate
+from .ir import Program, validate
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -20,14 +20,14 @@ class Target(Protocol):
     @property
     def target_id(self) -> str: ...
 
-    def validate(self, program: Package) -> tuple[Diagnostic, ...]: ...
+    def validate(self, program: Program) -> tuple[Diagnostic, ...]: ...
 
-    def emit(self, program: Package) -> Artifact: ...
+    def emit(self, program: Program) -> Artifact: ...
 
 
 @dataclass(frozen=True, kw_only=True)
 class CompileResult:
-    semantic_ir: Package
+    semantic_ir: Program
     target_id: str
     artifact: Artifact
     diagnostics: tuple[Diagnostic, ...] = ()
@@ -40,7 +40,7 @@ class CompileResult:
         return destination
 
 
-def compile_ir(program: Package, *, target: Target) -> CompileResult:
+def compile_ir(program: Program, *, target: Target) -> CompileResult:
     """Compile any author's IR; neither Python parsing nor XML belongs here."""
     if not isinstance(target, Target):
         raise TypeError("target must implement target_id, validate(program) and emit(program).")

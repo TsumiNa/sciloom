@@ -56,7 +56,7 @@ compile_ir(package, target=AutoSuiteTarget()).write("dist/from_json.asfp")
 
 ```mermaid
 flowchart LR
-    Python["Function instance"] --> Lower["Python AST lowering"] --> Semantic["Typed Package"]
+    Python["Function instance"] --> Lower["Python AST lowering"] --> Semantic["Typed Program"]
     JSON["JSON import"] --> Semantic
     Semantic --> Validate["Shared semantic validation"]
     Validate --> Target["Explicit target validation"] --> Backend["ASFP mapping and target IDs"]

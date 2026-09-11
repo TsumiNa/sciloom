@@ -33,3 +33,7 @@ class IRValidationError(DiagnosticError):
 
 class CompilationError(DiagnosticError):
     """A target cannot validate or emit this program."""
+
+
+class ExecutionError(DiagnosticError):
+    """Reference execution stopped with an invalid operation or exhausted budget."""

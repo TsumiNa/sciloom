@@ -14,7 +14,7 @@ flowchart TB
         GUI["xyflow editor"]
         AI["AI graph tools"]
     end
-    Compile --> IR["Typed AutoSuite Semantic IR"]
+    Compile --> IR["Typed SciLoom Semantic IR"]
     GUI <--> IR
     AI <--> IR
     subgraph Backend["Validation and serialization"]

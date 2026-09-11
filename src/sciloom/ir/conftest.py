@@ -9,7 +9,7 @@ from sciloom.ir import (
     InputBinding,
     Literal,
     OutputBinding,
-    Package,
+    Program,
     Reference,
     ScalarType,
     Variable,
@@ -18,7 +18,7 @@ from sciloom.ir import (
 
 
 @pytest.fixture
-def package() -> Package:
+def package() -> Program:
     """The semantic shape of Test12: identity function + caller storing 2.5."""
     callee = FunctionIR(
         node_id="fn:identity",
@@ -74,4 +74,4 @@ def package() -> Package:
             ),
         ),
     )
-    return Package(entry_function_id=caller.node_id, functions=(callee, caller))
+    return Program(entry_function_id=caller.node_id, functions=(callee, caller))

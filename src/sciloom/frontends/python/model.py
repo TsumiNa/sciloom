@@ -6,20 +6,20 @@ from functools import wraps
 from types import MappingProxyType
 from typing import Any, Callable, ClassVar, Generic, Mapping, NoReturn, TypeVar, get_args, get_origin, get_type_hints
 
-from ...ir import Diagnostic, IRValidationError, Package, ScalarType, VariableRole
+from ...ir import Diagnostic, IRValidationError, Program, ScalarType, VariableRole
 from ...compiler import CompileResult, Target, compile_ir
 
 
 class Integer:
-    """AutoSuite integer runtime type (not Python int)."""
+    """SciLoom integer runtime type (not Python int)."""
 
 
 class Real:
-    """AutoSuite real runtime type (not Python float)."""
+    """SciLoom real runtime type (not Python float)."""
 
 
 class Boolean:
-    """AutoSuite boolean runtime type (not Python bool)."""
+    """SciLoom boolean runtime type (not Python bool)."""
 
 
 T = TypeVar("T")
@@ -70,14 +70,14 @@ def runtime(method: Callable[..., Any]) -> Callable[..., Any]:
 
     @wraps(method)
     def registered(*args: Any, **kwargs: Any) -> Any:
-        raise TypeError("AutoSuite runtime methods must be compiled, not executed as Python.")
+        raise TypeError("SciLoom runtime methods must be compiled, not executed as Python.")
 
     setattr(registered, "__sciloom_runtime__", method)
     return registered
 
 
 class Function:
-    """Base for statically declared, instance-specialized AutoSuite functions."""
+    """Base for statically declared, instance-specialized SciLoom functions."""
 
     model_fields: ClassVar[Mapping[str, RuntimeField]] = MappingProxyType({})
 
@@ -132,7 +132,7 @@ class Function:
         for name, field in registered.items():
             setattr(cls, name, _RuntimeSlot(field))
 
-    def to_ir(self) -> Package:
+    def to_ir(self) -> Program:
         """Lower this instance without changing its configuration or runtime schema."""
         from .lowering import lower
 

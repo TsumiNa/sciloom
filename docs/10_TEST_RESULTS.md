@@ -7,7 +7,7 @@ Reference reorganization validation, 2026-09-11:
 - Current application: decompressed XML matches byte-for-byte; all 52 function packages match the application's XML nodes.
 - Schema references: 67 type templates parse and have valid source paths and matching type IDs.
 - Reference catalogs, relocation hashes and the current manifest: verified.
-- Package smoke and supplied CSV validation: pass.
+- Program smoke and supplied CSV validation: pass.
 - Six proposed Python frontend examples: syntax-check pass; they remain design examples, not an implemented runtime API.
 - Structural inspector: traverses untyped XML containers to display nested typed tasks.
 

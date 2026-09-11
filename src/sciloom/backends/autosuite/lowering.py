@@ -23,7 +23,7 @@ from ...ir import (
     FunctionIR,
     If,
     Literal,
-    Package,
+    Program,
     Reference,
     ScalarType,
     Statement,
@@ -57,7 +57,7 @@ def _without_source(value: Any) -> Any:
     return value
 
 
-def lower_asfp(package: Package, target: AutoSuiteVersion) -> SerializationIR:
+def lower_asfp(package: Program, target: AutoSuiteVersion) -> SerializationIR:
     """Lower a validated package, allocating target IDs within its semantic digest."""
     digest = hashlib.sha256(json.dumps(_without_source(to_dict(package)), sort_keys=True).encode()).hexdigest()
     namespace = uuid5(NAMESPACE_URL, f"https://sciloom.invalid/{target.value}/{digest}")
@@ -65,7 +65,7 @@ def lower_asfp(package: Package, target: AutoSuiteVersion) -> SerializationIR:
 
 
 class _Writer:
-    def __init__(self, package: Package, namespace: Any):
+    def __init__(self, package: Program, namespace: Any):
         self.package = package
         self.namespace = namespace
         self.functions = {function.node_id: function for function in package.functions}

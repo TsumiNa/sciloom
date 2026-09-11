@@ -12,7 +12,7 @@ from sciloom.ir import (
     FunctionIR,
     If,
     Literal,
-    Package,
+    Program,
     Reference,
     ScalarType,
     SourceSpan,
@@ -68,7 +68,7 @@ def test_nested_control_flow():
             ),
         ),
     )
-    program = Package(
+    program = Program(
         entry_function_id="fn",
         functions=(
             FunctionIR(
@@ -144,7 +144,7 @@ def test_recursion_is_a_target_policy(indirect):
         ),
     )
     second = FunctionIR(node_id="b", name="B", body=(Call(node_id="call:b", function_id="a"),))
-    package = Package(entry_function_id="a", functions=(first, second) if indirect else (first,))
+    package = Program(entry_function_id="a", functions=(first, second) if indirect else (first,))
     assert validate(package) == ()
 
 
@@ -156,7 +156,7 @@ def test_duplicate_ids_and_wrong_ownership(package):
 
 
 def test_empty_package_and_dangling_callee(package):
-    assert "entry_function" in {d.code for d in validate(Package(entry_function_id="absent"))}
+    assert "entry_function" in {d.code for d in validate(Program(entry_function_id="absent"))}
     _, caller = package.functions
     diagnostics = validate(replace(package, functions=(caller,)))
     assert "unknown_function" in {d.code for d in diagnostics}
@@ -226,7 +226,7 @@ def test_expression_types(op, left, right, target, error):
             ),
         ),
     )
-    diagnostics = validate(Package(entry_function_id="fn", functions=(function,)))
+    diagnostics = validate(Program(entry_function_id="fn", functions=(function,)))
     assert [d.code for d in diagnostics] == ([] if error is None else [error])
 
 
