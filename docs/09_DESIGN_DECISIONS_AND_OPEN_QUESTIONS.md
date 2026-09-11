@@ -25,7 +25,7 @@
 21. Application fields will declare globals. Function `GlobalRef[T]` dependencies bind explicitly with `bind_globals(...=app.ref(...))`; Python module globals are not target globals.
 22. First frontend source comes from ordinary `.py` files. Notebook, interactive and `exec()` definitions are deferred.
 23. Preserve native variable initialization behavior. Reset on each invocation only through explicit runtime assignment.
-24. Semantic format v1 uses explicit occurrence IDs and owned variable references; XML IDs are assigned by the backend. JSON import/export preserves IDs and semantic order.
+24. Semantic format v2 uses explicit occurrence IDs and owned variable references; XML IDs are assigned by the backend. JSON import/export preserves IDs and semantic order.
 
 ## Important questions still open for formal refactor
 

@@ -78,7 +78,7 @@ assert from_json(to_json(package)) == package
 - IDs identify occurrences. Even two reads of the same variable have distinct
   node IDs and the same `symbol_id`. Variable, function, statement and expression
   IDs share a package-wide namespace. The caller supplies IDs; import never invents them.
-- Global ownership and binding remain a future extension. V1 rejects foreign
+- Global ownership and binding remain a future extension. V2 rejects foreign
   variable references, unknown roles and unsupported kinds instead of guessing.
 
 ## JSON contract

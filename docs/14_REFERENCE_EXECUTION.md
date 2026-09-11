@@ -10,7 +10,7 @@ semantics; it is not AutoSuite simulation and does not control hardware.
 The root is `Program`, selecting an entry FunctionIR and containing specialized
 function instances. Semantic IDs identify occurrences and ownership, never target
 objects. JSON uses kind `Program` and explicit format_version `2`. Version 1 and
-the old Program import are rejected rather than silently migrated.
+the old Package import are rejected rather than silently migrated.
 
 `ir/schema.py` defines structural conversion independently of the JSON codec.
 Both typed validation and the codec use it; semantic validation does not import

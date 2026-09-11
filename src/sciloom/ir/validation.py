@@ -193,13 +193,13 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
             names.add(variable.name)
             if variable.initial is not None:
                 if variable.role != VariableRole.INTERNAL:
-                    report("initializer_role", "Only internal variable initializers are supported in v1.", vp, variable)
+                    report("initializer_role", "Only internal variable initializers are supported in the current IR.", vp, variable)
                 initial = expression(variable.initial, function, f"{vp}.initial")
                 check_assignment(initial, variable.type, vp, variable)
             elif variable.role == VariableRole.INTERNAL:
                 report(
                     "missing_initializer",
-                    "Internal variables need an explicit literal initial value in v1.",
+                    "Internal variables need an explicit literal initial value in the current IR.",
                     vp,
                     variable,
                 )
