@@ -37,7 +37,7 @@ future work; ASFP and reference execution are implemented now.
 | `interpreter/runtime.py` | Reference evaluation, call frames, persistent state, budgets and domain events |
 | `compiler.py` | Target protocol, shared compilation pipeline and generic byte artifacts |
 | `backends/autosuite/target.py` | Vendor version/configuration and target restrictions |
-| `backends/autosuite/lowering.py` | Function/control-flow mapping, target names and IDs |
+| `backends/autosuite/codegen.py` | Function/control-flow mapping, target names and IDs |
 | `backends/autosuite/agitation.py` | Individual-shaker binding and typed Stir adapter |
 | `backends/autosuite/xml.py` | Immutable serialization records and XML encoding |
 | `diagnostics.py` | Shared errors, diagnostics and source locations |
@@ -71,6 +71,19 @@ validate and emit it. A target returns an Artifact containing bytes, media type
 and suffix. Unsupported target semantics fail with diagnostics. Recursion and
 short-circuit operators are currently rejected by AutoSuite; they remain valid
 in the reference semantics. Target limitations must not narrow the shared model.
+
+`compiler.py` contains both an interface (`Target`) and a concrete shared pipeline
+(`compile_ir`), plus `Artifact` and `CompileResult`. AutoSuiteTarget implements
+the Target protocol structurally: it provides `target_id`, `validate(program)`
+and `emit(program)` without needing to inherit a compiler class. Its emission
+uses `codegen.py` to map Program into SerializationIR and `xml.py` to encode XML.
+A future backend can implement the same protocol with its own validation and output
+format; the shared pipeline does not change or acquire vendor-specific imports.
+
+Python `lowering.py` consumes source and produces semantic IR. AutoSuite
+`codegen.py` consumes that IR and produces a target-specific structure; it never
+parses Python. Its helper is called `lower_asfp` because this internal step lowers
+semantics into serialization records, before the final XML encoding.
 
 ## Preserve high-level intent until target lowering
 

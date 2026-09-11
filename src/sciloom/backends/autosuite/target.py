@@ -8,7 +8,7 @@ from ...diagnostics import CompilationError, Diagnostic
 from ...ir import Binary, BinaryOp, Call, Program
 from ...ir.traversal import iter_nodes
 from .agitation import IndividualShakerBinding
-from .lowering import lower_asfp
+from .codegen import lower_asfp
 from .xml import AutoSuiteVersion
 
 
