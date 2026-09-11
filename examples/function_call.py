@@ -1,4 +1,41 @@
-"""For experiment authors: compose functions and export an ASFP package."""
+"""For experiment authors: compose functions and export an ASFP package.
+
+Run from the repository root:
+    uv run python examples/function_call.py
+
+Expected terminal output:
+    dist/function_call.asfp
+
+The package contains Caller and Identity. Caller passes x=2.5 to Identity and
+binds its output y to the internal variable result. Identity assigns y=x.
+Compilation writes these instructions; it does not execute them.
+
+Generated ASFP excerpts (parameter IDs and other fields omitted):
+
+    Execute Function input binding:
+        <item0>
+          <!-- parameter ID omitted -->
+          <name>x</name>
+          <variablename />
+          <variabletype>realnumber</variabletype>
+          <isarray>0</isarray>
+          <expression>2.5</expression>
+        </item0>
+
+    Execute Function output binding:
+        <item0>
+          <!-- parameter ID omitted -->
+          <name>y</name>
+          <variablename>result</variablename>
+          <variabletype>realnumber</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item0>
+
+    Identity's Set Variable task:
+        <variablename>y</variablename>
+        <expressiontext>x</expressiontext>
+"""
 
 from pathlib import Path
 

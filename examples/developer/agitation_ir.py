@@ -3,8 +3,18 @@
 Run from the repository root:
     uv run python -m examples.developer.agitation_ir
 
+Expected terminal output:
+    dist/developer/agitation.ir.json
+    Started: AgitationState(enabled=True, speed=RotationalSpeed(rps=10.0))
+    Stopped: AgitationState(enabled=False, speed=RotationalSpeed(rps=10.0))
+
+The JSON file stores the same Function's Program. Reloading it preserves the IR.
+The first run commands 600 rpm (10 revolutions per second); the second disables
+agitation while retaining the last known commanded speed in reference state.
+These are reference-model states, not measurements of a physical device.
+
 Reuse the experiment author's Function, then inspect the compiler boundary.
-Reference execution records commands and state; it never controls hardware.
+This developer example writes JSON and executes the restored IR; it emits no ASFP.
 """
 
 from pathlib import Path
@@ -32,4 +42,6 @@ if __name__ == "__main__":
     assert not stopped.events[0].enabled and stopped.events[0].speed == 600 * rpm
 
     print(path)
-    print("Reference commands:", started.events, stopped.events)
+    resource_id = program.resources[0].node_id
+    print("Started:", started.resources[resource_id])
+    print("Stopped:", stopped.resources[resource_id])
