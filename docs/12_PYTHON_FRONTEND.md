@@ -61,7 +61,7 @@ Distinct instances of the same class remain separate specializations. Child
 functions are discovered in runtime source order; unused components are omitted.
 IDs are deterministic for repeated lowering of an unchanged instance graph/source,
 but are not promised stable across source edits or component reordering. Cycles in
-the function call graph are rejected by the shared semantic validator.
+the function call graph are representable in IR; AutoSuiteTarget rejects recursion.
 
 Global binding, Application and hardware/event APIs remain deferred. The proposed
 examples directory illustrates that broader design; only the subset documented
