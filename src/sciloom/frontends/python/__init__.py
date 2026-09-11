@@ -1,0 +1,1 @@
+"""Restricted Python source frontend."""

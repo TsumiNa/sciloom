@@ -1,8 +1,8 @@
 """SciLoom — programmable scientific automation from one semantic model."""
 
-from .frontend import Boolean, Function, Input, Integer, Output, Real, RuntimeField, runtime
+from .frontends.python.model import Boolean, Function, Input, Integer, Output, Real, RuntimeField, runtime
 from .compiler import CompileResult, compile_ir
-from .serialization import Target
+from .backends.autosuite.xml import Target
 
 __all__ = [
     "Boolean",
