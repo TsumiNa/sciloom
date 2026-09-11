@@ -22,6 +22,7 @@ class AutoSuiteTarget:
         object.__setattr__(self, "agitators", tuple(self.agitators))
         logical_ids: set[str] = set()
         device_ids: set[str] = set()
+        zones: set[str] = set()
         for binding in self.agitators:
             if not isinstance(binding, IndividualShakerBinding):
                 raise TypeError("agitators must contain IndividualShakerBinding records.")
@@ -29,8 +30,11 @@ class AutoSuiteTarget:
                 raise ValueError(f"Duplicate logical agitation binding: {binding.logical_id}")
             if binding.device_id in device_ids:
                 raise ValueError(f"Distinct resources cannot alias shaker device {binding.device_id}.")
+            if binding.zone in zones:
+                raise ValueError(f"Distinct resources cannot bind the same AutoSuite zone {binding.zone!r}.")
             logical_ids.add(binding.logical_id)
             device_ids.add(binding.device_id)
+            zones.add(binding.zone)
 
     @property
     def target_id(self) -> str:

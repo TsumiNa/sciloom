@@ -47,7 +47,7 @@ Python-to-ASFP structural checks; Executor acceptance remains untested here.
 
 ## Compiler foundation verification
 
-137 tests pass locally after the agitation backend stage. The suite includes:
+138 tests pass locally after the agitation backend stage. The suite includes:
 independent IR execution with frontend/backend imports blocked; a test-only
 non-XML target; source/JSON/direct-IR equivalence; session and call-frame state;
 errors, budgets and short-circuiting; typed quantities and retained agitation

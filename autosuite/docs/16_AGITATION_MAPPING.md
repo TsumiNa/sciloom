@@ -54,7 +54,7 @@ shaker `23`. This is the runnable example's deployment binding; a regression
 test checks the configuration relationship.
 
 The backend requires explicit bindings and rejects missing/unknown logical IDs,
-duplicate logical IDs and aliasing of distinct resources onto one shaker.
+duplicate logical IDs and aliasing of distinct resources onto one shaker or zone.
 It does not load the reference corpus during compilation. The caller must supply
 a zone and shaker that exist together in the deployment application. Automatic
 configuration discovery, other agitation mechanisms, multi-device zones and

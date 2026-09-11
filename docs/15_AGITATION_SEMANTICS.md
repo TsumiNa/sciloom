@@ -75,7 +75,7 @@ result = function.compile(target=target)
 
 This configuration belongs to the target, not Program. The device ID is the
 shaker address, not the vessel/rack address in the Zone. Missing or unknown
-bindings fail compilation; duplicate logical bindings and physical aliases fail
+bindings fail compilation; duplicate logical bindings, zones and physical aliases fail
 configuration. The adapter supports the observed individual-shaker profile only,
 not arbitrary agitation devices or dynamic Zone parameters.
 
