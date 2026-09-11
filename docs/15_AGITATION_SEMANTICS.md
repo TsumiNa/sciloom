@@ -79,10 +79,14 @@ bindings fail compilation; duplicate logical bindings, zones and physical aliase
 configuration. The adapter supports the observed individual-shaker profile only,
 not arbitrary agitation devices or dynamic Zone parameters.
 
-Run `uv run python examples/agitation.py` for conditional start/stop reference
-execution and generated `dist/agitation.asfp` / `dist/agitation.ir.json`.
-Runtime inputs remain parameters in the ASFP; the interpreter inputs do not
-specialize or run the exported file. The target accepts typed speeds in input/
+Experiment authors run `uv run python examples/agitation.py` to compile the
+Function directly to `examples/agitation.asfp`.
+
+SciLoom developers run `uv run python -m examples.developer.agitation_ir` from
+the repository root to inspect the same Function's IR, save and load
+`examples/developer/agitation_ir.json`, and check conditional start/stop with the
+reference interpreter. Runtime inputs remain parameters in the ASFP; the separate
+interpreter inputs do not specialize or run the exported file. The target accepts typed speeds in input/
 output bindings, local declarations and expressions.
 
 Stop serialization uses a documented inactive editor speed from the corpus;

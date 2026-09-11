@@ -1,4 +1,26 @@
-# Proposed frontend example code guide
+# Example code guide
+
+## Runnable examples
+
+| Audience | Example | Purpose |
+|---|---|---|
+| Experiment authors | [Function composition](../examples/function_call.py) | Define and compose Functions, then compile to ASFP |
+| Experiment authors | [Conditional agitation](../examples/agitation.py) | Define runtime behavior and configure a compilation target |
+| SciLoom developers | [Agitation IR](../examples/developer/agitation_ir.py) | Reuse the same Function; inspect, persist and reference-execute its IR |
+
+Run user examples with `uv run python examples/function_call.py` and
+`uv run python examples/agitation.py`. Their complete generated outputs are
+[function_call.asfp](../examples/function_call.asfp) and
+[agitation.asfp](../examples/agitation.asfp), beside their source files.
+Run the developer example from the repository root with
+`uv run python -m examples.developer.agitation_ir`; it writes
+[agitation_ir.json](../examples/developer/agitation_ir.json) beside its source.
+The module docstrings show the expected terminal output and explain each result.
+Rerunning an example refreshes its companion file. Source-location metadata in
+the JSON reflects the generating checkout. None of these examples sends commands
+to hardware.
+
+## Proposed frontend designs
 
 The files in `examples/proposed_frontend/` are **architecture examples**, not an implemented public API. Names such as `sciloom.runtime`, `Input`, `Integer` and `Function` are placeholders used to make the intended source-language semantics concrete.
 

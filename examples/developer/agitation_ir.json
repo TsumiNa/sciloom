@@ -1,0 +1,108 @@
+{
+  "entry_function_id": "fn:0",
+  "format_version": 2,
+  "functions": [
+    {
+      "body": [
+        {
+          "condition": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:2",
+            "source": {
+              "column": 11,
+              "kind": "SourceSpan",
+              "line": 61,
+              "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
+            },
+            "symbol_id": "fn:0:var:enabled"
+          },
+          "else_body": [
+            {
+              "kind": "StopAgitation",
+              "node_id": "fn:0:node:5",
+              "resource_id": "resource:reaction_mixer",
+              "source": {
+                "column": 12,
+                "kind": "SourceSpan",
+                "line": 64,
+                "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
+              }
+            }
+          ],
+          "kind": "If",
+          "node_id": "fn:0:node:1",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 61,
+            "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
+          },
+          "then_body": [
+            {
+              "kind": "SetAgitation",
+              "node_id": "fn:0:node:4",
+              "resource_id": "resource:reaction_mixer",
+              "source": {
+                "column": 12,
+                "kind": "SourceSpan",
+                "line": 62,
+                "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
+              },
+              "speed": {
+                "kind": "Reference",
+                "node_id": "fn:0:node:3",
+                "source": {
+                  "column": 36,
+                  "kind": "SourceSpan",
+                  "line": 62,
+                  "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
+                },
+                "symbol_id": "fn:0:var:shaker_speed"
+              }
+            }
+          ]
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "ConfigureAgitation",
+      "node_id": "fn:0",
+      "source": {
+        "column": 4,
+        "kind": "SourceSpan",
+        "line": 60,
+        "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
+      },
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "shaker_speed",
+          "node_id": "fn:0:var:shaker_speed",
+          "owner_id": "fn:0",
+          "role": "input",
+          "source": null,
+          "type": "rotational_speed"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "enabled",
+          "node_id": "fn:0:var:enabled",
+          "owner_id": "fn:0",
+          "role": "input",
+          "source": null,
+          "type": "boolean"
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": [
+    {
+      "kind": "AgitatorResource",
+      "logical_id": "reaction_mixer",
+      "node_id": "resource:reaction_mixer",
+      "source": null
+    }
+  ]
+}

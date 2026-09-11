@@ -1,16 +1,52 @@
-"""A conditional agitation program, reference execution, and AutoSuite compilation.
+"""For experiment authors: define conditional agitation and export an ASFP.
+
+Run from the repository root:
+    uv run python examples/agitation.py
+
+Expected terminal output:
+    agitation.asfp
+
+The package contains ConfigureAgitation with two runtime inputs:
+shaker_speed (angularspeed) and enabled (bool). When enabled is true, it sets
+the supplied speed on Heater Shaker 23; otherwise it disables agitation.
+The speed stays an input parameter; compiling does not choose a speed or send
+commands to hardware.
+
+Full generated output: agitation.asfp, beside this source file.
+
+Generated ASFP excerpts (metadata and other fields omitted):
+
+    Enabled branch:
+        <condition>enabled</condition>
+        ...
+        <component typeid="Chemspeed.SATaskSetAgitation.1">
+          <zone>Heater Shaker 23</zone>
+          <!-- metadata omitted -->
+          <taskdatas>
+            <count>1</count>
+            <taskdata0>
+              <progid>Chemspeed.SADeviceIndividualShaker.1</progid>
+              <deviceid>23</deviceid>
+              <wellid>-1</wellid>
+              <speed>shaker_speed</speed>
+            </taskdata0>
+          </taskdatas>
+          <switchon>1</switchon>
+          <speedunit>rpm</speedunit>
+          <!-- remaining fields omitted -->
+        </component>
+
+    Disabled branch's Stir task:
+        <switchon>0</switchon>
 
 The operation comes from Sample and Run GPC; this is not that entire workflow.
 The fixed zone/shaker binding is taken from the latest application configuration.
-No command is sent to a device.
 """
 
 from pathlib import Path
 
-from sciloom import Agitator, Boolean, Function, Input, RotationalSpeed, compile_ir, rpm, runtime
+from sciloom import Agitator, Boolean, Function, Input, RotationalSpeed, runtime
 from sciloom.backends.autosuite import AutoSuiteTarget, IndividualShakerBinding
-from sciloom.interpreter import Interpreter
-from sciloom.ir import from_json, to_json
 
 
 class ConfigureAgitation(Function):
@@ -30,14 +66,6 @@ class ConfigureAgitation(Function):
 
 if __name__ == "__main__":
     function = ConfigureAgitation(Agitator("reaction_mixer"))
-    program = from_json(to_json(function.to_ir()))
-    session = Interpreter(program)
-    started = session.run(inputs={"shaker_speed": 600 * rpm, "enabled": True})
-    stopped = session.run(inputs={"shaker_speed": 600 * rpm, "enabled": False})
-    assert started.events[0].enabled and started.events[0].speed == 600 * rpm
-    assert not stopped.events[0].enabled and stopped.events[0].speed == 600 * rpm
-    print("Reference commands:", started.events, stopped.events)
-
     target = AutoSuiteTarget(
         agitators=(
             IndividualShakerBinding(
@@ -47,7 +75,6 @@ if __name__ == "__main__":
             ),
         )
     )
-    result = compile_ir(program, target=target)
-    path = result.write(Path("dist") / "agitation.asfp")
-    path.with_suffix(".ir.json").write_text(to_json(program), encoding="utf-8")
-    print(path)
+    result = function.compile(target=target)
+    path = result.write(Path(__file__).with_suffix(".asfp"))
+    print(path.name)
