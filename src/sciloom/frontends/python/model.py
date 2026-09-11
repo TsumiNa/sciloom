@@ -7,8 +7,7 @@ from types import MappingProxyType
 from typing import Any, Callable, ClassVar, Generic, Mapping, NoReturn, TypeVar, get_args, get_origin, get_type_hints
 
 from ...ir import Diagnostic, IRValidationError, Package, ScalarType, VariableRole
-from ...compiler import CompileResult, compile_ir
-from ...backends.autosuite.xml import Target
+from ...compiler import CompileResult, Target, compile_ir
 
 
 class Integer:
@@ -139,8 +138,8 @@ class Function:
 
         return lower(self)
 
-    def compile(self, *, target: Target | str = Target.AUTOSUITE_2_47_1_1) -> CompileResult:
-        """Compile this specialized instance into an AutoSuite function package."""
+    def compile(self, *, target: Target) -> CompileResult:
+        """Compile this specialized instance using an explicit compilation target."""
         return compile_ir(self.to_ir(), target=target)
 
     def __call__(self, *args: Any, **kwargs: Any) -> Any:

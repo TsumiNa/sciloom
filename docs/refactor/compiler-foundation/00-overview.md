@@ -65,3 +65,8 @@ errors/budgets, retained domain intent and production XML field relationships.
 - [MLIR rationale](https://mlir.llvm.org/docs/Rationale/Rationale/)
 - [Target legality and conversion](https://mlir.llvm.org/docs/DialectConversion/)
 - [Side effects](https://mlir.llvm.org/docs/Rationale/SideEffectsAndSpeculation/)
+
+## Completed gates
+
+PR1: #5 merged as `70a88f0d58b62e9bda2747e80b4bd5d5ffd342f9`; 79 tests and
+Python 3.12–3.14 CI passed. Copilot acceptance-scope feedback was addressed.
