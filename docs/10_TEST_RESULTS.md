@@ -22,13 +22,16 @@ uv run python autosuite/tools/audit_corpus.py
 uv run python autosuite/tools/smoke_test.py
 uv run python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
 uv run python -m compileall -q examples/proposed_frontend
+uv run python examples/function_call.py
+uv run python examples/agitation.py
 ```
 
 ## Semantic IR stage
 
 Colocated tests cover typed/JSON round-trip, semantic occurrence IDs, source
 diagnostics, variable ownership, numeric and boolean expressions, nested control
-flow, complete call bindings and recursion rejection. CI runs those tests and the
+flow and complete call bindings. Recursion is legal IR with bounded reference
+execution and is rejected specifically by the AutoSuite target. CI runs those tests and the
 existing smoke/recipe checks on Python 3.12, 3.13 and 3.14. The ignored local manual
 is not required by these CI checks; a full corpus audit still requires the local
 reference materials listed in the manifest.
@@ -41,6 +44,16 @@ Test10_FIXED3, Test09 and Test08 with identity-preserving UUID normalization. Th
 also verify deterministic output, JSON/Python equivalence, source-instance
 preservation, boolean storage, generated names and file writing. These are
 Python-to-ASFP structural checks; Executor acceptance remains untested here.
+
+## Compiler foundation verification
+
+138 tests pass locally after the agitation backend stage. The suite includes:
+independent IR execution with frontend/backend imports blocked; a test-only
+non-XML target; source/JSON/direct-IR equivalence; session and call-frame state;
+errors, budgets and short-circuiting; typed quantities and retained agitation
+intent; explicit target bindings; and production/fixed-zone task comparisons.
+Existing FIXED control-flow comparisons still pass. Ruff and production mypy
+checks pass; CI runs both executable examples on Python 3.12–3.14.
 
 `AutoSuiteExecutor.exe` is not available here. Static validation does not establish
 Executor acceptance; generated applications must still pass the real integration gate:

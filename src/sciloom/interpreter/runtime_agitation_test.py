@@ -5,7 +5,7 @@ from dataclasses import replace
 import pytest
 
 from sciloom import Agitator, Boolean, Function, Input, RotationalSpeed, rpm, rps, runtime
-from sciloom.diagnostics import CompilationError, ExecutionError, IRValidationError
+from sciloom.diagnostics import ExecutionError, IRValidationError
 from sciloom.ir import (
     AgitatorResource,
     FunctionIR,
@@ -145,14 +145,6 @@ def test_bare_speed_in_source_is_not_implicitly_rpm():
 
     with pytest.raises(IRValidationError, match="quantity_type"):
         Bare().to_ir()
-
-
-def test_autosuite_reports_the_not_yet_supported_domain():
-    from sciloom import compile_ir
-    from sciloom.backends.autosuite import AutoSuiteTarget
-
-    with pytest.raises(CompilationError, match="unsupported_domain"):
-        compile_ir(direct_agitation(), target=AutoSuiteTarget())
 
 
 def test_rotational_speed_can_pass_through_function_calls_and_outputs():

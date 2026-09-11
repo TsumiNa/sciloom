@@ -25,7 +25,7 @@ because they capture distinct configurations and task/version combinations.
 
 ## Reading order
 
-The 16 reference documents are in one directory, numbered 00–15. This guide is
+The 17 reference documents are in one directory, numbered 00–16. This guide is
 00; read the following documents in order or jump to the relevant group.
 
 ### Sources and runtime semantics
@@ -41,6 +41,7 @@ The 16 reference documents are in one directory, numbered 00–15. This guide is
 - [06 · Semantic construct to XML mapping](06_SEMANTIC_TO_XML_MAPPING_REFERENCE.md)
 - [07 · Golden fixture matrix](07_GOLDEN_FIXTURE_MATRIX.md)
 - [08 · Type templates](08_TYPE_TEMPLATES.md)
+- [16 · Agitation mapping evidence](16_AGITATION_MAPPING.md)
 
 ### Current application and workflow
 

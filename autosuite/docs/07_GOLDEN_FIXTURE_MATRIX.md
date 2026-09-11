@@ -14,3 +14,4 @@
 | typed function I/O | - | Test11_FIXED | item IDs/types/array flags |
 | call argument binding | - | Test12_FIXED | call bindings reuse callee parameter IDs |
 | sequential zone | - | aaa_sequential_zone | `executionmode=1`, `sequentialzones`, fragment variable |
+| agitation intent and angularspeed | - | latest APP / Sample and Run GPC; functionsPackage_3 / 1st_vial | uniform-speed Stir envelope, canonical speed and explicit fixed-zone addressing; see [mapping evidence](16_AGITATION_MAPPING.md) |

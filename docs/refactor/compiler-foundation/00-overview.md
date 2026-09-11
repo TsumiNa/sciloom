@@ -76,3 +76,7 @@ checks and three-version CI passed. Documentation review feedback was addressed.
 
 PR3: #7 merged as `287d9de9db76a19223492fe0099bd8ac52de790d`; 104 tests and
 Python 3.12–3.14 CI passed. Migration/version review feedback was addressed.
+
+PR4: #8 merged as `5d53327f796724c38c6886cd9b6cee8b470d2293`; 122 tests,
+type checks and Python 3.12–3.14 CI passed. Unit-name and ledger review observations
+were answered with the documented API and remote-merge recording policy.
