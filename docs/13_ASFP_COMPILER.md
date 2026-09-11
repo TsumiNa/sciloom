@@ -37,7 +37,7 @@ restrictions and XML failures raise `CompilationError`, both with diagnostics.
 `.compile()` never writes files or changes the source instance; `.write()` creates
 parents and replaces the requested file. There is no separate transpile API.
 The generic result has no XML-specific field. Backend developers can inspect
-`backends.autosuite.lowering.lower_asfp` and its immutable XML records separately.
+`backends.autosuite.codegen.lower_asfp` and its immutable XML records separately.
 
 ## Agitation example
 
@@ -81,7 +81,7 @@ flowchart LR
 ```
 
 `frontends/python/model.py` provides the model API; `frontends/python/lowering.py` analyzes source; `ir/` holds
-semantics/validation; `compiler.py` coordinates format-independent compilation; `backends/autosuite/lowering.py` maps the
+semantics/validation; `compiler.py` coordinates format-independent compilation; `backends/autosuite/codegen.py` maps the
 target; `backends/autosuite/xml.py` contains immutable XML records and encoding. The installed
 package needs no reference corpus or third-party runtime dependencies to compile.
 
