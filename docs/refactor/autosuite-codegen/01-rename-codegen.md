@@ -6,8 +6,9 @@ Make Python source lowering and AutoSuite code generation distinguishable by nam
 
 ## Scope
 
-Rename the backend module and its colocated tests to `codegen.py` and
-`codegen_test.py`. Update imports and documentation together. Explain that
+Rename the backend module and its colocated tests to `codegen.py`,
+`codegen_test.py` and `codegen_agitation_test.py`. Update imports and documentation
+together. Explain that
 `compiler.py` owns both the Target protocol and the concrete shared pipeline,
 while AutoSuiteTarget implements the protocol using vendor-specific generation.
 

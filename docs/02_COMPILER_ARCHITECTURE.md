@@ -77,7 +77,7 @@ in the reference semantics. Target limitations must not narrow the shared model.
 the Target protocol structurally: it provides `target_id`, `validate(program)`
 and `emit(program)` without needing to inherit a compiler class. Its emission
 uses `codegen.py` to map Program into SerializationIR and `xml.py` to encode XML.
-Another backend implements the same protocol with its own validation and output
+A future backend can implement the same protocol with its own validation and output
 format; the shared pipeline does not change or acquire vendor-specific imports.
 
 Python `lowering.py` consumes source and produces semantic IR. AutoSuite
