@@ -19,20 +19,26 @@ IDs differ; structure and parameter binding relationships match the fixture.
 ## Public API
 
 ```python
-result = program.compile()  # default target: autosuite-2.47.1.1
+from sciloom.backends.autosuite import AutoSuiteTarget
+
+result = program.compile(target=AutoSuiteTarget())
 result.semantic_ir
-result.serialization_ir
+result.target_id
 result.diagnostics
-result.artifact             # UTF-8 XML bytes
+result.artifact.content     # UTF-8 XML bytes
+result.artifact.media_type  # application/xml
+result.artifact.suffix      # .asfp
 result.write("dist/program.asfp")
 ```
 
-`Target.AUTOSUITE_2_47_1_1` or its string value can be supplied as `target`.
-Unsupported targets raise `ValueError`. Invalid semantics/XML text raise
-`IRValidationError` with diagnostics. Successful results currently have no
-diagnostics. `.write()` creates parents and writes/replaces the requested file.
-`.compile()` itself does not write files or change the source instance.
-`.to_ir()` returns only the semantic model. There is no separate `transpile()` API.
+The target is explicit. `AutoSuiteTarget()` selects its supported default vendor
+version, 2.47.1.1; unknown versions raise `ValueError`. A different target implements
+the protocol in `sciloom.compiler`. IR errors raise `IRValidationError`; target
+restrictions and XML failures raise `CompilationError`, both with diagnostics.
+`.compile()` never writes files or changes the source instance; `.write()` creates
+parents and replaces the requested file. There is no separate transpile API.
+The generic result has no XML-specific field. Backend developers can inspect
+`backends.autosuite.lowering.lower_asfp` and its immutable XML records separately.
 
 JSON authoring uses the same compiler:
 
@@ -42,7 +48,7 @@ from sciloom import compile_ir
 from sciloom.ir import from_json
 
 package = from_json(Path("dist/function_call.ir.json").read_text())
-compile_ir(package).write("dist/from_json.asfp")
+compile_ir(package, target=AutoSuiteTarget()).write("dist/from_json.asfp")
 ```
 
 ## Layer boundaries
@@ -52,13 +58,13 @@ flowchart LR
     Python["Function instance"] --> Lower["Python AST lowering"] --> Semantic["Typed Package"]
     JSON["JSON import"] --> Semantic
     Semantic --> Validate["Shared semantic validation"]
-    Validate --> Backend["ASFP mapping and target IDs"]
+    Validate --> Target["Explicit target validation"] --> Backend["ASFP mapping and target IDs"]
     Backend --> SIR["Immutable SerializationIR / XmlNode"]
     SIR --> XML["ASFP XML bytes"]
 ```
 
 `frontends/python/model.py` provides the model API; `frontends/python/lowering.py` analyzes source; `ir/` holds
-semantics/validation; `compiler.py` coordinates compilation; `backends/autosuite/lowering.py` maps the
+semantics/validation; `compiler.py` coordinates format-independent compilation; `backends/autosuite/lowering.py` maps the
 target; `backends/autosuite/xml.py` contains immutable XML records and encoding. The installed
 package needs no reference corpus or third-party runtime dependencies to compile.
 

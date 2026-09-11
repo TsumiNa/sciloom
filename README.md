@@ -7,7 +7,7 @@ Python, a visual editor, and AI tools, all sharing one typed semantic model.
 AutoSuite is the initial target for compilation.
 
 Restricted Python Function authoring, typed IR, JSON interchange and ASFP compilation
-are available. `instance.compile()` compiles a configured Function to an AutoSuite
+are available. `instance.compile(target=...)` compiles a configured Function to an AutoSuite
 function package. Application and hardware-task support remain under development.
 
 ## Getting started

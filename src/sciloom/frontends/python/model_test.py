@@ -147,7 +147,7 @@ def test_runtime_assignment_does_not_create_undeclared_field():
         Bad().to_ir()
 
 
-def test_subprogram_recursion_is_rejected():
+def test_subprogram_recursion_can_be_represented():
     class Recursive(Function):
         def __init__(self):
             self.again = self
@@ -156,8 +156,8 @@ def test_subprogram_recursion_is_rejected():
         def run(self):
             self.again()
 
-    with pytest.raises(IRValidationError, match="recursive_call"):
-        Recursive().to_ir()
+    package = Recursive().to_ir()
+    assert package.functions[0].body[0].function_id == package.entry_function_id
 
 
 def test_host_type_mismatch_uses_semantic_diagnostics():

@@ -1,43 +1,54 @@
-"""Compile validated semantics into a target artifact without source mutation."""
+"""Validate semantic programs and delegate emission to an explicit target."""
 
-import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Protocol, runtime_checkable
 
-from .backends.autosuite.lowering import lower_asfp
-from .ir import Diagnostic, IRValidationError, Package, validate
-from .backends.autosuite.xml import SerializationIR, Target
+from .diagnostics import CompilationError, Diagnostic, IRValidationError
+from .ir import Package, validate
+
+
+@dataclass(frozen=True, kw_only=True)
+class Artifact:
+    content: bytes
+    media_type: str
+    suffix: str
+
+
+@runtime_checkable
+class Target(Protocol):
+    @property
+    def target_id(self) -> str: ...
+
+    def validate(self, program: Package) -> tuple[Diagnostic, ...]: ...
+
+    def emit(self, program: Package) -> Artifact: ...
 
 
 @dataclass(frozen=True, kw_only=True)
 class CompileResult:
     semantic_ir: Package
-    serialization_ir: SerializationIR
-    artifact: bytes
+    target_id: str
+    artifact: Artifact
     diagnostics: tuple[Diagnostic, ...] = ()
 
     def write(self, path: str | Path) -> Path:
-        """Write the ASFP bytes, creating parent directories when necessary."""
+        """Write the target's bytes, creating parent directories when necessary."""
         destination = Path(path)
         destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_bytes(self.artifact)
+        destination.write_bytes(self.artifact.content)
         return destination
 
 
-def compile_ir(package: Package, *, target: Target | str = Target.AUTOSUITE_2_47_1_1) -> CompileResult:
-    """Compile either Python-lowered or JSON-authored IR using one backend."""
-    try:
-        target = Target(target)
-    except ValueError:
-        raise ValueError(f"Unsupported compilation target: {target!r}") from None
-    diagnostics = validate(package)
+def compile_ir(program: Package, *, target: Target) -> CompileResult:
+    """Compile any author's IR; neither Python parsing nor XML belongs here."""
+    if not isinstance(target, Target):
+        raise TypeError("target must implement target_id, validate(program) and emit(program).")
+    diagnostics = validate(program)
     if diagnostics:
         raise IRValidationError(diagnostics)
-    serialization_ir = lower_asfp(package, target)
-    try:
-        artifact = serialization_ir.to_xml()
-        ET.fromstring(artifact)
-    except (ET.ParseError, ValueError, TypeError) as error:
-        # ValueError includes UnicodeError from XML encoding.
-        raise IRValidationError((Diagnostic(code="xml_text", message=str(error), path="$"),)) from error
-    return CompileResult(semantic_ir=package, serialization_ir=serialization_ir, artifact=artifact)
+    diagnostics = target.validate(program)
+    if diagnostics:
+        raise CompilationError(diagnostics)
+    artifact = target.emit(program)
+    return CompileResult(semantic_ir=program, target_id=target.target_id, artifact=artifact)

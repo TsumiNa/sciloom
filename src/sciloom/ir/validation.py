@@ -1,15 +1,12 @@
 """Symbol, type and control-flow validation shared by every frontend."""
 
-from collections.abc import Iterator
-from dataclasses import fields, is_dataclass
-from typing import Any
 
 from .codec import _convert
-from .diagnostics import Diagnostic, IRValidationError
+from .traversal import iter_nodes
+from ..diagnostics import Diagnostic, IRValidationError
 from .model import (
     Assignment,
     BinaryOp,
-    Call,
     Expression,
     FunctionIR,
     If,
@@ -24,17 +21,6 @@ from .model import (
     VariableRole,
     While,
 )
-
-
-def _nodes(value: Any, path: str = "$") -> Iterator[tuple[Node, str]]:
-    if isinstance(value, Node):
-        yield value, path
-    if is_dataclass(value):
-        for f in fields(value):
-            yield from _nodes(getattr(value, f.name), f"{path}.{f.name}")
-    elif isinstance(value, tuple):
-        for i, item in enumerate(value):
-            yield from _nodes(item, f"{path}[{i}]")
 
 
 def _assignable(source: ScalarType, target: ScalarType) -> bool:
@@ -71,7 +57,7 @@ def validate(package: Package) -> tuple[Diagnostic, ...]:
         report("format_version", "Only semantic format version 1 is supported.", "$.format_version")
 
     seen: dict[str, str] = {}
-    for node, path in _nodes(package):
+    for node, path in iter_nodes(package):
         if not node.node_id.strip():
             report("empty_id", "Semantic IDs must not be empty.", f"{path}.node_id", node)
         elif node.node_id in seen:
@@ -85,7 +71,6 @@ def validate(package: Package) -> tuple[Diagnostic, ...]:
     symbols = {variable.node_id: variable for function in package.functions for variable in function.variables}
     if package.entry_function_id not in functions:
         report("entry_function", "Entry must reference a function in this package.", "$.entry_function_id")
-    calls: dict[str, list[tuple[Call, str]]] = {key: [] for key in functions}
 
     def expression(expr: Expression, function: FunctionIR, path: str) -> ScalarType | None:
         if isinstance(expr, Literal):
@@ -169,8 +154,6 @@ def validate(package: Package) -> tuple[Diagnostic, ...]:
                 callee = functions.get(stmt.function_id)
                 if callee is None:
                     report("unknown_function", f"Unknown function {stmt.function_id!r}.", p, stmt)
-                else:
-                    calls[function.node_id].append((stmt, p))
                 for label, role in (("inputs", VariableRole.INPUT), ("outputs", VariableRole.OUTPUT)):
                     expected = {v.node_id: v for v in callee.variables if v.role == role} if callee else {}
                     bound: set[str] = set()
@@ -222,25 +205,4 @@ def validate(package: Package) -> tuple[Diagnostic, ...]:
                 )
         statements(function.body, function, f"{p}.body")
 
-    # Iterative DFS also handles long acyclic function chains without Python recursion.
-    completed: set[str] = set()
-    for root in functions:
-        if root in completed:
-            continue
-        active = {root}
-        stack = [(root, iter(calls[root]))]
-        while stack:
-            current, edges = stack[-1]
-            edge = next(edges, None)
-            if edge is None:
-                active.remove(current)
-                completed.add(current)
-                stack.pop()
-                continue
-            call, path = edge
-            if call.function_id in active:
-                report("recursive_call", "AutoSuite function calls must not be recursive.", path, call)
-            elif call.function_id not in completed:
-                active.add(call.function_id)
-                stack.append((call.function_id, iter(calls[call.function_id])))
     return tuple(errors)

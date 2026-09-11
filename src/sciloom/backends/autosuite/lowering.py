@@ -33,7 +33,7 @@ from ...ir import (
     While,
     to_dict,
 )
-from .xml import SerializationIR, Target, XmlNode
+from .xml import SerializationIR, AutoSuiteVersion, XmlNode
 
 _PARAMETER_TYPES = {ScalarType.INTEGER: "integer", ScalarType.REAL: "realnumber", ScalarType.BOOLEAN: "bool"}
 _STORAGE_TYPES = {ScalarType.INTEGER: "3", ScalarType.REAL: "5", ScalarType.BOOLEAN: "11"}
@@ -57,7 +57,7 @@ def _without_source(value: Any) -> Any:
     return value
 
 
-def lower_asfp(package: Package, target: Target) -> SerializationIR:
+def lower_asfp(package: Package, target: AutoSuiteVersion) -> SerializationIR:
     """Lower a validated package, allocating target IDs within its semantic digest."""
     digest = hashlib.sha256(json.dumps(_without_source(to_dict(package)), sort_keys=True).encode()).hexdigest()
     namespace = uuid5(NAMESPACE_URL, f"https://sciloom.invalid/{target.value}/{digest}")
@@ -278,7 +278,7 @@ class _Writer:
                 )
         return tuple(result)
 
-    def build(self, target: Target) -> SerializationIR:
+    def build(self, target: AutoSuiteVersion) -> SerializationIR:
         functions = []
         used_names: set[str] = set()
         for function in self.package.functions:

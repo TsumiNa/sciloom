@@ -132,7 +132,7 @@ def test_output_binding_checks_assignment_direction(package):
 
 
 @pytest.mark.parametrize("indirect", [False, True])
-def test_recursion_rejected(indirect):
+def test_recursion_is_a_target_policy(indirect):
     first = FunctionIR(
         node_id="a",
         name="A",
@@ -145,7 +145,7 @@ def test_recursion_rejected(indirect):
     )
     second = FunctionIR(node_id="b", name="B", body=(Call(node_id="call:b", function_id="a"),))
     package = Package(entry_function_id="a", functions=(first, second) if indirect else (first,))
-    assert "recursive_call" in {d.code for d in validate(package)}
+    assert validate(package) == ()
 
 
 def test_duplicate_ids_and_wrong_ownership(package):

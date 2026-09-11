@@ -3,7 +3,7 @@
 `sciloom.ir` implements the first stage of the compiler. It can represent and
 validate functions directly or through JSON. The [Python Function frontend](12_PYTHON_FRONTEND.md)
 also lowers into this model. The [ASFP compiler](13_ASFP_COMPILER.md) consumes it
-through `instance.compile()` or `compile_ir(package)`.
+through `instance.compile(target=...)` or `compile_ir(package, target=...)`.
 
 ## Architecture
 
@@ -17,7 +17,7 @@ flowchart LR
 
 `ir/model.py` defines immutable dataclasses and enums. `ir/validation.py` resolves
 symbols, types and call graphs. `ir/codec.py` provides the JSON boundary using the
-same declared field types. `ir/diagnostics.py` provides structured errors.
+same declared field types. `diagnostics.py` provides structured errors.
 There are no runtime dependencies outside Python's standard library.
 
 ## Typed construction
@@ -74,7 +74,7 @@ assert from_json(to_json(package)) == package
   Conditions must be boolean. No Python truthiness is inferred.
 - Statements include assignment, calls, `If` with ordered then/else bodies and
   `While`. An `elif` can be represented as an `If` inside the else body. Recursive
-  call graphs are rejected, including recursion inside nested control flow.
+  call graphs are representable; AutoSuite target validation rejects them.
 - IDs identify occurrences. Even two reads of the same variable have distinct
   node IDs and the same `symbol_id`. Variable, function, statement and expression
   IDs share a package-wide namespace. The caller supplies IDs; import never invents them.

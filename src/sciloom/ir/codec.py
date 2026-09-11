@@ -12,7 +12,7 @@ from functools import cache
 from types import UnionType
 from typing import Any, NoReturn, cast, get_args, get_origin, get_type_hints
 
-from .diagnostics import Diagnostic, IRValidationError
+from ..diagnostics import Diagnostic, IRValidationError
 from .model import Package
 
 
