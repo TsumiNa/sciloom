@@ -15,6 +15,8 @@ import re
 from typing import Any
 from uuid import NAMESPACE_URL, uuid5
 
+from ...diagnostics import CompilationError, Diagnostic
+
 from ...ir import (
     Assignment,
     BinaryOp,
@@ -255,7 +257,7 @@ class _Writer:
                         condition=self.expression(statement.condition),
                     )
                 )
-            else:
+            elif isinstance(statement, If):
                 branches = []
                 for label, condition_type, condition, branch_body in (
                     ("If", "0", self.expression(statement.condition), statement.then_body),
@@ -275,6 +277,18 @@ class _Writer:
                     )
                 result.append(
                     self.macro(tag, statement.node_id, function, (), name="If-Else", branches=tuple(branches))
+                )
+            else:
+                raise CompilationError(
+                    (
+                        Diagnostic(
+                            code="unsupported_operation",
+                            message=f"AutoSuite cannot emit {type(statement).__name__}.",
+                            path="$",
+                            node_id=statement.node_id,
+                            source=statement.source,
+                        ),
+                    )
                 )
         return tuple(result)
 

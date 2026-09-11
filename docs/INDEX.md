@@ -27,3 +27,5 @@ are centralized under `autosuite/`. Start with the
 [AutoSuite reference guide](../autosuite/docs/00_REFERENCE_GUIDE.md).
 
 - [Reference execution contract](14_REFERENCE_EXECUTION.md).
+
+- [Agitation domain semantics](15_AGITATION_SEMANTICS.md).
