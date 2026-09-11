@@ -16,6 +16,9 @@ required repository rules, not optional reference material.
 - Read and follow the [in-branch API compatibility rules](.github/instructions/in-branch-api-compat.instructions.md)
   before evolving in-progress APIs within a branch or adding compatibility wrappers,
   adapter layers, deprecated aliases or parallel interfaces.
+- Follow the [example output documentation rules](.github/instructions/example-output-documentation.instructions.md)
+  when creating or updating examples: embed short results in module docstrings and
+  keep long generated results in same-base-name companion files beside their code.
 - Recheck applicable instructions when the task expands to new files or activities.
   Do not assume the IDE or agent runtime has loaded them automatically.
 - Explicit user instructions and higher-priority system/developer instructions
