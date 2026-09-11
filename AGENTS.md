@@ -13,6 +13,9 @@ required repository rules, not optional reference material.
 - Apply workflow and environment instructions according to the activity being
   performed, including files without `applyTo`. Read shell-environment rules
   before terminal work and branch/PR rules before making changes.
+- Read and follow the [in-branch API compatibility rules](.github/instructions/in-branch-api-compat.instructions.md)
+  before evolving in-progress APIs within a branch or adding compatibility wrappers,
+  adapter layers, deprecated aliases or parallel interfaces.
 - Recheck applicable instructions when the task expands to new files or activities.
   Do not assume the IDE or agent runtime has loaded them automatically.
 - Explicit user instructions and higher-priority system/developer instructions
