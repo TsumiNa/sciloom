@@ -12,6 +12,33 @@ No official XSD was supplied. `empirical_type_catalog.json`, `asfp_path_profile.
 The supplied AutoSuite Software Manual 2.47.1.1 does **not** provide an official `.asfp` or `.app` XSD/schema, XML tag catalog, `typeid` catalog or UUID/reference specification. It documents the semantic programming model and import/export behavior. Therefore the serialization schema below is empirical and is derived from AutoSuite-produced files in this corpus.
 
 
+## `typeid` suffix: provisional assumption and open question
+
+**Status: awaiting vendor confirmation.** For the current AutoSuite 2.47.1.1
+backend, retain each observed complete type identifier, including its fixed `.1`
+suffix (for example, `Chemspeed.SATaskSetVariable.1`). Do not calculate the suffix
+from statement order, variable type or nesting, or add support for hypothetical
+suffix variants before there is evidence for them.
+
+A scan on 2026-09-11 of `autosuite/app/*.app` (68 gzip-compressed XML files) and
+`autosuite/asfp/*.asfp` (58 XML files), counting every `typeid` attribute, found
+67 distinct identifiers, all ending in `.1`. `Chemspeed.SATaskSetVariable.1`
+occurred 3,475 times, including 133 times in
+`app/config20260909_polymerization.app`. This scan excludes extracted copies and
+templates; its occurrence counts need not equal the broader empirical catalog.
+
+Still to confirm with vendor documentation or support:
+
+- What does the suffix formally identify? A component version is a hypothesis,
+  not an established schema fact.
+- Can other suffixes occur, and how do they relate to AutoSuite product versions,
+  component registration and XML compatibility?
+
+Revisit this assumption when adding a target version or importing evidence with
+a different suffix. Preserve the complete observed identifier and verify its
+payload and target acceptance before adding a mapping. The current evidence does
+not establish a universal rule that every type in every version ends in `.1`.
+
 ## `.app` container
 
 Every one of the 68 supplied `.app` files begins with the gzip magic bytes `1f 8b`. Decompression yields XML. The newest application root is:
