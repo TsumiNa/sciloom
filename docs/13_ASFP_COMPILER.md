@@ -11,8 +11,7 @@ Application, global binding and other device tasks remain deferred.
 uv run python examples/function_call.py
 ```
 
-This writes `dist/function_call.asfp` and `dist/function_call.ir.json` outside the
-reference corpus. The example is based on `Test12_FIXED_CallBinding_RealInOut.asfp`:
+This writes `dist/function_call.asfp` outside the reference corpus. The example is based on `Test12_FIXED_CallBinding_RealInOut.asfp`:
 an identity function accepts real `x` and writes real `y`; its caller passes `2.5`
 and binds the output to internal variable `result`. Function names and generated
 IDs differ; structure and parameter binding relationships match the fixture.
@@ -23,7 +22,6 @@ IDs differ; structure and parameter binding relationships match the fixture.
 from sciloom.backends.autosuite import AutoSuiteTarget
 
 result = program.compile(target=AutoSuiteTarget())
-result.semantic_ir
 result.target_id
 result.diagnostics
 result.artifact.content     # UTF-8 XML bytes
@@ -41,27 +39,34 @@ parents and replaces the requested file. There is no separate transpile API.
 The generic result has no XML-specific field. Backend developers can inspect
 `backends.autosuite.lowering.lower_asfp` and its immutable XML records separately.
 
-JSON authoring uses the same compiler:
-
-```python
-from pathlib import Path
-from sciloom import compile_ir
-from sciloom.backends.autosuite import AutoSuiteTarget
-from sciloom.ir import from_json
-
-package = from_json(Path("dist/function_call.ir.json").read_text())
-compile_ir(package, target=AutoSuiteTarget()).write("dist/from_json.asfp")
-```
-
 ## Agitation example
 
-`uv run python examples/agitation.py` writes `dist/agitation.asfp` and matching
-IR JSON after exercising conditional start/stop in the reference interpreter.
-It retains typed input parameters rather than baking interpreter inputs into XML.
+`uv run python examples/agitation.py` writes `dist/agitation.asfp` using
+`function.compile(target=target)`. Both user examples focus on Python authoring
+and ASFP export; neither exposes IR or executes a reference interpreter.
+The agitation function retains speed and enabled as runtime input parameters.
 [Agitation semantics](15_AGITATION_SEMANTICS.md) describes the source API and
 explicit IndividualShakerBinding configuration; the
 [mapping record](../autosuite/docs/16_AGITATION_MAPPING.md) identifies the real
 application/function evidence, fixed-zone addressing and inactive stop defaults.
+
+## Developer workflow
+
+From the repository root, run:
+
+```bash
+uv run python -m examples.developer.agitation_ir
+```
+
+This separate example reuses ConfigureAgitation, obtains its Program through
+`.to_ir()`, saves `dist/developer/agitation.ir.json`, reloads it with `from_json`
+and checks start/stop behavior with Interpreter. It generates no ASFP. Reference
+execution and JSON interchange are development tools, not required compilation
+steps for experiment authors.
+
+Developers can inspect `result.semantic_ir` after compilation or compile a
+loaded Program with `compile_ir(program, target=target)`. Loaded agitation IR
+needs the same explicit zone/shaker bindings as the Python Function.
 
 ## Layer boundaries
 

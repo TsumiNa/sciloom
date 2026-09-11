@@ -1,10 +1,9 @@
-"""Compile Test12-style functions to ASFP; all outputs stay outside the corpus."""
+"""For experiment authors: compose functions and export an ASFP package."""
 
 from pathlib import Path
 
 from sciloom.backends.autosuite import AutoSuiteTarget
 from sciloom import Function, Input, Output, Real, runtime
-from sciloom.ir import to_json
 
 
 class Identity(Function):
@@ -31,5 +30,4 @@ class Caller(Function):
 if __name__ == "__main__":
     result = Caller().compile(target=AutoSuiteTarget())
     path = result.write(Path("dist") / "function_call.asfp")
-    path.with_suffix(".ir.json").write_text(to_json(result.semantic_ir), encoding="utf-8")
     print(path)

@@ -24,6 +24,7 @@ uv run python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.cs
 uv run python -m compileall -q examples/proposed_frontend
 uv run python examples/function_call.py
 uv run python examples/agitation.py
+uv run python -m examples.developer.agitation_ir
 ```
 
 ## Semantic IR stage
@@ -53,7 +54,8 @@ non-XML target; source/JSON/direct-IR equivalence; session and call-frame state;
 errors, budgets and short-circuiting; typed quantities and retained agitation
 intent; explicit target bindings; and production/fixed-zone task comparisons.
 Existing FIXED control-flow comparisons still pass. Ruff and production mypy
-checks pass; CI runs both executable examples on Python 3.12–3.14.
+checks pass; CI runs both experiment-author examples and the separate developer
+IR example on Python 3.12–3.14.
 
 `AutoSuiteExecutor.exe` is not available here. Static validation does not establish
 Executor acceptance; generated applications must still pass the real integration gate:

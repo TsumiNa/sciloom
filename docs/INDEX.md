@@ -12,7 +12,7 @@ Read in numeric order, from the current project state through design and validat
 - [Instance specialization and compile API](05_INSTANCE_SPECIALIZATION_AND_COMPILE_API.md)
 - [Error handling](06_ERROR_HANDLING_MODEL.md)
 - [xyflow and AI on the shared IR](07_XYFLOW_AI_SHARED_IR.md)
-- [Frontend design examples](08_EXAMPLE_CODE_GUIDE.md)
+- [Example guide](08_EXAMPLE_CODE_GUIDE.md)
 - [Decisions and open questions](09_DESIGN_DECISIONS_AND_OPEN_QUESTIONS.md)
 - [Validation status](10_TEST_RESULTS.md)
 - [Semantic IR and JSON API](11_SEMANTIC_IR.md)

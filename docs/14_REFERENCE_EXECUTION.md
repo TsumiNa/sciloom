@@ -16,6 +16,17 @@ the old Package import are rejected rather than silently migrated.
 Both typed validation and the codec use it; semantic validation does not import
 the codec. Common diagnostics and SourceSpan live outside the IR dependency graph.
 
+## Developer example
+
+Run `uv run python -m examples.developer.agitation_ir` from the repository root.
+It reuses the Function in `examples/agitation.py`, persists its IR to
+`dist/developer/agitation.ir.json`, reloads it and verifies start/stop behavior
+in a reference session. The experiment-author example compiles directly to ASFP
+and does not expose these development steps.
+
+JSON serialization is optional: `Interpreter(function.to_ir())` works directly.
+The example deliberately exercises persistence as a separate architectural check.
+
 ## Execution API
 
 ```python

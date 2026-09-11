@@ -150,7 +150,9 @@ python autosuite/tools/smoke_test.py
 python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
 ```
 
-Run both `uv run python examples/function_call.py` and `uv run python examples/agitation.py`.
+Run the experiment-author examples with `uv run python examples/function_call.py`
+and `uv run python examples/agitation.py`. Also run the separate developer example
+with `uv run python -m examples.developer.agitation_ir` from the repository root.
 Run `python autosuite/tools/audit_corpus.py` after reference changes. Syntax-check `examples/proposed_frontend/*.py`. On the AutoSuite host, generated `.app` files must additionally pass Executor simulation. The historical compiler, ASPY inputs and text views have been removed; refactor work starts from the retained XML and semantic documentation.
 
 ## 9. Documentation location
