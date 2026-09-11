@@ -28,7 +28,7 @@ def test_round_trip_preserves_semantics_ids_and_source(package):
 @pytest.mark.parametrize(
     "mutate,code",
     [
-        (lambda d: d.update(format_version=2), "format_version"),
+        (lambda d: d.update(format_version=1), "format_version"),
         (lambda d: d.pop("format_version"), "json_shape"),
         (lambda d: d.update(format_version=True), "json_shape"),
         (lambda d: d.update(unknown=True), "json_shape"),
@@ -48,7 +48,7 @@ def test_invalid_documents_have_diagnostics(package, mutate, code):
     assert all(d.path.startswith("$") for d in error.value.diagnostics)
 
 
-@pytest.mark.parametrize("text", ["{", "null", "[]", '{"kind":"Package","kind":"Package"}', '{"x":NaN}'])
+@pytest.mark.parametrize("text", ["{", "null", "[]", '{"kind":"Program","kind":"Program"}', '{"x":NaN}'])
 def test_malformed_json_fails_explicitly(text):
     with pytest.raises(IRValidationError):
         from_json(text)

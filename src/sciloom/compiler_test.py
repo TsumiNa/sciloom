@@ -8,7 +8,7 @@ import pytest
 
 from sciloom.compiler import Artifact, compile_ir
 from sciloom.diagnostics import CompilationError, Diagnostic, IRValidationError
-from sciloom.ir import FunctionIR, Package
+from sciloom.ir import FunctionIR, Program
 
 
 class TextTarget:
@@ -27,7 +27,7 @@ class TextTarget:
 
 
 def program():
-    return Package(entry_function_id="f", functions=(FunctionIR(node_id="f", name="Empty"),))
+    return Program(entry_function_id="f", functions=(FunctionIR(node_id="f", name="Empty"),))
 
 
 def test_non_xml_artifact_and_write(tmp_path):

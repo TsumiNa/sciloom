@@ -16,7 +16,7 @@ The current target is:
 ```mermaid
 flowchart TB
     Class["Python class<br/>Static runtime schema"] -->|"Instantiate / __init__"| Instance["Python instance<br/>Specialization and composition"]
-    Instance -->|"instance.compile()"| IR["Typed AutoSuite Semantic IR"]
+    Instance -->|"instance.compile()"| IR["Typed SciLoom Semantic IR"]
     GUI["xyflow editor"] <--> IR
     AI["AI / Skill / MCP"] <--> IR
     IR --> Validate["Semantic validation"]

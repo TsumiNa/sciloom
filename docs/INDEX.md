@@ -25,3 +25,5 @@ Read in numeric order, from the current project state through design and validat
 Original files, the manual, schema evidence, workflow notes and reference tools
 are centralized under `autosuite/`. Start with the
 [AutoSuite reference guide](../autosuite/docs/00_REFERENCE_GUIDE.md).
+
+- [Reference execution contract](14_REFERENCE_EXECUTION.md).
