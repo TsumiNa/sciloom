@@ -15,7 +15,7 @@ import re
 from typing import Any
 from uuid import NAMESPACE_URL, uuid5
 
-from .ir import (
+from ...ir import (
     Assignment,
     BinaryOp,
     Call,
@@ -33,7 +33,7 @@ from .ir import (
     While,
     to_dict,
 )
-from .serialization import SerializationIR, Target, XmlNode
+from .xml import SerializationIR, Target, XmlNode
 
 _PARAMETER_TYPES = {ScalarType.INTEGER: "integer", ScalarType.REAL: "realnumber", ScalarType.BOOLEAN: "bool"}
 _STORAGE_TYPES = {ScalarType.INTEGER: "3", ScalarType.REAL: "5", ScalarType.BOOLEAN: "11"}

@@ -6,9 +6,9 @@ from functools import wraps
 from types import MappingProxyType
 from typing import Any, Callable, ClassVar, Generic, Mapping, NoReturn, TypeVar, get_args, get_origin, get_type_hints
 
-from .ir import Diagnostic, IRValidationError, Package, ScalarType, VariableRole
-from .compiler import CompileResult, compile_ir
-from .serialization import Target
+from ...ir import Diagnostic, IRValidationError, Package, ScalarType, VariableRole
+from ...compiler import CompileResult, compile_ir
+from ...backends.autosuite.xml import Target
 
 
 class Integer:

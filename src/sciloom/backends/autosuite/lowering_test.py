@@ -8,11 +8,11 @@ from pathlib import Path
 import pytest
 
 from sciloom import Boolean, Function, Integer, compile_ir, runtime
-from sciloom.frontend_test import Caller, Counter
+from sciloom.frontends.python.model_test import Caller, Counter
 from sciloom.ir import IRValidationError, SourceSpan, from_json, to_json
-from sciloom.serialization import SerializationIR
+from sciloom.backends.autosuite.xml import SerializationIR
 
-FIXTURES = Path(__file__).resolve().parents[2] / "autosuite/asfp"
+FIXTURES = Path(__file__).resolve().parents[4] / "autosuite/asfp"
 
 
 class Empty(Function):

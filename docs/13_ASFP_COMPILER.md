@@ -57,9 +57,9 @@ flowchart LR
     SIR --> XML["ASFP XML bytes"]
 ```
 
-`frontend.py` provides the model API; `lowering.py` analyzes source; `ir/` holds
-semantics/validation; `compiler.py` coordinates compilation; `asfp.py` maps the
-target; `serialization.py` contains immutable XML records and encoding. The installed
+`frontends/python/model.py` provides the model API; `frontends/python/lowering.py` analyzes source; `ir/` holds
+semantics/validation; `compiler.py` coordinates compilation; `backends/autosuite/lowering.py` maps the
+target; `backends/autosuite/xml.py` contains immutable XML records and encoding. The installed
 package needs no reference corpus or third-party runtime dependencies to compile.
 
 The backend owns `typeid`s, UUIDs, parameter IDs, Macro containers and XML defaults.

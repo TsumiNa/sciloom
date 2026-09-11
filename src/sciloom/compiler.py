@@ -4,9 +4,9 @@ import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from pathlib import Path
 
-from .asfp import lower_asfp
+from .backends.autosuite.lowering import lower_asfp
 from .ir import Diagnostic, IRValidationError, Package, validate
-from .serialization import SerializationIR, Target
+from .backends.autosuite.xml import SerializationIR, Target
 
 
 @dataclass(frozen=True, kw_only=True)
