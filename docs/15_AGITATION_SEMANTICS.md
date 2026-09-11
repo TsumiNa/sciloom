@@ -57,13 +57,43 @@ program produce matching start/stop state and events. A backend is not involved
 in these tests. Raw numeric inputs, missing resources and inconsistent logical IDs
 are explicit errors.
 
-AutoSuite emission is the next implementation stage. Until its adapter is present,
-the AutoSuite target rejects this domain with unsupported_domain. It does not
-discard the operation or convert it into an opaque generic command.
+## AutoSuite deployment
+
+The AutoSuite adapter binds logical resources explicitly to existing fixed zones
+on individual shakers:
+
+```python
+from sciloom.backends.autosuite import AutoSuiteTarget, IndividualShakerBinding
+
+target = AutoSuiteTarget(agitators=(
+    IndividualShakerBinding(
+        logical_id="reaction_mixer", zone="Heater Shaker 23", device_id="23",
+    ),
+))
+result = function.compile(target=target)
+```
+
+This configuration belongs to the target, not Program. The device ID is the
+shaker address, not the vessel/rack address in the Zone. Missing or unknown
+bindings fail compilation; duplicate logical bindings, zones and physical aliases fail
+configuration. The adapter supports the observed individual-shaker profile only,
+not arbitrary agitation devices or dynamic Zone parameters.
+
+Run `uv run python examples/agitation.py` for conditional start/stop reference
+execution and generated `dist/agitation.asfp` / `dist/agitation.ir.json`.
+Runtime inputs remain parameters in the ASFP; the interpreter inputs do not
+specialize or run the exported file. The target accepts typed speeds in input/
+output bindings, local declarations and expressions.
+
+Stop serialization uses a documented inactive editor speed from the corpus;
+it does not add a speed command or attempt to recover previous state.
+See [mapping evidence](../autosuite/docs/16_AGITATION_MAPPING.md). Physical limits,
+zone/device compatibility in a different application and Executor acceptance
+still require deployment validation.
 
 ## Production evidence
 
-The next adapter is grounded in the retained latest APP's Sample and Run GPC
+The adapter is grounded in the retained latest APP's Sample and Run GPC
 function (two SATaskSetAgitation nodes and an angularspeed input parameter).
 Manual section 3.6.19 establishes set speed and on/off semantics; device speed
 ranges depend on the selected device. This reference slice extracts the operation,

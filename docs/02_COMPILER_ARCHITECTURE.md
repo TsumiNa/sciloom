@@ -1,106 +1,107 @@
 # Compiler architecture
 
-## Architectural invariant
+SciLoom has one typed semantic program model, multiple authoring paths and explicit
+compilation targets. The Python frontend interprets source syntax; the IR retains
+program intent; a backend chooses how to express that intent on its platform.
 
-The compiler is **model-first**. Typed SciLoom Semantic IR is the central program representation shared across code, GUI and AI authoring paths.
+## Implemented boundaries
 
 ```mermaid
 flowchart TB
-    Class["Class definition<br/>Static runtime schema"] --> Instance["Python instance / __init__<br/>Host-time specialization"]
-    Instance --> Compile["instance.compile()"]
-    Compile --> IR["Typed SciLoom Semantic IR"]
-    Editors["xyflow / AI Skill-MCP"] <--> IR
-    IR --> Checks["Symbol, type and unit validation<br/>AutoSuite and target checks"]
-    Checks --> SIR["AutoSuite Serialization IR"]
-    SIR --> XML["Versioned XML backend"]
-    XML --> ASFP[".asfp"]
-    XML --> APP[".app · gzip XML"]
-    APP --> Executor["AutoSuiteExecutor.exe /sim"]
-    classDef core fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e;
-    class IR core;
+    Python["Python Function instance<br/>Host specialization and composition"] --> Lower["Python AST lowering"]
+    Lower --> IR["Program / Semantic IR"]
+    JSON["Versioned JSON"] <--> IR
+    Author["Future xyflow / AI authoring"] -.-> IR
+    IR --> Reference["Reference interpreter<br/>Values, state, events"]
+    IR --> Compile["compile_ir(program, target=...)<br/>Shared validation"]
+    Compile --> Target["Target.validate / Target.emit"]
+    Bind["AutoSuite deployment bindings"] --> AutoSuite
+    Target --> AutoSuite["AutoSuite backend<br/>Legality and typed task adapters"]
+    Target -.-> Other["Other target implementations"]
+    AutoSuite --> SIR["SerializationIR / XmlNode"]
+    SIR --> XML["ASFP XML artifact"]
 ```
 
-## Why the Semantic IR must be explicit
+The interpreter and a test-only non-XML target independently exercise this
+boundary. Neither generic compilation nor IR execution imports AutoSuite.
+GUI/AI authoring, additional production targets and Application generation remain
+future work; ASFP and reference execution are implemented now.
 
-The real corpus proves that AutoSuite contains distinctions a syntax-only AST must not blur:
+| Module | Owns |
+|---|---|
+| `frontends/python/model.py` | Function class schema, decorators and public source API |
+| `frontends/python/lowering.py` | File-backed source discovery, AST resolution and lowering to Program |
+| `ir/model.py` | Immutable typed program, variables, expressions, structured control flow and domain operations |
+| `ir/schema.py`, `validation.py`, `codec.py` | Structure, semantic legality and JSON v2 interchange |
+| `units.py` | Shared rotational-speed values and rpm/rps conversion |
+| `interpreter/runtime.py` | Reference evaluation, call frames, persistent state, budgets and domain events |
+| `compiler.py` | Target protocol, shared compilation pipeline and generic byte artifacts |
+| `backends/autosuite/target.py` | Vendor version/configuration and target restrictions |
+| `backends/autosuite/lowering.py` | Function/control-flow mapping, target names and IDs |
+| `backends/autosuite/agitation.py` | Individual-shaker binding and typed Stir adapter |
+| `backends/autosuite/xml.py` | Immutable serialization records and XML encoding |
+| `diagnostics.py` | Shared errors, diagnostics and source locations |
 
-- Function definition vs Macro Task scope;
-- global vs Macro-local state and non-Python reset behavior;
-- function parameter identity and call-binding IDs;
-- direct function components vs tasks nested inside Macro Tasks;
-- ordinary conditional Macro vs multi-condition IF/ELSE branch objects;
-- repeat, while and sequential/fragment execution;
-- sequential fragment variable vs normal loop variable;
-- device-specific Execute Operation payloads;
-- zones, wells, elements and device references;
-- application event functions such as OnStart/OnError/OnStop;
-- recoverable result-style errors vs fatal AutoSuite faults.
-
-These are semantic nodes/relationships, not serialization details.
-
-## Python frontend and compilation unit
-
-The new Python DSL is a **restricted source language**, not merely an executed builder API. Runtime method bodies are parsed through Python AST/CST and lowered into Semantic IR. Native Python syntax is reused where target semantics are equivalent.
-
-The compilation unit is an **instance**, not the class object:
+## Source lowering, semantics and compilation
 
 ```python
-program = DynamicTransfer(valve_group_size=8)
-artifact = program.compile(target=isynth)
+function = MyFunction(option=...)
+program = function.to_ir()
+result = compile_ir(program, target=target)
+# Convenience: function.compile(target=target)
 ```
 
-The class provides statically inspectable runtime schema. `__init__` and ordinary helper code execute as normal Python and specialize the instance before compilation. No dedicated `@comptime` stage marker is required in the baseline design.
+Class declarations define runtime fields; ordinary Python construction supplies
+host values and composed components. Lowering resolves registered runtime fields
+to typed symbol references and supported host values to constants/components.
+It parses runtime methods from ordinary .py files and never runs their bodies.
 
-A runtime `self.attr` is resolved in two layers:
+Program selects an entry function and owns specialized FunctionIR records and
+logical resources. Function variables have explicit owner and role. Internal
+defaults initialize session state; they are not implicit assignments on every
+call. Calls retain parameter bindings; If and While retain structured regions.
+A JSON or future GUI frontend can create these same records without Python.
 
-1. if `attr` is a registered class-level AutoSuite field, lower it as a target runtime symbol;
-2. otherwise resolve the specialized Python instance value as host-time data/component, subject to supported constant/object lowering rules.
+This IR resembles a compiler IR in its role as a stable semantic boundary. It is
+a structured scientific-program model, not LLVM instructions or SSA. No optimizer,
+pass registry or generic opaque-operation framework is introduced here.
 
-This gives a clean staging boundary without redefining ordinary Python execution.
+Generic compilation first validates the IR, then asks the explicit target to
+validate and emit it. A target returns an Artifact containing bytes, media type
+and suffix. Unsupported target semantics fail with diagnostics. Recursion and
+short-circuit operators are currently rejected by AutoSuite; they remain valid
+in the reference semantics. Target limitations must not narrow the shared model.
 
-See `docs/04_PYTHON_FRONTEND_AND_STAGING.md` and `docs/05_INSTANCE_SPECIALIZATION_AND_COMPILE_API.md`.
+## Preserve high-level intent until target lowering
 
-## GUI and AI stage
+AgitatorResource, SetAgitation and StopAgitation remain visible in Program. A
+set-speed operation carries a typed rotational-speed expression; stopping has
+no speed argument. Neither Python lowering nor IR validation replaces these
+operations with device IDs, XML fields or anonymous calls.
 
-xyflow edits a graph projection of the same Semantic IR. AI either edits that graph through Skill/MCP tooling or emits the same restricted Python frontend. No separate GUI language or AI pseudo-language should exist.
+The reference interpreter can observe and execute that intent without a backend.
+AutoSuite binds a logical resource to a concrete zone/individual shaker, then
+serializes the observed Stir payload. Rebinding changes the deployment artifact
+without changing Program. This validates the architectural boundary with one
+real operation; it does not establish a universal abstraction for all mixing
+mechanisms or automatic portability to every laboratory platform.
 
-See `docs/07_XYFLOW_AI_SHARED_IR.md`.
+The same distinction applies to scalar/control-flow serialization: Macro wrappers,
+branch container names, UUIDs, parameter IDs, typeid suffixes and field order are
+backend choices. Scope, value ownership, branch selection and call relationships
+are semantic concerns. A vendor's container structure must not dictate the IR.
 
-## Serialization backend
+## Evidence and verification
 
-AutoSuite XML mechanics belong below the semantic layer:
+Four FIXED exports test existing assignment/call/control-flow structures. The
+latest APP's Sample and Run GPC and a concrete-zone export test agitation.
+Generated output lives outside the original evidence corpus. JSON round trips,
+direct IR authoring, a non-XML target and independent reference execution ensure
+that matching vendor XML is not the only acceptance criterion.
 
-- UUID/object IDs;
-- function parameter IDs;
-- `typeid` strings;
-- XML field ordering/defaults;
-- exact branch/container nesting;
-- target-version differences;
-- application gzip packaging.
-
-For device-specific tasks, prefer corpus-derived XML templates plus typed adapters over inventing fields from general documentation.
-
-## Compiler pipeline
-
-1. Inspect the AutoSuite model class and registered runtime-field schema.
-2. Instantiate normally in Python; run `__init__` and host-time composition/specialization.
-3. Call `instance.compile(...)`.
-4. Discover registered runtime/event methods on the class.
-5. Parse/retrieve those method bodies as Python AST/CST.
-6. Resolve `self` references against class runtime fields vs specialized instance attributes.
-7. Resolve symbols, function/component relationships and compile-time constants.
-8. Infer/check AutoSuite types and physical units.
-9. Lower supported Python control flow into typed SciLoom runtime semantics.
-10. Validate AutoSuite rules (scope, recursion, sequential constraints, task requirements, error semantics).
-11. Resolve known configuration/zone/device references.
-12. Lower Semantic IR → Serialization IR.
-13. Allocate target IDs and references.
-14. Serialize `.asfp` or `.app` XML; gzip `.app` as required.
-15. Run structural/schema-corpus checks.
-16. Run `AutoSuiteExecutor.exe generated.app /r /sim 100 /s /c` on the AutoSuite host.
-
-`.compile()` should preferably be semantically pure with respect to the source instance: it may cache derived compilation data, but it should not silently rewrite the user's declared/specialized program state.
-
-## First implementation boundary
-
-Do not begin by generating arbitrary hardware configurations from scratch. First target a known machine configuration/base application and manipulate or generate the application/function sections needed by the current system. This reduces risk while the serialization backend is still empirical.
+See [reference execution](14_REFERENCE_EXECUTION.md),
+[agitation semantics](15_AGITATION_SEMANTICS.md), and
+[AutoSuite mapping evidence](../autosuite/docs/16_AGITATION_MAPPING.md).
+Static checks do not prove Executor acceptance or physical behavior. Application
+generation, globals, events, recovery, device discovery and full unit algebra
+remain outside the current implementation.

@@ -2,7 +2,8 @@
 
 The first compiler sequence is implemented: Python Function instances lower to
 typed semantic IR, then a thin Serialization IR and AutoSuite ASFP XML. The target
-is AutoSuite 2.47.1.1. Application, global binding and device tasks remain deferred.
+is AutoSuite 2.47.1.1. A typed individual-shaker agitation adapter is also available.
+Application, global binding and other device tasks remain deferred.
 
 ## Run the example
 
@@ -52,6 +53,16 @@ package = from_json(Path("dist/function_call.ir.json").read_text())
 compile_ir(package, target=AutoSuiteTarget()).write("dist/from_json.asfp")
 ```
 
+## Agitation example
+
+`uv run python examples/agitation.py` writes `dist/agitation.asfp` and matching
+IR JSON after exercising conditional start/stop in the reference interpreter.
+It retains typed input parameters rather than baking interpreter inputs into XML.
+[Agitation semantics](15_AGITATION_SEMANTICS.md) describes the source API and
+explicit IndividualShakerBinding configuration; the
+[mapping record](../autosuite/docs/16_AGITATION_MAPPING.md) identifies the real
+application/function evidence, fixed-zone addressing and inactive stop defaults.
+
 ## Layer boundaries
 
 ```mermaid
@@ -80,13 +91,15 @@ Macros; If/Else branches own `components` inside `SATaskCondition` tasks. Else-I
 is represented as nested If/Else inside the Else branch.
 
 Exports establish parameter types `realnumber`, `integer`, `bool` and storage
-codes `5`, `3`, `11`. Boolean storage uses `-1/0`, expressions use `true/false`.
+codes `5`, `3`, `11`. Rotational-speed parameters use `angularspeed`;
+internal speed variables use code `5`, SI unit `1/s` and display unit `rpm`. Boolean storage uses `-1/0`, expressions use `true/false`.
 Integer/boolean unit metadata follows the observed `siunit=1, unit=s` form; this
 serialization convention does not introduce a physical time type into the IR.
 
 ## Determinism and evidence
 
-Target UUIDs derive from a digest of the semantic package plus object role/ID.
+Target UUIDs derive from a digest of Program and canonical deployment bindings,
+plus the target version and object role/ID. Binding tuple order is irrelevant.
 Source spans are excluded. Recompilation produces identical bytes; different
 specializations receive distinct target IDs. Timestamps use a fixed zero epoch.
 Unsafe expression identifiers are mapped to safe local names, with references and

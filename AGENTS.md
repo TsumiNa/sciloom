@@ -147,6 +147,7 @@ python autosuite/tools/smoke_test.py
 python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
 ```
 
+Run both `uv run python examples/function_call.py` and `uv run python examples/agitation.py`.
 Run `python autosuite/tools/audit_corpus.py` after reference changes. Syntax-check `examples/proposed_frontend/*.py`. On the AutoSuite host, generated `.app` files must additionally pass Executor simulation. The historical compiler, ASPY inputs and text views have been removed; refactor work starts from the retained XML and semantic documentation.
 
 ## 9. Documentation location
@@ -161,3 +162,7 @@ XML. Program/JSON v2 is the current semantic contract; see
 [reference execution](docs/14_REFERENCE_EXECUTION.md). Keep vendor restrictions
 (such as recursion) in target validation. The reference interpreter specifies
 SciLoom behavior and is not evidence of vendor numerical or physical equivalence.
+
+Agitation intent stays in IR; AutoSuite zone/shaker bindings belong to the target.
+Consult `autosuite/docs/16_AGITATION_MAPPING.md` before changing this adapter.
+Do not infer generic physical limits or hardware equivalence from one device profile.
