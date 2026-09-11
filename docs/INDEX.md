@@ -18,14 +18,13 @@ Read in numeric order, from the current project state through design and validat
 - [Semantic IR and JSON API](11_SEMANTIC_IR.md)
 - [Python Function frontend](12_PYTHON_FRONTEND.md)
 - [ASFP compilation](13_ASFP_COMPILER.md)
-- [Implementation sequence](refactor/semantic-ir/00-overview.md)
+- [Reference execution contract](14_REFERENCE_EXECUTION.md)
+- [Agitation domain semantics](15_AGITATION_SEMANTICS.md)
+- [Initial Function implementation sequence](refactor/semantic-ir/00-overview.md)
+- [Compiler foundation refactor sequence](refactor/compiler-foundation/00-overview.md)
 
 ## AutoSuite reference
 
 Original files, the manual, schema evidence, workflow notes and reference tools
 are centralized under `autosuite/`. Start with the
 [AutoSuite reference guide](../autosuite/docs/00_REFERENCE_GUIDE.md).
-
-- [Reference execution contract](14_REFERENCE_EXECUTION.md).
-
-- [Agitation domain semantics](15_AGITATION_SEMANTICS.md).

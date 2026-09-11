@@ -5,19 +5,9 @@ from dataclasses import dataclass
 
 from ...compiler import Artifact
 from ...diagnostics import CompilationError, Diagnostic
-from ...ir import (
-    AgitatorResource,
-    Binary,
-    BinaryOp,
-    Call,
-    Literal,
-    Program,
-    ScalarType,
-    SetAgitation,
-    StopAgitation,
-    Variable,
-)
+from ...ir import Binary, BinaryOp, Call, Program
 from ...ir.traversal import iter_nodes
+from .agitation import IndividualShakerBinding
 from .lowering import lower_asfp
 from .xml import AutoSuiteVersion
 
@@ -25,9 +15,22 @@ from .xml import AutoSuiteVersion
 @dataclass(frozen=True, kw_only=True)
 class AutoSuiteTarget:
     version: AutoSuiteVersion = AutoSuiteVersion.V2_47_1_1
+    agitators: tuple[IndividualShakerBinding, ...] = ()
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "version", AutoSuiteVersion(self.version))
+        object.__setattr__(self, "agitators", tuple(self.agitators))
+        logical_ids: set[str] = set()
+        device_ids: set[str] = set()
+        for binding in self.agitators:
+            if not isinstance(binding, IndividualShakerBinding):
+                raise TypeError("agitators must contain IndividualShakerBinding records.")
+            if binding.logical_id in logical_ids:
+                raise ValueError(f"Duplicate logical agitation binding: {binding.logical_id}")
+            if binding.device_id in device_ids:
+                raise ValueError(f"Distinct resources cannot alias shaker device {binding.device_id}.")
+            logical_ids.add(binding.logical_id)
+            device_ids.add(binding.device_id)
 
     @property
     def target_id(self) -> str:
@@ -49,19 +52,27 @@ class AutoSuiteTarget:
             for node, path in iter_nodes(program)
             if isinstance(node, Binary) and node.op in (BinaryOp.AND, BinaryOp.OR)
         ]
-        errors.extend(
-            Diagnostic(
-                code="unsupported_domain",
-                message="AutoSuite agitation mapping is not implemented yet.",
-                path=path,
-                node_id=node.node_id,
-                source=node.source,
+        bindings = {binding.logical_id for binding in self.agitators}
+        resources = {resource.logical_id for resource in program.resources}
+        for i, resource in enumerate(program.resources):
+            if resource.logical_id not in bindings:
+                errors.append(
+                    Diagnostic(
+                        code="missing_resource_binding",
+                        message=f"No AutoSuite binding for agitator {resource.logical_id!r}.",
+                        path=f"$.resources[{i}]",
+                        node_id=resource.node_id,
+                        source=resource.source,
+                    )
+                )
+        for logical_id in sorted(bindings - resources):
+            errors.append(
+                Diagnostic(
+                    code="unknown_resource_binding",
+                    message=f"AutoSuite binding {logical_id!r} has no declared resource.",
+                    path="$.resources",
+                )
             )
-            for node, path in iter_nodes(program)
-            if isinstance(node, (AgitatorResource, SetAgitation, StopAgitation))
-            or isinstance(node, (Variable, Literal))
-            and node.type == ScalarType.ROTATIONAL_SPEED
-        )
         completed: set[str] = set()
         for root in calls:
             if root in completed:
@@ -93,7 +104,7 @@ class AutoSuiteTarget:
         return tuple(errors)
 
     def emit(self, program: Program) -> Artifact:
-        serialization_ir = lower_asfp(program, self.version)
+        serialization_ir = lower_asfp(program, self.version, agitators=self.agitators)
         try:
             content = serialization_ir.to_xml()
             ET.fromstring(content)

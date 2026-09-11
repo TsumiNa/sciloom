@@ -2,6 +2,7 @@
 
 Envelopes and default ordering: Test11/Test12; conditional Macro/branch nesting:
 Test08/Test09/Test10_FIXED3. Scalar storage codes/units also use the latest APP.
+Agitation uses the typed adapter in agitation.py, with explicit zone bindings.
 No reference corpus file is read or modified at compiler runtime.
 
 Type identifiers retain the observed fixed .1 suffix; its formal meaning and
@@ -12,6 +13,7 @@ open question in autosuite/docs/05_SCHEMA_EXTRACTION_AND_CONFIRMED_STRUCTURE.md.
 import hashlib
 import json
 import re
+from dataclasses import asdict, dataclass
 from typing import Any
 from uuid import NAMESPACE_URL, uuid5
 
@@ -28,6 +30,8 @@ from ...ir import (
     Program,
     Reference,
     ScalarType,
+    SetAgitation,
+    StopAgitation,
     Statement,
     Unary,
     Variable,
@@ -35,15 +39,23 @@ from ...ir import (
     While,
     to_dict,
 )
-from .xml import SerializationIR, AutoSuiteVersion, XmlNode
+from .agitation import IndividualShakerBinding, agitation_task
+from .xml import SerializationIR, AutoSuiteVersion, XmlNode, xml_node as _xml
 
-_PARAMETER_TYPES = {ScalarType.INTEGER: "integer", ScalarType.REAL: "realnumber", ScalarType.BOOLEAN: "bool"}
-_STORAGE_TYPES = {ScalarType.INTEGER: "3", ScalarType.REAL: "5", ScalarType.BOOLEAN: "11"}
+@dataclass(frozen=True)
+class _ScalarEncoding:
+    parameter_type: str
+    storage_type: str
+    si_unit: str
+    display_unit: str
 
 
-def _xml(tag: str, text: str = "", *children: XmlNode, **attributes: str) -> XmlNode:
-    return XmlNode(tag=tag, text=text, attributes=tuple(attributes.items()), children=tuple(children))
-
+_SCALARS = {
+    ScalarType.INTEGER: _ScalarEncoding("integer", "3", "1", "s"),
+    ScalarType.REAL: _ScalarEncoding("realnumber", "5", "1", "1"),
+    ScalarType.BOOLEAN: _ScalarEncoding("bool", "11", "1", "s"),
+    ScalarType.ROTATIONAL_SPEED: _ScalarEncoding("angularspeed", "5", "1/s", "rpm"),
+}
 
 def _number(value: bool | int | float) -> str:
     if isinstance(value, float) and value.is_integer():
@@ -59,17 +71,29 @@ def _without_source(value: Any) -> Any:
     return value
 
 
-def lower_asfp(package: Program, target: AutoSuiteVersion) -> SerializationIR:
-    """Lower a validated package, allocating target IDs within its semantic digest."""
-    digest = hashlib.sha256(json.dumps(_without_source(to_dict(package)), sort_keys=True).encode()).hexdigest()
+def lower_asfp(
+    program: Program,
+    target: AutoSuiteVersion,
+    *,
+    agitators: tuple[IndividualShakerBinding, ...] = (),
+) -> SerializationIR:
+    """Lower validated semantics and deployment bindings to target records."""
+    identity = {
+        "program": _without_source(to_dict(program)),
+        "agitators": [asdict(binding) for binding in sorted(agitators, key=lambda b: b.logical_id)],
+    }
+    digest = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
     namespace = uuid5(NAMESPACE_URL, f"https://sciloom.invalid/{target.value}/{digest}")
-    return _Writer(package, namespace).build(target)
+    bindings = {binding.logical_id: binding for binding in agitators}
+    resources = {resource.node_id: bindings[resource.logical_id] for resource in program.resources}
+    return _Writer(program, namespace, resources).build(target)
 
 
 class _Writer:
-    def __init__(self, package: Program, namespace: Any):
+    def __init__(self, package: Program, namespace: Any, resources: dict[str, IndividualShakerBinding]):
         self.package = package
         self.namespace = namespace
+        self.resources = resources
         self.functions = {function.node_id: function for function in package.functions}
         self.variables = {v.node_id: v for f in package.functions for v in f.variables}
         self.names: dict[str, str] = {}
@@ -133,7 +157,7 @@ class _Writer:
                         _xml("id", self.identifier("parameter", variable.node_id)),
                         _xml("name", variable.name),
                         _xml("variablename", variable_name),
-                        _xml("variabletype", _PARAMETER_TYPES[variable.type]),
+                        _xml("variabletype", _SCALARS[variable.type].parameter_type),
                         _xml("isarray", "0"),
                         _xml("expression", expression),
                     )
@@ -169,9 +193,9 @@ class _Writer:
                     "variable",
                     "",
                     _xml("name", self.names[variable.node_id]),
-                    _xml("value", "", _xml("type", _STORAGE_TYPES[variable.type]), _xml("value", value)),
-                    _xml("siunit", "1"),
-                    _xml("unit", "1" if variable.type == ScalarType.REAL else "s"),
+                    _xml("value", "", _xml("type", _SCALARS[variable.type].storage_type), _xml("value", value)),
+                    _xml("siunit", _SCALARS[variable.type].si_unit),
+                    _xml("unit", _SCALARS[variable.type].display_unit),
                     _xml("array", "0"),
                     _xml("creationtime", "0"),
                     _xml("constant", "0"),
@@ -221,6 +245,15 @@ class _Writer:
                     _xml("id", self.identifier("statement", statement.node_id)),
                 ]
                 result.append(_xml(tag, "", *children, typeid="Chemspeed.SATaskSetVariable.1"))
+            elif isinstance(statement, (SetAgitation, StopAgitation)):
+                result.append(
+                    agitation_task(
+                        tag=tag,
+                        binding=self.resources[statement.resource_id],
+                        speed=self.expression(statement.speed) if isinstance(statement, SetAgitation) else None,
+                        identifier=self.identifier("statement", statement.node_id),
+                    )
+                )
             elif isinstance(statement, Call):
                 result.append(
                     _xml(

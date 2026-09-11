@@ -23,6 +23,11 @@ class XmlNode:
         return element
 
 
+def xml_node(tag: str, text: str = "", *children: XmlNode, **attributes: str) -> XmlNode:
+    """Construct a target record without materializing an XML element."""
+    return XmlNode(tag=tag, text=text, attributes=tuple(attributes.items()), children=tuple(children))
+
+
 @dataclass(frozen=True, kw_only=True)
 class SerializationIR:
     target: AutoSuiteVersion
