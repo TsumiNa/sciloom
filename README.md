@@ -6,10 +6,9 @@ SciLoom aims to let scientists and engineers author automation workflows through
 Python, a visual editor, and AI tools, all sharing one typed semantic model.
 AutoSuite is the initial target for compilation.
 
-Restricted Python Function authoring, typed IR, JSON interchange, reference
-execution and AutoSuite ASFP compilation are available. Conditional agitation is
-the first experimental operation. Application generation and broader device
-support remain under development.
+Write reusable Python Functions, compose them and compile them to AutoSuite
+function packages. Conditional agitation is the first experimental operation.
+Application generation and broader device support remain under development.
 
 ## Getting started
 
@@ -24,8 +23,9 @@ uv run python examples/agitation.py
 
 The distribution name is `SciLoom`; the Python import name is `sciloom`.
 
-The examples write ASFP and IR JSON files under `dist/`. The agitation example
-also executes the IR in a reference interpreter; it does not control hardware.
+The examples show Function authoring, target configuration and `.compile()`.
+They write `examples/function_call.asfp` and `examples/agitation.asfp`. Compilation does
+not send commands to hardware; no knowledge of compiler internals is required.
 See the [compiler guide](docs/13_ASFP_COMPILER.md) for the API and validation scope.
 
 ## AutoSuite reference materials
@@ -41,11 +41,15 @@ organization and provenance.
 ## Documentation
 
 - [Project status](docs/00_PROJECT_STATE.md)
-- [Architecture and design](docs/INDEX.md)
-- [Semantic IR and JSON API](docs/11_SEMANTIC_IR.md)
 - [Python Function frontend](docs/12_PYTHON_FRONTEND.md)
 - [ASFP compilation](docs/13_ASFP_COMPILER.md)
 - [Runnable function-call example](examples/function_call.py)
 - [Runnable agitation example](examples/agitation.py)
+
+## For SciLoom developers
+
+- [Architecture and design](docs/INDEX.md)
+- [Semantic IR and JSON API](docs/11_SEMANTIC_IR.md)
+- [IR persistence and reference execution example](examples/developer/agitation_ir.py)
 - [Proposed Python examples](examples/proposed_frontend/) — illustrative, not runnable yet.
 - [Contributor and agent guidelines](AGENTS.md)
