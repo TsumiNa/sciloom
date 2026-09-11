@@ -46,11 +46,17 @@ Record this plan with PR1. Complete checks, inspect all review surfaces, address
 feedback, squash merge and verify remote MERGED before beginning the next stage.
 Every stage must pass independently; unsupported constructs fail explicitly.
 
-## Shared acceptance
+## Baseline checks for every PR
 
 Run pytest on src/sciloom, AutoSuite smoke and recipe checks, proposed-example
 syntax checks, and executable examples. Audit corpus after reference-document
-updates. Tests additionally establish IR execution without backend imports,
+updates. Only run examples and feature tests implemented by the current stage.
+
+## End-state acceptance
+
+The following capabilities are introduced incrementally by PR2–PR5, not required
+of the behavior-preserving PR1. Their owning stage adds the corresponding tests.
+By the end of PR5, tests establish IR execution without backend imports,
 non-XML target compilation, Python/JSON/direct-IR equivalence, state isolation,
 errors/budgets, retained domain intent and production XML field relationships.
 
