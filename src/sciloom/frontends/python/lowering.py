@@ -6,8 +6,8 @@ import tokenize
 from collections.abc import Sequence
 from typing import Any, NoReturn, cast
 
-from .frontend import Function
-from .ir import (
+from .model import Function
+from ...ir import (
     Assignment,
     Binary,
     BinaryOp,
