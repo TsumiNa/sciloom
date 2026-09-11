@@ -63,7 +63,7 @@ assert from_json(to_json(package)) == package
   Calls reference `FunctionIR.node_id`; input/output bindings reference the callee's
   variable IDs, not names or positional indexes. Every parameter is bound once.
 - Each variable has an explicit `owner_id` matching its containing function, a
-  role (`input`, `output`, `internal`) and a scalar type (`integer`, `real`, `boolean`).
+  role (`input`, `output`, `internal`) and a scalar type (`integer`, `real`, `boolean`, `rotational_speed`).
   Names are unique within a function. References cannot cross function ownership.
 - Internal variables require a literal initial value. This represents target
   initialization, not an implicit assignment at function entry. Parameter default
@@ -73,7 +73,7 @@ assert from_json(to_json(package)) == package
   integer-to-real widening is allowed, narrowing is not. Division produces real.
   Conditions must be boolean. No Python truthiness is inferred.
 - Statements include assignment, calls, `If` with ordered then/else bodies and
-  `While`. An `elif` can be represented as an `If` inside the else body. Recursive
+  `While`, plus typed SetAgitation/StopAgitation domain operations. An `elif` can be represented as an `If` inside the else body. Recursive
   call graphs are representable; AutoSuite target validation rejects them.
 - IDs identify occurrences. Even two reads of the same variable have distinct
   node IDs and the same `symbol_id`. Variable, function, statement and expression
@@ -103,3 +103,6 @@ termination, device safety or acceptance by AutoSuite Executor.
 
 The [reference execution contract](14_REFERENCE_EXECUTION.md) defines value, state,
 call-frame and error behavior independently of target serialization.
+
+The [agitation contract](15_AGITATION_SEMANTICS.md) defines logical resources,
+canonical rotational-speed values and high-level command effects.
