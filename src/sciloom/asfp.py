@@ -3,6 +3,10 @@
 Envelopes and default ordering: Test11/Test12; conditional Macro/branch nesting:
 Test08/Test09/Test10_FIXED3. Scalar storage codes/units also use the latest APP.
 No reference corpus file is read or modified at compiler runtime.
+
+Type identifiers retain the observed fixed .1 suffix; its formal meaning and
+cross-version compatibility await vendor confirmation. See the "typeid suffix"
+open question in autosuite/docs/05_SCHEMA_EXTRACTION_AND_CONFIRMED_STRUCTURE.md.
 """
 
 import hashlib
