@@ -1,5 +1,9 @@
 # Distinguish Python lowering from AutoSuite code generation
 
+Historical implementation plan. Package paths are superseded by the
+[package-layout contract](../package-layout/00-overview.md). The distinction
+between Python lowering and target code generation remains in force.
+
 Two modules named `lowering.py` obscure the distinction between Python source
 analysis and target-specific generation. The accepted change keeps Python lowering
 in the frontend and renames the AutoSuite module to `codegen.py`.

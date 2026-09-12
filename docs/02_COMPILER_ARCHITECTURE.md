@@ -1,5 +1,10 @@
 # Compiler architecture
 
+This page describes the current implementation. The accepted
+[package and interface refactor](refactor/package-layout/00-overview.md) specifies
+the staged move to `dsl`, `core` and `contrib`, native declarations and JSON v3
+lists. Paths and capabilities below are updated as each implementing stage lands.
+
 SciLoom has one typed semantic program model, multiple authoring paths and explicit
 compilation targets. The Python frontend interprets source syntax; the IR retains
 program intent; a backend chooses how to express that intent on its platform.

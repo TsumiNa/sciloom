@@ -1,5 +1,9 @@
 # Compiler foundation
 
+Historical implementation plan. Package paths and declaration spelling are
+superseded by the [package-layout contract](../package-layout/00-overview.md).
+Its stage table distinguishes accepted targets from implemented APIs.
+
 Accepted 2026-09-11. The purpose is to validate engineering boundaries with a small,
 independently executable IR and a real agitation operation. Examples probe the
 architecture; fixture details must not define its public language.
