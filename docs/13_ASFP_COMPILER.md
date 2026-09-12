@@ -1,6 +1,6 @@
 # Function compilation to ASFP
 
-The shared IR is JSON v3 with list semantics. AutoSuite compiles scalar and list
+The shared IR is JSON v4 with list semantics. AutoSuite compiles scalar and list
 programs; array generation is implemented in stage 8 of the
 [active implementation sequence](refactor/package-layout/00-overview.md).
 Existing scalar artifacts have been regenerated because the semantic version is
@@ -99,7 +99,8 @@ flowchart LR
     JSON["JSON import"] --> Semantic
     Semantic --> Validate["Shared semantic validation"]
     Validate --> Bind["Resolve and validate device bindings"]
-    Bind --> Target["Explicit target validation"] --> Backend["ASFP mapping and target IDs"]
+    Bind --> Configuration["Device capability and configuration checks"]
+    Configuration --> Target["Explicit target validation"] --> Backend["ASFP mapping and target IDs"]
     Backend --> SIR["Immutable SerializationIR / XmlNode"]
     SIR --> XML["ASFP XML bytes"]
 ```

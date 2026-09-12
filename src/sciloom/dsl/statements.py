@@ -7,8 +7,8 @@ from collections.abc import Sequence
 from .context import LoweringContext
 from .expressions import BINARY_OPERATORS, expression, is_length_call
 from .model import Function
-from .device_schema import DeviceReference
-from ..core.ir import Assignment, SetAgitation, StopAgitation, Binary, Call, If, InputBinding, ListSet, ListType, OutputBinding, Reference, ScalarType, Statement, VariableRole, While
+from .device_operations import configure, device_member, operation
+from ..core.ir import Assignment, Binary, Call, If, InputBinding, ListSet, ListType, OutputBinding, Reference, ScalarType, Statement, VariableRole, While
 
 
 def call(context: LoweringContext, node: ast.Call, targets: Sequence[ast.expr]) -> Call:
@@ -52,36 +52,6 @@ def call(context: LoweringContext, node: ast.Call, targets: Sequence[ast.expr]) 
     )
 
 
-def operation(context: LoweringContext, node: ast.Call) -> SetAgitation | StopAgitation | None:
-    method = node.func
-    if not (
-        isinstance(method, ast.Attribute)
-        and isinstance(method.value, ast.Attribute)
-        and isinstance(method.value.value, ast.Name)
-        and method.value.value.id == "self"
-    ):
-        return None
-    component = context.host_attribute(method.value.attr)
-    if not isinstance(component, DeviceReference):
-        return None
-    if method.attr == "set_speed":
-        if len(node.args) == 1 and not node.keywords:
-            speed = expression(context, node.args[0])
-        elif not node.args and len(node.keywords) == 1 and node.keywords[0].arg == "speed":
-            speed = expression(context, node.keywords[0].value)
-        else:
-            context.fail("operation_binding", "set_speed requires exactly one speed argument.", node)
-    elif method.attr == "stop":
-        if node.args or node.keywords:
-            context.fail("operation_binding", "stop takes no arguments.", node)
-    else:
-        context.fail("unsupported_operation", f"Unknown agitator operation {method.attr!r}.", node)
-    resource = context.device_resource(component)
-    if method.attr == "set_speed":
-        return SetAgitation(**context.metadata(node), resource_id=resource.node_id, speed=speed)
-    return StopAgitation(**context.metadata(node), resource_id=resource.node_id)
-
-
 def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statement, ...]:
     result: list[Statement] = []
     for node in body:
@@ -94,6 +64,10 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
         ):
             continue
         if isinstance(node, ast.Assign) and len(node.targets) == 1:
+            configuration = configure(context, node)
+            if configuration is not None:
+                result.append(configuration)
+                continue
             target = node.targets[0]
             if isinstance(node.value, ast.Call) and not is_length_call(node.value):
                 if isinstance(target, ast.Subscript):
@@ -110,6 +84,8 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
                     Assignment(**metadata, target=destination, value=expression(context, node.value, context.type_of(destination)))
                 )
         elif isinstance(node, ast.AugAssign) and type(node.op) in BINARY_OPERATORS:
+            if device_member(context, node.target) is not None:
+                context.fail("device_property_read", "Device properties only support plain assignment.", node)
             if isinstance(node.target, ast.Subscript):
                 destination, element_type = indexed_target(context, node.target)
                 result.append(ListSet(**context.metadata(node), target=destination, index=expression(context, node.target.slice), value=expression(context, node.value, element_type), op=BINARY_OPERATORS[type(node.op)]))
@@ -148,6 +124,8 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
 
 
 def indexed_target(context: LoweringContext, node: ast.Subscript) -> tuple[Reference, ScalarType]:
+    if device_member(context, node.value) is not None:
+        context.fail("device_property_read", "Indexed device-property updates require getters, which are unsupported.", node)
     if isinstance(node.slice, ast.Slice):
         context.fail("python_subset", "List slicing is unsupported.", node)
     destination = context.target(node.value)

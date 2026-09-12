@@ -8,7 +8,8 @@ from ...core.ir import (
     If,
     ListSet,
     ListType,
-    SetAgitation,
+    ConfigureProperty,
+    StartAgitation,
     StopAgitation,
     Statement,
     While,
@@ -54,19 +55,20 @@ def statements(
                 result.extend(value.prerequisites)
             text = value.text if statement.op is None else f"{previous.text} {statement.op.value} ({value.text})"
             result.append(set_variable(context, tag, array, text, identity=statement.node_id, index=captured_index))
-        elif isinstance(statement, (SetAgitation, StopAgitation)):
-            speed = (
-                plan_expression(context, function, statement.speed, tag)
-                if isinstance(statement, SetAgitation)
-                else None
-            )
-            if speed is not None:
-                result.extend(speed.prerequisites)
+        elif isinstance(statement, ConfigureProperty):
+            value = plan_expression(context, function, statement.value, tag)
+            result.extend(value.prerequisites)
+            result.append(set_variable(
+                context, tag, context.device_state[function.node_id][statement.resource_id].name,
+                value.text, identity=statement.node_id,
+            ))
+        elif isinstance(statement, (StartAgitation, StopAgitation)):
+            speed = context.device_state[function.node_id][statement.resource_id].name if isinstance(statement, StartAgitation) else None
             result.append(
                 agitation_task(
                     tag=tag,
                     binding=context.resources[statement.resource_id],
-                    speed=speed.text if speed is not None else None,
+                    speed=speed,
                     identifier=context.identifier("statement", statement.node_id),
                 )
             )
@@ -89,6 +91,11 @@ def statements(
                     after.append(set_variable(context, tag, name, temporary, array=True))
                 else:
                     outputs[output.parameter_id] = name
+            for resource_id, storage in context.device_state[statement.function_id].items():
+                assert storage.input_id is not None and storage.output_id is not None
+                caller_name = context.device_state[function.node_id][resource_id].name
+                inputs[storage.input_id] = caller_name
+                outputs[storage.output_id] = caller_name
             result.append(
                 _xml(
                     tag,

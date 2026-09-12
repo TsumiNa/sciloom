@@ -5,16 +5,19 @@ Run from the repository root:
 
 Expected terminal output:
     agitation_ir.json
-    Started: AgitationState(enabled=True, speed=RotationalSpeed(rps=10.0))
-    Stopped: AgitationState(enabled=False, speed=RotationalSpeed(rps=10.0))
+    Configured: {'speed': RotationalSpeed(rps=10.0)}
+    Applied before start: {}
+    Started: True {'speed': RotationalSpeed(rps=10.0)}
+    Stopped: False {'speed': RotationalSpeed(rps=10.0)}
 
 Full generated output: agitation_ir.json, beside this source file.
 Source paths and line numbers in JSON describe the generating checkout; these
 diagnostic fields can differ when the example is rerun elsewhere.
 
 The JSON file stores the same Function's Program. Reloading it preserves the IR.
-The first run commands 600 rpm (10 revolutions per second); the second disables
-agitation while retaining the last known commanded speed in reference state.
+The first run saves 600 rpm (10 revolutions per second), then explicitly starts.
+The configuration event precedes application. The second run stops agitation
+while retaining both saved and last-applied configurations in reference state.
 These are reference-model states, not measurements of a physical device.
 
 Reuse the experiment author's Function, then inspect the compiler boundary.
@@ -41,10 +44,17 @@ if __name__ == "__main__":
     session = Interpreter(restored)
     started = session.run(inputs={"shaker_speed": 600 * rpm, "enabled": True})
     stopped = session.run(inputs={"shaker_speed": 600 * rpm, "enabled": False})
-    assert started.events[0].enabled and started.events[0].speed == 600 * rpm
-    assert not stopped.events[0].enabled and stopped.events[0].speed == 600 * rpm
+    configured = started.events[0].state
+    assert configured.configuration == {"speed": 600 * rpm}
+    assert not configured.enabled and not configured.applied_configuration
 
     print(path.name)
     resource_id = program.resources[0].node_id
-    print("Started:", started.resources[resource_id])
-    print("Stopped:", stopped.resources[resource_id])
+    active = started.resources[resource_id]
+    inactive = stopped.resources[resource_id]
+    assert active.enabled and not inactive.enabled
+    assert active.configuration == inactive.configuration == inactive.applied_configuration
+    print("Configured:", dict(configured.configuration))
+    print("Applied before start:", dict(configured.applied_configuration))
+    print("Started:", active.enabled, dict(active.applied_configuration))
+    print("Stopped:", inactive.enabled, dict(inactive.applied_configuration))

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+from typing import TYPE_CHECKING
 from uuid import UUID, uuid5
 from ...core.ir import (
     Program,
@@ -20,12 +21,16 @@ from ...core.ir.traversal import iter_nodes
 from .agitation import AutoSuiteIndividualShaker
 from .xml import XmlNode, xml_node as _xml
 
+if TYPE_CHECKING:
+    from .device_state import DeviceStorage
+
 
 class CodegenContext:
     def __init__(self, package: Program, namespace: UUID, resources: dict[str, AutoSuiteIndividualShaker]) -> None:
         self.package = package
         self.namespace = namespace
         self.resources = resources
+        self.device_state: dict[str, dict[str, DeviceStorage]] = {}
         self.functions = {function.node_id: function for function in package.functions}
         self.variables = {v.node_id: v for f in package.functions for v in f.variables}
         self.names: dict[str, str] = {}

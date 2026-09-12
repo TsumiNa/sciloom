@@ -1,119 +1,107 @@
-# Agitation: a domain operation retained in IR
+# Device configuration and explicit agitation lifecycle
 
-This example probes architecture with a real operation supported by the production
-AutoSuite corpus. It does not attempt a complete agitation or device model.
+Device contracts define parameters and commands, Semantic IR describes the
+experiment, and a Target binds logical dependencies to concrete equipment.
+The [device refactor contract](refactor/device-abstraction/00-overview.md) is
+authoritative. Property configuration and explicit lifecycle are implemented;
+independent native commands and device condition specialization are later stages.
 
-## Intent and resources
-
-The current logical Agitator contract lives in `sciloom.devices` and remains
-available through the lazy `from sciloom import Agitator` author entry. It does not
-load the Python DSL or a vendor target. The accepted property/start lifecycle is
-documented in the [device refactor](refactor/device-abstraction/00-overview.md);
-until that stage lands, the command semantics below remain current.
-
-The Python DSL accepts a class-level `agitator: Agitator` device dependency,
-separate from Input/Output/Var fields. Calls to its `set_speed(speed)` and `stop()` methods inside
-runtime source lower to explicit SetAgitation and StopAgitation nodes. Calling
-these methods as host Python raises an error; they never contact a device.
-
-Program.resources declares AgitatorResource records with a semantic node ID and
-a logical_id. Root slots use their field name; nested slots use a component path
-such as `stage.agitator`. Assigning `self.stage.agitator = self.agitator` during
-host composition shares one logical resource. Declared slots on compiled
-Functions are included even if unused. Operations reference semantic IDs. A target
-binds logical IDs to hardware separately; IR contains no Zone, device ID or typeid.
-
-SetAgitation enables agitation and commands the supplied speed. StopAgitation
-disables agitation, retaining the last known commanded speed in reference state.
-A zero speed does not implicitly mean stop. No operation claims that the physical
-speed has been reached or that the contents have mixed. Sharing this command
-interface does not establish equivalence between different mixing mechanisms.
-
-## Rotational-speed values
+## Author interface
 
 ```python
-from sciloom import Input, RotationalSpeed, rpm, rps
+from sciloom import Agitator, Function, Input, RotationalSpeed, runtime
+from sciloom.contrib.autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
 
-assert 600 * rpm == 10 * rps
-# A Function declaration:
-# speed: Input[RotationalSpeed]
+class Mix(Function):
+    agitator: Agitator
+    speed: Input[RotationalSpeed]
+
+    @runtime
+    def run(self) -> None:
+        self.agitator.speed = self.speed
+        self.agitator.start()
+
+result = Mix().compile(target=AutoSuiteTarget(devices={
+    "agitator": AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="23"),
+}))
+# The ASFP keeps the public speed input, captures it into private configuration
+# storage, then emits Stir(switchon=1) using that saved value.
 ```
 
-RotationalSpeed is a finite nonnegative quantity. IR ScalarType.ROTATIONAL_SPEED
-literals store revolutions per second; JSON uses type rotational_speed. Unitless
-Plain `float`/`int` values cannot be implicitly assigned or passed as speeds.
-Public interpreter inputs/outputs use RotationalSpeed objects. Internal state
-snapshots retain canonical IR numeric values.
+The executable [author example](../examples/agitation.py) adds conditional stopping
+and writes its generated [ASFP companion](../examples/agitation.asfp). It does not
+execute hardware. Runtime source currently comes from ordinary `.py` files.
 
-The initial frontend supports numeric host literals/configuration multiplied by
-an imported rpm/rps constant, preconstructed host quantities, typed runtime
-references, assignments and function parameter binding. It resolves only known
-SpeedUnit values from module names, not arbitrary module globals or Python calls.
-General dimensional arithmetic and runtime scalar-to-quantity conversion are
-outside this slice. Scalar and quantity values cannot be mixed by arithmetic.
+`agitator: Agitator` is a device slot, separate from Input/Output/Var. Root slots
+use field names; nested slots use paths such as `stage.agitator`. Assign an
+existing logical reference during construction to share equipment:
+`self.stage.agitator = self.agitator`. All declared slots on compiled Functions
+require explicit target bindings. Different logical devices cannot alias the
+same physical shaker or zone. Lowering does not mutate the author instance.
 
-## Reference execution
+## Configuration and execution
 
-AgitationState records enabled and an optional known speed, initially false/None
-in a fresh reference session. This is a reference-model initial state, not a
-measurement of connected hardware. AgitationEvent records the originating node,
-resource and resulting commanded state, in execution order. Events are per run;
-resource state persists in the session. Result snapshots are detached and immutable.
+| Operation | Effect |
+|---|---|
+| `device.speed = value` | Evaluate and save the value now; preserve applied configuration and running state |
+| `device.start()` | Require complete configuration, apply the saved snapshot and enable; repeat to apply new values |
+| `device.stop()` | Disable while preserving saved and last-applied values |
+| Configure `0 * rpm` | Save a valid zero speed; stopping remains explicit |
 
-Python, hand-authored IR and JSON versions of a conditional configure-agitation
-program produce matching start/stop state and events. A backend is not involved
-in these tests. Raw numeric inputs, missing resources and inconsistent logical IDs
-are explicit errors.
+Subsequent changes to the RHS variable do not change saved configuration. Device
+values follow scalar/list copy rules. Configuration is shared across calls using
+the same resource; resources and reference sessions are independent. Getter,
+augmented assignment and indexed property updates are unsupported. Registered
+parameters only use property assignment; set_speed and SetAgitation are removed.
 
-## AutoSuite deployment
+The compiler proves required configuration using interprocedural guaranteed-write
+and incoming-requirement summaries. Branch guarantees intersect; possibly empty
+loops cannot establish configuration after the loop. Parent-configure/child-start
+and child-configure/parent-start both work. Compilation assumes no earlier entry
+calls. Reference execution can use actual retained state, and errors when start
+lacks required configuration.
 
-The AutoSuite adapter binds logical resources explicitly to existing fixed zones
-on individual shakers:
+RotationalSpeed is finite and nonnegative. `600 * rpm == 10 * rps`; canonical IR
+values use revolutions per second. Unitless numbers are not implicitly speeds.
+Mypy checks property value types and command signatures; SciLoom additionally
+checks schema roles, device capabilities and configuration completeness.
 
-```python
-from sciloom.contrib.autosuite import AutoSuiteTarget, AutoSuiteIndividualShaker
+## IR and reference snapshots
 
-target = AutoSuiteTarget(devices={
-    "agitator": AutoSuiteIndividualShaker(
-        zone="Heater Shaker 23", device_id="23",
-    ),
-})
-result = function.compile(target=target)
-```
+JSON v4 stores DeviceResource declarations and a data-only DeviceTypeContract
+directory. ConfigureProperty carries property identity and a typed value;
+StartAgitation/StopAgitation preserve lifecycle intent. Versioned IDs never cause
+Python imports. Native DeviceCommand and DeviceIf can be validated and exchanged
+now, but deferred execution/compilation reports explicit errors until its stage.
 
-This configuration belongs to the target, not Program. The device ID is the
-shaker address, not the vessel/rack address in the Zone. Missing or unknown
-bindings fail compilation; duplicate logical bindings, zones and physical aliases fail
-configuration. The adapter supports the observed individual-shaker profile only,
-not arbitrary agitation devices or dynamic Zone parameters.
+DeviceState exposes read-only `configuration`, `applied_configuration` and
+`enabled`. Mapping keys are property names; physical values are quantities and
+lists are tuples. DeviceEvent stores its node, resource, semantic operation ID
+and detached state snapshot. Writes and lifecycle operations each produce an
+event. No snapshot is telemetry. The [developer example](../examples/developer/agitation_ir.py)
+shows saved values before start and preserved values after stop.
 
-`BaseDevice` and `Agitator` are category contracts; the frozen
-`AutoSuiteIndividualShaker(Agitator)` describes deployment. Core receives only
-immutable `DeviceBindings` facts from `Target.resolve_devices(program)` and
-checks complete, compatible bindings before target validation/emission. JSON v3
-still describes generic Agitator slots only. Other declared device categories,
-properties and explicit start await the v4 stage; they are rejected for now.
+## AutoSuite mapping and limits
 
-Experiment authors run `uv run python examples/agitation.py` to compile the
-Function directly to `examples/agitation.asfp`.
+AutoSuiteIndividualShaker is a frozen Agitator deployment profile. It explicitly
+declares writable/required speed and supported start/stop; inheritance alone does
+not establish capabilities. The target resolves immutable binding facts once.
+Shared validation checks bindings, capabilities and configuration before emission.
 
-SciLoom developers run `uv run python -m examples.developer.agitation_ir` from
-the repository root to inspect the same Function's IR, save and load
-`examples/developer/agitation_ir.json`, and check conditional start/stop with the
-reference interpreter. Runtime inputs remain parameters in the ASFP; the separate
-interpreter inputs do not specialize or run the exported file. The target accepts typed speeds in input/
-output bindings, local declarations and expressions.
+Stir submits speed and on/off together. The backend stages configuration in a
+private variable, reads it for start, and emits switchon=0 for stop. It does not
+stage configuration through a disabled Stir. Entry-owned storage passes through
+private callee inputs/outputs; outputs first copy incoming state so unchanged
+branches return it. These records do not enter public semantic IR or change the
+author's entry signature. Wire zero initializers are not semantic configuration.
 
-Stop serialization uses a documented inactive editor speed from the corpus;
-it does not add a speed command or attempt to recover previous state.
-See [mapping evidence](../autosuite/docs/16_AGITATION_MAPPING.md). Physical limits,
-zone/device compatibility in a different application and Executor acceptance
-still require deployment validation.
+Private output copy-back occurs on normal return. Recovery after fatal callee
+failure before copy-back has no equivalence guarantee. The stop task's inactive
+editor speed is not saved configuration. Timing, getters, recovery and device
+limits remain in the collected [Q&A](refactor/device-abstraction/qa.md).
 
-## Production evidence
-
-The adapter is grounded in the retained latest APP's Sample and Run GPC
-function (two SATaskSetAgitation nodes and an angularspeed input parameter).
-Manual section 3.6.19 establishes set speed and on/off semantics; device speed
-ranges depend on the selected device. This reference slice extracts the operation,
-not the full GPC workflow or its physical sampling behavior.
+[Mapping evidence](../autosuite/docs/16_AGITATION_MAPPING.md) separates observed
+task/variable/parameter structures from composed transport behavior. Static XML
+checks do not establish Executor acceptance, speed attainment or equivalence of
+mixing mechanisms. No universal speed bounds, clamping, duration or real
+measurement APIs are introduced here.

@@ -10,7 +10,7 @@ from sciloom import Agitator, Function, Input, Output, RotationalSpeed, rpm, run
 from sciloom.core.compiler import compile_ir
 from sciloom.core.diagnostics import CompilationError
 from sciloom.core.interpreter import Interpreter
-from sciloom.core.ir import SetAgitation, from_json, to_json
+from sciloom.core.ir import ConfigureProperty, from_json, to_json
 from . import AutoSuiteTarget, AutoSuiteIndividualShaker
 
 CORPUS = Path(__file__).resolve().parents[4] / "autosuite"
@@ -26,7 +26,8 @@ class ConfigureAgitation(Function):
     @runtime
     def run(self):
         if self.enabled:
-            self.agitator.set_speed(self.shaker_speed)
+            self.agitator.speed = self.shaker_speed
+            self.agitator.start()
         else:
             self.agitator.stop()
 
@@ -65,12 +66,16 @@ def test_production_task_payload_and_typed_input_relationship():
         task.find("zone").text = "Heater Shaker 23"
         task.find("taskdatas/taskdata0/progid").text = "Chemspeed.SADeviceIndividualShaker.1"
         task.find("taskdatas/taskdata0/deviceid").text = "23"
+    reference[0].find("taskdatas/taskdata0/speed").text = generated[0].findtext("taskdatas/taskdata0/speed")
     assert [shape(task) for task in generated] == [shape(task) for task in reference]
     speed = root.find("function/functiondata/inputs/item0")
     vendor_speed = source.find(".//functiondata/inputs/item0")
     assert speed.findtext("variabletype") == vendor_speed.findtext("variabletype") == "angularspeed"
-    assert generated[0].findtext("taskdatas/taskdata0/speed") == speed.findtext("variablename")
-    assert all(task.tag == "component" for task in generated)
+    saved_name = generated[0].findtext("taskdatas/taskdata0/speed")
+    capture = root.find(".//*[@typeid='Chemspeed.SATaskSetVariable.1']")
+    assert capture.findtext("variablename") == saved_name
+    assert capture.findtext("expressiontext") == speed.findtext("variablename")
+    assert len(result.semantic_ir.functions[0].variables) == 2
 
 
 def test_concrete_zone_address_and_canonical_speed_match_standalone_export():
@@ -79,7 +84,8 @@ def test_concrete_zone_address_and_canonical_speed_match_standalone_export():
 
         @runtime
         def run(self):
-            self.agitator.set_speed(600 * rpm)
+            self.agitator.speed = 600 * rpm
+            self.agitator.start()
 
     root = ET.fromstring(Start().compile(target=target("1st_vial", "24")).artifact.content)
     generated = root.find(f".//*[@typeid='{AGITATION}']")
@@ -88,8 +94,12 @@ def test_concrete_zone_address_and_canonical_speed_match_standalone_export():
         for task in ET.parse(CORPUS / "asfp/functionsPackage_3.asfp").getroot().iter()
         if task.get("typeid") == AGITATION and task.findtext("zone") == "1st_vial" and task.findtext("switchon") == "1"
     )
+    assert reference.findtext("taskdatas/taskdata0/speed") == "10"
+    capture = root.find(".//*[@typeid='Chemspeed.SATaskSetVariable.1']")
+    assert capture.findtext("expressiontext") == "10"
+    assert capture.findtext("variablename") == generated.findtext("taskdatas/taskdata0/speed")
+    reference.find("taskdatas/taskdata0/speed").text = generated.findtext("taskdatas/taskdata0/speed")
     assert shape(generated) == shape(reference)
-    assert generated.findtext("taskdatas/taskdata0/speed") == "10"
 
 
 def test_rebinding_changes_only_target_representation():
@@ -101,7 +111,7 @@ def test_rebinding_changes_only_target_representation():
     assert first.semantic_ir == second.semantic_ir == program
     assert first.artifact != second.artifact
     assert compile_ir(from_json(snapshot), target=target()).artifact == first.artifact
-    assert isinstance(program.functions[0].body[0].then_body[0], SetAgitation)
+    assert isinstance(program.functions[0].body[0].then_body[0], ConfigureProperty)
     assert not any(word in snapshot for word in ("Chemspeed", "Heater Shaker", "device_id"))
     for result, zone, device_id in ((first, "Heater Shaker 23", "23"), (second, "Heater Shaker 25", "25")):
         task = ET.fromstring(result.artifact.content).find(f".//*[@typeid='{AGITATION}']")
@@ -109,7 +119,7 @@ def test_rebinding_changes_only_target_representation():
         assert task.findtext("taskdatas/taskdata0/deviceid") == device_id
     session = Interpreter(program)
     for speed in (300 * rpm, 1200 * rpm):
-        assert session.run(inputs={"shaker_speed": speed, "enabled": True}).events[0].speed == speed
+        assert session.run(inputs={"shaker_speed": speed, "enabled": True}).events[-1].state.applied_configuration["speed"] == speed
     assert first.artifact == compile_ir(program, target=target()).artifact
 
 
@@ -134,7 +144,8 @@ def test_quantities_keep_units_in_locals_outputs_and_call_bindings():
         @runtime
         def run(self):
             self.result = self.echo(speed=self.speed)
-            self.agitator.set_speed(self.result)
+            self.agitator.speed = self.result
+            self.agitator.start()
 
     result = Caller().compile(target=target())
     root = ET.fromstring(result.artifact.content)
@@ -182,12 +193,14 @@ def test_agitation_composes_with_loops_and_independent_resources():
     assert len(tasks) == 4
     assert {t.findtext("zone") for t in tasks} == {"Heater Shaker 23", "Heater Shaker 25"}
     events = Interpreter(result.semantic_ir).run().events
-    assert [(e.resource_id, e.enabled) for e in events] == [
+    assert [(e.resource_id, e.state.enabled) for e in events] == [
+        ("resource:first.agitator", False),
+        ("resource:first.agitator", True),
         ("resource:first.agitator", True),
         ("resource:first.agitator", True),
         ("resource:second.agitator", False),
     ]
-    assert events[-1].speed is None
+    assert events[-1].state.applied_configuration == {}
 
 
 def test_stop_has_no_speed_dependency_or_hidden_runtime_state():
@@ -204,7 +217,7 @@ def test_stop_has_no_speed_dependency_or_hidden_runtime_state():
     assert root.findtext("function/functiondata/inputs/count") == "0"
     task = root.find(f".//*[@typeid='{AGITATION}']")
     assert task.findtext("switchon") == "0"
-    assert Interpreter(result.semantic_ir).run().events[0].speed is None
+    assert Interpreter(result.semantic_ir).run().events[0].state.applied_configuration == {}
 
 
 def test_missing_or_unknown_target_bindings_fail_before_emission(monkeypatch):

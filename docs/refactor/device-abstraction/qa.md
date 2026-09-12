@@ -15,6 +15,13 @@ together. The [interface contract](00-overview.md) is authoritative.
 
 ## Updating this record
 
+Stage-4 implementation evidence: configured/applied snapshots and normal-return
+transport are covered by `core/interpreter/device_state_test.py` and
+`contrib/autosuite/device_state_test.py`. These are semantic/static checks; QA-001,
+QA-004 and QA-005 remain pending experimental/platform confirmation. The evidence
+levels and Executor requirements are recorded in the
+[AutoSuite mapping note](../../../autosuite/docs/16_AGITATION_MAPPING.md).
+
 Add new domain questions here rather than asking them individually. When an answer
 arrives, record who/what supplied it, date, evidence and affected contract sections.
 If a decision changes behavior, update the contract, relevant stage plans, examples

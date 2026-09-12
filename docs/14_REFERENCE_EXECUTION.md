@@ -5,16 +5,21 @@ call frames and control flow; `values.py` normalizes values and constructs
 execution errors; `expressions.py` evaluates expressions using session reads and
 step accounting. No generated source is executed.
 
+`device_state.py` owns saved/applied configuration snapshots and lifecycle events.
+Configuration assignments capture values immediately; starts apply complete
+configuration and stops preserve it. DeviceIf must be specialized before creating
+an Interpreter; native commands without reference semantics fail explicitly.
+
 SciLoom IR is a structured scientific-program model. It can be validated,
 exchanged as JSON and executed without importing either a source frontend or
 a target backend. The reference interpreter specifies the currently supported
 semantics; it is not AutoSuite simulation and does not control hardware.
 
-## Program and JSON v3
+## Program and JSON v4
 
 The root is `Program`, selecting an entry FunctionIR and containing specialized
 function instances. Semantic IDs identify occurrences and ownership, never target
-objects. JSON uses kind `Program` and explicit format_version `3`. Versions 1/2 and
+objects. JSON uses kind `Program` and explicit format_version `4`. Versions 1/2/3 and
 the old Package import are rejected rather than silently migrated.
 
 `core/ir/schema.py` defines structural conversion independently of the JSON codec.

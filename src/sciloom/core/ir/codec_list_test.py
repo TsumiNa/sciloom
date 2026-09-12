@@ -1,4 +1,4 @@
-"""JSON v3 lists retain typed high-level operations and reject invalid contracts."""
+"""JSON v4 lists retain typed high-level operations and reject invalid contracts."""
 
 from dataclasses import replace
 
@@ -24,10 +24,10 @@ def list_program():
     return Program(entry_function_id="f", functions=(FunctionIR(node_id="f", name="Lists", variables=(state, output), body=body),))
 
 
-def test_v3_roundtrip_decodes_enum_or_list_types_and_optional_enum():
+def test_v4_roundtrip_decodes_enum_or_list_types_and_optional_enum():
     program = list_program()
     document = to_dict(program)
-    assert document["format_version"] == 3
+    assert document["format_version"] == 4
     assert document["functions"][0]["variables"][0]["type"] == {"kind": "ListType", "element_type": "real"}
     assert document["functions"][0]["body"][1]["op"] == "*"
     assert from_json(to_json(program)) == program

@@ -1,6 +1,7 @@
 {
+  "device_types": [],
   "entry_function_id": "edit",
-  "format_version": 3,
+  "format_version": 4,
   "functions": [
     {
       "body": [

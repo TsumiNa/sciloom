@@ -158,7 +158,7 @@ Run the experiment-author examples with `uv run python examples/function_call.py
 and `uv run python examples/agitation.py`. Run the list author examples with `uv run python examples/scale_values.py` and
 `uv run python examples/non_zero_array_min.py`. Also run the developer example
 with `uv run python -m examples.developer.agitation_ir` from the repository root.
-Run `uv run python -m examples.developer.list_ir` for direct list IR and JSON v3.
+Run `uv run python -m examples.developer.list_ir` for direct list IR and JSON v4.
 Run `python autosuite/tools/audit_corpus.py` after reference changes. Syntax-check `examples/proposed_frontend/*.py`. On the AutoSuite host, generated `.app` files must additionally pass Executor simulation. The historical compiler, ASPY inputs and text views have been removed; refactor work starts from the retained XML and semantic documentation.
 
 ## 9. Documentation location
@@ -174,7 +174,7 @@ ownership. Experiment authors import their API from `sciloom`; contributors impo
 Core must not import `sciloom.devices`, DSL, contrib or Studio; data-only
 `sciloom.core.devices` binding records belong to core. The root author API stays lazy. Target
 selection is explicit. Generic compilation must not import AutoSuite or assume
-XML. Program/JSON v3 is the current semantic contract; see
+XML. Program/JSON v4 is the current semantic contract; see
 [reference execution](docs/14_REFERENCE_EXECUTION.md). Keep vendor restrictions
 (such as recursion) in target validation. The reference interpreter specifies
 SciLoom behavior and is not evidence of vendor numerical or physical equivalence.
@@ -185,9 +185,14 @@ variables. Share existing logical references during host composition; do not
 instantiate named Agitator objects or assign hardware to Function fields.
 Bind deployment with `AutoSuiteTarget(devices={"agitator": AutoSuiteIndividualShaker(...)})`.
 Every Target implements `resolve_devices(program) -> DeviceBindings`; empty
-bindings are valid only for device-free programs. JSON v3 currently supports
-generic Agitator slots; property configuration/start and typed extension contracts
-land together in v4. See the authoritative
+bindings are valid only for device-free programs. JSON v4 includes typed device
+contracts, ConfigureProperty and explicit StartAgitation/StopAgitation. Set speed
+with property assignment and explicitly start; no set_speed or SetAgitation alias.
+Configuration captures values at assignment, and start applies the complete saved
+configuration. Prove configuration across calls without assuming previous entry
+invocations. Getter/augmented property access is unsupported. Native DeviceCommand
+and DeviceIf wire forms are defined but their execution awaits stages 5 and 6.
+Backend context variables/parameters must not enter the public semantic Program. See the authoritative
 [device plan](docs/refactor/device-abstraction/00-overview.md).
 Consult `autosuite/docs/16_AGITATION_MAPPING.md` before changing this adapter.
 Do not infer generic physical limits or hardware equivalence from one device profile.

@@ -12,7 +12,8 @@ from .statements import statements
 from ..units import RotationalSpeed
 from ..core.diagnostics import IRValidationError
 from ..core.ir import (
-    AgitatorResource,
+    DeviceResource,
+    DeviceTypeContract,
     FunctionIR,
     ListLiteral,
     ListType,
@@ -29,13 +30,14 @@ def lower(root: Function) -> Program:
     instances: list[Function] = [root]
     ids = {id(root): "fn:0"}
     functions: list[FunctionIR] = []
-    resources: dict[str, AgitatorResource] = {}
+    resources: dict[str, DeviceResource] = {}
     paths = component_paths(root)
+    device_types: dict[str, DeviceTypeContract] = {}
     index = 0
     while index < len(instances):
         instance = instances[index]
         function_id = ids[id(instance)]
-        context = LoweringContext(instance, function_id, instances, ids, resources, paths)
+        context = LoweringContext(instance, function_id, instances, ids, resources, paths, device_types)
         for name in instance.device_fields:
             reference = context.host_attribute(name)
             assert isinstance(reference, DeviceReference)
@@ -43,7 +45,7 @@ def lower(root: Function) -> Program:
         function = build_function(context)
         functions.append(function)
         index += 1
-    package = Program(entry_function_id="fn:0", functions=tuple(functions), resources=tuple(resources.values()))
+    package = Program(entry_function_id="fn:0", functions=tuple(functions), resources=tuple(resources.values()), device_types=tuple(device_types.values()))
     diagnostics = validate(package)
     if diagnostics:
         raise IRValidationError(diagnostics)

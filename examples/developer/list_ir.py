@@ -1,4 +1,4 @@
-"""For SciLoom developers: construct and execute JSON v3 list semantics directly.
+"""For SciLoom developers: construct and execute JSON v4 list semantics directly.
 
 Run from the repository root:
     uv run python -m examples.developer.list_ir

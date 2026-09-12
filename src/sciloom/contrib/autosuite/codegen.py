@@ -20,6 +20,7 @@ from ...core.ir import Program, to_dict
 from .agitation import AutoSuiteIndividualShaker
 from .context import CodegenContext
 from .functions import build_functions
+from .device_state import prepare_device_state
 from .xml import AutoSuiteVersion, SerializationIR
 
 
@@ -46,4 +47,6 @@ def lower_asfp(
     namespace = uuid5(NAMESPACE_URL, f"https://sciloom.invalid/{target.value}/{digest}")
     bindings = devices
     resources = {resource.node_id: bindings[resource.logical_id] for resource in program.resources}
-    return build_functions(CodegenContext(program, namespace, resources), target)
+    context = CodegenContext(program, namespace, resources)
+    prepare_device_state(context)
+    return build_functions(context, target)
