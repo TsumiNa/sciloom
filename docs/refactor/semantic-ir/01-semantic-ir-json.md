@@ -23,7 +23,7 @@ Function ownership is represented now; global declarations are not accepted yet.
 - JSON round-trips preserve IDs, types and order with deterministic encoding.
 - Invalid JSON shapes, dangling IDs, cross-function references, invalid operators,
   type mismatches, incomplete call bindings and recursion produce diagnostics.
-- `uv run pytest src/sciloom/ir` passes.
+- `uv run pytest src/sciloom/core/ir` passes (path updated by the package-layout refactor).
 - `uv run python autosuite/tools/smoke_test.py` passes.
 - `uv run python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv` passes.
 - `uv run python -m compileall -q examples/proposed_frontend` passes.
