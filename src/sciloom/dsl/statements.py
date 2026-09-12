@@ -17,7 +17,7 @@ def call(context: LoweringContext, node: ast.Call, targets: Sequence[ast.expr]) 
         or not isinstance(callee_node.value, ast.Name)
         or callee_node.value.id != "self"
     ):
-        context.fail("python_subset", "Only calls to composed context.<function> instances are supported.", node)
+        context.fail("python_subset", "Only calls to composed self.<function> instances are supported.", node)
     callee = context.host_attribute(callee_node.attr)
     if not isinstance(callee, Function):
         context.fail("python_subset", "Runtime calls require a Function instance composed before compilation.", node)
