@@ -14,11 +14,13 @@ flowchart TB
     subgraph Authoring["Authoring and editing"]
         Class["Python DSL class schema<br/>Input / Output / Var"] --> Instance["Python instance<br/>__init__ specialization and composition"]
         Instance --> Compile["instance.compile()"]
-        GUI["Future xyflow / Studio editor"]
+        GUI["Future xyflow webapp"]
+        Studio["Future Studio editing service"]
         AI["Future AI graph tools"]
     end
     Compile --> IR["Typed SciLoom Semantic IR"]
-    GUI <--> IR
+    GUI <--> Studio
+    Studio <--> IR
     AI <--> IR
     subgraph Backend["Validation and serialization"]
         IR --> Validate["Semantic validation"]

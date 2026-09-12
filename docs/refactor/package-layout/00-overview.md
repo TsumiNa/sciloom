@@ -4,7 +4,8 @@
 
 This is the accepted interface contract for the nine-stage refactor. It supersedes
 the package layout in the compiler-foundation and autosuite-codegen plans, and
-the plain-ScalarType field spelling in the semantic-ir plan. Stage numbers below
+the plain SciLoom type declarations (such as `index: Integer = 0`) in the
+semantic-ir plan. Stage numbers below
 refer to this sequence, not GitHub PR numbers. Until its implementing stage lands,
 a target example is a specification, not a claim that it has already run.
 
@@ -99,7 +100,7 @@ annotations are host data. Var needs an explicit initial value. Initial values
 initialize session state, not each call; runtime assignment performs a reset.
 Scope follows the owning model. Application/global compilation remains deferred.
 
-The implementation uses generic Annotated aliases (TypeAlias plus TypeVar) with
+Stage 5 will use generic Annotated aliases (TypeAlias plus TypeVar) with
 one private field-role marker. get_type_hints(include_extras=True) preserves it;
 ordinary type checkers see T. Reject unsubscripted aliases, multiple/nested roles,
 Any and unsupported types. Keep descriptors preventing host reads/writes.
@@ -109,7 +110,7 @@ ScalarType.REAL/INTEGER/BOOLEAN and vendor storage codes remain internal.
 
 ```python
 from typing import Protocol
-from sciloom.core.compiler import Artifact
+from sciloom.core.compiler import Artifact, compile_ir
 from sciloom.core.diagnostics import Diagnostic
 from sciloom.core.ir import Program
 
@@ -226,9 +227,10 @@ in raw APP/ASFP. CSV and indexed writes do grow arrays in existing programs:
 record that future construction need without silently adopting auto-growing
 indexed assignment in SciLoom.
 
-The new Non Zero Array Min learning example preserves the numeric algorithm but
-explicitly removes volume units; it is not a full physical-unit reconstruction.
-Separate tests cover copy isolation, writes, list literals and parameter passing.
+Stage 8 will add a Non Zero Array Min learning example that preserves the numeric
+algorithm but explicitly removes volume units; it will not be a full physical-unit
+reconstruction. Separate tests will cover copy isolation, writes, list literals
+and parameter passing.
 
 ## Documentation, Studio and typing
 
@@ -290,4 +292,3 @@ live beside same-base-name code. Do not overwrite raw evidence. After reference
 documentation changes update MANIFEST hashes and run audit_corpus.py.
 Static XML/reference checks do not establish Executor acceptance or physical
 equivalence; retain the AutoSuite host simulation gate.
-
