@@ -6,6 +6,12 @@ Enforce shared implementation type contracts, following the [authoritative inter
 
 ## Scope
 
+Implemented: locked mypy dependency, `uv run mypy`/CI checking 45 production and
+example source files, complete core/contrib function annotations, precise
+scalar/list conversion types, preserved runtime decorator signatures, and static
+positive/negative compiler and native-declaration tests. Built wheel includes
+`sciloom/py.typed`. No plugin or blanket ignore is used.
+
 Add locked mypy development dependency/config/CI, complete core/contrib function annotations, preserve decorator signatures and py.typed, and add positive/negative interface/native-field typing checks.
 
 ## Non-goals
@@ -20,4 +26,3 @@ Check this stage against the exact imports, signatures and examples in the contr
 Update that contract in the same PR if an interface decision changes. Complete
 review, resolve feedback, verify latest-head checks and confirm remote squash merge
 before beginning the next stage.
-

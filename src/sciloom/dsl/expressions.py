@@ -6,7 +6,21 @@ import ast
 from typing import TypeGuard, cast
 from .context import LoweringContext
 from ..units import RotationalSpeed
-from ..core.ir import Binary, BinaryOp, Expression, ListLiteral, ListLength, ListGet, ListType, Literal, Reference, ScalarType, Unary, UnaryOp, ValueType
+from ..core.ir import (
+    Binary,
+    BinaryOp,
+    Expression,
+    ListLiteral,
+    ListLength,
+    ListGet,
+    ListType,
+    Literal,
+    Reference,
+    ScalarType,
+    Unary,
+    UnaryOp,
+    ValueType,
+)
 
 
 BINARY_OPERATORS = {
@@ -25,6 +39,7 @@ BINARY_OPERATORS = {
 }
 UNARY_OPERATORS = {ast.UAdd: UnaryOp.POSITIVE, ast.USub: UnaryOp.NEGATIVE, ast.Not: UnaryOp.NOT}
 
+
 def expression(context: LoweringContext, node: ast.AST, expected: ValueType | None = None) -> Expression:
     if isinstance(node, ast.List):
         element_type = expected.element_type if isinstance(expected, ListType) else None
@@ -33,10 +48,14 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
     if isinstance(node, ast.Subscript):
         if isinstance(node.slice, ast.Slice):
             context.fail("python_subset", "List slicing is unsupported.", node)
-        return ListGet(**context.metadata(node), value=expression(context, node.value), index=expression(context, node.slice))
+        return ListGet(
+            **context.metadata(node), value=expression(context, node.value), index=expression(context, node.slice)
+        )
     if is_length_call(node):
         if not context.allows_len:
-            context.fail("python_subset", "len must resolve to the Python builtin; shadowed calls are unsupported.", node)
+            context.fail(
+                "python_subset", "len must resolve to the Python builtin; shadowed calls are unsupported.", node
+            )
         if len(node.args) != 1 or node.keywords:
             context.fail("python_subset", "len requires one positional list argument.", node)
         return ListLength(**context.metadata(node), value=expression(context, node.args[0]))
@@ -72,7 +91,9 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
             right=expression(context, node.right),
         )
     elif isinstance(node, ast.UnaryOp) and type(node.op) in UNARY_OPERATORS:
-        return Unary(**context.metadata(node), op=UNARY_OPERATORS[type(node.op)], operand=expression(context, node.operand))
+        return Unary(
+            **context.metadata(node), op=UNARY_OPERATORS[type(node.op)], operand=expression(context, node.operand)
+        )
     elif isinstance(node, ast.Compare) and len(node.ops) == 1 and type(node.ops[0]) in BINARY_OPERATORS:
         return Binary(
             **context.metadata(node),
@@ -84,7 +105,10 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
         result = expression(context, node.values[0])
         for value_node in node.values[1:]:
             result = Binary(
-                **context.metadata(node), op=BINARY_OPERATORS[type(node.op)], left=result, right=expression(context, value_node)
+                **context.metadata(node),
+                op=BINARY_OPERATORS[type(node.op)],
+                left=result,
+                right=expression(context, value_node),
             )
         return result
     else:
@@ -101,7 +125,9 @@ def is_length_call(node: ast.AST) -> TypeGuard[ast.Call]:
     return isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "len"
 
 
-def list_literal(context: LoweringContext, node: ast.AST, elements: tuple[Expression, ...], expected: ValueType | None) -> ListLiteral:
+def list_literal(
+    context: LoweringContext, node: ast.AST, elements: tuple[Expression, ...], expected: ValueType | None
+) -> ListLiteral:
     if isinstance(expected, ListType):
         list_type = expected
     else:
@@ -111,7 +137,9 @@ def list_literal(context: LoweringContext, node: ast.AST, elements: tuple[Expres
         if types <= {ScalarType.INTEGER, ScalarType.REAL}:
             element_type = ScalarType.REAL if ScalarType.REAL in types else ScalarType.INTEGER
         elif len(types) == 1 and isinstance(next(iter(types)), ScalarType):
-            element_type = next(iter(types))
+            only_type = next(iter(types))
+            assert isinstance(only_type, ScalarType)
+            element_type = only_type
         else:
             context.fail("list_type", "Lists must be one-dimensional and homogeneous.", node)
         list_type = ListType(element_type=element_type)

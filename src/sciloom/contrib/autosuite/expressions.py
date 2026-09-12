@@ -71,7 +71,7 @@ def plan_expression(
         return ExpressionPlan(context.names[expression.symbol_id], context.variables[expression.symbol_id].type)
     if isinstance(expression, ListLiteral):
         name = context.temporary(function, expression.type, length=len(expression.elements))
-        tasks = []
+        tasks: list[XmlNode] = []
         for i, element in enumerate(expression.elements):
             value = plan_expression(context, function, element, tag)
             tasks.extend(value.prerequisites)
