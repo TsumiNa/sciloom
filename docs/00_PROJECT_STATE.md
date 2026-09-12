@@ -5,7 +5,7 @@
 Package reorganization and native declarations are implemented: authors use
 `Input[float]`, `Output[bool]` and `Var[int] = 0` from `sciloom`, with AutoSuite
 targets from `sciloom.contrib.autosuite`. JSON v3 list IR and reference execution
-are implemented; Python list syntax and AutoSuite array generation follow in the
+and Python list syntax are implemented; AutoSuite array generation follows in the
 [active refactor contract](refactor/package-layout/00-overview.md).
 
 The project has converged on a **model-first, instance-specialized compiler architecture**.

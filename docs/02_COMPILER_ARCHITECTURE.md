@@ -3,7 +3,7 @@
 This page describes the current implementation. The accepted
 [package and interface refactor](refactor/package-layout/00-overview.md) specifies
 the completed move to `dsl`, `core` and `contrib`, native declarations and JSON v3
-list semantics. Python list syntax and target arrays remain subsequent stages.
+list semantics and Python list syntax. Target array emission remains a subsequent stage.
 Paths and capabilities below are updated as each
 implementing stage lands.
 

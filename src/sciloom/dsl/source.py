@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import ast
+import builtins
 import inspect
 import tokenize
 from typing import Any
@@ -25,6 +26,9 @@ def runtime_source(context: LoweringContext) -> ast.FunctionDef:
     if len(methods) != 1:
         context.fail("runtime_method", "A Function requires exactly one @runtime instance method.")
     method = methods[0]
+    bindings = inspect.getclosurevars(method)
+    resolved_len = bindings.nonlocals.get("len", bindings.globals.get("len", bindings.builtins.get("len", builtins.len)))
+    context.allows_len = resolved_len is builtins.len
     context.unit_names = {name: value for name, value in method.__globals__.items() if isinstance(value, SpeedUnit)}
     context.filename = method.__code__.co_filename
     if not context.filename.endswith(".py"):

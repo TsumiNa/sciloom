@@ -1,12 +1,12 @@
-"""Translate scalar Python expressions without executing runtime source."""
+"""Translate typed Python expressions without executing runtime source."""
 
 from __future__ import annotations
 
 import ast
-from typing import cast
+from typing import TypeGuard, cast
 from .context import LoweringContext
 from ..units import RotationalSpeed
-from ..core.ir import Binary, BinaryOp, Expression, Literal, Reference, ScalarType, Unary, UnaryOp
+from ..core.ir import Binary, BinaryOp, Expression, ListLiteral, ListLength, ListGet, ListType, Literal, Reference, ScalarType, Unary, UnaryOp, ValueType
 
 
 BINARY_OPERATORS = {
@@ -25,7 +25,21 @@ BINARY_OPERATORS = {
 }
 UNARY_OPERATORS = {ast.UAdd: UnaryOp.POSITIVE, ast.USub: UnaryOp.NEGATIVE, ast.Not: UnaryOp.NOT}
 
-def expression(context: LoweringContext, node: ast.AST) -> Expression:
+def expression(context: LoweringContext, node: ast.AST, expected: ValueType | None = None) -> Expression:
+    if isinstance(node, ast.List):
+        element_type = expected.element_type if isinstance(expected, ListType) else None
+        elements = tuple(expression(context, item, element_type) for item in node.elts)
+        return list_literal(context, node, elements, expected)
+    if isinstance(node, ast.Subscript):
+        if isinstance(node.slice, ast.Slice):
+            context.fail("python_subset", "List slicing is unsupported.", node)
+        return ListGet(**context.metadata(node), value=expression(context, node.value), index=expression(context, node.slice))
+    if is_length_call(node):
+        if not context.allows_len:
+            context.fail("python_subset", "len must resolve to the Python builtin; shadowed calls are unsupported.", node)
+        if len(node.args) != 1 or node.keywords:
+            context.fail("python_subset", "len requires one positional list argument.", node)
+        return ListLength(**context.metadata(node), value=expression(context, node.args[0]))
     if isinstance(node, ast.Constant):
         value = node.value
     elif isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name) and node.value.id == "self":
@@ -81,3 +95,24 @@ def expression(context: LoweringContext, node: ast.AST) -> Expression:
     if scalar is None:
         context.fail("host_value", "Only scalar bool/int/float host values can enter runtime expressions.", node)
     return Literal(**context.metadata(node), type=scalar, value=cast(bool | int | float, value))
+
+
+def is_length_call(node: ast.AST) -> TypeGuard[ast.Call]:
+    return isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "len"
+
+
+def list_literal(context: LoweringContext, node: ast.AST, elements: tuple[Expression, ...], expected: ValueType | None) -> ListLiteral:
+    if isinstance(expected, ListType):
+        list_type = expected
+    else:
+        types = {context.type_of(element) for element in elements}
+        if not types:
+            context.fail("list_type", "An empty list needs a declared list element type.", node)
+        if types <= {ScalarType.INTEGER, ScalarType.REAL}:
+            element_type = ScalarType.REAL if ScalarType.REAL in types else ScalarType.INTEGER
+        elif len(types) == 1 and isinstance(next(iter(types)), ScalarType):
+            element_type = next(iter(types))
+        else:
+            context.fail("list_type", "Lists must be one-dimensional and homogeneous.", node)
+        list_type = ListType(element_type=element_type)
+    return ListLiteral(**context.metadata(node), type=list_type, elements=elements)
