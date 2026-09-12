@@ -1,5 +1,10 @@
 # Reference execution and the SciLoom semantic contract
 
+Implementation ownership: `core/interpreter/runtime.py` owns sessions, state,
+call frames and control flow; `values.py` normalizes values and constructs
+execution errors; `expressions.py` evaluates expressions using session reads and
+step accounting. No generated source is executed.
+
 SciLoom IR is a structured scientific-program model. It can be validated,
 exchanged as JSON and executed without importing either a source frontend or
 a target backend. The reference interpreter specifies the currently supported

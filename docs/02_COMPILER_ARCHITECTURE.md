@@ -35,15 +35,20 @@ future work; ASFP and reference execution are implemented now.
 
 | Module | Owns |
 |---|---|
-| `dsl/model.py` | Function class schema, decorators and public source API |
-| `dsl/lowering.py` | File-backed source discovery, AST resolution and lowering to Program |
-| `core/ir/model.py` | Immutable typed program, variables, expressions, structured control flow and domain operations |
-| `core/ir/schema.py`, `validation.py`, `codec.py` | Structure, semantic legality and JSON v2 interchange |
+| `dsl/model.py`, `schema.py` | Function lifecycle/components; field roles, defaults and host-access protection |
+| `dsl/lowering.py`, `context.py` | Instance graph to Program orchestration; shared symbols, IDs and source locations |
+| `dsl/source.py`, `expressions.py`, `statements.py` | File-backed source discovery; Python expressions; calls, operations and control flow |
+| `core/ir/types.py`, `model.py` | Value types/compatibility; immutable semantic nodes |
+| `core/ir/schema.py`, `codec.py` | Structural conversion and JSON v2 interchange |
+| `core/ir/expressions.py`, `validation.py` | Expression/symbol type checking; whole-program legality |
 | `units.py` | Shared rotational-speed values and rpm/rps conversion |
-| `core/interpreter/runtime.py` | Reference evaluation, call frames, persistent state, budgets and domain events |
+| `core/interpreter/runtime.py` | Sessions, call frames, persistent state, budgets, control flow and domain events |
+| `core/interpreter/values.py`, `expressions.py` | Value normalization/errors; expression evaluation |
 | `core/compiler.py` | Target protocol, shared compilation pipeline and generic byte artifacts |
 | `contrib/autosuite/target.py` | Vendor version/configuration and target restrictions |
-| `contrib/autosuite/codegen.py` | Function/control-flow mapping, target names and IDs |
+| `contrib/autosuite/codegen.py`, `context.py` | Generation entrypoint; target names, IDs and deployment state |
+| `contrib/autosuite/encoding.py`, `parameters.py`, `expressions.py` | Types/variable initialization; parameter bindings; target expressions |
+| `contrib/autosuite/tasks.py`, `functions.py` | Task/control-flow organization; function definitions and package envelope |
 | `contrib/autosuite/agitation.py` | Individual-shaker binding and typed Stir adapter |
 | `contrib/autosuite/xml.py` | Immutable serialization records and XML encoding |
 | `core/diagnostics.py` | Shared errors, diagnostics and source locations |

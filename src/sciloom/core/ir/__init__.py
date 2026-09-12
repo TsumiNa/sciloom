@@ -1,7 +1,8 @@
 """Typed semantic IR, validated JSON interchange and frontend-neutral diagnostics."""
 
 from .codec import from_dict, from_json, to_dict, to_json
-from ..diagnostics import Diagnostic, IRValidationError
+from ..diagnostics import Diagnostic, IRValidationError, SourceSpan
+from .types import ScalarType
 from .model import (
     AgitatorResource,
     SetAgitation,
@@ -18,8 +19,6 @@ from .model import (
     OutputBinding,
     Program,
     Reference,
-    ScalarType,
-    SourceSpan,
     Statement,
     Unary,
     UnaryOp,
