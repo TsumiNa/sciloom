@@ -8,7 +8,7 @@ from typing import Any, NoReturn, cast
 
 from .model import Agitator, Function
 from ...units import RotationalSpeed, SpeedUnit
-from ...ir import (
+from ...core.ir import (
     Assignment,
     AgitatorResource,
     SetAgitation,

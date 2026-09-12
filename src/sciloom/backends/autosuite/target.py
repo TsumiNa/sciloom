@@ -3,10 +3,10 @@
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 
-from ...compiler import Artifact
-from ...diagnostics import CompilationError, Diagnostic
-from ...ir import Binary, BinaryOp, Call, Program
-from ...ir.traversal import iter_nodes
+from ...core.compiler import Artifact
+from ...core.diagnostics import CompilationError, Diagnostic
+from ...core.ir import Binary, BinaryOp, Call, Program
+from ...core.ir.traversal import iter_nodes
 from .agitation import IndividualShakerBinding
 from .codegen import lower_asfp
 from .xml import AutoSuiteVersion

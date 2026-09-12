@@ -16,6 +16,9 @@ compatibility shims would create competing interfaces. Neither is introduced.
 
 ## Ordered stages and availability
 
+Implementation progress: stage 1 is merged in GitHub PR #12. Stage 2 implements
+the core paths below; DSL/contrib, native declarations and lists remain pending.
+
 | Stage | Plan | Capability available after merge |
 |---|---|---|
 | 1 | [Contract](01-contract.md) | Workflow rule and this design; no new runtime API |

@@ -36,16 +36,16 @@ future work; ASFP and reference execution are implemented now.
 |---|---|
 | `frontends/python/model.py` | Function class schema, decorators and public source API |
 | `frontends/python/lowering.py` | File-backed source discovery, AST resolution and lowering to Program |
-| `ir/model.py` | Immutable typed program, variables, expressions, structured control flow and domain operations |
-| `ir/schema.py`, `validation.py`, `codec.py` | Structure, semantic legality and JSON v2 interchange |
+| `core/ir/model.py` | Immutable typed program, variables, expressions, structured control flow and domain operations |
+| `core/ir/schema.py`, `validation.py`, `codec.py` | Structure, semantic legality and JSON v2 interchange |
 | `units.py` | Shared rotational-speed values and rpm/rps conversion |
-| `interpreter/runtime.py` | Reference evaluation, call frames, persistent state, budgets and domain events |
-| `compiler.py` | Target protocol, shared compilation pipeline and generic byte artifacts |
+| `core/interpreter/runtime.py` | Reference evaluation, call frames, persistent state, budgets and domain events |
+| `core/compiler.py` | Target protocol, shared compilation pipeline and generic byte artifacts |
 | `backends/autosuite/target.py` | Vendor version/configuration and target restrictions |
 | `backends/autosuite/codegen.py` | Function/control-flow mapping, target names and IDs |
 | `backends/autosuite/agitation.py` | Individual-shaker binding and typed Stir adapter |
 | `backends/autosuite/xml.py` | Immutable serialization records and XML encoding |
-| `diagnostics.py` | Shared errors, diagnostics and source locations |
+| `core/diagnostics.py` | Shared errors, diagnostics and source locations |
 
 ## Source lowering, semantics and compilation
 
@@ -77,7 +77,7 @@ and suffix. Unsupported target semantics fail with diagnostics. Recursion and
 short-circuit operators are currently rejected by AutoSuite; they remain valid
 in the reference semantics. Target limitations must not narrow the shared model.
 
-`compiler.py` contains both an interface (`Target`) and a concrete shared pipeline
+`core/compiler.py` contains both an interface (`Target`) and a concrete shared pipeline
 (`compile_ir`), plus `Artifact` and `CompileResult`. AutoSuiteTarget implements
 the Target protocol structurally: it provides `target_id`, `validate(program)`
 and `emit(program)` without needing to inherit a compiler class. Its emission

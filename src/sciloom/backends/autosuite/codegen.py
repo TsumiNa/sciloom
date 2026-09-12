@@ -17,9 +17,9 @@ from dataclasses import asdict, dataclass
 from typing import Any
 from uuid import NAMESPACE_URL, uuid5
 
-from ...diagnostics import CompilationError, Diagnostic
+from ...core.diagnostics import CompilationError, Diagnostic
 
-from ...ir import (
+from ...core.ir import (
     Assignment,
     BinaryOp,
     Call,

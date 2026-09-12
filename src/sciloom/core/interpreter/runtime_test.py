@@ -6,8 +6,8 @@ import sys
 import pytest
 
 from sciloom import Boolean, Function, Input, Integer, Output, Real, runtime
-from sciloom.diagnostics import ExecutionError
-from sciloom.ir import (
+from sciloom.core.diagnostics import ExecutionError
+from sciloom.core.ir import (
     Assignment,
     Binary,
     BinaryOp,
@@ -236,15 +236,15 @@ class Block:
         if fullname.startswith(("sciloom.frontends", "sciloom.backends")):
             raise ImportError("frontends and backends are forbidden")
 sys.meta_path.insert(0, Block())
-from sciloom.ir import from_json
-from sciloom.interpreter import Interpreter
+from sciloom.core.ir import from_json
+from sciloom.core.interpreter import Interpreter
 assert Interpreter(from_json(sys.stdin.read())).run(inputs={"amount": 7}).outputs == {"result": 7}
 """
     subprocess.run([sys.executable, "-c", script], input=document, text=True, check=True)
 
 
 def test_json_v1_is_not_silently_upgraded():
-    from sciloom.ir import IRValidationError, from_dict, to_dict
+    from sciloom.core.ir import IRValidationError, from_dict, to_dict
 
     document = to_dict(independent_accumulator())
     document["format_version"] = 1

@@ -6,9 +6,9 @@ from dataclasses import replace
 
 import pytest
 
-from sciloom.compiler import Artifact, compile_ir
-from sciloom.diagnostics import CompilationError, Diagnostic, IRValidationError
-from sciloom.ir import FunctionIR, Program
+from sciloom.core.compiler import Artifact, compile_ir
+from sciloom.core.diagnostics import CompilationError, Diagnostic, IRValidationError
+from sciloom.core.ir import FunctionIR, Program
 
 
 class TextTarget:
@@ -63,12 +63,13 @@ def test_import_and_compilation_without_vendor_modules():
 import sys
 class Block:
     def find_spec(self, fullname, *args):
-        if fullname.startswith("sciloom.backends"):
-            raise ImportError("vendor modules are forbidden")
+        if fullname.startswith(("sciloom.backends", "sciloom.frontends", "sciloom.dsl", "sciloom.contrib")):
+            raise ImportError("authoring and vendor modules are forbidden")
 sys.meta_path.insert(0, Block())
-from sciloom.compiler_test import program, TextTarget
-from sciloom.compiler import compile_ir
-from sciloom.ir import from_json, to_json
+from sciloom.core.compiler_test import program, TextTarget
+from sciloom.core.compiler import compile_ir
+from sciloom.core.ir import from_json, to_json
+from sciloom.core.interpreter import Interpreter
 assert compile_ir(from_json(to_json(program())), target=TextTarget()).artifact.content.startswith(b"plain")
 """
     subprocess.run([sys.executable, "-c", script], check=True)
