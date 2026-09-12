@@ -34,8 +34,7 @@ Input/Output/Var are Annotated aliases: ordinary type checkers see the native
 value type, while SciLoom resolves annotations with `include_extras=True` to keep
 the role. Exactly one direct role is required. Bare aliases, nested roles,
 missing Var initializers and unsupported types fail during class construction.
-List declarations and source conversion are implemented; AutoSuite array emission
-remains the next stage in the [implementation contract](refactor/package-layout/00-overview.md).
+List declarations, source conversion and AutoSuite array emission are implemented; see the [implementation contract](refactor/package-layout/00-overview.md).
 
 `__init__` is normal Python. It can assign scalar configuration and compose child
 Function instances. Runtime fields cannot be read or written as host Python; they
@@ -73,9 +72,10 @@ integers excluding bool; negative/out-of-range reads and writes are execution
 errors, with no automatic growth. Python slicing, comprehensions, iteration,
 append/pop/remove/clear and indexed Function output bindings remain unsupported.
 Shadowing builtin `len` is rejected rather than silently changing its meaning.
-The complete ScaleValues contract is exercised in `dsl/lowering_list_test.py` via
-the reference interpreter; `.compile(target=AutoSuiteTarget())` still reports
-`unsupported_list` until target support lands.
+The complete [ScaleValues example](../examples/scale_values.py) compiles to ASFP.
+AutoSuite requires whole-list output assignment on every return path and before
+reads (`list_output_initialization`); initialize outputs before potentially empty
+loops. See [array mapping evidence](../autosuite/docs/17_ARRAY_MAPPING.md).
 
 ## Runtime source subset
 
@@ -100,8 +100,8 @@ Supported runtime syntax:
 
 A call is a statement, not an expression nested inside arithmetic. Python local
 temporaries, arbitrary helper calls, attribute chains, properties, module-global
-lookups, chained comparisons, loops with `break`/`continue`, `for`, `return`, arrays,
-units and exception handling are outside this subset. Unsupported forms fail with
+lookups, chained comparisons, loops with `break`/`continue`, `for`, `return`, multidimensional arrays,
+units other than the supported rotational-speed quantities, and exception handling are outside this subset. Unsupported forms fail with
 source-located diagnostics. Reading a property never executes its getter during lowering.
 
 ## Identity and compilation boundaries

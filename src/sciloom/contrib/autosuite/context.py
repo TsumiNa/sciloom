@@ -5,7 +5,18 @@ from __future__ import annotations
 import json
 import re
 from uuid import UUID, uuid5
-from ...core.ir import Program
+from ...core.ir import (
+    Program,
+    FunctionIR,
+    ListType,
+    ListLiteral,
+    Literal,
+    ScalarType,
+    ValueType,
+    Variable,
+    VariableRole,
+)
+from ...core.ir.traversal import iter_nodes
 from .agitation import IndividualShakerBinding
 from .xml import XmlNode, xml_node as _xml
 
@@ -29,6 +40,52 @@ class CodegenContext:
                     candidate += "_"
                 used.add(candidate)
                 self.names[variable.node_id] = candidate
+        self.parameter_names = self.names.copy()
+        self.temporaries: dict[str, list[Variable]] = {f.node_id: [] for f in package.functions}
+        self.sequence = 0
+        self.occupied_ids = {node.node_id for node, _ in iter_nodes(package)}
+
+    def fresh_id(self) -> str:
+        while True:
+            self.sequence += 1
+            identity = f"generated:{self.sequence}"
+            if identity not in self.occupied_ids:
+                self.occupied_ids.add(identity)
+                return identity
+
+    def temporary(self, function: FunctionIR, value_type: ValueType, *, length: int = 0) -> str:
+        """Allocate target-owned storage without adding nodes to the semantic program."""
+        identity = self.fresh_id()
+        occupied = {self.names[v.node_id] for v in function.variables}
+        occupied.update(self.parameter_names[v.node_id] for v in function.variables)
+        occupied.update(self.names[v.node_id] for v in self.temporaries[function.node_id])
+        name = f"sciloom_tmp_{self.sequence}"
+        while name in occupied:
+            name += "_"
+        scalar = value_type.element_type if isinstance(value_type, ListType) else value_type
+        zero = False if scalar == ScalarType.BOOLEAN else 0
+        initial = (
+            ListLiteral(
+                node_id=identity + ":initial",
+                type=value_type,
+                elements=tuple(
+                    Literal(node_id=f"{identity}:initial:{i}", type=scalar, value=zero) for i in range(length)
+                ),
+            )
+            if isinstance(value_type, ListType)
+            else Literal(node_id=identity + ":initial", type=scalar, value=zero)
+        )
+        variable = Variable(
+            node_id=identity,
+            owner_id=function.node_id,
+            name=name,
+            role=VariableRole.INTERNAL,
+            type=value_type,
+            initial=initial,
+        )
+        self.names[identity] = name
+        self.temporaries[function.node_id].append(variable)
+        return name
 
     def identifier(self, role: str, semantic_id: str) -> str:
         return "{" + str(uuid5(self.namespace, json.dumps((role, semantic_id)))).upper() + "}"

@@ -1,7 +1,7 @@
 # Function compilation to ASFP
 
-The shared IR is now JSON v3 with list semantics. AutoSuite compilation currently
-rejects lists with `unsupported_list`; array generation is stage 8 of the
+The shared IR is JSON v3 with list semantics. AutoSuite compiles scalar and list
+programs; array generation is implemented in stage 8 of the
 [active implementation sequence](refactor/package-layout/00-overview.md).
 Existing scalar artifacts have been regenerated because the semantic version is
 part of the UUID identity hash. Their structure and payloads are unchanged after
@@ -57,6 +57,22 @@ explicit IndividualShakerBinding configuration; the
 [mapping record](../autosuite/docs/16_AGITATION_MAPPING.md) identifies the real
 application/function evidence, fixed-zone addressing and inactive stop defaults.
 
+## List examples and target restrictions
+
+Run `uv run python examples/scale_values.py` and
+`uv run python examples/non_zero_array_min.py`. Both write full ASFP companions.
+The latter is a dimensionless numeric adaptation of the latest application's
+volume-array algorithm. Array I/O uses variable bindings and private value copies;
+indexed updates use faulting reads before writes to prevent automatic growth.
+Conditions with prerequisites are re-evaluated at every loop test.
+
+AutoSuite requires definite whole-list assignment to array outputs before reads
+and on every return path; initialize before possibly empty loops. This avoids
+stale parameter storage and reports `list_output_initialization` when unproven.
+The full [mapping record](../autosuite/docs/17_ARRAY_MAPPING.md) distinguishes
+observed wire fields from derived Boolean/physical combinations and guard behavior
+that still require real Executor simulation.
+
 ## Developer workflow
 
 From the repository root, run:
@@ -92,7 +108,9 @@ conversion; `core/ir/` holds semantics/validation; `core/compiler.py` coordinate
 format-independent compilation. Within `contrib/autosuite`, `codegen.py` is the
 generation entrypoint and `context.py` owns names/IDs. `encoding.py` handles types
 and variable initializers, `parameters.py` handles function bindings, and
-`expressions.py` renders expressions. `tasks.py` organizes control flow;
+`expressions.py` plans value expressions and ordered prerequisite tasks.
+`primitives.py` supplies observed Set Variable/Macro wire forms; `tasks.py`
+schedules control flow, checked indices and call copies;
 `functions.py` builds function envelopes. `xml.py` encodes immutable XML records.
 The installed package needs no reference corpus or third-party runtime dependencies.
 
@@ -109,7 +127,7 @@ is represented as nested If/Else inside the Else branch.
 Exports establish parameter types `realnumber`, `integer`, `bool` and storage
 codes `5`, `3`, `11`. Rotational-speed parameters use `angularspeed`;
 internal speed variables use code `5`, SI unit `1/s` and display unit `rpm`. Boolean storage uses `-1/0`, expressions use `true/false`.
-Integer/boolean unit metadata follows the observed `siunit=1, unit=s` form; this
+Scalar integer/boolean unit metadata follows the observed `siunit=1, unit=s` form; this
 serialization convention does not introduce a physical time type into the IR.
 
 ## Determinism and evidence
