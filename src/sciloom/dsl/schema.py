@@ -10,7 +10,7 @@ from types import MappingProxyType
 from typing import Annotated, Any, NoReturn, TypeAlias, TypeVar, get_args, get_origin, get_type_hints
 from ..units import RotationalSpeed
 from ..core.diagnostics import Diagnostic, IRValidationError
-from ..core.ir.types import ScalarType
+from ..core.ir.types import ListType, ScalarType, ValueType
 from ..core.ir import VariableRole
 
 
@@ -40,8 +40,8 @@ _TYPES = {
 class RuntimeField:
     name: str
     role: VariableRole
-    type: ScalarType
-    default: bool | int | float | RotationalSpeed | None = None
+    type: ValueType
+    default: bool | int | float | RotationalSpeed | tuple[bool | int | float | RotationalSpeed, ...] | None = None
 
 
 def _schema_error(name: str, message: str, code: str = "class_schema") -> NoReturn:
@@ -83,9 +83,7 @@ def build_schema(cls: type, reserved_names: Container[str]) -> Mapping[str, Runt
             continue
         if len(roles) != 1:
             _schema_error(name, "Runtime fields require exactly one role; nested roles are unsupported.")
-        scalar = arguments[0]
-        if not isinstance(scalar, type) or scalar not in _TYPES:
-            _schema_error(name, "Input, Output and Var require an explicit supported type: int, float, bool or RotationalSpeed.")
+        value_type = _value_type(name, arguments[0])
         if name in reserved_names or name.startswith("_"):
             _schema_error(name, "Runtime field name conflicts with the model API.")
         role = roles[0].value
@@ -93,20 +91,11 @@ def build_schema(cls: type, reserved_names: Container[str]) -> Mapping[str, Runt
             default = inherited[name].default
         else:
             default = cls.__dict__.get(name)
-        if role == VariableRole.INTERNAL and type(default) not in (bool, int, float, RotationalSpeed):
-            _schema_error(name, "Var requires an explicit scalar literal initial value.")
-        if role == VariableRole.INTERNAL:
-            allowed_types = {
-                int: (int,),
-                float: (int, float),
-                bool: (bool,),
-                RotationalSpeed: (RotationalSpeed,),
-            }[scalar]
-            if type(default) not in allowed_types or (type(default) is float and not math.isfinite(default)):
-                _schema_error(name, f"Default must be a finite {scalar.__name__} value.")
+            if role == VariableRole.INTERNAL:
+                default = _default(name, default, value_type)
         if role != VariableRole.INTERNAL and name in cls.__dict__:
             _schema_error(name, "Parameter defaults are outside the first frontend subset.")
-        field = RuntimeField(name=name, role=role, type=_TYPES[scalar], default=default)
+        field = RuntimeField(name=name, role=role, type=value_type, default=default)
         if name in inherited and field != inherited[name]:
             _schema_error(
                 name, "Overriding runtime schema is unsupported; specialize host-time configuration instead."
@@ -122,3 +111,30 @@ def _contains_role(annotation: Any) -> bool:
     if isinstance(annotation, _FieldRole):
         return True
     return any(_contains_role(argument) for argument in get_args(annotation))
+
+
+def _value_type(name: str, annotation: Any) -> ValueType:
+    if get_origin(annotation) is list:
+        args = get_args(annotation)
+        if len(args) != 1 or not isinstance(args[0], type) or args[0] not in _TYPES:
+            _schema_error(name, "Lists require one supported scalar element type; Any and nested lists are unsupported.")
+        return ListType(element_type=_TYPES[args[0]])
+    if not isinstance(annotation, type) or annotation not in _TYPES:
+        _schema_error(name, "Input, Output and Var require int, float, bool, RotationalSpeed or a typed list of those values.")
+    return _TYPES[annotation]
+
+
+def _default(name: str, value: Any, value_type: ValueType) -> Any:
+    if isinstance(value_type, ListType):
+        if type(value) is not list:
+            _schema_error(name, "Var requires an explicit list initial value.")
+        return tuple(_default(name, item, value_type.element_type) for item in value)
+    if value is None:
+        _schema_error(name, "Var requires an explicit scalar literal initial value.")
+    allowed = {
+        ScalarType.INTEGER: (int,), ScalarType.REAL: (int, float),
+        ScalarType.BOOLEAN: (bool,), ScalarType.ROTATIONAL_SPEED: (RotationalSpeed,),
+    }[value_type]
+    if type(value) not in allowed or (type(value) is float and not math.isfinite(value)):
+        _schema_error(name, f"Default must be a finite {value_type.value} value.")
+    return value

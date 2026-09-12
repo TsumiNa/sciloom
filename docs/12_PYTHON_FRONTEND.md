@@ -21,7 +21,8 @@ uv run python examples/function_call.py
 ## Declarations and specialization
 
 Import `Function`, `Input`, `Output`, `Var` and `runtime` from `sciloom`. Use native
-`int`, `float`, `bool`, or `RotationalSpeed` as value types. Real/Integer/Boolean
+`int`, `float`, `bool`, `RotationalSpeed`, or one-dimensional `list[T]` of those
+types as value types. Real/Integer/Boolean
 markers have been removed. Declare inputs and outputs as `Input[T]` and
 `Output[T]` without defaults. Declare internal state as `name: Var[T] = literal`;
 the initial value persists across calls, with explicit runtime assignment for
@@ -33,8 +34,8 @@ Input/Output/Var are Annotated aliases: ordinary type checkers see the native
 value type, while SciLoom resolves annotations with `include_extras=True` to keep
 the role. Exactly one direct role is required. Bare aliases, nested roles,
 missing Var initializers and unsupported types fail during class construction.
-Lists remain unsupported until the list stages in the
-[implementation contract](refactor/package-layout/00-overview.md).
+List declarations and source conversion are implemented; AutoSuite array emission
+remains the next stage in the [implementation contract](refactor/package-layout/00-overview.md).
 
 `__init__` is normal Python. It can assign scalar configuration and compose child
 Function instances. Runtime fields cannot be read or written as host Python; they
@@ -51,6 +52,30 @@ types already come from annotations. See Identity/Caller in
 [agitation.py](../examples/agitation.py). These conventions prepare help text for
 AI and future Studio; no description extractor or node registry is implemented.
 Docstrings never determine execution rules or replace semantic validation.
+
+## Runtime lists
+
+Declare inputs/outputs with `Input[list[T]]` / `Output[list[T]]`, or persistent
+state with `Var[list[T]] = [...]`. Schema construction copies and freezes list
+defaults; subsequent mutation of the original Python initializer cannot change
+the class schema. Different composed Function instances and interpreter sessions
+have independent state, while repeated calls to one instance retain state.
+
+The source subset supports list literals, whole assignment, Function I/O, builtin
+`len`, indexed reads, indexed writes and augmented indexed assignment. `if` and
+`while` combine these operations without lowering list intent to vendor tasks.
+Empty literals need a declared element context, such as assignment to a list field
+or a typed call argument. Nonempty literals can infer a homogeneous type, including
+numeric widening; list variables themselves are invariant in their element type.
+
+Assignment and function transfer use value semantics. Indices are nonnegative
+integers excluding bool; negative/out-of-range reads and writes are execution
+errors, with no automatic growth. Python slicing, comprehensions, iteration,
+append/pop/remove/clear and indexed Function output bindings remain unsupported.
+Shadowing builtin `len` is rejected rather than silently changing its meaning.
+The complete ScaleValues contract is exercised in `dsl/lowering_list_test.py` via
+the reference interpreter; `.compile(target=AutoSuiteTarget())` still reports
+`unsupported_list` until target support lands.
 
 ## Runtime source subset
 
