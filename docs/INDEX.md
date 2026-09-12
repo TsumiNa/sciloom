@@ -22,6 +22,7 @@ Read in numeric order, from the current project state through design and validat
 - [Agitation domain semantics](15_AGITATION_SEMANTICS.md)
 - [Initial Function implementation sequence](refactor/semantic-ir/00-overview.md)
 - [Compiler foundation refactor sequence](refactor/compiler-foundation/00-overview.md)
+- [Accepted package layout, native types and list implementation sequence](refactor/package-layout/00-overview.md)
 
 ## AutoSuite reference
 

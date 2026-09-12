@@ -1,6 +1,9 @@
 # Target architecture after ASPY refactor
 
-**Status:** agreed architecture baseline before formal refactor.
+**Status:** target design. See the [authoritative interface contract and staged
+availability](refactor/package-layout/00-overview.md) and the
+[current implementation](02_COMPILER_ARCHITECTURE.md). Application/global, GUI
+and additional hardware support remain future work.
 
 ## Core decision
 
@@ -9,17 +12,21 @@ The project moves from a language-first design to a **model-first, instance-spec
 ```mermaid
 flowchart TB
     subgraph Authoring["Authoring and editing"]
-        Class["Python class schema<br/>Input / Output / typed fields / GlobalRef"] --> Instance["Python instance<br/>__init__ specialization and composition"]
+        Class["Python DSL class schema<br/>Input / Output / Var"] --> Instance["Python instance<br/>__init__ specialization and composition"]
         Instance --> Compile["instance.compile()"]
-        GUI["xyflow editor"]
-        AI["AI graph tools"]
+        GUI["Future xyflow webapp"]
+        Studio["Future Studio editing service"]
+        AI["Future AI graph tools"]
     end
     Compile --> IR["Typed SciLoom Semantic IR"]
-    GUI <--> IR
+    GUI <--> Studio
+    Studio <--> IR
     AI <--> IR
     subgraph Backend["Validation and serialization"]
         IR --> Validate["Semantic validation"]
-        Validate --> SIR["AutoSuite Serialization IR"]
+        Validate --> Compiler["core.compiler / Target protocol"]
+        Compiler --> SIR["contrib.autosuite / Serialization IR"]
+        Compiler -.-> Other["Independent equipment packages"]
         SIR --> XML["Versioned XML backend"]
     end
     XML --> ASFP["Function package · .asfp"]
@@ -31,25 +38,32 @@ flowchart TB
 
 ## Class versus instance
 
-The class defines the **static AutoSuite runtime schema** and must be inspectable before instantiation:
+The class defines the **static SciLoom runtime schema** and must be inspectable
+before instantiation. This target declaration becomes available in stage 7;
+AutoSuite list compilation follows in stage 8:
 
 ```python
-class DynamicTransfer(Function):
-    source: Input[Zone]
-    volumes: Input[Array[Volume]]
-    index: Integer = 0
+from sciloom import Function, Input, Var
+
+
+class ScaleValues(Function):
+    values: Input[list[float]]
+    index: Var[int] = 0
+    batch_size: int = 8  # Host configuration.
 ```
 
 The instance defines a **specialized program**:
 
 ```python
-program = DynamicTransfer(valve_group_size=8)
-artifact = program.compile(target=isynth)
+program = MyFunction(option=...)
+artifact = program.compile(target=target)
 ```
 
 `__init__` is ordinary Python and is the natural place for compile-time specialization, dependency/configuration binding and program composition. It should not be used to dynamically invent runtime field schema in v1.
 
-Python is host-time by default; there is no required `@comptime` decorator. Explicit markers are only needed for code that enters AutoSuite runtime semantics (e.g. `@runtime`, `@main`, `@on_start`, `@on_error`, `@on_stop`).
+Python is host-time by default; there is no required `@comptime` decorator.
+`@runtime` marks the currently supported runtime method. Application event
+decorators remain proposed rather than implemented.
 
 ## What is shared
 

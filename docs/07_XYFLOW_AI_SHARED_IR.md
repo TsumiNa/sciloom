@@ -1,19 +1,40 @@
 # xyflow, Python and AI on one semantic model
 
+**Status:** future tooling design. This sequence defines the boundaries and
+docstring convention; it does not implement Studio, a server or a webapp. Exact
+package/API decisions are in the [interface contract](refactor/package-layout/00-overview.md).
+
 ## One model, multiple representations
 
 The agreed design is that all authoring paths converge on the same Typed SciLoom Semantic IR.
 
 ```mermaid
 flowchart TB
-    Python["Python source / compiler"] --> IR["Typed SciLoom Semantic IR"]
-    GUI["xyflow editor"] <--> IR
+    Python["Python DSL / custom Function"] --> IR["core: Typed SciLoom Semantic IR"]
+    Python --> Schema["Field roles and types"]
+    Python --> Docs["Docstring purpose and Attributes"]
+    Schema --> Catalog["Future Studio node catalogue"]
+    Docs --> Catalog
+    Catalog --> Studio["Future Studio editing service"]
+    GUI["Future xyflow webapp"] <--> Studio
+    Studio <--> IR
     AI["AI Skill / MCP / node-graph tools"] <--> IR
     classDef core fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e;
     class IR core;
 ```
 
 There is no separate “GUI AST” or “AI pseudo-language”.
+
+Users define reusable nodes as ordinary SciLoom Function classes. Field schema
+provides ports and types; the class docstring describes purpose and an Attributes
+section describes fields by their actual names. Constructor Args describe host
+configuration. Types need not be repeated in prose. Descriptions assist users and
+AI but never determine execution semantics. Description extraction and node
+registration are future work.
+
+GUI composition edits the IR through Studio directly, without routing every edit
+through regenerated Python. New primitive semantics still require contributor
+implementation; composing existing Functions does not.
 
 ## xyflow responsibilities
 
