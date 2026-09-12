@@ -26,6 +26,31 @@ uv run python examples/function_call.py
 
 ## Declarations and specialization
 
+Host instance construction and device selection are distinct stages. Runtime
+if/elif conditions can use the restricted `comptime` queries imported from
+`sciloom`; `.to_ir()` preserves both branches until a target binding is supplied.
+
+```python
+from sciloom import comptime
+from examples.developer.demo_contribution import DemoAgitator
+
+# Inside a @runtime method with an Agitator slot:
+if comptime.is_device(self.agitator, DemoAgitator):
+    self.agitator.gain = 0.5
+self.agitator.speed = self.speed
+self.agitator.start()
+```
+
+This sequence is runnable in the [portable example](../examples/developer/portable_agitation.py).
+`is_device` narrows the true branch's device interface. `can_write(device, "name")`
+and `supports(device, DeviceType.command)` query explicit capabilities without
+narrowing. A literal property name must resolve unambiguously in compatible device
+declarations in scope. Queries take two positional arguments and appear only as
+whole if/elif conditions; combine them using nesting. Getters, arbitrary host
+queries, boolean query expressions and runtime-dependent type selection remain
+unsupported. All branches must pass source/type validation, including branches
+that a particular target will discard.
+
 Import `Function`, `Input`, `Output`, `Var` and `runtime` from `sciloom`. Use native
 `int`, `float`, `bool`, `RotationalSpeed`, or one-dimensional `list[T]` of those
 types as value types. Real/Integer/Boolean

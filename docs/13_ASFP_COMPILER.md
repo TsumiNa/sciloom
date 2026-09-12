@@ -31,6 +31,8 @@ from sciloom.contrib.autosuite import AutoSuiteTarget
 result = program.compile(target=AutoSuiteTarget())
 result.target_id
 result.diagnostics
+result.semantic_ir         # Authored program, including device conditions
+result.specialized_ir      # Selected high-level program given to the backend
 result.artifact.content     # UTF-8 XML bytes
 result.artifact.media_type  # application/xml
 result.artifact.suffix      # .asfp
@@ -87,9 +89,15 @@ and checks start/stop behavior with Interpreter. It generates no ASFP. Reference
 execution and JSON interchange are development tools, not required compilation
 steps for experiment authors.
 
-Developers can inspect `result.semantic_ir` after compilation or compile a
+Developers can inspect `result.semantic_ir` and `result.specialized_ir` after compilation or compile a
 loaded Program with `compile_ir(program, target=target)`. Loaded agitation IR
 needs the same explicit zone/shaker bindings as the Python Function.
+
+Run `uv run python -m examples.developer.portable_agitation` to compile one authored
+JSON program for AutoSuite and the independent Demo target. The source declares
+Agitator and uses `comptime.is_device` only for a Demo gain adjustment. AutoSuite
+receives no unsupported gain task. Both selected programs retain explicit
+configuration/start intent and can be passed to the reference interpreter.
 
 ## Layer boundaries
 
@@ -99,7 +107,8 @@ flowchart LR
     JSON["JSON import"] --> Semantic
     Semantic --> Validate["Shared semantic validation"]
     Validate --> Bind["Resolve and validate device bindings"]
-    Bind --> Configuration["Device capability and configuration checks"]
+    Bind --> Specialize["Select device branches and reachable functions"]
+    Specialize --> Configuration["Device capability and configuration checks"]
     Configuration --> Target["Explicit target validation"] --> Backend["ASFP mapping and target IDs"]
     Backend --> SIR["Immutable SerializationIR / XmlNode"]
     SIR --> XML["ASFP XML bytes"]
@@ -138,6 +147,9 @@ Target UUIDs derive from a digest of Program and canonical deployment bindings,
 plus the target version and object role/ID. Binding tuple order is irrelevant.
 Source spans are excluded. Recompilation produces identical bytes; different
 specializations receive distinct target IDs. Timestamps use a fixed zero epoch.
+Device specialization now makes bound interface types explicit in the high-level
+Program before hashing. Device example UUIDs were regenerated for this change;
+it does not introduce private configuration variables into public IR.
 Unsafe expression identifiers are mapped to safe local names, with references and
 call bindings using the same mapping. Macro counters avoid declared variable names.
 The manual requires variable names to start with an ASCII letter; JSON names

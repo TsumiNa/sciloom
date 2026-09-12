@@ -8,6 +8,7 @@ from .context import LoweringContext
 from .expressions import BINARY_OPERATORS, expression, is_length_call
 from .model import Function
 from .device_operations import configure, device_member, operation
+from .device_conditions import device_if
 from ..core.ir import Assignment, Binary, Call, If, InputBinding, ListSet, ListType, OutputBinding, Reference, ScalarType, Statement, VariableRole, While
 
 
@@ -103,6 +104,10 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
                 )
             )
         elif isinstance(node, ast.If):
+            selected = device_if(context, node)
+            if selected is not None:
+                result.append(selected)
+                continue
             result.append(
                 If(
                     **context.metadata(node),

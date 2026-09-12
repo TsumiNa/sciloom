@@ -4,7 +4,7 @@ Device contracts define parameters and commands, Semantic IR describes the
 experiment, and a Target binds logical dependencies to concrete equipment.
 The [device refactor contract](refactor/device-abstraction/00-overview.md) is
 authoritative. Property configuration and explicit lifecycle are implemented;
-independent native commands also compile; device condition specialization is the next stage.
+independent native commands and device condition specialization are also implemented.
 
 ## Author interface
 
@@ -75,7 +75,17 @@ Python imports. Native DeviceCommand compiles only when the bound device provide
 the matching trusted signature and explicit capability. The external
 [Demo contribution](../examples/developer/demo_contribution/__init__.py) adds gain,
 calibration and a recording target. Reference execution of unknown native commands
-fails explicitly. DeviceIf can be exchanged but compilation awaits specialization.
+fails explicitly. DeviceIf preserves both source branches until explicit target
+binding; pure specialization selects branches and then capabilities/configuration
+are checked on the retained program. Queries use `comptime.can_write`, `supports`
+or `is_device` only in if/elif conditions. The latter narrows the declared type
+for subclass properties/commands. All branches must still be valid typed source.
+
+The [portable developer example](../examples/developer/portable_agitation.py)
+shows one JSON program compiled for AutoSuite and Demo. Missing bindings fail
+before selection; inactive extensions require no installed Python implementation.
+Target contracts include their full trusted ancestor directory. No source/JSON
+semantic identifier triggers a dynamic Python import.
 
 DeviceState exposes read-only `configuration`, `applied_configuration` and
 `enabled`. Mapping keys are property names; physical values are quantities and

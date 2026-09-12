@@ -192,7 +192,13 @@ Configuration captures values at assignment, and start applies the complete save
 configuration. Prove configuration across calls without assuming previous entry
 invocations. Getter/augmented property access is unsupported. Native DeviceCommand
 compiles via typed trusted contributor contracts; reference execution requires
-defined semantics and rejects unknown native commands. DeviceIf awaits stage 6.
+defined semantics and rejects unknown native commands. DeviceIf is retained in
+authored IR and selected by pure `core.specialization.specialize`. Only if/elif
+accept comptime device queries. All branches are source/type checked before
+selection. Target.resolve_devices sees authored IR once; validate/emit see
+CompileResult.specialized_ir. The result's semantic_ir remains authored IR.
+DeviceBinding includes the concrete contract and its required complete
+base_contracts directory. Never import Python implementations from JSON IDs.
 Backend context variables/parameters must not enter the public semantic Program. See the authoritative
 [device plan](docs/refactor/device-abstraction/00-overview.md).
 Consult `autosuite/docs/16_AGITATION_MAPPING.md` before changing this adapter.

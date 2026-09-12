@@ -34,6 +34,8 @@ program = Program(entry_function_id="f", functions=(FunctionIR(node_id="f", name
 result = compile_ir(program, target=target)
 assert_type(result, CompileResult)
 assert_type(result.artifact, Artifact)
+assert_type(result.semantic_ir, Program)
+assert_type(result.specialized_ir, Program)
 assert_type(result.write("example.txt"), Path)
 literal = Literal(node_id="literal", type=ScalarType.REAL, value=1.0)
 numbers = ListType(element_type=ScalarType.REAL)

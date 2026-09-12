@@ -146,8 +146,10 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                 elif isinstance(predicate, IsDevice) and not any(c.type_id == predicate.device_type_id for c in package.device_types):
                     report("device_contract", "Device query must name a declared type.", p, predicate)
                 true_types = dict(narrowed)
-                if isinstance(predicate, IsDevice):
-                    true_types[predicate.resource_id] = predicate.device_type_id
+                if isinstance(predicate, IsDevice) and resource is not None:
+                    current_type = next((c for c in package.device_types if c.type_id == resource.device_type_id), None)
+                    if current_type is None or predicate.device_type_id not in (current_type.type_id, *current_type.base_type_ids):
+                        true_types[predicate.resource_id] = predicate.device_type_id
                 statements(stmt.then_body, function, f"{p}.then_body", true_types)
                 statements(stmt.else_body, function, f"{p}.else_body", narrowed)
             else:

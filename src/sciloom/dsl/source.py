@@ -27,6 +27,7 @@ def runtime_source(context: LoweringContext) -> ast.FunctionDef:
         context.fail("runtime_method", "A Function requires exactly one @runtime instance method.")
     method = methods[0]
     bindings = inspect.getclosurevars(method)
+    context.static_names = {**method.__globals__, **bindings.nonlocals}
     resolved_len = bindings.nonlocals.get("len", bindings.globals.get("len", bindings.builtins.get("len", builtins.len)))
     context.allows_len = resolved_len is builtins.len
     context.unit_names = {name: value for name, value in method.__globals__.items() if isinstance(value, SpeedUnit)}

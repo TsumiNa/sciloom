@@ -116,6 +116,7 @@ def bind_device(*, logical_id: str, device: BaseDevice, physical_id: str) -> "De
         raise TypeError("supported_operations must list registered command methods.")
     return DeviceBinding(
         logical_id=logical_id, contract=contract, physical_id=physical_id,
+        base_contracts=tuple(device_contract(base) for base in cls.__mro__[1:] if issubclass(base, BaseDevice)),
         writable_properties=tuple(properties[name] for name in writable),
         supported_operations=tuple(getattr(method, "__sciloom_operation_id__", "") for method in operations),
     )

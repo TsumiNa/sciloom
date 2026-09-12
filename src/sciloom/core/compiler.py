@@ -6,8 +6,9 @@ from typing import Protocol, runtime_checkable
 
 from .diagnostics import CompilationError, Diagnostic, IRValidationError
 from .ir import Program, validate
-from .devices import DeviceBindings, validate_bindings
+from .devices import DeviceBindings
 from .configuration import validate_device_usage
+from .specialization import specialize
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -32,6 +33,7 @@ class Target(Protocol):
 @dataclass(frozen=True, kw_only=True)
 class CompileResult:
     semantic_ir: Program
+    specialized_ir: Program
     target_id: str
     artifact: Artifact
     diagnostics: tuple[Diagnostic, ...] = ()
@@ -52,14 +54,12 @@ def compile_ir(program: Program, *, target: Target) -> CompileResult:
     if diagnostics:
         raise IRValidationError(diagnostics)
     bindings = target.resolve_devices(program)
-    diagnostics = validate_bindings(program, bindings)
+    specialized = specialize(program, bindings=bindings)
+    diagnostics = validate_device_usage(specialized, bindings)
     if diagnostics:
         raise CompilationError(diagnostics)
-    diagnostics = validate_device_usage(program, bindings)
+    diagnostics = target.validate(specialized)
     if diagnostics:
         raise CompilationError(diagnostics)
-    diagnostics = target.validate(program)
-    if diagnostics:
-        raise CompilationError(diagnostics)
-    artifact = target.emit(program)
-    return CompileResult(semantic_ir=program, target_id=target.target_id, artifact=artifact)
+    artifact = target.emit(specialized)
+    return CompileResult(semantic_ir=program, specialized_ir=specialized, target_id=target.target_id, artifact=artifact)

@@ -147,19 +147,23 @@ The precise Function/Macro/Application composition API remains a formal-refactor
 
 ## `.compile()` result
 
-A useful conceptual result type is:
+The implemented Function result interface is:
 
 ```python
 result = program.compile(target=isynth)
 
 result.diagnostics
 result.semantic_ir
-result.serialization_ir
+result.specialized_ir
 result.artifact
-result.write("polymerization.app")
+result.write("function.asfp")
 ```
 
-For a `Function`, the default artifact may be `.asfp`; for `Application`, `.app`. Exact naming/API is not frozen.
+The original semantic_ir preserves device branches; specialized_ir contains the
+selected high-level program after target binding. Backend serialization records
+are private. AutoSuite Function artifacts are `.asfp`; Application `.app` output
+remains future work. The [device contract](refactor/device-abstraction/00-overview.md)
+defines the current Target and CompileResult interfaces.
 
 Compilation should preferably be source-instance preserving: no hidden mutation of declared runtime state or host-time configuration should be necessary to obtain an artifact.
 

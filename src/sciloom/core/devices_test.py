@@ -13,7 +13,7 @@ from .ir.device_contracts import AGITATOR_CONTRACT, BASE_DEVICE_CONTRACT, AGITAT
 
 
 def binding():
-    return DeviceBinding(logical_id="mixer", contract=AGITATOR_CONTRACT, writable_properties=(AGITATION_SPEED_ID,), supported_operations=(START_AGITATION_ID, STOP_AGITATION_ID), physical_id="test:1")
+    return DeviceBinding(logical_id="mixer", contract=AGITATOR_CONTRACT, base_contracts=(BASE_DEVICE_CONTRACT,), writable_properties=(AGITATION_SPEED_ID,), supported_operations=(START_AGITATION_ID, STOP_AGITATION_ID), physical_id="test:1")
 
 
 def test_resolver_cannot_silently_drop_or_mistype_dependencies():
@@ -23,7 +23,7 @@ def test_resolver_cannot_silently_drop_or_mistype_dependencies():
         compile_ir(source, target=target)
     assert not target.emitted
     assert validate_bindings(source, DeviceBindings(devices=(binding(),))) == ()
-    wrong = replace(binding(), contract=BASE_DEVICE_CONTRACT, writable_properties=(), supported_operations=())
+    wrong = replace(binding(), contract=BASE_DEVICE_CONTRACT, base_contracts=(), writable_properties=(), supported_operations=())
     assert [d.code for d in validate_bindings(source, DeviceBindings(devices=(wrong,)))] == ["device_type"]
     assert [d.code for d in validate_bindings(program(), DeviceBindings(devices=(binding(),)))] == ["unknown_resource_binding"]
     with pytest.raises(TypeError, match="DeviceBindings"):

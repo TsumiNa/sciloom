@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from .diagnostics import Diagnostic
 from .ir import Program
 from .ir.device_contracts import DeviceTypeContract
-from .ir.device_validation import semantic_id
+from .ir.device_validation import semantic_id, validate_directory
 from .ir.schema import _convert
 
 
@@ -13,6 +13,7 @@ from .ir.schema import _convert
 class DeviceBinding:
     logical_id: str
     contract: DeviceTypeContract
+    base_contracts: tuple[DeviceTypeContract, ...]
     physical_id: str
     writable_properties: tuple[str, ...] = ()
     supported_operations: tuple[str, ...] = ()
@@ -26,6 +27,17 @@ class DeviceBinding:
         _convert(self.contract, DeviceTypeContract, "$.binding.contract", encode=True)
         if any(not semantic_id(value) for value in (self.contract.type_id, *self.contract.base_type_ids)):
             raise ValueError("Device type identities must be namespaced and versioned.")
+        object.__setattr__(self, "base_contracts", tuple(self.base_contracts))
+        _convert(self.base_contracts, tuple[DeviceTypeContract, ...], "$.binding.base_contracts", encode=True)
+        if {c.type_id for c in self.base_contracts} != set(self.contract.base_type_ids):
+            raise ValueError("base_contracts must provide the complete trusted ancestor directory.")
+        contract_errors: list[str] = []
+        validate_directory(
+            Program(entry_function_id="", device_types=(*self.base_contracts, self.contract)),
+            lambda code, message, path, node: contract_errors.append(message),
+        )
+        if contract_errors:
+            raise ValueError("Invalid trusted device directory: " + "; ".join(contract_errors))
         for name, available in (
             ("writable_properties", {p.semantic_id for p in self.contract.properties}),
             ("supported_operations", {op.semantic_id for op in self.contract.operations}),
@@ -46,6 +58,11 @@ class DeviceBindings:
         object.__setattr__(self, "devices", tuple(self.devices))
         if any(not isinstance(value, DeviceBinding) for value in self.devices):
             raise TypeError("DeviceBindings requires DeviceBinding records.")
+        contracts: dict[str, DeviceTypeContract] = {}
+        for binding in self.devices:
+            for contract in (*binding.base_contracts, binding.contract):
+                if contracts.setdefault(contract.type_id, contract) != contract:
+                    raise ValueError("Conflicting trusted device contracts across bindings.")
         for field in ("logical_id", "physical_id"):
             values = [getattr(value, field) for value in self.devices]
             if len(values) != len(set(values)):
@@ -72,7 +89,8 @@ def validate_bindings(program: Program, bindings: DeviceBindings) -> tuple[Diagn
                     source=resource.source,
                 )
             )
-        elif any(c.type_id == binding.contract.type_id and c != binding.contract for c in program.device_types):
+        elif any(c.type_id == trusted.type_id and c != trusted for c in program.device_types
+                 for trusted in (*binding.base_contracts, binding.contract)):
             errors.append(Diagnostic(code="device_contract", message="Serialized device contract differs from the target's trusted contract.", path=f"$.resources[{i}]", node_id=resource.node_id, source=resource.source))
     for name in sorted(provided.keys() - required):
         errors.append(
