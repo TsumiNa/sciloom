@@ -8,6 +8,16 @@ from sciloom.core.ir import Call, FunctionIR, Program, from_json, to_json, valid
 from .target import AutoSuiteTarget
 
 
+def test_list_ir_is_explicitly_rejected_until_array_codegen_exists():
+    from sciloom.core.ir import ListType, ScalarType, Variable, VariableRole
+
+    variable = Variable(node_id="values", owner_id="f", name="values", role=VariableRole.INPUT, type=ListType(element_type=ScalarType.REAL))
+    program = Program(entry_function_id="f", functions=(FunctionIR(node_id="f", name="ListInput", variables=(variable,)),))
+    assert validate(program) == ()
+    with pytest.raises(CompilationError, match="unsupported_list"):
+        compile_ir(program, target=AutoSuiteTarget())
+
+
 @pytest.mark.parametrize("indirect", [False, True])
 def test_recursion_is_legal_ir_but_illegal_for_autosuite(indirect):
     first = FunctionIR(node_id="a", name="A", body=(Call(node_id="call:a", function_id="b" if indirect else "a"),))

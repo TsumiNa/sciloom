@@ -32,6 +32,8 @@ def _convert(value: Any, expected: Any, path: str, *, encode: bool) -> Any:
                     if encode
                     else (isinstance(value, dict) and value.get("kind") == choice.__name__)
                 )
+            elif isinstance(choice, type) and issubclass(choice, Enum):
+                matches = type(value) is choice if encode else type(value) is str
             else:
                 matches = type(value) is choice
             if matches:

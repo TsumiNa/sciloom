@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from enum import StrEnum
 
 from ..diagnostics import SourceSpan
-from .types import ScalarType
+from .types import ListType, ScalarType, ValueType
 
 
 class VariableRole(StrEnum):
@@ -68,7 +68,24 @@ class Binary(Node):
     right: "Expression"
 
 
-Expression = Literal | Reference | Unary | Binary
+@dataclass(frozen=True, kw_only=True)
+class ListLiteral(Node):
+    type: ListType
+    elements: tuple["Expression", ...] = ()
+
+
+@dataclass(frozen=True, kw_only=True)
+class ListLength(Node):
+    value: "Expression"
+
+
+@dataclass(frozen=True, kw_only=True)
+class ListGet(Node):
+    value: "Expression"
+    index: "Expression"
+
+
+Expression = Literal | Reference | Unary | Binary | ListLiteral | ListLength | ListGet
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -76,14 +93,24 @@ class Variable(Node):
     owner_id: str
     name: str
     role: VariableRole
-    type: ScalarType
-    initial: Literal | None = None
+    type: ValueType
+    initial: Literal | ListLiteral | None = None
 
 
 @dataclass(frozen=True, kw_only=True)
 class Assignment(Node):
     target: Reference
     value: Expression
+
+
+@dataclass(frozen=True, kw_only=True)
+class ListSet(Node):
+    """Update one existing element; an augmented op evaluates the index/read once."""
+
+    target: Reference
+    index: Expression
+    value: Expression
+    op: BinaryOp | None = None
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -140,7 +167,7 @@ class StopAgitation(Node):
     resource_id: str
 
 
-Statement = Assignment | Call | If | While | SetAgitation | StopAgitation
+Statement = Assignment | ListSet | Call | If | While | SetAgitation | StopAgitation
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -161,4 +188,4 @@ class Program:
     entry_function_id: str
     functions: tuple[FunctionIR, ...] = ()
     resources: tuple[AgitatorResource, ...] = ()
-    format_version: int = 2
+    format_version: int = 3
