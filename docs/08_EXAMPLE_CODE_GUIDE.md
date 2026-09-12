@@ -24,7 +24,7 @@ For implemented direct list semantics, run
 `uv run python -m examples.developer.list_ir`. Its
 [source](../examples/developer/list_ir.py) and [JSON](../examples/developer/list_ir.json)
 show copying and element updates with JSON v3. This is a developer example;
-Python list authoring and AutoSuite array generation are later stages.
+Python list authoring is also implemented; AutoSuite array generation is the next stage.
 
 ## Proposed frontend designs
 

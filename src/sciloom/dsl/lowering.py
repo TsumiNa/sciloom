@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 from typing import cast
+from dataclasses import replace
 from .context import LoweringContext
 from .model import Function
 from .source import runtime_source
 from .statements import statements
 from ..units import RotationalSpeed
 from ..core.diagnostics import IRValidationError
-from ..core.ir import AgitatorResource, FunctionIR, Literal, Program, Variable, VariableRole, validate
+from ..core.ir import AgitatorResource, FunctionIR, ListLiteral, ListType, Literal, Program, Variable, VariableRole, validate
 
 
 def lower(root: Function) -> Program:
@@ -38,13 +39,20 @@ def build_function(context: LoweringContext) -> FunctionIR:
     for field in context.instance.model_fields.values():
         initial = None
         if field.role == VariableRole.INTERNAL:
-            initial = Literal(
-                node_id=f"{context.symbol(field.name)}:initial",
-                type=field.type,
-                value=field.default.rps
-                if isinstance(field.default, RotationalSpeed)
-                else cast(bool | int | float, field.default),
-            )
+            if isinstance(field.type, ListType):
+                assert isinstance(field.default, tuple)
+                initial = ListLiteral(
+                    node_id=f"{context.symbol(field.name)}:initial", type=field.type,
+                    elements=tuple(Literal(node_id=f"{context.symbol(field.name)}:initial:{i}", type=field.type.element_type, value=value.rps if isinstance(value, RotationalSpeed) else value) for i, value in enumerate(field.default)),
+                )
+            else:
+                initial = Literal(
+                    node_id=f"{context.symbol(field.name)}:initial",
+                    type=field.type,
+                    value=field.default.rps
+                    if isinstance(field.default, RotationalSpeed)
+                    else cast(bool | int | float, field.default),
+                )
         variables.append(
             Variable(
                 node_id=context.symbol(field.name),
@@ -55,10 +63,11 @@ def build_function(context: LoweringContext) -> FunctionIR:
                 initial=initial,
             )
         )
-    return FunctionIR(
+    function = FunctionIR(
         node_id=context.function_id,
         name=type(context.instance).__name__,
         source=context.span(node),
         variables=tuple(variables),
-        body=statements(context, node.body),
     )
+    context.function_schema = function
+    return replace(function, body=statements(context, node.body))

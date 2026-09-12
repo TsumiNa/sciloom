@@ -8,7 +8,9 @@ from typing import Any, NoReturn, cast
 from .model import Function
 from ..units import SpeedUnit
 from ..core.diagnostics import Diagnostic, IRValidationError, SourceSpan
-from ..core.ir import AgitatorResource, Reference
+from ..core.ir import AgitatorResource, Expression, FunctionIR, Reference, ValueType
+from ..core.ir.expressions import ExpressionChecker
+from ..core.ir.model import Node
 
 
 _MISSING = object()
@@ -31,6 +33,8 @@ class LoweringContext:
         self.unit_names: dict[str, SpeedUnit] = {}
         self.filename = ""
         self.sequence = 0
+        self.function_schema: FunctionIR | None = None
+        self.allows_len = False
 
     def fail(self, code: str, message: str, node: ast.AST | None = None) -> NoReturn:
         source = self.span(node) if node is not None else None
@@ -63,3 +67,18 @@ class LoweringContext:
         ):
             self.fail("runtime_field", "Assignment targets must be declared self.<runtime_field> references.", node)
         return Reference(**self.metadata(node), symbol_id=self.symbol(node.attr))
+
+    def type_of(self, expression: Expression) -> ValueType:
+        """Use shared expression rules for contextual list construction."""
+        assert self.function_schema is not None
+        errors: list[Diagnostic] = []
+
+        def report(code: str, message: str, path: str, node: Node | None) -> None:
+            errors.append(Diagnostic(code=code, message=message, path=path, node_id=node.node_id if node else None, source=node.source if node else None))
+
+        checker = ExpressionChecker({v.node_id: v for v in self.function_schema.variables}, report)
+        value_type = checker.check(expression, self.function_schema, f"$.python.{self.function_id}")
+        if errors:
+            raise IRValidationError(tuple(errors))
+        assert value_type is not None
+        return value_type

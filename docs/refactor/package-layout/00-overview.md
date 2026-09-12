@@ -17,9 +17,9 @@ compatibility shims would create competing interfaces. Neither is introduced.
 
 ## Ordered stages and availability
 
-Implementation progress: stages 1–5 are merged in GitHub PRs #12–16.
-Stage 6 implements direct list IR, JSON v3 and reference execution. Python list
-syntax and AutoSuite array generation remain pending.
+Implementation progress: stages 1–6 are merged in GitHub PRs #12–17.
+Stage 7 implements Python list declarations and conversion to the shared IR.
+AutoSuite array generation remains pending; reference execution supports lists.
 
 | Stage | Plan | Capability available after merge |
 |---|---|---|
@@ -59,6 +59,10 @@ studio/web are documentation boundaries only in this sequence: no placeholder
 implementation, web dependency, node registry or HTTP framework is added.
 
 ## Author API (scalar declarations: stage 5; complete example: stage 8)
+
+At stage 7 the ScaleValues class below supports `to_ir()` and reference execution;
+the final AutoSuite compile/write lines become available at stage 8. The class is
+covered by the colocated DSL list tests, including its empty-input behavior.
 
 ```python
 from sciloom import Function, Input, Output, Var, runtime
