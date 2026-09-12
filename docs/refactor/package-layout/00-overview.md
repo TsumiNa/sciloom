@@ -1,5 +1,10 @@
 # Package layout, native declarations and runtime lists
 
+The device refactor supersedes this plan's Target interface: current targets also
+implement `resolve_devices(program) -> DeviceBindings`. Use the
+[device contract](../device-abstraction/00-overview.md#compiler-and-binding-interface)
+for current contributor code; the Target snippet below records the earlier stage.
+
 ## Status and authority
 
 This is the accepted interface contract for the nine-stage refactor. It supersedes

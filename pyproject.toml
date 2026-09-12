@@ -63,6 +63,8 @@ disallow_incomplete_defs = true
 module = [
     "sciloom.units_test",
     "sciloom.devices.agitation_test",
+    "sciloom.dsl.device_schema_test",
+    "sciloom.core.devices_test",
     "sciloom.dsl.lowering_list_test",
     "sciloom.dsl.model_test",
     "sciloom.dsl.schema_test",

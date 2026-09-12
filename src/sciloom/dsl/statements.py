@@ -7,8 +7,8 @@ from collections.abc import Sequence
 from .context import LoweringContext
 from .expressions import BINARY_OPERATORS, expression, is_length_call
 from .model import Function
-from ..devices.agitation import Agitator
-from ..core.ir import Assignment, AgitatorResource, SetAgitation, StopAgitation, Binary, Call, If, InputBinding, ListSet, ListType, OutputBinding, Reference, ScalarType, Statement, VariableRole, While
+from .device_schema import DeviceReference
+from ..core.ir import Assignment, SetAgitation, StopAgitation, Binary, Call, If, InputBinding, ListSet, ListType, OutputBinding, Reference, ScalarType, Statement, VariableRole, While
 
 
 def call(context: LoweringContext, node: ast.Call, targets: Sequence[ast.expr]) -> Call:
@@ -62,7 +62,7 @@ def operation(context: LoweringContext, node: ast.Call) -> SetAgitation | StopAg
     ):
         return None
     component = context.host_attribute(method.value.attr)
-    if not isinstance(component, Agitator):
+    if not isinstance(component, DeviceReference):
         return None
     if method.attr == "set_speed":
         if len(node.args) == 1 and not node.keywords:
@@ -76,10 +76,7 @@ def operation(context: LoweringContext, node: ast.Call) -> SetAgitation | StopAg
             context.fail("operation_binding", "stop takes no arguments.", node)
     else:
         context.fail("unsupported_operation", f"Unknown agitator operation {method.attr!r}.", node)
-    resource = context.resources.setdefault(
-        component.resource_id,
-        AgitatorResource(node_id=f"resource:{component.resource_id}", logical_id=component.resource_id),
-    )
+    resource = context.device_resource(component)
     if method.attr == "set_speed":
         return SetAgitation(**context.metadata(node), resource_id=resource.node_id, speed=speed)
     return StopAgitation(**context.metadata(node), resource_id=resource.node_id)

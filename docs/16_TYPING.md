@@ -49,8 +49,10 @@ validation remains necessary. No Any-based compatibility API is introduced.
 
 ## Contributor interfaces
 
-The [authoritative contract](refactor/package-layout/00-overview.md#contributor-contract-new-imports-stage-2)
+The [authoritative device contract](refactor/device-abstraction/00-overview.md#compiler-and-binding-interface)
 shows the exact Target/Artifact/CompileResult interfaces and an independent target.
+Targets now implement `resolve_devices(program) -> DeviceBindings`, including
+device-free targets, which return `DeviceBindings()`.
 Mypy rejects a Target whose emit returns str, incorrect Artifact content types,
 and incorrect IR constructor arguments. A valid target's compilation result is
 CompileResult, its artifact is Artifact, and write returns pathlib.Path.

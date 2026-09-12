@@ -11,14 +11,16 @@ load the Python DSL or a vendor target. The accepted property/start lifecycle is
 documented in the [device refactor](refactor/device-abstraction/00-overview.md);
 until that stage lands, the command semantics below remain current.
 
-The Python frontend accepts a host component `Agitator("reaction_mixer")`, composed
-before compilation. Calls to its `set_speed(speed)` and `stop()` methods inside
+The Python DSL accepts a class-level `agitator: Agitator` device dependency,
+separate from Input/Output/Var fields. Calls to its `set_speed(speed)` and `stop()` methods inside
 runtime source lower to explicit SetAgitation and StopAgitation nodes. Calling
 these methods as host Python raises an error; they never contact a device.
 
 Program.resources declares AgitatorResource records with a semantic node ID and
-a logical_id. Equal logical IDs denote the same resource across composed functions;
-unused host components are not added. Operations reference semantic IDs. A target
+a logical_id. Root slots use their field name; nested slots use a component path
+such as `stage.agitator`. Assigning `self.stage.agitator = self.agitator` during
+host composition shares one logical resource. Declared slots on compiled
+Functions are included even if unused. Operations reference semantic IDs. A target
 binds logical IDs to hardware separately; IR contains no Zone, device ID or typeid.
 
 SetAgitation enables agitation and commands the supplied speed. StopAgitation
@@ -69,13 +71,13 @@ The AutoSuite adapter binds logical resources explicitly to existing fixed zones
 on individual shakers:
 
 ```python
-from sciloom.contrib.autosuite import AutoSuiteTarget, IndividualShakerBinding
+from sciloom.contrib.autosuite import AutoSuiteTarget, AutoSuiteIndividualShaker
 
-target = AutoSuiteTarget(agitators=(
-    IndividualShakerBinding(
-        logical_id="reaction_mixer", zone="Heater Shaker 23", device_id="23",
+target = AutoSuiteTarget(devices={
+    "agitator": AutoSuiteIndividualShaker(
+        zone="Heater Shaker 23", device_id="23",
     ),
-))
+})
 result = function.compile(target=target)
 ```
 
@@ -84,6 +86,13 @@ shaker address, not the vessel/rack address in the Zone. Missing or unknown
 bindings fail compilation; duplicate logical bindings, zones and physical aliases fail
 configuration. The adapter supports the observed individual-shaker profile only,
 not arbitrary agitation devices or dynamic Zone parameters.
+
+`BaseDevice` and `Agitator` are category contracts; the frozen
+`AutoSuiteIndividualShaker(Agitator)` describes deployment. Core receives only
+immutable `DeviceBindings` facts from `Target.resolve_devices(program)` and
+checks complete, compatible bindings before target validation/emission. JSON v3
+still describes generic Agitator slots only. Other declared device categories,
+properties and explicit start await the v4 stage; they are rejected for now.
 
 Experiment authors run `uv run python examples/agitation.py` to compile the
 Function directly to `examples/agitation.asfp`.

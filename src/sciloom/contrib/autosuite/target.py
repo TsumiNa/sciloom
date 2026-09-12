@@ -1,13 +1,17 @@
 """The explicit AutoSuite target: vendor legality and XML emission."""
 
 import xml.etree.ElementTree as ET
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from types import MappingProxyType
+from typing import Mapping
 
 from ...core.compiler import Artifact
+from ...core.devices import DeviceBinding, DeviceBindings
 from ...core.diagnostics import CompilationError, Diagnostic
 from ...core.ir import Binary, BinaryOp, Call, Program
 from ...core.ir.traversal import iter_nodes
-from .agitation import IndividualShakerBinding
+from ...devices.agitation import Agitator
+from .agitation import AutoSuiteIndividualShaker
 from .codegen import lower_asfp
 from .xml import AutoSuiteVersion
 from .validation import validate_array_outputs
@@ -16,26 +20,39 @@ from .validation import validate_array_outputs
 @dataclass(frozen=True, kw_only=True)
 class AutoSuiteTarget:
     version: AutoSuiteVersion = AutoSuiteVersion.V2_47_1_1
-    agitators: tuple[IndividualShakerBinding, ...] = ()
+    devices: Mapping[str, AutoSuiteIndividualShaker] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "version", AutoSuiteVersion(self.version))
-        object.__setattr__(self, "agitators", tuple(self.agitators))
-        logical_ids: set[str] = set()
+        object.__setattr__(self, "devices", MappingProxyType(dict(self.devices)))
         device_ids: set[str] = set()
         zones: set[str] = set()
-        for binding in self.agitators:
-            if not isinstance(binding, IndividualShakerBinding):
-                raise TypeError("agitators must contain IndividualShakerBinding records.")
-            if binding.logical_id in logical_ids:
-                raise ValueError(f"Duplicate logical agitation binding: {binding.logical_id}")
+        for name, binding in self.devices.items():
+            if not isinstance(name, str) or not name or any(
+                not part.isidentifier() or part.startswith("_") for part in name.split(".")
+            ):
+                raise ValueError("Device binding names must be logical field/component paths.")
+            if type(binding) is not AutoSuiteIndividualShaker:
+                raise TypeError("devices must contain AutoSuiteIndividualShaker records.")
             if binding.device_id in device_ids:
                 raise ValueError(f"Distinct resources cannot alias shaker device {binding.device_id}.")
             if binding.zone in zones:
                 raise ValueError(f"Distinct resources cannot bind the same AutoSuite zone {binding.zone!r}.")
-            logical_ids.add(binding.logical_id)
             device_ids.add(binding.device_id)
             zones.add(binding.zone)
+
+    def resolve_devices(self, program: Program) -> DeviceBindings:
+        return DeviceBindings(
+            devices=tuple(
+                DeviceBinding(
+                    logical_id=name,
+                    device_type_id=device.device_type_id,
+                    compatible_type_ids=(Agitator.device_type_id,),
+                    physical_id=f"autosuite:individual-shaker:{device.device_id}",
+                )
+                for name, device in sorted(self.devices.items())
+            )
+        )
 
     @property
     def target_id(self) -> str:
@@ -57,28 +74,7 @@ class AutoSuiteTarget:
             for node, path in iter_nodes(program)
             if isinstance(node, Binary) and node.op in (BinaryOp.AND, BinaryOp.OR)
         ]
-        bindings = {binding.logical_id for binding in self.agitators}
         errors.extend(validate_array_outputs(program))
-        resources = {resource.logical_id for resource in program.resources}
-        for i, resource in enumerate(program.resources):
-            if resource.logical_id not in bindings:
-                errors.append(
-                    Diagnostic(
-                        code="missing_resource_binding",
-                        message=f"No AutoSuite binding for agitator {resource.logical_id!r}.",
-                        path=f"$.resources[{i}]",
-                        node_id=resource.node_id,
-                        source=resource.source,
-                    )
-                )
-        for logical_id in sorted(bindings - resources):
-            errors.append(
-                Diagnostic(
-                    code="unknown_resource_binding",
-                    message=f"AutoSuite binding {logical_id!r} has no declared resource.",
-                    path="$.resources",
-                )
-            )
         completed: set[str] = set()
         for root in calls:
             if root in completed:
@@ -110,7 +106,7 @@ class AutoSuiteTarget:
         return tuple(errors)
 
     def emit(self, program: Program) -> Artifact:
-        serialization_ir = lower_asfp(program, self.version, agitators=self.agitators)
+        serialization_ir = lower_asfp(program, self.version, devices=self.devices)
         try:
             content = serialization_ir.to_xml()
             ET.fromstring(content)
