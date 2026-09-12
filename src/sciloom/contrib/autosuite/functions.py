@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
-from ...core.ir import VariableRole
+from ...core.ir import ListType, VariableRole
 from .context import CodegenContext
 from .parameters import functiondata
-from .tasks import macro, statements
+from .tasks import statements
+from .primitives import macro, set_variable
+from dataclasses import replace
 from .xml import AutoSuiteVersion, SerializationIR, xml_node as _xml
 
 
@@ -18,10 +20,24 @@ def build_functions(context: CodegenContext, target: AutoSuiteVersion) -> Serial
             name += "_"
         used_names.add(name)
         internal = tuple(v for v in function.variables if v.role == VariableRole.INTERNAL)
+        before, after = [], []
+        for variable in function.variables:
+            if not isinstance(variable.type, ListType) or variable.role == VariableRole.INTERNAL:
+                continue
+            public_name = context.parameter_names[variable.node_id]
+            private_name = context.temporary(function, variable.type)
+            context.names[variable.node_id] = private_name
+            if variable.role == VariableRole.INPUT:
+                before.append(set_variable(context, "task", private_name, public_name, array=True))
+            else:
+                after.append(set_variable(context, "task", public_name, private_name, array=True))
+        # Schedule first so every target-private variable is known before declaring locals.
+        tasks = (*before, *statements(context, function.body, function, "task"), *after)
+        declarations = (*internal, *context.temporaries[function.node_id])
         body = (
-            (macro(context, "component", function.node_id, function, function.body, variables=internal, role="locals"),)
-            if internal
-            else statements(context, function.body, function, "component")
+            (macro(context, "component", function.node_id, function, tasks, variables=declarations, role="locals"),)
+            if declarations
+            else tuple(replace(task, tag="component") for task in tasks)
         )
         functions.append(
             _xml(

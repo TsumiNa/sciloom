@@ -1,29 +1,32 @@
-"""Encode Function parameter declarations and Execute Function bindings."""
+"""Encode parameter declarations and already-evaluated call bindings."""
 
-from __future__ import annotations
-
-from ...core.ir import Call, FunctionIR, VariableRole
+from ...core.ir import FunctionIR, ListType, VariableRole
 from .context import CodegenContext
 from .encoding import SCALARS
-from .expressions import render_expression
 from .xml import XmlNode, xml_node as _xml
 
 
-def functiondata(context: CodegenContext, function: FunctionIR, call: Call | None = None) -> XmlNode:
+def functiondata(
+    context: CodegenContext,
+    function: FunctionIR,
+    *,
+    inputs: dict[str, str] | None = None,
+    outputs: dict[str, str] | None = None,
+) -> XmlNode:
     groups = []
     for tag, role in (("inputs", VariableRole.INPUT), ("outputs", VariableRole.OUTPUT)):
         parameters = [v for v in function.variables if v.role == role]
         entries = [_xml("count", str(len(parameters)))]
-        inputs = {b.parameter_id: b.value for b in call.inputs} if call else {}
-        outputs = {b.parameter_id: b.target for b in call.outputs} if call else {}
         for i, variable in enumerate(parameters):
-            variable_name = context.names[variable.node_id]
+            array = isinstance(variable.type, ListType)
+            scalar = variable.type.element_type if isinstance(variable.type, ListType) else variable.type
+            variable_name = context.parameter_names[variable.node_id]
             expression_text = ""
-            if call and role == VariableRole.INPUT:
-                variable_name = ""
-                expression_text = render_expression(context, inputs[variable.node_id])
-            elif call:
-                variable_name = context.names[outputs[variable.node_id].symbol_id]
+            if inputs is not None and role == VariableRole.INPUT:
+                variable_name = inputs[variable.node_id] if array else ""
+                expression_text = "" if array else inputs[variable.node_id]
+            elif outputs is not None and role == VariableRole.OUTPUT:
+                variable_name = outputs[variable.node_id]
             entries.append(
                 _xml(
                     f"item{i}",
@@ -31,8 +34,8 @@ def functiondata(context: CodegenContext, function: FunctionIR, call: Call | Non
                     _xml("id", context.identifier("parameter", variable.node_id)),
                     _xml("name", variable.name),
                     _xml("variablename", variable_name),
-                    _xml("variabletype", SCALARS[variable.type].parameter_type),
-                    _xml("isarray", "0"),
+                    _xml("variabletype", SCALARS[scalar].parameter_type),
+                    _xml("isarray", "1" if array else "0"),
                     _xml("expression", expression_text),
                 )
             )

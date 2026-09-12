@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from sciloom import Function, Input, Output, RotationalSpeed, Var, rpm, runtime
-from sciloom.core.diagnostics import CompilationError, ExecutionError, IRValidationError
+from sciloom.core.diagnostics import ExecutionError, IRValidationError
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import ListGet, ListLength, ListLiteral, ListSet, ListType, ScalarType, from_json, to_json
 from sciloom.core.ir.traversal import iter_nodes
@@ -43,8 +43,7 @@ def test_scale_values_preserves_high_level_lists_and_copy_semantics():
     assert values == [1.0, 2.0, 3.0]
     assert function.batch_size == 8
     assert Interpreter(program).run(inputs={"values": [], "factor": 2.0}).outputs["result"] == ()
-    with pytest.raises(CompilationError, match="unsupported_list"):
-        function.compile(target=AutoSuiteTarget())
+    assert function.compile(target=AutoSuiteTarget()).artifact.suffix == ".asfp"
 
 
 def test_python_and_direct_ir_edit_programs_agree():

@@ -3,7 +3,7 @@
 This page describes the current implementation. The accepted
 [package and interface refactor](refactor/package-layout/00-overview.md) specifies
 the completed move to `dsl`, `core` and `contrib`, native declarations and JSON v3
-list semantics and Python list syntax. Target array emission remains a subsequent stage.
+list semantics and Python list syntax. AutoSuite array emission includes copy isolation and ordered index checks.
 Paths and capabilities below are updated as each
 implementing stage lands.
 
@@ -48,8 +48,8 @@ future work; ASFP and reference execution are implemented now.
 | `core/compiler.py` | Target protocol, shared compilation pipeline and generic byte artifacts |
 | `contrib/autosuite/target.py` | Vendor version/configuration and target restrictions |
 | `contrib/autosuite/codegen.py`, `context.py` | Generation entrypoint; target names, IDs and deployment state |
-| `contrib/autosuite/encoding.py`, `parameters.py`, `expressions.py` | Types/variable initialization; parameter bindings; target expressions |
-| `contrib/autosuite/tasks.py`, `functions.py` | Task/control-flow organization; function definitions and package envelope |
+| `contrib/autosuite/encoding.py`, `parameters.py`, `expressions.py` | Types/variable initialization; parameter bindings; expressions with prerequisite tasks |
+| `contrib/autosuite/primitives.py`, `contrib/autosuite/tasks.py`, `functions.py` | Task/check scheduling; function definitions and package envelope |
 | `contrib/autosuite/agitation.py` | Individual-shaker binding and typed Stir adapter |
 | `contrib/autosuite/xml.py` | Immutable serialization records and XML encoding |
 | `core/diagnostics.py` | Shared errors, diagnostics and source locations |
