@@ -41,7 +41,8 @@ future work; ASFP and reference execution are implemented now.
 
 | Module | Owns |
 |---|---|
-| `dsl/model.py`, `schema.py` | Function lifecycle/components; field roles, defaults and host-access protection |
+| `dsl/model.py`, `schema.py` | Function lifecycle; field roles, defaults and host-access protection |
+| `devices/agitation.py` | Logical agitation contract, independent of Python source analysis |
 | `dsl/lowering.py`, `context.py` | Instance graph to Program orchestration; shared symbols, IDs and source locations |
 | `dsl/source.py`, `expressions.py`, `statements.py` | File-backed source discovery; Python expressions; calls, operations and control flow |
 | `core/ir/types.py`, `model.py` | Value types/compatibility; immutable semantic nodes |

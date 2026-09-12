@@ -6,7 +6,8 @@ import ast
 from collections.abc import Sequence
 from .context import LoweringContext
 from .expressions import BINARY_OPERATORS, expression, is_length_call
-from .model import Agitator, Function
+from .model import Function
+from ..devices import Agitator
 from ..core.ir import Assignment, AgitatorResource, SetAgitation, StopAgitation, Binary, Call, If, InputBinding, ListSet, ListType, OutputBinding, Reference, ScalarType, Statement, VariableRole, While
 
 

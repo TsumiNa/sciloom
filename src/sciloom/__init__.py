@@ -5,16 +5,21 @@ from typing import TYPE_CHECKING, Any
 from .units import RotationalSpeed, rpm, rps
 
 if TYPE_CHECKING:
-    from .dsl.model import Agitator, Function, runtime
+    from .devices import Agitator
+    from .dsl.model import Function, runtime
     from .dsl.schema import Input, Output, Var
 
-_DSL_EXPORTS = {"Agitator", "Function", "Input", "Output", "Var", "runtime"}
+_DSL_EXPORTS = {"Function", "Input", "Output", "Var", "runtime"}
 
 
 def __getattr__(name: str) -> Any:
     # Importing sciloom.core.ir or the interpreter must not load the Python DSL.
+    if name == "Agitator":
+        from .devices import Agitator
+
+        return Agitator
     if name in _DSL_EXPORTS:
-        if name in {"Agitator", "Function", "runtime"}:
+        if name in {"Function", "runtime"}:
             from .dsl import model
 
             return getattr(model, name)
