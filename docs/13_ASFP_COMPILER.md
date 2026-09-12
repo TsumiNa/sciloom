@@ -32,7 +32,7 @@ result.write("dist/program.asfp")
 
 The target is explicit. `AutoSuiteTarget()` selects its supported default vendor
 version, 2.47.1.1; unknown versions raise `ValueError`. A different target implements
-the protocol in `sciloom.compiler`. IR errors raise `IRValidationError`; target
+the protocol in `sciloom.core.compiler`. IR errors raise `IRValidationError`; target
 restrictions and XML failures raise `CompilationError`, both with diagnostics.
 `.compile()` never writes files or changes the source instance; `.write()` creates
 parents and replaces the requested file. There is no separate transpile API.
@@ -80,8 +80,8 @@ flowchart LR
     SIR --> XML["ASFP XML bytes"]
 ```
 
-`frontends/python/model.py` provides the model API; `frontends/python/lowering.py` analyzes source; `ir/` holds
-semantics/validation; `compiler.py` coordinates format-independent compilation; `backends/autosuite/codegen.py` maps the
+`frontends/python/model.py` provides the model API; `frontends/python/lowering.py` analyzes source; `core/ir/` holds
+semantics/validation; `core/compiler.py` coordinates format-independent compilation; `backends/autosuite/codegen.py` maps the
 target; `backends/autosuite/xml.py` contains immutable XML records and encoding. The installed
 package needs no reference corpus or third-party runtime dependencies to compile.
 

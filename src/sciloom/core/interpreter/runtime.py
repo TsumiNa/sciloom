@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from types import MappingProxyType
 from typing import NoReturn
 
-from ..units import RotationalSpeed
+from ...units import RotationalSpeed
 from ..diagnostics import Diagnostic, ExecutionError, IRValidationError
 from ..ir import (
     Assignment,

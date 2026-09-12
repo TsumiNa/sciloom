@@ -3,7 +3,7 @@
 import pytest
 
 from sciloom import Boolean, Function, Input, Integer, Output, Real, runtime
-from sciloom.ir import IRValidationError, ScalarType, from_json, to_json
+from sciloom.core.ir import IRValidationError, ScalarType, from_json, to_json
 
 
 class Identity(Function):

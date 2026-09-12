@@ -25,8 +25,8 @@ from pathlib import Path
 
 from examples.agitation import ConfigureAgitation
 from sciloom import Agitator, rpm
-from sciloom.interpreter import Interpreter
-from sciloom.ir import from_json, to_json
+from sciloom.core.interpreter import Interpreter
+from sciloom.core.ir import from_json, to_json
 
 
 if __name__ == "__main__":

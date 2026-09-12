@@ -3,7 +3,7 @@
 from typing import TYPE_CHECKING, Any
 
 from .units import RotationalSpeed, rpm, rps
-from .compiler import Artifact, CompileResult, Target, compile_ir
+from .core.compiler import Artifact, CompileResult, Target, compile_ir
 
 if TYPE_CHECKING:
     from .frontends.python.model import Agitator, Boolean, Function, Input, Integer, Output, Real, RuntimeField, runtime
@@ -12,7 +12,7 @@ _FRONTEND_EXPORTS = {"Agitator", "Boolean", "Function", "Input", "Integer", "Out
 
 
 def __getattr__(name: str) -> Any:
-    # Importing sciloom.ir or the interpreter must not load a source frontend.
+    # Importing sciloom.core.ir or the interpreter must not load a source frontend.
     if name in _FRONTEND_EXPORTS:
         from .frontends.python import model
 

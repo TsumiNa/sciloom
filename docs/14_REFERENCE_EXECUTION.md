@@ -12,7 +12,7 @@ function instances. Semantic IDs identify occurrences and ownership, never targe
 objects. JSON uses kind `Program` and explicit format_version `2`. Version 1 and
 the old Package import are rejected rather than silently migrated.
 
-`ir/schema.py` defines structural conversion independently of the JSON codec.
+`core/ir/schema.py` defines structural conversion independently of the JSON codec.
 Both typed validation and the codec use it; semantic validation does not import
 the codec. Common diagnostics and SourceSpan live outside the IR dependency graph.
 
@@ -30,7 +30,7 @@ The example deliberately exercises persistence as a separate architectural check
 ## Execution API
 
 ```python
-from sciloom.interpreter import ExecutionConfig, Interpreter
+from sciloom.core.interpreter import ExecutionConfig, Interpreter
 
 session = Interpreter(program.to_ir(), config=ExecutionConfig(max_steps=10_000))
 first = session.run(inputs={"amount": 3})

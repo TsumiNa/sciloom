@@ -7,8 +7,9 @@ from types import MappingProxyType
 from typing import Any, Callable, ClassVar, Generic, Mapping, NoReturn, TypeVar, get_args, get_origin, get_type_hints
 
 from ...units import RotationalSpeed
-from ...ir import Diagnostic, IRValidationError, Program, ScalarType, VariableRole
-from ...compiler import CompileResult, Target, compile_ir
+from ...core.diagnostics import Diagnostic, IRValidationError
+from ...core.ir import Program, ScalarType, VariableRole
+from ...core.compiler import CompileResult, Target, compile_ir
 
 
 class Integer:
