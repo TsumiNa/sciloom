@@ -1,6 +1,6 @@
 # Semantic IR and JSON API
 
-`sciloom.ir` implements the first stage of the compiler. It can represent and
+`sciloom.core.ir` implements the first stage of the compiler. It can represent and
 validate functions directly or through JSON. The [Python Function frontend](12_PYTHON_FRONTEND.md)
 also lowers into this model. The [ASFP compiler](13_ASFP_COMPILER.md) consumes it
 through `instance.compile(target=...)` or `compile_ir(package, target=...)`.
@@ -15,9 +15,9 @@ flowchart LR
     IR --> Backend["Serialization IR and ASFP"]
 ```
 
-`ir/model.py` defines immutable dataclasses and enums. `ir/validation.py` resolves
-symbols, types and call graphs. `ir/codec.py` provides the JSON boundary using the
-same declared field types. `diagnostics.py` provides structured errors.
+`core/ir/model.py` defines immutable dataclasses and enums. `core/ir/validation.py` resolves
+symbols, types and call graphs. `core/ir/codec.py` provides the JSON boundary using the
+same declared field types. `core/diagnostics.py` provides structured errors.
 There are no runtime dependencies outside Python's standard library.
 
 ## Typed construction
@@ -27,7 +27,7 @@ scientist-facing Python DSL will use ordinary assignment and control flow instea
 of these constructors.
 
 ```python
-from sciloom.ir import (
+from sciloom.core.ir import (
     Assignment, FunctionIR, Program, Reference, ScalarType,
     Variable, VariableRole, from_json, to_json, validate,
 )

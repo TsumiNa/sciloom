@@ -3,7 +3,7 @@
 ## Current compiler direction
 
 The project has converged on a **model-first, instance-specialized compiler architecture**.
-`sciloom.ir` provides immutable typed Function IR, validation and versioned JSON
+`sciloom.core.ir` provides immutable typed Function IR, validation and versioned JSON
 interchange. The restricted Python `Function` frontend now lowers configured
 instances with `.to_ir()` or emits ASFP through `.compile(target=...)`. The first Function
 compiler sequence is implemented and structurally checked against retained fixtures.

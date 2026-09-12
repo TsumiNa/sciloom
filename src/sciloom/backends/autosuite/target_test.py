@@ -3,8 +3,8 @@
 import pytest
 
 from sciloom import compile_ir
-from sciloom.diagnostics import CompilationError
-from sciloom.ir import Call, FunctionIR, Program, from_json, to_json, validate
+from sciloom.core.diagnostics import CompilationError
+from sciloom.core.ir import Call, FunctionIR, Program, from_json, to_json, validate
 from .target import AutoSuiteTarget
 
 

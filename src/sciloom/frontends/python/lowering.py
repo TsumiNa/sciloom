@@ -8,7 +8,8 @@ from typing import Any, NoReturn, cast
 
 from .model import Agitator, Function
 from ...units import RotationalSpeed, SpeedUnit
-from ...ir import (
+from ...core.diagnostics import Diagnostic, IRValidationError, SourceSpan
+from ...core.ir import (
     Assignment,
     AgitatorResource,
     SetAgitation,
@@ -16,18 +17,15 @@ from ...ir import (
     Binary,
     BinaryOp,
     Call,
-    Diagnostic,
     Expression,
     FunctionIR,
     If,
     InputBinding,
-    IRValidationError,
     Literal,
     OutputBinding,
     Program,
     Reference,
     ScalarType,
-    SourceSpan,
     Statement,
     Unary,
     UnaryOp,

@@ -5,8 +5,8 @@ from dataclasses import replace
 import pytest
 
 from sciloom import Agitator, Boolean, Function, Input, RotationalSpeed, rpm, rps, runtime
-from sciloom.diagnostics import ExecutionError, IRValidationError
-from sciloom.ir import (
+from sciloom.core.diagnostics import ExecutionError, IRValidationError
+from sciloom.core.ir import (
     AgitatorResource,
     FunctionIR,
     If,
@@ -216,8 +216,8 @@ class Block:
         if fullname.startswith(("sciloom.frontends", "sciloom.backends")):
             raise ImportError("source and vendor modules are forbidden")
 sys.meta_path.insert(0, Block())
-from sciloom.ir import from_json
-from sciloom.interpreter import Interpreter
+from sciloom.core.ir import from_json
+from sciloom.core.interpreter import Interpreter
 from sciloom.units import rpm
 result = Interpreter(from_json(sys.stdin.read())).run(inputs={"speed": 600 * rpm, "enabled": True})
 assert result.resources["mixer"].speed == 600 * rpm
