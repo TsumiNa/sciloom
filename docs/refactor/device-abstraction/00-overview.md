@@ -7,7 +7,8 @@ supersedes the device/lifecycle portions of the compiler-foundation and
 package-layout plans when the corresponding implementation stage lands. Other
 package, scalar and list contracts remain in force.
 
-Stage 1 records the design. Stages 2–6 are pending. Examples of target interfaces
+Stage 1 is merged as PR #22 (8e90e64). Stage 2 moves the existing device module;
+stages 3–6 are pending. Examples of target interfaces
 below are specifications, not claims of currently runnable code. Every stage
 updates its callers, examples, status and tests before review and squash merge.
 Do not start a later implementation stage before the preceding PR is merged.
