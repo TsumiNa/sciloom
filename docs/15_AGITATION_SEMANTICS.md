@@ -5,6 +5,12 @@ AutoSuite corpus. It does not attempt a complete agitation or device model.
 
 ## Intent and resources
 
+The current logical Agitator contract lives in `sciloom.devices` and remains
+available through the lazy `from sciloom import Agitator` author entry. It does not
+load the Python DSL or a vendor target. The accepted property/start lifecycle is
+documented in the [device refactor](refactor/device-abstraction/00-overview.md);
+until that stage lands, the command semantics below remain current.
+
 The Python frontend accepts a host component `Agitator("reaction_mixer")`, composed
 before compilation. Calls to its `set_speed(speed)` and `stop()` methods inside
 runtime source lower to explicit SetAgitation and StopAgitation nodes. Calling

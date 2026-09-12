@@ -1,12 +1,10 @@
-"""Host-specialized Function instances and logical experiment components."""
+"""Host-specialized Function instances and runtime source registration."""
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 from functools import wraps
 from types import MappingProxyType
 from typing import Any, Callable, ClassVar, Mapping, ParamSpec, TypeVar
-from ..units import RotationalSpeed
 from ..core.ir import Program
 from ..core.compiler import CompileResult, Target, compile_ir
 from .schema import RuntimeField, build_schema
@@ -56,22 +54,3 @@ class Function:
 
     def __call__(self, *args: Any, **kwargs: Any) -> Any:
         raise TypeError("Function calls in @runtime methods are compiled, not executed as Python.")
-
-
-@dataclass(frozen=True)
-class Agitator:
-    """A named logical component, bound to hardware only by the selected target."""
-
-    resource_id: str
-
-    def __post_init__(self) -> None:
-        if not isinstance(self.resource_id, str) or not self.resource_id.strip():
-            raise ValueError("Agitator requires a nonempty logical resource ID.")
-
-    def set_speed(self, speed: RotationalSpeed) -> None:
-        """Declare a runtime command; host invocation is prohibited."""
-        raise TypeError("Agitator operations belong in compiled @runtime methods.")
-
-    def stop(self) -> None:
-        """Declare a runtime command; following DSL statements remain reachable."""
-        raise TypeError("Agitator operations belong in compiled @runtime methods.")

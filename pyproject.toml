@@ -62,6 +62,7 @@ disallow_incomplete_defs = true
 [[tool.mypy.overrides]]
 module = [
     "sciloom.units_test",
+    "sciloom.devices.agitation_test",
     "sciloom.dsl.lowering_list_test",
     "sciloom.dsl.model_test",
     "sciloom.dsl.schema_test",
