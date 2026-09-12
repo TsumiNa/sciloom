@@ -1,12 +1,13 @@
 """Symbol, type and control-flow validation shared by every frontend."""
 
+from dataclasses import replace
 from .schema import _convert
 from .expressions import ExpressionChecker
 from .types import ListType, ScalarType, ValueType, is_assignable
 from .traversal import iter_nodes
 from ..diagnostics import Diagnostic, IRValidationError
 from .model import Assignment, BinaryOp, ListLiteral, ListSet, Literal, ConfigureProperty, StartAgitation, StopAgitation, DeviceCommand, DeviceIf, CanWrite, SupportsOperation, IsDevice, FunctionIR, If, Node, Program, Statement, VariableRole, While
-from .device_validation import validate_directory, members_for, is_agitator
+from .device_validation import validate_directory, members_for, query_members_for, is_agitator
 from .device_contracts import START_AGITATION_ID, STOP_AGITATION_ID
 
 
@@ -71,7 +72,8 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
         if source is not None and target is not None and not is_assignable(source, target):
             report("type_mismatch", f"Cannot assign {source.value} to {target.value}.", path, node)
 
-    def statements(body: tuple[Statement, ...], function: FunctionIR, path: str) -> None:
+    def statements(body: tuple[Statement, ...], function: FunctionIR, path: str, narrowed: dict[str, str] | None = None) -> None:
+        narrowed = {} if narrowed is None else narrowed
         for i, stmt in enumerate(body):
             p = f"{path}[{i}]"
             if isinstance(stmt, Assignment):
@@ -97,12 +99,14 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                 if condition is not None and condition != ScalarType.BOOLEAN:
                     report("condition_type", "Control-flow conditions must be boolean.", f"{p}.condition", stmt)
                 if isinstance(stmt, If):
-                    statements(stmt.then_body, function, f"{p}.then_body")
-                    statements(stmt.else_body, function, f"{p}.else_body")
+                    statements(stmt.then_body, function, f"{p}.then_body", narrowed)
+                    statements(stmt.else_body, function, f"{p}.else_body", narrowed)
                 else:
-                    statements(stmt.body, function, f"{p}.body")
+                    statements(stmt.body, function, f"{p}.body", narrowed)
             elif isinstance(stmt, (ConfigureProperty, StartAgitation, StopAgitation, DeviceCommand)):
                 resource = resources.get(stmt.resource_id)
+                if resource is not None and resource.node_id in narrowed:
+                    resource = replace(resource, device_type_id=narrowed[resource.node_id])
                 properties, commands = members_for(package, resource) if resource else ((), ())
                 if resource is None:
                     report("unknown_resource", "Operation must reference a declared device.", p, stmt)
@@ -128,18 +132,24 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
             elif isinstance(stmt, DeviceIf):
                 predicate = stmt.condition
                 resource = resources.get(predicate.resource_id)
+                if resource is not None and resource.node_id in narrowed:
+                    resource = replace(resource, device_type_id=narrowed[resource.node_id])
+                properties, commands = query_members_for(package, resource) if resource else ((), ())
                 if resource is None:
                     report("unknown_resource", "Device predicate must reference a declared resource.", p, predicate)
                 if isinstance(predicate, CanWrite):
-                    if not any(v.semantic_id == predicate.property_id for c in package.device_types for v in c.properties):
+                    if not any(v.semantic_id == predicate.property_id for v in properties):
                         report("device_property", "Device query must name a declared property.", p, predicate)
                 elif isinstance(predicate, SupportsOperation):
-                    if not any(v.semantic_id == predicate.operation_id for c in package.device_types for v in c.operations):
+                    if not any(v.semantic_id == predicate.operation_id for v in commands):
                         report("device_command", "Device query must name a declared command.", p, predicate)
                 elif isinstance(predicate, IsDevice) and not any(c.type_id == predicate.device_type_id for c in package.device_types):
                     report("device_contract", "Device query must name a declared type.", p, predicate)
-                statements(stmt.then_body, function, f"{p}.then_body")
-                statements(stmt.else_body, function, f"{p}.else_body")
+                true_types = dict(narrowed)
+                if isinstance(predicate, IsDevice):
+                    true_types[predicate.resource_id] = predicate.device_type_id
+                statements(stmt.then_body, function, f"{p}.then_body", true_types)
+                statements(stmt.else_body, function, f"{p}.else_body", narrowed)
             else:
                 callee = functions.get(stmt.function_id)
                 if callee is None:

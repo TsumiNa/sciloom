@@ -5,7 +5,7 @@ from dataclasses import replace
 import pytest
 
 from . import CanWrite, CommandArgument, CommandContract, CommandParameter, ConfigureProperty, DeviceCommand, DeviceIf, DeviceResource, FunctionIR, IsDevice, Literal, Program, PropertyContract, ScalarType, SupportsOperation, from_dict, from_json, to_dict, to_json, validate
-from .device_contracts import AGITATOR_CONTRACT, AGITATOR_TYPE_ID, AGITATION_SPEED_ID, BASE_DEVICE_CONTRACT, START_AGITATION_ID
+from .device_contracts import AGITATOR_CONTRACT, AGITATOR_TYPE_ID, BASE_DEVICE_CONTRACT, START_AGITATION_ID
 from ..diagnostics import ExecutionError, IRValidationError
 from ..interpreter import Interpreter
 
@@ -16,7 +16,7 @@ def extension_program():
     contract = replace(AGITATOR_CONTRACT, type_id="test.shaker/v1", base_type_ids=(AGITATOR_TYPE_ID, BASE_DEVICE_CONTRACT.type_id), properties=(*AGITATOR_CONTRACT.properties, prop), operations=(*AGITATOR_CONTRACT.operations, command))
     return Program(
         entry_function_id="f", device_types=(BASE_DEVICE_CONTRACT, AGITATOR_CONTRACT, contract),
-        resources=(DeviceResource(node_id="r", logical_id="agitator", device_type_id=AGITATOR_TYPE_ID),),
+        resources=(DeviceResource(node_id="r", logical_id="agitator", device_type_id=contract.type_id),),
         functions=(FunctionIR(node_id="f", name="Check", body=(DeviceCommand(
             node_id="call", resource_id="r", operation_id=command.semantic_id,
             arguments=(CommandArgument(name="level", value=Literal(node_id="level", type=ScalarType.REAL, value=0.5)),),
@@ -73,3 +73,32 @@ def test_generic_command_cannot_bypass_builtin_lifecycle_checks():
     call = DeviceCommand(node_id="start", resource_id="r", operation_id=START_AGITATION_ID)
     invalid = replace(program, functions=(replace(function, body=(call,)),))
     assert "device_command" in {d.code for d in validate(invalid)}
+
+
+def test_extension_commands_require_a_declared_or_guard_narrowed_interface():
+    program = extension_program()
+    resource = replace(program.resources[0], device_type_id=AGITATOR_TYPE_ID)
+    generic = replace(program, resources=(resource,))
+    assert "device_command" in {d.code for d in validate(generic)}
+    function = generic.functions[0]
+    guard = IsDevice(node_id="guard", resource_id="r", device_type_id="test.shaker/v1")
+    narrowed = replace(generic, functions=(replace(function, body=(DeviceIf(node_id="if", condition=guard, then_body=function.body),)),))
+    assert from_json(to_json(narrowed)) == narrowed
+    wrong_branch = replace(narrowed, functions=(replace(function, body=(DeviceIf(node_id="if", condition=guard, else_body=function.body),)),))
+    assert "device_command" in {d.code for d in validate(wrong_branch)}
+
+
+@pytest.mark.parametrize("predicate", [
+    CanWrite(node_id="query", resource_id="r", property_id="test.gain/v1"),
+    SupportsOperation(node_id="query", resource_id="r", operation_id="test.calibrate/v1"),
+])
+def test_capability_queries_allow_compatible_extensions_but_not_unrelated_families(predicate):
+    program = extension_program()
+    function = replace(program.functions[0], body=(DeviceIf(node_id="if", condition=predicate),))
+    generic = replace(program, resources=(replace(program.resources[0], device_type_id=AGITATOR_TYPE_ID),), functions=(function,))
+    assert validate(generic) == ()  # A query is not permission to call the member.
+    from .device_contracts import DeviceTypeContract
+    unrelated = DeviceTypeContract(type_id="test.thermometer/v1", base_type_ids=(BASE_DEVICE_CONTRACT.type_id,))
+    invalid = replace(generic, device_types=(*generic.device_types, unrelated), resources=(replace(program.resources[0], device_type_id=unrelated.type_id),))
+    codes = {d.code for d in validate(invalid)}
+    assert codes & {"device_property", "device_command"}

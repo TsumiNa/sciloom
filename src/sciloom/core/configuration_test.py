@@ -6,7 +6,6 @@ import pytest
 
 from sciloom import Agitator, Function, Input, rpm, runtime
 from sciloom.contrib.autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
-from .compiler import compile_ir
 from .devices import DeviceBinding, DeviceBindings
 from .configuration import validate_device_usage
 from .diagnostics import CompilationError

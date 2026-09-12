@@ -8,7 +8,6 @@ from types import MappingProxyType
 from typing import Any, Mapping, get_type_hints
 from weakref import WeakValueDictionary
 
-from ..devices.agitation import Agitator
 from ..devices.base import BaseDevice
 from ..devices.declarations import device_contract
 

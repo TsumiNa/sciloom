@@ -64,10 +64,16 @@ def semantic_id(value: str) -> bool:
 
 
 def members_for(program: Program, resource: DeviceResource) -> tuple[tuple[PropertyContract, ...], tuple[CommandContract, ...]]:
-    """Include explicitly catalogued extensions of the declared category.
+    """Return the declared interface, including validated inherited signatures."""
+    contract = next((c for c in program.device_types if c.type_id == resource.device_type_id), None)
+    return (contract.properties, contract.operations) if contract else ((), ())
 
-    Binding validation proves that selected members are implemented. Merely
-    sharing a spelling with a member of an unrelated category is insufficient.
+
+def query_members_for(program: Program, resource: DeviceResource) -> tuple[tuple[PropertyContract, ...], tuple[CommandContract, ...]]:
+    """Capability queries may ask about known compatible extensions.
+
+    Querying an optional member does not grant permission to use it. IsDevice
+    narrows the true branch's interface; unrelated device families stay excluded.
     """
     related = [c for c in program.device_types if resource.device_type_id in (c.type_id, *c.base_type_ids)]
     return tuple(p for c in related for p in c.properties), tuple(op for c in related for op in c.operations)

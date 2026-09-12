@@ -389,6 +389,13 @@ branches require device implementation support and target legality. Missing
 bindings are errors, never false queries. Prune unreachable functions after
 selection. Interpreter requires resolved branches and rejects unknown commands.
 
+Ordinary operations use only the resource's declared interface, including its
+ancestors. An IsDevice true branch refines that interface to the queried type;
+the false branch retains the original interface. CanWrite/SupportsOperation may
+ask about declared members of compatible extensions, but do not grant permission
+to use those members or admit unrelated device families. This distinction is
+validated in v4 JSON even before predicate execution is enabled in stage 6.
+
 ## AutoSuite backend (stage 4)
 
 The supported Stir task submits speed and on/off together. Store configuration in

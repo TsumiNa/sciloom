@@ -3,7 +3,7 @@
 import pytest
 from dataclasses import FrozenInstanceError
 
-from sciloom import Agitator, RotationalSpeed, rpm
+from sciloom import Agitator, rpm
 from sciloom.contrib.autosuite import AutoSuiteIndividualShaker
 from sciloom.core.ir.device_contracts import AGITATOR_CONTRACT
 from .declarations import bind_device, device_contract, operation
