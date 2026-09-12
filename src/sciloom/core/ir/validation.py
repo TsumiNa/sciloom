@@ -1,31 +1,11 @@
 """Symbol, type and control-flow validation shared by every frontend."""
 
 from .schema import _convert
+from .expressions import ExpressionChecker
+from .types import is_assignable
 from .traversal import iter_nodes
 from ..diagnostics import Diagnostic, IRValidationError
-from .model import (
-    Assignment,
-    SetAgitation,
-    StopAgitation,
-    BinaryOp,
-    Expression,
-    FunctionIR,
-    If,
-    Literal,
-    Node,
-    Program,
-    Reference,
-    ScalarType,
-    Statement,
-    Unary,
-    UnaryOp,
-    VariableRole,
-    While,
-)
-
-
-def _assignable(source: ScalarType, target: ScalarType) -> bool:
-    return source == target or (source == ScalarType.INTEGER and target == ScalarType.REAL)
+from .model import Assignment, SetAgitation, StopAgitation, FunctionIR, If, Node, Program, ScalarType, Statement, VariableRole, While
 
 
 def validate(package: Program) -> tuple[Diagnostic, ...]:
@@ -81,67 +61,10 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
     if package.entry_function_id not in functions:
         report("entry_function", "Entry must reference a function in this package.", "$.entry_function_id")
 
-    def expression(expr: Expression, function: FunctionIR, path: str) -> ScalarType | None:
-        if isinstance(expr, Literal):
-            valid = {
-                ScalarType.INTEGER: type(expr.value) is int,
-                ScalarType.REAL: type(expr.value) in (int, float),
-                ScalarType.BOOLEAN: type(expr.value) is bool,
-                ScalarType.ROTATIONAL_SPEED: type(expr.value) in (int, float) and expr.value >= 0,
-            }[expr.type]
-            if not valid:
-                report("literal_type", f"Value does not represent {expr.type.value}.", path, expr)
-                return None
-            return expr.type
-        if isinstance(expr, Reference):
-            variable = symbols.get(expr.symbol_id)
-            if variable is None:
-                report("unknown_symbol", f"Unknown variable {expr.symbol_id!r}.", path, expr)
-                return None
-            if variable.owner_id != function.node_id or variable not in function.variables:
-                report(
-                    "symbol_scope", "Variable belongs to a different function; globals are not implicit.", path, expr
-                )
-                return None
-            return variable.type
-        if isinstance(expr, Unary):
-            operand = expression(expr.operand, function, f"{path}.operand")
-            if operand is None:
-                return None
-            if expr.op == UnaryOp.NOT:
-                if operand == ScalarType.BOOLEAN:
-                    return ScalarType.BOOLEAN
-            elif operand in (ScalarType.INTEGER, ScalarType.REAL):
-                return operand
-            report("operator_type", f"Operator {expr.op.value!r} cannot take {operand.value}.", path, expr)
-            return None
-        left = expression(expr.left, function, f"{path}.left")
-        right = expression(expr.right, function, f"{path}.right")
-        if left is None or right is None:
-            return None
-        numeric = left in (ScalarType.INTEGER, ScalarType.REAL) and right in (ScalarType.INTEGER, ScalarType.REAL)
-        if expr.op in (BinaryOp.AND, BinaryOp.OR):
-            if left == right == ScalarType.BOOLEAN:
-                return ScalarType.BOOLEAN
-        elif expr.op in (BinaryOp.EQUAL, BinaryOp.NOT_EQUAL):
-            if left == right or numeric:
-                return ScalarType.BOOLEAN
-        elif expr.op in (BinaryOp.LESS, BinaryOp.LESS_EQUAL, BinaryOp.GREATER, BinaryOp.GREATER_EQUAL):
-            if numeric:
-                return ScalarType.BOOLEAN
-        elif numeric:
-            return (
-                ScalarType.REAL
-                if expr.op == BinaryOp.DIVIDE or ScalarType.REAL in (left, right)
-                else ScalarType.INTEGER
-            )
-        report(
-            "operator_type", f"Operator {expr.op.value!r} cannot combine {left.value} and {right.value}.", path, expr
-        )
-        return None
+    expression = ExpressionChecker(symbols, report).check
 
     def check_assignment(source: ScalarType | None, target: ScalarType | None, path: str, node: Node) -> None:
-        if source is not None and target is not None and not _assignable(source, target):
+        if source is not None and target is not None and not is_assignable(source, target):
             report("type_mismatch", f"Cannot assign {source.value} to {target.value}.", path, node)
 
     def statements(body: tuple[Statement, ...], function: FunctionIR, path: str) -> None:

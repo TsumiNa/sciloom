@@ -15,9 +15,11 @@ flowchart LR
     IR --> Backend["Serialization IR and ASFP"]
 ```
 
-`core/ir/model.py` defines immutable dataclasses and enums. `core/ir/validation.py` resolves
-symbols, types and call graphs. `core/ir/codec.py` provides the JSON boundary using the
-same declared field types. `core/diagnostics.py` provides structured errors.
+`core/ir/types.py` defines value types and assignment compatibility;
+`core/ir/model.py` defines immutable semantic nodes. `core/ir/expressions.py`
+checks expression types and symbol ownership, while `core/ir/validation.py`
+checks the whole program. `core/ir/schema.py` checks structure independently of
+the JSON boundary in `core/ir/codec.py`. `core/diagnostics.py` provides errors.
 There are no runtime dependencies outside Python's standard library.
 
 ## Typed construction

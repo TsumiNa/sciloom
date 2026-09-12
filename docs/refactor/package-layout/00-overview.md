@@ -16,8 +16,8 @@ compatibility shims would create competing interfaces. Neither is introduced.
 
 ## Ordered stages and availability
 
-Implementation progress: stages 1 and 2 are merged in GitHub PRs #12 and #13.
-Stage 3 implements DSL/contrib paths and author-only root exports. Native
+Implementation progress: stages 1–3 are merged in GitHub PRs #12–14.
+Stage 4 separates implementation responsibilities within those paths. Native
 declarations and lists remain pending; authors still use Real/Integer/Boolean
 until stage 5.
 

@@ -6,6 +6,12 @@ then returns a validated `sciloom.core.ir.Program`. `instance.compile(target=...
 emits the selected target's artifact. AutoSuiteTarget emits ASFP; see the
 [compiler guide](13_ASFP_COMPILER.md).
 
+Implementation ownership: `dsl/model.py` handles Function lifecycle and logical
+components; `dsl/schema.py` handles declarations and descriptors. `lowering.py`
+builds the instance graph using `context.py` for symbols/source identity,
+`source.py` for file discovery, `expressions.py` for expression conversion and
+`statements.py` for calls, domain operations and structured control flow.
+
 See the runnable [function-call example](../examples/function_call.py):
 
 ```bash
