@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import inspect
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from types import MappingProxyType
 from typing import Any, Mapping, get_type_hints
+from weakref import WeakValueDictionary
 
 from ..devices.agitation import Agitator
 from ..devices.base import BaseDevice
@@ -25,14 +26,23 @@ class DeviceReference:
 class DeviceSlot:
     name: str
     device_type: type[BaseDevice]
+    _references: WeakValueDictionary[int, DeviceReference] = field(
+        default_factory=WeakValueDictionary, init=False, repr=False, compare=False,
+    )
 
     def __get__(self, instance: object | None, owner: type | None = None) -> DeviceReference | DeviceSlot:
         if instance is None:
             return self
         values = vars(instance)
-        if self.name not in values:
-            values[self.name] = DeviceReference(instance, self.name, self.device_type)
-        return values[self.name]
+        if self.name in values:
+            return values[self.name]
+        reference = self._references.get(id(instance))
+        if reference is None:
+            reference = DeviceReference(instance, self.name, self.device_type)
+            self._references[id(instance)] = reference
+        # Weak values retain identity while a caller/shared slot holds the
+        # reference, without mutating the Function or keeping it alive forever.
+        return reference
 
     def __set__(self, instance: object, value: object) -> None:
         if not isinstance(value, DeviceReference) or not issubclass(value.device_type, self.device_type):
@@ -60,6 +70,13 @@ def build_device_schema(cls: type, reserved: Mapping[str, object]) -> Mapping[st
             raise TypeError("JSON v3 supports only Agitator device slots; other device contracts require v4.")
         if name in cls.__dict__ and not isinstance(cls.__dict__[name], DeviceSlot):
             raise TypeError(f"Device slot {name!r} cannot have a class-level value.")
+        for base in cls.__mro__[1:]:
+            member = base.__dict__.get(name)
+            if (name in base.__dict__ and not isinstance(member, DeviceSlot)) or (
+                name in inspect.get_annotations(base)
+                and name not in getattr(base, "device_fields", {})
+            ):
+                raise TypeError(f"Device slot {name!r} cannot replace an inherited host member.")
         slots[name] = DeviceSlot(name, annotation)
         setattr(cls, name, slots[name])
     for name, slot in slots.items():

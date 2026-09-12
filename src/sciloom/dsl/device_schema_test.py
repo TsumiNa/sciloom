@@ -121,3 +121,40 @@ def test_unused_declared_slot_still_requires_a_binding():
             pass
 
     assert Empty().to_ir().resources[0].logical_id == "agitator"
+
+
+def test_lowering_does_not_write_references_into_user_instances():
+    model = Workflow(share=False)
+    before = vars(model).copy(), vars(model.stage).copy()
+    model.to_ir()
+    assert (vars(model), vars(model.stage)) == before
+    reference = model.agitator
+    assert reference is model.agitator
+    assert vars(model) == before[0]
+
+
+def test_reference_cache_does_not_leak_functions_or_require_hashability():
+    import gc
+    import weakref
+
+    class Unhashable(Stage):
+        __hash__ = None
+
+    model = Unhashable()
+    reference = model.agitator
+    assert reference is model.agitator
+    model.to_ir()
+    weak = weakref.ref(model)
+    del reference, model
+    gc.collect()
+    assert weak() is None
+
+
+@pytest.mark.parametrize("kind", ["value", "annotation", "property"])
+def test_devices_cannot_replace_inherited_host_members(kind):
+    namespace = {"__annotations__": {"stage": int}} if kind == "annotation" else {
+        "stage": property(lambda self: 1) if kind == "property" else 1,
+    }
+    host = type("Host", (Function,), namespace)
+    with pytest.raises(TypeError, match="inherited host"):
+        type("Child", (host,), {"__annotations__": {"stage": Agitator}})

@@ -18,7 +18,7 @@ class DeviceBinding:
             if not isinstance(value, str) or not value.strip():
                 raise ValueError("Device binding identities must be nonempty strings.")
         object.__setattr__(self, "compatible_type_ids", tuple(self.compatible_type_ids))
-        if any(not isinstance(value, str) or not value for value in self.compatible_type_ids):
+        if any(not isinstance(value, str) or not value.strip() for value in self.compatible_type_ids):
             raise ValueError("Compatible device identities must be nonempty strings.")
 
 

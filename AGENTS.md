@@ -171,7 +171,8 @@ The Python DSL (`sciloom.dsl`), shared semantic/compiler tools (`sciloom.core`)
 and equipment targets (`sciloom.contrib`, or independent packages) have separate
 ownership. Experiment authors import their API from `sciloom`; contributors import
 `Target`, `Artifact`, `CompileResult` and `compile_ir` from `sciloom.core.compiler`.
-Core must not import devices, DSL, contrib or Studio; the root author API stays lazy. Target
+Core must not import `sciloom.devices`, DSL, contrib or Studio; data-only
+`sciloom.core.devices` binding records belong to core. The root author API stays lazy. Target
 selection is explicit. Generic compilation must not import AutoSuite or assume
 XML. Program/JSON v3 is the current semantic contract; see
 [reference execution](docs/14_REFERENCE_EXECUTION.md). Keep vendor restrictions

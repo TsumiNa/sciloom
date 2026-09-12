@@ -57,7 +57,8 @@ it into XML-oriented nodes in the DSL.
 | sciloom.core.interpreter | Reference sessions and configuration/applied snapshots |
 | sciloom.contrib.autosuite | Concrete profiles, deployment checks and XML generation |
 
-Core must not import devices, DSL, contrib or Studio. Units remain independent.
+Core must not import `sciloom.devices`, DSL, contrib or Studio. Data-only
+`sciloom.core.devices` bindings belong to core. Units remain independent.
 BaseDevice does not impose start/stop on every device family. Agitator owns that
 family's lifecycle. Concrete profiles are immutable deployment descriptions, not
 live hardware connections. Independent packages need no plugin discovery or

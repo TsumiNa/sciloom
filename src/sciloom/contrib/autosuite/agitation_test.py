@@ -53,3 +53,18 @@ def test_deployment_records_and_mapping_are_frozen():
         target.devices["other"] = binding
     with pytest.raises(FrozenInstanceError):
         binding.zone = "elsewhere"
+
+
+def test_shared_pipeline_resolves_devices_once(monkeypatch):
+    from .codegen_agitation_test import ConfigureAgitation, target
+
+    original = AutoSuiteTarget.resolve_devices
+    calls = []
+
+    def resolve(self, program):
+        calls.append(program)
+        return original(self, program)
+
+    monkeypatch.setattr(AutoSuiteTarget, "resolve_devices", resolve)
+    ConfigureAgitation().compile(target=target())
+    assert len(calls) == 1

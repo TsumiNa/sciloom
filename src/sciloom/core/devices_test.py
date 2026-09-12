@@ -40,3 +40,5 @@ def test_binding_facts_freeze_collections_and_reject_aliases():
         DeviceBindings(devices=(binding(), replace(binding(), logical_id="other")))
     with pytest.raises(TypeError, match="DeviceBinding"):
         DeviceBindings(devices=("not a record",))
+    with pytest.raises(ValueError, match="Compatible"):
+        replace(binding(), compatible_type_ids=("  ",))

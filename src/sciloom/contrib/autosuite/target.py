@@ -6,7 +6,7 @@ from types import MappingProxyType
 from typing import Mapping
 
 from ...core.compiler import Artifact
-from ...core.devices import DeviceBinding, DeviceBindings, validate_bindings
+from ...core.devices import DeviceBinding, DeviceBindings
 from ...core.diagnostics import CompilationError, Diagnostic
 from ...core.ir import Binary, BinaryOp, Call, Program
 from ...core.ir.traversal import iter_nodes
@@ -75,7 +75,6 @@ class AutoSuiteTarget:
             if isinstance(node, Binary) and node.op in (BinaryOp.AND, BinaryOp.OR)
         ]
         errors.extend(validate_array_outputs(program))
-        errors.extend(validate_bindings(program, self.resolve_devices(program)))
         completed: set[str] = set()
         for root in calls:
             if root in completed:
