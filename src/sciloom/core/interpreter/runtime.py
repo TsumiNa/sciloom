@@ -6,10 +6,35 @@ from types import MappingProxyType
 
 from ...units import RotationalSpeed
 from ..diagnostics import IRValidationError
-from ..ir import Assignment, ListSet, SetAgitation, StopAgitation, Call, FunctionIR, If, Program, Reference, ScalarType, Statement, VariableRole, While, validate
+from ..ir import (
+    Assignment,
+    ListSet,
+    SetAgitation,
+    StopAgitation,
+    Call,
+    FunctionIR,
+    If,
+    Program,
+    Reference,
+    ScalarType,
+    Statement,
+    VariableRole,
+    While,
+    validate,
+)
 from ..ir.model import Node
 
-from .values import InputValue, OutputValue, RuntimeValue, checked_index, coerce, fail, initial_value, input_value, output_value
+from .values import (
+    InputValue,
+    OutputValue,
+    RuntimeValue,
+    checked_index,
+    coerce,
+    fail,
+    initial_value,
+    input_value,
+    output_value,
+)
 from .expressions import apply_binary, evaluate
 
 
@@ -55,7 +80,7 @@ class Interpreter:
     sequential execution, not a transactional rollback or physical simulator.
     """
 
-    def __init__(self, program: Program, *, config: ExecutionConfig | None = None):
+    def __init__(self, program: Program, *, config: ExecutionConfig | None = None) -> None:
         diagnostics = validate(program)
         if diagnostics:
             raise IRValidationError(diagnostics)
@@ -70,7 +95,9 @@ class Interpreter:
         for variable in self._variables.values():
             if variable.role == VariableRole.INTERNAL:
                 assert variable.initial is not None
-                self._state[variable.owner_id][variable.node_id] = coerce(initial_value(variable.initial), variable.type, variable)
+                self._state[variable.owner_id][variable.node_id] = coerce(
+                    initial_value(variable.initial), variable.type, variable
+                )
 
     def _tick(self, node: Node) -> None:
         self._steps += 1
@@ -94,9 +121,7 @@ class Interpreter:
         except RecursionError:
             fail("execution_depth", "Reference evaluation exceeded the host nesting limit.")
         named = {
-            v.name: output_value(outputs[v.node_id], v.type)
-            for v in entry.variables
-            if v.role == VariableRole.OUTPUT
+            v.name: output_value(outputs[v.node_id], v.type) for v in entry.variables if v.role == VariableRole.OUTPUT
         }
         snapshot = {key: MappingProxyType(dict(value)) for key, value in self._state.items()}
         return ExecutionResult(
@@ -146,9 +171,11 @@ class Interpreter:
                 assert isinstance(values, tuple)
                 index = checked_index(values, evaluate(self, statement.index, frame), statement)
                 if statement.op is not None:
-                    value = apply_binary(statement.op, values[index], evaluate(self, statement.value, frame), statement)
-                assert value is not None
-                self._write(statement.target, values[:index] + (value,) + values[index + 1:], frame)
+                    operand = evaluate(self, statement.value, frame)
+                    assert not isinstance(operand, tuple)
+                    value = apply_binary(statement.op, values[index], operand, statement)
+                assert value is not None and not isinstance(value, tuple)
+                self._write(statement.target, values[:index] + (value,) + values[index + 1 :], frame)
             elif isinstance(statement, If):
                 branch = statement.then_body if evaluate(self, statement.condition, frame) else statement.else_body
                 self._statements(branch, frame, depth)
@@ -170,9 +197,7 @@ class Interpreter:
                 previous = self._resources[statement.resource_id]
                 if isinstance(statement, SetAgitation):
                     speed = RotationalSpeed(
-                        rps=coerce(
-                            evaluate(self, statement.speed, frame), ScalarType.ROTATIONAL_SPEED, statement
-                        )
+                        rps=coerce(evaluate(self, statement.speed, frame), ScalarType.ROTATIONAL_SPEED, statement)
                     )
                     state = AgitationState(enabled=True, speed=speed)
                 else:

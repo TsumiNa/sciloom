@@ -8,6 +8,10 @@ targets from `sciloom.contrib.autosuite`. JSON v3 list IR and reference executio
 and Python list syntax are implemented, including AutoSuite array generation; see the
 [active refactor contract](refactor/package-layout/00-overview.md).
 
+The [typing baseline](16_TYPING.md) checks production code, author examples and
+extension interfaces with locked mypy and CI on Python 3.12–3.14. GUI/server and
+Application/global work remain future capabilities.
+
 The project has converged on a **model-first, instance-specialized compiler architecture**.
 `sciloom.core.ir` provides immutable typed Function IR, validation and versioned JSON
 interchange. The restricted Python `Function` frontend now lowers configured

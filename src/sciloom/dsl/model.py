@@ -5,18 +5,22 @@ from __future__ import annotations
 from dataclasses import dataclass
 from functools import wraps
 from types import MappingProxyType
-from typing import Any, Callable, ClassVar, Mapping, NoReturn
+from typing import Any, Callable, ClassVar, Mapping, ParamSpec, TypeVar
 from ..units import RotationalSpeed
 from ..core.ir import Program
 from ..core.compiler import CompileResult, Target, compile_ir
 from .schema import RuntimeField, build_schema
 
 
-def runtime(method: Callable[..., Any]) -> Callable[..., Any]:
+P = ParamSpec("P")
+R = TypeVar("R")
+
+
+def runtime(method: Callable[P, R]) -> Callable[P, R]:
     """Register source for compilation and prevent accidental host execution."""
 
     @wraps(method)
-    def registered(*args: Any, **kwargs: Any) -> Any:
+    def registered(*args: P.args, **kwargs: P.kwargs) -> R:
         raise TypeError("SciLoom runtime methods must be compiled, not executed as Python.")
 
     setattr(registered, "__sciloom_runtime__", method)
@@ -64,8 +68,10 @@ class Agitator:
         if not isinstance(self.resource_id, str) or not self.resource_id.strip():
             raise ValueError("Agitator requires a nonempty logical resource ID.")
 
-    def set_speed(self, speed: RotationalSpeed) -> NoReturn:
+    def set_speed(self, speed: RotationalSpeed) -> None:
+        """Declare a runtime command; host invocation is prohibited."""
         raise TypeError("Agitator operations belong in compiled @runtime methods.")
 
-    def stop(self) -> NoReturn:
+    def stop(self) -> None:
+        """Declare a runtime command; following DSL statements remain reachable."""
         raise TypeError("Agitator operations belong in compiled @runtime methods.")

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import math
-from typing import NoReturn
+from typing import NoReturn, overload
 from ...units import RotationalSpeed
 from ..diagnostics import Diagnostic, ExecutionError
 from ..ir.model import Literal, ListLiteral, Node
@@ -13,7 +13,17 @@ from ..ir.types import ListType, ScalarType, ValueType
 ScalarValue = bool | int | float
 RuntimeValue = ScalarValue | tuple[ScalarValue, ...]
 InputScalar = ScalarValue | RotationalSpeed
-InputValue = InputScalar | list[InputScalar] | tuple[InputScalar, ...]
+# Lists are invariant: spell out homogeneous alternatives so list[float] etc.
+# remain accepted without widening the public API to arbitrary sequences.
+InputValue = (
+    InputScalar
+    | list[bool]
+    | list[int]
+    | list[float]
+    | list[RotationalSpeed]
+    | list[InputScalar]
+    | tuple[InputScalar, ...]
+)
 OutputValue = InputScalar | tuple[InputScalar, ...]
 
 
@@ -31,6 +41,14 @@ def fail(code: str, message: str, node: Node | None = None) -> NoReturn:
     )
 
 
+@overload
+def coerce(value: RuntimeValue, scalar: ScalarType, node: Node) -> ScalarValue: ...
+
+
+@overload
+def coerce(value: RuntimeValue, scalar: ListType, node: Node) -> tuple[ScalarValue, ...]: ...
+
+
 def coerce(value: RuntimeValue, scalar: ValueType, node: Node) -> RuntimeValue:
     if isinstance(scalar, ListType):
         if type(value) is not tuple:
@@ -44,6 +62,7 @@ def coerce(value: RuntimeValue, scalar: ValueType, node: Node) -> RuntimeValue:
     }[scalar]
     if type(value) not in allowed:
         fail("runtime_type", f"Expected {scalar.value}, received {type(value).__name__}.", node)
+    assert not isinstance(value, tuple)
     try:
         result = float(value) if scalar in (ScalarType.REAL, ScalarType.ROTATIONAL_SPEED) else value
     except OverflowError:
@@ -65,10 +84,19 @@ def initial_value(literal: Literal | ListLiteral) -> RuntimeValue:
     return coerce(literal.value, literal.type, literal)
 
 
+@overload
+def input_value(value: InputValue, value_type: ScalarType, node: Node) -> ScalarValue: ...
+
+
+@overload
+def input_value(value: InputValue, value_type: ListType, node: Node) -> tuple[ScalarValue, ...]: ...
+
+
 def input_value(value: InputValue, value_type: ValueType, node: Node) -> RuntimeValue:
     if isinstance(value_type, ListType):
         if type(value) not in (list, tuple):
             fail("runtime_type", f"Expected {value_type.value} input.", node)
+        assert isinstance(value, (list, tuple))
         return tuple(input_value(item, value_type.element_type, node) for item in value)
     if value_type == ScalarType.ROTATIONAL_SPEED:
         if not isinstance(value, RotationalSpeed):
@@ -76,13 +104,24 @@ def input_value(value: InputValue, value_type: ValueType, node: Node) -> Runtime
         value = value.rps
     elif isinstance(value, RotationalSpeed):
         fail("runtime_type", "A quantity cannot be passed to a scalar input.", node)
+    if isinstance(value, (list, tuple)):
+        fail("runtime_type", f"Expected {value_type.value}, received {type(value).__name__}.", node)
     return coerce(value, value_type, node)
+
+
+@overload
+def output_value(value: RuntimeValue, value_type: ScalarType) -> InputScalar: ...
+
+
+@overload
+def output_value(value: RuntimeValue, value_type: ListType) -> tuple[InputScalar, ...]: ...
 
 
 def output_value(value: RuntimeValue, value_type: ValueType) -> OutputValue:
     if isinstance(value_type, ListType):
         assert isinstance(value, tuple)
         return tuple(output_value(item, value_type.element_type) for item in value)
+    assert not isinstance(value, tuple)
     return RotationalSpeed(rps=value) if value_type == ScalarType.ROTATIONAL_SPEED else value
 
 

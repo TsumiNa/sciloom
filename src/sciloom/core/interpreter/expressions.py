@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 from ..ir import BinaryOp, Expression, Literal, ListLiteral, ListLength, ListGet, Reference, Unary, UnaryOp
 from ..ir.model import Node
 from .values import RuntimeValue, ScalarValue, checked_index, coerce, fail
+
 if TYPE_CHECKING:
     from .runtime import Interpreter
 
@@ -15,8 +16,12 @@ if TYPE_CHECKING:
 def evaluate(session: Interpreter, expression: Expression, frame: dict[str, RuntimeValue]) -> RuntimeValue:
     session._tick(expression)
     if isinstance(expression, ListLiteral):
-        values = tuple(evaluate(session, item, frame) for item in expression.elements)
-        return coerce(values, expression.type, expression)
+        elements: list[ScalarValue] = []
+        for item in expression.elements:
+            element = evaluate(session, item, frame)
+            assert not isinstance(element, tuple)  # Validated homogeneous scalar elements.
+            elements.append(element)
+        return coerce(tuple(elements), expression.type, expression)
     if isinstance(expression, (ListLength, ListGet)):
         values = evaluate(session, expression.value, frame)
         assert isinstance(values, tuple)
@@ -32,6 +37,7 @@ def evaluate(session: Interpreter, expression: Expression, frame: dict[str, Runt
     try:
         if isinstance(expression, Unary):
             value = evaluate(session, expression.operand, frame)
+            assert not isinstance(value, tuple)
             if expression.op == UnaryOp.NOT:
                 result = not value
             elif expression.op == UnaryOp.POSITIVE:
@@ -40,11 +46,13 @@ def evaluate(session: Interpreter, expression: Expression, frame: dict[str, Runt
                 result = -value
         else:
             left = evaluate(session, expression.left, frame)
+            assert not isinstance(left, tuple)
             if expression.op == BinaryOp.AND and not left:
                 return False
             if expression.op == BinaryOp.OR and left:
                 return True
             right = evaluate(session, expression.right, frame)
+            assert not isinstance(right, tuple)
             result = apply_binary(expression.op, left, right, expression)
     except (ZeroDivisionError, OverflowError) as error:
         fail("numeric_error", str(error), expression)

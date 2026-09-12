@@ -42,13 +42,23 @@ skip-magic-trailing-comma = false
 max-complexity = 10
 
 [tool.mypy]
-# Without this, mypy does not look inside any function that lacks annotations — which is most of
-# the training loop. PR #45 shipped a float into a dict[str, Tensor] and an opt.step() the branch
-# logged that it would skip, both in functions `uv run mypy` reported as clean. Enforced per
-# commit by the mypy hook in .pre-commit-config.yaml.
+# Production package and runnable examples share the public type contract.
+# Colocated tests intentionally construct invalid runtime schemas and IR values.
+files = ["src/sciloom", "examples/function_call.py", "examples/agitation.py", "examples/scale_values.py", "examples/non_zero_array_min.py", "examples/developer"]
+exclude = ["(_test|conftest)\\.py$"]
+explicit_package_bases = true
+mypy_path = "$MYPY_CONFIG_FILE_DIR/src"
 check_untyped_defs = true
+warn_unused_ignores = true
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = ["sciloom.core.*", "sciloom.contrib.*"]
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
 
 [dependency-groups]
 dev = [
+    "mypy>=2.3.1",
     "pytest>=9.1.1",
 ]

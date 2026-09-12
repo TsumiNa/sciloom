@@ -22,7 +22,7 @@ class Diagnostic:
 
 
 class DiagnosticError(ValueError):
-    def __init__(self, diagnostics: tuple[Diagnostic, ...]):
+    def __init__(self, diagnostics: tuple[Diagnostic, ...]) -> None:
         self.diagnostics = diagnostics
         super().__init__("\n".join(f"{d.path}: {d.message} [{d.code}]" for d in diagnostics))
 
