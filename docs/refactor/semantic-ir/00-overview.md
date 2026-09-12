@@ -1,5 +1,9 @@
 # Semantic IR implementation sequence
 
+Historical implementation plan. Package paths and declaration spelling are
+superseded by the [package-layout contract](../package-layout/00-overview.md).
+Its stage table distinguishes accepted targets from implemented APIs.
+
 Accepted scope: build a typed semantic model, then the restricted Python frontend,
 then prove Python → ASFP against retained AutoSuite fixtures. The public compiler
 entry point is `instance.compile()`. This is compilation even though the output

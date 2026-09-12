@@ -50,6 +50,26 @@ Record the plan under `docs/refactor/<refactor-slug>/` before implementation:
 
 If the user requests a complex refactor without a plan, propose the split and get agreement before writing code.
 
+### API and interface examples are part of the plan
+
+When a refactor or plan designs or changes an API/interface, its design document
+under `docs/` must include concrete example code before implementation begins.
+
+- Show exact imports, names, signatures, typical calls and expected results. For
+  an extension interface, also show a minimal implementation of that interface.
+  Prose such as "provide a common interface" is not a substitute for examples.
+- Identify one authoritative interface contract. Every affected PR plan must link
+  to it rather than independently redefining names, parameters or return types.
+- Label current, target and intermediate interfaces, and identify the PR after
+  which each example becomes runnable. Do not describe unimplemented examples as
+  already executed or supported.
+- If implementation changes the agreed interface, update the contract examples,
+  affected stage plans and callers in the same PR. Later PRs must use the revised
+  contract rather than an obsolete example.
+- Once the relevant interface exists, verify the examples with executable examples
+  or focused tests. Include that verification in the implementing PR's acceptance.
+  Follow the example-output documentation rules for runnable learning examples.
+
 ### Requirements for every PR in the sequence
 
 1. **One stated purpose.** The title names a single outcome. If stating the goal requires "and", it is probably two PRs.
@@ -57,6 +77,9 @@ If the user requests a complex refactor without a plan, propose the split and ge
 3. **Independently reviewable.** Someone reading only this PR and its plan file should understand what changed and why, without reading the rest of the sequence. "Part 2 of the refactor" is not a description.
 4. **Independently revertible.** Reverting one PR must not break the PRs that landed before it.
 5. **No mixing of mechanical and semantic change.** A pure move/rename is one PR; a behavior change is another. But when a move breaks literal-path or literal-string references, update those references **in the same PR that moves the files** — never split a move from the reference updates it invalidates.
+6. **Interface consistency.** Check implementation and callers against the linked
+   authoritative code examples, and run the interface checks required by that
+   stage. Update the contract in the same PR if its design changes.
 
 ### Ordering
 
