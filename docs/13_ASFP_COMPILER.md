@@ -19,7 +19,7 @@ IDs differ; structure and parameter binding relationships match the fixture.
 ## Public API
 
 ```python
-from sciloom.backends.autosuite import AutoSuiteTarget
+from sciloom.contrib.autosuite import AutoSuiteTarget
 
 result = program.compile(target=AutoSuiteTarget())
 result.target_id
@@ -37,7 +37,7 @@ restrictions and XML failures raise `CompilationError`, both with diagnostics.
 `.compile()` never writes files or changes the source instance; `.write()` creates
 parents and replaces the requested file. There is no separate transpile API.
 The generic result has no XML-specific field. Backend developers can inspect
-`backends.autosuite.codegen.lower_asfp` and its immutable XML records separately.
+`contrib.autosuite.codegen.lower_asfp` and its immutable XML records separately.
 
 ## Agitation example
 
@@ -80,9 +80,9 @@ flowchart LR
     SIR --> XML["ASFP XML bytes"]
 ```
 
-`frontends/python/model.py` provides the model API; `frontends/python/lowering.py` analyzes source; `core/ir/` holds
-semantics/validation; `core/compiler.py` coordinates format-independent compilation; `backends/autosuite/codegen.py` maps the
-target; `backends/autosuite/xml.py` contains immutable XML records and encoding. The installed
+`dsl/model.py` provides the model API; `dsl/lowering.py` analyzes source; `core/ir/` holds
+semantics/validation; `core/compiler.py` coordinates format-independent compilation; `contrib/autosuite/codegen.py` maps the
+target; `contrib/autosuite/xml.py` contains immutable XML records and encoding. The installed
 package needs no reference corpus or third-party runtime dependencies to compile.
 
 The backend owns `typeid`s, UUIDs, parameter IDs, Macro containers and XML defaults.

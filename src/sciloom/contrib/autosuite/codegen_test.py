@@ -7,12 +7,13 @@ from pathlib import Path
 
 import pytest
 
-from sciloom.backends.autosuite import AutoSuiteTarget
+from sciloom.contrib.autosuite import AutoSuiteTarget
 from sciloom.core.diagnostics import CompilationError
-from sciloom import Boolean, Function, Integer, compile_ir, runtime
-from sciloom.frontends.python.model_test import Caller, Counter
+from sciloom import Boolean, Function, Integer, runtime
+from sciloom.core.compiler import compile_ir
+from sciloom.dsl.model_test import Caller, Counter
 from sciloom.core.ir import IRValidationError, SourceSpan, from_json, to_json
-from sciloom.backends.autosuite.xml import SerializationIR
+from sciloom.contrib.autosuite.xml import SerializationIR
 
 FIXTURES = Path(__file__).resolve().parents[4] / "autosuite/asfp"
 

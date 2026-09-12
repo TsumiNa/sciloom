@@ -6,10 +6,10 @@ from functools import wraps
 from types import MappingProxyType
 from typing import Any, Callable, ClassVar, Generic, Mapping, NoReturn, TypeVar, get_args, get_origin, get_type_hints
 
-from ...units import RotationalSpeed
-from ...core.diagnostics import Diagnostic, IRValidationError
-from ...core.ir import Program, ScalarType, VariableRole
-from ...core.compiler import CompileResult, Target, compile_ir
+from ..units import RotationalSpeed
+from ..core.diagnostics import Diagnostic, IRValidationError
+from ..core.ir import Program, ScalarType, VariableRole
+from ..core.compiler import CompileResult, Target, compile_ir
 
 
 class Integer:

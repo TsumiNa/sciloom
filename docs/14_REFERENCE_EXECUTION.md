@@ -86,7 +86,7 @@ explicit control flow. No backend may silently substitute eager evaluation.
 Direct-IR, Python and JSON versions of the same stateful program have matching
 outputs across calls. Tests also cover shared/distinct instances, recursive frames,
 loops, dead-expression short-circuiting, runtime faults, immutable snapshots and
-budget exhaustion. A subprocess blocks imports of all frontends and backends
+budget exhaustion. A subprocess blocks imports of DSL and equipment targets
 while executing JSON IR.
 
 Existing AutoSuite golden comparisons validate serialized structure and reference

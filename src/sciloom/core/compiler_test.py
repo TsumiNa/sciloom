@@ -63,9 +63,14 @@ def test_import_and_compilation_without_vendor_modules():
 import sys
 class Block:
     def find_spec(self, fullname, *args):
-        if fullname.startswith(("sciloom.backends", "sciloom.frontends", "sciloom.dsl", "sciloom.contrib")):
+        if fullname.startswith(("sciloom.dsl", "sciloom.contrib")):
             raise ImportError("authoring and vendor modules are forbidden")
 sys.meta_path.insert(0, Block())
+import sciloom
+assert "sciloom.core.compiler" not in sys.modules
+assert not {"Target", "Artifact", "CompileResult", "compile_ir", "RuntimeField"} & set(sciloom.__all__)
+for name in ("Target", "Artifact", "CompileResult", "compile_ir", "RuntimeField"):
+    assert not hasattr(sciloom, name)
 from sciloom.core.compiler_test import program, TextTarget
 from sciloom.core.compiler import compile_ir
 from sciloom.core.ir import from_json, to_json

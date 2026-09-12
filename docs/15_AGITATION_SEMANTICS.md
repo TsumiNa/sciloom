@@ -63,7 +63,7 @@ The AutoSuite adapter binds logical resources explicitly to existing fixed zones
 on individual shakers:
 
 ```python
-from sciloom.backends.autosuite import AutoSuiteTarget, IndividualShakerBinding
+from sciloom.contrib.autosuite import AutoSuiteTarget, IndividualShakerBinding
 
 target = AutoSuiteTarget(agitators=(
     IndividualShakerBinding(
