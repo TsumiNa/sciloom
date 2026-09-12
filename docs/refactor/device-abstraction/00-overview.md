@@ -156,7 +156,7 @@ forwarding aliases for Agitator("name"), IndividualShakerBinding or agitators=.
 | start while enabled | Reapply current complete configuration and remain enabled |
 | device.stop() | Disable; retain configured and last-applied snapshots |
 | write while enabled | Change configured values only, not applied values |
-| speed = 0 * rpm | Configure zero; does not stop or provide an implicit default |
+| device.speed = 0 * rpm | Configure zero; does not stop or provide an implicit default |
 
 Keep configured values, applied values and enabled state distinct. Configuration
 belongs to a logical resource shared across calls in a session. Fresh sessions
@@ -172,11 +172,17 @@ self.agitator.start()  # Uses the previously captured value.
 The snippet illustrates capture semantics in a context where speed is writable;
 the complete author example above does not modify its input.
 
-Required configuration starts unset. Validate starts along all reachable paths,
-including transitive calls. A possibly zero-iteration loop cannot establish
-configuration afterward. Do not rely on a preceding entry invocation. Reference
-sessions preserve writes before failures; target recovery equivalence remains
-limited as recorded in [Q&A](qa.md).
+Required configuration starts unset. Compilation requires definite configuration
+within each entry invocation, including transitive calls, without assuming any
+previous entry execution. A possibly zero-iteration loop cannot establish it.
+Thus a program that configures only on some entry invocations and otherwise starts
+from historical state is rejected by the compiler, even though the reference
+session retains that state. Retention does not waive this conservative compile
+check. Direct reference execution checks actual state: starting unset fails on
+the first call; a later start can use retained configuration. This execution
+capability does not imply that the compiler accepts an unproved entry path.
+Reference sessions preserve writes before failures; target recovery equivalence
+remains limited as recorded in [Q&A](qa.md).
 
 Property reads, augmented assignments and indexed mutation of device properties
 are initially unsupported. A typing getter is not hardware telemetry. Start does
@@ -197,10 +203,6 @@ class DemoAgitator(Agitator):
     device_type_id: ClassVar[str] = "example.demo-agitator/v1"
     writable_properties: ClassVar[tuple[str, ...]] = ("speed", "gain")
     required_configuration: ClassVar[tuple[str, ...]] = ("speed", "gain")
-    supported_operations: ClassVar[
-        tuple[Callable[..., None], ...]
-    ] = (Agitator.start, Agitator.stop)
-
     @property
     def gain(self) -> float:
         raise TypeError("Device property reads are not supported yet.")
@@ -209,6 +211,14 @@ class DemoAgitator(Agitator):
     @operation(id="example.demo-agitator.gain/v1")
     def gain(self, value: float) -> None:
         """Stage the gain for the next start."""
+
+    @operation(id="example.demo-agitator.calibrate/v1")
+    def calibrate(self) -> None:
+        """Record a test-only calibration command; no actual hardware exists."""
+
+    supported_operations: ClassVar[
+        tuple[Callable[..., None], ...]
+    ] = (Agitator.start, Agitator.stop, calibrate)
 ```
 
 The operation decorator preserves ParamSpec/return typing and prevents ordinary
@@ -290,6 +300,10 @@ assert result.specialized_ir == selected
 The developer fragment assumes a declared function and target as above. The
 compiler validates authored IR, resolves bindings once, specializes, validates
 retained capabilities/definite configuration, runs target validation and emits.
+Target.validate and Target.emit receive only the selected/specialized Program;
+Target.resolve_devices receives the authored Program. CompileResult.semantic_ir
+remains the authored Program, and specialized_ir is the selected Program sent to
+the backend. Unresolved static branches never reach target validation/emission.
 specialize is pure and retains source locations/identities. Both result IRs remain
 high-level; backend working variables and hidden parameters belong below them.
 
@@ -393,7 +407,9 @@ Add positive/negative mypy examples, including wrong property types and TypeGuar
 Keep short learning outputs in module docstrings and long outputs in same-basename
 companions. Update live architecture/DSL/reference execution docs and AGENTS with
 each implemented stage; mark old plans superseded for their changed portions.
-After reference-doc changes update MANIFEST and run audit_corpus.py. Static XML
+For changes to files tracked in autosuite/MANIFEST.csv (including reference docs),
+update their hashes and run audit_corpus.py. Project docs under docs/ do not require
+manifest updates. Do not change raw evidence to satisfy a compiler test. Static XML
 checks do not establish Executor acceptance; retain the real simulation gate.
 
 No GUI/server, public Application/global API, measured getters, general time model,
