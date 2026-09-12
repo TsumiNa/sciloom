@@ -4,8 +4,9 @@
 
 This is the accepted interface contract for the nine-stage refactor. It supersedes
 the package layout in the compiler-foundation and autosuite-codegen plans, and
-the plain SciLoom type declarations (such as `index: Integer = 0`) in the
-semantic-ir plan. Stage numbers below
+the historical unwrapped runtime-state declarations in the semantic-ir plan.
+The current spelling is `index: Var[int] = 0`; the former marker API is removed.
+Stage numbers below
 refer to this sequence, not GitHub PR numbers. Until its implementing stage lands,
 a target example is a specification, not a claim that it has already run.
 
