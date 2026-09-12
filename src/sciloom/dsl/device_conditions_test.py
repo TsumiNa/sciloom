@@ -16,6 +16,7 @@ from sciloom.core.diagnostics import CompilationError, ExecutionError, IRValidat
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import DeviceCommand, DeviceIf, from_json, to_json, validate
 from sciloom.core.specialization import specialize
+from sciloom.devices import BaseDevice
 
 
 def autosuite():
@@ -188,6 +189,30 @@ def test_querying_an_ancestor_does_not_widen_a_known_subtype():
                 self.agitator.gain = 0.5
 
     Specific().compile(target=demo())
+
+
+def test_unrelated_and_sibling_query_types_are_rejected():
+    class Thermometer(BaseDevice):
+        device_type_id = "example.thermometer/v1"
+
+    class Unrelated(Function):
+        agitator: Agitator
+
+        @runtime
+        def run(self):
+            if comptime.is_device(self.agitator, Thermometer):
+                pass
+
+    class Sibling(Unrelated):
+        @runtime
+        def run(self):
+            if comptime.is_device(self.agitator, DemoAgitator):
+                if comptime.is_device(self.agitator, AutoSuiteIndividualShaker):
+                    pass
+
+    for cls in (Unrelated, Sibling):
+        with pytest.raises(IRValidationError, match="inheritance chain"):
+            cls().to_ir()
 
 
 def test_missing_binding_and_configuration_are_not_false_queries():

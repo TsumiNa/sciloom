@@ -36,6 +36,9 @@ bound resource types are made explicit; authored `.to_ir()` stays unchanged.
 imported into the runtime method's defining namespace. Ambiguous/unknown names
 fail; no global plugin registry is introduced. This query does not narrow the
 Python type. Use `is_device` for access to subclass-only members.
+is_device queries must stay on the current interface's inheritance chain, including
+inside nested guards. Source and IR/JSON reject unrelated and sibling types;
+cross-family intersection queries are outside this slice.
 
 ## Acceptance
 

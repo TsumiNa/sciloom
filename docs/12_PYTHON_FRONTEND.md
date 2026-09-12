@@ -50,6 +50,8 @@ whole if/elif conditions; combine them using nesting. Getters, arbitrary host
 queries, boolean query expressions and runtime-dependent type selection remain
 unsupported. All branches must pass source/type validation, including branches
 that a particular target will discard.
+is_device accepts the current interface, its ancestors or its descendants;
+unrelated and sibling-type queries are rejected, including under nested guards.
 
 Import `Function`, `Input`, `Output`, `Var` and `runtime` from `sciloom`. Use native
 `int`, `float`, `bool`, `RotationalSpeed`, or one-dimensional `list[T]` of those

@@ -420,6 +420,10 @@ With DemoAgitator, retain gain and speed configuration before start; with AutoSu
 remove the gain branch. is_device provides TypeGuard narrowing and means the
 declared type or its subtypes. supports(device, Agitator.start) checks registered
 commands; can_write(device, "gain") checks a declared literal property name.
+The queried type must be the current interface, an ancestor or a descendant.
+Unrelated/sibling type tests are rejected by both source and IR/JSON validation,
+including after an outer guard narrows the interface. Cross-family intersection
+queries for hypothetical multiple-inheritance devices are outside this subset.
 supports does not accept a property/getter. Do not add can_read before reads exist.
 
 Queries appear only in if/elif conditions, with nesting for combinations. Runtime

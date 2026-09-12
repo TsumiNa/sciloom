@@ -143,8 +143,16 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                 elif isinstance(predicate, SupportsOperation):
                     if not any(v.semantic_id == predicate.operation_id for v in commands):
                         report("device_command", "Device query must name a declared command.", p, predicate)
-                elif isinstance(predicate, IsDevice) and not any(c.type_id == predicate.device_type_id for c in package.device_types):
-                    report("device_contract", "Device query must name a declared type.", p, predicate)
+                elif isinstance(predicate, IsDevice):
+                    queried_type = next((c for c in package.device_types if c.type_id == predicate.device_type_id), None)
+                    current_type = next((c for c in package.device_types if resource is not None and c.type_id == resource.device_type_id), None)
+                    if queried_type is None:
+                        report("device_contract", "Device query must name a declared type.", p, predicate)
+                    elif current_type is not None and not (
+                        queried_type.type_id in (current_type.type_id, *current_type.base_type_ids)
+                        or current_type.type_id in queried_type.base_type_ids
+                    ):
+                        report("device_condition", "is_device requires a type on the current device interface's inheritance chain.", p, predicate)
                 true_types = dict(narrowed)
                 if isinstance(predicate, IsDevice) and resource is not None:
                     current_type = next((c for c in package.device_types if c.type_id == resource.device_type_id), None)

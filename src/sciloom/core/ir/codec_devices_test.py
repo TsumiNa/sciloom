@@ -102,3 +102,25 @@ def test_capability_queries_allow_compatible_extensions_but_not_unrelated_famili
     invalid = replace(generic, device_types=(*generic.device_types, unrelated), resources=(replace(program.resources[0], device_type_id=unrelated.type_id),))
     codes = {d.code for d in validate(invalid)}
     assert codes & {"device_property", "device_command"}
+
+
+def test_is_device_rejects_unrelated_and_sibling_types_in_ir_and_json():
+    from .device_contracts import DeviceTypeContract
+
+    program = extension_program()
+    other = DeviceTypeContract(type_id="test.thermometer/v1", base_type_ids=(BASE_DEVICE_CONTRACT.type_id,))
+    sibling = replace(program.device_types[-1], type_id="test.other-shaker/v1")
+    for queried in (other, sibling):
+        branch = DeviceIf(node_id="if", condition=IsDevice(node_id="query", resource_id="r", device_type_id=queried.type_id))
+        invalid = replace(program, device_types=(*program.device_types, queried),
+                          functions=(replace(program.functions[0], body=(branch,)),))
+        assert "device_condition" in {d.code for d in validate(invalid)}
+        # Build a shape-valid wire document without bypassing decoder validation.
+        document = to_dict(replace(program, device_types=(*program.device_types, queried)))
+        document["functions"][0]["body"] = [{
+            "kind": "DeviceIf", "node_id": "if", "condition": {
+                "kind": "IsDevice", "node_id": "query", "resource_id": "r", "device_type_id": queried.type_id,
+            },
+        }]
+        with pytest.raises(IRValidationError, match="inheritance chain"):
+            from_dict(document)

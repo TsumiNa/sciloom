@@ -45,6 +45,8 @@ def device_if(context: LoweringContext, node: ast.If) -> DeviceIf | None:
         cls = static_object(context, call.args[1])
         if not isinstance(cls, type) or not issubclass(cls, BaseDevice):
             context.fail("device_condition", "is_device requires a declared device class.", call.args[1])
+        if not (issubclass(cls, declared) or issubclass(declared, cls)):
+            context.fail("device_condition", "is_device requires a type on the current device interface's inheritance chain.", call.args[1])
         context.register_device_type(cls)
         condition = IsDevice(**context.metadata(call), resource_id=resource_id, device_type_id=cls.device_type_id)
         narrowed = declared if issubclass(declared, cls) else cls
