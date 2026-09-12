@@ -1,6 +1,6 @@
 """Design example: native Python control flow lowered to AutoSuite runtime IR."""
 
-from sciloom import Function, Input, Array, Zone, Volume, Integer, Boolean, runtime
+from sciloom import Function, Input, Array, Zone, Volume, runtime, Var
 from sciloom.units import mL
 
 
@@ -8,11 +8,11 @@ class DynamicTransfer(Function):
     source_zone: Input[Zone]
     destination_zone: Input[Zone]
     volumes: Input[Array[Volume]]
-    max_chunk_size: Input[Integer]
+    max_chunk_size: Input[int]
 
-    index: Integer = 0
-    remaining: Volume = 0 * mL
-    done: Boolean = False
+    index: Var[int] = 0
+    remaining: Var[Volume] = 0 * mL
+    done: Var[bool] = False
 
     def __init__(self, *, valve_group_size: int = 8, channels=(1, 2, 3, 4)):
         # Host-time constants/configuration; not AutoSuite runtime fields.

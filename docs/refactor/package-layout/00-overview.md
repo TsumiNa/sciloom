@@ -4,8 +4,9 @@
 
 This is the accepted interface contract for the nine-stage refactor. It supersedes
 the package layout in the compiler-foundation and autosuite-codegen plans, and
-the plain SciLoom type declarations (such as `index: Integer = 0`) in the
-semantic-ir plan. Stage numbers below
+the historical unwrapped runtime-state declarations in the semantic-ir plan.
+The current spelling is `index: Var[int] = 0`; the former marker API is removed.
+Stage numbers below
 refer to this sequence, not GitHub PR numbers. Until its implementing stage lands,
 a target example is a specification, not a claim that it has already run.
 
@@ -16,10 +17,9 @@ compatibility shims would create competing interfaces. Neither is introduced.
 
 ## Ordered stages and availability
 
-Implementation progress: stages 1–3 are merged in GitHub PRs #12–14.
-Stage 4 separates implementation responsibilities within those paths. Native
-declarations and lists remain pending; authors still use Real/Integer/Boolean
-until stage 5.
+Implementation progress: stages 1–4 are merged in GitHub PRs #12–15.
+Stage 5 implements native scalar Input/Output/Var declarations and docstring
+conventions. Runtime lists remain pending; JSON is still v2.
 
 | Stage | Plan | Capability available after merge |
 |---|---|---|
@@ -105,7 +105,7 @@ annotations are host data. Var needs an explicit initial value. Initial values
 initialize session state, not each call; runtime assignment performs a reset.
 Scope follows the owning model. Application/global compilation remains deferred.
 
-Stage 5 will use generic Annotated aliases (TypeAlias plus TypeVar) with
+Stage 5 uses generic Annotated aliases (TypeAlias plus TypeVar) with
 one private field-role marker. get_type_hints(include_extras=True) preserves it;
 ordinary type checkers see T. Reject unsubscripted aliases, multiple/nested roles,
 Any and unsupported types. Keep descriptors preventing host reads/writes.

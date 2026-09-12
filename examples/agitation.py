@@ -45,19 +45,31 @@ The fixed zone/shaker binding is taken from the latest application configuration
 
 from pathlib import Path
 
-from sciloom import Agitator, Boolean, Function, Input, RotationalSpeed, runtime
+from sciloom import Agitator, Function, Input, RotationalSpeed, runtime
 from sciloom.contrib.autosuite import AutoSuiteTarget, IndividualShakerBinding
 
 
 class ConfigureAgitation(Function):
-    shaker_speed: Input[RotationalSpeed]
-    enabled: Input[Boolean]
+    """Set or disable a logical agitator using runtime inputs.
 
-    def __init__(self, agitator: Agitator):
+    Attributes:
+        shaker_speed: Commanded rotational speed when enabled.
+        enabled: Whether agitation should be enabled.
+    """
+
+    shaker_speed: Input[RotationalSpeed]
+    enabled: Input[bool]
+
+    def __init__(self, agitator: Agitator) -> None:
+        """Bind a logical component during host specialization.
+
+        Args:
+            agitator: Logical resource; the compilation target selects hardware.
+        """
         self.agitator = agitator
 
     @runtime
-    def run(self):
+    def run(self) -> None:
         if self.enabled:
             self.agitator.set_speed(self.shaker_speed)
         else:

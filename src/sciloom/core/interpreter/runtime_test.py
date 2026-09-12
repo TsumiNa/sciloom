@@ -5,7 +5,7 @@ import sys
 
 import pytest
 
-from sciloom import Boolean, Function, Input, Integer, Output, Real, runtime
+from sciloom import Function, Input, Output, runtime, Var
 from sciloom.core.diagnostics import ExecutionError
 from sciloom.core.ir import (
     Assignment,
@@ -25,9 +25,9 @@ from .runtime import ExecutionConfig, Interpreter
 
 
 class Accumulator(Function):
-    amount: Input[Integer]
-    total: Integer = 0
-    result: Output[Integer]
+    amount: Input[int]
+    total: Var[int] = 0
+    result: Output[int]
 
     @runtime
     def run(self):
@@ -104,8 +104,8 @@ def test_python_direct_and_json_ir_agree_across_calls():
 
 def test_shared_and_distinct_instances_have_correct_state():
     class Pair(Function):
-        result: Output[Integer]
-        other: Integer = 0
+        result: Output[int]
+        other: Var[int] = 0
 
         def __init__(self, shared):
             self.first = Accumulator()
@@ -123,8 +123,8 @@ def test_shared_and_distinct_instances_have_correct_state():
 
 def test_recursive_frames_are_independent():
     class Factorial(Function):
-        n: Input[Integer]
-        result: Output[Integer]
+        n: Input[int]
+        result: Output[int]
 
         def __init__(self):
             self.again = self
@@ -145,8 +145,8 @@ def test_recursive_frames_are_independent():
 
 def test_loop_and_short_circuit_do_not_execute_dead_expressions():
     class Safe(Function):
-        count: Integer = 0
-        answer: Output[Boolean]
+        count: Var[int] = 0
+        answer: Output[bool]
 
         @runtime
         def run(self):
@@ -173,8 +173,8 @@ def test_empty_infinite_loop_is_bounded():
 
 def test_output_frames_do_not_keep_previous_values():
     class Maybe(Function):
-        enabled: Input[Boolean]
-        result: Output[Integer]
+        enabled: Input[bool]
+        result: Output[int]
 
         @runtime
         def run(self):
@@ -189,7 +189,7 @@ def test_output_frames_do_not_keep_previous_values():
 
 def test_uninitialized_read_and_division_failure_have_locations():
     class Uninitialized(Function):
-        result: Output[Integer]
+        result: Output[int]
 
         @runtime
         def run(self):
@@ -200,8 +200,8 @@ def test_uninitialized_read_and_division_failure_have_locations():
     assert error.value.diagnostics[0].source.path.endswith("runtime_test.py")
 
     class Division(Function):
-        divisor: Input[Real]
-        result: Output[Real]
+        divisor: Input[float]
+        result: Output[float]
 
         @runtime
         def run(self):
@@ -254,9 +254,9 @@ def test_json_v1_is_not_silently_upgraded():
 
 def test_faults_preserve_prior_state_writes():
     class Partial(Function):
-        divisor: Input[Real]
-        count: Integer = 0
-        result: Output[Real]
+        divisor: Input[float]
+        count: Var[int] = 0
+        result: Output[float]
 
         @runtime
         def run(self):

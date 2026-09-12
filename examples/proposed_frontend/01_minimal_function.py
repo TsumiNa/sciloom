@@ -1,15 +1,15 @@
 """Design example only: proposed restricted-Python frontend, not a runnable API."""
 
-from sciloom import Function, Input, Output, Zone, Volume, Integer, runtime
+from sciloom import Function, Input, Output, Zone, Volume, runtime, Var
 
 
 class TransferOne(Function):
     source: Input[Zone]
     destination: Input[Zone]
     volume: Input[Volume]
-    status: Output[Integer]
+    status: Output[int]
 
-    attempts: Integer = 0
+    attempts: Var[int] = 0
 
     def __init__(self, *, operation_profile="default"):
         # Ordinary Python: compile-time specialization of this instance.

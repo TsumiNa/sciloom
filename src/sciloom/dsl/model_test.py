@@ -2,13 +2,13 @@
 
 import pytest
 
-from sciloom import Boolean, Function, Input, Integer, Output, Real, runtime
+from sciloom import Function, Input, Output, runtime, Var
 from sciloom.core.ir import IRValidationError, ScalarType, from_json, to_json
 
 
 class Identity(Function):
-    x: Input[Real]
-    y: Output[Real]
+    x: Input[float]
+    y: Output[float]
 
     @runtime
     def run(self):
@@ -16,7 +16,7 @@ class Identity(Function):
 
 
 class Caller(Function):
-    result: Real = 0.0
+    result: Var[float] = 0.0
 
     def __init__(self, value=2.5):
         self.value = value
@@ -28,8 +28,8 @@ class Caller(Function):
 
 
 class Counter(Function):
-    count: Integer = 0
-    done: Boolean = False
+    count: Var[int] = 0
+    done: Var[bool] = False
     limit: int = 3
 
     @runtime
@@ -82,7 +82,7 @@ def test_runtime_method_cannot_execute_as_host_python():
 
 def test_initializer_cannot_shadow_runtime_field():
     class Bad(Function):
-        count: Integer = 0
+        count: Var[int] = 0
 
         def __init__(self):
             self.count = 3
@@ -123,7 +123,7 @@ def test_unavailable_source_is_explicit():
 
 def test_host_property_is_not_executed():
     class Bad(Function):
-        result: Real = 0.0
+        result: Var[float] = 0.0
 
         @property
         def secret(self):
@@ -188,7 +188,7 @@ def test_invalid_schema_fails_at_class_definition():
     with pytest.raises(IRValidationError, match="class_schema"):
 
         class BadDefault(Function):
-            x: Input[Real] = None
+            x: Input[float] = None
 
 
 
@@ -208,9 +208,9 @@ def test_missing_call_argument_is_located():
 
 def test_multiple_outputs_bind_in_declared_order():
     class Pair(Function):
-        x: Input[Real]
-        first: Output[Real]
-        second: Output[Real]
+        x: Input[float]
+        first: Output[float]
+        second: Output[float]
 
         @runtime
         def run(self):
@@ -218,8 +218,8 @@ def test_multiple_outputs_bind_in_declared_order():
             self.second = -self.x
 
     class PairCaller(Function):
-        a: Real = 0.0
-        b: Real = 0.0
+        a: Var[float] = 0.0
+        b: Var[float] = 0.0
 
         def __init__(self):
             self.pair = Pair()

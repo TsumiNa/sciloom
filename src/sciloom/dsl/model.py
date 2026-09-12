@@ -24,7 +24,15 @@ def runtime(method: Callable[..., Any]) -> Callable[..., Any]:
 
 
 class Function:
-    """Base for statically declared, instance-specialized SciLoom functions."""
+    """Base for statically declared, instance-specialized SciLoom functions.
+
+    Declare runtime fields with Input[T], Output[T] or Var[T]; other annotations
+    describe host configuration. Var requires an explicit initial value, retained
+    across calls rather than reset automatically. Use class docstrings for the
+    function's purpose and an Attributes section keyed by runtime field names.
+    Constructor Args document host specialization. These descriptions help authors
+    and future tooling; field declarations and IR define execution semantics.
+    """
 
     model_fields: ClassVar[Mapping[str, RuntimeField]] = MappingProxyType({})
 

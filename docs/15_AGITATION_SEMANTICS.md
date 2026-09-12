@@ -33,7 +33,7 @@ assert 600 * rpm == 10 * rps
 
 RotationalSpeed is a finite nonnegative quantity. IR ScalarType.ROTATIONAL_SPEED
 literals store revolutions per second; JSON uses type rotational_speed. Unitless
-Real/Integer values cannot be implicitly assigned or passed as speeds.
+Plain `float`/`int` values cannot be implicitly assigned or passed as speeds.
 Public interpreter inputs/outputs use RotationalSpeed objects. Internal state
 snapshots retain canonical IR numeric values.
 
