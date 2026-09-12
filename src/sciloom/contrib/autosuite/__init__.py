@@ -1,7 +1,7 @@
 """AutoSuite target backend."""
 
 from .target import AutoSuiteTarget
-from .agitation import IndividualShakerBinding
+from .agitation import AutoSuiteIndividualShaker
 from .xml import AutoSuiteVersion
 
-__all__ = ["AutoSuiteTarget", "AutoSuiteVersion", "IndividualShakerBinding"]
+__all__ = ["AutoSuiteTarget", "AutoSuiteVersion", "AutoSuiteIndividualShaker"]

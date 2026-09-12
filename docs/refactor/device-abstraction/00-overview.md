@@ -7,11 +7,19 @@ supersedes the device/lifecycle portions of the compiler-foundation and
 package-layout plans when the corresponding implementation stage lands. Other
 package, scalar and list contracts remain in force.
 
-Stage 1 is merged as PR #22 (8e90e64). Stage 2 moves the existing device module;
-stages 3–6 are pending. Examples of target interfaces
+Stage 1 is merged as PR #22 (8e90e64), stage 2 as PR #23 (01fd95a).
+Stage 3 implements declarative slots and explicit deployment binding;
+stages 4–6 are pending. Examples of target interfaces
 below are specifications, not claims of currently runnable code. Every stage
 updates its callers, examples, status and tests before review and squash merge.
 Do not start a later implementation stage before the preceding PR is merged.
+
+Stage 3 retains JSON v3 and the single `set_speed`/`stop` runtime interface.
+It accepts generic Agitator slots only; other category or concrete slot annotations
+fail explicitly until v4 carries their declared type contracts. The deployment
+object is already an immutable Agitator subclass. Stage 4 replaces the operation
+interface and wire model together. This intermediate restriction avoids adding
+unversioned type fields to v3 or accepting bindings without validating slot types.
 
 | Stage | Plan | Available after merge |
 |---|---|---|
@@ -240,6 +248,28 @@ The test target also checks gain in [0, 1]: reject invalid constants and runtime
 values whose compliance cannot be proved. No invented AutoSuite gain mapping.
 
 ## Compiler and binding interface
+
+Stage 3 introduces this data-only deployment envelope. A binding identifies one
+logical resource and one physical identity within its target. Compatibility uses
+stable semantic IDs, not Python classes. Constructors freeze collection inputs;
+duplicate logical/physical identities fail:
+
+```python
+from sciloom.core.devices import DeviceBinding, DeviceBindings
+
+bindings = DeviceBindings(devices=(DeviceBinding(
+    logical_id="agitator",
+    device_type_id="sciloom.autosuite.individual-shaker/v1",
+    compatible_type_ids=("sciloom.agitator/v1",),
+    physical_id="autosuite:individual-shaker:23",
+),))
+assert bindings.devices[0].logical_id == "agitator"
+```
+
+These identity fields are current from stage 3. Stages 4/5 extend binding facts
+with trusted property/operation contracts required by the v4 directory; stage 6
+uses them for branch selection. No serialized implementation ID is dynamically
+imported.
 
 Stage 3 introduces immutable binding facts and explicit deployment resolution.
 The final protocol and result behavior (complete at stage 6) are:

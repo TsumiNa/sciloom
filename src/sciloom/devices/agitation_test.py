@@ -16,7 +16,7 @@ sys.meta_path.insert(0, Block())
 from sciloom import Agitator
 from sciloom.devices import Agitator as DeviceAgitator
 assert Agitator is DeviceAgitator
-assert Agitator("mixer").resource_id == "mixer"
+assert Agitator.device_type_id == "sciloom.agitator/v1"
 """],
         check=True,
     )

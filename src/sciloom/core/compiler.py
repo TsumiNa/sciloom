@@ -6,6 +6,7 @@ from typing import Protocol, runtime_checkable
 
 from .diagnostics import CompilationError, Diagnostic, IRValidationError
 from .ir import Program, validate
+from .devices import DeviceBindings, validate_bindings
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -19,6 +20,8 @@ class Artifact:
 class Target(Protocol):
     @property
     def target_id(self) -> str: ...
+
+    def resolve_devices(self, program: Program) -> DeviceBindings: ...
 
     def validate(self, program: Program) -> tuple[Diagnostic, ...]: ...
 
@@ -43,10 +46,13 @@ class CompileResult:
 def compile_ir(program: Program, *, target: Target) -> CompileResult:
     """Compile any author's IR; neither Python parsing nor XML belongs here."""
     if not isinstance(target, Target):
-        raise TypeError("target must implement target_id, validate(program) and emit(program).")
+        raise TypeError("target must implement target_id, resolve_devices(program), validate(program) and emit(program).")
     diagnostics = validate(program)
     if diagnostics:
         raise IRValidationError(diagnostics)
+    diagnostics = validate_bindings(program, target.resolve_devices(program))
+    if diagnostics:
+        raise CompilationError(diagnostics)
     diagnostics = target.validate(program)
     if diagnostics:
         raise CompilationError(diagnostics)

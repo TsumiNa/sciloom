@@ -12,6 +12,38 @@ Introduce BaseDevice/type identity, independent device-slot schema and immutable
 
 No property/start behavior, v4 or compile-time queries; no old-binding aliases.
 
+## Implemented intermediate interface
+
+Generic Agitator annotations are supported with v3; other slot types explicitly
+require v4. Device profiles and bindings are immutable. A composed Function's
+canonical path is the first path in a sorted breadth-first walk of host Function
+attributes; shared logical references retain their owner's slot path. Unowned
+references outside that composition fail. All declared slots on compiled Functions
+require bindings, including slots without an operation in the current body.
+
+```python
+from sciloom import Agitator, Function, rpm, runtime
+from sciloom.contrib.autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
+
+class Mix(Function):
+    agitator: Agitator
+
+    @runtime
+    def run(self) -> None:
+        self.agitator.set_speed(600 * rpm)
+
+result = Mix().compile(target=AutoSuiteTarget(devices={
+    "agitator": AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="23"),
+}))
+assert result.artifact.suffix == ".asfp"
+# v3: one logical resource and one Stir task; speed=10 rps, switchon=1.
+```
+
+Runnable after stage 3; equivalent executable coverage lives in
+`dsl/device_schema_test.py` and `contrib/autosuite/codegen_agitation_test.py`.
+Binding-path changes regenerate agitation UUIDs and the JSON example's resource
+IDs/source locations. The v3 wire schema and observed Stir payload stay unchanged.
+
 ## Acceptance
 
 Run shared acceptance; test annotation-only slots, inheritance, deterministic paths, logical sharing, type/duplicate/missing bindings and host access protection. Verify Target typing and empty bindings for device-free targets.
@@ -23,4 +55,3 @@ recorded provisional decisions without asking the user individually.
 
 Complete review, address feedback, verify latest-head checks and confirm remote
 squash merge before starting the next stage.
-

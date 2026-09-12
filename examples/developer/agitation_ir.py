@@ -24,13 +24,13 @@ This developer example writes JSON and executes the restored IR; it emits no ASF
 from pathlib import Path
 
 from examples.agitation import ConfigureAgitation
-from sciloom import Agitator, rpm
+from sciloom import rpm
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import from_json, to_json
 
 
 if __name__ == "__main__":
-    function = ConfigureAgitation(Agitator("reaction_mixer"))
+    function = ConfigureAgitation()
     program = function.to_ir()
 
     path = Path(__file__).with_suffix(".json")

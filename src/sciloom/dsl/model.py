@@ -8,6 +8,7 @@ from typing import Any, Callable, ClassVar, Mapping, ParamSpec, TypeVar
 from ..core.ir import Program
 from ..core.compiler import CompileResult, Target, compile_ir
 from .schema import RuntimeField, build_schema
+from .device_schema import DeviceSlot, build_device_schema
 
 
 P = ParamSpec("P")
@@ -37,10 +38,12 @@ class Function:
     """
 
     model_fields: ClassVar[Mapping[str, RuntimeField]] = MappingProxyType({})
+    device_fields: ClassVar[Mapping[str, DeviceSlot]] = MappingProxyType({})
 
     def __init_subclass__(cls, **kwargs: Any) -> None:
         super().__init_subclass__(**kwargs)
         cls.model_fields = build_schema(cls, Function.__dict__)
+        cls.device_fields = build_device_schema(cls, Function.__dict__)
 
     def to_ir(self) -> Program:
         """Lower this instance without changing its configuration or runtime schema."""

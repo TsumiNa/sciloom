@@ -24,7 +24,7 @@ class Scale(Function):
     index: Var[int] = 0
     flags: Var[list[bool]] = [True]
     speeds: Var[list[RotationalSpeed]] = [60 * rpm]
-    agitator = Agitator("mixer")
+    agitator: Agitator
 
     @runtime
     def run(self) -> None:
@@ -47,7 +47,7 @@ class Bad(Function):
     factor: Input[float]
     index: Var[int] = "text"
     values: Var[list[float]] = [1.0, "text"]
-    agitator = Agitator("mixer")
+    agitator: Agitator
     @runtime
     def run(self) -> None:
         self.factor = "text"

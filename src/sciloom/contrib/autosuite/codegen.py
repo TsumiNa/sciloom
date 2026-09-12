@@ -14,10 +14,10 @@ from __future__ import annotations
 import hashlib
 import json
 from dataclasses import asdict
-from typing import Any
+from typing import Any, Mapping
 from uuid import NAMESPACE_URL, uuid5
 from ...core.ir import Program, to_dict
-from .agitation import IndividualShakerBinding
+from .agitation import AutoSuiteIndividualShaker
 from .context import CodegenContext
 from .functions import build_functions
 from .xml import AutoSuiteVersion, SerializationIR
@@ -35,15 +35,15 @@ def lower_asfp(
     program: Program,
     target: AutoSuiteVersion,
     *,
-    agitators: tuple[IndividualShakerBinding, ...] = (),
+    devices: Mapping[str, AutoSuiteIndividualShaker],
 ) -> SerializationIR:
     """Lower validated semantics and deployment bindings to target records."""
     identity = {
         "program": _without_source(to_dict(program)),
-        "agitators": [asdict(binding) for binding in sorted(agitators, key=lambda b: b.logical_id)],
+        "agitators": [{"logical_id": name, **asdict(binding)} for name, binding in sorted(devices.items())],
     }
     digest = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
     namespace = uuid5(NAMESPACE_URL, f"https://sciloom.invalid/{target.value}/{digest}")
-    bindings = {binding.logical_id: binding for binding in agitators}
+    bindings = devices
     resources = {resource.node_id: bindings[resource.logical_id] for resource in program.resources}
     return build_functions(CodegenContext(program, namespace, resources), target)

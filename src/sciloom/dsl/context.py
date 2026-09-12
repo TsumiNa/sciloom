@@ -6,6 +6,7 @@ import ast
 import inspect
 from typing import Any, NoReturn, cast
 from .model import Function
+from .device_schema import DeviceReference
 from ..units import SpeedUnit
 from ..core.diagnostics import Diagnostic, IRValidationError, SourceSpan
 from ..core.ir import AgitatorResource, Expression, FunctionIR, Reference, ValueType
@@ -24,12 +25,14 @@ class LoweringContext:
         instances: list[Function],
         ids: dict[int, str],
         resources: dict[str, AgitatorResource],
+        paths: dict[int, str],
     ) -> None:
         self.instance = instance
         self.function_id = function_id
         self.instances = instances
         self.ids = ids
         self.resources = resources
+        self.paths = paths
         self.unit_names: dict[str, SpeedUnit] = {}
         self.filename = ""
         self.sequence = 0
@@ -54,9 +57,17 @@ class LoweringContext:
         return f"{function_id or self.function_id}:var:{name}"
 
     def host_attribute(self, name: str) -> Any:
+        if name in self.instance.device_fields:
+            return self.instance.device_fields[name].__get__(self.instance)
         if name in vars(self.instance):
             return vars(self.instance)[name]
         return inspect.getattr_static(type(self.instance), name, _MISSING)
+
+    def device_resource(self, reference: DeviceReference) -> AgitatorResource:
+        if id(reference.owner) not in self.paths:
+            self.fail("device_reference", "Shared device owner must belong to this Function composition.")
+        logical_id = ".".join(filter(None, (self.paths[id(reference.owner)], reference.name)))
+        return self.resources.setdefault(logical_id, AgitatorResource(node_id=f"resource:{logical_id}", logical_id=logical_id))
 
     def target(self, node: ast.AST) -> Reference:
         if (

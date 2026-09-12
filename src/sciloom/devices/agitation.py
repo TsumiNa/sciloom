@@ -1,19 +1,15 @@
 """Logical agitation contract, independent of Python source conversion."""
 
-from dataclasses import dataclass
+from typing import ClassVar
 
 from ..units import RotationalSpeed
+from .base import BaseDevice
 
 
-@dataclass(frozen=True)
-class Agitator:
-    """A named logical component, bound to hardware only by the selected target."""
+class Agitator(BaseDevice):
+    """Declare a logical device using an annotated Function field."""
 
-    resource_id: str
-
-    def __post_init__(self) -> None:
-        if not isinstance(self.resource_id, str) or not self.resource_id.strip():
-            raise ValueError("Agitator requires a nonempty logical resource ID.")
+    device_type_id: ClassVar[str] = "sciloom.agitator/v1"
 
     def set_speed(self, speed: RotationalSpeed) -> None:
         """Declare a runtime command; host invocation is prohibited."""
