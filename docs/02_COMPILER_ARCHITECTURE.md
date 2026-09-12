@@ -2,8 +2,9 @@
 
 This page describes the current implementation. The accepted
 [package and interface refactor](refactor/package-layout/00-overview.md) specifies
-the completed move to `dsl`, `core` and `contrib`, plus the upcoming native
-declarations and JSON v3 lists. Paths and capabilities below are updated as each
+the completed move to `dsl`, `core` and `contrib`, native declarations and JSON v3
+list semantics. Python list syntax and target arrays remain subsequent stages.
+Paths and capabilities below are updated as each
 implementing stage lands.
 
 SciLoom has one typed semantic program model, multiple authoring paths and explicit
@@ -39,7 +40,7 @@ future work; ASFP and reference execution are implemented now.
 | `dsl/lowering.py`, `context.py` | Instance graph to Program orchestration; shared symbols, IDs and source locations |
 | `dsl/source.py`, `expressions.py`, `statements.py` | File-backed source discovery; Python expressions; calls, operations and control flow |
 | `core/ir/types.py`, `model.py` | Value types/compatibility; immutable semantic nodes |
-| `core/ir/schema.py`, `codec.py` | Structural conversion and JSON v2 interchange |
+| `core/ir/schema.py`, `codec.py` | Structural conversion and JSON v3 interchange |
 | `core/ir/expressions.py`, `validation.py` | Expression/symbol type checking; whole-program legality |
 | `units.py` | Shared rotational-speed values and rpm/rps conversion |
 | `core/interpreter/runtime.py` | Sessions, call frames, persistent state, budgets, control flow and domain events |

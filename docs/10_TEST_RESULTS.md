@@ -1,5 +1,12 @@
 # Validation status
 
+Current list IR stage: 201 tests pass locally. JSON v3 strict conversion, list
+copying/call isolation, typed input/output, persistent state, detached snapshots,
+index bounds and evaluation order are covered. AutoSuite deliberately rejects
+lists until its array emission stage. The direct-IR developer example is run in
+CI with `uv run python -m examples.developer.list_ir`. The reproducible mypy
+baseline is still stage 9; this stage does not claim a current mypy pass.
+
 Reference reorganization validation, 2026-09-11:
 
 - Original APP archive: all 68 entries match 68 distinct expanded gzip/XML files.

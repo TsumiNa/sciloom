@@ -4,8 +4,9 @@
 
 Package reorganization and native declarations are implemented: authors use
 `Input[float]`, `Output[bool]` and `Var[int] = 0` from `sciloom`, with AutoSuite
-targets from `sciloom.contrib.autosuite`. Runtime lists and JSON v3 are subsequent
-stages in the [active refactor contract](refactor/package-layout/00-overview.md).
+targets from `sciloom.contrib.autosuite`. JSON v3 list IR and reference execution
+are implemented; Python list syntax and AutoSuite array generation follow in the
+[active refactor contract](refactor/package-layout/00-overview.md).
 
 The project has converged on a **model-first, instance-specialized compiler architecture**.
 `sciloom.core.ir` provides immutable typed Function IR, validation and versioned JSON
@@ -17,7 +18,7 @@ See the [implementation sequence](refactor/semantic-ir/00-overview.md),
 [ASFP compiler](13_ASFP_COMPILER.md). Executor simulation remains an external gate.
 
 The [compiler foundation refactor](refactor/compiler-foundation/00-overview.md)
-separates Python lowering, Program/JSON v2, reference execution and explicit target
+separates Python lowering, Program/JSON (now v3), reference execution and explicit target
 compilation. Agitation provides a real high-level operation with logical resources
 and typed speed; AutoSuite deployment bindings remain outside IR. See the
 [implemented architecture](02_COMPILER_ARCHITECTURE.md).

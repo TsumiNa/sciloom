@@ -10,11 +10,11 @@ exchanged as JSON and executed without importing either a source frontend or
 a target backend. The reference interpreter specifies the currently supported
 semantics; it is not AutoSuite simulation and does not control hardware.
 
-## Program and JSON v2
+## Program and JSON v3
 
 The root is `Program`, selecting an entry FunctionIR and containing specialized
 function instances. Semantic IDs identify occurrences and ownership, never target
-objects. JSON uses kind `Program` and explicit format_version `2`. Version 1 and
+objects. JSON uses kind `Program` and explicit format_version `3`. Versions 1/2 and
 the old Package import are rejected rather than silently migrated.
 
 `core/ir/schema.py` defines structural conversion independently of the JSON codec.
@@ -31,6 +31,11 @@ and does not expose these development steps.
 
 JSON serialization is optional: `Interpreter(function.to_ir())` works directly.
 The example deliberately exercises persistence as a separate architectural check.
+
+Run `uv run python -m examples.developer.list_ir` for direct list IR construction.
+It writes [list_ir.json](../examples/developer/list_ir.json) and prints `(9.0, 2.0)`
+while the original Python input remains `[1.0, 2.0]`. List execution is implemented;
+Python list lowering and AutoSuite array generation are subsequent stages.
 
 ## Execution API
 
@@ -63,6 +68,20 @@ Earlier state writes remain after a failing run; execution does not promise
 transactional rollback. A new Interpreter starts a fresh session.
 
 ## Values, evaluation and failures
+
+One-dimensional homogeneous lists support all four scalar types. Assignment and
+call input/output transfer copy values; immutable tuples prevent aliases between
+variables, sessions or snapshots. Host inputs accept lists or tuples; public list
+outputs are tuples, with physical elements restored as quantities. Defaults are
+constant immutable IR and internal state persists across calls.
+
+ListLiteral constructs a typed list, ListLength returns its length, ListGet reads
+an existing element and ListSet updates one. Indices must be nonnegative integers
+excluding bool, and reads/writes outside the current length fail with index_bounds.
+There is no resizing, implicit truthiness, list comparison or list arithmetic.
+An ordinary ListSet evaluates its RHS before target/index access; an augmented
+ListSet reads the selected element/index once before evaluating the RHS. Failed
+operations do not roll back earlier state writes.
 
 - `int` has mathematical-integer reference semantics. `float` uses finite binary64
   values. `bool` is distinct from `int`. Integer-to-float conversion is explicit

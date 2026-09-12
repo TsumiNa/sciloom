@@ -17,9 +17,9 @@ compatibility shims would create competing interfaces. Neither is introduced.
 
 ## Ordered stages and availability
 
-Implementation progress: stages 1–4 are merged in GitHub PRs #12–15.
-Stage 5 implements native scalar Input/Output/Var declarations and docstring
-conventions. Runtime lists remain pending; JSON is still v2.
+Implementation progress: stages 1–5 are merged in GitHub PRs #12–16.
+Stage 6 implements direct list IR, JSON v3 and reference execution. Python list
+syntax and AutoSuite array generation remain pending.
 
 | Stage | Plan | Capability available after merge |
 |---|---|---|
@@ -166,6 +166,37 @@ must not replace them with AutoSuite tasks. List literal elements can be runtime
 expressions; class initializers must contain constants. Empty literals obtain
 their element type from the declaration/call context. Compatible scalar literals
 may widen int to float; list variables require identical element types.
+
+The implemented stage-6 constructors are exported from `sciloom.core.ir`:
+
+| Constructor | Required semantic fields (besides node_id; source is optional) |
+|---|---|
+| ListLiteral | type: ListType; elements: tuple[Expression, ...] defaults to () |
+| ListLength | value: Expression |
+| ListGet | value: Expression; index: Expression |
+| ListSet | target: Reference; index: Expression; value: Expression; op: BinaryOp or None defaults to None |
+
+For example, an augmented write remains one high-level statement:
+
+```python
+from sciloom.core.ir import BinaryOp, ListSet, Literal, Reference, ScalarType
+
+update = ListSet(
+    node_id="update",
+    target=Reference(node_id="destination", symbol_id="values"),
+    index=Literal(node_id="index", type=ScalarType.INTEGER, value=0),
+    value=Literal(node_id="factor", type=ScalarType.REAL, value=2.0),
+    op=BinaryOp.MULTIPLY,
+)
+```
+
+With a declared list[float] symbol `values`, this doubles its first element.
+`op=None` assigns the RHS, evaluating it before target/index access. Augmented
+arithmetic evaluates target/index and reads the selected element once before its
+RHS. This avoids introducing source- or vendor-specific temporaries into IR.
+The complete runnable [list IR example](../../../examples/developer/list_ir.py)
+and its same-base-name JSON demonstrate copy semantics; run it as
+`uv run python -m examples.developer.list_ir` from the repository root.
 
 Supported source is list literals/defaults, whole assignment, function I/O,
 len, index reads, index writes/augmented writes and existing if/while. First-stage

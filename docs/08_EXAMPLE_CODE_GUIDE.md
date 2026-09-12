@@ -22,6 +22,12 @@ to hardware.
 
 ## Proposed frontend designs
 
+For implemented direct list semantics, run
+`uv run python -m examples.developer.list_ir`. Its
+[source](../examples/developer/list_ir.py) and [JSON](../examples/developer/list_ir.json)
+show copying and element updates with JSON v3. This is a developer example;
+Python list authoring and AutoSuite array generation are later stages.
+
 The files in `examples/proposed_frontend/` are **architecture examples**, not
 runnable applications. Function, Input/Output/Var and runtime are implemented;
 Application, Zone/Volume, event/fault handling and the illustrative task calls

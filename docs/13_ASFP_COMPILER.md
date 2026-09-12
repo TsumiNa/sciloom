@@ -1,5 +1,12 @@
 # Function compilation to ASFP
 
+The shared IR is now JSON v3 with list semantics. AutoSuite compilation currently
+rejects lists with `unsupported_list`; array generation is stage 8 of the
+[active implementation sequence](refactor/package-layout/00-overview.md).
+Existing scalar artifacts have been regenerated because the semantic version is
+part of the UUID identity hash. Their structure and payloads are unchanged after
+normalizing UUIDs.
+
 The first compiler sequence is implemented: Python Function instances lower to
 typed semantic IR, then a thin Serialization IR and AutoSuite ASFP XML. The target
 is AutoSuite 2.47.1.1. A typed individual-shaker agitation adapter is also available.

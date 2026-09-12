@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from enum import StrEnum
+from dataclasses import dataclass
 
 
 class ScalarType(StrEnum):
@@ -12,5 +13,17 @@ class ScalarType(StrEnum):
     ROTATIONAL_SPEED = "rotational_speed"
 
 
-def is_assignable(source: ScalarType, target: ScalarType) -> bool:
+@dataclass(frozen=True, kw_only=True)
+class ListType:
+    element_type: ScalarType
+
+    @property
+    def value(self) -> str:
+        return f"list[{self.element_type.value}]"
+
+
+ValueType = ScalarType | ListType
+
+
+def is_assignable(source: ValueType, target: ValueType) -> bool:
     return source == target or (source == ScalarType.INTEGER and target == ScalarType.REAL)
