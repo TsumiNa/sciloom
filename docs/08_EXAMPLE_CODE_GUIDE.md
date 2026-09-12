@@ -7,6 +7,8 @@
 | Experiment authors | [Function composition](../examples/function_call.py) | Define and compose Functions, then compile to ASFP |
 | Experiment authors | [Conditional agitation](../examples/agitation.py) | Define runtime behavior and configure a compilation target |
 | SciLoom developers | [Agitation IR](../examples/developer/agitation_ir.py) | Reuse the same Function; inspect, persist and reference-execute its IR |
+| SciLoom developers | [Independent device](../examples/developer/demo_device.py) | Extend properties/commands and compile with an external recording Target |
+| SciLoom developers | [Portable agitation](../examples/developer/portable_agitation.py) | Rebind authored JSON to AutoSuite/Demo; inspect and execute specialized IR |
 
 Run user examples with `uv run python examples/function_call.py` and
 `uv run python examples/agitation.py`. Their complete generated outputs are
@@ -19,6 +21,12 @@ The module docstrings show the expected terminal output and explain each result.
 Rerunning an example refreshes its companion file. Source-location metadata in
 the JSON reflects the generating checkout. None of these examples sends commands
 to hardware.
+
+Run `uv run python -m examples.developer.demo_device` and
+`uv run python -m examples.developer.portable_agitation` for contributor and
+device-specialization examples. Portable agitation keeps its authored `.json`
+alongside `.autosuite.asfp` and `.demo.json` target artifacts. All share the source
+base name, and the module docstrings explain their expected outputs.
 
 For implemented direct list semantics, run
 `uv run python -m examples.developer.list_ir`. Its

@@ -28,7 +28,9 @@ refers to a declared type; ConfigureProperty captures a value, while
 StartAgitation/StopAgitation preserve lifecycle intent. DeviceCommand, DeviceIf,
 CanWrite, SupportsOperation and IsDevice are part of v4 interchange. Native commands
 compile via trusted contributor signatures; the interpreter rejects commands with
-no reference execution semantics. Condition specialization remains the next stage.
+no reference execution semantics. `core.specialization.specialize(program,
+bindings=...)` selects device branches purely from trusted data, preserves source
+identity and returns a validated high-level program with bound resource types.
 
 ## Typed construction
 

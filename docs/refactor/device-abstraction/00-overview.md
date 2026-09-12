@@ -7,10 +7,11 @@ supersedes the device/lifecycle portions of the compiler-foundation and
 package-layout plans when the corresponding implementation stage lands. Other
 package, scalar and list contracts remain in force.
 
-Stages 1–4 are merged as PRs #22 (8e90e64), #23 (01fd95a), #24
-(82f9090) and #25 (cd92f54). Stage 5 implements independent native contributions;
-stage 6 remains pending. Examples of target interfaces
-below are specifications, not claims of currently runnable code. Every stage
+Stages 1–5 are merged as PRs #22 (8e90e64), #23 (01fd95a), #24
+(82f9090), #25 (cd92f54) and #26 (35c3f21). Stage 6 implements device queries,
+pure specialization and JSON rebinding. The final device interfaces below are
+implemented and exercised by examples/tests. Future GUI/Application sections remain
+designs. Every stage
 updates its callers, examples, status and tests before review and squash merge.
 Do not start a later implementation stage before the preceding PR is merged.
 
@@ -276,20 +277,22 @@ arguments. Defaults, argument unpacking and variadics remain unsupported.
 
 ## Compiler and binding interface
 
-The current data-only binding envelope includes the trusted concrete contract,
+The final data-only binding envelope includes the trusted concrete contract,
+its complete `base_contracts: tuple[DeviceTypeContract, ...]` ancestor directory,
 explicit writable properties and supported operations. IDs and ancestry live in
 the contract, avoiding duplicated type-identity fields. Constructors freeze
-collection inputs; duplicate logical/physical identities fail. This stage-4
+collection inputs; duplicate logical/physical identities fail. This final
 example uses the built-in category as a minimal reference binding:
 
 ```python
 from sciloom.core.devices import DeviceBinding, DeviceBindings
 from sciloom.core.ir.device_contracts import (
-    AGITATOR_CONTRACT, AGITATION_SPEED_ID, START_AGITATION_ID, STOP_AGITATION_ID,
+    AGITATOR_CONTRACT, BASE_DEVICE_CONTRACT, AGITATION_SPEED_ID, START_AGITATION_ID, STOP_AGITATION_ID,
 )
 
 bindings = DeviceBindings(devices=(DeviceBinding(
     logical_id="agitator", contract=AGITATOR_CONTRACT, physical_id="reference:1",
+    base_contracts=(BASE_DEVICE_CONTRACT,),
     writable_properties=(AGITATION_SPEED_ID,),
     supported_operations=(START_AGITATION_ID, STOP_AGITATION_ID),
 ),))
@@ -300,6 +303,12 @@ Concrete contributors can use `sciloom.devices.declarations.device_contract(cls)
 to read signatures and `bind_device(logical_id=..., device=..., physical_id=...)`
 to construct this envelope from an explicit profile. Stage 6 uses these facts for
 branch selection. No serialized implementation ID is dynamically imported.
+
+`base_contracts` is required in the final envelope. Its records must exactly cover
+the complete ancestor IDs of `contract`; shared ancestors across bindings must
+agree. This lets JSON programs bind subtypes whose intermediate Python classes
+are not installed. The specialization stage validates trusted directories and
+matching authored contracts before selecting branches.
 
 Stage 3 introduces immutable binding facts and explicit deployment resolution.
 The final protocol and result behavior (complete at stage 6) are:
@@ -368,6 +377,11 @@ remains the authored Program, and specialized_ir is the selected Program sent to
 the backend. Unresolved static branches never reach target validation/emission.
 specialize is pure and retains source locations/identities. Both result IRs remain
 high-level; backend working variables and hidden parameters belong below them.
+The specialized resource type is the bound concrete interface; its directory
+contains only bound types and their ancestors. Authored IR retains inactive
+extensions as data. Unreachable functions after device selection are pruned.
+ASFP semantic hashes/UUIDs change when binding makes concrete resource types
+explicit; this stage regenerates the device artifacts. JSON remains v4.
 
 ## IR and JSON v4 (stage 4)
 
@@ -406,6 +420,10 @@ With DemoAgitator, retain gain and speed configuration before start; with AutoSu
 remove the gain branch. is_device provides TypeGuard narrowing and means the
 declared type or its subtypes. supports(device, Agitator.start) checks registered
 commands; can_write(device, "gain") checks a declared literal property name.
+The queried type must be the current interface, an ancestor or a descendant.
+Unrelated/sibling type tests are rejected by both source and IR/JSON validation,
+including after an outer guard narrows the interface. Cross-family intersection
+queries for hypothetical multiple-inheritance devices are outside this subset.
 supports does not accept a property/getter. Do not add can_read before reads exist.
 
 Queries appear only in if/elif conditions, with nesting for combinations. Runtime
@@ -421,6 +439,15 @@ the false branch retains the original interface. CanWrite/SupportsOperation may
 ask about declared members of compatible extensions, but do not grant permission
 to use those members or admit unrelated device families. This distinction is
 validated in v4 JSON even before predicate execution is enabled in stage 6.
+
+The executable [portable example](../../../examples/developer/portable_agitation.py)
+round-trips authored JSON, compiles AutoSuite and Demo targets, and reference-executes
+their `specialized_ir`. Expected configurations contain `speed` for AutoSuite and
+`gain, speed` for Demo. Its three companions retain authored JSON and each target's
+artifact. `can_write` resolves property names among compatible device declarations
+in the runtime method's defining namespace; unknown/ambiguous names fail. It does
+not narrow the Python type. Query arguments are two positional arguments, and
+queries only occur as whole if/elif conditions; use nested branches for combinations.
 
 ## AutoSuite backend (stage 4)
 

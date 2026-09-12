@@ -37,7 +37,8 @@ def test_external_contribution_roundtrip_and_no_invented_execution():
     program = DemoExperiment().to_ir()
     target = DemoTarget(devices={"agitator": DemoAgitator()})
     result = compile_ir(from_json(to_json(program)), target=target)
-    assert from_json(result.artifact.content.decode()) == program
+    assert result.semantic_ir == program
+    assert from_json(result.artifact.content.decode()) == result.specialized_ir
     with pytest.raises(ExecutionError, match="unsupported_operation"):
         Interpreter(program).run()
 

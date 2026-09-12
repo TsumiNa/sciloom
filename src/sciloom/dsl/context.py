@@ -42,6 +42,8 @@ class LoweringContext:
         self.sequence = 0
         self.function_schema: FunctionIR | None = None
         self.allows_len = False
+        self.static_names: dict[str, Any] = {}
+        self.narrowed_devices: dict[str, type[BaseDevice]] = {}
 
     def fail(self, code: str, message: str, node: ast.AST | None = None) -> NoReturn:
         source = self.span(node) if node is not None else None
@@ -71,16 +73,22 @@ class LoweringContext:
         if id(reference.owner) not in self.paths:
             self.fail("device_reference", "Shared device owner must belong to this Function composition.")
         logical_id = ".".join(filter(None, (self.paths[id(reference.owner)], reference.name)))
-        for cls in reversed(reference.device_type.__mro__):
+        self.register_device_type(reference.device_type)
+        return self.resources.setdefault(
+            logical_id,
+            DeviceResource(node_id=f"resource:{logical_id}", logical_id=logical_id, device_type_id=reference.device_type.device_type_id),
+        )
+
+    def register_device_type(self, device_type: type[BaseDevice]) -> None:
+        for cls in reversed(device_type.__mro__):
             if issubclass(cls, BaseDevice):
                 contract = device_contract(cls)
                 previous = self.device_types.setdefault(contract.type_id, contract)
                 if previous != contract:
                     self.fail("device_contract", "A device type identifier has conflicting declarations.")
-        return self.resources.setdefault(
-            logical_id,
-            DeviceResource(node_id=f"resource:{logical_id}", logical_id=logical_id, device_type_id=reference.device_type.device_type_id),
-        )
+
+    def device_type(self, reference: DeviceReference) -> type[BaseDevice]:
+        return self.narrowed_devices.get(self.device_resource(reference).node_id, reference.device_type)
 
     def target(self, node: ast.AST) -> Reference:
         if (

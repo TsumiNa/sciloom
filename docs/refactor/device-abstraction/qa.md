@@ -22,6 +22,11 @@ QA-004 and QA-005 remain pending experimental/platform confirmation. The evidenc
 levels and Executor requirements are recorded in the
 [AutoSuite mapping note](../../../autosuite/docs/16_AGITATION_MAPPING.md).
 
+Stages 5/6 add an artificial gain bound and recording calibration command solely
+to test contribution and specialization. They provide no new experimental evidence
+for QA-001–005. Cross-target/JSON tests verify software contracts; all five
+experimenter/platform confirmation statuses remain pending.
+
 Add new domain questions here rather than asking them individually. When an answer
 arrives, record who/what supplied it, date, evidence and affected contract sections.
 If a decision changes behavior, update the contract, relevant stage plans, examples

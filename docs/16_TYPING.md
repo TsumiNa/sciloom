@@ -2,8 +2,9 @@
 
 Run `uv sync --locked` and `uv run mypy` from the repository root. Mypy is a locked
 development dependency; CI runs the same command on Python 3.12, 3.13 and 3.14.
-The default scope is production `src/sciloom` and the six runnable author/developer
-examples. Colocated runtime tests and conftest files are excluded because many
+The default scope is production `src/sciloom`, runnable author examples and
+`examples/developer`, including the independent contribution. Colocated runtime
+tests and conftest files are excluded because many
 intentionally create invalid schemas and IR. Positive/negative static tests run
 mypy on separate source fixtures as part of pytest.
 
@@ -56,11 +57,18 @@ device-free targets, which return `DeviceBindings()`.
 Mypy rejects a Target whose emit returns str, incorrect Artifact content types,
 and incorrect IR constructor arguments. A valid target's compilation result is
 CompileResult, its artifact is Artifact, and write returns pathlib.Path.
+Both semantic_ir and specialized_ir have type Program. `operation` preserves
+property setter/command signatures; assigning an int to a RotationalSpeed property
+or passing arguments to calibrate() is rejected. `comptime.is_device` returns
+TypeGuard[T], so the true branch may use a concrete device's additional members.
+The false branch and following statements retain the original device type.
+can_write/supports check capabilities at compilation, not Python type narrowing.
 
 Interpreter list inputs accept typed Python lists and tuples; invariant list
 typing is accounted for explicitly. Scalar/list conversion overloads retain the
 correct return shape. Immutable snapshots continue to expose tuples.
 
 Regression checks are in `core/compiler_typing_test.py` and
-`dsl/schema_typing_test.py`. They verify both successful checks and the expected
+`dsl/schema_typing_test.py`, `dsl/contribution_test.py` and
+`dsl/device_conditions_test.py`. They verify both successful checks and the expected
 error counts/codes, so accidentally erasing a public type to Any fails the tests.

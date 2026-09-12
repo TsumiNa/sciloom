@@ -94,98 +94,84 @@
       "body": [
         {
           "kind": "ConfigureProperty",
-          "node_id": "fn:0:node:1",
-          "property_id": "sciloom.agitator.speed/v1",
-          "resource_id": "resource:agitator",
-          "source": {
-            "column": 8,
-            "kind": "SourceSpan",
-            "line": 32,
-            "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
-          },
-          "value": {
-            "kind": "Literal",
-            "node_id": "fn:0:node:3",
-            "source": {
-              "column": 30,
-              "kind": "SourceSpan",
-              "line": 32,
-              "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
-            },
-            "type": "rotational_speed",
-            "value": 10.0
-          }
-        },
-        {
-          "kind": "ConfigureProperty",
-          "node_id": "fn:0:node:4",
+          "node_id": "fn:0:node:3",
           "property_id": "example.demo-agitator.gain/v1",
           "resource_id": "resource:agitator",
           "source": {
-            "column": 8,
+            "column": 12,
             "kind": "SourceSpan",
-            "line": 33,
-            "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+            "line": 39,
+            "path": "/Users/liuchang/projects/sci-loom/examples/developer/portable_agitation.py"
           },
           "value": {
             "kind": "Literal",
-            "node_id": "fn:0:node:5",
+            "node_id": "fn:0:node:4",
             "source": {
-              "column": 29,
+              "column": 33,
               "kind": "SourceSpan",
-              "line": 33,
-              "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+              "line": 39,
+              "path": "/Users/liuchang/projects/sci-loom/examples/developer/portable_agitation.py"
             },
             "type": "real",
             "value": 0.5
           }
         },
         {
+          "kind": "ConfigureProperty",
+          "node_id": "fn:0:node:5",
+          "property_id": "sciloom.agitator.speed/v1",
+          "resource_id": "resource:agitator",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 40,
+            "path": "/Users/liuchang/projects/sci-loom/examples/developer/portable_agitation.py"
+          },
+          "value": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:6",
+            "source": {
+              "column": 30,
+              "kind": "SourceSpan",
+              "line": 40,
+              "path": "/Users/liuchang/projects/sci-loom/examples/developer/portable_agitation.py"
+            },
+            "symbol_id": "fn:0:var:speed"
+          }
+        },
+        {
           "kind": "StartAgitation",
-          "node_id": "fn:0:node:6",
-          "resource_id": "resource:agitator",
-          "source": {
-            "column": 8,
-            "kind": "SourceSpan",
-            "line": 34,
-            "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
-          }
-        },
-        {
-          "arguments": [],
-          "kind": "DeviceCommand",
           "node_id": "fn:0:node:7",
-          "operation_id": "example.demo-agitator.calibrate/v1",
           "resource_id": "resource:agitator",
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 35,
-            "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
-          }
-        },
-        {
-          "kind": "StopAgitation",
-          "node_id": "fn:0:node:8",
-          "resource_id": "resource:agitator",
-          "source": {
-            "column": 8,
-            "kind": "SourceSpan",
-            "line": 36,
-            "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+            "line": 41,
+            "path": "/Users/liuchang/projects/sci-loom/examples/developer/portable_agitation.py"
           }
         }
       ],
       "kind": "FunctionIR",
-      "name": "DemoExperiment",
+      "name": "PortableAgitation",
       "node_id": "fn:0",
       "source": {
         "column": 4,
         "kind": "SourceSpan",
-        "line": 31,
-        "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+        "line": 37,
+        "path": "/Users/liuchang/projects/sci-loom/examples/developer/portable_agitation.py"
       },
-      "variables": []
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "speed",
+          "node_id": "fn:0:var:speed",
+          "owner_id": "fn:0",
+          "role": "input",
+          "source": null,
+          "type": "rotational_speed"
+        }
+      ]
     }
   ],
   "kind": "Program",

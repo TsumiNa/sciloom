@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='utf-8'?>
+<functions>
+  <function typeid="Chemspeed.SATaskFunctionDefinition.1">
+    <description />
+    <name>PortableAgitation</name>
+    <edittime>0</edittime>
+    <expanded>1</expanded>
+    <functiondata>
+      <inputs>
+        <count>1</count>
+        <item0>
+          <id>{DD104092-4772-5A78-BA64-F5A748987807}</id>
+          <name>speed</name>
+          <variablename>speed</variablename>
+          <variabletype>angularspeed</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item0>
+        <sortType>0</sortType>
+      </inputs>
+      <outputs>
+        <count>0</count>
+        <sortType>0</sortType>
+      </outputs>
+    </functiondata>
+    <id>{83165980-9C61-50BE-AAE3-B655A5BABC6B}</id>
+    <components>
+      <component typeid="Chemspeed.SAMacroTask.1">
+        <description />
+        <name>Macro Task</name>
+        <edittime>0</edittime>
+        <expanded>1</expanded>
+        <conditionloop>1</conditionloop>
+        <conditionif />
+        <conditionwhile />
+        <conditiontype>0</conditiontype>
+        <loopvariable>loop</loopvariable>
+        <fragmentvariable>fragment</fragmentvariable>
+        <executionmode>0</executionmode>
+        <sequentialzones>
+          <count>0</count>
+        </sequentialzones>
+        <multicondition>0</multicondition>
+        <multiloop>0</multiloop>
+        <variables sortingType="1">
+          <variable>
+            <name>sciloom_tmp_1</name>
+            <value>
+              <type>5</type>
+              <value>0</value>
+            </value>
+            <siunit>1/s</siunit>
+            <unit>rpm</unit>
+            <array>0</array>
+            <creationtime>0</creationtime>
+            <constant>0</constant>
+          </variable>
+        </variables>
+        <id>{96B7D530-52C6-56A8-A164-EE3179023AAC}</id>
+        <tasks>
+          <task typeid="Chemspeed.SATaskSetVariable.1">
+            <description />
+            <name>Set Variable</name>
+            <edittime>0</edittime>
+            <variablename>sciloom_tmp_1</variablename>
+            <expressiontext>speed</expressiontext>
+            <elementselectmode>0</elementselectmode>
+            <elementnumber />
+            <numberofelements />
+            <startindex>0</startindex>
+            <clearvariable>0</clearvariable>
+            <sortwells>0</sortwells>
+            <enumerationtype>0</enumerationtype>
+            <wellsenumeration>0</wellsenumeration>
+            <elementsenumeration>0</elementsenumeration>
+            <id>{B1253442-5E48-5575-AD17-02557FB0D7C5}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskSetAgitation.1">
+            <zone>Heater Shaker 23</zone>
+            <description />
+            <name>Stir</name>
+            <edittime>0</edittime>
+            <taskdatas>
+              <count>1</count>
+              <taskdata0>
+                <progid>Chemspeed.SADeviceIndividualShaker.1</progid>
+                <deviceid>23</deviceid>
+                <wellid>-1</wellid>
+                <speed>sciloom_tmp_1</speed>
+              </taskdata0>
+            </taskdatas>
+            <switchon>1</switchon>
+            <speedunit>rpm</speedunit>
+            <autofillspeed>1</autofillspeed>
+            <stirrertype>0</stirrertype>
+            <id>{4617C4D9-E447-501F-B461-650A69E5CD23}</id>
+          </task>
+        </tasks>
+      </component>
+    </components>
+  </function>
+</functions>

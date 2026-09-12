@@ -9,7 +9,7 @@
       <inputs>
         <count>2</count>
         <item0>
-          <id>{6B1A744B-28DC-5EA8-AE87-C8ECD17405A6}</id>
+          <id>{BED151A2-A520-5BEB-B8D8-B0346D9FD00B}</id>
           <name>shaker_speed</name>
           <variablename>shaker_speed</variablename>
           <variabletype>angularspeed</variabletype>
@@ -17,7 +17,7 @@
           <expression />
         </item0>
         <item1>
-          <id>{FD882A2C-7782-5F59-B7D7-94A79FE820D6}</id>
+          <id>{9AC1BBC4-1231-54BF-A417-BC077E8CBD50}</id>
           <name>enabled</name>
           <variablename>enabled</variablename>
           <variabletype>bool</variabletype>
@@ -31,7 +31,7 @@
         <sortType>0</sortType>
       </outputs>
     </functiondata>
-    <id>{C73C8605-5443-5180-976D-CC58DE17448B}</id>
+    <id>{EBC09206-09B3-5849-8041-36CD14A4C587}</id>
     <components>
       <component typeid="Chemspeed.SAMacroTask.1">
         <description />
@@ -64,7 +64,7 @@
             <constant>0</constant>
           </variable>
         </variables>
-        <id>{CB3879CC-E423-5D5E-9B44-73875BFF61D3}</id>
+        <id>{8AE65F3E-A134-5DE4-865A-B08EDE41FB4E}</id>
         <tasks>
           <task typeid="Chemspeed.SAMacroTask.1">
             <description />
@@ -84,7 +84,7 @@
             <multicondition>1</multicondition>
             <multiloop>0</multiloop>
             <variables sortingType="1" />
-            <id>{5A7A4AD3-B3FC-56AE-BA9C-6286E0225152}</id>
+            <id>{FA3EEEBF-A09D-583C-B713-58B2EF3618AB}</id>
             <tasks>
               <task typeid="Chemspeed.SATaskCondition.1">
                 <description />
@@ -93,7 +93,7 @@
                 <expanded>1</expanded>
                 <conditiontype>0</conditiontype>
                 <condition>enabled</condition>
-                <id>{A841D656-5DCB-5285-9942-BAE22B283523}</id>
+                <id>{23DE13B6-441B-57A7-BCE8-65411BDE5031}</id>
                 <components>
                   <component typeid="Chemspeed.SATaskSetVariable.1">
                     <description />
@@ -110,7 +110,7 @@
                     <enumerationtype>0</enumerationtype>
                     <wellsenumeration>0</wellsenumeration>
                     <elementsenumeration>0</elementsenumeration>
-                    <id>{D8012EF5-A28B-5676-82E7-7929B214D5E6}</id>
+                    <id>{526B74D6-5753-5FF2-9FE6-BEFC8FE6E90C}</id>
                   </component>
                   <component typeid="Chemspeed.SATaskSetAgitation.1">
                     <zone>Heater Shaker 23</zone>
@@ -130,7 +130,7 @@
                     <speedunit>rpm</speedunit>
                     <autofillspeed>1</autofillspeed>
                     <stirrertype>0</stirrertype>
-                    <id>{345A004F-7A2E-5724-BEB7-5B3884E2DB6D}</id>
+                    <id>{E871FFEC-94D9-5889-8CCD-5DA78CB25E90}</id>
                   </component>
                 </components>
               </task>
@@ -141,7 +141,7 @@
                 <expanded>1</expanded>
                 <conditiontype>2</conditiontype>
                 <condition />
-                <id>{D248C99A-597B-53B9-80C9-EC5E9C32A829}</id>
+                <id>{5AB6A618-FEA0-5026-A4FE-5C53DCF9F62C}</id>
                 <components>
                   <component typeid="Chemspeed.SATaskSetAgitation.1">
                     <zone>Heater Shaker 23</zone>
@@ -161,7 +161,7 @@
                     <speedunit>rpm</speedunit>
                     <autofillspeed>1</autofillspeed>
                     <stirrertype>0</stirrertype>
-                    <id>{74AE6BED-20D5-55B0-87AF-E6F6E18E2918}</id>
+                    <id>{443D7E80-11B0-5E34-9F8C-97D303C79DE0}</id>
                   </component>
                 </components>
               </task>
