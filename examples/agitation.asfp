@@ -9,7 +9,7 @@
       <inputs>
         <count>2</count>
         <item0>
-          <id>{D2C975D4-12D3-5FF1-BE60-E90420DB791C}</id>
+          <id>{9FB63403-85A9-5B2F-88A2-2CD3F3D42CAD}</id>
           <name>shaker_speed</name>
           <variablename>shaker_speed</variablename>
           <variabletype>angularspeed</variabletype>
@@ -17,7 +17,7 @@
           <expression />
         </item0>
         <item1>
-          <id>{50331385-9BD5-510E-AB80-001AB62BD1BE}</id>
+          <id>{A6E06D8B-0035-5A19-94EC-9B59455C77E4}</id>
           <name>enabled</name>
           <variablename>enabled</variablename>
           <variabletype>bool</variabletype>
@@ -31,7 +31,7 @@
         <sortType>0</sortType>
       </outputs>
     </functiondata>
-    <id>{179B0839-1140-518A-809C-798ADCB2D5BD}</id>
+    <id>{73F257EF-F385-5F3B-9931-2C2C93EC9FB0}</id>
     <components>
       <component typeid="Chemspeed.SAMacroTask.1">
         <description />
@@ -51,7 +51,7 @@
         <multicondition>1</multicondition>
         <multiloop>0</multiloop>
         <variables sortingType="1" />
-        <id>{25DD2514-5D20-5171-95B0-181D0B2B1A4A}</id>
+        <id>{D10EA9B0-E29C-5286-877D-9E3D6D0F0DB3}</id>
         <tasks>
           <task typeid="Chemspeed.SATaskCondition.1">
             <description />
@@ -60,7 +60,7 @@
             <expanded>1</expanded>
             <conditiontype>0</conditiontype>
             <condition>enabled</condition>
-            <id>{D849ED87-EBD0-5BAB-8CB0-A47C8950C021}</id>
+            <id>{996B8583-31C1-5617-8C54-EECE21997C16}</id>
             <components>
               <component typeid="Chemspeed.SATaskSetAgitation.1">
                 <zone>Heater Shaker 23</zone>
@@ -80,7 +80,7 @@
                 <speedunit>rpm</speedunit>
                 <autofillspeed>1</autofillspeed>
                 <stirrertype>0</stirrertype>
-                <id>{B6AA744D-8768-5C3D-9D15-623466EEC922}</id>
+                <id>{6DFCFF83-8062-57F0-8EB9-884F156F6AD6}</id>
               </component>
             </components>
           </task>
@@ -91,7 +91,7 @@
             <expanded>1</expanded>
             <conditiontype>2</conditiontype>
             <condition />
-            <id>{42A3E1C3-BC0B-56FA-8253-B1FE91C59ED9}</id>
+            <id>{FE52497B-60D1-5A3B-81BA-991B4C9E286F}</id>
             <components>
               <component typeid="Chemspeed.SATaskSetAgitation.1">
                 <zone>Heater Shaker 23</zone>
@@ -111,7 +111,7 @@
                 <speedunit>rpm</speedunit>
                 <autofillspeed>1</autofillspeed>
                 <stirrertype>0</stirrertype>
-                <id>{EFCCF817-DD83-5DDC-A40F-58B893A0C787}</id>
+                <id>{7B0D1416-814F-5A66-921E-74A49B4869AB}</id>
               </component>
             </components>
           </task>

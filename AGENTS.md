@@ -171,7 +171,8 @@ The Python DSL (`sciloom.dsl`), shared semantic/compiler tools (`sciloom.core`)
 and equipment targets (`sciloom.contrib`, or independent packages) have separate
 ownership. Experiment authors import their API from `sciloom`; contributors import
 `Target`, `Artifact`, `CompileResult` and `compile_ir` from `sciloom.core.compiler`.
-Core must not import DSL, contrib or Studio; the root author API stays lazy. Target
+Core must not import `sciloom.devices`, DSL, contrib or Studio; data-only
+`sciloom.core.devices` binding records belong to core. The root author API stays lazy. Target
 selection is explicit. Generic compilation must not import AutoSuite or assume
 XML. Program/JSON v3 is the current semantic contract; see
 [reference execution](docs/14_REFERENCE_EXECUTION.md). Keep vendor restrictions
@@ -179,5 +180,14 @@ XML. Program/JSON v3 is the current semantic contract; see
 SciLoom behavior and is not evidence of vendor numerical or physical equivalence.
 
 Agitation intent stays in IR; AutoSuite zone/shaker bindings belong to the target.
+Declare logical dependencies with `agitator: Agitator`, independently of runtime
+variables. Share existing logical references during host composition; do not
+instantiate named Agitator objects or assign hardware to Function fields.
+Bind deployment with `AutoSuiteTarget(devices={"agitator": AutoSuiteIndividualShaker(...)})`.
+Every Target implements `resolve_devices(program) -> DeviceBindings`; empty
+bindings are valid only for device-free programs. JSON v3 currently supports
+generic Agitator slots; property configuration/start and typed extension contracts
+land together in v4. See the authoritative
+[device plan](docs/refactor/device-abstraction/00-overview.md).
 Consult `autosuite/docs/16_AGITATION_MAPPING.md` before changing this adapter.
 Do not infer generic physical limits or hardware equivalence from one device profile.

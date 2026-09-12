@@ -26,8 +26,9 @@ flowchart TB
     Author["Future xyflow / AI authoring"] -.-> IR
     IR --> Reference["core.interpreter<br/>Values, state, events"]
     IR --> Compile["core.compiler: compile_ir<br/>Shared validation"]
-    Compile --> Target["Target.validate / Target.emit"]
-    Bind["AutoSuite deployment bindings"] --> AutoSuite
+    Compile --> Resolve["Target.resolve_devices<br/>core.devices binding validation"]
+    Resolve --> Target["Target.validate / Target.emit"]
+    Bind["Concrete device deployment profiles"] --> Resolve
     Target --> AutoSuite["contrib.autosuite<br/>Legality and typed task adapters"]
     Target -.-> Other["Other target implementations"]
     AutoSuite --> SIR["SerializationIR / XmlNode"]
@@ -43,6 +44,8 @@ future work; ASFP and reference execution are implemented now.
 |---|---|
 | `dsl/model.py`, `schema.py` | Function lifecycle; field roles, defaults and host-access protection |
 | `devices/agitation.py` | Logical agitation contract, independent of Python source analysis |
+| `devices/base.py`, `dsl/device_schema.py` | Device type identity; separate logical slots and host-time sharing |
+| `core/devices.py` | Immutable deployment facts and binding validation, without Python device classes |
 | `dsl/lowering.py`, `context.py` | Instance graph to Program orchestration; shared symbols, IDs and source locations |
 | `dsl/source.py`, `expressions.py`, `statements.py` | File-backed source discovery; Python expressions; calls, operations and control flow |
 | `core/ir/types.py`, `model.py` | Value types/compatibility; immutable semantic nodes |
@@ -84,15 +87,15 @@ This IR resembles a compiler IR in its role as a stable semantic boundary. It is
 a structured scientific-program model, not LLVM instructions or SSA. No optimizer,
 pass registry or generic opaque-operation framework is introduced here.
 
-Generic compilation first validates the IR, then asks the explicit target to
-validate and emit it. A target returns an Artifact containing bytes, media type
+Generic compilation first validates the IR, resolves and validates device
+bindings, then asks the explicit target to validate and emit it. A target returns an Artifact containing bytes, media type
 and suffix. Unsupported target semantics fail with diagnostics. Recursion and
 short-circuit operators are currently rejected by AutoSuite; they remain valid
 in the reference semantics. Target limitations must not narrow the shared model.
 
 `core/compiler.py` contains both an interface (`Target`) and a concrete shared pipeline
 (`compile_ir`), plus `Artifact` and `CompileResult`. AutoSuiteTarget implements
-the Target protocol structurally: it provides `target_id`, `validate(program)`
+the Target protocol structurally: it provides `target_id`, `resolve_devices(program)`, `validate(program)`
 and `emit(program)` without needing to inherit a compiler class. Its emission
 uses `codegen.py` to map Program into SerializationIR and `xml.py` to encode XML.
 A future backend can implement the same protocol with its own validation and output

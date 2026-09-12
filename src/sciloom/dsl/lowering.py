@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import cast
 from dataclasses import replace
 from .context import LoweringContext
+from .device_schema import DeviceReference, component_paths
 from .model import Function
 from .source import runtime_source
 from .statements import statements
@@ -29,11 +30,17 @@ def lower(root: Function) -> Program:
     ids = {id(root): "fn:0"}
     functions: list[FunctionIR] = []
     resources: dict[str, AgitatorResource] = {}
+    paths = component_paths(root)
     index = 0
     while index < len(instances):
         instance = instances[index]
         function_id = ids[id(instance)]
-        function = build_function(LoweringContext(instance, function_id, instances, ids, resources))
+        context = LoweringContext(instance, function_id, instances, ids, resources, paths)
+        for name in instance.device_fields:
+            reference = context.host_attribute(name)
+            assert isinstance(reference, DeviceReference)
+            context.device_resource(reference)
+        function = build_function(context)
         functions.append(function)
         index += 1
     package = Program(entry_function_id="fn:0", functions=tuple(functions), resources=tuple(resources.values()))

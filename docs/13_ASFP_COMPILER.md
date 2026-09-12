@@ -53,7 +53,7 @@ The generic result has no XML-specific field. Backend developers can inspect
 and ASFP export; neither exposes IR or executes a reference interpreter.
 The agitation function retains speed and enabled as runtime input parameters.
 [Agitation semantics](15_AGITATION_SEMANTICS.md) describes the source API and
-explicit IndividualShakerBinding configuration; the
+explicit AutoSuiteIndividualShaker profiles in `AutoSuiteTarget(devices=...)`; the
 [mapping record](../autosuite/docs/16_AGITATION_MAPPING.md) identifies the real
 application/function evidence, fixed-zone addressing and inactive stop defaults.
 
@@ -98,7 +98,8 @@ flowchart LR
     Python["Function instance"] --> Lower["Python AST lowering"] --> Semantic["Typed Program"]
     JSON["JSON import"] --> Semantic
     Semantic --> Validate["Shared semantic validation"]
-    Validate --> Target["Explicit target validation"] --> Backend["ASFP mapping and target IDs"]
+    Validate --> Bind["Resolve and validate device bindings"]
+    Bind --> Target["Explicit target validation"] --> Backend["ASFP mapping and target IDs"]
     Backend --> SIR["Immutable SerializationIR / XmlNode"]
     SIR --> XML["ASFP XML bytes"]
 ```

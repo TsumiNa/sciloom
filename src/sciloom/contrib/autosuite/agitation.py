@@ -7,12 +7,15 @@ speedunit=rpm only selects its display unit. See autosuite/docs/16_AGITATION_MAP
 
 import re
 from dataclasses import dataclass
+from typing import ClassVar
+
+from ...devices.agitation import Agitator
 
 from .xml import XmlNode, xml_node as _xml
 
 
 @dataclass(frozen=True, kw_only=True)
-class IndividualShakerBinding:
+class AutoSuiteIndividualShaker(Agitator):
     """Bind one logical controller to a fixed zone on one individual shaker.
 
     device_id identifies the shaker, not the vessel/rack listed in the zone.
@@ -20,12 +23,12 @@ class IndividualShakerBinding:
     record does not discover hardware or establish physical speed limits.
     """
 
-    logical_id: str
+    device_type_id: ClassVar[str] = "sciloom.autosuite.individual-shaker/v1"
     zone: str
     device_id: str
 
     def __post_init__(self) -> None:
-        for name in ("logical_id", "zone"):
+        for name in ("zone",):
             value = getattr(self, name)
             if not isinstance(value, str) or not value.strip() or any(ord(c) < 32 for c in value):
                 raise ValueError(f"{name} must be a nonempty single-line string.")
@@ -33,7 +36,7 @@ class IndividualShakerBinding:
             raise ValueError("device_id must be the positive decimal ID of an individual shaker.")
 
 
-def agitation_task(*, tag: str, binding: IndividualShakerBinding, speed: str | None, identifier: str) -> XmlNode:
+def agitation_task(*, tag: str, binding: AutoSuiteIndividualShaker, speed: str | None, identifier: str) -> XmlNode:
     """Serialize a command; None disables agitation without reading a speed.
 
     The disabled task retains an inactive editor speed of 100 rpm, as observed

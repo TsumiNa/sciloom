@@ -28,8 +28,7 @@ class ConfigureAgitation(Function):
     speed: Input[RotationalSpeed]
     enabled: Input[bool]
 
-    def __init__(self, agitator):
-        self.agitator = agitator
+    agitator: Agitator
 
     @runtime
     def run(self):
@@ -81,7 +80,7 @@ def direct_agitation():
 
 
 def test_python_direct_and_json_agitation_have_the_same_intent():
-    python = ConfigureAgitation(Agitator("reaction_mixer")).to_ir()
+    python = ConfigureAgitation().to_ir()
     programs = (python, direct_agitation(), from_json(to_json(direct_agitation())))
     for program in programs:
         assert len(program.resources) == 1
@@ -102,8 +101,9 @@ def test_python_direct_and_json_agitation_have_the_same_intent():
 
 def test_unit_literals_and_host_quantities_lower_without_executing_methods():
     class LiteralSpeed(Function):
+        agitator: Agitator
+
         def __init__(self):
-            self.agitator = Agitator("mixer")
             self.speed = 600 * rpm
 
         @runtime
@@ -119,7 +119,7 @@ def test_unit_literals_and_host_quantities_lower_without_executing_methods():
         (False, 20 * rps),
     ]
     with pytest.raises(TypeError, match="compiled"):
-        Agitator("mixer").set_speed(600 * rpm)
+        LiteralSpeed().agitator.set_speed(600 * rpm)
 
 
 def test_physical_input_requires_a_quantity():
@@ -136,8 +136,7 @@ def test_unknown_resources_fail_ir_validation():
 
 def test_bare_speed_in_source_is_not_implicitly_rpm():
     class Bare(Function):
-        def __init__(self):
-            self.agitator = Agitator("mixer")
+        agitator: Agitator
 
         @runtime
         def run(self):
@@ -187,8 +186,8 @@ def test_operations_compose_in_loops_and_functions_with_distinct_resources():
         index: Var[int] = 0
 
         def __init__(self):
-            self.first = ConfigureAgitation(Agitator("first"))
-            self.second = ConfigureAgitation(Agitator("second"))
+            self.first = ConfigureAgitation()
+            self.second = ConfigureAgitation()
 
         @runtime
         def run(self):
@@ -199,9 +198,9 @@ def test_operations_compose_in_loops_and_functions_with_distinct_resources():
 
     result = Interpreter(Sequence().to_ir()).run()
     assert [(e.resource_id, e.enabled) for e in result.events] == [
-        ("resource:first", True), ("resource:first", True), ("resource:second", False),
+        ("resource:first.agitator", True), ("resource:first.agitator", True), ("resource:second.agitator", False),
     ]
-    assert result.resources["resource:second"].speed is None
+    assert result.resources["resource:second.agitator"].speed is None
 
 
 def test_domain_ir_executes_without_source_or_vendor_modules():

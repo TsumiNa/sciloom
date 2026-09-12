@@ -11,7 +11,7 @@
             "source": {
               "column": 11,
               "kind": "SourceSpan",
-              "line": 73,
+              "line": 68,
               "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
             },
             "symbol_id": "fn:0:var:enabled"
@@ -20,11 +20,11 @@
             {
               "kind": "StopAgitation",
               "node_id": "fn:0:node:5",
-              "resource_id": "resource:reaction_mixer",
+              "resource_id": "resource:agitator",
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 76,
+                "line": 71,
                 "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
               }
             }
@@ -34,18 +34,18 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 73,
+            "line": 68,
             "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
           },
           "then_body": [
             {
               "kind": "SetAgitation",
               "node_id": "fn:0:node:4",
-              "resource_id": "resource:reaction_mixer",
+              "resource_id": "resource:agitator",
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 74,
+                "line": 69,
                 "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
               },
               "speed": {
@@ -54,7 +54,7 @@
                 "source": {
                   "column": 36,
                   "kind": "SourceSpan",
-                  "line": 74,
+                  "line": 69,
                   "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
                 },
                 "symbol_id": "fn:0:var:shaker_speed"
@@ -69,7 +69,7 @@
       "source": {
         "column": 4,
         "kind": "SourceSpan",
-        "line": 72,
+        "line": 67,
         "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
       },
       "variables": [
@@ -100,8 +100,8 @@
   "resources": [
     {
       "kind": "AgitatorResource",
-      "logical_id": "reaction_mixer",
-      "node_id": "resource:reaction_mixer",
+      "logical_id": "agitator",
+      "node_id": "resource:agitator",
       "source": null
     }
   ]

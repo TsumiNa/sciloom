@@ -13,6 +13,7 @@ def test_compiler_type_contract(tmp_path, valid):
     source = """
 from pathlib import Path
 from typing import assert_type
+from sciloom.core.devices import DeviceBindings
 from sciloom.core.compiler import Artifact, CompileResult, Target, compile_ir
 from sciloom.core.diagnostics import Diagnostic
 from sciloom.core.ir import FunctionIR, ListType, Literal, Program, ScalarType
@@ -21,6 +22,8 @@ class TextTarget:
     @property
     def target_id(self) -> str:
         return "text"
+    def resolve_devices(self, program: Program) -> DeviceBindings:
+        return DeviceBindings()
     def validate(self, program: Program) -> tuple[Diagnostic, ...]:
         return ()
     def emit(self, program: Program) -> Artifact:
@@ -39,6 +42,8 @@ numbers = ListType(element_type=ScalarType.REAL)
         source += """
 class BadTarget:
     target_id = "bad"
+    def resolve_devices(self, program: Program) -> DeviceBindings:
+        return DeviceBindings()
     def validate(self, program: Program) -> tuple[Diagnostic, ...]:
         return ()
     def emit(self, program: Program) -> str:

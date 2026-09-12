@@ -17,12 +17,12 @@ from ...core.ir import (
     VariableRole,
 )
 from ...core.ir.traversal import iter_nodes
-from .agitation import IndividualShakerBinding
+from .agitation import AutoSuiteIndividualShaker
 from .xml import XmlNode, xml_node as _xml
 
 
 class CodegenContext:
-    def __init__(self, package: Program, namespace: UUID, resources: dict[str, IndividualShakerBinding]) -> None:
+    def __init__(self, package: Program, namespace: UUID, resources: dict[str, AutoSuiteIndividualShaker]) -> None:
         self.package = package
         self.namespace = namespace
         self.resources = resources

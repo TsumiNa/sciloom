@@ -11,7 +11,7 @@ from sciloom.core.compiler import compile_ir
 from sciloom.core.diagnostics import CompilationError
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import SetAgitation, from_json, to_json
-from . import AutoSuiteTarget, IndividualShakerBinding
+from . import AutoSuiteTarget, AutoSuiteIndividualShaker
 
 CORPUS = Path(__file__).resolve().parents[4] / "autosuite"
 AGITATION = "Chemspeed.SATaskSetAgitation.1"
@@ -21,8 +21,7 @@ class ConfigureAgitation(Function):
     shaker_speed: Input[RotationalSpeed]
     enabled: Input[bool]
 
-    def __init__(self, name="reaction_mixer"):
-        self.agitator = Agitator(name)
+    agitator: Agitator
 
     @runtime
     def run(self):
@@ -34,7 +33,7 @@ class ConfigureAgitation(Function):
 
 def target(zone="Heater Shaker 23", device_id="23"):
     return AutoSuiteTarget(
-        agitators=(IndividualShakerBinding(logical_id="reaction_mixer", zone=zone, device_id=device_id),)
+        devices={"agitator": AutoSuiteIndividualShaker(zone=zone, device_id=device_id)}
     )
 
 
@@ -76,8 +75,7 @@ def test_production_task_payload_and_typed_input_relationship():
 
 def test_concrete_zone_address_and_canonical_speed_match_standalone_export():
     class Start(Function):
-        def __init__(self):
-            self.agitator = Agitator("reaction_mixer")
+        agitator: Agitator
 
         @runtime
         def run(self):
@@ -128,9 +126,10 @@ def test_quantities_keep_units_in_locals_outputs_and_call_bindings():
         speed: Var[RotationalSpeed] = 600 * rpm
         result: Output[RotationalSpeed]
 
+        agitator: Agitator
+
         def __init__(self):
             self.echo = Echo()
-            self.agitator = Agitator("reaction_mixer")
 
         @runtime
         def run(self):
@@ -160,7 +159,7 @@ def test_agitation_composes_with_loops_and_independent_resources():
 
         def __init__(self):
             self.first = ConfigureAgitation()
-            self.second = ConfigureAgitation("other_mixer")
+            self.second = ConfigureAgitation()
 
         @runtime
         def run(self):
@@ -171,30 +170,29 @@ def test_agitation_composes_with_loops_and_independent_resources():
 
     config = replace(
         target(),
-        agitators=(
-            *target().agitators,
-            IndividualShakerBinding(logical_id="other_mixer", zone="Heater Shaker 25", device_id="25"),
-        ),
+        devices={
+            "first.agitator": target().devices["agitator"],
+            "second.agitator": AutoSuiteIndividualShaker(zone="Heater Shaker 25", device_id="25"),
+        },
     )
     result = Sequence().compile(target=config)
-    reordered = replace(config, agitators=tuple(reversed(config.agitators)))
+    reordered = replace(config, devices=dict(reversed(tuple(config.devices.items()))))
     assert Sequence().compile(target=reordered).artifact == result.artifact
     tasks = ET.fromstring(result.artifact.content).findall(f".//*[@typeid='{AGITATION}']")
     assert len(tasks) == 4
     assert {t.findtext("zone") for t in tasks} == {"Heater Shaker 23", "Heater Shaker 25"}
     events = Interpreter(result.semantic_ir).run().events
     assert [(e.resource_id, e.enabled) for e in events] == [
-        ("resource:reaction_mixer", True),
-        ("resource:reaction_mixer", True),
-        ("resource:other_mixer", False),
+        ("resource:first.agitator", True),
+        ("resource:first.agitator", True),
+        ("resource:second.agitator", False),
     ]
     assert events[-1].speed is None
 
 
 def test_stop_has_no_speed_dependency_or_hidden_runtime_state():
     class Stop(Function):
-        def __init__(self):
-            self.agitator = Agitator("reaction_mixer")
+        agitator: Agitator
 
         @runtime
         def run(self):
@@ -217,7 +215,7 @@ def test_missing_or_unknown_target_bindings_fail_before_emission(monkeypatch):
     with pytest.raises(CompilationError, match="missing_resource_binding"):
         ConfigureAgitation().compile(target=AutoSuiteTarget())
     config = AutoSuiteTarget(
-        agitators=(IndividualShakerBinding(logical_id="typo", zone="Heater Shaker 23", device_id="23"),)
+        devices={"typo": AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="23")}
     )
     with pytest.raises(CompilationError, match="unknown_resource_binding"):
         ConfigureAgitation().compile(target=config)
