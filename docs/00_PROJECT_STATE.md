@@ -12,7 +12,8 @@ The [active device refactor](refactor/device-abstraction/00-overview.md) adds
 typed slots, explicit deployment profiles, property configuration and explicit
 start/stop. These lifecycle semantics compile to AutoSuite and execute in the
 reference interpreter with separate configured/applied snapshots. Native device
-commands and compile-time device specialization remain subsequent stages.
+commands compile through typed contributor contracts, demonstrated by an independent
+Demo target. Compile-time device specialization remains the subsequent stage.
 
 The [typing baseline](16_TYPING.md) checks production code, author examples and
 extension interfaces with locked mypy and CI on Python 3.12–3.14. GUI/server and

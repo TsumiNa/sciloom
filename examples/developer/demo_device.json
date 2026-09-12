@@ -1,0 +1,201 @@
+{
+  "device_types": [
+    {
+      "base_type_ids": [],
+      "kind": "DeviceTypeContract",
+      "operations": [],
+      "properties": [],
+      "required_configuration": [],
+      "type_id": "sciloom.device/v1"
+    },
+    {
+      "base_type_ids": [
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "kind": "CommandContract",
+          "name": "start",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.start/v1"
+        },
+        {
+          "kind": "CommandContract",
+          "name": "stop",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.stop/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "speed",
+          "semantic_id": "sciloom.agitator.speed/v1",
+          "type": "rotational_speed"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.agitator.speed/v1"
+      ],
+      "type_id": "sciloom.agitator/v1"
+    },
+    {
+      "base_type_ids": [
+        "sciloom.agitator/v1",
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "kind": "CommandContract",
+          "name": "start",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.start/v1"
+        },
+        {
+          "kind": "CommandContract",
+          "name": "stop",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.stop/v1"
+        },
+        {
+          "kind": "CommandContract",
+          "name": "calibrate",
+          "parameters": [],
+          "semantic_id": "example.demo-agitator.calibrate/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "speed",
+          "semantic_id": "sciloom.agitator.speed/v1",
+          "type": "rotational_speed"
+        },
+        {
+          "kind": "PropertyContract",
+          "name": "gain",
+          "semantic_id": "example.demo-agitator.gain/v1",
+          "type": "real"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.agitator.speed/v1",
+        "example.demo-agitator.gain/v1"
+      ],
+      "type_id": "example.demo-agitator/v1"
+    }
+  ],
+  "entry_function_id": "fn:0",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "fn:0:node:1",
+          "property_id": "sciloom.agitator.speed/v1",
+          "resource_id": "resource:agitator",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 30,
+            "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "fn:0:node:3",
+            "source": {
+              "column": 30,
+              "kind": "SourceSpan",
+              "line": 30,
+              "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+            },
+            "type": "rotational_speed",
+            "value": 10.0
+          }
+        },
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "fn:0:node:4",
+          "property_id": "example.demo-agitator.gain/v1",
+          "resource_id": "resource:agitator",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 31,
+            "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "fn:0:node:5",
+            "source": {
+              "column": 29,
+              "kind": "SourceSpan",
+              "line": 31,
+              "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+            },
+            "type": "real",
+            "value": 0.5
+          }
+        },
+        {
+          "kind": "StartAgitation",
+          "node_id": "fn:0:node:6",
+          "resource_id": "resource:agitator",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 32,
+            "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+          }
+        },
+        {
+          "arguments": [],
+          "kind": "DeviceCommand",
+          "node_id": "fn:0:node:7",
+          "operation_id": "example.demo-agitator.calibrate/v1",
+          "resource_id": "resource:agitator",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 33,
+            "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+          }
+        },
+        {
+          "kind": "StopAgitation",
+          "node_id": "fn:0:node:8",
+          "resource_id": "resource:agitator",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 34,
+            "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "DemoExperiment",
+      "node_id": "fn:0",
+      "source": {
+        "column": 4,
+        "kind": "SourceSpan",
+        "line": 29,
+        "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+      },
+      "variables": []
+    }
+  ],
+  "kind": "Program",
+  "resources": [
+    {
+      "device_type_id": "example.demo-agitator/v1",
+      "kind": "DeviceResource",
+      "logical_id": "agitator",
+      "node_id": "resource:agitator",
+      "source": null
+    }
+  ]
+}

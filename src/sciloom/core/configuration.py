@@ -24,7 +24,11 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
         if isinstance(node, DeviceIf):
             message = "Device conditions require specialization, which is not enabled in this stage."
         elif isinstance(node, DeviceCommand):
-            message = "Native device commands require the independent-contribution stage."
+            binding = resources[node.resource_id]
+            expected_command = next((c for t in program.device_types for c in t.operations if c.semantic_id == node.operation_id), None)
+            actual_command = next((c for c in binding.contract.operations if c.semantic_id == node.operation_id), None)
+            if node.operation_id not in binding.supported_operations or expected_command != actual_command:
+                message = "The bound device does not implement this command contract."
         elif isinstance(node, ConfigureProperty):
             binding = resources[node.resource_id]
             expected = next((p for c in program.device_types for p in c.properties if p.semantic_id == node.property_id), None)

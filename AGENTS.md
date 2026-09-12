@@ -191,7 +191,8 @@ with property assignment and explicitly start; no set_speed or SetAgitation alia
 Configuration captures values at assignment, and start applies the complete saved
 configuration. Prove configuration across calls without assuming previous entry
 invocations. Getter/augmented property access is unsupported. Native DeviceCommand
-and DeviceIf wire forms are defined but their execution awaits stages 5 and 6.
+compiles via typed trusted contributor contracts; reference execution requires
+defined semantics and rejects unknown native commands. DeviceIf awaits stage 6.
 Backend context variables/parameters must not enter the public semantic Program. See the authoritative
 [device plan](docs/refactor/device-abstraction/00-overview.md).
 Consult `autosuite/docs/16_AGITATION_MAPPING.md` before changing this adapter.

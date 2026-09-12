@@ -26,8 +26,9 @@ There are no runtime dependencies outside Python's standard library.
 `device_validation.py` validates their directory and ancestry. DeviceResource
 refers to a declared type; ConfigureProperty captures a value, while
 StartAgitation/StopAgitation preserve lifecycle intent. DeviceCommand, DeviceIf,
-CanWrite, SupportsOperation and IsDevice are part of v4 interchange; native
-execution and condition specialization remain later implementation stages.
+CanWrite, SupportsOperation and IsDevice are part of v4 interchange. Native commands
+compile via trusted contributor signatures; the interpreter rejects commands with
+no reference execution semantics. Condition specialization remains the next stage.
 
 ## Typed construction
 
