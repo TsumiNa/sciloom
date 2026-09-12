@@ -8,13 +8,7 @@ from dataclasses import dataclass
 from enum import StrEnum
 
 from ..diagnostics import SourceSpan
-
-
-class ScalarType(StrEnum):
-    INTEGER = "integer"
-    REAL = "real"
-    BOOLEAN = "boolean"
-    ROTATIONAL_SPEED = "rotational_speed"
+from .types import ScalarType
 
 
 class VariableRole(StrEnum):

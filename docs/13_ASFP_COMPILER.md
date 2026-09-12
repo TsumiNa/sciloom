@@ -80,10 +80,14 @@ flowchart LR
     SIR --> XML["ASFP XML bytes"]
 ```
 
-`dsl/model.py` provides the model API; `dsl/lowering.py` analyzes source; `core/ir/` holds
-semantics/validation; `core/compiler.py` coordinates format-independent compilation; `contrib/autosuite/codegen.py` maps the
-target; `contrib/autosuite/xml.py` contains immutable XML records and encoding. The installed
-package needs no reference corpus or third-party runtime dependencies to compile.
+`dsl/model.py` provides the model API; `dsl/lowering.py` coordinates source
+conversion; `core/ir/` holds semantics/validation; `core/compiler.py` coordinates
+format-independent compilation. Within `contrib/autosuite`, `codegen.py` is the
+generation entrypoint and `context.py` owns names/IDs. `encoding.py` handles types
+and variable initializers, `parameters.py` handles function bindings, and
+`expressions.py` renders expressions. `tasks.py` organizes control flow;
+`functions.py` builds function envelopes. `xml.py` encodes immutable XML records.
+The installed package needs no reference corpus or third-party runtime dependencies.
 
 The backend owns `typeid`s, UUIDs, parameter IDs, Macro containers and XML defaults.
 It currently retains fixed `.1` type identifiers. The suffix's formal meaning and
