@@ -17,9 +17,9 @@ compatibility shims would create competing interfaces. Neither is introduced.
 
 ## Ordered stages and availability
 
-Implementation progress: stages 1–6 are merged in GitHub PRs #12–17.
-Stage 7 implements Python list declarations and conversion to the shared IR.
-AutoSuite array generation remains pending; reference execution supports lists.
+Implementation progress: stages 1–7 are merged in GitHub PRs #12–18.
+Stage 8 implements AutoSuite arrays, checked indexing and complete author examples.
+The mypy baseline remains stage 9; real Executor simulation is still external.
 
 | Stage | Plan | Capability available after merge |
 |---|---|---|
@@ -61,8 +61,9 @@ implementation, web dependency, node registry or HTTP framework is added.
 ## Author API (scalar declarations: stage 5; complete example: stage 8)
 
 At stage 7 the ScaleValues class below supports `to_ir()` and reference execution;
-the final AutoSuite compile/write lines become available at stage 8. The class is
-covered by the colocated DSL list tests, including its empty-input behavior.
+the final AutoSuite compile/write lines are implemented at stage 8. The runnable
+[example](../../../examples/scale_values.py) and colocated DSL/backend tests cover
+this contract, including empty inputs.
 
 ```python
 from sciloom import Function, Input, Output, Var, runtime
@@ -240,6 +241,13 @@ Index writes use the whole variable name, elementselectmode=0 and elementnumber;
 whole-list assignment uses observed mode 4. Array input bindings use variablename,
 not the expression field used for scalar inputs. Keep parameter IDs consistent.
 
+The implemented target requires definite whole-list output assignment before
+reads and on every return path, reporting `list_output_initialization` otherwise.
+Initialize outputs before possibly empty loops. Function entry/return also use
+private array working storage, so external callers cannot expose shared aliases.
+This conservative target restriction prevents stale vendor output values without
+changing reference-execution semantics.
+
 Private temporary arrays isolate call inputs and outputs from possible vendor
 aliasing. Runtime list literals are materialized in private arrays, not emitted
 as undocumented Python-like expression strings. Do not prematurely lower list
@@ -267,9 +275,9 @@ in raw APP/ASFP. CSV and indexed writes do grow arrays in existing programs:
 record that future construction need without silently adopting auto-growing
 indexed assignment in SciLoom.
 
-Stage 8 will add a Non Zero Array Min learning example that preserves the numeric
+Stage 8 adds a [Non Zero Array Min learning example](../../../examples/non_zero_array_min.py) that preserves the numeric
 algorithm but explicitly removes volume units; it will not be a full physical-unit
-reconstruction. Separate tests will cover copy isolation, writes, list literals
+reconstruction. Separate tests cover copy isolation, writes, list literals
 and parameter passing.
 
 ## Documentation, Studio and typing

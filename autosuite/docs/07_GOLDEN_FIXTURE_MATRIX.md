@@ -15,3 +15,4 @@
 | call argument binding | - | Test12_FIXED | call bindings reuse callee parameter IDs |
 | sequential zone | - | aaa_sequential_zone | `executionmode=1`, `sequentialzones`, fragment variable |
 | agitation intent and angularspeed | - | latest APP / Sample and Run GPC; functionsPackage_3 / 1st_vial | uniform-speed Stir envelope, canonical speed and explicit fixed-zone addressing; see [mapping evidence](16_AGITATION_MAPPING.md) |
+| array declarations, bindings and indexing | - | latest APP / Non Zero Array Min / Set ISynth Drawer State; config20260902_2; Suzuki-Miyaura | observed array wire forms plus explicitly derived copy/guard combinations; see [array mapping](17_ARRAY_MAPPING.md) |

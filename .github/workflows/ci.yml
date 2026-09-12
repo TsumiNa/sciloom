@@ -28,5 +28,7 @@ jobs:
       - run: uv run python -m compileall -q examples/proposed_frontend
       - run: uv run python examples/function_call.py
       - run: uv run python examples/agitation.py
+      - run: uv run python examples/scale_values.py
+      - run: uv run python examples/non_zero_array_min.py
       - run: uv run python -m examples.developer.agitation_ir
       - run: uv run python -m examples.developer.list_ir

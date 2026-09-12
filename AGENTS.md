@@ -154,7 +154,8 @@ python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
 ```
 
 Run the experiment-author examples with `uv run python examples/function_call.py`
-and `uv run python examples/agitation.py`. Also run the separate developer example
+and `uv run python examples/agitation.py`. Run the list author examples with `uv run python examples/scale_values.py` and
+`uv run python examples/non_zero_array_min.py`. Also run the developer example
 with `uv run python -m examples.developer.agitation_ir` from the repository root.
 Run `uv run python -m examples.developer.list_ir` for direct list IR and JSON v3.
 Run `python autosuite/tools/audit_corpus.py` after reference changes. Syntax-check `examples/proposed_frontend/*.py`. On the AutoSuite host, generated `.app` files must additionally pass Executor simulation. The historical compiler, ASPY inputs and text views have been removed; refactor work starts from the retained XML and semantic documentation.

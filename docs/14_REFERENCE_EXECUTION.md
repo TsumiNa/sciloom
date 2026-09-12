@@ -35,7 +35,8 @@ The example deliberately exercises persistence as a separate architectural check
 Run `uv run python -m examples.developer.list_ir` for direct list IR construction.
 It writes [list_ir.json](../examples/developer/list_ir.json) and prints `(9.0, 2.0)`
 while the original Python input remains `[1.0, 2.0]`. List execution and Python
-list lowering are implemented; AutoSuite array generation is the next stage.
+list lowering and AutoSuite array generation are implemented. The latter has
+[separate evidence and Executor limitations](../autosuite/docs/17_ARRAY_MAPPING.md).
 
 ## Execution API
 

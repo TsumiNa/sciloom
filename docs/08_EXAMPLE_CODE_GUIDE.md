@@ -24,7 +24,11 @@ For implemented direct list semantics, run
 `uv run python -m examples.developer.list_ir`. Its
 [source](../examples/developer/list_ir.py) and [JSON](../examples/developer/list_ir.json)
 show copying and element updates with JSON v3. This is a developer example;
-Python list authoring is also implemented; AutoSuite array generation is the next stage.
+Python list authoring and AutoSuite generation are implemented. Run
+`uv run python examples/scale_values.py` and
+`uv run python examples/non_zero_array_min.py` for author examples with complete
+same-name ASFP companions. The latter removes volume units from the original
+Non Zero Array Min algorithm; it is a numeric adaptation.
 
 ## Proposed frontend designs
 

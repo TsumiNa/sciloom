@@ -19,6 +19,8 @@ uv sync --locked
 uv run python -c "import sciloom"
 uv run python examples/function_call.py
 uv run python examples/agitation.py
+uv run python examples/scale_values.py
+uv run python examples/non_zero_array_min.py
 ```
 
 The distribution name is `SciLoom`; the Python import name is `sciloom`.
@@ -45,6 +47,8 @@ organization and provenance.
 - [ASFP compilation](docs/13_ASFP_COMPILER.md)
 - [Runnable function-call example](examples/function_call.py)
 - [Runnable agitation example](examples/agitation.py)
+- [List copying and scaling](examples/scale_values.py)
+- [Numeric Non Zero Array Min](examples/non_zero_array_min.py)
 
 ## For SciLoom developers
 

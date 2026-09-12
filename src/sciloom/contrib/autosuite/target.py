@@ -5,11 +5,12 @@ from dataclasses import dataclass
 
 from ...core.compiler import Artifact
 from ...core.diagnostics import CompilationError, Diagnostic
-from ...core.ir import Binary, BinaryOp, Call, ListType, ListLiteral, ListLength, ListGet, ListSet, Program, Variable
+from ...core.ir import Binary, BinaryOp, Call, Program
 from ...core.ir.traversal import iter_nodes
 from .agitation import IndividualShakerBinding
 from .codegen import lower_asfp
 from .xml import AutoSuiteVersion
+from .validation import validate_array_outputs
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -57,9 +58,7 @@ class AutoSuiteTarget:
             if isinstance(node, Binary) and node.op in (BinaryOp.AND, BinaryOp.OR)
         ]
         bindings = {binding.logical_id for binding in self.agitators}
-        for node, path in iter_nodes(program):
-            if isinstance(node, (ListLiteral, ListLength, ListGet, ListSet)) or (isinstance(node, Variable) and isinstance(node.type, ListType)):
-                errors.append(Diagnostic(code="unsupported_list", message="AutoSuite list emission is not implemented yet.", path=path, node_id=node.node_id, source=node.source))
+        errors.extend(validate_array_outputs(program))
         resources = {resource.logical_id for resource in program.resources}
         for i, resource in enumerate(program.resources):
             if resource.logical_id not in bindings:

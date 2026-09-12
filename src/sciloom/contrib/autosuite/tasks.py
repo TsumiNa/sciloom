@@ -1,143 +1,164 @@
-"""Organize runtime statements, Macro control flow and domain tasks."""
-
-from __future__ import annotations
+"""Schedule semantic statements, expression checks and target-private call copies."""
 
 from ...core.diagnostics import CompilationError, Diagnostic
-from ...core.ir import Assignment, Call, FunctionIR, If, SetAgitation, StopAgitation, Statement, Variable, While
+from ...core.ir import (
+    Assignment,
+    Call,
+    FunctionIR,
+    If,
+    ListSet,
+    ListType,
+    SetAgitation,
+    StopAgitation,
+    Statement,
+    While,
+)
 from .agitation import agitation_task
 from .context import CodegenContext
-from .encoding import variable_declaration
-from .expressions import render_expression
+from .expressions import checked_read, materialize, plan_expression
 from .parameters import functiondata
+from .primitives import macro, set_variable
 from .xml import XmlNode, xml_node as _xml
 
 
-def macro(
-    context: CodegenContext,
-    tag: str,
-    identity: str,
-    function: FunctionIR,
-    body: tuple[Statement, ...],
-    *,
-    name: str = "Macro Task",
-    condition_type: str = "0",
-    condition: str = "",
-    variables: tuple[Variable, ...] = (),
-    branches: tuple[XmlNode, ...] = (),
-    role: str = "statement",
-) -> XmlNode:
-    declared = [variable_declaration(v, context.names[v.node_id]) for v in variables]
-    occupied = {context.names[v.node_id] for v in function.variables}
-    loop_name, fragment_name = "loop", "fragment"
-    while loop_name in occupied:
-        loop_name += "_"
-    while fragment_name in occupied:
-        fragment_name += "_"
-    children = [
-        *context.metadata(name, expanded=True),
-        _xml("conditionloop", "1"),
-        _xml("conditionif", condition if condition_type == "1" else ""),
-        _xml("conditionwhile", condition if condition_type == "2" else ""),
-        _xml("conditiontype", condition_type),
-        _xml("loopvariable", loop_name),
-        _xml("fragmentvariable", fragment_name),
-        _xml("executionmode", "0"),
-        _xml("sequentialzones", "", _xml("count", "0")),
-        _xml("multicondition", "1" if branches else "0"),
-        _xml("multiloop", "0"),
-        _xml("variables", "", *declared, sortingType="1"),
-        _xml("id", context.identifier(role, identity)),
-        _xml("tasks", "", *(branches or statements(context, body, function, "task"))),
-    ]
-    return _xml(tag, "", *children, typeid="Chemspeed.SAMacroTask.1")
-
-
-def statements(context: CodegenContext, body: tuple[Statement, ...], function: FunctionIR, tag: str) -> tuple[XmlNode, ...]:
+def statements(
+    context: CodegenContext, body: tuple[Statement, ...], function: FunctionIR, tag: str
+) -> tuple[XmlNode, ...]:
     result = []
     for statement in body:
         if isinstance(statement, Assignment):
-            children = [
-                *context.metadata("Set Variable"),
-                _xml("variablename", context.names[statement.target.symbol_id]),
-                _xml("expressiontext", render_expression(context, statement.value)),
-                _xml("elementselectmode", "0"),
-                _xml("elementnumber"),
-                _xml("numberofelements"),
-                _xml("startindex", "0"),
-                _xml("clearvariable", "0"),
-                _xml("sortwells", "0"),
-                _xml("enumerationtype", "0"),
-                _xml("wellsenumeration", "0"),
-                _xml("elementsenumeration", "0"),
-                _xml("id", context.identifier("statement", statement.node_id)),
-            ]
-            result.append(_xml(tag, "", *children, typeid="Chemspeed.SATaskSetVariable.1"))
+            value = plan_expression(context, function, statement.value, tag)
+            result.extend(value.prerequisites)
+            result.append(
+                set_variable(
+                    context,
+                    tag,
+                    context.names[statement.target.symbol_id],
+                    value.text,
+                    identity=statement.node_id,
+                    array=isinstance(value.type, ListType),
+                )
+            )
+        elif isinstance(statement, ListSet):
+            array = context.names[statement.target.symbol_id]
+            value_type = context.variables[statement.target.symbol_id].type
+            assert isinstance(value_type, ListType)
+            value = plan_expression(context, function, statement.value, tag)
+            if statement.op is None:
+                value = materialize(context, function, value, tag)
+                result.extend(value.prerequisites)
+            index = plan_expression(context, function, statement.index, tag)
+            previous, captured_index = checked_read(context, function, array, index, value_type.element_type, tag)
+            result.extend(previous.prerequisites)
+            if statement.op is not None:
+                result.extend(value.prerequisites)
+            text = value.text if statement.op is None else f"{previous.text} {statement.op.value} ({value.text})"
+            result.append(set_variable(context, tag, array, text, identity=statement.node_id, index=captured_index))
         elif isinstance(statement, (SetAgitation, StopAgitation)):
+            speed = (
+                plan_expression(context, function, statement.speed, tag)
+                if isinstance(statement, SetAgitation)
+                else None
+            )
+            if speed is not None:
+                result.extend(speed.prerequisites)
             result.append(
                 agitation_task(
                     tag=tag,
                     binding=context.resources[statement.resource_id],
-                    speed=render_expression(context, statement.speed) if isinstance(statement, SetAgitation) else None,
+                    speed=speed.text if speed is not None else None,
                     identifier=context.identifier("statement", statement.node_id),
                 )
             )
         elif isinstance(statement, Call):
+            inputs, outputs = {}, {}
+            after = []
+            plans = [(binding, plan_expression(context, function, binding.value, tag)) for binding in statement.inputs]
+            needs_evaluation = any(plan.prerequisites or isinstance(plan.type, ListType) for _, plan in plans)
+            for binding, plan in plans:
+                if needs_evaluation:
+                    plan = materialize(context, function, plan, tag)
+                result.extend(plan.prerequisites)
+                inputs[binding.parameter_id] = plan.text
+            for binding in statement.outputs:
+                name = context.names[binding.target.symbol_id]
+                value_type = context.variables[binding.parameter_id].type
+                if isinstance(value_type, ListType):
+                    temporary = context.temporary(function, value_type)
+                    outputs[binding.parameter_id] = temporary
+                    after.append(set_variable(context, tag, name, temporary, array=True))
+                else:
+                    outputs[binding.parameter_id] = name
             result.append(
                 _xml(
                     tag,
                     "",
                     *context.metadata("Execute Function"),
-                    functiondata(context, context.functions[statement.function_id], statement),
+                    functiondata(context, context.functions[statement.function_id], inputs=inputs, outputs=outputs),
                     _xml("functionid", context.identifier("function", statement.function_id)),
                     _xml("id", context.identifier("statement", statement.node_id)),
                     typeid="Chemspeed.SATaskExecuteFunction.1",
                 )
             )
+            result.extend(after)
         elif isinstance(statement, While):
+            condition = plan_expression(context, function, statement.condition, tag)
+            loop_body = statements(context, statement.body, function, "task")
+            if condition.prerequisites:
+                condition = materialize(context, function, condition, tag)
+                result.extend(condition.prerequisites)
+                # Re-plan at the loop tail: distinct task IDs and checks on every retest.
+                retest = plan_expression(context, function, statement.condition, "task")
+                loop_body += (*retest.prerequisites, set_variable(context, "task", condition.text, retest.text))
             result.append(
-                macro(context, 
+                macro(
+                    context,
                     tag,
                     statement.node_id,
                     function,
-                    statement.body,
+                    loop_body,
                     name="While",
                     condition_type="2",
-                    condition=render_expression(context, statement.condition),
-                )
-            )
-        elif isinstance(statement, If) and not statement.else_body:
-            result.append(
-                macro(context, 
-                    tag,
-                    statement.node_id,
-                    function,
-                    statement.then_body,
-                    name="If",
-                    condition_type="1",
-                    condition=render_expression(context, statement.condition),
+                    condition=condition.text,
                 )
             )
         elif isinstance(statement, If):
-            branches = []
-            for label, condition_type, condition, branch_body in (
-                ("If", "0", render_expression(context, statement.condition), statement.then_body),
-                ("Else", "2", "", statement.else_body),
-            ):
-                branches.append(
-                    _xml(
-                        "task",
-                        "",
-                        *context.metadata(label, expanded=True),
-                        _xml("conditiontype", condition_type),
-                        _xml("condition", condition),
-                        _xml("id", context.identifier(label, statement.node_id)),
-                        _xml("components", "", *statements(context, branch_body, function, "component")),
-                        typeid="Chemspeed.SATaskCondition.1",
+            condition = plan_expression(context, function, statement.condition, tag)
+            result.extend(condition.prerequisites)
+            if not statement.else_body:
+                result.append(
+                    macro(
+                        context,
+                        tag,
+                        statement.node_id,
+                        function,
+                        statements(context, statement.then_body, function, "task"),
+                        name="If",
+                        condition_type="1",
+                        condition=condition.text,
                     )
                 )
-            result.append(
-                macro(context, tag, statement.node_id, function, (), name="If-Else", branches=tuple(branches))
-            )
+            else:
+                branches = []
+                for label, condition_type, text, branch_body in (
+                    ("If", "0", condition.text, statement.then_body),
+                    ("Else", "2", "", statement.else_body),
+                ):
+                    branches.append(
+                        _xml(
+                            "task",
+                            "",
+                            *context.metadata(label, expanded=True),
+                            _xml("conditiontype", condition_type),
+                            _xml("condition", text),
+                            _xml("id", context.identifier(label, statement.node_id)),
+                            _xml("components", "", *statements(context, branch_body, function, "component")),
+                            typeid="Chemspeed.SATaskCondition.1",
+                        )
+                    )
+                result.append(
+                    macro(context, tag, statement.node_id, function, tuple(branches), name="If-Else", branches=True)
+                )
         else:
             raise CompilationError(
                 (
