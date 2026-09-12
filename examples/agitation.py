@@ -46,7 +46,7 @@ The fixed zone/shaker binding is taken from the latest application configuration
 from pathlib import Path
 
 from sciloom import Agitator, Boolean, Function, Input, RotationalSpeed, runtime
-from sciloom.backends.autosuite import AutoSuiteTarget, IndividualShakerBinding
+from sciloom.contrib.autosuite import AutoSuiteTarget, IndividualShakerBinding
 
 
 class ConfigureAgitation(Function):

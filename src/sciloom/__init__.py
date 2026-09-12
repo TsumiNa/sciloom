@@ -3,18 +3,17 @@
 from typing import TYPE_CHECKING, Any
 
 from .units import RotationalSpeed, rpm, rps
-from .core.compiler import Artifact, CompileResult, Target, compile_ir
 
 if TYPE_CHECKING:
-    from .frontends.python.model import Agitator, Boolean, Function, Input, Integer, Output, Real, RuntimeField, runtime
+    from .dsl.model import Agitator, Boolean, Function, Input, Integer, Output, Real, runtime
 
-_FRONTEND_EXPORTS = {"Agitator", "Boolean", "Function", "Input", "Integer", "Output", "Real", "RuntimeField", "runtime"}
+_DSL_EXPORTS = {"Agitator", "Boolean", "Function", "Input", "Integer", "Output", "Real", "runtime"}
 
 
 def __getattr__(name: str) -> Any:
-    # Importing sciloom.core.ir or the interpreter must not load a source frontend.
-    if name in _FRONTEND_EXPORTS:
-        from .frontends.python import model
+    # Importing sciloom.core.ir or the interpreter must not load the Python DSL.
+    if name in _DSL_EXPORTS:
+        from .dsl import model
 
         return getattr(model, name)
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
@@ -25,16 +24,11 @@ __all__ = [
     "RotationalSpeed",
     "rpm",
     "rps",
-    "Artifact",
     "Boolean",
-    "CompileResult",
     "Function",
     "Input",
     "Integer",
     "Output",
     "Real",
-    "RuntimeField",
-    "Target",
-    "compile_ir",
     "runtime",
 ]

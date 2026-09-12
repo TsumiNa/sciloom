@@ -6,7 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from sciloom import Agitator, Boolean, Function, Input, Integer, Output, RotationalSpeed, compile_ir, rpm, runtime
+from sciloom import Agitator, Boolean, Function, Input, Integer, Output, RotationalSpeed, rpm, runtime
+from sciloom.core.compiler import compile_ir
 from sciloom.core.diagnostics import CompilationError
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import SetAgitation, from_json, to_json

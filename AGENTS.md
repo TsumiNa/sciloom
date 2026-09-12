@@ -164,7 +164,11 @@ Keep project/design Markdown under `docs/` and AutoSuite-specific reference Mark
 
 ## 10. Compiler and reference-execution boundaries
 
-The Python frontend, IR and target backends have separate ownership. Target
+The Python DSL (`sciloom.dsl`), shared semantic/compiler tools (`sciloom.core`)
+and equipment targets (`sciloom.contrib`, or independent packages) have separate
+ownership. Experiment authors import their API from `sciloom`; contributors import
+`Target`, `Artifact`, `CompileResult` and `compile_ir` from `sciloom.core.compiler`.
+Core must not import DSL, contrib or Studio; the root author API stays lazy. Target
 selection is explicit. Generic compilation must not import AutoSuite or assume
 XML. Program/JSON v2 is the current semantic contract; see
 [reference execution](docs/14_REFERENCE_EXECUTION.md). Keep vendor restrictions

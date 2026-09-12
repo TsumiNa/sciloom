@@ -7,9 +7,9 @@ from collections.abc import Sequence
 from typing import Any, NoReturn, cast
 
 from .model import Agitator, Function
-from ...units import RotationalSpeed, SpeedUnit
-from ...core.diagnostics import Diagnostic, IRValidationError, SourceSpan
-from ...core.ir import (
+from ..units import RotationalSpeed, SpeedUnit
+from ..core.diagnostics import Diagnostic, IRValidationError, SourceSpan
+from ..core.ir import (
     Assignment,
     AgitatorResource,
     SetAgitation,

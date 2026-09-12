@@ -233,8 +233,8 @@ def test_json_ir_executes_without_frontend_or_backend_imports():
 import sys
 class Block:
     def find_spec(self, fullname, *args):
-        if fullname.startswith(("sciloom.frontends", "sciloom.backends")):
-            raise ImportError("frontends and backends are forbidden")
+        if fullname.startswith(("sciloom.dsl", "sciloom.contrib")):
+            raise ImportError("DSL and equipment targets are forbidden")
 sys.meta_path.insert(0, Block())
 from sciloom.core.ir import from_json
 from sciloom.core.interpreter import Interpreter
