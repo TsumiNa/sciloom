@@ -5,41 +5,33 @@ from __future__ import annotations
 import math
 from collections.abc import Container, Mapping
 from dataclasses import dataclass
+from enum import Enum
 from types import MappingProxyType
-from typing import Any, Generic, NoReturn, TypeVar, get_args, get_origin, get_type_hints
+from typing import Annotated, Any, NoReturn, TypeAlias, TypeVar, get_args, get_origin, get_type_hints
 from ..units import RotationalSpeed
 from ..core.diagnostics import Diagnostic, IRValidationError
 from ..core.ir.types import ScalarType
 from ..core.ir import VariableRole
 
 
-class Integer:
-    """SciLoom integer runtime type (not Python int)."""
-
-
-class Real:
-    """SciLoom real runtime type (not Python float)."""
-
-
-class Boolean:
-    """SciLoom boolean runtime type (not Python bool)."""
+class _FieldRole(Enum):
+    INPUT = VariableRole.INPUT
+    OUTPUT = VariableRole.OUTPUT
+    VAR = VariableRole.INTERNAL
 
 
 T = TypeVar("T")
 
 
-class Input(Generic[T]):
-    """Typed function input declaration."""
-
-
-class Output(Generic[T]):
-    """Typed function output declaration."""
+Input: TypeAlias = Annotated[T, _FieldRole.INPUT]
+Output: TypeAlias = Annotated[T, _FieldRole.OUTPUT]
+Var: TypeAlias = Annotated[T, _FieldRole.VAR]
 
 
 _TYPES = {
-    Integer: ScalarType.INTEGER,
-    Real: ScalarType.REAL,
-    Boolean: ScalarType.BOOLEAN,
+    int: ScalarType.INTEGER,
+    float: ScalarType.REAL,
+    bool: ScalarType.BOOLEAN,
     RotationalSpeed: ScalarType.ROTATIONAL_SPEED,
 }
 
@@ -78,40 +70,36 @@ def build_schema(cls: type, reserved_names: Container[str]) -> Mapping[str, Runt
     for base in reversed(cls.__mro__[1:]):
         inherited.update(getattr(base, "model_fields", {}))
     try:
-        annotations = get_type_hints(cls)
+        annotations = get_type_hints(cls, include_extras=True)
     except (NameError, TypeError) as error:
         _schema_error(cls.__name__, f"Cannot resolve class annotations: {error}")
     registered = inherited.copy()
     for name, annotation in annotations.items():
-        if annotation in (Input, Output):
-            _schema_error(name, "Input and Output require an explicit scalar type argument.")
-        origin = get_origin(annotation)
-        is_parameter = origin in (Input, Output)
-        scalar = get_args(annotation)[0] if is_parameter else annotation
-        if scalar not in _TYPES:
-            if is_parameter or name in inherited:
-                _schema_error(name, "Runtime fields require Integer, Real, Boolean or RotationalSpeed.")
+        arguments = get_args(annotation) if get_origin(annotation) is Annotated else ()
+        roles = [item for item in arguments[1:] if isinstance(item, _FieldRole)]
+        if not roles:
+            if name in inherited or _contains_role(annotation):
+                _schema_error(name, "Runtime fields require one direct Input[T], Output[T] or Var[T] role.")
             continue
+        if len(roles) != 1:
+            _schema_error(name, "Runtime fields require exactly one role; nested roles are unsupported.")
+        scalar = arguments[0]
+        if not isinstance(scalar, type) or scalar not in _TYPES:
+            _schema_error(name, "Input, Output and Var require an explicit supported type: int, float, bool or RotationalSpeed.")
         if name in reserved_names or name.startswith("_"):
             _schema_error(name, "Runtime field name conflicts with the model API.")
-        role = (
-            VariableRole.INPUT
-            if origin is Input
-            else VariableRole.OUTPUT
-            if origin is Output
-            else VariableRole.INTERNAL
-        )
+        role = roles[0].value
         if name in inherited and name not in cls.__dict__:
             default = inherited[name].default
         else:
             default = cls.__dict__.get(name)
         if role == VariableRole.INTERNAL and type(default) not in (bool, int, float, RotationalSpeed):
-            _schema_error(name, "Internal variables require a scalar literal default.")
+            _schema_error(name, "Var requires an explicit scalar literal initial value.")
         if role == VariableRole.INTERNAL:
             allowed_types = {
-                Integer: (int,),
-                Real: (int, float),
-                Boolean: (bool,),
+                int: (int,),
+                float: (int, float),
+                bool: (bool,),
                 RotationalSpeed: (RotationalSpeed,),
             }[scalar]
             if type(default) not in allowed_types or (type(default) is float and not math.isfinite(default)):
@@ -127,3 +115,10 @@ def build_schema(cls: type, reserved_names: Container[str]) -> Mapping[str, Runt
     for name, field in registered.items():
         setattr(cls, name, _RuntimeSlot(field))
     return MappingProxyType(registered)
+
+
+def _contains_role(annotation: Any) -> bool:
+    """Reject roles hidden inside other typing constructs instead of treating them as host fields."""
+    if isinstance(annotation, _FieldRole):
+        return True
+    return any(_contains_role(argument) for argument in get_args(annotation))

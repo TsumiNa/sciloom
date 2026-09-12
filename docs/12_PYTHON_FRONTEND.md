@@ -20,18 +20,37 @@ uv run python examples/function_call.py
 
 ## Declarations and specialization
 
-Import `Function`, `Input`, `Output`, `Integer`, `Real`, `Boolean` and `runtime`
-from `sciloom`. Declare inputs and outputs as `Input[T]` and `Output[T]` without
-defaults. Declare internal variables as `name: T = literal`; their defaults retain
-target initialization semantics. Plain Python annotations such as `limit: int = 3`
-are host-time configuration. `Class.model_fields` exposes an immutable mapping of
-`RuntimeField` records before instantiation.
+Import `Function`, `Input`, `Output`, `Var` and `runtime` from `sciloom`. Use native
+`int`, `float`, `bool`, or `RotationalSpeed` as value types. Real/Integer/Boolean
+markers have been removed. Declare inputs and outputs as `Input[T]` and
+`Output[T]` without defaults. Declare internal state as `name: Var[T] = literal`;
+the initial value persists across calls, with explicit runtime assignment for
+resets. Unwrapped annotations such as `limit: int = 3` or a plain physical type
+are host-time configuration. `Class.model_fields` exposes immutable RuntimeField
+records; these implementation records belong to `dsl.schema`.
+
+Input/Output/Var are Annotated aliases: ordinary type checkers see the native
+value type, while SciLoom resolves annotations with `include_extras=True` to keep
+the role. Exactly one direct role is required. Bare aliases, nested roles,
+missing Var initializers and unsupported types fail during class construction.
+Lists remain unsupported until the list stages in the
+[implementation contract](refactor/package-layout/00-overview.md).
 
 `__init__` is normal Python. It can assign scalar configuration and compose child
 Function instances. Runtime fields cannot be read or written as host Python; they
 are used by source lowering. Inherited schema/runtime methods are supported,
 but changing inherited runtime field declarations is rejected in this subset.
 Specialize ordinary Python configuration instead.
+
+## Function documentation
+
+Describe the purpose in the class docstring, followed by an Attributes section
+whose names match runtime fields. Constructor Args explain host configuration;
+types already come from annotations. See Identity/Caller in
+[function_call.py](../examples/function_call.py) and ConfigureAgitation in
+[agitation.py](../examples/agitation.py). These conventions prepare help text for
+AI and future Studio; no description extractor or node registry is implemented.
+Docstrings never determine execution rules or replace semantic validation.
 
 ## Runtime source subset
 

@@ -2,6 +2,11 @@
 
 ## Current compiler direction
 
+Package reorganization and native declarations are implemented: authors use
+`Input[float]`, `Output[bool]` and `Var[int] = 0` from `sciloom`, with AutoSuite
+targets from `sciloom.contrib.autosuite`. Runtime lists and JSON v3 are subsequent
+stages in the [active refactor contract](refactor/package-layout/00-overview.md).
+
 The project has converged on a **model-first, instance-specialized compiler architecture**.
 `sciloom.core.ir` provides immutable typed Function IR, validation and versioned JSON
 interchange. The restricted Python `Function` frontend now lowers configured

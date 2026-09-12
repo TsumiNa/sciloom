@@ -52,8 +52,8 @@ class DynamicTransfer(Function):
     destination: Input[Zone]
     volumes: Input[Array[Volume]]
 
-    index: Integer = 0
-    error_code: Output[Integer] = 0
+    index: Var[int] = 0
+    error_code: Output[int]
 ```
 
 The framework should collect these definitions at class creation, similar to `Pydantic.model_fields` or SQLAlchemy declarative mappings.
@@ -66,7 +66,7 @@ This pattern should not be supported initially:
 
 ```python
 def __init__(self):
-    self.index: Integer = 0  # not a class-level runtime declaration
+    self.index: Var[int] = 0  # not a class-level runtime declaration
 ```
 
 If runtime state only appears after instantiation, the framework loses important static properties:
@@ -80,10 +80,10 @@ If runtime state only appears after instantiation, the framework loses important
 
 Therefore:
 
-> **Class = AutoSuite runtime schema. Instance = specialized realization of that schema.**
+> **Class = SciLoom runtime schema. Instance = specialized realization of that schema.**
 
-Plain SciLoom field types replace the earlier `Local[T]` syntax. Ordinary Python
-types remain host-time configuration. Application fields will own globals;
+`Input[T]`, `Output[T]` and `Var[T]` declare roles using native Python types;
+unwrapped annotations remain host-time configuration. Application fields will own globals;
 Function `GlobalRef[T]` dependencies bind through `bind_globals(...=app.ref(...))`.
 This binding configures existing declared fields without creating new runtime schema.
 
@@ -93,7 +93,7 @@ This binding configures existing declared fields without creating new runtime sc
 
 ```python
 class DynamicTransfer(Function):
-    index: Integer = 0
+    index: Var[int] = 0
 
     def __init__(self, *, valve_group_size=8, channels=(1, 2, 3, 4)):
         self.valve_group_size = int(valve_group_size)

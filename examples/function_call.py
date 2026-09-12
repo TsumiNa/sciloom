@@ -42,27 +42,45 @@ Generated ASFP excerpts (parameter IDs and other fields omitted):
 from pathlib import Path
 
 from sciloom.contrib.autosuite import AutoSuiteTarget
-from sciloom import Function, Input, Output, Real, runtime
+from sciloom import Function, Input, Output, Var, runtime
 
 
 class Identity(Function):
-    x: Input[Real]
-    y: Output[Real]
+    """Copy one numeric input to its output.
+
+    Attributes:
+        x: Value supplied by the caller.
+        y: Copied value returned to the caller.
+    """
+
+    x: Input[float]
+    y: Output[float]
 
     @runtime
-    def run(self):
+    def run(self) -> None:
         self.y = self.x
 
 
 class Caller(Function):
-    result: Real = 0.0
+    """Specialize and call Identity with a host-configured value.
 
-    def __init__(self, value: float = 2.5):
+    Attributes:
+        result: Persistent runtime state receiving Identity's output.
+    """
+
+    result: Var[float] = 0.0
+
+    def __init__(self, value: float = 2.5) -> None:
+        """Configure the call.
+
+        Args:
+            value: Host value embedded in the compiled call.
+        """
         self.value = value
         self.identity = Identity()
 
     @runtime
-    def run(self):
+    def run(self) -> None:
         self.result = self.identity(x=self.value)
 
 

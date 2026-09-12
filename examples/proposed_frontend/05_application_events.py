@@ -1,10 +1,10 @@
 """Design example: application/event semantic roles."""
 
-from sciloom import Application, Boolean, on_start, on_error, on_stop, main
+from sciloom import Application, on_start, on_error, on_stop, main, Var
 
 
 class PolymerizationApplication(Application):
-    error_latched: Boolean = False
+    error_latched: Var[bool] = False
 
     @on_start
     def initialize(self):

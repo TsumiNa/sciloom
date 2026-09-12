@@ -16,10 +16,9 @@ compatibility shims would create competing interfaces. Neither is introduced.
 
 ## Ordered stages and availability
 
-Implementation progress: stages 1–3 are merged in GitHub PRs #12–14.
-Stage 4 separates implementation responsibilities within those paths. Native
-declarations and lists remain pending; authors still use Real/Integer/Boolean
-until stage 5.
+Implementation progress: stages 1–4 are merged in GitHub PRs #12–15.
+Stage 5 implements native scalar Input/Output/Var declarations and docstring
+conventions. Runtime lists remain pending; JSON is still v2.
 
 | Stage | Plan | Capability available after merge |
 |---|---|---|
@@ -105,7 +104,7 @@ annotations are host data. Var needs an explicit initial value. Initial values
 initialize session state, not each call; runtime assignment performs a reset.
 Scope follows the owning model. Application/global compilation remains deferred.
 
-Stage 5 will use generic Annotated aliases (TypeAlias plus TypeVar) with
+Stage 5 uses generic Annotated aliases (TypeAlias plus TypeVar) with
 one private field-role marker. get_type_hints(include_extras=True) preserves it;
 ordinary type checkers see T. Reject unsubscripted aliases, multiple/nested roles,
 Any and unsupported types. Keep descriptors preventing host reads/writes.

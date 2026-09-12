@@ -6,9 +6,9 @@ from .units import RotationalSpeed, rpm, rps
 
 if TYPE_CHECKING:
     from .dsl.model import Agitator, Function, runtime
-    from .dsl.schema import Boolean, Input, Integer, Output, Real
+    from .dsl.schema import Input, Output, Var
 
-_DSL_EXPORTS = {"Agitator", "Boolean", "Function", "Input", "Integer", "Output", "Real", "runtime"}
+_DSL_EXPORTS = {"Agitator", "Function", "Input", "Output", "Var", "runtime"}
 
 
 def __getattr__(name: str) -> Any:
@@ -29,11 +29,9 @@ __all__ = [
     "RotationalSpeed",
     "rpm",
     "rps",
-    "Boolean",
     "Function",
     "Input",
-    "Integer",
     "Output",
-    "Real",
+    "Var",
     "runtime",
 ]
