@@ -7,9 +7,11 @@ import inspect
 from typing import Any, NoReturn, cast
 from .model import Function
 from .device_schema import DeviceReference
+from ..devices.base import BaseDevice
+from ..devices.declarations import device_contract
 from ..units import SpeedUnit
 from ..core.diagnostics import Diagnostic, IRValidationError, SourceSpan
-from ..core.ir import AgitatorResource, Expression, FunctionIR, Reference, ValueType
+from ..core.ir import DeviceResource, DeviceTypeContract, Expression, FunctionIR, Reference, ValueType
 from ..core.ir.expressions import ExpressionChecker
 from ..core.ir.model import Node
 
@@ -24,8 +26,9 @@ class LoweringContext:
         function_id: str,
         instances: list[Function],
         ids: dict[int, str],
-        resources: dict[str, AgitatorResource],
+        resources: dict[str, DeviceResource],
         paths: dict[int, str],
+        device_types: dict[str, DeviceTypeContract],
     ) -> None:
         self.instance = instance
         self.function_id = function_id
@@ -33,6 +36,7 @@ class LoweringContext:
         self.ids = ids
         self.resources = resources
         self.paths = paths
+        self.device_types = device_types
         self.unit_names: dict[str, SpeedUnit] = {}
         self.filename = ""
         self.sequence = 0
@@ -63,11 +67,20 @@ class LoweringContext:
             return vars(self.instance)[name]
         return inspect.getattr_static(type(self.instance), name, _MISSING)
 
-    def device_resource(self, reference: DeviceReference) -> AgitatorResource:
+    def device_resource(self, reference: DeviceReference) -> DeviceResource:
         if id(reference.owner) not in self.paths:
             self.fail("device_reference", "Shared device owner must belong to this Function composition.")
         logical_id = ".".join(filter(None, (self.paths[id(reference.owner)], reference.name)))
-        return self.resources.setdefault(logical_id, AgitatorResource(node_id=f"resource:{logical_id}", logical_id=logical_id))
+        for cls in reversed(reference.device_type.__mro__):
+            if issubclass(cls, BaseDevice):
+                contract = device_contract(cls)
+                previous = self.device_types.setdefault(contract.type_id, contract)
+                if previous != contract:
+                    self.fail("device_contract", "A device type identifier has conflicting declarations.")
+        return self.resources.setdefault(
+            logical_id,
+            DeviceResource(node_id=f"resource:{logical_id}", logical_id=logical_id, device_type_id=reference.device_type.device_type_id),
+        )
 
     def target(self, node: ast.AST) -> Reference:
         if (

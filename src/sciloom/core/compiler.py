@@ -7,6 +7,7 @@ from typing import Protocol, runtime_checkable
 from .diagnostics import CompilationError, Diagnostic, IRValidationError
 from .ir import Program, validate
 from .devices import DeviceBindings, validate_bindings
+from .configuration import validate_device_usage
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -50,7 +51,11 @@ def compile_ir(program: Program, *, target: Target) -> CompileResult:
     diagnostics = validate(program)
     if diagnostics:
         raise IRValidationError(diagnostics)
-    diagnostics = validate_bindings(program, target.resolve_devices(program))
+    bindings = target.resolve_devices(program)
+    diagnostics = validate_bindings(program, bindings)
+    if diagnostics:
+        raise CompilationError(diagnostics)
+    diagnostics = validate_device_usage(program, bindings)
     if diagnostics:
         raise CompilationError(diagnostics)
     diagnostics = target.validate(program)

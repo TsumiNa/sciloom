@@ -14,7 +14,8 @@ class Stage(Function):
 
     @runtime
     def run(self):
-        self.agitator.set_speed(600 * rpm)
+        self.agitator.speed = 600 * rpm
+        self.agitator.start()
 
 
 class Workflow(Function):
@@ -39,11 +40,11 @@ def test_annotation_slots_share_identity_and_state_without_runtime_variables():
     assert model.agitator is not Workflow().agitator
     program = model.to_ir()
     assert program == model.to_ir()
-    assert program.format_version == 3
+    assert program.format_version == 4
     assert [resource.logical_id for resource in program.resources] == ["agitator"]
     result = Interpreter(program).run()
     assert len(result.resources) == 1
-    assert result.resources["resource:agitator"].speed == 600 * rpm
+    assert result.resources["resource:agitator"].applied_configuration["speed"] == 600 * rpm
     assert not result.resources["resource:agitator"].enabled
     target = AutoSuiteTarget(devices={"agitator": AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="23")})
     assert model.compile(target=target).artifact.content.startswith(b"<?xml")
@@ -103,9 +104,9 @@ def test_invalid_declarations_and_inherited_role_changes():
         class Reserved(Function):
             compile: Agitator
 
-    with pytest.raises(TypeError, match="v4"):
-        class Unsupported(Function):
-            device: BaseDevice
+    class Generic(Function):
+        device: BaseDevice
+    assert tuple(Generic.device_fields) == ("device",)
 
     with pytest.raises(IRValidationError, match="class_schema"):
         class Wrapped(Function):

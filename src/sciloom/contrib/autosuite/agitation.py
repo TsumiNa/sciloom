@@ -7,7 +7,7 @@ speedunit=rpm only selects its display unit. See autosuite/docs/16_AGITATION_MAP
 
 import re
 from dataclasses import dataclass
-from typing import ClassVar
+from typing import Callable, ClassVar
 
 from ...devices.agitation import Agitator
 
@@ -24,6 +24,9 @@ class AutoSuiteIndividualShaker(Agitator):
     """
 
     device_type_id: ClassVar[str] = "sciloom.autosuite.individual-shaker/v1"
+    writable_properties: ClassVar[tuple[str, ...]] = ("speed",)
+    required_configuration: ClassVar[tuple[str, ...]] = ("speed",)
+    supported_operations: ClassVar[tuple[Callable[..., None], ...]] = (Agitator.start, Agitator.stop)
     zone: str
     device_id: str
 

@@ -2,7 +2,7 @@
 
 This page describes the current implementation. The accepted
 [package and interface refactor](refactor/package-layout/00-overview.md) specifies
-the completed move to `dsl`, `core` and `contrib`, native declarations and JSON v3
+the completed move to `dsl`, `core` and `contrib`, native declarations and JSON v4
 list semantics and Python list syntax. AutoSuite array emission includes copy isolation and ordered index checks.
 Paths and capabilities below are updated as each
 implementing stage lands.
@@ -27,7 +27,8 @@ flowchart TB
     IR --> Reference["core.interpreter<br/>Values, state, events"]
     IR --> Compile["core.compiler: compile_ir<br/>Shared validation"]
     Compile --> Resolve["Target.resolve_devices<br/>core.devices binding validation"]
-    Resolve --> Target["Target.validate / Target.emit"]
+    Resolve --> Configuration["Capabilities and definite configuration"]
+    Configuration --> Target["Target.validate / Target.emit"]
     Bind["Concrete device deployment profiles"] --> Resolve
     Target --> AutoSuite["contrib.autosuite<br/>Legality and typed task adapters"]
     Target -.-> Other["Other target implementations"]
@@ -49,11 +50,15 @@ future work; ASFP and reference execution are implemented now.
 | `dsl/lowering.py`, `context.py` | Instance graph to Program orchestration; shared symbols, IDs and source locations |
 | `dsl/source.py`, `expressions.py`, `statements.py` | File-backed source discovery; Python expressions; calls, operations and control flow |
 | `core/ir/types.py`, `model.py` | Value types/compatibility; immutable semantic nodes |
-| `core/ir/schema.py`, `codec.py` | Structural conversion and JSON v3 interchange |
+| `core/ir/schema.py`, `codec.py` | Structural conversion and JSON v4 interchange |
 | `core/ir/expressions.py`, `validation.py` | Expression/symbol type checking; whole-program legality |
 | `units.py` | Shared rotational-speed values and rpm/rps conversion |
 | `core/interpreter/runtime.py` | Sessions, call frames, persistent state, budgets, control flow and domain events |
 | `core/interpreter/values.py`, `expressions.py` | Value normalization/errors; expression evaluation |
+| `core/configuration.py` | Capability checks and interprocedural definite configuration |
+| `core/ir/device_contracts.py`, `device_validation.py` | Data-only device directory and signature validation |
+| `core/interpreter/device_state.py` | Saved/applied configuration and lifecycle snapshots |
+| `contrib/autosuite/device_state.py` | Private configuration storage and normal-return transport |
 | `core/compiler.py` | Target protocol, shared compilation pipeline and generic byte artifacts |
 | `contrib/autosuite/target.py` | Vendor version/configuration and target restrictions |
 | `contrib/autosuite/codegen.py`, `context.py` | Generation entrypoint; target names, IDs and deployment state |
@@ -108,9 +113,9 @@ semantics into serialization records, before the final XML encoding.
 
 ## Preserve high-level intent until target lowering
 
-AgitatorResource, SetAgitation and StopAgitation remain visible in Program. A
-set-speed operation carries a typed rotational-speed expression; stopping has
-no speed argument. Neither Python lowering nor IR validation replaces these
+DeviceResource, ConfigureProperty, StartAgitation and StopAgitation remain visible
+in Program. Property assignment captures a typed value; start applies saved
+configuration, and stopping has no speed argument. Neither Python lowering nor IR validation replaces these
 operations with device IDs, XML fields or anonymous calls.
 
 The reference interpreter can observe and execute that intent without a backend.

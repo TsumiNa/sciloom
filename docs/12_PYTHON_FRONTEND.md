@@ -1,5 +1,11 @@
 # Python Function frontend
 
+Device annotations such as `agitator: Agitator` form a separate dependency schema.
+`self.agitator.speed = value` lowers to ConfigureProperty; explicit `start()` and
+`stop()` lower to lifecycle nodes. Reads and augmented property writes are rejected.
+See [device semantics](15_AGITATION_SEMANTICS.md). The DSL never invokes declared
+property or command bodies while translating source.
+
 `Function` classes declare runtime schema before instantiation. Calling
 `instance.to_ir()` reads registered runtime source and instance configuration,
 then returns a validated `sciloom.core.ir.Program`. `instance.compile(target=...)` additionally

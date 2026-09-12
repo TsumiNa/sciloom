@@ -2,5 +2,6 @@
 
 from .agitation import Agitator
 from .base import BaseDevice
+from .declarations import operation
 
-__all__ = ["Agitator", "BaseDevice"]
+__all__ = ["Agitator", "BaseDevice", "operation"]

@@ -5,11 +5,13 @@ from .expressions import ExpressionChecker
 from .types import ListType, ScalarType, ValueType, is_assignable
 from .traversal import iter_nodes
 from ..diagnostics import Diagnostic, IRValidationError
-from .model import Assignment, BinaryOp, ListLiteral, ListSet, Literal, SetAgitation, StopAgitation, FunctionIR, If, Node, Program, Statement, VariableRole, While
+from .model import Assignment, BinaryOp, ListLiteral, ListSet, Literal, ConfigureProperty, StartAgitation, StopAgitation, DeviceCommand, DeviceIf, CanWrite, SupportsOperation, IsDevice, FunctionIR, If, Node, Program, Statement, VariableRole, While
+from .device_validation import validate_directory, members_for, is_agitator
+from .device_contracts import START_AGITATION_ID, STOP_AGITATION_ID
 
 
 def validate(package: Program) -> tuple[Diagnostic, ...]:
-    """Return errors without modifying IR. An empty tuple means valid v3 semantics.
+    """Return errors without modifying IR. An empty tuple means valid v4 semantics.
 
     This does not prove Executor acceptance, loop termination or device safety.
     Programmatic construction and JSON import receive the same structural checks.
@@ -34,8 +36,9 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
             )
         )
 
-    if package.format_version != 3:
-        report("format_version", "Only semantic format version 3 is supported.", "$.format_version")
+    if package.format_version != 4:
+        report("format_version", "Only semantic format version 4 is supported.", "$.format_version")
+    validate_directory(package, report)
 
     seen: dict[str, str] = {}
     for node, path in iter_nodes(package):
@@ -98,13 +101,45 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                     statements(stmt.else_body, function, f"{p}.else_body")
                 else:
                     statements(stmt.body, function, f"{p}.body")
-            elif isinstance(stmt, (SetAgitation, StopAgitation)):
-                if stmt.resource_id not in resources:
-                    report("unknown_resource", "Operation must reference a declared agitator.", p, stmt)
-                if isinstance(stmt, SetAgitation):
-                    speed_type = expression(stmt.speed, function, f"{p}.speed")
-                    if speed_type is not None and speed_type != ScalarType.ROTATIONAL_SPEED:
-                        report("quantity_type", "Agitation requires a rotational-speed quantity.", p, stmt)
+            elif isinstance(stmt, (ConfigureProperty, StartAgitation, StopAgitation, DeviceCommand)):
+                resource = resources.get(stmt.resource_id)
+                properties, commands = members_for(package, resource) if resource else ((), ())
+                if resource is None:
+                    report("unknown_resource", "Operation must reference a declared device.", p, stmt)
+                if isinstance(stmt, ConfigureProperty):
+                    prop = next((v for v in properties if v.semantic_id == stmt.property_id), None)
+                    actual = expression(stmt.value, function, f"{p}.value")
+                    if prop is None:
+                        report("device_property", "Property must have a declared signature for this device category.", p, stmt)
+                    else:
+                        check_assignment(actual, prop.type, p, stmt)
+                elif isinstance(stmt, DeviceCommand):
+                    if stmt.operation_id in (START_AGITATION_ID, STOP_AGITATION_ID):
+                        report("device_command", "Built-in agitation commands require their dedicated semantic nodes.", p, stmt)
+                    command = next((c for c in commands if c.semantic_id == stmt.operation_id), None)
+                    parameters = {v.name: v.type for v in command.parameters} if command else {}
+                    names = [a.name for a in stmt.arguments]
+                    if command is None or len(set(names)) != len(names) or set(names) != parameters.keys():
+                        report("device_command", "Command arguments must match its declared signature.", p, stmt)
+                    for argument in stmt.arguments:
+                        check_assignment(expression(argument.value, function, p), parameters.get(argument.name), p, stmt)
+                elif resource is not None and not is_agitator(package, resource):
+                    report("device_type", "Agitation lifecycle requires an Agitator resource.", p, stmt)
+            elif isinstance(stmt, DeviceIf):
+                predicate = stmt.condition
+                resource = resources.get(predicate.resource_id)
+                if resource is None:
+                    report("unknown_resource", "Device predicate must reference a declared resource.", p, predicate)
+                if isinstance(predicate, CanWrite):
+                    if not any(v.semantic_id == predicate.property_id for c in package.device_types for v in c.properties):
+                        report("device_property", "Device query must name a declared property.", p, predicate)
+                elif isinstance(predicate, SupportsOperation):
+                    if not any(v.semantic_id == predicate.operation_id for c in package.device_types for v in c.operations):
+                        report("device_command", "Device query must name a declared command.", p, predicate)
+                elif isinstance(predicate, IsDevice) and not any(c.type_id == predicate.device_type_id for c in package.device_types):
+                    report("device_contract", "Device query must name a declared type.", p, predicate)
+                statements(stmt.then_body, function, f"{p}.then_body")
+                statements(stmt.else_body, function, f"{p}.else_body")
             else:
                 callee = functions.get(stmt.function_id)
                 if callee is None:

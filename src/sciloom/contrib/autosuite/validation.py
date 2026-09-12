@@ -10,7 +10,7 @@ from ...core.ir import (
     ListType,
     Program,
     Reference,
-    SetAgitation,
+    ConfigureProperty,
     Statement,
     VariableRole,
     While,
@@ -62,8 +62,8 @@ def validate_array_outputs(program: Program) -> tuple[Diagnostic, ...]:
                 elif isinstance(statement, While):
                     read(statement.condition, assigned)
                     block(statement.body, assigned)
-                elif isinstance(statement, SetAgitation):
-                    read(statement.speed, assigned)
+                elif isinstance(statement, ConfigureProperty):
+                    read(statement.value, assigned)
             return assigned
 
         assigned = block(function.body, set())

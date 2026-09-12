@@ -4,9 +4,15 @@
 
 Package reorganization and native declarations are implemented: authors use
 `Input[float]`, `Output[bool]` and `Var[int] = 0` from `sciloom`, with AutoSuite
-targets from `sciloom.contrib.autosuite`. JSON v3 list IR and reference execution
+targets from `sciloom.contrib.autosuite`. JSON v4 list IR and reference execution
 and Python list syntax are implemented, including AutoSuite array generation; see the
-[active refactor contract](refactor/package-layout/00-overview.md).
+[completed package refactor](refactor/package-layout/00-overview.md).
+
+The [active device refactor](refactor/device-abstraction/00-overview.md) adds
+typed slots, explicit deployment profiles, property configuration and explicit
+start/stop. These lifecycle semantics compile to AutoSuite and execute in the
+reference interpreter with separate configured/applied snapshots. Native device
+commands and compile-time device specialization remain subsequent stages.
 
 The [typing baseline](16_TYPING.md) checks production code, author examples and
 extension interfaces with locked mypy and CI on Python 3.12–3.14. GUI/server and
@@ -22,7 +28,7 @@ See the [implementation sequence](refactor/semantic-ir/00-overview.md),
 [ASFP compiler](13_ASFP_COMPILER.md). Executor simulation remains an external gate.
 
 The [compiler foundation refactor](refactor/compiler-foundation/00-overview.md)
-separates Python lowering, Program/JSON (now v3), reference execution and explicit target
+separates Python lowering, Program/JSON (now v4), reference execution and explicit target
 compilation. Agitation provides a real high-level operation with logical resources
 and typed speed; AutoSuite deployment bindings remain outside IR. See the
 [implemented architecture](02_COMPILER_ARCHITECTURE.md).

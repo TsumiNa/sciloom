@@ -4,25 +4,27 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from types import MappingProxyType
 
-from ...units import RotationalSpeed
 from ..diagnostics import IRValidationError
 from ..ir import (
     Assignment,
     ListSet,
-    SetAgitation,
+    ConfigureProperty,
+    StartAgitation,
+    DeviceIf,
     StopAgitation,
     Call,
     FunctionIR,
     If,
     Program,
     Reference,
-    ScalarType,
     Statement,
     VariableRole,
     While,
     validate,
 )
 from ..ir.model import Node
+from ..ir.traversal import iter_nodes
+from .device_state import DeviceState, DeviceEvent, DeviceSession
 
 from .values import (
     InputValue,
@@ -51,26 +53,12 @@ class ExecutionConfig:
 
 
 @dataclass(frozen=True, kw_only=True)
-class AgitationState:
-    enabled: bool = False
-    speed: RotationalSpeed | None = None
-
-
-@dataclass(frozen=True, kw_only=True)
-class AgitationEvent:
-    node_id: str
-    resource_id: str
-    enabled: bool
-    speed: RotationalSpeed | None
-
-
-@dataclass(frozen=True, kw_only=True)
 class ExecutionResult:
     outputs: Mapping[str, OutputValue]
     state: Mapping[str, Mapping[str, RuntimeValue]]
     steps: int
-    resources: Mapping[str, AgitationState]
-    events: tuple[AgitationEvent, ...]
+    resources: Mapping[str, DeviceState]
+    events: tuple[DeviceEvent, ...]
 
 
 class Interpreter:
@@ -84,14 +72,17 @@ class Interpreter:
         diagnostics = validate(program)
         if diagnostics:
             raise IRValidationError(diagnostics)
+        for node, _ in iter_nodes(program):
+            if isinstance(node, DeviceIf):
+                fail("unspecialized_device_condition", "Specialize device conditions before reference execution.", node)
         self.program = program
         self.config = config if config is not None else ExecutionConfig()
         self._functions = {f.node_id: f for f in program.functions}
         self._variables = {v.node_id: v for f in program.functions for v in f.variables}
         self._state: dict[str, dict[str, RuntimeValue]] = {f.node_id: {} for f in program.functions}
         self._steps = 0
-        self._resources = {r.node_id: AgitationState() for r in program.resources}
-        self._events: list[AgitationEvent] = []
+        self._devices = DeviceSession(program)
+        self._events: list[DeviceEvent] = []
         for variable in self._variables.values():
             if variable.role == VariableRole.INTERNAL:
                 assert variable.initial is not None
@@ -128,7 +119,7 @@ class Interpreter:
             outputs=MappingProxyType(named),
             state=MappingProxyType(snapshot),
             steps=self._steps,
-            resources=MappingProxyType(dict(self._resources)),
+            resources=MappingProxyType(dict(self._devices.states)),
             events=tuple(self._events),
         )
 
@@ -193,23 +184,8 @@ class Interpreter:
                 outputs = self._call(callee, arguments, depth + 1)
                 for binding in statement.outputs:
                     self._write(binding.target, outputs[binding.parameter_id], frame)
-            elif isinstance(statement, (SetAgitation, StopAgitation)):
-                previous = self._resources[statement.resource_id]
-                if isinstance(statement, SetAgitation):
-                    speed = RotationalSpeed(
-                        rps=coerce(evaluate(self, statement.speed, frame), ScalarType.ROTATIONAL_SPEED, statement)
-                    )
-                    state = AgitationState(enabled=True, speed=speed)
-                else:
-                    state = AgitationState(enabled=False, speed=previous.speed)
-                self._resources[statement.resource_id] = state
-                self._events.append(
-                    AgitationEvent(
-                        node_id=statement.node_id,
-                        resource_id=statement.resource_id,
-                        enabled=state.enabled,
-                        speed=state.speed,
-                    )
-                )
+            elif isinstance(statement, (ConfigureProperty, StartAgitation, StopAgitation)):
+                value = evaluate(self, statement.value, frame) if isinstance(statement, ConfigureProperty) else None
+                self._events.append(self._devices.apply(statement, value))
             else:
                 fail("unsupported_operation", f"Cannot execute {type(statement).__name__}.", statement)
