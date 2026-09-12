@@ -100,7 +100,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 30,
+            "line": 32,
             "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
           },
           "value": {
@@ -109,7 +109,7 @@
             "source": {
               "column": 30,
               "kind": "SourceSpan",
-              "line": 30,
+              "line": 32,
               "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
             },
             "type": "rotational_speed",
@@ -124,7 +124,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 31,
+            "line": 33,
             "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
           },
           "value": {
@@ -133,7 +133,7 @@
             "source": {
               "column": 29,
               "kind": "SourceSpan",
-              "line": 31,
+              "line": 33,
               "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
             },
             "type": "real",
@@ -147,7 +147,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 32,
+            "line": 34,
             "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
           }
         },
@@ -160,7 +160,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 33,
+            "line": 35,
             "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
           }
         },
@@ -171,7 +171,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 34,
+            "line": 36,
             "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
           }
         }
@@ -182,7 +182,7 @@
       "source": {
         "column": 4,
         "kind": "SourceSpan",
-        "line": 29,
+        "line": 31,
         "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
       },
       "variables": []

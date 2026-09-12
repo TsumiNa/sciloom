@@ -1,4 +1,4 @@
-"""Compile an independent contribution, without AutoSuite imports or hardware I/O.
+"""For SciLoom developers: compile an independent device contribution.
 
 Run: uv run python -m examples.developer.demo_device
 
@@ -8,6 +8,8 @@ Expected output:
 
 The companion JSON is the recording target's output. calibrate() is a declared
 native request, not an operation the reference interpreter knows how to execute.
+No AutoSuite imports or hardware I/O are involved. Absolute SourceSpan diagnostic
+paths in the companion depend on the checkout that generated it.
 """
 
 from pathlib import Path
