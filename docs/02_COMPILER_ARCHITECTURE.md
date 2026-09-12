@@ -2,8 +2,9 @@
 
 This page describes the current implementation. The accepted
 [package and interface refactor](refactor/package-layout/00-overview.md) specifies
-the staged move to `dsl`, `core` and `contrib`, native declarations and JSON v3
-lists. Paths and capabilities below are updated as each implementing stage lands.
+the completed move to `dsl`, `core` and `contrib`, plus the upcoming native
+declarations and JSON v3 lists. Paths and capabilities below are updated as each
+implementing stage lands.
 
 SciLoom has one typed semantic program model, multiple authoring paths and explicit
 compilation targets. The Python frontend interprets source syntax; the IR retains
@@ -13,15 +14,15 @@ program intent; a backend chooses how to express that intent on its platform.
 
 ```mermaid
 flowchart TB
-    Python["Python Function instance<br/>Host specialization and composition"] --> Lower["Python AST lowering"]
-    Lower --> IR["Program / Semantic IR"]
+    Python["Python Function instance<br/>Host specialization and composition"] --> Lower["dsl: Python AST lowering"]
+    Lower --> IR["core.ir: Program / Semantic IR"]
     JSON["Versioned JSON"] <--> IR
     Author["Future xyflow / AI authoring"] -.-> IR
-    IR --> Reference["Reference interpreter<br/>Values, state, events"]
-    IR --> Compile["compile_ir(program, target=...)<br/>Shared validation"]
+    IR --> Reference["core.interpreter<br/>Values, state, events"]
+    IR --> Compile["core.compiler: compile_ir<br/>Shared validation"]
     Compile --> Target["Target.validate / Target.emit"]
     Bind["AutoSuite deployment bindings"] --> AutoSuite
-    Target --> AutoSuite["AutoSuite backend<br/>Legality and typed task adapters"]
+    Target --> AutoSuite["contrib.autosuite<br/>Legality and typed task adapters"]
     Target -.-> Other["Other target implementations"]
     AutoSuite --> SIR["SerializationIR / XmlNode"]
     SIR --> XML["ASFP XML artifact"]
@@ -34,17 +35,17 @@ future work; ASFP and reference execution are implemented now.
 
 | Module | Owns |
 |---|---|
-| `frontends/python/model.py` | Function class schema, decorators and public source API |
-| `frontends/python/lowering.py` | File-backed source discovery, AST resolution and lowering to Program |
+| `dsl/model.py` | Function class schema, decorators and public source API |
+| `dsl/lowering.py` | File-backed source discovery, AST resolution and lowering to Program |
 | `core/ir/model.py` | Immutable typed program, variables, expressions, structured control flow and domain operations |
 | `core/ir/schema.py`, `validation.py`, `codec.py` | Structure, semantic legality and JSON v2 interchange |
 | `units.py` | Shared rotational-speed values and rpm/rps conversion |
 | `core/interpreter/runtime.py` | Reference evaluation, call frames, persistent state, budgets and domain events |
 | `core/compiler.py` | Target protocol, shared compilation pipeline and generic byte artifacts |
-| `backends/autosuite/target.py` | Vendor version/configuration and target restrictions |
-| `backends/autosuite/codegen.py` | Function/control-flow mapping, target names and IDs |
-| `backends/autosuite/agitation.py` | Individual-shaker binding and typed Stir adapter |
-| `backends/autosuite/xml.py` | Immutable serialization records and XML encoding |
+| `contrib/autosuite/target.py` | Vendor version/configuration and target restrictions |
+| `contrib/autosuite/codegen.py` | Function/control-flow mapping, target names and IDs |
+| `contrib/autosuite/agitation.py` | Individual-shaker binding and typed Stir adapter |
+| `contrib/autosuite/xml.py` | Immutable serialization records and XML encoding |
 | `core/diagnostics.py` | Shared errors, diagnostics and source locations |
 
 ## Source lowering, semantics and compilation

@@ -42,6 +42,7 @@ from ...core.ir import (
 from .agitation import IndividualShakerBinding, agitation_task
 from .xml import SerializationIR, AutoSuiteVersion, XmlNode, xml_node as _xml
 
+
 @dataclass(frozen=True)
 class _ScalarEncoding:
     parameter_type: str
@@ -56,6 +57,7 @@ _SCALARS = {
     ScalarType.BOOLEAN: _ScalarEncoding("bool", "11", "1", "s"),
     ScalarType.ROTATIONAL_SPEED: _ScalarEncoding("angularspeed", "5", "1/s", "rpm"),
 }
+
 
 def _number(value: bool | int | float) -> str:
     if isinstance(value, float) and value.is_integer():
