@@ -20,13 +20,13 @@ Rerunning an example refreshes its companion file. Source-location metadata in
 the JSON reflects the generating checkout. None of these examples sends commands
 to hardware.
 
-## Proposed frontend designs
-
 For implemented direct list semantics, run
 `uv run python -m examples.developer.list_ir`. Its
 [source](../examples/developer/list_ir.py) and [JSON](../examples/developer/list_ir.json)
 show copying and element updates with JSON v3. This is a developer example;
 Python list authoring and AutoSuite array generation are later stages.
+
+## Proposed frontend designs
 
 The files in `examples/proposed_frontend/` are **architecture examples**, not
 runnable applications. Function, Input/Output/Var and runtime are implemented;
