@@ -13,6 +13,10 @@ build-backend = "uv_build"
 [tool.uv.build-backend]
 module-name = "sciloom"
 
+[tool.pytest.ini_options]
+# Integration tests import the independent contributor example from the checkout.
+pythonpath = ["."]
+
 [tool.ruff]
 exclude = [".venv", "venv", "__pycache__", ".git"]
 line-length = 120
@@ -65,6 +69,7 @@ module = [
     "sciloom.devices.agitation_test",
     "sciloom.devices.declarations_test",
     "sciloom.dsl.device_operations_test",
+    "sciloom.dsl.contribution_test",
     "sciloom.core.configuration_test",
     "sciloom.core.interpreter.device_state_test",
     "sciloom.contrib.autosuite.device_state_test",

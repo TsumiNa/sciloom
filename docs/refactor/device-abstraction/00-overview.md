@@ -7,9 +7,9 @@ supersedes the device/lifecycle portions of the compiler-foundation and
 package-layout plans when the corresponding implementation stage lands. Other
 package, scalar and list contracts remain in force.
 
-Stages 1–3 are merged as PRs #22 (8e90e64), #23 (01fd95a) and #24
-(82f9090). Stage 4 implements property configuration, explicit lifecycle and v4;
-stages 5–6 remain pending. Examples of target interfaces
+Stages 1–4 are merged as PRs #22 (8e90e64), #23 (01fd95a), #24
+(82f9090) and #25 (cd92f54). Stage 5 implements independent native contributions;
+stage 6 remains pending. Examples of target interfaces
 below are specifications, not claims of currently runnable code. Every stage
 updates its callers, examples, status and tests before review and squash merge.
 Do not start a later implementation stage before the preceding PR is merged.
@@ -247,6 +247,32 @@ objects or new quantity system. Test the contribution boundary with an additiona
 independent command and a recording target that handles it without core changes.
 The test target also checks gain in [0, 1]: reject invalid constants and runtime
 values whose compliance cannot be proved. No invented AutoSuite gain mapping.
+
+Stage 5's executable contribution is outside the `sciloom` namespace in
+[`examples/developer/demo_contribution`](../../../examples/developer/demo_contribution/__init__.py).
+Its `DemoAgitator` additionally takes `device_id: str = "demo-1"` as deployment
+identity. `DemoTarget(*, devices: Mapping[str, DemoAgitator])` accepts exact demo
+profiles, resolves bindings with `bind_device`, validates literal gains in [0, 1],
+and emits the validated program as an `application/json` recording artifact.
+It deliberately rejects runtime values and arithmetic it cannot prove. It does
+not simulate calibration. No demo identifier appears in shared DSL/core code.
+
+```python
+from examples.developer.demo_contribution import DemoAgitator, DemoTarget
+from examples.developer.demo_device import DemoExperiment
+
+result = DemoExperiment().compile(
+    target=DemoTarget(devices={"agitator": DemoAgitator(device_id="demo-1")}),
+)
+result.write("demo_device.json")
+# ConfigureProperty, ConfigureProperty, StartAgitation, DeviceCommand, StopAgitation
+```
+
+Run `uv run python -m examples.developer.demo_device`; the same-name JSON companion
+records its full output. Tests copy the contribution outside the checkout and
+import it independently. Registered command arguments obey their Python signature
+(including positional-only and keyword-only parameters) and become typed named IR
+arguments. Defaults, argument unpacking and variadics remain unsupported.
 
 ## Compiler and binding interface
 

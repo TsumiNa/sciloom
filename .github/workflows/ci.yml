@@ -33,3 +33,4 @@ jobs:
       - run: uv run python examples/non_zero_array_min.py
       - run: uv run python -m examples.developer.agitation_ir
       - run: uv run python -m examples.developer.list_ir
+      - run: uv run python -m examples.developer.demo_device

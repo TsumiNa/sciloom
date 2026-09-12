@@ -1,8 +1,9 @@
 """Lower property writes and registered lifecycle calls without invoking devices."""
 
 import ast
+import inspect
 
-from ..core.ir import ConfigureProperty, StartAgitation, StopAgitation
+from ..core.ir import CommandArgument, ConfigureProperty, DeviceCommand, StartAgitation, StopAgitation
 from ..core.ir.device_contracts import START_AGITATION_ID, STOP_AGITATION_ID
 from ..devices.declarations import device_contract
 from .context import LoweringContext
@@ -35,7 +36,7 @@ def configure(context: LoweringContext, node: ast.Assign) -> ConfigureProperty |
     )
 
 
-def operation(context: LoweringContext, node: ast.Call) -> StartAgitation | StopAgitation | None:
+def operation(context: LoweringContext, node: ast.Call) -> StartAgitation | StopAgitation | DeviceCommand | None:
     member = device_member(context, node.func)
     if member is None:
         return None
@@ -44,9 +45,25 @@ def operation(context: LoweringContext, node: ast.Call) -> StartAgitation | Stop
     command = next((c for c in contract.operations if c.name == name), None)
     if command is None:
         context.fail("unsupported_operation", f"Device command {name!r} is not declared.", node)
-    if command.semantic_id not in (START_AGITATION_ID, STOP_AGITATION_ID):
-        context.fail("unsupported_operation", "Native device commands require the contribution stage.", node)
-    if node.args or node.keywords:
-        context.fail("operation_binding", f"{name} takes no arguments.", node)
-    cls = StartAgitation if command.semantic_id == START_AGITATION_ID else StopAgitation
-    return cls(**context.metadata(node), resource_id=context.device_resource(reference).node_id)
+    if any(isinstance(arg, ast.Starred) for arg in node.args) or any(k.arg is None for k in node.keywords):
+        context.fail("operation_binding", "Device calls do not support argument unpacking.", node)
+    keywords: dict[str, ast.expr] = {}
+    for keyword in node.keywords:
+        assert keyword.arg is not None
+        if keyword.arg in keywords:
+            context.fail("operation_binding", "Duplicate device command argument.", node)
+        keywords[keyword.arg] = keyword.value
+    method = inspect.getattr_static(reference.device_type, name)
+    try:
+        arguments = inspect.signature(method).bind(None, *node.args, **keywords).arguments
+    except TypeError as error:
+        context.fail("operation_binding", str(error), node)
+    resource_id = context.device_resource(reference).node_id
+    if command.semantic_id in (START_AGITATION_ID, STOP_AGITATION_ID):
+        cls = StartAgitation if command.semantic_id == START_AGITATION_ID else StopAgitation
+        return cls(**context.metadata(node), resource_id=resource_id)
+    return DeviceCommand(
+        **context.metadata(node), resource_id=resource_id, operation_id=command.semantic_id,
+        arguments=tuple(CommandArgument(name=p.name, value=expression(context, arguments[p.name], p.type))
+                        for p in command.parameters),
+    )
