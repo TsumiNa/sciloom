@@ -2,14 +2,14 @@
 
 from .schema import _convert
 from .expressions import ExpressionChecker
-from .types import is_assignable
+from .types import ListType, ScalarType, ValueType, is_assignable
 from .traversal import iter_nodes
 from ..diagnostics import Diagnostic, IRValidationError
-from .model import Assignment, SetAgitation, StopAgitation, FunctionIR, If, Node, Program, ScalarType, Statement, VariableRole, While
+from .model import Assignment, BinaryOp, ListLiteral, ListSet, Literal, SetAgitation, StopAgitation, FunctionIR, If, Node, Program, Statement, VariableRole, While
 
 
 def validate(package: Program) -> tuple[Diagnostic, ...]:
-    """Return errors without modifying IR. An empty tuple means valid v2 semantics.
+    """Return errors without modifying IR. An empty tuple means valid v3 semantics.
 
     This does not prove Executor acceptance, loop termination or device safety.
     Programmatic construction and JSON import receive the same structural checks.
@@ -34,8 +34,8 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
             )
         )
 
-    if package.format_version != 2:
-        report("format_version", "Only semantic format version 2 is supported.", "$.format_version")
+    if package.format_version != 3:
+        report("format_version", "Only semantic format version 3 is supported.", "$.format_version")
 
     seen: dict[str, str] = {}
     for node, path in iter_nodes(package):
@@ -61,9 +61,10 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
     if package.entry_function_id not in functions:
         report("entry_function", "Entry must reference a function in this package.", "$.entry_function_id")
 
-    expression = ExpressionChecker(symbols, report).check
+    checker = ExpressionChecker(symbols, report)
+    expression = checker.check
 
-    def check_assignment(source: ScalarType | None, target: ScalarType | None, path: str, node: Node) -> None:
+    def check_assignment(source: ValueType | None, target: ValueType | None, path: str, node: Node) -> None:
         if source is not None and target is not None and not is_assignable(source, target):
             report("type_mismatch", f"Cannot assign {source.value} to {target.value}.", path, node)
 
@@ -74,6 +75,20 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                 target = expression(stmt.target, function, f"{p}.target")
                 source = expression(stmt.value, function, f"{p}.value")
                 check_assignment(source, target, p, stmt)
+            elif isinstance(stmt, ListSet):
+                target = expression(stmt.target, function, f"{p}.target")
+                index = expression(stmt.index, function, f"{p}.index")
+                source = expression(stmt.value, function, f"{p}.value")
+                if index is not None and index != ScalarType.INTEGER:
+                    report("index_type", "List indices must be integers, excluding bool.", f"{p}.index", stmt.index)
+                if target is not None and not isinstance(target, ListType):
+                    report("list_type", "Indexed assignment requires a list variable.", p, stmt)
+                if stmt.op is not None and stmt.op not in (BinaryOp.ADD, BinaryOp.SUBTRACT, BinaryOp.MULTIPLY, BinaryOp.DIVIDE):
+                    report("operator_type", "Augmented index assignment requires an arithmetic operator.", p, stmt)
+                elif isinstance(target, ListType):
+                    if stmt.op is not None:
+                        source = checker.binary(stmt.op, target.element_type, source, p, stmt)
+                    check_assignment(source, target.element_type, p, stmt)
             elif isinstance(stmt, (If, While)):
                 condition = expression(stmt.condition, function, f"{p}.condition")
                 if condition is not None and condition != ScalarType.BOOLEAN:
@@ -132,6 +147,8 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                 report("variable_name", "Variable names must be nonempty and unique within a function.", vp, variable)
             names.add(variable.name)
             if variable.initial is not None:
+                if isinstance(variable.initial, ListLiteral) and any(not isinstance(e, Literal) for e in variable.initial.elements):
+                    report("initializer_literal", "List initializers must contain only scalar literals.", vp, variable)
                 if variable.role != VariableRole.INTERNAL:
                     report(
                         "initializer_role",

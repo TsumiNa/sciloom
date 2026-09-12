@@ -65,11 +65,14 @@ assert from_json(to_json(package)) == package
   Calls reference `FunctionIR.node_id`; input/output bindings reference the callee's
   variable IDs, not names or positional indexes. Every parameter is bound once.
 - Each variable has an explicit `owner_id` matching its containing function, a
-  role (`input`, `output`, `internal`) and a scalar type (`integer`, `real`, `boolean`, `rotational_speed`).
+  role (`input`, `output`, `internal`) and a value type: scalar (`integer`, `real`,
+  `boolean`, `rotational_speed`) or `ListType(element_type=...)`.
   Names are unique within a function. References cannot cross function ownership.
 - Internal variables require a literal initial value. This represents target
   initialization, not an implicit assignment at function entry. Parameter default
-  values are outside v2. Assignment and output-call destinations use variable references.
+  values are outside v3. List initializers contain only scalar Literal elements.
+  Assignment and output-call destinations use variable references; ListSet handles
+  indexed writes explicitly.
 - Expressions include typed literals, references, unary `+`/`-`/`not`, arithmetic
   `+`/`-`/`*`/`/`, comparisons and boolean `and`/`or`. Boolean is distinct from integer;
   integer-to-real widening is allowed, narrowing is not. Division produces real.
@@ -80,15 +83,17 @@ assert from_json(to_json(package)) == package
 - IDs identify occurrences. Even two reads of the same variable have distinct
   node IDs and the same `symbol_id`. Variable, function, statement and expression
   IDs share a package-wide namespace. The caller supplies IDs; import never invents them.
-- Global ownership and binding remain a future extension. V2 rejects foreign
+- Global ownership and binding remain a future extension. V3 rejects foreign
   variable references, unknown roles and unsupported kinds instead of guessing.
 
 ## JSON contract
 
 Use `to_dict()` / `from_dict()` for Python mappings and `to_json()` / `from_json()`
 for strings. Top-level `kind` is `Program` and `format_version` must explicitly be
-`2`. Every record has a `kind` tag matching its public dataclass name, including
+`3`. Versions 1 and 2 are rejected. Every record has a `kind` tag matching its public dataclass name, including
 bindings and source spans. Enums use their string values; tuples use JSON arrays.
+List types use `{"kind": "ListType", "element_type": "real"}`; scalar types remain
+enum strings. This is a single v3 contract, with no parallel v2 reader.
 Required dataclass fields must be present; defaulted fields may be omitted on
 import. Export materializes defaults and emits sorted object keys, two-space
 indentation and a final newline. Function/body/binding order is preserved.

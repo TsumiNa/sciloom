@@ -6,11 +6,11 @@ from types import MappingProxyType
 
 from ...units import RotationalSpeed
 from ..diagnostics import IRValidationError
-from ..ir import Assignment, SetAgitation, StopAgitation, Call, FunctionIR, If, Program, Reference, ScalarType, Statement, VariableRole, While, validate
+from ..ir import Assignment, ListSet, SetAgitation, StopAgitation, Call, FunctionIR, If, Program, Reference, ScalarType, Statement, VariableRole, While, validate
 from ..ir.model import Node
 
-from .values import InputValue, ScalarValue, coerce, fail
-from .expressions import evaluate
+from .values import InputValue, OutputValue, RuntimeValue, checked_index, coerce, fail, initial_value, input_value, output_value
+from .expressions import apply_binary, evaluate
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -41,8 +41,8 @@ class AgitationEvent:
 
 @dataclass(frozen=True, kw_only=True)
 class ExecutionResult:
-    outputs: Mapping[str, InputValue]
-    state: Mapping[str, Mapping[str, ScalarValue]]
+    outputs: Mapping[str, OutputValue]
+    state: Mapping[str, Mapping[str, RuntimeValue]]
     steps: int
     resources: Mapping[str, AgitationState]
     events: tuple[AgitationEvent, ...]
@@ -63,16 +63,14 @@ class Interpreter:
         self.config = config if config is not None else ExecutionConfig()
         self._functions = {f.node_id: f for f in program.functions}
         self._variables = {v.node_id: v for f in program.functions for v in f.variables}
-        self._state: dict[str, dict[str, ScalarValue]] = {f.node_id: {} for f in program.functions}
+        self._state: dict[str, dict[str, RuntimeValue]] = {f.node_id: {} for f in program.functions}
         self._steps = 0
         self._resources = {r.node_id: AgitationState() for r in program.resources}
         self._events: list[AgitationEvent] = []
         for variable in self._variables.values():
             if variable.role == VariableRole.INTERNAL:
                 assert variable.initial is not None
-                self._state[variable.owner_id][variable.node_id] = coerce(
-                    variable.initial.value, variable.type, variable
-                )
+                self._state[variable.owner_id][variable.node_id] = coerce(initial_value(variable.initial), variable.type, variable)
 
     def _tick(self, node: Node) -> None:
         self._steps += 1
@@ -85,18 +83,10 @@ class Interpreter:
         parameters = [v for v in entry.variables if v.role == VariableRole.INPUT]
         if set(values) != {v.name for v in parameters}:
             fail("input_binding", "Supply exactly the entry function's named inputs.", entry)
-        arguments = {}
-        for parameter in parameters:
-            value = values[parameter.name]
-            if parameter.type == ScalarType.ROTATIONAL_SPEED:
-                if not isinstance(value, RotationalSpeed):
-                    fail(
-                        "runtime_type", "A rotational-speed input requires a quantity such as 600 * rpm.", parameter
-                    )
-                value = value.rps
-            elif isinstance(value, RotationalSpeed):
-                fail("runtime_type", "A quantity cannot be passed to a scalar input.", parameter)
-            arguments[parameter.node_id] = coerce(value, parameter.type, parameter)
+        arguments = {
+            parameter.node_id: input_value(values[parameter.name], parameter.type, parameter)
+            for parameter in parameters
+        }
         self._steps = 0
         self._events = []
         try:
@@ -104,9 +94,7 @@ class Interpreter:
         except RecursionError:
             fail("execution_depth", "Reference evaluation exceeded the host nesting limit.")
         named = {
-            v.name: (
-                RotationalSpeed(rps=outputs[v.node_id]) if v.type == ScalarType.ROTATIONAL_SPEED else outputs[v.node_id]
-            )
+            v.name: output_value(outputs[v.node_id], v.type)
             for v in entry.variables
             if v.role == VariableRole.OUTPUT
         }
@@ -119,19 +107,19 @@ class Interpreter:
             events=tuple(self._events),
         )
 
-    def _read(self, reference: Reference, frame: dict[str, ScalarValue]) -> ScalarValue:
+    def _read(self, reference: Reference, frame: dict[str, RuntimeValue]) -> RuntimeValue:
         variable = self._variables[reference.symbol_id]
         storage = self._state[variable.owner_id] if variable.role == VariableRole.INTERNAL else frame
         if variable.node_id not in storage:
             fail("uninitialized_read", f"Variable {variable.name!r} has no value in this call.", reference)
         return storage[variable.node_id]
 
-    def _write(self, target: Reference, value: ScalarValue, frame: dict[str, ScalarValue]) -> None:
+    def _write(self, target: Reference, value: RuntimeValue, frame: dict[str, RuntimeValue]) -> None:
         variable = self._variables[target.symbol_id]
         storage = self._state[variable.owner_id] if variable.role == VariableRole.INTERNAL else frame
         storage[variable.node_id] = coerce(value, variable.type, target)
 
-    def _call(self, function: FunctionIR, inputs: dict[str, ScalarValue], depth: int) -> dict[str, ScalarValue]:
+    def _call(self, function: FunctionIR, inputs: dict[str, RuntimeValue], depth: int) -> dict[str, RuntimeValue]:
         self._tick(function)
         if depth > self.config.max_call_depth:
             fail("call_depth", "Reference execution exceeded its call-depth budget.", function)
@@ -145,11 +133,22 @@ class Interpreter:
                 outputs[variable.node_id] = frame[variable.node_id]
         return outputs
 
-    def _statements(self, statements: tuple[Statement, ...], frame: dict[str, ScalarValue], depth: int) -> None:
+    def _statements(self, statements: tuple[Statement, ...], frame: dict[str, RuntimeValue], depth: int) -> None:
         for statement in statements:
             self._tick(statement)
             if isinstance(statement, Assignment):
                 self._write(statement.target, evaluate(self, statement.value, frame), frame)
+            elif isinstance(statement, ListSet):
+                # Plain assignment evaluates the RHS first. Augmented assignment
+                # checks and reads the selected element before evaluating its RHS.
+                value = evaluate(self, statement.value, frame) if statement.op is None else None
+                values = self._read(statement.target, frame)
+                assert isinstance(values, tuple)
+                index = checked_index(values, evaluate(self, statement.index, frame), statement)
+                if statement.op is not None:
+                    value = apply_binary(statement.op, values[index], evaluate(self, statement.value, frame), statement)
+                assert value is not None
+                self._write(statement.target, values[:index] + (value,) + values[index + 1:], frame)
             elif isinstance(statement, If):
                 branch = statement.then_body if evaluate(self, statement.condition, frame) else statement.else_body
                 self._statements(branch, frame, depth)

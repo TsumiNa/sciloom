@@ -2,7 +2,7 @@
 
 from .codec import from_dict, from_json, to_dict, to_json
 from ..diagnostics import Diagnostic, IRValidationError, SourceSpan
-from .types import ScalarType
+from .types import ListType, ScalarType, ValueType
 from .model import (
     AgitatorResource,
     SetAgitation,
@@ -16,6 +16,10 @@ from .model import (
     If,
     InputBinding,
     Literal,
+    ListLiteral,
+    ListLength,
+    ListGet,
+    ListSet,
     OutputBinding,
     Program,
     Reference,
@@ -43,6 +47,12 @@ __all__ = [
     "If",
     "InputBinding",
     "Literal",
+    "ListType",
+    "ValueType",
+    "ListLiteral",
+    "ListLength",
+    "ListGet",
+    "ListSet",
     "OutputBinding",
     "Program",
     "Reference",
