@@ -15,6 +15,7 @@
         "executionmode",
         "expressiontext",
         "expressiontextnewlines",
+        "fragmentsize",
         "fragmentvariable",
         "functiondata",
         "functionid",
@@ -27,12 +28,14 @@
         "numberofelements",
         "realnumber",
         "sciloom",
+        "sequentialzone",
         "sequentialzones",
         "siunit",
         "sortwells",
         "startindex",
         "variablename",
         "variabletype",
-        "wellsenumeration"
+        "wellsenumeration",
+        "zonename"
     ]
 }
