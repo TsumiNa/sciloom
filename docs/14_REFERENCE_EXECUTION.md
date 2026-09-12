@@ -64,13 +64,13 @@ transactional rollback. A new Interpreter starts a fresh session.
 
 ## Values, evaluation and failures
 
-- Integer has mathematical-integer reference semantics. Real uses finite binary64
-  values. Boolean is distinct from Integer. Integer-to-Real conversion is explicit
+- `int` has mathematical-integer reference semantics. `float` uses finite binary64
+  values. `bool` is distinct from `int`. Integer-to-float conversion is explicit
   in the evaluator at typed storage/parameter boundaries; narrowing is rejected.
-- Division produces Real. Division by zero, nonfinite results and values too large
-  to convert to Real raise ExecutionError with diagnostics.
+- Division produces `float`. Division by zero, nonfinite results and values too large
+  to convert to `float` raise ExecutionError with diagnostics.
 - Expressions evaluate left to right; boolean AND/OR short-circuit. If and While
-  require Boolean conditions. No host-Python truthiness or arbitrary functions
+  require `bool` conditions. No host-Python truthiness or arbitrary functions
   participate in evaluating authored programs.
 - max_steps defaults to 10,000; expressions, statements and function entries each
   consume a step. Empty loops are bounded because conditions consume steps.

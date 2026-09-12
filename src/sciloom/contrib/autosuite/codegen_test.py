@@ -9,7 +9,7 @@ import pytest
 
 from sciloom.contrib.autosuite import AutoSuiteTarget
 from sciloom.core.diagnostics import CompilationError
-from sciloom import Boolean, Function, Integer, runtime
+from sciloom import Function, runtime, Var
 from sciloom.core.compiler import compile_ir
 from sciloom.dsl.model_test import Caller, Counter
 from sciloom.core.ir import IRValidationError, SourceSpan, from_json, to_json
@@ -157,8 +157,8 @@ def test_corrupt_call_parameter_is_detected_by_comparison():
 
 def test_nested_control_flow_and_boolean_storage():
     class State(Function):
-        loop: Integer = 0
-        enabled: Boolean = True
+        loop: Var[int] = 0
+        enabled: Var[bool] = True
 
         @runtime
         def run(self):

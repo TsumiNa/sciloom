@@ -28,7 +28,7 @@ required repository rules, not optional reference material.
 
 1. **Typed SciLoom Semantic IR is the semantic source of truth.**
 2. The primary code frontend is a **restricted Python source language**. Python AST/CST analysis is intentional; arbitrary Python compatibility is not a goal. The implemented subset is documented in `docs/12_PYTHON_FRONTEND.md`.
-3. **Class-level declarations define the static SciLoom runtime schema.** Use `Input[T]`, `Output[T]` and plain SciLoom types (`index: Integer = 0`); there is no `Local[T]` wrapper. Ordinary Python types such as `int` remain host-time data. Future Application fields declare globals; Function `GlobalRef[T]` fields explicitly reference them.
+3. **Class-level declarations define the static SciLoom runtime schema.** Use `Input[T]`, `Output[T]` and `Var[T]` with native `float`, `int`, `bool` or physical quantity types. `Var` needs an explicit initial value. Unwrapped annotations are host-time data. There is no `Local[T]` wrapper; field scope follows the owning model. Application/global support remains deferred; future Function `GlobalRef[T]` fields explicitly reference Application state.
 4. **The program/function instance is the compilation unit.** `__init__` and ordinary Python specialize/compose the instance before `instance.compile()`.
 5. Python is host/generation-time by default. There is no baseline `@comptime` decorator. Explicit decorators/registered roles mark AutoSuite runtime methods and event entry points (`runtime`, `main`, `on_start`, `on_error`, `on_stop`, etc.).
 6. `__init__` must not silently create new runtime fields in v1. Runtime field schema belongs at class level; instance attributes are compile-time values/components unless explicitly modeled otherwise.
@@ -65,7 +65,7 @@ Runtime state must be statically inspectable from the class definition, e.g.:
 ```python
 class Example(Function):
     source: Input[Zone]
-    index: Integer = 0
+    index: Var[int] = 0
 ```
 
 `__init__` is normal Python and may specialize the program:

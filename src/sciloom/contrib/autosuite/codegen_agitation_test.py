@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from sciloom import Agitator, Boolean, Function, Input, Integer, Output, RotationalSpeed, rpm, runtime
+from sciloom import Agitator, Function, Input, Output, RotationalSpeed, rpm, runtime, Var
 from sciloom.core.compiler import compile_ir
 from sciloom.core.diagnostics import CompilationError
 from sciloom.core.interpreter import Interpreter
@@ -19,7 +19,7 @@ AGITATION = "Chemspeed.SATaskSetAgitation.1"
 
 class ConfigureAgitation(Function):
     shaker_speed: Input[RotationalSpeed]
-    enabled: Input[Boolean]
+    enabled: Input[bool]
 
     def __init__(self, name="reaction_mixer"):
         self.agitator = Agitator(name)
@@ -125,7 +125,7 @@ def test_quantities_keep_units_in_locals_outputs_and_call_bindings():
             self.result = self.speed
 
     class Caller(Function):
-        speed: RotationalSpeed = 600 * rpm
+        speed: Var[RotationalSpeed] = 600 * rpm
         result: Output[RotationalSpeed]
 
         def __init__(self):
@@ -156,7 +156,7 @@ def test_quantities_keep_units_in_locals_outputs_and_call_bindings():
 
 def test_agitation_composes_with_loops_and_independent_resources():
     class Sequence(Function):
-        index: Integer = 0
+        index: Var[int] = 0
 
         def __init__(self):
             self.first = ConfigureAgitation()

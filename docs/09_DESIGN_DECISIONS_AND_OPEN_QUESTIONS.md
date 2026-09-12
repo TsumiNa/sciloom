@@ -21,7 +21,7 @@
 17. Do not use deprecated COM integration.
 18. Keep ArkSuite outside the compiler's assumptions until its vendor manual/API docs are obtained.
 19. Treat the AutoSuite manual as semantic documentation and the real corpus as serialization evidence; the manual does not define the `.asfp/.app` XML schema.
-20. Use plain SciLoom class annotations for internal runtime fields; omit `Local[T]`. Ordinary Python annotations remain host-time data.
+20. Use `Input[T]`, `Output[T]` and `Var[T]` with native Python value types. Var requires an explicit initial value; scope follows its owning model. Unwrapped annotations remain host-time data; no `Local[T]` wrapper is used.
 21. Application fields will declare globals. Function `GlobalRef[T]` dependencies bind explicitly with `bind_globals(...=app.ref(...))`; Python module globals are not target globals.
 22. First frontend source comes from ordinary `.py` files. Notebook, interactive and `exec()` definitions are deferred.
 23. Preserve native variable initialization behavior. Reset on each invocation only through explicit runtime assignment.

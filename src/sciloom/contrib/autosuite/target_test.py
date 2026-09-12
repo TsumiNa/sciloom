@@ -25,10 +25,10 @@ def test_unknown_vendor_version():
 
 
 def test_unverified_short_circuit_is_rejected_explicitly():
-    from sciloom import Boolean, Function, Output, runtime
+    from sciloom import Function, Output, runtime
 
     class Logical(Function):
-        result: Output[Boolean]
+        result: Output[bool]
 
         @runtime
         def run(self):

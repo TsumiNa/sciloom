@@ -1,6 +1,6 @@
 """Design example: class schema is known before instantiation; instance holds specialization."""
 
-from sciloom import Function, Input, Output, Zone, Array, Volume, Integer, runtime
+from sciloom import Function, Input, Output, Zone, Array, Volume, runtime, Var
 
 
 class LoadReagent(Function):
@@ -8,8 +8,8 @@ class LoadReagent(Function):
     source: Input[Zone]
     destination: Input[Zone]
     volumes: Input[Array[Volume]]
-    error_code: Output[Integer] = 0
-    index: Integer = 0
+    error_code: Output[int]
+    index: Var[int] = 0
 
     def __init__(self, *, valve_group_size=8):
         # Ordinary Python / host-time state.

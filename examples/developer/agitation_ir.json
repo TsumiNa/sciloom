@@ -11,7 +11,7 @@
             "source": {
               "column": 11,
               "kind": "SourceSpan",
-              "line": 61,
+              "line": 73,
               "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
             },
             "symbol_id": "fn:0:var:enabled"
@@ -24,7 +24,7 @@
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 64,
+                "line": 76,
                 "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
               }
             }
@@ -34,7 +34,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 61,
+            "line": 73,
             "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
           },
           "then_body": [
@@ -45,7 +45,7 @@
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 62,
+                "line": 74,
                 "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
               },
               "speed": {
@@ -54,7 +54,7 @@
                 "source": {
                   "column": 36,
                   "kind": "SourceSpan",
-                  "line": 62,
+                  "line": 74,
                   "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
                 },
                 "symbol_id": "fn:0:var:shaker_speed"
@@ -69,7 +69,7 @@
       "source": {
         "column": 4,
         "kind": "SourceSpan",
-        "line": 60,
+        "line": 72,
         "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
       },
       "variables": [

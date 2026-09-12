@@ -4,7 +4,7 @@ from dataclasses import replace
 
 import pytest
 
-from sciloom import Agitator, Boolean, Function, Input, RotationalSpeed, rpm, rps, runtime
+from sciloom import Agitator, Function, Input, RotationalSpeed, rpm, rps, runtime, Var
 from sciloom.core.diagnostics import ExecutionError, IRValidationError
 from sciloom.core.ir import (
     AgitatorResource,
@@ -26,7 +26,7 @@ from .runtime import Interpreter
 
 class ConfigureAgitation(Function):
     speed: Input[RotationalSpeed]
-    enabled: Input[Boolean]
+    enabled: Input[bool]
 
     def __init__(self, agitator):
         self.agitator = agitator
@@ -182,10 +182,9 @@ def test_duplicate_logical_resource_identity_is_rejected():
 
 
 def test_operations_compose_in_loops_and_functions_with_distinct_resources():
-    from sciloom import Integer
 
     class Sequence(Function):
-        index: Integer = 0
+        index: Var[int] = 0
 
         def __init__(self):
             self.first = ConfigureAgitation(Agitator("first"))
