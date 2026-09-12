@@ -4,7 +4,7 @@ Device contracts define parameters and commands, Semantic IR describes the
 experiment, and a Target binds logical dependencies to concrete equipment.
 The [device refactor contract](refactor/device-abstraction/00-overview.md) is
 authoritative. Property configuration and explicit lifecycle are implemented;
-independent native commands and device condition specialization are later stages.
+independent native commands also compile; device condition specialization is the next stage.
 
 ## Author interface
 
@@ -71,8 +71,11 @@ checks schema roles, device capabilities and configuration completeness.
 JSON v4 stores DeviceResource declarations and a data-only DeviceTypeContract
 directory. ConfigureProperty carries property identity and a typed value;
 StartAgitation/StopAgitation preserve lifecycle intent. Versioned IDs never cause
-Python imports. Native DeviceCommand and DeviceIf can be validated and exchanged
-now, but deferred execution/compilation reports explicit errors until its stage.
+Python imports. Native DeviceCommand compiles only when the bound device provides
+the matching trusted signature and explicit capability. The external
+[Demo contribution](../examples/developer/demo_contribution/__init__.py) adds gain,
+calibration and a recording target. Reference execution of unknown native commands
+fails explicitly. DeviceIf can be exchanged but compilation awaits specialization.
 
 DeviceState exposes read-only `configuration`, `applied_configuration` and
 `enabled`. Mapping keys are property names; physical values are quantities and
