@@ -8,8 +8,8 @@ from types import MappingProxyType
 from typing import Any, Mapping, get_type_hints
 from weakref import WeakValueDictionary
 
-from ..devices.agitation import Agitator
 from ..devices.base import BaseDevice
+from ..devices.declarations import device_contract
 
 
 @dataclass(frozen=True, eq=False)
@@ -64,10 +64,7 @@ def build_device_schema(cls: type, reserved: Mapping[str, object]) -> Mapping[st
             continue
         if name.startswith("_") or name in reserved or name in getattr(cls, "model_fields", {}):
             raise TypeError(f"Invalid or conflicting device slot name {name!r}.")
-        # v3 only carries generic agitation resources. Typed category catalogs
-        # become part of the v4 lifecycle contract in the following stage.
-        if annotation is not Agitator:
-            raise TypeError("JSON v3 supports only Agitator device slots; other device contracts require v4.")
+        device_contract(annotation)
         if name in cls.__dict__ and not isinstance(cls.__dict__[name], DeviceSlot):
             raise TypeError(f"Device slot {name!r} cannot have a class-level value.")
         for base in cls.__mro__[1:]:

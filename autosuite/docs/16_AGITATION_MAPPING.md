@@ -72,9 +72,9 @@ type 5, siunit 1/s and display unit rpm.
 The production stop contains speed `1.66666666667`, an inactive 100 rpm editor
 setting. Other exports retain different inactive values, including prior symbolic
 speeds. The initial adapter uses this observed 100 rpm wire default only when
-switchon=0. It does not issue a 100 rpm command, read a speed input, or introduce
-hidden state to recover the previous speed. Reference execution retains its last
-known commanded setpoint; that is not a claim about AutoSuite editor metadata.
+switchon=0. The stop task does not issue a 100 rpm command or read/write saved
+configuration. Reference execution preserves both configured and last-applied
+values; neither snapshot reconstructs AutoSuite editor metadata.
 
 The manual associates setting speed with the enabled state. Acceptance of this
 generated disabled payload must still be confirmed through Executor. Device
@@ -82,11 +82,32 @@ speed bounds and physical speed attainment are outside static XML evidence.
 
 ## Comparison and remaining verification
 
+The v4 adapter stages property assignments into private physical variables, then
+starts using the saved speed expression. Each entry owns its configuration storage;
+related callees receive private angularspeed inputs and outputs. Callee outputs
+first copy inputs so unchanged branches return the prior configuration. Public
+entry inputs/outputs are unchanged, and private transport never enters authored IR.
+
+| Mapping | Evidence level | Remaining verification |
+|---|---|---|
+| Stir speed, switchon, addressing and unit fields | Observed production/standalone task structures and manual semantics | Executor acceptance on the bound configuration |
+| Physical variable and angularspeed parameter encoding | Observed APP variables and function exports | Generated storage lifetime across actual repeated calls |
+| Private configuration inputs/outputs and initialization copies | Compiler composition of observed Set Variable and Execute Function forms; static regression checks | End-to-end Executor execution for nested calls and unchanged branches |
+| Output copy-back following normal return | SciLoom compilation contract and existing function output mapping | No equivalence claim for recovery after a fatal callee failure before copy-back |
+
+Internal wire zeros allocate storage only. A shared configuration analysis proves
+all required writes before starts; it never treats zero initialization or a prior
+entry invocation as evidence of configuration. The reference interpreter specifies
+SciLoom snapshots, not hardware behavior. These composed mappings require Executor
+simulation before real-platform acceptance; raw reference files are unchanged.
+
 The production comparison preserves all task fields and their order. It
 normalizes task/component context, UUID spellings and timestamps, and explicitly
 substitutes the fixed zone and individual-shaker address for the production
-runtime Zone parameter. A second comparison uses the complete fixed-zone task
-without address substitutions. Typed parameters, canonical units, call-binding
+runtime Zone parameter. The start speed now names private storage; comparisons
+verify its preceding capture assignment and normalize that variable name at the
+Stir payload boundary. The standalone comparison verifies the captured canonical
+600 rpm value as 10 rps. Typed parameters, units, call-binding
 IDs and nesting inside conditional branches are checked separately.
 
 These checks establish structural consistency, not AutoSuite import or execution

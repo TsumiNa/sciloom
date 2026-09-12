@@ -9,6 +9,7 @@ from enum import StrEnum
 
 from ..diagnostics import SourceSpan
 from .types import ListType, ScalarType, ValueType
+from .device_contracts import DeviceTypeContract
 
 
 class VariableRole(StrEnum):
@@ -146,18 +147,27 @@ class While(Node):
 
 
 @dataclass(frozen=True, kw_only=True)
-class AgitatorResource(Node):
-    """A logical agitation controller, independent of zones and vendor IDs."""
+class DeviceResource(Node):
+    """A typed logical device, independent of deployment addresses."""
 
     logical_id: str
+    device_type_id: str
 
 
 @dataclass(frozen=True, kw_only=True)
-class SetAgitation(Node):
-    """Enable the resource and command its rotational-speed setpoint."""
+class ConfigureProperty(Node):
+    """Capture a value now; it is applied only by the device's explicit command."""
 
     resource_id: str
-    speed: Expression
+    property_id: str
+    value: Expression
+
+
+@dataclass(frozen=True, kw_only=True)
+class StartAgitation(Node):
+    """Apply the complete saved configuration and enable/reapply agitation."""
+
+    resource_id: str
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -167,7 +177,48 @@ class StopAgitation(Node):
     resource_id: str
 
 
-Statement = Assignment | ListSet | Call | If | While | SetAgitation | StopAgitation
+@dataclass(frozen=True, kw_only=True)
+class CommandArgument:
+    name: str
+    value: Expression
+
+
+@dataclass(frozen=True, kw_only=True)
+class DeviceCommand(Node):
+    resource_id: str
+    operation_id: str
+    arguments: tuple[CommandArgument, ...] = ()
+
+
+@dataclass(frozen=True, kw_only=True)
+class CanWrite(Node):
+    resource_id: str
+    property_id: str
+
+
+@dataclass(frozen=True, kw_only=True)
+class SupportsOperation(Node):
+    resource_id: str
+    operation_id: str
+
+
+@dataclass(frozen=True, kw_only=True)
+class IsDevice(Node):
+    resource_id: str
+    device_type_id: str
+
+
+DevicePredicate = CanWrite | SupportsOperation | IsDevice
+
+
+@dataclass(frozen=True, kw_only=True)
+class DeviceIf(Node):
+    condition: DevicePredicate
+    then_body: tuple["Statement", ...] = ()
+    else_body: tuple["Statement", ...] = ()
+
+
+Statement = Assignment | ListSet | Call | If | While | ConfigureProperty | StartAgitation | StopAgitation | DeviceCommand | DeviceIf
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -187,5 +238,6 @@ class Program:
 
     entry_function_id: str
     functions: tuple[FunctionIR, ...] = ()
-    resources: tuple[AgitatorResource, ...] = ()
-    format_version: int = 3
+    resources: tuple[DeviceResource, ...] = ()
+    device_types: tuple[DeviceTypeContract, ...] = ()
+    format_version: int = 4

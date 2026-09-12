@@ -4,8 +4,16 @@ from .codec import from_dict, from_json, to_dict, to_json
 from ..diagnostics import Diagnostic, IRValidationError, SourceSpan
 from .types import ListType, ScalarType, ValueType
 from .model import (
-    AgitatorResource,
-    SetAgitation,
+    DeviceResource,
+    ConfigureProperty,
+    StartAgitation,
+    DeviceCommand,
+    CommandArgument,
+    CanWrite,
+    SupportsOperation,
+    IsDevice,
+    DeviceIf,
+    DevicePredicate,
     StopAgitation,
     Assignment,
     Binary,
@@ -30,11 +38,21 @@ from .model import (
     VariableRole,
     While,
 )
+from .device_contracts import (PropertyContract, CommandContract, CommandParameter, DeviceTypeContract)
 from .validation import validate
 
 __all__ = [
-    "AgitatorResource",
-    "SetAgitation",
+    "PropertyContract", "CommandContract", "CommandParameter", "DeviceTypeContract",
+    "DeviceResource",
+    "ConfigureProperty",
+    "StartAgitation",
+    "DeviceCommand",
+    "CommandArgument",
+    "CanWrite",
+    "SupportsOperation",
+    "IsDevice",
+    "DeviceIf",
+    "DevicePredicate",
     "StopAgitation",
     "Assignment",
     "Binary",

@@ -33,7 +33,8 @@ class Scale(Function):
         assert_type(self.values, list[float])
         self.result = self.values
         self.result[self.index] *= self.factor
-        self.agitator.set_speed(self.speeds[0])
+        self.agitator.speed = self.speeds[0]
+        self.agitator.start()
         self.agitator.stop()
 
 callback: Callable[[], None] = Scale().run
@@ -53,7 +54,8 @@ class Bad(Function):
         self.factor = "text"
         self.index = 1.5
         self.values = ["text"]
-        self.agitator.set_speed(1.0)
+        self.agitator.speed = 1.0
+        self.agitator.start()
         self.agitator.stop()
         self.index = "still checked after stop"
 """
@@ -80,5 +82,5 @@ class Bad(Function):
     else:
         assert result.returncode == 1, result.stdout + result.stderr
         assert result.stdout.count(" error: ") == 8, result.stdout
-        for code in ("[assignment]", "[list-item]", "[arg-type]"):
+        for code in ("[assignment]", "[list-item]"):
             assert code in result.stdout

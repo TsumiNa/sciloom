@@ -7,6 +7,7 @@ from .context import CodegenContext
 from .parameters import functiondata
 from .tasks import statements
 from .primitives import macro, set_variable
+from .device_state import initialize_device_outputs
 from dataclasses import replace
 from .xml import AutoSuiteVersion, SerializationIR, xml_node as _xml
 
@@ -14,13 +15,13 @@ from .xml import AutoSuiteVersion, SerializationIR, xml_node as _xml
 def build_functions(context: CodegenContext, target: AutoSuiteVersion) -> SerializationIR:
     functions = []
     used_names: set[str] = set()
-    for function in context.package.functions:
+    for function in context.functions.values():
         name = function.name
         while name in used_names:
             name += "_"
         used_names.add(name)
         internal = tuple(v for v in function.variables if v.role == VariableRole.INTERNAL)
-        before, after = [], []
+        before, after = list(initialize_device_outputs(context, function)), []
         for variable in function.variables:
             if not isinstance(variable.type, ListType) or variable.role == VariableRole.INTERNAL:
                 continue

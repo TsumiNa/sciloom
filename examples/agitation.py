@@ -7,8 +7,8 @@ Expected terminal output:
     agitation.asfp
 
 The package contains ConfigureAgitation with two runtime inputs:
-shaker_speed (angularspeed) and enabled (bool). When enabled is true, it sets
-the supplied speed on Heater Shaker 23; otherwise it disables agitation.
+shaker_speed (angularspeed) and enabled (bool). When enabled is true, it saves
+the supplied speed and explicitly starts Heater Shaker 23; otherwise it stops.
 The speed stays an input parameter; compiling does not choose a speed or send
 commands to hardware.
 
@@ -19,6 +19,12 @@ Generated ASFP excerpts (metadata and other fields omitted):
     Enabled branch:
         <condition>enabled</condition>
         ...
+        <component typeid="Chemspeed.SATaskSetVariable.1">
+          <!-- metadata omitted -->
+          <variablename>sciloom_tmp_1</variablename>
+          <expressiontext>shaker_speed</expressiontext>
+          <!-- remaining fields omitted -->
+        </component>
         <component typeid="Chemspeed.SATaskSetAgitation.1">
           <zone>Heater Shaker 23</zone>
           <!-- metadata omitted -->
@@ -28,7 +34,7 @@ Generated ASFP excerpts (metadata and other fields omitted):
               <progid>Chemspeed.SADeviceIndividualShaker.1</progid>
               <deviceid>23</deviceid>
               <wellid>-1</wellid>
-              <speed>shaker_speed</speed>
+              <speed>sciloom_tmp_1</speed>
             </taskdata0>
           </taskdatas>
           <switchon>1</switchon>
@@ -50,7 +56,7 @@ from sciloom.contrib.autosuite import AutoSuiteTarget, AutoSuiteIndividualShaker
 
 
 class ConfigureAgitation(Function):
-    """Set or disable a logical agitator using runtime inputs.
+    """Save configuration and explicitly start or stop a logical agitator.
 
     Attributes:
         agitator: Logical device; the compilation target selects hardware.
@@ -66,7 +72,8 @@ class ConfigureAgitation(Function):
     @runtime
     def run(self) -> None:
         if self.enabled:
-            self.agitator.set_speed(self.shaker_speed)
+            self.agitator.speed = self.shaker_speed
+            self.agitator.start()
         else:
             self.agitator.stop()
 

@@ -7,14 +7,14 @@ supersedes the device/lifecycle portions of the compiler-foundation and
 package-layout plans when the corresponding implementation stage lands. Other
 package, scalar and list contracts remain in force.
 
-Stage 1 is merged as PR #22 (8e90e64), stage 2 as PR #23 (01fd95a).
-Stage 3 implements declarative slots and explicit deployment binding;
-stages 4–6 are pending. Examples of target interfaces
+Stages 1–3 are merged as PRs #22 (8e90e64), #23 (01fd95a) and #24
+(82f9090). Stage 4 implements property configuration, explicit lifecycle and v4;
+stages 5–6 remain pending. Examples of target interfaces
 below are specifications, not claims of currently runnable code. Every stage
 updates its callers, examples, status and tests before review and squash merge.
 Do not start a later implementation stage before the preceding PR is merged.
 
-Stage 3 retains JSON v3 and the single `set_speed`/`stop` runtime interface.
+The historical stage 3 retained JSON v3 and the single `set_speed`/`stop` runtime interface.
 It accepts generic Agitator slots only; other category or concrete slot annotations
 fail explicitly until v4 carries their declared type contracts. The deployment
 object is already an immutable Agitator subclass. Stage 4 replaces the operation
@@ -250,27 +250,30 @@ values whose compliance cannot be proved. No invented AutoSuite gain mapping.
 
 ## Compiler and binding interface
 
-Stage 3 introduces this data-only deployment envelope. A binding identifies one
-logical resource and one physical identity within its target. Compatibility uses
-stable semantic IDs, not Python classes. Constructors freeze collection inputs;
-duplicate logical/physical identities fail:
+The current data-only binding envelope includes the trusted concrete contract,
+explicit writable properties and supported operations. IDs and ancestry live in
+the contract, avoiding duplicated type-identity fields. Constructors freeze
+collection inputs; duplicate logical/physical identities fail. This stage-4
+example uses the built-in category as a minimal reference binding:
 
 ```python
 from sciloom.core.devices import DeviceBinding, DeviceBindings
+from sciloom.core.ir.device_contracts import (
+    AGITATOR_CONTRACT, AGITATION_SPEED_ID, START_AGITATION_ID, STOP_AGITATION_ID,
+)
 
 bindings = DeviceBindings(devices=(DeviceBinding(
-    logical_id="agitator",
-    device_type_id="sciloom.autosuite.individual-shaker/v1",
-    compatible_type_ids=("sciloom.agitator/v1",),
-    physical_id="autosuite:individual-shaker:23",
+    logical_id="agitator", contract=AGITATOR_CONTRACT, physical_id="reference:1",
+    writable_properties=(AGITATION_SPEED_ID,),
+    supported_operations=(START_AGITATION_ID, STOP_AGITATION_ID),
 ),))
 assert bindings.devices[0].logical_id == "agitator"
 ```
 
-These identity fields are current from stage 3. Stages 4/5 extend binding facts
-with trusted property/operation contracts required by the v4 directory; stage 6
-uses them for branch selection. No serialized implementation ID is dynamically
-imported.
+Concrete contributors can use `sciloom.devices.declarations.device_contract(cls)`
+to read signatures and `bind_device(logical_id=..., device=..., physical_id=...)`
+to construct this envelope from an explicit profile. Stage 6 uses these facts for
+branch selection. No serialized implementation ID is dynamically imported.
 
 Stage 3 introduces immutable binding facts and explicit deployment resolution.
 The final protocol and result behavior (complete at stage 6) are:
@@ -314,7 +317,8 @@ interface to install. A one-function device-free program compiled through
 compile_ir(program, target=SummaryTarget()) yields b"functions=1\n".
 An empty DeviceBindings cannot satisfy a program with device dependencies.
 Binding facts contain logical identity, concrete type ancestry and trusted member
-contracts/support/requirements, never Python classes or hardware addresses.
+contracts/support/requirements and opaque physical identities, never Python
+classes or live hardware objects. Concrete zone/address encoding stays in Target.
 
 ```python
 from sciloom.core.compiler import compile_ir
@@ -384,6 +388,13 @@ ordinary host calls raise. All branches must be valid typed DSL/IR. Only retaine
 branches require device implementation support and target legality. Missing
 bindings are errors, never false queries. Prune unreachable functions after
 selection. Interpreter requires resolved branches and rejects unknown commands.
+
+Ordinary operations use only the resource's declared interface, including its
+ancestors. An IsDevice true branch refines that interface to the queried type;
+the false branch retains the original interface. CanWrite/SupportsOperation may
+ask about declared members of compatible extensions, but do not grant permission
+to use those members or admit unrelated device families. This distinction is
+validated in v4 JSON even before predicate execution is enabled in stage 6.
 
 ## AutoSuite backend (stage 4)
 

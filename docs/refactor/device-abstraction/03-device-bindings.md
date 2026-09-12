@@ -12,7 +12,10 @@ Introduce BaseDevice/type identity, independent device-slot schema and immutable
 
 No property/start behavior, v4 or compile-time queries; no old-binding aliases.
 
-## Implemented intermediate interface
+## Historical intermediate interface
+
+Superseded by [stage 4](04-configuration-lifecycle.md); the set_speed example below
+records the earlier stage and is no longer the current executable interface.
 
 Generic Agitator annotations are supported with v3; other slot types explicitly
 require v4. Device profiles and bindings are immutable. A composed Function's

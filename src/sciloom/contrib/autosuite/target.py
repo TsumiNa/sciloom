@@ -6,11 +6,11 @@ from types import MappingProxyType
 from typing import Mapping
 
 from ...core.compiler import Artifact
-from ...core.devices import DeviceBinding, DeviceBindings
+from ...core.devices import DeviceBindings
 from ...core.diagnostics import CompilationError, Diagnostic
 from ...core.ir import Binary, BinaryOp, Call, Program
 from ...core.ir.traversal import iter_nodes
-from ...devices.agitation import Agitator
+from ...devices.declarations import bind_device
 from .agitation import AutoSuiteIndividualShaker
 from .codegen import lower_asfp
 from .xml import AutoSuiteVersion
@@ -44,10 +44,9 @@ class AutoSuiteTarget:
     def resolve_devices(self, program: Program) -> DeviceBindings:
         return DeviceBindings(
             devices=tuple(
-                DeviceBinding(
+                bind_device(
                     logical_id=name,
-                    device_type_id=device.device_type_id,
-                    compatible_type_ids=(Agitator.device_type_id,),
+                    device=device,
                     physical_id=f"autosuite:individual-shaker:{device.device_id}",
                 )
                 for name, device in sorted(self.devices.items())
