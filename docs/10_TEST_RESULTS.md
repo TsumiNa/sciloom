@@ -1,13 +1,15 @@
 # Validation status
 
-Current AutoSuite array stage: 241 tests pass locally. JSON v3 strict conversion, list
+Completed package/native/list refactor: 245 tests pass locally. JSON v3 strict conversion, list
 copying/call isolation, typed input/output, persistent state, detached snapshots,
 index bounds and evaluation order are covered. AutoSuite array declarations,
 copy boundaries, literal construction and checked index scheduling are compared
 with corpus evidence and a deliberately limited test-only wire model. This does
 not establish Executor acceptance. The direct-IR developer example is run in
-CI with `uv run python -m examples.developer.list_ir`. The reproducible mypy
-baseline is still stage 9; this stage does not claim a current mypy pass.
+CI with `uv run python -m examples.developer.list_ir`. `uv run mypy` passes for
+45 production/example source files. Four static contract tests prove valid
+Target/IR/Artifact/native declarations pass and incorrect ones fail. The wheel
+was built and checked to contain `sciloom/py.typed`; see [typing](16_TYPING.md).
 
 Python tests additionally execute ScaleValues, runtime literals and typed calls;
 verify schema-default freezing and independent composed-instance state; compare
@@ -31,6 +33,7 @@ or its test suite. XML candidates and AutoSuite-fixed counterparts remain refere
 
 ```bash
 uv run pytest src/sciloom
+uv run mypy
 uv run python autosuite/tools/audit_corpus.py
 uv run python autosuite/tools/smoke_test.py
 uv run python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv

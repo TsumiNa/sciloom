@@ -24,7 +24,7 @@ from .xml import XmlNode, xml_node as _xml
 def statements(
     context: CodegenContext, body: tuple[Statement, ...], function: FunctionIR, tag: str
 ) -> tuple[XmlNode, ...]:
-    result = []
+    result: list[XmlNode] = []
     for statement in body:
         if isinstance(statement, Assignment):
             value = plan_expression(context, function, statement.value, tag)
@@ -80,15 +80,15 @@ def statements(
                     plan = materialize(context, function, plan, tag)
                 result.extend(plan.prerequisites)
                 inputs[binding.parameter_id] = plan.text
-            for binding in statement.outputs:
-                name = context.names[binding.target.symbol_id]
-                value_type = context.variables[binding.parameter_id].type
+            for output in statement.outputs:
+                name = context.names[output.target.symbol_id]
+                value_type = context.variables[output.parameter_id].type
                 if isinstance(value_type, ListType):
                     temporary = context.temporary(function, value_type)
-                    outputs[binding.parameter_id] = temporary
+                    outputs[output.parameter_id] = temporary
                     after.append(set_variable(context, tag, name, temporary, array=True))
                 else:
-                    outputs[binding.parameter_id] = name
+                    outputs[output.parameter_id] = name
             result.append(
                 _xml(
                     tag,

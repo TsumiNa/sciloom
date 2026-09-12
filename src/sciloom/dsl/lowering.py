@@ -10,7 +10,17 @@ from .source import runtime_source
 from .statements import statements
 from ..units import RotationalSpeed
 from ..core.diagnostics import IRValidationError
-from ..core.ir import AgitatorResource, FunctionIR, ListLiteral, ListType, Literal, Program, Variable, VariableRole, validate
+from ..core.ir import (
+    AgitatorResource,
+    FunctionIR,
+    ListLiteral,
+    ListType,
+    Literal,
+    Program,
+    Variable,
+    VariableRole,
+    validate,
+)
 
 
 def lower(root: Function) -> Program:
@@ -37,13 +47,21 @@ def build_function(context: LoweringContext) -> FunctionIR:
     node = runtime_source(context)
     variables = []
     for field in context.instance.model_fields.values():
-        initial = None
+        initial: Literal | ListLiteral | None = None
         if field.role == VariableRole.INTERNAL:
             if isinstance(field.type, ListType):
                 assert isinstance(field.default, tuple)
                 initial = ListLiteral(
-                    node_id=f"{context.symbol(field.name)}:initial", type=field.type,
-                    elements=tuple(Literal(node_id=f"{context.symbol(field.name)}:initial:{i}", type=field.type.element_type, value=value.rps if isinstance(value, RotationalSpeed) else value) for i, value in enumerate(field.default)),
+                    node_id=f"{context.symbol(field.name)}:initial",
+                    type=field.type,
+                    elements=tuple(
+                        Literal(
+                            node_id=f"{context.symbol(field.name)}:initial:{i}",
+                            type=field.type.element_type,
+                            value=value.rps if isinstance(value, RotationalSpeed) else value,
+                        )
+                        for i, value in enumerate(field.default)
+                    ),
                 )
             else:
                 initial = Literal(

@@ -149,6 +149,7 @@ Run at minimum:
 
 ```bash
 uv run pytest src/sciloom
+uv run mypy
 python autosuite/tools/smoke_test.py
 python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
 ```

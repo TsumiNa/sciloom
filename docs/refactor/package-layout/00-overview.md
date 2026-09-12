@@ -17,9 +17,10 @@ compatibility shims would create competing interfaces. Neither is introduced.
 
 ## Ordered stages and availability
 
-Implementation progress: stages 1–7 are merged in GitHub PRs #12–18.
-Stage 8 implements AutoSuite arrays, checked indexing and complete author examples.
-The mypy baseline remains stage 9; real Executor simulation is still external.
+Implementation progress: stages 1–8 are merged in GitHub PRs #12–19.
+Stage 9 completes the implementation with locked mypy checks, typed author and
+extension contracts, and CI. All nine planned capabilities are implemented;
+real Executor simulation remains external.
 
 | Stage | Plan | Capability available after merge |
 |---|---|---|
@@ -309,7 +310,7 @@ Update all live Mermaid architecture/data-flow diagrams and explanatory paths
 when their stage lands; retain historical diagrams with supersession notices.
 Distinguish current capabilities, target design and future Studio/web services.
 
-Stage 9 adds mypy as a locked development dependency and CI command (uv run mypy).
+Stage 9 implements mypy as a locked development dependency and CI command (uv run mypy).
 Check core/contrib production functions, excluding test/conftest entrypoints,
 with check_untyped_defs and complete function annotations; do not enable blanket
 whole-repository strict or globally ignore imports. Preserve py.typed. Check
@@ -317,6 +318,10 @@ correct/incorrect Target implementations, IR/Artifact constructors and native
 Annotated field inference/defaults. Preserve runtime decorator signatures.
 No plugin or claim of full Function-call/host-access/device checking is made.
 IR validation remains authoritative for Python, GUI, AI and external JSON.
+See [the implemented typing baseline](../../16_TYPING.md) and the colocated
+compiler/schema typing tests for checked positive/negative examples. Agitator
+commands have a None return type in the DSL so subsequent statements remain
+reachable to type checkers; their host-access protection remains unchanged.
 
 ## Shared acceptance
 

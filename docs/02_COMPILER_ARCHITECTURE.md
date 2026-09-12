@@ -7,6 +7,11 @@ list semantics and Python list syntax. AutoSuite array emission includes copy is
 Paths and capabilities below are updated as each
 implementing stage lands.
 
+Static contributor contracts are checked by `uv run mypy`; native declarations
+and valid/invalid Target implementations have dedicated typing tests. See
+[typing scope](16_TYPING.md). Semantic validation is still shared by every
+authoring path and is independent of mypy.
+
 SciLoom has one typed semantic program model, multiple authoring paths and explicit
 compilation targets. The Python frontend interprets source syntax; the IR retains
 program intent; a backend chooses how to express that intent on its platform.

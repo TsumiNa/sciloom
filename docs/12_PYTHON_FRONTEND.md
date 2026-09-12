@@ -52,6 +52,11 @@ types already come from annotations. See Identity/Caller in
 AI and future Studio; no description extractor or node registry is implemented.
 Docstrings never determine execution rules or replace semantic validation.
 
+`uv run mypy` checks the production package and runnable examples. Annotated
+field aliases retain native types, and `runtime` retains the method signature.
+See [typing scope and limits](16_TYPING.md); schema, source-subset and device
+rules remain SciLoom validation responsibilities.
+
 ## Runtime lists
 
 Declare inputs/outputs with `Input[list[T]]` / `Output[list[T]]`, or persistent
