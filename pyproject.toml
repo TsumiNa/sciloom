@@ -57,6 +57,33 @@ module = ["sciloom.core.*", "sciloom.contrib.*"]
 disallow_untyped_defs = true
 disallow_incomplete_defs = true
 
+# IDEs may check excluded files explicitly. Mypy module patterns cannot match
+# filename suffixes, so keep this list in sync when adding *_test.py modules.
+[[tool.mypy.overrides]]
+module = [
+    "sciloom.units_test",
+    "sciloom.dsl.lowering_list_test",
+    "sciloom.dsl.model_test",
+    "sciloom.dsl.schema_test",
+    "sciloom.dsl.schema_typing_test",
+    "sciloom.dsl.statements_test",
+    "sciloom.core.compiler_test",
+    "sciloom.core.compiler_typing_test",
+    "sciloom.core.interpreter.runtime_test",
+    "sciloom.core.interpreter.runtime_list_test",
+    "sciloom.core.interpreter.runtime_agitation_test",
+    "sciloom.core.ir.codec_test",
+    "sciloom.core.ir.codec_list_test",
+    "sciloom.core.ir.validation_test",
+    "sciloom.contrib.autosuite.agitation_test",
+    "sciloom.contrib.autosuite.codegen_test",
+    "sciloom.contrib.autosuite.codegen_arrays_test",
+    "sciloom.contrib.autosuite.codegen_agitation_test",
+    "sciloom.contrib.autosuite.target_test",
+]
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+
 [dependency-groups]
 dev = [
     "mypy>=2.3.1",
