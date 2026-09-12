@@ -120,6 +120,30 @@ def test_empty_defaults_runtime_literals_calls_and_output_isolation():
     assert Interpreter(program).run(inputs={"factor": 3.0}).outputs == {"original": (1.0, 6.0), "changed": (9.0, 6.0), "empty": ()}
 
 
+def test_inherited_list_defaults_are_reused_without_renormalization():
+    class Base(Function):
+        values: Var[list[int]] = [1]
+        result: Output[list[int]]
+
+        @runtime
+        def run(self):
+            self.values[0] += 1
+            self.result = self.values
+
+    class Child(Base):
+        pass
+
+    class Redeclared(Base):
+        values: Var[list[int]]
+
+    for cls in (Child, Redeclared):
+        assert cls.model_fields["values"].default == (1,)
+        assert Interpreter(cls().to_ir()).run().outputs == {"result": (2,)}
+    with pytest.raises(IRValidationError, match="Overriding runtime schema"):
+        class Changed(Base):
+            values: Var[list[int]] = [2]
+
+
 def test_distinct_composed_instances_have_independent_list_state():
     class Counter(Function):
         values: Var[list[int]] = [0]
