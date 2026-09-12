@@ -24,10 +24,12 @@ flowchart TB
     Lower --> IR["core.ir: Program / Semantic IR"]
     JSON["Versioned JSON"] <--> IR
     Author["Future xyflow / AI authoring"] -.-> IR
-    IR --> Reference["core.interpreter<br/>Values, state, events"]
+    IR -->|No unresolved device conditions| Reference["core.interpreter<br/>Values, state, events"]
     IR --> Compile["core.compiler: compile_ir<br/>Shared validation"]
     Compile --> Resolve["Target.resolve_devices<br/>core.devices binding validation"]
-    Resolve --> Configuration["Capabilities and definite configuration"]
+    Resolve --> Specialize["core.specialization<br/>Select device branches and reachable functions"]
+    Specialize --> Reference
+    Specialize --> Configuration["Capabilities and definite configuration"]
     Configuration --> Target["Target.validate / Target.emit"]
     Bind["Concrete device deployment profiles"] --> Resolve
     Target --> AutoSuite["contrib.autosuite<br/>Legality and typed task adapters"]
@@ -47,6 +49,8 @@ future work; ASFP and reference execution are implemented now.
 | `devices/agitation.py` | Logical agitation contract, independent of Python source analysis |
 | `devices/base.py`, `dsl/device_schema.py` | Device type identity; separate logical slots and host-time sharing |
 | `core/devices.py` | Immutable deployment facts and binding validation, without Python device classes |
+| `core/specialization.py` | Pure device-branch selection, trusted resource types and reachable function graph |
+| `dsl/comptime.py`, `device_conditions.py` | Typed query markers and source branch/type refinement |
 | `dsl/lowering.py`, `context.py` | Instance graph to Program orchestration; shared symbols, IDs and source locations |
 | `dsl/source.py`, `expressions.py`, `statements.py` | File-backed source discovery; Python expressions; calls, operations and control flow |
 | `core/ir/types.py`, `model.py` | Value types/compatibility; immutable semantic nodes |
@@ -92,8 +96,10 @@ This IR resembles a compiler IR in its role as a stable semantic boundary. It is
 a structured scientific-program model, not LLVM instructions or SSA. No optimizer,
 pass registry or generic opaque-operation framework is introduced here.
 
-Generic compilation first validates the IR, resolves and validates device
-bindings, then asks the explicit target to validate and emit it. A target returns an Artifact containing bytes, media type
+Generic compilation first validates authored IR, resolves and validates device
+bindings, specializes device conditions, and proves retained capabilities and
+configuration. It then asks the explicit target to validate and emit the selected
+program. A target returns an Artifact containing bytes, media type
 and suffix. Unsupported target semantics fail with diagnostics. Recursion and
 short-circuit operators are currently rejected by AutoSuite; they remain valid
 in the reference semantics. Target limitations must not narrow the shared model.
@@ -105,6 +111,13 @@ and `emit(program)` without needing to inherit a compiler class. Its emission
 uses `codegen.py` to map Program into SerializationIR and `xml.py` to encode XML.
 A future backend can implement the same protocol with its own validation and output
 format; the shared pipeline does not change or acquire vendor-specific imports.
+
+`CompileResult.semantic_ir` is the authored program; `specialized_ir` is the
+high-level selected program given to Target.validate/emit. Binding resolution runs
+once on authored IR. Trusted concrete and ancestor contracts are data-only; they
+replace declared resource types in selected IR. Source positions/identities are
+preserved, while inactive branches/functions and unused type declarations are
+removed. Backend storage and deployment addresses remain outside both Programs.
 
 Python `lowering.py` consumes source and produces semantic IR. AutoSuite
 `codegen.py` consumes that IR and produces a target-specific structure; it never

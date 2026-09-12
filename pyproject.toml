@@ -69,6 +69,8 @@ module = [
     "sciloom.devices.agitation_test",
     "sciloom.devices.declarations_test",
     "sciloom.dsl.device_operations_test",
+    "sciloom.dsl.device_conditions_test",
+    "sciloom.core.specialization_test",
     "sciloom.dsl.contribution_test",
     "sciloom.core.configuration_test",
     "sciloom.core.interpreter.device_state_test",

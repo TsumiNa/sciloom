@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING, Any
 from .units import RotationalSpeed, rpm, rps
 
 if TYPE_CHECKING:
+    from .dsl import comptime
     from .devices.agitation import Agitator
     from .dsl.model import Function, runtime
     from .dsl.schema import Input, Output, Var
@@ -14,6 +15,10 @@ _DSL_EXPORTS = {"Function", "Input", "Output", "Var", "runtime"}
 
 def __getattr__(name: str) -> Any:
     # Importing sciloom.core.ir or the interpreter must not load the Python DSL.
+    if name == "comptime":
+        from .dsl import comptime
+
+        return comptime
     if name == "Agitator":
         from .devices.agitation import Agitator
 
@@ -30,6 +35,7 @@ def __getattr__(name: str) -> Any:
 
 
 __all__ = [
+    "comptime",
     "Agitator",
     "RotationalSpeed",
     "rpm",

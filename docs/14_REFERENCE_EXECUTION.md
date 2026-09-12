@@ -9,6 +9,10 @@ step accounting. No generated source is executed.
 Configuration assignments capture values immediately; starts apply complete
 configuration and stops preserve it. DeviceIf must be specialized before creating
 an Interpreter; native commands without reference semantics fail explicitly.
+Use `Interpreter(result.specialized_ir)` after compilation, or call the pure
+`sciloom.core.specialization.specialize(program, bindings=...)` before constructing
+the session. The [portable example](../examples/developer/portable_agitation.py)
+demonstrates both bound configurations from the same authored JSON.
 
 SciLoom IR is a structured scientific-program model. It can be validated,
 exchanged as JSON and executed without importing either a source frontend or

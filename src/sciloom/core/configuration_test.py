@@ -126,7 +126,7 @@ def test_type_inheritance_does_not_imply_supported_operations():
 def test_every_required_parameter_must_be_configured():
     gain = PropertyContract(semantic_id="test.shaker.gain/v1", name="gain", type=ScalarType.REAL)
     contract = replace(AGITATOR_CONTRACT, type_id="test.shaker/v1", base_type_ids=(AGITATOR_CONTRACT.type_id, BASE_DEVICE_CONTRACT.type_id), properties=(*AGITATOR_CONTRACT.properties, gain), required_configuration=(AGITATION_SPEED_ID, gain.semantic_id))
-    binding = DeviceBinding(logical_id="agitator", contract=contract, physical_id="test:1", writable_properties=contract.required_configuration, supported_operations=(START_AGITATION_ID, STOP_AGITATION_ID))
+    binding = DeviceBinding(logical_id="agitator", contract=contract, base_contracts=(BASE_DEVICE_CONTRACT, AGITATOR_CONTRACT), physical_id="test:1", writable_properties=contract.required_configuration, supported_operations=(START_AGITATION_ID, STOP_AGITATION_ID))
     program = Program(
         entry_function_id="f", device_types=(BASE_DEVICE_CONTRACT, AGITATOR_CONTRACT, contract),
         resources=(DeviceResource(node_id="device", logical_id="agitator", device_type_id=contract.type_id),),

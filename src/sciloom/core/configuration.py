@@ -22,7 +22,7 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
     for node, path in iter_nodes(program):
         message = None
         if isinstance(node, DeviceIf):
-            message = "Device conditions require specialization, which is not enabled in this stage."
+            message = "Device conditions must be specialized before capability/configuration validation."
         elif isinstance(node, DeviceCommand):
             binding = resources[node.resource_id]
             expected_command = next((c for t in program.device_types for c in t.operations if c.semantic_id == node.operation_id), None)

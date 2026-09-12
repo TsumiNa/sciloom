@@ -24,7 +24,7 @@ def configure(context: LoweringContext, node: ast.Assign) -> ConfigureProperty |
     if member is None:
         return None
     reference, name = member
-    contract = device_contract(reference.device_type)
+    contract = device_contract(context.device_type(reference))
     prop = next((p for p in contract.properties if p.name == name), None)
     if prop is None:
         context.fail("device_property", f"Device property {name!r} is not declared.", node.targets[0])
@@ -41,7 +41,7 @@ def operation(context: LoweringContext, node: ast.Call) -> StartAgitation | Stop
     if member is None:
         return None
     reference, name = member
-    contract = device_contract(reference.device_type)
+    contract = device_contract(context.device_type(reference))
     command = next((c for c in contract.operations if c.name == name), None)
     if command is None:
         context.fail("unsupported_operation", f"Device command {name!r} is not declared.", node)
@@ -53,7 +53,7 @@ def operation(context: LoweringContext, node: ast.Call) -> StartAgitation | Stop
         if keyword.arg in keywords:
             context.fail("operation_binding", "Duplicate device command argument.", node)
         keywords[keyword.arg] = keyword.value
-    method = inspect.getattr_static(reference.device_type, name)
+    method = inspect.getattr_static(context.device_type(reference), name)
     try:
         arguments = inspect.signature(method).bind(None, *node.args, **keywords).arguments
     except TypeError as error:
