@@ -13,6 +13,9 @@ build-backend = "uv_build"
 [tool.uv.build-backend]
 module-name = "sciloom"
 
+[tool.uv.sources]
+mike = { git = "https://github.com/squidfunk/mike.git", rev = "2d4ad799442f4592db8ad53b179bfb33db8c69ac" }
+
 [tool.pytest.ini_options]
 # Integration tests import the independent contributor example from the checkout.
 pythonpath = ["."]
@@ -107,6 +110,7 @@ dev = [
 ]
 docs = [
     "griffelib==2.3.0",
+    "mike",
     "mkdocstrings-python==2.0.8",
     "zensical==0.0.61",
 ]
