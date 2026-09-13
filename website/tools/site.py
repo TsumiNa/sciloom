@@ -42,9 +42,24 @@ def git(root: Path, *args: str) -> str:
     return subprocess.check_output(["git", "-C", str(root), *args], text=True).strip()
 
 
+def package_version(root: Path) -> str:
+    """Return the version shared by the root project and every uv workspace member."""
+    config = tomllib.loads((root / "pyproject.toml").read_text())
+    version = config["project"]["version"]
+    for pattern in config.get("tool", {}).get("uv", {}).get("workspace", {}).get("members", ()):
+        for member in sorted(root.glob(pattern)):
+            project = tomllib.loads((member / "pyproject.toml").read_text())["project"]
+            if project["version"] != version:
+                raise ValueError(
+                    "Workspace members must share the root version: "
+                    f"{project['name']} is {project['version']}, root is {version}"
+                )
+    return version
+
+
 def source_info(root: Path, *, preview: str | None = None, publish_ref: str | None = None) -> dict[str, str]:
     """Identify this checkout, never a separately installed SciLoom distribution."""
-    package = tomllib.loads((root / "pyproject.toml").read_text())["project"]["version"]
+    package = package_version(root)
     commit = git(root, "rev-parse", "HEAD")
     dirty = bool(git(root, "status", "--porcelain", "--untracked-files=no"))
     if publish_ref:

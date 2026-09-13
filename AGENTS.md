@@ -185,8 +185,9 @@ Public English documentation lives under `website/docs/`; it is the only website
 source tree. Website configuration, theme and tooling live together under
 `website/`; ignored outputs live in `website/.build/`. The repository is a uv
 workspace (`packages/*`): dependency groups and `uv.lock` stay in the root
-pyproject, and each member declares only its own runtime dependencies. Run from
-the repository root:
+pyproject, and each member declares only its own runtime dependencies. Members
+share one version; bump every member together with the commands in
+`website/docs/developer/publication.md`. Run from the repository root:
 `uv run --group docs python website/tools/site.py serve` to preview
 and `uv run --group docs python website/tools/site.py build --strict` to build.
 Run `uv run --group docs pytest website/tools` for documentation tooling changes.
