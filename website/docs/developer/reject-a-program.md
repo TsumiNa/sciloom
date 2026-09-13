@@ -59,8 +59,9 @@ platform: CompilationError [bench_hold_limit] (source attached)
     hold() requires a literal duration; this target proves literals only.
 ```
 
-The same program produced the last two. Nothing about it changed; the deployment
-did. This is the point of compiling against explicit bindings rather than against
+The same authored program produced the last two: `RuntimeHold`, compiled once
+against a fixed heater and once against a writable one. Nothing about the program
+changed; the deployment did. This is the point of compiling against explicit bindings rather than against
 an assumed instrument.
 
 ## Reading a diagnostic
@@ -75,8 +76,11 @@ Every rejection carries the same record.
 | `node_id` | The exact node, for tooling that maps back to a graph |
 | `source` | The author's Python file and line, when the program came from source |
 
-A failure carries **all** the diagnostics that layer found, not the first, so an
-author can fix a batch rather than recompile once per mistake.
+The aggregating layers carry **all** the diagnostics they found, not the first, so
+an author can fix a batch rather than recompile once per mistake. IR validation,
+the binding and configuration checks and `Target.validate` all collect. Declaration
+and source analysis raise at the first problem, because a half-built class or an
+unparsable method makes everything after it meaningless.
 
 ## Where your own check belongs
 
@@ -138,10 +142,13 @@ without reading your source.
 
 Compare `invalid hold`, which says only that you are unhappy.
 
-Give each rule its own `code`, keep the code stable, and always attach `path`,
-`node_id` and `source` from the node you rejected. A target that returns a single
-`Diagnostic(code="error", message="cannot compile")` is technically correct and
-practically useless.
+Give each rule its own `code` and keep the code stable. `path` is required; take it
+from the traversal. `node_id` and `source` are optional, so attach them from the
+node you rejected whenever it has them. Programmatically built IR may carry no
+source at all, which is exactly why a message has to stand on its own.
+
+A target that returns a single `Diagnostic(code="error", message="cannot compile",
+path="$")` is technically valid and practically useless.
 
 ## The complete example
 
@@ -210,13 +217,17 @@ class BenchTarget:
     target_id = "example.bench/v1"
     max_hold_seconds = 600.0
 
-    def __init__(self, *, devices: Mapping[str, Heater]) -> None:
+    def __init__(self, *, devices: Mapping[str, BenchHeater | FixedHeater]) -> None:
+        if any(type(device) not in (BenchHeater, FixedHeater) for device in devices.values()):
+            raise TypeError("BenchTarget supports BenchHeater and FixedHeater profiles.")
+        if any(not device.channel for device in devices.values()):
+            raise ValueError("Bench channels must not be empty.")
         self.devices = MappingProxyType(dict(devices))
 
     def resolve_devices(self, program: Program) -> DeviceBindings:
         return DeviceBindings(
             devices=tuple(
-                bind_device(logical_id=name, device=device, physical_id=f"bench:{name}")
+                bind_device(logical_id=name, device=device, physical_id=f"bench:{device.channel}")
                 for name, device in self.devices.items()
             )
         )
@@ -228,15 +239,19 @@ class BenchTarget:
                 continue
             seconds = node.arguments[0].value
             if not isinstance(seconds, Literal) or not isinstance(seconds.value, int | float):
-                diagnostics.append(self.rejected(node, path, "a literal duration"))
+                diagnostics.append(
+                    self.rejected(node, path, "hold() requires a literal duration; this target proves literals only.")
+                )
             elif not 0.0 <= seconds.value <= self.max_hold_seconds:
-                diagnostics.append(self.rejected(node, path, f"a duration in [0, {self.max_hold_seconds}] s"))
+                diagnostics.append(
+                    self.rejected(node, path, f"hold() must be within [0, {self.max_hold_seconds}] s on this bench.")
+                )
         return tuple(diagnostics)
 
-    def rejected(self, node: DeviceCommand, path: str, expected: str) -> Diagnostic:
+    def rejected(self, node: DeviceCommand, path: str, message: str) -> Diagnostic:
         return Diagnostic(
             code="bench_hold_limit",
-            message=f"hold() requires {expected}; this target proves literals only.",
+            message=message,
             path=path,
             node_id=node.node_id,
             source=node.source,
@@ -251,26 +266,6 @@ def report(label: str, error: DiagnosticError) -> None:
     attached = " (source attached)" if diagnostic.source is not None else ""
     print(f"{label}: {type(error).__name__} [{diagnostic.code}]{attached}")
     print(f"    {diagnostic.message}")
-
-
-class Anneal(Function):
-    """Write a setpoint and hold it.
-
-    Attributes:
-        heater: Logical heater bound by the selected target.
-        temperature: Target temperature supplied by the caller.
-        done: Set once the hold has been requested.
-    """
-
-    heater: Heater
-    temperature: Input[float]
-    done: Output[bool]
-
-    @runtime
-    def run(self) -> None:
-        self.heater.setpoint = self.temperature
-        self.heater.hold(30.0)
-        self.done = True
 
 
 class Adaptive(Function):
@@ -353,8 +348,9 @@ try:
 except IRValidationError as error:
     report("source", error)
 
+# One authored program, two deployments, two different rejections.
 try:
-    Anneal().compile(target=BenchTarget(devices={"heater": FixedHeater()}))
+    RuntimeHold().compile(target=BenchTarget(devices={"heater": FixedHeater()}))
     raise AssertionError("writing to a fixed heater should be rejected")
 except CompilationError as error:
     report("capability", error)
