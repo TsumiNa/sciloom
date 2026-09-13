@@ -5,7 +5,8 @@ programs. Independent packages use the same public interfaces as sciloom.contrib
 no plugin registry or namespace installation is required.
 
 This page is the reference. For worked walkthroughs, start with
-[add a device](add-a-device.md) and [add a target](add-a-target.md).
+[add a device](add-a-device.md), then [add a target](add-a-target.md) and
+[reject a program](reject-a-program.md).
 
 ## A minimal target
 

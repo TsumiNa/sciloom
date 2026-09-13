@@ -75,9 +75,13 @@ raises once, so an author sees every problem in a program rather than the first.
                 continue
             seconds = node.arguments[0].value
             if not isinstance(seconds, Literal) or not isinstance(seconds.value, int | float):
-                diagnostics.append(self.rejected(node, path, "a literal duration"))
+                diagnostics.append(
+                    self.rejected(node, path, "hold() requires a literal duration; this target proves literals only.")
+                )
             elif not 0.0 <= seconds.value <= self.max_hold_seconds:
-                diagnostics.append(self.rejected(node, path, f"a duration in [0, {self.max_hold_seconds}] s"))
+                diagnostics.append(
+                    self.rejected(node, path, f"hold() must be within [0, {self.max_hold_seconds}] s on this bench.")
+                )
         return tuple(diagnostics)
 ```
 
@@ -92,8 +96,9 @@ source attached: True
 ```
 
 A literal of `900.0` reaches the second branch instead and is rejected for its
-value: `hold() requires a duration in [0, 600.0] s`. Writing the bound as an
-interval rather than a maximum costs nothing and rules out a negative duration.
+value: `hold() must be within [0, 600.0] s on this bench.` Each branch writes its
+own message, because "this target proves literals only" explains nothing about a
+literal that is simply too large.
 
 One subtlety is worth seeing early, because it decides how conservative a target
 must be. `hold(-1.0)` is not a literal in the IR: Python parses it as a negation of
@@ -102,7 +107,9 @@ unprovable rather than by range. That is the correct outcome here, and it is a g
 illustration of why a target should inspect the IR it actually receives rather than
 the source it imagines.
 
-Rejecting the unprovable is honest; accepting it and hoping is not. A target that
+Rejecting the unprovable is honest; accepting it and hoping is not.
+[Reject a program](reject-a-program.md) covers every layer that can say no, and when
+to let a program adapt instead. A target that
 could evaluate ranges would accept more, and the message says which kind of target
 this is so the author knows what to change.
 
@@ -231,15 +238,19 @@ class BenchTarget:
                 continue
             seconds = node.arguments[0].value
             if not isinstance(seconds, Literal) or not isinstance(seconds.value, int | float):
-                diagnostics.append(self.rejected(node, path, "a literal duration"))
+                diagnostics.append(
+                    self.rejected(node, path, "hold() requires a literal duration; this target proves literals only.")
+                )
             elif not 0.0 <= seconds.value <= self.max_hold_seconds:
-                diagnostics.append(self.rejected(node, path, f"a duration in [0, {self.max_hold_seconds}] s"))
+                diagnostics.append(
+                    self.rejected(node, path, f"hold() must be within [0, {self.max_hold_seconds}] s on this bench.")
+                )
         return tuple(diagnostics)
 
-    def rejected(self, node: DeviceCommand, path: str, expected: str) -> Diagnostic:
+    def rejected(self, node: DeviceCommand, path: str, message: str) -> Diagnostic:
         return Diagnostic(
             code="bench_hold_limit",
-            message=f"hold() requires {expected}; this target proves literals only.",
+            message=message,
             path=path,
             node_id=node.node_id,
             source=node.source,
