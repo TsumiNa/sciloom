@@ -166,9 +166,9 @@ python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
 ```
 
 Enable the versioned pre-commit hook once per clone with
-`git config core.hooksPath .githooks`. It applies `ruff check --fix` and
-`ruff format` to staged Python files, re-stages them and blocks the commit only
-when unfixable lint errors remain. CI runs the same two ruff commands.
+`git config core.hooksPath .githooks`. It runs `ruff check --fix-only` and
+`ruff format` on staged Python files, re-stages them, then runs `ruff check` and
+blocks the commit only when errors remain. CI runs the same two ruff commands.
 
 Run the experiment-author examples with `uv run python examples/function_call.py`
 and `uv run python examples/agitation.py`. Run the list author examples with `uv run python examples/scale_values.py` and

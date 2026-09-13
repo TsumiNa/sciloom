@@ -3,7 +3,7 @@
 # Enable once per clone: git config core.hooksPath .githooks
 set -eu
 
-staged=$(git -c core.quotePath=false diff --cached --name-only --diff-filter=ACMR -- "*.py")
+staged=$(git -c core.quotePath=false diff --cached --name-only --diff-filter=ACMR -- "*.py" "*.pyi")
 [ -n "$staged" ] || exit 0
 
 IFS="

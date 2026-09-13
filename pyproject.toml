@@ -57,10 +57,6 @@ no-lines-before = ["local-folder"]
 quote-style = "double"
 skip-magic-trailing-comma = false
 
-[tool.ruff.lint.mccabe]
-# C901
-max-complexity = 10
-
 [tool.mypy]
 # Production package and runnable examples share the public type contract.
 # Colocated tests intentionally construct invalid runtime schemas and IR values.
