@@ -9,6 +9,7 @@ from sciloom.core.ir import (
     Assignment,
     Binary,
     Call,
+    DeviceIf,
     If,
     InputBinding,
     ListSet,
@@ -21,7 +22,7 @@ from sciloom.core.ir import (
     While,
 )
 from .context import LoweringContext
-from .device_conditions import device_if
+from .device_conditions import device_condition
 from .device_operations import configure, operation
 from .expressions import BINARY_OPERATORS, expression, is_length_call
 from .model import Function
@@ -139,9 +140,19 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
                 )
             )
         elif isinstance(node, ast.If):
-            selected = device_if(context, node)
-            if selected is not None:
-                result.append(selected)
+            query = device_condition(context, node)
+            if query is not None:
+                metadata = context.metadata(node)
+                with context.narrowing(query.resource_id, query.narrowed_type):
+                    then_body = statements(context, node.body)
+                result.append(
+                    DeviceIf(
+                        **metadata,
+                        condition=query.predicate,
+                        then_body=then_body,
+                        else_body=statements(context, node.orelse),
+                    )
+                )
                 continue
             result.append(
                 If(

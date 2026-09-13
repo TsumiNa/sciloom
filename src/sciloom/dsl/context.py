@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import ast
 import inspect
+from collections.abc import Iterator
+from contextlib import contextmanager
 from typing import Any, NoReturn, cast
 
 from sciloom.core.diagnostics import Diagnostic, IRValidationError, SourceSpan
@@ -105,6 +107,17 @@ class LoweringContext:
 
     def device_type(self, reference: DeviceReference) -> type[BaseDevice]:
         return self.narrowed_devices.get(self.device_resource(reference).node_id, reference.device_type)
+
+    @contextmanager
+    def narrowing(self, resource_id: str, device_type: type[BaseDevice] | None) -> Iterator[None]:
+        """Apply one branch-local device narrowing and restore the enclosing scope."""
+        original = self.narrowed_devices.copy()
+        if device_type is not None:
+            self.narrowed_devices[resource_id] = device_type
+        try:
+            yield
+        finally:
+            self.narrowed_devices = original
 
     def target(self, node: ast.AST) -> Reference:
         if (
