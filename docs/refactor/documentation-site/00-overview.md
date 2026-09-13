@@ -94,8 +94,18 @@ each version's `build-info.json` and show version/short SHA on every page:
 {"version":"0.1.0","ref":"v0.1.0","commit":"<full source SHA>","package_version":"0.1.0"}
 ```
 
-The placeholder above documents the shape, not a real deployed build. Local
-uncommitted previews identify themselves as dirty. Published builds must be clean.
+The development snapshot uses `version="dev"` and `ref="main"`; package_version
+is read from that source commit's pyproject.toml, never replaced with "dev":
+
+```json
+{"version":"dev","ref":"main","commit":"<full main source SHA>","package_version":"0.1.0"}
+```
+
+These placeholders document the shape, not real deployed builds. PR artifacts
+use version="preview", ref="refs/pull/<number>/head" and the PR head SHA. Local
+builds use version="local" ("local-dirty" for uncommitted tracked changes), the
+current branch name ("HEAD" when detached), and the full HEAD SHA. Only dev and
+numeric release versions are publishable. Published builds must be clean.
 An existing release tied to another SHA is an error, never an overwrite. Stable
 is selected numerically, not by event time. Search is local to the selected version.
 Serialize publication, reconcile missing eligible tags, and prevent stale main
