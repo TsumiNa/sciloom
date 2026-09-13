@@ -100,8 +100,8 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 32,
-            "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+            "line": 34,
+            "path": "examples/developer/demo_device.py"
           },
           "value": {
             "kind": "Literal",
@@ -109,8 +109,8 @@
             "source": {
               "column": 30,
               "kind": "SourceSpan",
-              "line": 32,
-              "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+              "line": 34,
+              "path": "examples/developer/demo_device.py"
             },
             "type": "rotational_speed",
             "value": 10.0
@@ -124,8 +124,8 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 33,
-            "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+            "line": 35,
+            "path": "examples/developer/demo_device.py"
           },
           "value": {
             "kind": "Literal",
@@ -133,8 +133,8 @@
             "source": {
               "column": 29,
               "kind": "SourceSpan",
-              "line": 33,
-              "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+              "line": 35,
+              "path": "examples/developer/demo_device.py"
             },
             "type": "real",
             "value": 0.5
@@ -147,8 +147,8 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 34,
-            "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+            "line": 36,
+            "path": "examples/developer/demo_device.py"
           }
         },
         {
@@ -160,8 +160,8 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 35,
-            "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+            "line": 37,
+            "path": "examples/developer/demo_device.py"
           }
         },
         {
@@ -171,8 +171,8 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 36,
-            "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+            "line": 38,
+            "path": "examples/developer/demo_device.py"
           }
         }
       ],
@@ -182,8 +182,8 @@
       "source": {
         "column": 4,
         "kind": "SourceSpan",
-        "line": 31,
-        "path": "/Users/liuchang/projects/sci-loom/examples/developer/demo_device.py"
+        "line": 33,
+        "path": "examples/developer/demo_device.py"
       },
       "variables": []
     }

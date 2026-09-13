@@ -100,8 +100,8 @@
           "source": {
             "column": 12,
             "kind": "SourceSpan",
-            "line": 39,
-            "path": "/Users/liuchang/projects/sci-loom/examples/developer/portable_agitation.py"
+            "line": 41,
+            "path": "examples/developer/portable_agitation.py"
           },
           "value": {
             "kind": "Literal",
@@ -109,8 +109,8 @@
             "source": {
               "column": 33,
               "kind": "SourceSpan",
-              "line": 39,
-              "path": "/Users/liuchang/projects/sci-loom/examples/developer/portable_agitation.py"
+              "line": 41,
+              "path": "examples/developer/portable_agitation.py"
             },
             "type": "real",
             "value": 0.5
@@ -124,8 +124,8 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 40,
-            "path": "/Users/liuchang/projects/sci-loom/examples/developer/portable_agitation.py"
+            "line": 42,
+            "path": "examples/developer/portable_agitation.py"
           },
           "value": {
             "kind": "Reference",
@@ -133,8 +133,8 @@
             "source": {
               "column": 30,
               "kind": "SourceSpan",
-              "line": 40,
-              "path": "/Users/liuchang/projects/sci-loom/examples/developer/portable_agitation.py"
+              "line": 42,
+              "path": "examples/developer/portable_agitation.py"
             },
             "symbol_id": "fn:0:var:speed"
           }
@@ -146,8 +146,8 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 41,
-            "path": "/Users/liuchang/projects/sci-loom/examples/developer/portable_agitation.py"
+            "line": 43,
+            "path": "examples/developer/portable_agitation.py"
           }
         }
       ],
@@ -157,8 +157,8 @@
       "source": {
         "column": 4,
         "kind": "SourceSpan",
-        "line": 37,
-        "path": "/Users/liuchang/projects/sci-loom/examples/developer/portable_agitation.py"
+        "line": 39,
+        "path": "examples/developer/portable_agitation.py"
       },
       "variables": [
         {

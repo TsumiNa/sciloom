@@ -30,6 +30,7 @@ EXAMPLES = (
     "developer/demo_device.py",
     "developer/demo_device.json",
     "developer/demo_contribution/__init__.py",
+    "developer/source_paths.py",
     "developer/portable_agitation.py",
     "developer/portable_agitation.json",
     "developer/portable_agitation.autosuite.asfp",

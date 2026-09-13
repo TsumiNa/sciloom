@@ -10,9 +10,9 @@ Expected terminal output:
     Started: True {'speed': RotationalSpeed(rps=10.0)}
     Stopped: False {'speed': RotationalSpeed(rps=10.0)}
 
-Full generated output: agitation_ir.json, beside this source file.
-Source paths and line numbers in JSON describe the generating checkout; these
-diagnostic fields can differ when the example is rerun elsewhere.
+Full generated output: agitation_ir.json, beside this source file. Source paths
+are rewritten relative to the repository root so the committed companion file
+does not depend on the checkout that produced it.
 
 The JSON file stores the same Function's Program. Reloading it preserves the IR.
 The first run saves 600 rpm (10 revolutions per second), then explicitly starts.
@@ -30,10 +30,11 @@ from examples.agitation import ConfigureAgitation
 from sciloom import rpm
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import from_json, to_json
+from .source_paths import repository_relative
 
 if __name__ == "__main__":
     function = ConfigureAgitation()
-    program = function.to_ir()
+    program = repository_relative(function.to_ir())
 
     path = Path(__file__).with_suffix(".json")
     path.write_text(to_json(program), encoding="utf-8")

@@ -48,6 +48,7 @@ Exports include defaults, sorted keys, two-space indentation and a final newline
 ordered bodies and bindings keep their order. Exported mappings are detached.
 
 SourceSpan records one-based lines and zero-based UTF-8 byte columns. Source IDs
-and spans survive round trips. Paths identify the generating checkout and can
-differ between environments. JSON is declarative data: implementation IDs never
+and spans survive round trips. Lowering records the absolute path of the defining
+file, so paths identify the generating checkout; the developer examples rewrite
+them relative to the repository root before writing their companion files. JSON is declarative data: implementation IDs never
 cause dynamic Python imports. See [binding and specialization](compiler.md).
