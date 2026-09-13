@@ -1,6 +1,6 @@
 # Versioned publication
 
-The public site is [tsumina.github.io/sci-loom](https://tsumina.github.io/sci-loom/).
+The public site is [tsumina.github.io/sciloom](https://tsumina.github.io/sciloom/).
 The source repository remains private. Pages uses the current repository; changing
 source visibility later does not require a new documentation address.
 
@@ -68,7 +68,7 @@ keep it when restoring Pages or rerunning a failed deployment.
 The internal read-only preparation command is:
 
 ```bash
-uv run --group docs python docs/tools/publication.py --repository TsumiNa/sci-loom
+uv run --group docs python docs/tools/publication.py --repository TsumiNa/sciloom
 ```
 
 It requires a full, clean Actions checkout with fetched `origin/main`, tags and
