@@ -3,8 +3,8 @@
 ## Authority and status
 
 This is the accepted interface contract for a nine-stage layering refactor of the
-Python frontend. It extends the package-layout contract, whose nine stages are
-merged. Every constraint that plan states remains in force, including explicit
+Python frontend. It extends the package-layout contract, which records its
+own stage status. Every constraint that plan states remains in force, including explicit
 context objects, direct functions and the absence of a pass registry, mixin
 hierarchy, compatibility facade or generic pass framework. Its stage 4 acceptance
 required no *new* import cycles, which this plan does not dispute: the cycles
