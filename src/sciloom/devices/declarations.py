@@ -4,16 +4,14 @@ from __future__ import annotations
 
 import inspect
 from functools import wraps
-from typing import TYPE_CHECKING, Callable, ParamSpec, get_args, get_origin, get_type_hints
+from typing import Callable, ParamSpec, get_args, get_origin, get_type_hints
 
+from sciloom.core.devices import DeviceBinding
 from sciloom.core.ir.device_contracts import CommandContract, CommandParameter, DeviceTypeContract, PropertyContract
 from sciloom.core.ir.device_validation import semantic_id
 from sciloom.core.ir.types import ListType, ScalarType, ValueType
 from sciloom.units import RotationalSpeed
 from .base import BaseDevice
-
-if TYPE_CHECKING:
-    from sciloom.core.devices import DeviceBinding
 
 P = ParamSpec("P")
 
@@ -127,7 +125,7 @@ def device_contract(cls: type[BaseDevice]) -> DeviceTypeContract:
     )
 
 
-def bind_device(*, logical_id: str, device: BaseDevice, physical_id: str) -> "DeviceBinding":
+def bind_device(*, logical_id: str, device: BaseDevice, physical_id: str) -> DeviceBinding:
     """Translate an explicit concrete profile into contributor-neutral facts.
 
     Args:
@@ -142,8 +140,6 @@ def bind_device(*, logical_id: str, device: BaseDevice, physical_id: str) -> "De
         TypeError: Profile declarations or capability lists are malformed.
         ValueError: The resulting binding violates trusted-contract invariants.
     """
-    from sciloom.core.devices import DeviceBinding
-
     cls = type(device)
     for name in ("writable_properties", "required_configuration", "supported_operations"):
         if name not in cls.__dict__:
