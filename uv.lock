@@ -573,6 +573,7 @@ dev = [
     { name = "pytest" },
 ]
 docs = [
+    { name = "griffelib" },
     { name = "mkdocstrings-python" },
     { name = "zensical" },
 ]
@@ -585,6 +586,7 @@ dev = [
     { name = "pytest", specifier = ">=9.1.1" },
 ]
 docs = [
+    { name = "griffelib", specifier = "==2.3.0" },
     { name = "mkdocstrings-python", specifier = "==2.0.8" },
     { name = "zensical", specifier = "==0.0.61" },
 ]

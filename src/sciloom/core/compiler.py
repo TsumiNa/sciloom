@@ -55,7 +55,9 @@ class CompileResult:
         specialized_ir: High-level program selected for the supplied bindings.
         target_id: Target's format/platform identity.
         artifact: Target output; backend-private storage stays outside both IRs.
-        diagnostics: Diagnostics retained with the successful result."""
+        diagnostics: Empty for results returned by compile_ir; any validation
+            diagnostic currently raises an exception instead of returning a result.
+    """
     semantic_ir: Program
     specialized_ir: Program
     target_id: str

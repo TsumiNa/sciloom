@@ -22,7 +22,8 @@ class DeviceBinding:
         supported_operations: Supported command semantic IDs.
 
     Raises:
-        TypeError: A contract has an invalid record type or shape.
+        TypeError: The concrete contract is not a DeviceTypeContract.
+        IRValidationError: Concrete or ancestor contract fields have invalid shapes.
         ValueError: Identities, ancestry or capability declarations are inconsistent."""
     logical_id: str
     contract: DeviceTypeContract
