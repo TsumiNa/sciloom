@@ -379,7 +379,7 @@ def test_empty_output_replaces_previous_call_value_and_typed_index_reads_compile
 
 
 def test_private_ids_and_names_do_not_collide_with_ir_supplied_symbols():
-    from sciloom.core.ir import ListType, ScalarType, Variable, VariableRole, FunctionIR, Program
+    from sciloom.core.ir import FunctionIR, ListType, Program, ScalarType, Variable, VariableRole
 
     variable = Variable(
         node_id="generated:1",

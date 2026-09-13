@@ -7,13 +7,13 @@ from pathlib import Path
 
 import pytest
 
-from sciloom.contrib.autosuite import AutoSuiteTarget
-from sciloom.core.diagnostics import CompilationError
-from sciloom import Function, runtime, Var
+from sciloom import Function, Var, runtime
 from sciloom.core.compiler import compile_ir
-from sciloom.dsl.model_test import Caller, Counter
+from sciloom.core.diagnostics import CompilationError
 from sciloom.core.ir import IRValidationError, SourceSpan, from_json, to_json
-from sciloom.contrib.autosuite.xml import SerializationIR
+from sciloom.dsl.model_test import Caller, Counter
+from . import AutoSuiteTarget
+from .xml import SerializationIR
 
 FIXTURES = Path(__file__).resolve().parents[4] / "autosuite/asfp"
 
@@ -132,7 +132,10 @@ def test_python_json_compilation_and_write_are_identical(tmp_path):
     first = program.compile(target=AutoSuiteTarget())
     assert vars(program) == before
     assert first == program.compile(target=AutoSuiteTarget())
-    assert compile_ir(from_json(to_json(first.semantic_ir)), target=AutoSuiteTarget()).artifact.content == first.artifact.content
+    assert (
+        compile_ir(from_json(to_json(first.semantic_ir)), target=AutoSuiteTarget()).artifact.content
+        == first.artifact.content
+    )
     path = first.write(tmp_path / "nested" / "example.asfp")
     assert path.read_bytes() == first.artifact.content
     assert first.diagnostics == ()
@@ -140,7 +143,10 @@ def test_python_json_compilation_and_write_are_identical(tmp_path):
 
 def test_different_specializations_have_disjoint_xml_ids():
     def ids(value):
-        return {element.text for element in ET.fromstring(Caller(value).compile(target=AutoSuiteTarget()).artifact.content).iter("id")}
+        return {
+            element.text
+            for element in ET.fromstring(Caller(value).compile(target=AutoSuiteTarget()).artifact.content).iter("id")
+        }
 
     assert ids(2.5).isdisjoint(ids(3.5))
 
@@ -193,7 +199,10 @@ def test_source_locations_do_not_change_artifact_identity():
             *package.functions[1:],
         ),
     )
-    assert compile_ir(package, target=AutoSuiteTarget()).artifact.content == compile_ir(changed, target=AutoSuiteTarget()).artifact.content
+    assert (
+        compile_ir(package, target=AutoSuiteTarget()).artifact.content
+        == compile_ir(changed, target=AutoSuiteTarget()).artifact.content
+    )
 
 
 @pytest.mark.parametrize("name", ["result + 1", "_result"])

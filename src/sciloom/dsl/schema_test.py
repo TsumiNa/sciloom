@@ -1,7 +1,8 @@
 """Runtime defaults are validated when the class schema is built."""
 
-import pytest
 from typing import Annotated, Any, ClassVar, get_args, get_type_hints
+
+import pytest
 
 from sciloom import Function, Input, Output, RotationalSpeed, Var, rpm
 from sciloom.core.diagnostics import IRValidationError
@@ -59,11 +60,21 @@ def test_native_roles_preserve_types_metadata_and_host_configuration():
             setattr(instance, name, 1)
 
 
-@pytest.mark.parametrize("annotation", [
-    Input, Output, Var, Input[Any], Var[list], Var[list[int]],
-    Var[Input[float]], Output[Var[int]], Input[Input[float]],
-    ClassVar[Input[int]],
-])
+@pytest.mark.parametrize(
+    "annotation",
+    [
+        Input,
+        Output,
+        Var,
+        Input[Any],
+        Var[list],
+        Var[list[int]],
+        Var[Input[float]],
+        Output[Var[int]],
+        Input[Input[float]],
+        ClassVar[Input[int]],
+    ],
+)
 def test_invalid_role_or_type_is_a_schema_error(annotation):
     with pytest.raises(IRValidationError, match="class_schema"):
         type("Invalid", (Function,), {"__annotations__": {"value": annotation}, "value": 0})

@@ -8,10 +8,11 @@ from dataclasses import dataclass
 from enum import Enum
 from types import MappingProxyType
 from typing import Annotated, Any, NoReturn, TypeAlias, TypeVar, get_args, get_origin, get_type_hints
-from ..units import RotationalSpeed
-from ..core.diagnostics import Diagnostic, IRValidationError
-from ..core.ir.types import ListType, ScalarType, ValueType
-from ..core.ir import VariableRole
+
+from sciloom.core.diagnostics import Diagnostic, IRValidationError
+from sciloom.core.ir import VariableRole
+from sciloom.core.ir.types import ListType, ScalarType, ValueType
+from sciloom.units import RotationalSpeed
 
 
 class _FieldRole(Enum):
@@ -100,9 +101,7 @@ def build_schema(cls: type, reserved_names: Container[str]) -> Mapping[str, Runt
             _schema_error(name, "Parameter defaults are outside the first frontend subset.")
         field = RuntimeField(name=name, role=role, type=value_type, default=default)
         if name in inherited and field != inherited[name]:
-            _schema_error(
-                name, "Overriding runtime schema is unsupported; specialize host-time configuration instead."
-            )
+            _schema_error(name, "Overriding runtime schema is unsupported; specialize host-time configuration instead.")
         registered[name] = field
     for name, field in registered.items():
         setattr(cls, name, _RuntimeSlot(field))
@@ -120,10 +119,14 @@ def _value_type(name: str, annotation: Any) -> ValueType:
     if get_origin(annotation) is list:
         args = get_args(annotation)
         if len(args) != 1 or not isinstance(args[0], type) or args[0] not in _TYPES:
-            _schema_error(name, "Lists require one supported scalar element type; Any and nested lists are unsupported.")
+            _schema_error(
+                name, "Lists require one supported scalar element type; Any and nested lists are unsupported."
+            )
         return ListType(element_type=_TYPES[args[0]])
     if not isinstance(annotation, type) or annotation not in _TYPES:
-        _schema_error(name, "Input, Output and Var require int, float, bool, RotationalSpeed or a typed list of those values.")
+        _schema_error(
+            name, "Input, Output and Var require int, float, bool, RotationalSpeed or a typed list of those values."
+        )
     return _TYPES[annotation]
 
 
@@ -135,8 +138,10 @@ def _default(name: str, value: Any, value_type: ValueType) -> Any:
     if value is None:
         _schema_error(name, "Var requires an explicit scalar literal initial value.")
     allowed = {
-        ScalarType.INTEGER: (int,), ScalarType.REAL: (int, float),
-        ScalarType.BOOLEAN: (bool,), ScalarType.ROTATIONAL_SPEED: (RotationalSpeed,),
+        ScalarType.INTEGER: (int,),
+        ScalarType.REAL: (int, float),
+        ScalarType.BOOLEAN: (bool,),
+        ScalarType.ROTATIONAL_SPEED: (RotationalSpeed,),
     }[value_type]
     if type(value) not in allowed or (type(value) is float and not math.isfinite(value)):
         _schema_error(name, f"Default must be a finite {value_type.value} value.")

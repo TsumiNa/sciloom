@@ -1,6 +1,6 @@
 """Observed Set Variable and Macro wire forms used by task/expression scheduling."""
 
-from ...core.ir import FunctionIR, Variable
+from sciloom.core.ir import FunctionIR, Variable
 from .context import CodegenContext
 from .encoding import variable_declaration
 from .xml import XmlNode, xml_node as _xml

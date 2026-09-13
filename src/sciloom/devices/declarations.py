@@ -4,16 +4,14 @@ from __future__ import annotations
 
 import inspect
 from functools import wraps
-from typing import TYPE_CHECKING, Callable, ParamSpec, get_args, get_origin, get_type_hints
+from typing import Callable, ParamSpec, get_args, get_origin, get_type_hints
 
-from ..core.ir.device_contracts import CommandContract, CommandParameter, DeviceTypeContract, PropertyContract
-from ..core.ir.device_validation import semantic_id
-from ..core.ir.types import ListType, ScalarType, ValueType
-from ..units import RotationalSpeed
+from sciloom.core.devices import DeviceBinding
+from sciloom.core.ir.device_contracts import CommandContract, CommandParameter, DeviceTypeContract, PropertyContract
+from sciloom.core.ir.device_validation import semantic_id
+from sciloom.core.ir.types import ListType, ScalarType, ValueType
+from sciloom.units import RotationalSpeed
 from .base import BaseDevice
-
-if TYPE_CHECKING:
-    from ..core.devices import DeviceBinding
 
 P = ParamSpec("P")
 
@@ -47,7 +45,12 @@ def operation(*, id: str) -> Callable[[Callable[P, None]], Callable[P, None]]:
 
 def value_type(annotation: object) -> ValueType:
     """Device values use the same native scalar and homogeneous list vocabulary."""
-    scalars = {int: ScalarType.INTEGER, float: ScalarType.REAL, bool: ScalarType.BOOLEAN, RotationalSpeed: ScalarType.ROTATIONAL_SPEED}
+    scalars = {
+        int: ScalarType.INTEGER,
+        float: ScalarType.REAL,
+        bool: ScalarType.BOOLEAN,
+        RotationalSpeed: ScalarType.ROTATIONAL_SPEED,
+    }
     if isinstance(annotation, type) and annotation in scalars:
         return scalars[annotation]
     if get_origin(annotation) is list:
@@ -92,7 +95,10 @@ def device_contract(cls: type[BaseDevice]) -> DeviceTypeContract:
             raise TypeError("Device operations require an ordinary instance receiver.")
         arguments = []
         for parameter in parameters[1:]:
-            if parameter.default is not inspect.Parameter.empty or parameter.kind in (inspect.Parameter.VAR_POSITIONAL, inspect.Parameter.VAR_KEYWORD):
+            if parameter.default is not inspect.Parameter.empty or parameter.kind in (
+                inspect.Parameter.VAR_POSITIONAL,
+                inspect.Parameter.VAR_KEYWORD,
+            ):
                 raise TypeError("Device commands do not support defaults or variadic arguments.")
             arguments.append(CommandParameter(name=parameter.name, type=value_type(hints.get(parameter.name))))
         if isinstance(member, property):
@@ -119,7 +125,7 @@ def device_contract(cls: type[BaseDevice]) -> DeviceTypeContract:
     )
 
 
-def bind_device(*, logical_id: str, device: BaseDevice, physical_id: str) -> "DeviceBinding":
+def bind_device(*, logical_id: str, device: BaseDevice, physical_id: str) -> DeviceBinding:
     """Translate an explicit concrete profile into contributor-neutral facts.
 
     Args:
@@ -134,8 +140,6 @@ def bind_device(*, logical_id: str, device: BaseDevice, physical_id: str) -> "De
         TypeError: Profile declarations or capability lists are malformed.
         ValueError: The resulting binding violates trusted-contract invariants.
     """
-    from ..core.devices import DeviceBinding
-
     cls = type(device)
     for name in ("writable_properties", "required_configuration", "supported_operations"):
         if name not in cls.__dict__:
@@ -149,7 +153,9 @@ def bind_device(*, logical_id: str, device: BaseDevice, physical_id: str) -> "De
     if not isinstance(operations, tuple) or any(not callable(method) for method in operations):
         raise TypeError("supported_operations must list registered command methods.")
     return DeviceBinding(
-        logical_id=logical_id, contract=contract, physical_id=physical_id,
+        logical_id=logical_id,
+        contract=contract,
+        physical_id=physical_id,
         base_contracts=tuple(device_contract(base) for base in cls.__mro__[1:] if issubclass(base, BaseDevice)),
         writable_properties=tuple(properties[name] for name in writable),
         supported_operations=tuple(getattr(method, "__sciloom_operation_id__", "") for method in operations),

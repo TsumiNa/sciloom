@@ -8,15 +8,15 @@ from __future__ import annotations
 
 import argparse
 import ast
-from contextlib import chdir
-from dataclasses import asdict, dataclass
 import json
 import os
-from pathlib import Path
 import re
 import subprocess
 import tarfile
 import tomllib
+from contextlib import chdir
+from dataclasses import asdict, dataclass
+from pathlib import Path
 
 from mike import commands, git_utils
 
@@ -61,15 +61,20 @@ def select_snapshots(candidates: list[Snapshot], published: dict[str, dict], pas
                 continue
         if item.commit in passed:
             selected.append(item)
-    return sorted(selected, key=lambda item: (item.version == "dev", release_key(item.version) if item.version != "dev" else ()))
+    return sorted(
+        selected, key=lambda item: (item.version == "dev", release_key(item.version) if item.version != "dev" else ())
+    )
 
 
 def checked(repository: str, commit: str) -> bool:
     """Require successful push CI and all expected jobs for this exact source SHA."""
+
     def pages(endpoint: str) -> list[dict]:
         return json.loads(subprocess.check_output(["gh", "api", "--paginate", "--slurp", endpoint], text=True))
 
-    runs = pages(f"repos/{repository}/actions/workflows/ci.yml/runs?event=push&status=success&head_sha={commit}&per_page=100")
+    runs = pages(
+        f"repos/{repository}/actions/workflows/ci.yml/runs?event=push&status=success&head_sha={commit}&per_page=100"
+    )
     for page in runs:
         for run in page["workflow_runs"]:
             if run["head_sha"] != commit or run["event"] != "push" or run["head_repository"]["full_name"] != repository:
@@ -83,8 +88,21 @@ def checked(repository: str, commit: str) -> bool:
 
 def audit_site(site: Path, expected_examples: tuple[str, ...]) -> None:
     """Reject non-site roots, links and unselected source/evidence downloads."""
-    allowed = {"404.html", "index.html", "build-info.json", "objects.inv", "sitemap.xml", "search.json",
-               "api", "assets", "developer", "examples", "introduction", "user-guide", "_generated"}
+    allowed = {
+        "404.html",
+        "index.html",
+        "build-info.json",
+        "objects.inv",
+        "sitemap.xml",
+        "search.json",
+        "api",
+        "assets",
+        "developer",
+        "examples",
+        "introduction",
+        "user-guide",
+        "_generated",
+    }
     if {p.name for p in site.iterdir()} - allowed:
         raise ValueError("Unexpected content at the public site root")
     downloads = site / "_generated/examples"
@@ -107,7 +125,8 @@ def record(storage: Path, site: Path, snapshot: Snapshot, *, expected_examples: 
     audit_site(site, expected_examples)
     with chdir(storage):
         with commands.deploy(
-            {"site_dir": str(site), "use_directory_urls": True}, snapshot.version,
+            {"site_dir": str(site), "use_directory_urls": True},
+            snapshot.version,
             alias_type=commands.AliasType.redirect,
             message=f"Documentation {snapshot.version} from {snapshot.commit}",
         ):
@@ -123,8 +142,13 @@ def aliases(storage: Path) -> None:
             latest = max(releases, key=release_key)
             current = next(item for item in versions if item["version"] == latest)
             if "stable" not in current["aliases"]:
-                commands.alias({"use_directory_urls": True}, latest, ["stable"], update_aliases=True,
-                               alias_type=commands.AliasType.redirect)
+                commands.alias(
+                    {"use_directory_urls": True},
+                    latest,
+                    ["stable"],
+                    update_aliases=True,
+                    alias_type=commands.AliasType.redirect,
+                )
         default = "stable" if releases else "dev"
         try:
             commands.set_default(default)
@@ -145,7 +169,12 @@ def main() -> None:
     git(storage, "init", "-q")
     git(storage, "config", "user.name", "SciLoom documentation")
     git(storage, "config", "user.email", "docs@users.noreply.github.com")
-    prior = subprocess.run(["git", "-C", str(ROOT), "show-ref", "--verify", "--quiet", "refs/remotes/origin/gh-pages"]).returncode == 0
+    prior = (
+        subprocess.run(
+            ["git", "-C", str(ROOT), "show-ref", "--verify", "--quiet", "refs/remotes/origin/gh-pages"]
+        ).returncode
+        == 0
+    )
     if prior:
         git(storage, "fetch", str(ROOT), "refs/remotes/origin/gh-pages:refs/heads/gh-pages")
     published = {}
@@ -156,7 +185,10 @@ def main() -> None:
                 release_key(name)
             published[name] = json.loads(git(storage, "show", f"gh-pages:{name}/build-info.json"))
 
-    refs = ["main", *[ref for ref in git(ROOT, "tag", "--list").splitlines() if ref.startswith("v") and RELEASE.fullmatch(ref[1:])]]
+    refs = [
+        "main",
+        *[ref for ref in git(ROOT, "tag", "--list").splitlines() if ref.startswith("v") and RELEASE.fullmatch(ref[1:])],
+    ]
     candidates = []
     for ref in refs:
         revision = "refs/remotes/origin/main" if ref == "main" else f"refs/tags/{ref}"
@@ -168,7 +200,9 @@ def main() -> None:
     for item in selected:
         if item.version == "dev" and "dev" in published:
             previous = published["dev"]["commit"]
-            if subprocess.run(["git", "-C", str(ROOT), "merge-base", "--is-ancestor", previous, item.commit]).returncode:
+            if subprocess.run(
+                ["git", "-C", str(ROOT), "merge-base", "--is-ancestor", previous, item.commit]
+            ).returncode:
                 raise ValueError("Refusing stale or divergent dev history")
         checkout = build / item.version
         git(ROOT, "worktree", "add", "--detach", str(checkout), item.commit)
@@ -176,13 +210,36 @@ def main() -> None:
             env = dict(os.environ)
             for key in ("VIRTUAL_ENV", "UV_PROJECT_ENVIRONMENT", "GH_TOKEN", "GITHUB_TOKEN", "SCILOOM_DOCS_PR_NUMBER"):
                 env.pop(key, None)
-            subprocess.run(["uv", "sync", "--locked", "--group", "docs", "--python", "3.14"], cwd=checkout, env=env, check=True)
-            subprocess.run(["uv", "run", "--no-sync", "--group", "docs", "python", "website/tools/site.py", "build", "--strict", "--publish-ref", item.ref], cwd=checkout, env=env, check=True)
+            subprocess.run(
+                ["uv", "sync", "--locked", "--group", "docs", "--python", "3.14"], cwd=checkout, env=env, check=True
+            )
+            subprocess.run(
+                [
+                    "uv",
+                    "run",
+                    "--no-sync",
+                    "--group",
+                    "docs",
+                    "python",
+                    "website/tools/site.py",
+                    "build",
+                    "--strict",
+                    "--publish-ref",
+                    item.ref,
+                ],
+                cwd=checkout,
+                env=env,
+                check=True,
+            )
             if git(checkout, "status", "--porcelain", "--untracked-files=no"):
                 raise ValueError("A version build modified tracked source files")
             source = ast.parse((checkout / "website/tools/site.py").read_text())
-            expected_examples = next(ast.literal_eval(node.value) for node in source.body
-                                     if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == "EXAMPLES" for t in node.targets))
+            expected_examples = next(
+                ast.literal_eval(node.value)
+                for node in source.body
+                if isinstance(node, ast.Assign)
+                and any(isinstance(t, ast.Name) and t.id == "EXAMPLES" for t in node.targets)
+            )
             record(storage, checkout / "website/.build/site", item, expected_examples=expected_examples)
         finally:
             git(ROOT, "worktree", "remove", "--force", str(checkout))

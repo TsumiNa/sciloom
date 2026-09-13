@@ -7,7 +7,7 @@ from functools import cache
 from types import UnionType
 from typing import Any, NoReturn, get_args, get_origin, get_type_hints
 
-from ..diagnostics import Diagnostic, IRValidationError
+from sciloom.core.diagnostics import Diagnostic, IRValidationError
 
 
 def _fail(code: str, message: str, path: str) -> NoReturn:

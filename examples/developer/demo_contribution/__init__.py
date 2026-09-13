@@ -41,7 +41,9 @@ class DemoAgitator(Agitator):
         """Record a native calibration request; no reference execution semantics."""
 
     supported_operations: ClassVar[tuple[Callable[..., None], ...]] = (
-        Agitator.start, Agitator.stop, calibrate,
+        Agitator.start,
+        Agitator.stop,
+        calibrate,
     )
 
 
@@ -62,10 +64,12 @@ class DemoTarget:
         self.devices = MappingProxyType(dict(devices))
 
     def resolve_devices(self, program: Program) -> DeviceBindings:
-        return DeviceBindings(devices=tuple(
-            bind_device(logical_id=name, device=device, physical_id=f"demo:{device.device_id}")
-            for name, device in self.devices.items()
-        ))
+        return DeviceBindings(
+            devices=tuple(
+                bind_device(logical_id=name, device=device, physical_id=f"demo:{device.device_id}")
+                for name, device in self.devices.items()
+            )
+        )
 
     def validate(self, program: Program) -> tuple[Diagnostic, ...]:
         diagnostics = []
@@ -73,10 +77,15 @@ class DemoTarget:
             if isinstance(node, ConfigureProperty) and node.property_id == "example.demo-agitator.gain/v1":
                 value = node.value
                 if not (isinstance(value, Literal) and type(value.value) in (int, float) and 0 <= value.value <= 1):
-                    diagnostics.append(Diagnostic(
-                        code="demo_gain_range", message="Demo gain must be provably within [0, 1]; this target proves literals only.",
-                        path=path, node_id=node.node_id, source=node.source,
-                    ))
+                    diagnostics.append(
+                        Diagnostic(
+                            code="demo_gain_range",
+                            message="Demo gain must be provably within [0, 1]; this target proves literals only.",
+                            path=path,
+                            node_id=node.node_id,
+                            source=node.source,
+                        )
+                    )
         return tuple(diagnostics)
 
     def emit(self, program: Program) -> Artifact:

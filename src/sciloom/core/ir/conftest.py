@@ -2,7 +2,7 @@
 
 import pytest
 
-from sciloom.core.ir import (
+from . import (
     Assignment,
     Call,
     FunctionIR,

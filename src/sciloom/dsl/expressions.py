@@ -4,15 +4,14 @@ from __future__ import annotations
 
 import ast
 from typing import TypeGuard, cast
-from .context import LoweringContext
-from ..units import RotationalSpeed
-from ..core.ir import (
+
+from sciloom.core.ir import (
     Binary,
     BinaryOp,
     Expression,
-    ListLiteral,
-    ListLength,
     ListGet,
+    ListLength,
+    ListLiteral,
     ListType,
     Literal,
     Reference,
@@ -21,7 +20,8 @@ from ..core.ir import (
     UnaryOp,
     ValueType,
 )
-
+from sciloom.units import RotationalSpeed
+from .context import LoweringContext
 
 BINARY_OPERATORS = {
     ast.Add: BinaryOp.ADD,
@@ -44,7 +44,11 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
     from .device_operations import device_member
 
     if device_member(context, node) is not None:
-        context.fail("device_property_read", "Device getters are not supported; use a runtime variable for the configured value.", node)
+        context.fail(
+            "device_property_read",
+            "Device getters are not supported; use a runtime variable for the configured value.",
+            node,
+        )
     if isinstance(node, ast.List):
         element_type = expected.element_type if isinstance(expected, ListType) else None
         elements = tuple(expression(context, item, element_type) for item in node.elts)

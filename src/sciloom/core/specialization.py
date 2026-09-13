@@ -45,20 +45,50 @@ def specialize(program: Program, *, bindings: DeviceBindings) -> Program:
                     match = condition.device_type_id in (binding.contract.type_id, *binding.contract.base_type_ids)
                 elif isinstance(condition, CanWrite):
                     match = condition.property_id in binding.writable_properties
-                    expected = next(p for c in program.device_types for p in c.properties if p.semantic_id == condition.property_id)
-                    actual = next((p for p in binding.contract.properties if p.semantic_id == condition.property_id), None)
+                    expected = next(
+                        p for c in program.device_types for p in c.properties if p.semantic_id == condition.property_id
+                    )
+                    actual = next(
+                        (p for p in binding.contract.properties if p.semantic_id == condition.property_id), None
+                    )
                     if match and expected != actual:
-                        raise CompilationError((Diagnostic(code="device_contract", message="Selected property query differs from the trusted signature.", path="$", node_id=condition.node_id, source=condition.source),))
+                        raise CompilationError(
+                            (
+                                Diagnostic(
+                                    code="device_contract",
+                                    message="Selected property query differs from the trusted signature.",
+                                    path="$",
+                                    node_id=condition.node_id,
+                                    source=condition.source,
+                                ),
+                            )
+                        )
                 else:
                     assert isinstance(condition, SupportsOperation)
                     match = condition.operation_id in binding.supported_operations
-                    expected_command = next(c for t in program.device_types for c in t.operations if c.semantic_id == condition.operation_id)
-                    actual_command = next((c for c in binding.contract.operations if c.semantic_id == condition.operation_id), None)
+                    expected_command = next(
+                        c for t in program.device_types for c in t.operations if c.semantic_id == condition.operation_id
+                    )
+                    actual_command = next(
+                        (c for c in binding.contract.operations if c.semantic_id == condition.operation_id), None
+                    )
                     if match and expected_command != actual_command:
-                        raise CompilationError((Diagnostic(code="device_contract", message="Selected command query differs from the trusted signature.", path="$", node_id=condition.node_id, source=condition.source),))
+                        raise CompilationError(
+                            (
+                                Diagnostic(
+                                    code="device_contract",
+                                    message="Selected command query differs from the trusted signature.",
+                                    path="$",
+                                    node_id=condition.node_id,
+                                    source=condition.source,
+                                ),
+                            )
+                        )
                 selected.extend(block(statement.then_body if match else statement.else_body))
             elif isinstance(statement, If):
-                selected.append(replace(statement, then_body=block(statement.then_body), else_body=block(statement.else_body)))
+                selected.append(
+                    replace(statement, then_body=block(statement.then_body), else_body=block(statement.else_body))
+                )
             elif isinstance(statement, While):
                 selected.append(replace(statement, body=block(statement.body)))
             else:

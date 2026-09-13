@@ -2,7 +2,7 @@
 
 import pytest
 
-from sciloom import Function, Input, Output, runtime, Var
+from sciloom import Function, Input, Output, Var, runtime
 from sciloom.core.ir import IRValidationError, ScalarType, from_json, to_json
 
 
@@ -189,10 +189,6 @@ def test_invalid_schema_fails_at_class_definition():
 
         class BadDefault(Function):
             x: Input[float] = None
-
-
-
-
 
 
 def test_missing_call_argument_is_located():

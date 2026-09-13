@@ -6,11 +6,26 @@ import pytest
 
 from sciloom import Agitator, Function, Input, rpm, runtime
 from sciloom.contrib.autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
-from .devices import DeviceBinding, DeviceBindings
 from .configuration import validate_device_usage
+from .devices import DeviceBinding, DeviceBindings
 from .diagnostics import CompilationError
-from .ir import ConfigureProperty, DeviceResource, FunctionIR, Literal, Program, PropertyContract, ScalarType, StartAgitation
-from .ir.device_contracts import AGITATOR_CONTRACT, BASE_DEVICE_CONTRACT, AGITATION_SPEED_ID, START_AGITATION_ID, STOP_AGITATION_ID
+from .ir import (
+    ConfigureProperty,
+    DeviceResource,
+    FunctionIR,
+    Literal,
+    Program,
+    PropertyContract,
+    ScalarType,
+    StartAgitation,
+)
+from .ir.device_contracts import (
+    AGITATION_SPEED_ID,
+    AGITATOR_CONTRACT,
+    BASE_DEVICE_CONTRACT,
+    START_AGITATION_ID,
+    STOP_AGITATION_ID,
+)
 
 
 class Configure(Function):
@@ -125,23 +140,53 @@ def test_type_inheritance_does_not_imply_supported_operations():
 
 def test_every_required_parameter_must_be_configured():
     gain = PropertyContract(semantic_id="test.shaker.gain/v1", name="gain", type=ScalarType.REAL)
-    contract = replace(AGITATOR_CONTRACT, type_id="test.shaker/v1", base_type_ids=(AGITATOR_CONTRACT.type_id, BASE_DEVICE_CONTRACT.type_id), properties=(*AGITATOR_CONTRACT.properties, gain), required_configuration=(AGITATION_SPEED_ID, gain.semantic_id))
-    binding = DeviceBinding(logical_id="agitator", contract=contract, base_contracts=(BASE_DEVICE_CONTRACT, AGITATOR_CONTRACT), physical_id="test:1", writable_properties=contract.required_configuration, supported_operations=(START_AGITATION_ID, STOP_AGITATION_ID))
+    contract = replace(
+        AGITATOR_CONTRACT,
+        type_id="test.shaker/v1",
+        base_type_ids=(AGITATOR_CONTRACT.type_id, BASE_DEVICE_CONTRACT.type_id),
+        properties=(*AGITATOR_CONTRACT.properties, gain),
+        required_configuration=(AGITATION_SPEED_ID, gain.semantic_id),
+    )
+    binding = DeviceBinding(
+        logical_id="agitator",
+        contract=contract,
+        base_contracts=(BASE_DEVICE_CONTRACT, AGITATOR_CONTRACT),
+        physical_id="test:1",
+        writable_properties=contract.required_configuration,
+        supported_operations=(START_AGITATION_ID, STOP_AGITATION_ID),
+    )
     program = Program(
-        entry_function_id="f", device_types=(BASE_DEVICE_CONTRACT, AGITATOR_CONTRACT, contract),
+        entry_function_id="f",
+        device_types=(BASE_DEVICE_CONTRACT, AGITATOR_CONTRACT, contract),
         resources=(DeviceResource(node_id="device", logical_id="agitator", device_type_id=contract.type_id),),
-        functions=(FunctionIR(node_id="f", name="Configure", body=(
-            ConfigureProperty(node_id="speed", resource_id="device", property_id=AGITATION_SPEED_ID, value=Literal(node_id="value", type=ScalarType.ROTATIONAL_SPEED, value=10)),
-            StartAgitation(node_id="start", resource_id="device"),
-        )),),
+        functions=(
+            FunctionIR(
+                node_id="f",
+                name="Configure",
+                body=(
+                    ConfigureProperty(
+                        node_id="speed",
+                        resource_id="device",
+                        property_id=AGITATION_SPEED_ID,
+                        value=Literal(node_id="value", type=ScalarType.ROTATIONAL_SPEED, value=10),
+                    ),
+                    StartAgitation(node_id="start", resource_id="device"),
+                ),
+            ),
+        ),
     )
     assert validate_device_usage(program, DeviceBindings(devices=(binding,)))[0].code == "device_configuration"
     function = program.functions[0]
-    extra = ConfigureProperty(node_id="gain", resource_id="device", property_id=gain.semantic_id, value=Literal(node_id="gain_value", type=ScalarType.REAL, value=0.5))
+    extra = ConfigureProperty(
+        node_id="gain",
+        resource_id="device",
+        property_id=gain.semantic_id,
+        value=Literal(node_id="gain_value", type=ScalarType.REAL, value=0.5),
+    )
     complete = replace(program, functions=(replace(function, body=(function.body[0], extra, function.body[1])),))
     assert validate_device_usage(complete, DeviceBindings(devices=(binding,))) == ()
-    from .interpreter import Interpreter
     from .diagnostics import ExecutionError
+    from .interpreter import Interpreter
 
     with pytest.raises(ExecutionError, match="device_configuration"):
         Interpreter(program).run()

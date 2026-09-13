@@ -6,12 +6,12 @@ from pathlib import Path
 
 import pytest
 
-from sciloom import Agitator, Function, Input, Output, RotationalSpeed, rpm, runtime, Var
+from sciloom import Agitator, Function, Input, Output, RotationalSpeed, Var, rpm, runtime
 from sciloom.core.compiler import compile_ir
 from sciloom.core.diagnostics import CompilationError
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import ConfigureProperty, from_json, to_json
-from . import AutoSuiteTarget, AutoSuiteIndividualShaker
+from . import AutoSuiteIndividualShaker, AutoSuiteTarget
 
 CORPUS = Path(__file__).resolve().parents[4] / "autosuite"
 AGITATION = "Chemspeed.SATaskSetAgitation.1"
@@ -33,9 +33,7 @@ class ConfigureAgitation(Function):
 
 
 def target(zone="Heater Shaker 23", device_id="23"):
-    return AutoSuiteTarget(
-        devices={"agitator": AutoSuiteIndividualShaker(zone=zone, device_id=device_id)}
-    )
+    return AutoSuiteTarget(devices={"agitator": AutoSuiteIndividualShaker(zone=zone, device_id=device_id)})
 
 
 def shape(element):
@@ -119,7 +117,10 @@ def test_rebinding_changes_only_target_representation():
         assert task.findtext("taskdatas/taskdata0/deviceid") == device_id
     session = Interpreter(program)
     for speed in (300 * rpm, 1200 * rpm):
-        assert session.run(inputs={"shaker_speed": speed, "enabled": True}).events[-1].state.applied_configuration["speed"] == speed
+        assert (
+            session.run(inputs={"shaker_speed": speed, "enabled": True}).events[-1].state.applied_configuration["speed"]
+            == speed
+        )
     assert first.artifact == compile_ir(program, target=target()).artifact
 
 
@@ -227,9 +228,7 @@ def test_missing_or_unknown_target_bindings_fail_before_emission(monkeypatch):
     monkeypatch.setattr(AutoSuiteTarget, "emit", fail)
     with pytest.raises(CompilationError, match="missing_resource_binding"):
         ConfigureAgitation().compile(target=AutoSuiteTarget())
-    config = AutoSuiteTarget(
-        devices={"typo": AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="23")}
-    )
+    config = AutoSuiteTarget(devices={"typo": AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="23")})
     with pytest.raises(CompilationError, match="unknown_resource_binding"):
         ConfigureAgitation().compile(target=config)
 

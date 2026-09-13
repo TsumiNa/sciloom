@@ -1,16 +1,16 @@
 """Python list programs retain list intent and agree with reference IR execution."""
 
-from typing import Any
 from pathlib import Path
+from typing import Any
 
 import pytest
 
 from sciloom import Function, Input, Output, RotationalSpeed, Var, rpm, runtime
+from sciloom.contrib.autosuite import AutoSuiteTarget
 from sciloom.core.diagnostics import ExecutionError, IRValidationError
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import ListGet, ListLength, ListLiteral, ListSet, ListType, ScalarType, from_json, to_json
 from sciloom.core.ir.traversal import iter_nodes
-from sciloom.contrib.autosuite import AutoSuiteTarget
 
 
 class ScaleValues(Function):
@@ -116,7 +116,11 @@ def test_empty_defaults_runtime_literals_calls_and_output_isolation():
 
     program = Caller().to_ir()
     assert any(isinstance(node, ListLiteral) for node, _ in iter_nodes(program))
-    assert Interpreter(program).run(inputs={"factor": 3.0}).outputs == {"original": (1.0, 6.0), "changed": (9.0, 6.0), "empty": ()}
+    assert Interpreter(program).run(inputs={"factor": 3.0}).outputs == {
+        "original": (1.0, 6.0),
+        "changed": (9.0, 6.0),
+        "empty": (),
+    }
 
 
 def test_inherited_list_defaults_are_reused_without_renormalization():
@@ -139,6 +143,7 @@ def test_inherited_list_defaults_are_reused_without_renormalization():
         assert cls.model_fields["values"].default == (1,)
         assert Interpreter(cls().to_ir()).run().outputs == {"result": (2,)}
     with pytest.raises(IRValidationError, match="Overriding runtime schema"):
+
         class Changed(Base):
             values: Var[list[int]] = [2]
 
@@ -147,6 +152,7 @@ def test_distinct_composed_instances_have_independent_list_state():
     class Counter(Function):
         values: Var[list[int]] = [0]
         result: Output[list[int]]
+
         @runtime
         def run(self):
             self.values[0] += 1
@@ -156,8 +162,10 @@ def test_distinct_composed_instances_have_independent_list_state():
         first: Output[list[int]]
         repeated: Output[list[int]]
         other: Output[list[int]]
+
         def __init__(self):
             self.one, self.two = Counter(), Counter()
+
         @runtime
         def run(self):
             self.first = self.one()
@@ -184,11 +192,20 @@ def test_boolean_and_physical_lists_keep_their_element_meaning():
     assert Interpreter(Values().to_ir()).run().outputs == {"flag_output": (True,), "speed_output": (120 * rpm,)}
 
 
-@pytest.mark.parametrize("annotation,default", [
-    (list, []), (list[Any], []), (list[list[int]], []), (list[int], [True]),
-    (list[float], [False]), (list[bool], [1]), (list[float], [float("nan")]),
-    (list[int], (1,)), (list[RotationalSpeed], [1.0]),
-])
+@pytest.mark.parametrize(
+    "annotation,default",
+    [
+        (list, []),
+        (list[Any], []),
+        (list[list[int]], []),
+        (list[int], [True]),
+        (list[float], [False]),
+        (list[bool], [1]),
+        (list[float], [float("nan")]),
+        (list[int], (1,)),
+        (list[RotationalSpeed], [1.0]),
+    ],
+)
 def test_list_schema_rejects_unsupported_types_and_defaults(annotation, default):
     with pytest.raises(IRValidationError, match="class_schema"):
         type("Invalid", (Function,), {"__annotations__": {"values": Var[annotation]}, "values": default})
@@ -197,12 +214,14 @@ def test_list_schema_rejects_unsupported_types_and_defaults(annotation, default)
 def test_bad_element_literal_and_boolean_index_fail_semantic_validation():
     class BadElements(Function):
         values: Output[list[float]]
+
         @runtime
         def run(self):
             self.values = [1.0, True]
 
     class BadIndex(Function):
         values: Var[list[int]] = [1]
+
         @runtime
         def run(self):
             self.values[False] = 2
@@ -216,8 +235,10 @@ def test_bad_element_literal_and_boolean_index_fail_semantic_validation():
 def test_python_index_writes_do_not_wrap_or_resize(index):
     class InvalidIndex(Function):
         values: Var[list[int]] = [1]
+
         def __init__(self):
             self.index = index
+
         @runtime
         def run(self):
             self.values[self.index] = 2
@@ -227,10 +248,12 @@ def test_python_index_writes_do_not_wrap_or_resize(index):
 
 
 def test_shadowed_len_is_not_silently_treated_as_a_builtin():
-    len = lambda values: 99
+    len = lambda values: 99  # noqa: E731 - deliberate builtin shadowing
+
     class Shadowed(Function):
         values: Input[list[int]]
         result: Output[int]
+
         @runtime
         def run(self):
             self.result = len(self.values)
@@ -245,6 +268,7 @@ def test_length_assignment_index_reads_and_inferred_nonempty_literal():
         length: Output[int]
         first: Output[float]
         literal_length: Output[int]
+
         @runtime
         def run(self):
             self.length = len(self.values)
@@ -253,12 +277,17 @@ def test_length_assignment_index_reads_and_inferred_nonempty_literal():
 
     program = Read().to_ir()
     assert any(isinstance(node, ListGet) for node, _ in iter_nodes(program))
-    assert Interpreter(program).run(inputs={"values": [7.0]}).outputs == {"length": 1, "first": 7.0, "literal_length": 2}
+    assert Interpreter(program).run(inputs={"values": [7.0]}).outputs == {
+        "length": 1,
+        "first": 7.0,
+        "literal_length": 2,
+    }
 
 
 def test_list_methods_and_slicing_remain_unsupported():
     class Append(Function):
         values: Var[list[int]] = []
+
         @runtime
         def run(self):
             self.values.append(1)
@@ -266,24 +295,28 @@ def test_list_methods_and_slicing_remain_unsupported():
     class Slice(Function):
         values: Input[list[int]]
         result: Output[list[int]]
+
         @runtime
         def run(self):
             self.result = self.values[:]
 
     class Pop(Function):
         values: Var[list[int]] = [1]
+
         @runtime
         def run(self):
             self.values.pop()
 
     class Remove(Function):
         values: Var[list[int]] = [1]
+
         @runtime
         def run(self):
             self.values.remove(1)
 
     class Clear(Function):
         values: Var[list[int]] = [1]
+
         @runtime
         def run(self):
             self.values.clear()
@@ -291,6 +324,7 @@ def test_list_methods_and_slicing_remain_unsupported():
     class Comprehension(Function):
         values: Input[list[int]]
         result: Output[list[int]]
+
         @runtime
         def run(self):
             self.result = [x for x in self.values]
@@ -298,6 +332,7 @@ def test_list_methods_and_slicing_remain_unsupported():
     class Iterate(Function):
         values: Input[list[int]]
         result: Output[int]
+
         @runtime
         def run(self):
             for x in self.values:
@@ -311,14 +346,17 @@ def test_list_methods_and_slicing_remain_unsupported():
 def test_indexed_function_output_binding_is_explicitly_unsupported():
     class Child(Function):
         value: Output[int]
+
         @runtime
         def run(self):
             self.value = 1
 
     class Caller(Function):
         values: Var[list[int]] = [0]
+
         def __init__(self):
             self.child = Child()
+
         @runtime
         def run(self):
             self.values[0] = self.child()
@@ -330,6 +368,7 @@ def test_indexed_function_output_binding_is_explicitly_unsupported():
 def test_empty_list_without_a_declared_element_context_is_rejected():
     class UntypedEmpty(Function):
         result: Output[int]
+
         @runtime
         def run(self):
             self.result = len([])

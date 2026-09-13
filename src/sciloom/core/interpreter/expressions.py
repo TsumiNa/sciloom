@@ -5,8 +5,9 @@ from __future__ import annotations
 import math
 import operator
 from typing import TYPE_CHECKING
-from ..ir import BinaryOp, Expression, Literal, ListLiteral, ListLength, ListGet, Reference, Unary, UnaryOp
-from ..ir.model import Node
+
+from sciloom.core.ir import BinaryOp, Expression, ListGet, ListLength, ListLiteral, Literal, Reference, Unary, UnaryOp
+from sciloom.core.ir.model import Node
 from .values import RuntimeValue, ScalarValue, checked_index, coerce, fail
 
 if TYPE_CHECKING:

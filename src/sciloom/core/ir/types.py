@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-from enum import StrEnum
 from dataclasses import dataclass
+from enum import StrEnum
 
 
 class ScalarType(StrEnum):
     """Closed semantic scalar vocabulary; quantity values use canonical units."""
+
     INTEGER = "integer"
     REAL = "real"
     BOOLEAN = "boolean"
@@ -20,6 +21,7 @@ class ListType:
 
     Args:
         element_type: Element type; nested lists and untyped lists are not supported."""
+
     element_type: ScalarType
 
     @property

@@ -1,6 +1,6 @@
 """Design example: native Python control flow lowered to AutoSuite runtime IR."""
 
-from sciloom import Function, Input, Array, Zone, Volume, runtime, Var
+from sciloom import Array, Function, Input, Var, Volume, Zone, runtime
 from sciloom.units import mL
 
 

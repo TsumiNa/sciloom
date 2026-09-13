@@ -5,16 +5,16 @@ from dataclasses import dataclass, field
 from types import MappingProxyType
 from typing import Mapping
 
-from ...core.compiler import Artifact
-from ...core.devices import DeviceBindings
-from ...core.diagnostics import CompilationError, Diagnostic
-from ...core.ir import Binary, BinaryOp, Call, Program
-from ...core.ir.traversal import iter_nodes
-from ...devices.declarations import bind_device
+from sciloom.core.compiler import Artifact
+from sciloom.core.devices import DeviceBindings
+from sciloom.core.diagnostics import CompilationError, Diagnostic
+from sciloom.core.ir import Binary, BinaryOp, Call, Program
+from sciloom.core.ir.traversal import iter_nodes
+from sciloom.devices.declarations import bind_device
 from .agitation import AutoSuiteIndividualShaker
 from .codegen import lower_asfp
-from .xml import AutoSuiteVersion
 from .validation import validate_array_outputs
+from .xml import AutoSuiteVersion
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -30,6 +30,7 @@ class AutoSuiteTarget:
         ValueError: A profile/version/path is invalid or physical bindings are duplicated.
 
     Generated XML still requires AutoSuite Executor validation on the deployment host."""
+
     version: AutoSuiteVersion = AutoSuiteVersion.V2_47_1_1
     devices: Mapping[str, AutoSuiteIndividualShaker] = field(default_factory=dict)
 
@@ -39,8 +40,10 @@ class AutoSuiteTarget:
         device_ids: set[str] = set()
         zones: set[str] = set()
         for name, binding in self.devices.items():
-            if not isinstance(name, str) or not name or any(
-                not part.isidentifier() or part.startswith("_") for part in name.split(".")
+            if (
+                not isinstance(name, str)
+                or not name
+                or any(not part.isidentifier() or part.startswith("_") for part in name.split("."))
             ):
                 raise ValueError("Device binding names must be logical field/component paths.")
             if type(binding) is not AutoSuiteIndividualShaker:

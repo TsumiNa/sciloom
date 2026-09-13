@@ -18,22 +18,42 @@ from pathlib import Path
 
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import (
-    Assignment, FunctionIR, ListSet, ListType, Literal, Program, Reference,
-    ScalarType, Variable, VariableRole, from_json, to_json,
+    Assignment,
+    FunctionIR,
+    ListSet,
+    ListType,
+    Literal,
+    Program,
+    Reference,
+    ScalarType,
+    Variable,
+    VariableRole,
+    from_json,
+    to_json,
 )
 
 
 def build_program() -> Program:
     numbers = ListType(element_type=ScalarType.REAL)
     function = FunctionIR(
-        node_id="edit", name="EditCopy",
+        node_id="edit",
+        name="EditCopy",
         variables=(
             Variable(node_id="values", owner_id="edit", name="values", role=VariableRole.INPUT, type=numbers),
             Variable(node_id="result", owner_id="edit", name="result", role=VariableRole.OUTPUT, type=numbers),
         ),
         body=(
-            Assignment(node_id="copy", target=Reference(node_id="copy-out", symbol_id="result"), value=Reference(node_id="copy-in", symbol_id="values")),
-            ListSet(node_id="set", target=Reference(node_id="set-out", symbol_id="result"), index=Literal(node_id="index", type=ScalarType.INTEGER, value=0), value=Literal(node_id="value", type=ScalarType.REAL, value=9.0)),
+            Assignment(
+                node_id="copy",
+                target=Reference(node_id="copy-out", symbol_id="result"),
+                value=Reference(node_id="copy-in", symbol_id="values"),
+            ),
+            ListSet(
+                node_id="set",
+                target=Reference(node_id="set-out", symbol_id="result"),
+                index=Literal(node_id="index", type=ScalarType.INTEGER, value=0),
+                value=Literal(node_id="value", type=ScalarType.REAL, value=9.0),
+            ),
         ),
     )
     return Program(entry_function_id="edit", functions=(function,))

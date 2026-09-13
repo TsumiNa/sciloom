@@ -1,12 +1,12 @@
 """Exercise version history with the real pinned mike fork in isolated Git repos."""
 
-from dataclasses import asdict, replace
 import json
 import os
 import shutil
 import subprocess
 import sys
 import tomllib
+from dataclasses import asdict, replace
 
 import pytest
 
@@ -19,7 +19,10 @@ def test_reconcile_missing_tags_and_reject_moved_release():
     dev = pub.Snapshot("dev", "main", "c" * 40, "0.2.0")
     candidates = [dev, second, first]
     assert pub.select_snapshots(candidates, {}, {first.commit, second.commit}) == [first, second]
-    assert pub.select_snapshots(candidates, {first.version: asdict(first)}, {item.commit for item in candidates}) == [second, dev]
+    assert pub.select_snapshots(candidates, {first.version: asdict(first)}, {item.commit for item in candidates}) == [
+        second,
+        dev,
+    ]
     with pytest.raises(ValueError, match="overwrite"):
         pub.select_snapshots([replace(first, commit="d" * 40)], {first.version: asdict(first)}, set())
     with pytest.raises(ValueError, match="mismatch"):
@@ -43,19 +46,26 @@ def test_two_releases_and_dev_preserve_history_and_highest_stable(history, tmp_p
     source = tmp_path / "body"
     (source / "api").mkdir(parents=True)
     config = tmp_path / "mkdocs.yml"
-    config.write_text("site_name: Version fixture\nsite_url: https://tsumina.github.io/sciloom/\n"
-                      "docs_dir: body\nsite_dir: site\ntheme:\n  font: false\n"
-                      "extra:\n  version:\n    provider: mike\n")
+    config.write_text(
+        "site_name: Version fixture\nsite_url: https://tsumina.github.io/sciloom/\n"
+        "docs_dir: body\nsite_dir: site\ntheme:\n  font: false\n"
+        "extra:\n  version:\n    provider: mike\n"
+    )
     saved = {}
     for version, sha in (("0.2.0", "b"), ("0.1.0", "a"), ("dev", "c"), ("dev", "d")):
-        snapshot = pub.Snapshot(version, "main" if version == "dev" else "v" + version, sha * 40,
-                                "0.2.0" if version == "dev" else version)
+        snapshot = pub.Snapshot(
+            version, "main" if version == "dev" else "v" + version, sha * 40, "0.2.0" if version == "dev" else version
+        )
         (source / "index.md").write_text(f"# Version {version}\n\nSource {sha * 40}.\n\n[API](api/index.md)\n")
         (source / "api/index.md").write_text(f"# API {version}\n\nUniqueSearch{sha}Only\n")
         (source / "build-info.json").write_text(json.dumps(asdict(snapshot)))
-        subprocess.run([sys.executable, "-m", "zensical", "build", "--strict", "--clean", "-f", str(config)],
-                       cwd=tmp_path, env={**os.environ, "MIKE_DOCS_VERSION": version}, check=True)
-        assert f'https://tsumina.github.io/sciloom/{version}/' in (site / "index.html").read_text()
+        subprocess.run(
+            [sys.executable, "-m", "zensical", "build", "--strict", "--clean", "-f", str(config)],
+            cwd=tmp_path,
+            env={**os.environ, "MIKE_DOCS_VERSION": version},
+            check=True,
+        )
+        assert f"https://tsumina.github.io/sciloom/{version}/" in (site / "index.html").read_text()
         pub.record(history, site, snapshot)
         pub.aliases(history)
         for name, tree in saved.items():
@@ -124,8 +134,11 @@ def test_locked_checkout_pipeline_and_stale_dev_rejection(tmp_path, monkeypatch)
     for name in ("README.md", "pyproject.toml", "uv.lock", ".gitignore", ".python-version"):
         shutil.copyfile(pub.ROOT / name, root / name)
     for name in ("src", "website", "examples"):
-        shutil.copytree(pub.ROOT / name, root / name,
-                        ignore=shutil.ignore_patterns("__pycache__", "_generated", "build-info.json", ".build", ".cache"))
+        shutil.copytree(
+            pub.ROOT / name,
+            root / name,
+            ignore=shutil.ignore_patterns("__pycache__", "_generated", "build-info.json", ".build", ".cache"),
+        )
     pub.git(root, "init", "-q", "-b", "main")
     pub.git(root, "config", "user.name", "Docs Test")
     pub.git(root, "config", "user.email", "docs@example.invalid")

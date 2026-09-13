@@ -4,28 +4,28 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 from types import MappingProxyType
 
-from ..diagnostics import IRValidationError
-from ..ir import (
+from sciloom.core.diagnostics import IRValidationError
+from sciloom.core.ir import (
     Assignment,
-    ListSet,
-    ConfigureProperty,
-    StartAgitation,
-    DeviceIf,
-    StopAgitation,
     Call,
+    ConfigureProperty,
+    DeviceIf,
     FunctionIR,
     If,
+    ListSet,
     Program,
     Reference,
+    StartAgitation,
     Statement,
+    StopAgitation,
     VariableRole,
     While,
     validate,
 )
-from ..ir.model import Node
-from ..ir.traversal import iter_nodes
-from .device_state import DeviceState, DeviceEvent, DeviceSession
-
+from sciloom.core.ir.model import Node
+from sciloom.core.ir.traversal import iter_nodes
+from .device_state import DeviceEvent, DeviceSession, DeviceState
+from .expressions import apply_binary, evaluate
 from .values import (
     InputValue,
     OutputValue,
@@ -37,7 +37,6 @@ from .values import (
     input_value,
     output_value,
 )
-from .expressions import apply_binary, evaluate
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -50,6 +49,7 @@ class ExecutionConfig:
 
     Raises:
         ValueError: Either budget is outside its supported integer range."""
+
     max_steps: int = 10_000
     max_call_depth: int = 64
 
@@ -72,6 +72,7 @@ class ExecutionResult:
         events: Ordered device events from this run.
 
     Snapshots returned by the interpreter do not change after later runs."""
+
     outputs: Mapping[str, OutputValue]
     state: Mapping[str, Mapping[str, RuntimeValue]]
     steps: int
