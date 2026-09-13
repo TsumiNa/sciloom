@@ -1,0 +1,89 @@
+"""Prepare public documentation assets, stamp their source, and invoke Zensical."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+import tomllib
+
+ROOT = Path(__file__).resolve().parents[2]
+# No recursive repository copy: additions to the public downloads are deliberate.
+EXAMPLES = (
+    "function_call.py", "function_call.asfp", "agitation.py", "agitation.asfp",
+    "scale_values.py", "scale_values.asfp", "non_zero_array_min.py", "non_zero_array_min.asfp",
+    "developer/agitation_ir.py", "developer/agitation_ir.json",
+    "developer/list_ir.py", "developer/list_ir.json",
+    "developer/demo_device.py", "developer/demo_device.json",
+    "developer/demo_contribution/__init__.py",
+    "developer/portable_agitation.py", "developer/portable_agitation.json",
+    "developer/portable_agitation.autosuite.asfp", "developer/portable_agitation.demo.json",
+)
+
+
+def git(root: Path, *args: str) -> str:
+    return subprocess.check_output(["git", "-C", str(root), *args], text=True).strip()
+
+
+def source_info(root: Path, *, preview: str | None = None) -> dict[str, str]:
+    """Identify this checkout, never a separately installed SciLoom distribution."""
+    package = tomllib.loads((root / "pyproject.toml").read_text())["project"]["version"]
+    commit = git(root, "rev-parse", "HEAD")
+    dirty = bool(git(root, "status", "--porcelain", "--untracked-files=no"))
+    if preview:
+        if not preview.isdecimal():
+            raise ValueError("preview must be a pull request number")
+        version, ref = "preview", f"refs/pull/{preview}/head"
+        if dirty:
+            raise ValueError("PR previews require a clean checkout")
+    else:
+        version = "local-dirty" if dirty else "local"
+        ref = git(root, "rev-parse", "--abbrev-ref", "HEAD")
+    return {"version": version, "ref": ref, "commit": commit, "package_version": package}
+
+
+def prepare(root: Path, info: dict[str, str]) -> None:
+    """Copy only selected learning assets; leave all source files unchanged."""
+    public = root / "docs/site"
+    generated = public / "_generated"
+    metadata = public / "build-info.json"
+    if public.resolve() != root.resolve() / "docs/site" or metadata.is_symlink():
+        raise ValueError("public documentation and metadata must not be symlinks")
+    if generated.is_symlink():
+        raise ValueError("generated documentation directory must not be a symlink")
+    if generated.exists():
+        shutil.rmtree(generated)
+    for name in EXAMPLES:
+        source = root / "examples" / name
+        if source.resolve() != root.resolve() / "examples" / name:
+            raise ValueError(f"example escapes the publication allowlist: {name}")
+        destination = generated / "examples" / name
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, destination)
+    metadata.write_text(json.dumps(info, indent=2) + "\n")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("command", choices=("serve", "build"))
+    parser.add_argument("--strict", action="store_true")
+    parser.add_argument("--preview", default=os.environ.get("SCILOOM_DOCS_PR_NUMBER"),
+                        help="Stamp a clean PR head checkout with its PR number")
+    args = parser.parse_args()
+    info = source_info(ROOT, preview=args.preview)
+    prepare(ROOT, info)
+    env = dict(os.environ)
+    for key, value in info.items():
+        env[f"SCILOOM_DOCS_{key.upper()}"] = value
+    command = [sys.executable, "-m", "zensical", args.command, "-f", "mkdocs.yml"]
+    if args.strict:
+        command.append("--strict")
+    subprocess.run(command, cwd=ROOT, env=env, check=True)
+
+
+if __name__ == "__main__":
+    main()

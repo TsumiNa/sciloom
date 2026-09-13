@@ -1,5 +1,10 @@
 # Documentation index
 
+The [public handbook source](site/index.md) and its
+[local build instructions](site/developer/documentation.md) are being assembled
+from the current implementation. The records below retain design history and
+implementation context; they are not automatically published with the website.
+
 ## Architecture and implementation direction
 
 Read in numeric order, from the current project state through design and validation.

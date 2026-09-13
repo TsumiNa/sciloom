@@ -42,6 +42,7 @@ organization and provenance.
 
 ## Documentation
 
+- [Public handbook source](docs/site/index.md) — English guides and source-generated API documentation.
 - [Project status](docs/00_PROJECT_STATE.md)
 - [Python Function frontend](docs/12_PYTHON_FRONTEND.md)
 - [ASFP compilation](docs/13_ASFP_COMPILER.md)
