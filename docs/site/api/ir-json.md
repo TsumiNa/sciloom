@@ -11,4 +11,3 @@ The current interchange contract is **JSON v4**. Import these functions from `sc
 ::: sciloom.core.ir.to_json
 
 ::: sciloom.core.ir.from_json
-

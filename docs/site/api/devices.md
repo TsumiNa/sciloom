@@ -9,4 +9,3 @@
 ::: sciloom.devices.declarations.device_contract
 
 ::: sciloom.devices.declarations.bind_device
-

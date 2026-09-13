@@ -31,4 +31,3 @@ All objects below are available from `sciloom.core.ir`. Frozen records describe 
 ::: sciloom.core.ir.ListGet
 
 ::: sciloom.core.ir.Expression
-

@@ -9,4 +9,3 @@ Use the root imports `RotationalSpeed`, `rpm` and `rps`. Values are canonicalize
 ::: sciloom.rps
 
 ::: sciloom.units.SpeedUnit
-

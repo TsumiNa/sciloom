@@ -7,4 +7,3 @@ Import these interfaces from `sciloom.contrib.autosuite`. [Compilation](../user-
 ::: sciloom.contrib.autosuite.AutoSuiteIndividualShaker
 
 ::: sciloom.contrib.autosuite.AutoSuiteVersion
-

@@ -13,4 +13,3 @@ Compiler, IR and reference execution use structured diagnostics with semantic pa
 ::: sciloom.core.diagnostics.CompilationError
 
 ::: sciloom.core.diagnostics.ExecutionError
-

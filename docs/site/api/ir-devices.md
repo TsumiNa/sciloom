@@ -31,4 +31,3 @@ Contracts contain data, never executable Python. Conditions retain both branches
 ::: sciloom.core.ir.DevicePredicate
 
 ::: sciloom.core.ir.DeviceIf
-

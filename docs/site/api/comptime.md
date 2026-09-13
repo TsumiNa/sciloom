@@ -7,4 +7,3 @@ Import `comptime` from `sciloom`. These predicates belong only in compiled `if`/
 ::: sciloom.comptime.supports
 
 ::: sciloom.comptime.is_device
-
