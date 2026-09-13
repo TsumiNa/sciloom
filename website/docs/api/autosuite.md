@@ -1,9 +1,9 @@
 # AutoSuite contribution
 
-Import these interfaces from `sciloom.contrib.autosuite`. [Compilation](../user-guide/compilation.md) explains deployment and validation boundaries.
+Import these interfaces from `sciloom_autosuite`, the workspace member distributed as `sciloom-autosuite`. [Compilation](../user-guide/compilation.md) explains deployment and validation boundaries.
 
-::: sciloom.contrib.autosuite.AutoSuiteTarget
+::: sciloom_autosuite.AutoSuiteTarget
 
-::: sciloom.contrib.autosuite.AutoSuiteIndividualShaker
+::: sciloom_autosuite.AutoSuiteIndividualShaker
 
-::: sciloom.contrib.autosuite.AutoSuiteVersion
+::: sciloom_autosuite.AutoSuiteVersion

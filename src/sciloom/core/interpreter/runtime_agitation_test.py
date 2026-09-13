@@ -238,7 +238,7 @@ def test_domain_ir_executes_without_source_or_vendor_modules():
 import sys
 class Block:
     def find_spec(self, fullname, *args):
-        if fullname.startswith(("sciloom.dsl", "sciloom.contrib")):
+        if fullname.startswith(("sciloom.dsl", "sciloom_autosuite")):
             raise ImportError("source and vendor modules are forbidden")
 sys.meta_path.insert(0, Block())
 from sciloom.core.ir import from_json

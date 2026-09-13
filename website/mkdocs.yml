@@ -83,7 +83,7 @@ plugins:
   - mkdocstrings:
       handlers:
         python:
-          paths: [../src]
+          paths: [../src, ../packages/sciloom-autosuite/src]
           options:
             allow_inspection: false
             docstring_style: google

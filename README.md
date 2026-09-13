@@ -33,7 +33,9 @@ uv run python examples/scale_values.py
 uv run python examples/non_zero_array_min.py
 ```
 
-The distribution name is `SciLoom`; the Python import name is `sciloom`.
+The distribution name is `SciLoom`; the Python import name is `sciloom`. The
+repository is a uv workspace: `uv sync --locked` also installs the AutoSuite target
+member `sciloom-autosuite` from `packages/`, imported as `sciloom_autosuite`.
 
 The examples show Function authoring, target configuration and `.compile()`.
 They write `examples/function_call.asfp` and `examples/agitation.asfp`. Compilation does

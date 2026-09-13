@@ -5,9 +5,9 @@ from dataclasses import FrozenInstanceError
 import pytest
 
 from sciloom import Agitator, rpm
-from sciloom.contrib.autosuite import AutoSuiteIndividualShaker
 from sciloom.core.diagnostics import IRValidationError
 from sciloom.core.ir.device_contracts import AGITATOR_CONTRACT
+from sciloom_autosuite import AutoSuiteIndividualShaker
 from .declarations import bind_device, device_contract, operation
 
 

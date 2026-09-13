@@ -16,10 +16,10 @@ reports configured parameters, not measured hardware state.
 from pathlib import Path
 
 from sciloom import Agitator, Function, Input, RotationalSpeed, comptime, rpm, runtime
-from sciloom.contrib.autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
 from sciloom.core.compiler import compile_ir
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import from_json, to_json
+from sciloom_autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
 from .demo_contribution import DemoAgitator, DemoTarget
 from .source_paths import repository_relative
 

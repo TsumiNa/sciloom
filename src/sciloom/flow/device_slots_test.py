@@ -3,10 +3,10 @@
 import pytest
 
 from sciloom import Agitator, Function, Input, Var, rpm, runtime
-from sciloom.contrib.autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
 from sciloom.core.diagnostics import IRValidationError
 from sciloom.core.interpreter import Interpreter
 from sciloom.devices import BaseDevice
+from sciloom_autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
 
 
 class Stage(Function):

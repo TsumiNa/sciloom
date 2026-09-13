@@ -13,7 +13,7 @@ def test_device_import_is_independent_of_source_and_targets():
 import sys
 class Block:
     def find_spec(self, fullname, *args):
-        if fullname.startswith(("sciloom.dsl", "sciloom.contrib")):
+        if fullname.startswith(("sciloom.dsl", "sciloom_autosuite")):
             raise ImportError("Device contracts cannot load source or targets")
 sys.meta_path.insert(0, Block())
 from sciloom import Agitator

@@ -13,7 +13,7 @@ AutoSuite Executor acceptance remains a separate platform gate.
 from pathlib import Path
 
 from sciloom import Function, Input, Output, Var, runtime
-from sciloom.contrib.autosuite import AutoSuiteTarget
+from sciloom_autosuite import AutoSuiteTarget
 
 
 class ScaleValues(Function):

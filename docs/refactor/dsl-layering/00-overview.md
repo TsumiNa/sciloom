@@ -95,7 +95,7 @@ already does; no target imports the flow vocabulary or the source analysis.
 | `sciloom.devices` | Controlled things: device families, member declarations, contracts and bindings |
 | `sciloom.dsl` | DSL source analysis: one Python Function instance to validated IR |
 | `sciloom.core` | IR, validation, compiler pipeline, reference interpreter, diagnostics |
-| `sciloom.contrib` | Equipment targets |
+| `sciloom.contrib` | Equipment targets (superseded by the [uv workspace plan](../uv-workspace/00-overview.md): the maintained target is the workspace member `sciloom_autosuite`) |
 
 `sciloom.devices` keeps its current import path. Its published paths
 (`BaseDevice`, `operation`, `declarations.device_contract`,

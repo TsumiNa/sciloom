@@ -56,14 +56,15 @@ it into XML-oriented nodes in the DSL.
 | sciloom.core.specialization | Pure selection of device-dependent branches |
 | sciloom.core.compiler | Target protocol, validation pipeline and artifacts |
 | sciloom.core.interpreter | Reference sessions and configuration/applied snapshots |
-| sciloom.contrib.autosuite | Concrete profiles, deployment checks and XML generation |
+| sciloom.contrib.autosuite | Concrete profiles, deployment checks and XML generation (superseded by the [uv workspace plan](../uv-workspace/00-overview.md): now the workspace member `sciloom_autosuite`) |
 
 Core must not import `sciloom.devices`, DSL, contrib or Studio. Data-only
 `sciloom.core.devices` bindings belong to core. Units remain independent.
 BaseDevice does not impose start/stop on every device family. Agitator owns that
 family's lifecycle. Concrete profiles are immutable deployment descriptions, not
 live hardware connections. Independent packages need no plugin discovery or
-installation into the sciloom.contrib namespace.
+installation into the sciloom.contrib namespace (superseded: that namespace no
+longer exists; see the [uv workspace plan](../uv-workspace/00-overview.md)).
 
 ```mermaid
 classDiagram
@@ -98,7 +99,7 @@ of this sequence. Docstrings provide descriptions, not executable constraints.
 
 ```python
 from sciloom import Agitator, Function, Input, RotationalSpeed, runtime
-from sciloom.contrib.autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
+from sciloom.contrib.autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget  # superseded: now `from sciloom_autosuite import ...`, see ../uv-workspace/00-overview.md
 
 
 class ConfigureAgitation(Function):

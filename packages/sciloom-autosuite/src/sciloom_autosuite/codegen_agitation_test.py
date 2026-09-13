@@ -13,6 +13,7 @@ from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import ConfigureProperty, from_json, to_json
 from . import AutoSuiteIndividualShaker, AutoSuiteTarget
 
+# Evidence corpus at the workspace root, outside this distribution.
 CORPUS = Path(__file__).resolve().parents[4] / "autosuite"
 AGITATION = "Chemspeed.SATaskSetAgitation.1"
 

@@ -56,7 +56,7 @@ the same PR. No temporary aliases, plugins or later-stage parallel implementatio
 | sciloom.core.compiler | Target protocol, generic pipeline, artifacts/results |
 | sciloom.core.diagnostics | Diagnostics, errors and source locations |
 | sciloom.core.interpreter | Values, evaluation and reference sessions |
-| sciloom.contrib.autosuite | Version/bindings, legality, code generation, XML |
+| sciloom.contrib.autosuite | Version/bindings, legality, code generation, XML (superseded by the [uv workspace plan](../uv-workspace/00-overview.md): now the workspace member `sciloom_autosuite`) |
 | sciloom.studio (future) | Node catalogue, graph projection, editing services/server |
 | web/ (future, repository root) | TypeScript/React/xyflow application |
 
@@ -75,7 +75,7 @@ this contract, including empty inputs.
 
 ```python
 from sciloom import Function, Input, Output, Var, runtime
-from sciloom.contrib.autosuite import AutoSuiteTarget
+from sciloom.contrib.autosuite import AutoSuiteTarget  # superseded: now `from sciloom_autosuite import AutoSuiteTarget`, see ../uv-workspace/00-overview.md
 
 
 class ScaleValues(Function):

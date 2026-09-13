@@ -5,7 +5,7 @@ from dataclasses import replace
 import pytest
 
 from sciloom import Agitator, Function, Input, rpm, runtime
-from sciloom.contrib.autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
+from sciloom_autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
 from .configuration import validate_device_usage
 from .devices import DeviceBinding, DeviceBindings
 from .diagnostics import CompilationError

@@ -48,7 +48,7 @@ jobs:
       - run: uv run ruff check
       - run: uv run ruff format --check
       - run: uv run mypy
-      - run: uv run pytest src/sciloom examples
+      - run: uv run pytest src/sciloom packages/sciloom-autosuite/src examples
       - run: uv run python autosuite/tools/smoke_test.py
       - run: uv run python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
       - run: uv run python -m compileall -q examples/proposed_frontend
