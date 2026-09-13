@@ -8,14 +8,16 @@ Expected output:
 
 The companion JSON is the recording target's output. calibrate() is a declared
 native request, not an operation the reference interpreter knows how to execute.
-No AutoSuite imports or hardware I/O are involved. Absolute SourceSpan diagnostic
-paths in the companion depend on the checkout that generated it.
+No AutoSuite imports or hardware I/O are involved. SourceSpan paths are rewritten
+relative to the repository root so the committed companion file is reproducible.
 """
 
 from pathlib import Path
 
 from sciloom import Function, rpm, runtime
+from sciloom.core.compiler import compile_ir
 from .demo_contribution import DemoAgitator, DemoTarget
+from .source_paths import repository_relative
 
 
 class DemoExperiment(Function):
@@ -37,7 +39,8 @@ class DemoExperiment(Function):
 
 
 if __name__ == "__main__":
-    result = DemoExperiment().compile(target=DemoTarget(devices={"agitator": DemoAgitator()}))
+    program = repository_relative(DemoExperiment().to_ir())
+    result = compile_ir(program, target=DemoTarget(devices={"agitator": DemoAgitator()}))
     path = result.write(Path(__file__).with_suffix(".json"))
     print(path.name)
     print(", ".join(type(node).__name__ for node in result.semantic_ir.functions[0].body))

@@ -2,8 +2,8 @@
 
 Every walkthrough includes the actual runnable source, its expected result and
 same-name generated companions. Use a source checkout to run the listed commands.
-Downloads are learning references; generated JSON may contain diagnostic paths
-from its generating checkout.
+Downloads are learning references; generated JSON records source paths relative
+to the repository root.
 
 ## For experiment authors
 

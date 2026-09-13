@@ -54,7 +54,7 @@
               "column": 11,
               "kind": "SourceSpan",
               "line": 74,
-              "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
+              "path": "examples/agitation.py"
             },
             "symbol_id": "fn:0:var:enabled"
           },
@@ -67,7 +67,7 @@
                 "column": 12,
                 "kind": "SourceSpan",
                 "line": 78,
-                "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
+                "path": "examples/agitation.py"
               }
             }
           ],
@@ -77,7 +77,7 @@
             "column": 8,
             "kind": "SourceSpan",
             "line": 74,
-            "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
+            "path": "examples/agitation.py"
           },
           "then_body": [
             {
@@ -89,7 +89,7 @@
                 "column": 12,
                 "kind": "SourceSpan",
                 "line": 75,
-                "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
+                "path": "examples/agitation.py"
               },
               "value": {
                 "kind": "Reference",
@@ -98,7 +98,7 @@
                   "column": 34,
                   "kind": "SourceSpan",
                   "line": 75,
-                  "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
+                  "path": "examples/agitation.py"
                 },
                 "symbol_id": "fn:0:var:shaker_speed"
               }
@@ -111,7 +111,7 @@
                 "column": 12,
                 "kind": "SourceSpan",
                 "line": 76,
-                "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
+                "path": "examples/agitation.py"
               }
             }
           ]
@@ -124,7 +124,7 @@
         "column": 4,
         "kind": "SourceSpan",
         "line": 73,
-        "path": "/Users/liuchang/projects/sci-loom/examples/agitation.py"
+        "path": "examples/agitation.py"
       },
       "variables": [
         {
