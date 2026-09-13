@@ -5,12 +5,58 @@ import xml.etree.ElementTree as ET
 import pytest
 
 from sciloom import Agitator, Function, Input, rpm, runtime
-from sciloom.core.configuration_test import ChildConfigure, ParentConfigure, target
 from sciloom.core.ir import to_json
+from . import AutoSuiteIndividualShaker, AutoSuiteTarget
 
 SET = "Chemspeed.SATaskSetVariable.1"
 CALL = "Chemspeed.SATaskExecuteFunction.1"
 STIR = "Chemspeed.SATaskSetAgitation.1"
+
+
+class Configure(Function):
+    agitator: Agitator
+
+    @runtime
+    def run(self):
+        self.agitator.speed = 600 * rpm
+
+
+class Start(Function):
+    agitator: Agitator
+
+    @runtime
+    def run(self):
+        self.agitator.start()
+
+
+class ParentConfigure(Function):
+    agitator: Agitator
+
+    def __init__(self):
+        self.child = Start()
+        self.child.agitator = self.agitator
+
+    @runtime
+    def run(self):
+        self.agitator.speed = 600 * rpm
+        self.child()
+
+
+class ChildConfigure(Function):
+    agitator: Agitator
+
+    def __init__(self):
+        self.child = Configure()
+        self.child.agitator = self.agitator
+
+    @runtime
+    def run(self):
+        self.child()
+        self.agitator.start()
+
+
+def target():
+    return AutoSuiteTarget(devices={"agitator": AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="23")})
 
 
 @pytest.mark.parametrize("cls", [ParentConfigure, ChildConfigure])

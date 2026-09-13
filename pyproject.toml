@@ -128,6 +128,7 @@ module = [
     "sciloom_autosuite.codegen_arrays_test",
     "sciloom_autosuite.codegen_agitation_test",
     "sciloom_autosuite.target_test",
+    "sciloom_autosuite.portability_test",
 ]
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
