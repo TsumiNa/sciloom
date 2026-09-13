@@ -19,7 +19,6 @@ ANALYSIS = frozenset(
 # entry requires the matching source change; adding one requires a contract change.
 DEFERRED_IMPORTS = frozenset(
     {
-        ("device_schema", "model"),
         ("model", "lowering"),
     }
 )
