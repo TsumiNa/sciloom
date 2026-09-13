@@ -169,6 +169,10 @@ Public English documentation lives under `docs/site/`; it is the only website
 source tree. Use `uv run --group docs python docs/tools/site.py serve` to preview
 and `uv run --group docs python docs/tools/site.py build --strict` to build.
 Run `uv run --group docs pytest docs/tools` for documentation tooling changes.
+Public deployment is handled by `.github/workflows/documentation.yml` after
+exact-commit CI checks. Preserve the generated-only `gh-pages` history and release
+immutability; do not publish raw evidence or bypass the version checks. See
+`docs/site/developer/publication.md` for version rules and recovery.
 Only explicitly listed examples may be copied into generated downloads. Do not
 publish the AutoSuite corpus or internal refactor records. API pages use static
 mkdocstrings extraction; document public APIs with English Google-style docstrings.

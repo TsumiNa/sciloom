@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -29,12 +30,28 @@ def git(root: Path, *args: str) -> str:
     return subprocess.check_output(["git", "-C", str(root), *args], text=True).strip()
 
 
-def source_info(root: Path, *, preview: str | None = None) -> dict[str, str]:
+def source_info(root: Path, *, preview: str | None = None, publish_ref: str | None = None) -> dict[str, str]:
     """Identify this checkout, never a separately installed SciLoom distribution."""
     package = tomllib.loads((root / "pyproject.toml").read_text())["project"]["version"]
     commit = git(root, "rev-parse", "HEAD")
     dirty = bool(git(root, "status", "--porcelain", "--untracked-files=no"))
-    if preview:
+    if publish_ref:
+        if preview or dirty:
+            raise ValueError("Published documentation requires a clean, non-PR checkout")
+        ref = publish_ref
+        if ref == "main":
+            version = "dev"
+            expected = git(root, "rev-parse", "refs/remotes/origin/main")
+        elif re.fullmatch(r"v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)", ref):
+            version = ref[1:]
+            if package != version:
+                raise ValueError("Release tag must match the source package version")
+            expected = git(root, "rev-parse", f"refs/tags/{ref}^{{commit}}")
+        else:
+            raise ValueError("Publish only main or vMAJOR.MINOR.PATCH")
+        if expected != commit:
+            raise ValueError("Published ref does not identify this source commit")
+    elif preview:
         if not preview.isdecimal():
             raise ValueError("preview must be a pull request number")
         version, ref = "preview", f"refs/pull/{preview}/head"
@@ -73,12 +90,19 @@ def main() -> None:
     parser.add_argument("--strict", action="store_true")
     parser.add_argument("--preview", default=os.environ.get("SCILOOM_DOCS_PR_NUMBER"),
                         help="Stamp a clean PR head checkout with its PR number")
+    parser.add_argument("--publish-ref", help="Stamp an exact main/release checkout for publication")
     args = parser.parse_args()
-    info = source_info(ROOT, preview=args.preview)
+    if args.publish_ref and args.command != "build":
+        parser.error("--publish-ref is only valid for build")
+    info = source_info(ROOT, preview=args.preview, publish_ref=args.publish_ref)
     prepare(ROOT, info)
     env = dict(os.environ)
     for key, value in info.items():
         env[f"SCILOOM_DOCS_{key.upper()}"] = value
+    if args.publish_ref:
+        env["MIKE_DOCS_VERSION"] = info["version"]
+    else:
+        env.pop("MIKE_DOCS_VERSION", None)
     command = [sys.executable, "-m", "zensical", args.command, "-f", "mkdocs.yml"]
     if args.strict:
         command.append("--strict")

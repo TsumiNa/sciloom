@@ -38,5 +38,5 @@ execution semantics where relevant. Short example results belong in the example'
 module docstring; long results belong in same-basename companion files.
 
 Local pages show `local` or `local-dirty` and the source SHA. PR artifacts identify
-the PR head commit. Automatic public deployment and release version selection are
-not enabled in this foundation stage.
+the PR head commit. [Versioned publication](publication.md) explains checked
+development builds, release snapshots and deployment recovery.
