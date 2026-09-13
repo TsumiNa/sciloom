@@ -67,7 +67,7 @@ def test_import_and_compilation_without_vendor_modules():
 import sys
 class Block:
     def find_spec(self, fullname, *args):
-        if fullname.startswith(("sciloom.devices", "sciloom.dsl", "sciloom.contrib")):
+        if fullname.startswith(("sciloom.devices", "sciloom.dsl", "sciloom_autosuite")):
             raise ImportError("authoring and vendor modules are forbidden")
 sys.meta_path.insert(0, Block())
 import sciloom

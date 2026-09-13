@@ -30,7 +30,7 @@ flowchart TD
 | sciloom.core.devices / specialization | Data-only binding facts and branch selection |
 | sciloom.core.interpreter | Reference execution sessions |
 | sciloom.core.diagnostics | Errors, diagnostics and source spans |
-| sciloom.contrib.autosuite | AutoSuite device profiles, legality and XML generation |
+| sciloom_autosuite | AutoSuite device profiles, legality and XML generation; the workspace member `sciloom-autosuite` under `packages/` |
 
 `flow` and `devices` are the two vocabularies an author writes; `dsl` is the only
 layer that reads Python source; `core` imports neither. Dependencies run dsl to
@@ -39,8 +39,9 @@ import of the analysis driver, because the author-facing type owns the entry poi
 while the analysis needs that type at runtime. An equipment target declares and
 binds devices, so it may import `sciloom.devices`; no target imports the flow
 vocabulary or the source analysis. Independent equipment packages implement the
-same Target protocol without joining the contrib namespace or registering a
-plugin. Unit types remain independent.
+same Target protocol without joining the SciLoom source tree or registering a
+plugin; the shipped AutoSuite target is itself a separate workspace member with
+its own distribution. Unit types remain independent.
 
 Within the analysis, shared state, source discovery, expression conversion and
 statement conversion have separate responsibilities, and every statement recursion

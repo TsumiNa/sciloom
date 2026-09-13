@@ -1,7 +1,9 @@
 # Getting started
 
 SciLoom currently targets Python 3.12–3.14; development is pinned to Python 3.14.
-The distribution is named `SciLoom`, and the import is `sciloom`.
+The distribution is named `SciLoom`, and the import is `sciloom`. The AutoSuite
+target ships as the workspace member `sciloom-autosuite`, imported as
+`sciloom_autosuite`; `uv sync --locked` installs both.
 
 The documentation is public before the source repository. The following setup
 requires repository access. A public PyPI installation is not offered by this
@@ -24,7 +26,7 @@ its elements. Its declarations use familiar Python types:
 
 ```python
 from sciloom import Function, Input, Output, Var, runtime
-from sciloom.contrib.autosuite import AutoSuiteTarget
+from sciloom_autosuite import AutoSuiteTarget
 ```
 
 Define a Function class in a normal `.py` file. Inputs and outputs describe values

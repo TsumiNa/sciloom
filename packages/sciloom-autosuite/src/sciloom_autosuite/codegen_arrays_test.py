@@ -17,6 +17,7 @@ from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import from_json, to_json
 from .target import AutoSuiteTarget
 
+# Evidence corpus at the workspace root, outside this distribution.
 ROOT = Path(__file__).resolve().parents[4]
 EXTRACTED = ROOT / "autosuite/extracted/latest_app/functions"
 

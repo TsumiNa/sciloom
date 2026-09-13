@@ -133,7 +133,7 @@ def test_locked_checkout_pipeline_and_stale_dev_rejection(tmp_path, monkeypatch)
     root.mkdir()
     for name in ("README.md", "pyproject.toml", "uv.lock", ".gitignore", ".python-version"):
         shutil.copyfile(pub.ROOT / name, root / name)
-    for name in ("src", "website", "examples"):
+    for name in ("src", "packages", "website", "examples"):
         shutil.copytree(
             pub.ROOT / name,
             root / name,

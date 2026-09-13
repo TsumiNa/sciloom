@@ -48,7 +48,7 @@ def test_direct_ir_and_json_select_without_python_device_implementations(tmp_pat
     script = """import sys
 class Block:
     def find_spec(self, fullname, *args):
-        if fullname.startswith(("sciloom.devices", "sciloom.dsl", "sciloom.contrib", "examples")):
+        if fullname.startswith(("sciloom.devices", "sciloom.dsl", "sciloom_autosuite", "examples")):
             raise ImportError("No device implementation package is installed")
 sys.meta_path.insert(0, Block())
 from pathlib import Path

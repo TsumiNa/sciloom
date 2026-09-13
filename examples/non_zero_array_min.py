@@ -18,7 +18,7 @@ volume conversions. Compilation is not AutoSuite Executor simulation.
 from pathlib import Path
 
 from sciloom import Function, Input, Output, Var, runtime
-from sciloom.contrib.autosuite import AutoSuiteTarget
+from sciloom_autosuite import AutoSuiteTarget
 
 
 class NonZeroArrayMin(Function):

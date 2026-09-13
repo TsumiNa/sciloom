@@ -159,7 +159,7 @@ Run at minimum:
 ```bash
 uv run ruff check
 uv run ruff format --check
-uv run pytest src/sciloom examples
+uv run pytest src/sciloom packages/sciloom-autosuite/src examples
 uv run mypy
 python autosuite/tools/smoke_test.py
 python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
@@ -183,8 +183,10 @@ Keep internal project/design Markdown under `docs/` and AutoSuite-specific refer
 
 Public English documentation lives under `website/docs/`; it is the only website
 source tree. Website configuration, theme and tooling live together under
-`website/`; ignored outputs live in `website/.build/`. Dependencies stay in the
-root pyproject and lock file. Run from the repository root:
+`website/`; ignored outputs live in `website/.build/`. The repository is a uv
+workspace (`packages/*`): dependency groups and `uv.lock` stay in the root
+pyproject, and each member declares only its own runtime dependencies. Run from
+the repository root:
 `uv run --group docs python website/tools/site.py serve` to preview
 and `uv run --group docs python website/tools/site.py build --strict` to build.
 Run `uv run --group docs pytest website/tools` for documentation tooling changes.
@@ -200,8 +202,9 @@ mkdocstrings extraction; document public APIs with English Google-style docstrin
 
 The authoring vocabulary (`sciloom.flow` for procedure and control, `sciloom.devices`
 for controlled things), the source analysis that turns it into IR (`sciloom.dsl`),
-shared semantic/compiler tools (`sciloom.core`) and equipment targets
-(`sciloom.contrib`, or independent packages) have separate ownership. `flow` and
+shared semantic/compiler tools (`sciloom.core`) and equipment targets (the
+workspace member `sciloom_autosuite` under `packages/sciloom-autosuite/`, or
+independent packages) have separate ownership. `flow` and
 `devices` are what an author writes; `dsl` is the only layer that reads Python
 source; `core` imports neither. A target may import `sciloom.devices` to declare
 and bind hardware, never the flow vocabulary or the analysis. `Function.to_ir`
@@ -209,7 +212,7 @@ defers one import of the analysis driver; that seam is the frontend's only back
 edge and `src/sciloom/dsl/layering_test.py` enforces it. See
 [the layering plan](docs/refactor/dsl-layering/00-overview.md). Experiment authors import their API from `sciloom`; contributors import
 `Target`, `Artifact`, `CompileResult` and `compile_ir` from `sciloom.core.compiler`.
-Core must not import `sciloom.devices`, DSL, contrib or Studio; data-only
+Core must not import `sciloom.devices`, DSL, `sciloom_autosuite` or Studio; data-only
 `sciloom.core.devices` binding records belong to core. The root author API stays lazy. Target
 selection is explicit. Generic compilation must not import AutoSuite or assume
 XML. Program/JSON v4 is the current semantic contract; see

@@ -233,7 +233,7 @@ def test_json_ir_executes_without_frontend_or_backend_imports():
 import sys
 class Block:
     def find_spec(self, fullname, *args):
-        if fullname.startswith(("sciloom.dsl", "sciloom.contrib")):
+        if fullname.startswith(("sciloom.dsl", "sciloom_autosuite")):
             raise ImportError("DSL and equipment targets are forbidden")
 sys.meta_path.insert(0, Block())
 from sciloom.core.ir import from_json

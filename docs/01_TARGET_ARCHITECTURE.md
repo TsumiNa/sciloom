@@ -31,7 +31,7 @@ flowchart TB
         Validate --> Compiler["core.compiler / Target protocol"]
         Compiler --> Bind["Resolve trusted device contracts"]
         Bind --> Specialize["core.specialization<br/>Select device branches"]
-        Specialize --> SIR["contrib.autosuite / Serialization IR"]
+        Specialize --> SIR["sciloom_autosuite / Serialization IR"]
         Specialize -.-> Other["Independent equipment packages"]
         SIR --> XML["Versioned XML backend"]
     end

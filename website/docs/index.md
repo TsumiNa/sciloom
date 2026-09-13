@@ -21,7 +21,8 @@ flowchart LR
 
 The current implementation supports Function programs, scalar and list state,
 physical rotational-speed values, device configuration and explicit start/stop.
-AutoSuite is the first maintained target. Compilation does not operate equipment.
+AutoSuite is the first maintained target, shipped as the `sciloom-autosuite`
+package. Compilation does not operate equipment.
 
 - [Get started](introduction/getting-started.md)
 - [User guide](user-guide/functions.md)
