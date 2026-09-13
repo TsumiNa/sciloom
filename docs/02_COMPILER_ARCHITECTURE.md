@@ -1,6 +1,6 @@
 # Compiler architecture
 
-The current handbook is maintained in [Architecture and ownership](site/developer/architecture.md).
+The current handbook is maintained in [Architecture and ownership](../website/docs/developer/architecture.md).
 This file is an index for existing repository links; update the handbook when
 behavior changes, rather than maintaining a second current description here.
 

@@ -138,7 +138,7 @@ def main() -> None:
     args = parser.parse_args()
     if git(ROOT, "status", "--porcelain", "--untracked-files=no"):
         raise ValueError("Publication preparation requires a clean source checkout")
-    build = ROOT / ".build/publication"
+    build = ROOT / "website/.build/publication"
     build.mkdir(parents=True, exist_ok=False)
     storage = build / "history"
     storage.mkdir()
@@ -177,13 +177,13 @@ def main() -> None:
             for key in ("VIRTUAL_ENV", "UV_PROJECT_ENVIRONMENT", "GH_TOKEN", "GITHUB_TOKEN", "SCILOOM_DOCS_PR_NUMBER"):
                 env.pop(key, None)
             subprocess.run(["uv", "sync", "--locked", "--group", "docs", "--python", "3.14"], cwd=checkout, env=env, check=True)
-            subprocess.run(["uv", "run", "--no-sync", "--group", "docs", "python", "docs/tools/site.py", "build", "--strict", "--publish-ref", item.ref], cwd=checkout, env=env, check=True)
+            subprocess.run(["uv", "run", "--no-sync", "--group", "docs", "python", "website/tools/site.py", "build", "--strict", "--publish-ref", item.ref], cwd=checkout, env=env, check=True)
             if git(checkout, "status", "--porcelain", "--untracked-files=no"):
                 raise ValueError("A version build modified tracked source files")
-            source = ast.parse((checkout / "docs/tools/site.py").read_text())
+            source = ast.parse((checkout / "website/tools/site.py").read_text())
             expected_examples = next(ast.literal_eval(node.value) for node in source.body
                                      if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == "EXAMPLES" for t in node.targets))
-            record(storage, checkout / ".build/docs", item, expected_examples=expected_examples)
+            record(storage, checkout / "website/.build/site", item, expected_examples=expected_examples)
         finally:
             git(ROOT, "worktree", "remove", "--force", str(checkout))
     if not selected and not prior:

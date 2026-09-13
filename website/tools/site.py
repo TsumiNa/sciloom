@@ -65,10 +65,10 @@ def source_info(root: Path, *, preview: str | None = None, publish_ref: str | No
 
 def prepare(root: Path, info: dict[str, str]) -> None:
     """Copy only selected learning assets; leave all source files unchanged."""
-    public = root / "docs/site"
+    public = root / "website/docs"
     generated = public / "_generated"
     metadata = public / "build-info.json"
-    if public.resolve() != root.resolve() / "docs/site" or metadata.is_symlink():
+    if public.resolve() != root.resolve() / "website/docs" or metadata.is_symlink():
         raise ValueError("public documentation and metadata must not be symlinks")
     if generated.is_symlink():
         raise ValueError("generated documentation directory must not be a symlink")
@@ -106,7 +106,7 @@ def main() -> None:
     command = [sys.executable, "-m", "zensical", args.command, "-f", "mkdocs.yml"]
     if args.strict:
         command.append("--strict")
-    subprocess.run(command, cwd=ROOT, env=env, check=True)
+    subprocess.run(command, cwd=ROOT / "website", env=env, check=True)
 
 
 if __name__ == "__main__":

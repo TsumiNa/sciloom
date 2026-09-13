@@ -10,7 +10,7 @@ import tomllib
 
 import pytest
 
-from docs.tools import publication as pub
+from website.tools import publication as pub
 
 
 def test_reconcile_missing_tags_and_reject_moved_release():
@@ -121,11 +121,11 @@ def test_locked_checkout_pipeline_and_stale_dev_rejection(tmp_path, monkeypatch)
     """Build actual docs in a separate source repo; mock only the GitHub CI response."""
     root = tmp_path / "source"
     root.mkdir()
-    for name in ("README.md", "pyproject.toml", "uv.lock", ".gitignore", ".python-version", "mkdocs.yml"):
+    for name in ("README.md", "pyproject.toml", "uv.lock", ".gitignore", ".python-version"):
         shutil.copyfile(pub.ROOT / name, root / name)
-    for name in ("src", "docs", "examples"):
+    for name in ("src", "website", "examples"):
         shutil.copytree(pub.ROOT / name, root / name,
-                        ignore=shutil.ignore_patterns("__pycache__", "_generated", "build-info.json"))
+                        ignore=shutil.ignore_patterns("__pycache__", "_generated", "build-info.json", ".build", ".cache"))
     pub.git(root, "init", "-q", "-b", "main")
     pub.git(root, "config", "user.name", "Docs Test")
     pub.git(root, "config", "user.email", "docs@example.invalid")
@@ -137,7 +137,9 @@ def test_locked_checkout_pipeline_and_stale_dev_rejection(tmp_path, monkeypatch)
     monkeypatch.setattr(pub, "checked", lambda repository, commit: True)
     monkeypatch.setattr("sys.argv", ["publication.py", "--repository", "owner/repo"])
     pub.main()
-    output = root / ".build/publication"
+    assert not (root / "docs").exists()
+    assert not (root / "mkdocs.yml").exists()
+    output = root / "website/.build/publication"
     info = json.loads((output / "site/dev/build-info.json").read_text())
     package_version = tomllib.loads((root / "pyproject.toml").read_text())["project"]["version"]
     assert info == {"version": "dev", "ref": "main", "commit": sha, "package_version": package_version}

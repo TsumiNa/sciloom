@@ -23,13 +23,13 @@ jobs:
           version: "0.12.10"
           python-version: "3.14"
       - run: uv sync --locked --group docs
-      - run: uv run --group docs python docs/tools/site.py build --strict
-      - run: uv run --group docs pytest docs/tools
+      - run: uv run --group docs python website/tools/site.py build --strict
+      - run: uv run --group docs pytest website/tools
       - run: git diff --exit-code
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: documentation-${{ github.event.pull_request.head.sha || github.sha }}
-          path: .build/docs
+          path: website/.build/site
           retention-days: 14
           if-no-files-found: error
   check:

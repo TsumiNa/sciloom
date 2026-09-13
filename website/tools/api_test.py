@@ -14,7 +14,7 @@ def test_catalogue_covers_exports_with_static_docstrings():
     loader = GriffeLoader(search_paths=[ROOT / "src"], allow_inspection=False)
     package = loader.load("sciloom")
     loader.resolve_aliases(implicit=True, external=False)
-    pages = list((ROOT / "docs/site/api").glob("*.md"))
+    pages = list((ROOT / "website/docs/api").glob("*.md"))
     paths = {p for page in pages for p in re.findall(r"^::: (\S+)", page.read_text(), re.M)}
     for module in ("sciloom", "sciloom.core.ir", "sciloom.devices", "sciloom.core.interpreter", "sciloom.contrib.autosuite"):
         obj = package if module == "sciloom" else package[module.removeprefix("sciloom.")]
@@ -33,16 +33,16 @@ def test_catalogue_covers_exports_with_static_docstrings():
 
 
 def test_catalogue_objects_have_html_anchors():
-    subprocess.run([sys.executable, str(ROOT / "docs/tools/site.py"), "build", "--strict"], check=True)
-    for page in (ROOT / "docs/site/api").glob("*.md"):
-        html = (ROOT / ".build/docs/api" / page.stem / "index.html") if page.stem != "index" else ROOT / ".build/docs/api/index.html"
+    subprocess.run([sys.executable, str(ROOT / "website/tools/site.py"), "build", "--strict"], check=True)
+    for page in (ROOT / "website/docs/api").glob("*.md"):
+        html = (ROOT / "website/.build/site/api" / page.stem / "index.html") if page.stem != "index" else ROOT / "website/.build/site/api/index.html"
         rendered = html.read_text()
         for path in re.findall(r"^::: (\S+)", page.read_text(), re.M):
             assert f'id="{path}"' in rendered, path
-    author = (ROOT / ".build/docs/api/author/index.html").read_text()
+    author = (ROOT / "website/.build/site/api/author/index.html").read_text()
     assert 'id="sciloom.Agitator.speed"' in author
     assert 'id="sciloom.Function.compile"' in author
-    compiler = (ROOT / ".build/docs/api/compiler/index.html").read_text()
+    compiler = (ROOT / "website/.build/site/api/compiler/index.html").read_text()
     assert 'id="sciloom.core.compiler.Target.resolve_devices"' in compiler
     assert "DeviceBindings" in compiler
     assert "DeviceBinding.__post_init__" not in compiler

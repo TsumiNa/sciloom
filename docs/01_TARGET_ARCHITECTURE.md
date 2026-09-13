@@ -1,12 +1,12 @@
 # Target architecture after ASPY refactor
 
 Historical design context. The maintained description of implemented behavior is
-the [architecture handbook](site/developer/architecture.md). Future API examples
+the [architecture handbook](../website/docs/developer/architecture.md). Future API examples
 below are retained as design history, not as currently supported interfaces.
 
 **Status:** target design. See the [authoritative interface contract and staged
 availability](refactor/package-layout/00-overview.md) and the
-[current implementation](site/developer/architecture.md). Application/global, GUI
+[current implementation](../website/docs/developer/architecture.md). Application/global, GUI
 and additional hardware support remain future work.
 
 ## Core decision

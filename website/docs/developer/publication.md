@@ -68,12 +68,12 @@ keep it when restoring Pages or rerunning a failed deployment.
 The internal read-only preparation command is:
 
 ```bash
-uv run --group docs python docs/tools/publication.py --repository TsumiNa/sciloom
+uv run --group docs python website/tools/publication.py --repository TsumiNa/sciloom
 ```
 
 It requires a full, clean Actions checkout with fetched `origin/main`, tags and
 existing `origin/gh-pages`, authenticated read access for CI lookup, and an unused
-`.build/publication/` directory. It prepares artifacts but does not push or deploy.
+`website/.build/publication/` directory. It prepares artifacts but does not push or deploy.
 Use the [local preview command](documentation.md) for ordinary documentation work.
 
 The pinned [Zensical-compatible mike fork](https://zensical.org/docs/compatibility/mkdocs/mike/)
