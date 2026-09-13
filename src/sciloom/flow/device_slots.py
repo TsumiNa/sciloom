@@ -5,9 +5,10 @@ from __future__ import annotations
 import inspect
 from dataclasses import dataclass, field
 from types import MappingProxyType
-from typing import Any, Mapping, get_type_hints
+from typing import Any, Mapping, NoReturn, get_type_hints
 from weakref import WeakValueDictionary
 
+from sciloom.core.diagnostics import Diagnostic, IRValidationError
 from sciloom.devices.base import BaseDevice
 from sciloom.devices.declarations import device_contract
 
@@ -55,6 +56,10 @@ class DeviceSlot:
         vars(instance)[self.name] = value
 
 
+def _schema_error(name: str, message: str) -> NoReturn:
+    raise IRValidationError((Diagnostic(code="class_schema", message=message, path=f"$.schema.{name}"),))
+
+
 def build_device_schema(cls: type, reserved: Mapping[str, object]) -> Mapping[str, DeviceSlot]:
     slots: dict[str, DeviceSlot] = {}
     for base in reversed(cls.__mro__[1:]):
@@ -64,23 +69,23 @@ def build_device_schema(cls: type, reserved: Mapping[str, object]) -> Mapping[st
         annotation = annotations[name]
         is_device = isinstance(annotation, type) and issubclass(annotation, BaseDevice)
         if name in slots and annotation is not slots[name].device_type:
-            raise TypeError(f"Inherited device slot {name!r} cannot change type or field role.")
+            _schema_error(name, f"Inherited device slot {name!r} cannot change type or field role.")
         if not is_device:
             continue
         if name.startswith("_") or name in reserved or name in getattr(cls, "model_fields", {}):
-            raise TypeError(f"Invalid or conflicting device slot name {name!r}.")
+            _schema_error(name, f"Invalid or conflicting device slot name {name!r}.")
         device_contract(annotation)
         if name in cls.__dict__ and not isinstance(cls.__dict__[name], DeviceSlot):
-            raise TypeError(f"Device slot {name!r} cannot have a class-level value.")
+            _schema_error(name, f"Device slot {name!r} cannot have a class-level value.")
         for base in cls.__mro__[1:]:
             member = base.__dict__.get(name)
             if (name in base.__dict__ and not isinstance(member, DeviceSlot)) or (
                 name in inspect.get_annotations(base) and name not in getattr(base, "device_fields", {})
             ):
-                raise TypeError(f"Device slot {name!r} cannot replace an inherited host member.")
+                _schema_error(name, f"Device slot {name!r} cannot replace an inherited host member.")
         slots[name] = DeviceSlot(name, annotation)
         setattr(cls, name, slots[name])
     for name, slot in slots.items():
         if inspect.getattr_static(cls, name) is not slot:
-            raise TypeError(f"Inherited device slot {name!r} cannot be shadowed.")
+            _schema_error(name, f"Inherited device slot {name!r} cannot be shadowed.")
     return MappingProxyType(slots)

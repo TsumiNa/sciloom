@@ -6,6 +6,7 @@ import pytest
 
 from sciloom import Agitator, rpm
 from sciloom.contrib.autosuite import AutoSuiteIndividualShaker
+from sciloom.core.diagnostics import IRValidationError
 from sciloom.core.ir.device_contracts import AGITATOR_CONTRACT
 from .declarations import bind_device, device_contract, operation
 
@@ -39,7 +40,7 @@ def test_mismatched_property_types_and_nonvoid_commands_are_rejected():
         def gain(self, value: int) -> None:
             pytest.fail("setter must not execute")
 
-    with pytest.raises(TypeError, match="types must match"):
+    with pytest.raises(IRValidationError, match="types must match"):
         device_contract(Mismatch)
 
     class Nonvoid(Agitator):
@@ -49,7 +50,7 @@ def test_mismatched_property_types_and_nonvoid_commands_are_rejected():
         def measure(self) -> float:
             return 1.0
 
-    with pytest.raises(TypeError, match="return None"):
+    with pytest.raises(IRValidationError, match="return None"):
         device_contract(Nonvoid)
 
 
