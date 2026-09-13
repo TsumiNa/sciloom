@@ -1,5 +1,5 @@
 ---
-description: 'Use when starting work on a change, bug fix, refactor, upgrade, or any modification request. Covers when to create a new branch, when to stay on the current branch, when to open a pull request before continuing, and how to split a complex refactor into a sequence of independently verifiable PRs.'
+description: 'Use when starting work on a change, bug fix, refactor, upgrade, or any modification request. Covers when to create a new branch, when to stay on the current branch, when to open a pull request before continuing, how to split a complex refactor into a sequence of independently verifiable PRs, and how to decide the version bump that ends every PR and plan.'
 name: 'Branch and Pull Request Workflow'
 applyTo: '**'
 ---
@@ -29,6 +29,44 @@ Check these conditions in order and stop at the first match:
 - When case 2 applies, do not open a second PR for the same branch.
 - If it is unclear whether an existing branch is "ahead but unpushed" versus "already has a PR", prefer checking remote state before deciding.
 
+## Version bump
+
+Every PR, and every PR plan file created or updated after this rule landed, ends
+with a version decision. Make it after the change is complete, when its real
+extent is known, and apply it as the last change before requesting review. If
+review fixes change the PR's extent, re-evaluate the decision after the last fix,
+immediately before the merge, and update the bump and the `Version:` line when the
+outcome changed. The package version is `[project].version` in `pyproject.toml`;
+a bump changes that value in the same PR. Record the decision and its
+one-sentence reason as the last section of the plan file (**Version**) and as a
+`Version:` line at the end of the PR description. Earlier plan files keep their
+recorded sections; add a **Version** section only when such a plan is next updated.
+
+Choose exactly one outcome:
+
+- **MAJOR** — requires explicit human approval. Propose the bump with its reason
+  (for example a breaking change to the public author API, the semantic IR or JSON
+  contract, or serialization output) and wait for the answer before committing it.
+  Never bump MAJOR on your own judgment.
+- **MINOR or PATCH** — decide yourself from the extent of the code change: MINOR
+  for new capability or a noticeable behavior change, PATCH for fixes and contained
+  changes.
+- **No bump** — when the change is too small to justify even a PATCH bump (for
+  example a typo, comment, instruction or documentation-only change), leave
+  `[project].version` unchanged and identify the resulting state as
+  `MAJOR.MINOR.PATCH+<short commit id>`, where the short commit id is the
+  squash-merge commit on the default branch (for example `0.1.0+7e46bb1`). Before
+  the merge, write `0.1.0+<merge commit>`; fill in the id once the merge is confirmed.
+
+The `+<short commit id>` suffix is SemVer 2.0.0 build metadata (a PEP 440 local
+version): it does not change precedence, so the state still counts as
+`MAJOR.MINOR.PATCH`. Never use a `-` suffix; SemVer reads that as a pre-release
+with lower precedence, and uv rejects it. Keep the suffix a record identifier: do
+not write it into `[project].version`, because the merge commit id exists only
+after the merge and release tags must equal the plain `[project].version`. A bump
+alone does not create a release either; release tags follow
+`website/docs/developer/publication.md`.
+
 ## Splitting a Complex Refactor
 
 Treat a change as a **complex refactor** when any of these hold:
@@ -46,7 +84,7 @@ For these, decide the PR sequence **before editing any file**. Do not open one b
 Record the plan under `docs/refactor/<refactor-slug>/` before implementation:
 
 - `00-overview.md` — why the refactor exists, the decision with alternatives and consequences, explicit non-goals, and the ordered list of planned PRs.
-- one plan file per planned PR, each with **Goal**, **Scope**, **Non-goals**, and **Acceptance** sections. Follow the plan-filename convention in `repository-doc-boundaries.instructions.md`; documentation validation enforces it.
+- one plan file per planned PR, each with **Goal**, **Scope**, **Non-goals**, **Acceptance** and, last, **Version** sections (see [Version bump](#version-bump); plans that predate that rule gain the section when next updated). Follow the plan-filename convention in `repository-doc-boundaries.instructions.md`; documentation validation enforces it.
 
 If the user requests a complex refactor without a plan, propose the split and get agreement before writing code.
 
@@ -97,12 +135,12 @@ The current PR is a hard gate for every later PR in the plan. Do not create the 
 
 Before the gate may advance:
 
-1. Finish the current PR's stated scope and run its acceptance checks.
+1. Finish the current PR's stated scope, run its acceptance checks, then make and apply the version decision (see [Version bump](#version-bump)) as the last change.
 2. Push the complete change and wait for required CI and configured human or automated review. Passing CI alone does not complete the review gate.
 3. Inspect every review surface: submitted reviews, inline review threads, and general PR comments.
 4. Address every actionable comment with a code or documentation change and regression coverage where appropriate. If a suggestion should not be implemented, reply with a concrete technical reason instead of silently ignoring it.
-5. Push the follow-up commits, wait for the checks on the latest head commit, reply to each handled thread, and resolve it. Recheck that no new or unresolved review thread remains.
-6. Squash-merge the PR. Confirm the remote PR state is `MERGED` and record the resulting merge commit; a local worktree warning is not evidence that the remote merge failed.
+5. Push the follow-up commits, wait for the checks on the latest head commit, reply to each handled thread, and resolve it. Recheck that no new or unresolved review thread remains. If the fixes changed the PR's extent, re-evaluate the version decision (see [Version bump](#version-bump)) before merging.
+6. Squash-merge the PR. Confirm the remote PR state is `MERGED` and record the resulting merge commit; a local worktree warning is not evidence that the remote merge failed. For a PR without a bump, this merge commit's short id completes the `MAJOR.MINOR.PATCH+<short commit id>` identifier.
 7. Fetch the merged default branch, then create the next PR's branch or worktree from that updated default branch. Never base the next stage on the unmerged predecessor branch.
 
 Keep every later plan item pending until the preceding PR has passed this complete gate. If review requests changes or the latest checks fail, remain on the current PR and fix it; do not advance the sequence. A separately submitted refactor-plan PR is subject to the same gate before PR1 starts.
@@ -121,3 +159,6 @@ Keep every later plan item pending until the preceding PR has passed this comple
 - Treating green CI as a substitute for waiting for and auditing review feedback.
 - Merging while actionable comments or unresolved review threads remain.
 - Advancing from a local branch state without confirming the remote squash merge and updating from the default branch.
+- Bumping MAJOR without explicit human approval, or bumping PATCH for a change that does not justify it.
+- Finishing a PR or plan file without a recorded version decision.
+- Writing the `+<short commit id>` form into `[project].version` or tagging it as a release, or spelling it with a `-` suffix, which SemVer reads as a pre-release.
