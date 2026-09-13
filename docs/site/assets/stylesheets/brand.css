@@ -11,5 +11,6 @@
 
 body[data-md-color-scheme="default"] img.sciloom-brand-dark,
 body[data-md-color-scheme="slate"] img.sciloom-brand-light {
-  display: none;
+  /* Override the mobile drawer's more specific image display rule as well. */
+  display: none !important;
 }
