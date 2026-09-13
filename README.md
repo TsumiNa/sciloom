@@ -3,7 +3,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/site/assets/brand/svg/sciloom-banner-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="docs/site/assets/brand/svg/sciloom-banner-light.svg">
-  <img src="docs/site/assets/brand/svg/sciloom-banner-light.svg" alt="SciLoom — programmable scientific automation" width="1800" height="600">
+  <img src="docs/site/assets/brand/svg/sciloom-banner-light.svg" alt="SciLoom — programmable scientific automation" width="1800">
 </picture>
 
 SciLoom — programmable scientific automation from one semantic model.
