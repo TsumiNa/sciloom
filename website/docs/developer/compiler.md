@@ -10,7 +10,7 @@ validation and emission see the selected high-level program.
 
 ```python
 from examples.scale_values import ScaleValues
-from sciloom.contrib.autosuite import AutoSuiteTarget
+from sciloom_autosuite import AutoSuiteTarget
 from sciloom.core.compiler import compile_ir
 from sciloom.core.ir import from_json, to_json
 from sciloom.core.specialization import specialize

@@ -5,7 +5,7 @@ For the repository's device-free scaling example:
 
 ```python
 from examples.scale_values import ScaleValues
-from sciloom.contrib.autosuite import AutoSuiteTarget
+from sciloom_autosuite import AutoSuiteTarget
 
 compiled = ScaleValues().compile(target=AutoSuiteTarget())
 compiled.write("scale_values.asfp")

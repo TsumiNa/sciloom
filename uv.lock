@@ -2,6 +2,12 @@ version = 1
 revision = 3
 requires-python = ">=3.12, <3.15"
 
+[manifest]
+members = [
+    "sciloom",
+    "sciloom-autosuite",
+]
+
 [[package]]
 name = "ast-serialize"
 version = "0.11.1"
@@ -617,6 +623,7 @@ dev = [
     { name = "mypy" },
     { name = "pytest" },
     { name = "ruff" },
+    { name = "sciloom-autosuite" },
 ]
 docs = [
     { name = "griffelib" },
@@ -632,6 +639,7 @@ dev = [
     { name = "mypy", specifier = ">=2.3.1" },
     { name = "pytest", specifier = ">=9.1.1" },
     { name = "ruff", specifier = ">=0.16.7" },
+    { name = "sciloom-autosuite", editable = "packages/sciloom-autosuite" },
 ]
 docs = [
     { name = "griffelib", specifier = ">=2.3.0" },
@@ -639,6 +647,17 @@ docs = [
     { name = "mkdocstrings-python", specifier = ">=2.0.8" },
     { name = "zensical", specifier = ">=0.0.61" },
 ]
+
+[[package]]
+name = "sciloom-autosuite"
+version = "0.1.0"
+source = { editable = "packages/sciloom-autosuite" }
+dependencies = [
+    { name = "sciloom" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "sciloom", editable = "." }]
 
 [[package]]
 name = "six"

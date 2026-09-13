@@ -6,7 +6,9 @@ recording, or whatever your instrument reads.
 
 A target is not a subclass and not a plugin. It is four members the compiler calls
 by name, so a target written in your own package, importing nothing but SciLoom's
-public contracts, works exactly like the shipped one.
+public contracts, works exactly like the shipped one. The shipped AutoSuite target
+is itself a separate package, the workspace member `sciloom-autosuite`, so the
+shape you build here is the shape it has.
 
 This page continues the heater from [add a device](add-a-device.md).
 

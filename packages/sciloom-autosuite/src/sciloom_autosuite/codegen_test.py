@@ -15,6 +15,7 @@ from sciloom.flow.function_test import Caller, Counter
 from . import AutoSuiteTarget
 from .xml import SerializationIR
 
+# Evidence corpus at the workspace root, outside this distribution.
 FIXTURES = Path(__file__).resolve().parents[4] / "autosuite/asfp"
 
 

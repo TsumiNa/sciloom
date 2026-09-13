@@ -133,7 +133,7 @@ def test_contribution_imports_from_outside_sciloom(tmp_path):
     shutil.copytree(source, tmp_path / "demo_contribution", ignore=shutil.ignore_patterns("__pycache__"))
     script = tmp_path / "check.py"
     script.write_text(
-        'from demo_contribution import DemoAgitator, DemoTarget\nimport sys\nfrom sciloom.core.compiler import Target\nassert isinstance(DemoTarget(devices={"agitator": DemoAgitator()}), Target)\nassert not any(k.startswith("sciloom.contrib.autosuite") for k in sys.modules)\n'
+        'from demo_contribution import DemoAgitator, DemoTarget\nimport sys\nfrom sciloom.core.compiler import Target\nassert isinstance(DemoTarget(devices={"agitator": DemoAgitator()}), Target)\nassert not any(k.startswith("sciloom_autosuite") for k in sys.modules)\n'
     )
     result = subprocess.run([sys.executable, str(script)], cwd=tmp_path, capture_output=True, text=True)
     assert result.returncode == 0, result.stderr

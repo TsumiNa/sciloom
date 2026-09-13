@@ -9,7 +9,6 @@ import pytest
 from examples.developer.demo_contribution import DemoAgitator, DemoTarget
 from examples.developer.portable_agitation import PortableAgitation
 from sciloom import Agitator, Function, Var, comptime, rpm, runtime
-from sciloom.contrib.autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
 from sciloom.core.compiler import compile_ir
 from sciloom.core.devices import DeviceBindings
 from sciloom.core.diagnostics import CompilationError, ExecutionError, IRValidationError
@@ -17,6 +16,7 @@ from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import DeviceCommand, DeviceIf, from_json, to_json, validate
 from sciloom.core.specialization import specialize
 from sciloom.devices import BaseDevice
+from sciloom_autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
 
 
 def autosuite():

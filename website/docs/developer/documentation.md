@@ -11,13 +11,16 @@ uv run --group docs python website/tools/site.py serve
 Open `http://127.0.0.1:8000/`. Edit English Markdown in `website/docs/`; the server
 reloads those pages. Restart preview after changing example download files so the
 prepared copies are refreshed. API descriptions are extracted statically from
-`src/sciloom`, without importing device classes or running their methods.
+`src/sciloom` and `packages/sciloom-autosuite/src`, without importing device
+classes or running their methods.
 
 The website is self-contained under `website/`: `docs/` holds public pages and
 assets, `theme/` holds templates, `tools/` holds build tools and their tests, and
 `mkdocs.yml` configures Zensical. Internal design records stay in the repository's
-separate root `docs/` directory and are not needed to build the site. Dependencies
-remain in the root `pyproject.toml` and `uv.lock`.
+separate root `docs/` directory and are not needed to build the site. The
+repository is a uv workspace: dependency groups and `uv.lock` remain in the root
+`pyproject.toml`, and each member under `packages/` declares only its own runtime
+dependencies.
 
 For CI-equivalent validation:
 

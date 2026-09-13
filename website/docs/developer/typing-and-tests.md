@@ -1,8 +1,9 @@
 # Typing and tests
 
 Run `uv sync --locked` followed by `uv run mypy`. CI checks Python 3.12, 3.13 and
-3.14. Core/contrib functions have complete annotations, and unannotated function
-bodies are checked. The package carries py.typed; no custom mypy plugin is needed.
+3.14. Core and `sciloom_autosuite` functions have complete annotations, and
+unannotated function bodies are checked. Both distributions carry py.typed; no
+custom mypy plugin is needed.
 
 Input/Output/Var are Annotated aliases. Mypy sees the Python value type, while
 SciLoom reads role metadata. Wrong scalar/list assignments and invalid device
@@ -19,7 +20,7 @@ Schema, IR and target validation remain necessary.
 ```bash
 uv run ruff check
 uv run ruff format --check
-uv run pytest src/sciloom examples
+uv run pytest src/sciloom packages/sciloom-autosuite/src examples
 uv run mypy
 uv run python autosuite/tools/smoke_test.py
 uv run python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv

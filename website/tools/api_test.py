@@ -11,9 +11,14 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def test_catalogue_covers_exports_with_static_docstrings():
-    loader = GriffeLoader(search_paths=[ROOT / "src"], allow_inspection=False)
-    package = loader.load("sciloom")
+    loader = GriffeLoader(search_paths=[ROOT / "src", ROOT / "packages/sciloom-autosuite/src"], allow_inspection=False)
+    packages = {name: loader.load(name) for name in ("sciloom", "sciloom_autosuite")}
     loader.resolve_aliases(implicit=True, external=False)
+
+    def resolve(path):
+        top, _, rest = path.partition(".")
+        return packages[top][rest] if rest else packages[top]
+
     pages = list((ROOT / "website/docs/api").glob("*.md"))
     paths = {p for page in pages for p in re.findall(r"^::: (\S+)", page.read_text(), re.M)}
     for module in (
@@ -21,9 +26,9 @@ def test_catalogue_covers_exports_with_static_docstrings():
         "sciloom.core.ir",
         "sciloom.devices",
         "sciloom.core.interpreter",
-        "sciloom.contrib.autosuite",
+        "sciloom_autosuite",
     ):
-        obj = package if module == "sciloom" else package[module.removeprefix("sciloom.")]
+        obj = resolve(module)
         for name in obj.exports:
             exported = obj[name]
             if name == "comptime":
@@ -33,7 +38,7 @@ def test_catalogue_covers_exports_with_static_docstrings():
                 candidates = {module + "." + name, exported.canonical_path, "sciloom." + name}
                 assert candidates & paths, (module, name)
     for path in paths:
-        obj = package[path.removeprefix("sciloom.")]
+        obj = resolve(path)
         assert obj.docstring and obj.docstring.value.strip(), path
         assert not any(part.startswith("_") or part.endswith("_test") for part in path.split("."))
 

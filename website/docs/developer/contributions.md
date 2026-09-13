@@ -1,8 +1,8 @@
 # Contributing a device or target
 
 Device contracts define parameters and commands. Targets validate and emit platform
-programs. Independent packages use the same public interfaces as sciloom.contrib;
-no plugin registry or namespace installation is required.
+programs. Independent packages use the same public interfaces as the shipped
+`sciloom-autosuite` member; no plugin registry or namespace installation is required.
 
 This page is the reference. For worked walkthroughs, start with
 [add a device](add-a-device.md), then [add a target](add-a-target.md) and

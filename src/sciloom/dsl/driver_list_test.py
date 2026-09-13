@@ -6,11 +6,11 @@ from typing import Any
 import pytest
 
 from sciloom import Function, Input, Output, RotationalSpeed, Var, rpm, runtime
-from sciloom.contrib.autosuite import AutoSuiteTarget
 from sciloom.core.diagnostics import ExecutionError, IRValidationError
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import ListGet, ListLength, ListLiteral, ListSet, ListType, ScalarType, from_json, to_json
 from sciloom.core.ir.traversal import iter_nodes
+from sciloom_autosuite import AutoSuiteTarget
 
 
 class ScaleValues(Function):
