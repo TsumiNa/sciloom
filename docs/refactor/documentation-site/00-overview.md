@@ -2,7 +2,7 @@
 
 Status: plan merged in PR #28 (`4a62f2e`); foundation merged in PR #29 (`3f91340`).
 Stage 2 merged in PR #30 (`fb853ca5`); stage 3 merged in PR #31 (`b361be6f`).
-Stage 4 is implemented in [PR #32](https://github.com/TsumiNa/sci-loom/pull/32).
+Stage 4 is implemented in [PR #32](https://github.com/TsumiNa/sciloom/pull/32).
 The publication workflow records live deployment outcomes; the implementing PR
 records the first deployed source SHA after merge and successful main CI.
 This document is
@@ -120,7 +120,7 @@ separate site for every main commit. Version aliases use redirects, not symlinks
 PRs build/check and upload preview artifacts without deployment credentials.
 Main/tag publication requires successful checks for that exact source commit.
 Pin Actions by SHA; docs use Python 3.14 while existing CI retains 3.12–3.14.
-Default to Pages on TsumiNa/sci-loom if its private-repository entitlement permits.
+Default to Pages on TsumiNa/sciloom if its private-repository entitlement permits.
 Otherwise publish generated assets to public TsumiNa/sciloom-docs using a dedicated
 deployment credential. Source remains private. Choose the destination once during
 setup; later opening the source repository does not move the site. Use the default

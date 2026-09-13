@@ -2,9 +2,9 @@
 
 SciLoom — programmable scientific automation from one semantic model.
 
-[Documentation](https://tsumina.github.io/sci-loom/) ·
-[User guide](https://tsumina.github.io/sci-loom/dev/user-guide/functions/) ·
-[API reference](https://tsumina.github.io/sci-loom/dev/api/)
+[Documentation](https://tsumina.github.io/sciloom/) ·
+[User guide](https://tsumina.github.io/sciloom/dev/user-guide/functions/) ·
+[API reference](https://tsumina.github.io/sciloom/dev/api/)
 
 SciLoom aims to let scientists and engineers author automation workflows through
 Python, a visual editor, and AI tools, all sharing one typed semantic model.

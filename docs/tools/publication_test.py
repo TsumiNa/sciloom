@@ -43,7 +43,7 @@ def test_two_releases_and_dev_preserve_history_and_highest_stable(history, tmp_p
     source = tmp_path / "body"
     (source / "api").mkdir(parents=True)
     config = tmp_path / "mkdocs.yml"
-    config.write_text("site_name: Version fixture\nsite_url: https://tsumina.github.io/sci-loom/\n"
+    config.write_text("site_name: Version fixture\nsite_url: https://tsumina.github.io/sciloom/\n"
                       "docs_dir: body\nsite_dir: site\ntheme:\n  font: false\n"
                       "extra:\n  version:\n    provider: mike\n")
     saved = {}
@@ -55,7 +55,7 @@ def test_two_releases_and_dev_preserve_history_and_highest_stable(history, tmp_p
         (source / "build-info.json").write_text(json.dumps(asdict(snapshot)))
         subprocess.run([sys.executable, "-m", "zensical", "build", "--strict", "--clean", "-f", str(config)],
                        cwd=tmp_path, env={**os.environ, "MIKE_DOCS_VERSION": version}, check=True)
-        assert f'https://tsumina.github.io/sci-loom/{version}/' in (site / "index.html").read_text()
+        assert f'https://tsumina.github.io/sciloom/{version}/' in (site / "index.html").read_text()
         pub.record(history, site, snapshot)
         pub.aliases(history)
         for name, tree in saved.items():
@@ -142,7 +142,7 @@ def test_locked_checkout_pipeline_and_stale_dev_rejection(tmp_path, monkeypatch)
     package_version = tomllib.loads((root / "pyproject.toml").read_text())["project"]["version"]
     assert info == {"version": "dev", "ref": "main", "commit": sha, "package_version": package_version}
     html = (output / "site/dev/index.html").read_text()
-    assert 'href="https://tsumina.github.io/sci-loom/dev/"' in html
+    assert 'href="https://tsumina.github.io/sciloom/dev/"' in html
     assert '"provider":"mike"' in html
     assert pub.git(root, "status", "--porcelain", "--untracked-files=no") == ""
     # Keep generated history, then simulate a main reset behind its published dev.
