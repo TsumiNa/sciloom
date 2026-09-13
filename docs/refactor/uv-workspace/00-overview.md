@@ -1,6 +1,9 @@
 # uv workspace and lockstep versioning
 
-Status: accepted plan; implemented by the ordered PRs below.
+Status: implemented. The plan landed in [PR #55](https://github.com/TsumiNa/sciloom/pull/55);
+the ordered PRs below merged as [PR #56](https://github.com/TsumiNa/sciloom/pull/56),
+[PR #58](https://github.com/TsumiNa/sciloom/pull/58) and
+[PR #59](https://github.com/TsumiNa/sciloom/pull/59). All members remain at `0.1.0`.
 
 The AutoSuite target is the only equipment target maintained in this repository,
 and it lives inside the core distribution as `sciloom.contrib.autosuite`. Manage
