@@ -8,6 +8,8 @@ theme:
   custom_dir: docs/theme
   language: en
   font: false
+  logo: assets/brand/svg/sciloom-mark-light.svg
+  favicon: assets/brand/favicon.svg
   features:
     - navigation.tabs
     - navigation.sections
@@ -48,6 +50,7 @@ nav:
       - Typing and tests: developer/typing-and-tests.md
       - Building documentation: developer/documentation.md
       - Versioned publication: developer/publication.md
+      - Brand assets: developer/brand.md
   - Examples:
       - Overview: examples/index.md
       - Function calls: examples/function-call.md
@@ -107,6 +110,8 @@ markdown_extensions:
 validation:
   invalid_links: true
   invalid_link_anchors: true
+extra_css:
+  - assets/stylesheets/brand.css
 extra:
   version:
     provider: mike

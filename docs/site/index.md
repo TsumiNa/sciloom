@@ -1,5 +1,10 @@
 # SciLoom
 
+<div class="sciloom-banner">
+  <img class="sciloom-brand-light" src="assets/brand/svg/sciloom-banner-light.svg" alt="SciLoom — programmable scientific automation" width="1800" height="600">
+  <img class="sciloom-brand-dark" src="assets/brand/svg/sciloom-banner-dark.svg" alt="SciLoom — programmable scientific automation" width="1800" height="600">
+</div>
+
 **Programmable scientific automation from one semantic model.**
 
 Describe an experiment using a restricted Python DSL. SciLoom checks its typed
