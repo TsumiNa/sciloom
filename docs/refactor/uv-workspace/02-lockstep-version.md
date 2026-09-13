@@ -28,8 +28,10 @@ inheritance mechanism; no bump.
 `uv version --bump patch --package sciloom-autosuite --dry-run` print without
 writing; the end-to-end publication test still produces the four-field
 `build-info.json`; `git diff --check` passes. After merge,
-`dev/developer/publication/` shows the lockstep rule. This PR is based on `main`
-after the version-bump rule has merged, because it extends that rule.
+`dev/developer/publication/` shows the lockstep rule. This PR extends the Version
+bump section that [PR #36](https://github.com/TsumiNa/sciloom/pull/36) (`6a1343a`)
+added to the branch workflow, so it is based on `main` at or after that commit
+and after PR1 has merged.
 
 ## Version
 

@@ -16,9 +16,15 @@ tests and the member's tests; add a comment above each corpus path constant in
 the member tests. Regenerate `uv.lock`. Extend the CI pytest path, `.gitignore`,
 the mkdocs search paths, the API page directives, `website/tools/api_test.py`
 (second search path, per-package resolution) and the publication fixture copy
-list. Update the public pages listed in the overview, README, AGENTS.md §8-§10,
-`docs/01_TARGET_ARCHITECTURE.md`, and mark the `sciloom.contrib.autosuite` rows
-of earlier plans superseded.
+list. Update the public pages listed in the overview, README, AGENTS.md §8-§10
+and `docs/01_TARGET_ARCHITECTURE.md`. Mark every current-contract statement of
+the `sciloom.contrib` namespace in earlier plans superseded with a pointer to
+this plan: the ownership row and the author-API import in
+`docs/refactor/package-layout/00-overview.md`, the ownership row in
+`docs/refactor/dsl-layering/00-overview.md`, and the ownership row, the
+"installation into the sciloom.contrib namespace" sentence and the import
+example in `docs/refactor/device-abstraction/00-overview.md`. Stage files and
+stage tables stay as history.
 
 ## Non-goals
 
@@ -42,9 +48,11 @@ corpus move; no extra.
 - `uv build --package sciloom-autosuite` produces a wheel containing `py.typed`;
   delete the artifacts afterwards.
 - A search for `sciloom.contrib` over `src`, `packages`, `examples`, `website`,
-  `AGENTS.md`, `README.md` and `.github` finds nothing; example companion files
-  are byte-identical; `git diff --check` and `git diff --exit-code` pass after all
-  builds and example runs.
+  `AGENTS.md`, `README.md`, `.github` and `pyproject.toml` finds nothing, and over
+  `docs/refactor/*/00-overview.md` finds it only on lines that carry a superseded
+  note pointing to this plan (stage files keep their historical text); example
+  companion files are byte-identical; `git diff --check` and `git diff --exit-code`
+  pass after all builds and example runs.
 - After merge, `https://tsumina.github.io/sciloom/dev/` shows the new import path.
 
 ## Version

@@ -103,8 +103,19 @@ dev = ["mypy>=2.3.1", "pytest>=9.1.1", "ruff>=0.16.7", "sciloom-autosuite"]
 src = [".", "src", "packages/sciloom-autosuite/src"]
 
 [tool.mypy]
-files = ["src/sciloom", "packages/sciloom-autosuite/src/sciloom_autosuite", "examples/..."]
+files = [
+    "src/sciloom",
+    "packages/sciloom-autosuite/src/sciloom_autosuite",
+    "examples/function_call.py",
+    "examples/agitation.py",
+    "examples/scale_values.py",
+    "examples/non_zero_array_min.py",
+    "examples/developer",
+]
 mypy_path = ["$MYPY_CONFIG_FILE_DIR/src", "$MYPY_CONFIG_FILE_DIR/packages/sciloom-autosuite/src"]
+
+[[tool.mypy.overrides]]
+module = ["sciloom.core.*", "sciloom_autosuite.*"]   # strict; the relaxed test list renames its six autosuite entries
 ```
 
 The member does not pin `sciloom`: lockstep is enforced by tooling and the shared
@@ -149,9 +160,10 @@ procedure. PR3 changes no public page. Verify
 | 3 | [Decouple tests](03-decouple-tests.md) | Core tests pass without the member; member tests import no core test module |
 
 Each PR follows review, fixes, latest-head checks and remote squash merge before
-the next starts. Later stages never begin on an unmerged predecessor. PR2 is
-based on `main` after the version-bump rule has merged, because it extends that
-rule.
+the next starts. Later stages never begin on an unmerged predecessor. PR2 extends
+the Version bump section that [PR #36](https://github.com/TsumiNa/sciloom/pull/36)
+(`6a1343a`) added to `branch-and-pr-workflow.instructions.md`; that rule is
+already on `main`.
 
 ## Version
 
