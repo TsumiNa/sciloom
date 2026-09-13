@@ -34,6 +34,7 @@ are indexes; design proposals and validation records retain their historical con
 - [Collected device questions for later confirmation](refactor/device-abstraction/qa.md)
 - [English documentation and versioned publication plan](refactor/documentation-site/00-overview.md)
 - [Standalone website directory contract](refactor/standalone-website/00-overview.md)
+- [uv workspace and lockstep versioning](refactor/uv-workspace/00-overview.md)
 
 ## AutoSuite reference
 
