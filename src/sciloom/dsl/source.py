@@ -9,7 +9,7 @@ import tokenize
 from typing import Any
 
 from sciloom.units import SpeedUnit
-from .context import LoweringContext
+from .context import LoweringContext, RuntimeSource
 
 
 def runtime_source(context: LoweringContext) -> ast.FunctionDef:
@@ -28,18 +28,21 @@ def runtime_source(context: LoweringContext) -> ast.FunctionDef:
         context.fail("runtime_method", "A Function requires exactly one @runtime instance method.")
     method = methods[0]
     bindings = inspect.getclosurevars(method)
-    context.static_names = {**method.__globals__, **bindings.nonlocals}
     resolved_len = bindings.nonlocals.get(
         "len", bindings.globals.get("len", bindings.builtins.get("len", builtins.len))
     )
-    context.allows_len = resolved_len is builtins.len
-    context.unit_names = {name: value for name, value in method.__globals__.items() if isinstance(value, SpeedUnit)}
-    context.filename = method.__code__.co_filename
-    if not context.filename.endswith(".py"):
+    # One hand-off instead of five attributes filled from another module.
+    context.source = RuntimeSource(
+        filename=method.__code__.co_filename,
+        static_names={**method.__globals__, **bindings.nonlocals},
+        unit_names={name: value for name, value in method.__globals__.items() if isinstance(value, SpeedUnit)},
+        allows_len=resolved_len is builtins.len,
+    )
+    if not context.source.filename.endswith(".py"):
         context.fail("source_unavailable", "Runtime source must come from an ordinary .py file.")
     try:
-        with tokenize.open(context.filename) as source:
-            module = ast.parse(source.read(), filename=context.filename)
+        with tokenize.open(context.source.filename) as source:
+            module = ast.parse(source.read(), filename=context.source.filename)
     except (OSError, UnicodeError, SyntaxError) as error:
         context.fail("source_unavailable", f"Cannot read runtime source: {error}")
     candidates = [

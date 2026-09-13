@@ -42,10 +42,10 @@ def call(context: LoweringContext, node: ast.Call, targets: Sequence[ast.expr]) 
     callee = context.host_attribute(callee_node.attr)
     if not isinstance(callee, Function):
         context.fail("python_subset", "Runtime calls require a Function instance composed before compilation.", node)
-    if id(callee) not in context.ids:
-        context.ids[id(callee)] = f"fn:{len(context.instances)}"
-        context.instances.append(callee)
-    callee_id = context.ids[id(callee)]
+    if id(callee) not in context.scope.ids:
+        context.scope.ids[id(callee)] = f"fn:{len(context.scope.instances)}"
+        context.scope.instances.append(callee)
+    callee_id = context.scope.ids[id(callee)]
     inputs = [field for field in callee.model_fields.values() if field.role == VariableRole.INPUT]
     outputs = [field for field in callee.model_fields.values() if field.role == VariableRole.OUTPUT]
     if len(node.args) > len(inputs) or len(targets) != len(outputs):

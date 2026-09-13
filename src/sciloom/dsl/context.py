@@ -4,8 +4,10 @@ from __future__ import annotations
 
 import ast
 import inspect
-from collections.abc import Iterator
+from collections.abc import Iterator, Mapping
 from contextlib import contextmanager
+from dataclasses import dataclass, field
+from types import MappingProxyType
 from typing import Any, NoReturn, cast
 
 from sciloom.core.diagnostics import Diagnostic, IRValidationError, SourceSpan
@@ -21,30 +23,52 @@ from sciloom.units import SpeedUnit
 _MISSING = object()
 
 
+@dataclass
+class ProgramScope:
+    """Accumulators every function lowered into one program shares.
+
+    Attributes:
+        paths: Host composition path of each composed Function, by identity.
+        instances: Worklist of Function instances discovered so far.
+        ids: Function identifier of each discovered instance, by identity.
+        resources: Logical device resources interned across the program.
+        device_types: Device contracts recorded for the program, by type ID.
+    """
+
+    paths: dict[int, str]
+    instances: list[Function] = field(default_factory=list)
+    ids: dict[int, str] = field(default_factory=dict)
+    resources: dict[str, DeviceResource] = field(default_factory=dict)
+    device_types: dict[str, DeviceTypeContract] = field(default_factory=dict)
+
+
+@dataclass(frozen=True, kw_only=True)
+class RuntimeSource:
+    """What the analysis learns from one registered runtime method.
+
+    Attributes:
+        filename: Path of the .py file defining the method.
+        static_names: Globals and closure bindings visible to the method.
+        unit_names: Physical quantity units bound in the defining module.
+        allows_len: Whether len still resolves to the builtin.
+    """
+
+    filename: str = ""
+    static_names: Mapping[str, Any] = MappingProxyType({})
+    unit_names: Mapping[str, SpeedUnit] = MappingProxyType({})
+    allows_len: bool = False
+
+
 class LoweringContext:
-    def __init__(
-        self,
-        instance: Function,
-        function_id: str,
-        instances: list[Function],
-        ids: dict[int, str],
-        resources: dict[str, DeviceResource],
-        paths: dict[int, str],
-        device_types: dict[str, DeviceTypeContract],
-    ) -> None:
+    def __init__(self, instance: Function, function_id: str, scope: ProgramScope) -> None:
         self.instance = instance
         self.function_id = function_id
-        self.instances = instances
-        self.ids = ids
-        self.resources = resources
-        self.paths = paths
-        self.device_types = device_types
-        self.unit_names: dict[str, SpeedUnit] = {}
-        self.filename = ""
+        self.scope = scope
+        # Filled once by source discovery, which runs after the declared device
+        # slots are registered so a slot error still precedes a source error.
+        self.source = RuntimeSource()
         self.sequence = 0
         self.function_schema: FunctionIR | None = None
-        self.allows_len = False
-        self.static_names: dict[str, Any] = {}
         self.narrowed_devices: dict[str, type[BaseDevice]] = {}
 
     def fail(self, code: str, message: str, node: ast.AST | None = None) -> NoReturn:
@@ -55,7 +79,7 @@ class LoweringContext:
 
     def span(self, node: ast.AST) -> SourceSpan:
         location = cast(ast.expr | ast.stmt, node)
-        return SourceSpan(path=self.filename, line=location.lineno, column=location.col_offset)
+        return SourceSpan(path=self.source.filename, line=location.lineno, column=location.col_offset)
 
     def metadata(self, node: ast.AST) -> dict[str, Any]:
         self.sequence += 1
@@ -84,11 +108,11 @@ class LoweringContext:
         return (component, node.attr) if isinstance(component, DeviceReference) else None
 
     def device_resource(self, reference: DeviceReference) -> DeviceResource:
-        if id(reference.owner) not in self.paths:
+        if id(reference.owner) not in self.scope.paths:
             self.fail("device_reference", "Shared device owner must belong to this Function composition.")
-        logical_id = ".".join(filter(None, (self.paths[id(reference.owner)], reference.name)))
+        logical_id = ".".join(filter(None, (self.scope.paths[id(reference.owner)], reference.name)))
         self.register_device_type(reference.device_type)
-        return self.resources.setdefault(
+        return self.scope.resources.setdefault(
             logical_id,
             DeviceResource(
                 node_id=f"resource:{logical_id}",
@@ -101,7 +125,7 @@ class LoweringContext:
         for cls in reversed(device_type.__mro__):
             if issubclass(cls, BaseDevice):
                 contract = device_contract(cls)
-                previous = self.device_types.setdefault(contract.type_id, contract)
+                previous = self.scope.device_types.setdefault(contract.type_id, contract)
                 if previous != contract:
                     self.fail("device_contract", "A device type identifier has conflicting declarations.")
 
