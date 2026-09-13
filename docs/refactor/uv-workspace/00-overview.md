@@ -1,13 +1,17 @@
 # uv workspace and lockstep versioning
 
-Status: accepted plan; implemented by the ordered PRs below.
+Status: implemented. The plan landed in [PR #55](https://github.com/TsumiNa/sciloom/pull/55);
+the ordered PRs below merged as [PR #56](https://github.com/TsumiNa/sciloom/pull/56),
+[PR #58](https://github.com/TsumiNa/sciloom/pull/58) and
+[PR #59](https://github.com/TsumiNa/sciloom/pull/59). All members remain at `0.1.0`.
 
-The AutoSuite target is the only equipment target maintained in this repository,
-and it lives inside the core distribution as `sciloom.contrib.autosuite`. Manage
-it as its own distribution in the same repository, the way a Cargo workspace
-manages several crates, so it can later move to its own repository if its
-development cadence diverges from the core. The core distribution stays
-dependency-free and the public documentation stays one site.
+The AutoSuite target is the only equipment target maintained in this repository.
+Before this refactor it lived inside the core distribution as
+`sciloom.contrib.autosuite`. It is now its own distribution in the same
+repository, the way a Cargo workspace manages several crates, so it can later
+move to its own repository if its development cadence diverges from the core.
+The core distribution stays dependency-free and the public documentation stays
+one site.
 
 ## Decision
 
