@@ -30,8 +30,8 @@ Inspect all review surfaces, fix feedback and squash merge the completed stage.
 ## Implementation and deployment choice
 
 The Pages API successfully enabled a public Actions-backed site on the existing
-private `TsumiNa/sci-loom` repository. The selected URL is
-`https://tsumina.github.io/sci-loom/`; the fallback repository is unnecessary.
+private `TsumiNa/sciloom` repository. The selected URL is
+`https://tsumina.github.io/sciloom/`; the fallback repository is unnecessary.
 No source visibility change, release tag or PyPI publication was performed.
 
 The docs group pins squidfunk/mike at

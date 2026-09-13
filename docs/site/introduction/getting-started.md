@@ -8,8 +8,8 @@ requires repository access. A public PyPI installation is not offered by this
 documentation release.
 
 ```bash
-git clone git@github.com:TsumiNa/sci-loom.git
-cd sci-loom
+git clone git@github.com:TsumiNa/sciloom.git
+cd sciloom
 uv sync --locked
 uv run python examples/scale_values.py
 ```
