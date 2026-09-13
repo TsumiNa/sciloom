@@ -32,7 +32,10 @@ def test_complete_handbook_snippet(page, tmp_path):
     subprocess.run([sys.executable, str(example)], cwd=tmp_path, env=env, check=True)
 
 
-@pytest.mark.parametrize("page", ("developer/add-a-device", "developer/add-a-target"))
+@pytest.mark.parametrize(
+    "page",
+    ("developer/add-a-device", "developer/add-a-target", "developer/reject-a-program"),
+)
 def test_complete_tutorial_snippet(page, tmp_path):
     """Tutorials build up in steps, so their complete program is the last block."""
     markdown = (ROOT / f"website/docs/{page}.md").read_text()
