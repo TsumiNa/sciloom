@@ -6,6 +6,7 @@ from enum import StrEnum
 
 
 class AutoSuiteVersion(StrEnum):
+    """AutoSuite serialization versions supported by the maintained contribution."""
     V2_47_1_1 = "autosuite-2.47.1.1"
 
 

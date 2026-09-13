@@ -24,8 +24,11 @@ T = TypeVar("T")
 
 
 Input: TypeAlias = Annotated[T, _FieldRole.INPUT]
+"""Declare a runtime input while exposing its underlying value type to Python typing."""
 Output: TypeAlias = Annotated[T, _FieldRole.OUTPUT]
+"""Declare a runtime output copied back to the caller after normal return."""
 Var: TypeAlias = Annotated[T, _FieldRole.VAR]
+"""Declare persistent Function state with an explicit, copied class-level initial value."""
 
 
 _TYPES = {

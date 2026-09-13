@@ -10,7 +10,17 @@ from .validation import validate
 
 
 def to_dict(package: Program) -> dict[str, Any]:
-    """Validate a package and return a detached JSON-compatible object."""
+    """Validate a package and return a detached JSON-compatible object.
+
+    Args:
+        package: Semantic program using the current format version.
+
+    Returns:
+        A new dictionary containing only JSON-compatible values.
+
+    Raises:
+        IRValidationError: Structural or semantic validation fails.
+    """
     diagnostics = validate(package)
     if diagnostics:
         raise IRValidationError(diagnostics)
@@ -18,7 +28,17 @@ def to_dict(package: Program) -> dict[str, Any]:
 
 
 def from_dict(document: dict[str, Any]) -> Program:
-    """Construct typed IR, rejecting malformed or semantically invalid documents."""
+    """Construct typed IR from a strict JSON-compatible document.
+
+    Args:
+        document: Dictionary explicitly declaring format_version 4.
+
+    Returns:
+        A validated Program with typed nodes and immutable sequences.
+
+    Raises:
+        IRValidationError: Shape, version, fields, types or semantics are invalid.
+    """
     if not isinstance(document, dict) or "format_version" not in document:
         _fail("json_shape", "A package must declare format_version.", "$.format_version")
     try:
@@ -32,12 +52,33 @@ def from_dict(document: dict[str, Any]) -> Program:
 
 
 def to_json(package: Program) -> str:
-    """Produce deterministic, readable JSON; retain IDs and semantic list order."""
+    """Produce deterministic, readable JSON, retaining IDs and semantic list order.
+
+    Args:
+        package: Semantic program to validate and serialize.
+
+    Returns:
+        Sorted-key, indented JSON text ending with a newline.
+
+    Raises:
+        IRValidationError: The program fails validation.
+    """
     return json.dumps(to_dict(package), ensure_ascii=False, allow_nan=False, sort_keys=True, indent=2) + "\n"
 
 
 def from_json(text: str) -> Program:
-    """Parse JSON without duplicate keys or nonstandard NaN/Infinity values."""
+    """Parse strict JSON without executing code or loading device implementations.
+
+    Args:
+        text: JSON v4 document.
+
+    Returns:
+        A validated typed Program.
+
+    Raises:
+        IRValidationError: Syntax, duplicate keys, nonfinite constants, version
+            or program structure/semantics are invalid.
+    """
 
     def pairs(items: list[tuple[str, Any]]) -> dict[str, Any]:
         result: dict[str, Any] = {}
