@@ -318,7 +318,7 @@ def test_array_encoding_matches_raw_evidence_and_composed_scalar_types():
 
 
 def test_whole_copy_and_indexed_write_fields_match_observed_modes():
-    from sciloom.dsl.lowering_list_test import ScaleValues
+    from sciloom.dsl.driver_list_test import ScaleValues
 
     root = ET.fromstring(compiled(ScaleValues()).artifact.content)
     raw = ET.fromstring(gzip.decompress((ROOT / "autosuite/app/config20260902_2.app").read_bytes()))

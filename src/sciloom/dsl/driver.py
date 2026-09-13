@@ -18,13 +18,13 @@ from sciloom.core.ir import (
     VariableRole,
     validate,
 )
-from sciloom.units import RotationalSpeed
-from .context import LoweringContext
-from .device_schema import DeviceReference
+from sciloom.flow.device_slots import DeviceReference
 
 # Function is read at runtime below, not only in annotations. Do not move this
 # import behind TYPE_CHECKING: component_paths tests instances with isinstance.
-from .model import Function
+from sciloom.flow.function import Function
+from sciloom.units import RotationalSpeed
+from .context import LoweringContext
 from .source import runtime_source
 from .statements import statements
 

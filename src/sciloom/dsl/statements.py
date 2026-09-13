@@ -21,14 +21,14 @@ from sciloom.core.ir import (
     VariableRole,
     While,
 )
+
+# Function is read at runtime below, not only in annotations. Do not move this
+# import behind TYPE_CHECKING: composed calls test the callee with isinstance.
+from sciloom.flow.function import Function
 from .context import LoweringContext
 from .device_conditions import device_condition
 from .device_operations import configure, operation
 from .expressions import BINARY_OPERATORS, expression, is_length_call
-
-# Function is read at runtime below, not only in annotations. Do not move this
-# import behind TYPE_CHECKING: composed calls test the callee with isinstance.
-from .model import Function
 
 
 def call(context: LoweringContext, node: ast.Call, targets: Sequence[ast.expr]) -> Call:
