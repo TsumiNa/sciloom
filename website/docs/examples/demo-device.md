@@ -8,7 +8,7 @@ DemoExperiment uses an independent DemoAgitator profile with speed, gain and a n
 uv run python -m examples.developer.demo_device
 ```
 
-The emitted node sequence is ConfigureProperty, ConfigureProperty, StartAgitation, DeviceCommand, StopAgitation. The target conservatively accepts only literal gain values in [0, 1]. The extension adds a property and command without changes to core. calibrate has no reference execution semantics, so recording its request does not imply the interpreter or hardware can execute it. SourceSpan paths in the JSON depend on the generating checkout.
+The emitted node sequence is ConfigureProperty, ConfigureProperty, StartAgitation, DeviceCommand, StopAgitation. The target conservatively accepts only literal gain values in [0, 1]. The extension adds a property and command without changes to core. calibrate has no reference execution semantics, so recording its request does not imply the interpreter or hardware can execute it. SourceSpan paths in the JSON are relative to the repository root, so the companion file is reproducible.
 
 The module docstring below records expected terminal output. Compilation and
 reference execution do not operate hardware or replace AutoSuite Executor checks.

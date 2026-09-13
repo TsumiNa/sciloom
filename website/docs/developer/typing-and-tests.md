@@ -19,7 +19,7 @@ Schema, IR and target validation remain necessary.
 ```bash
 uv run ruff check
 uv run ruff format --check
-uv run pytest src/sciloom
+uv run pytest src/sciloom examples
 uv run mypy
 uv run python autosuite/tools/smoke_test.py
 uv run python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv

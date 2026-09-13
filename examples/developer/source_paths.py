@@ -4,7 +4,9 @@ Lowering records the absolute path of the Python file that defines a runtime
 method, so serialized IR would otherwise embed the path of whichever checkout
 produced it. The developer examples commit their JSON output as learning
 material, so they rewrite those diagnostic paths relative to the repository
-root before writing a file. Diagnostics raised at runtime keep absolute paths.
+root before writing a file. Lowering itself is unchanged and still records the
+absolute path; because the examples then compile and reference-execute the
+rewritten program, any diagnostic they report names the same relative path.
 
 This module is a helper for the examples, not part of the SciLoom API.
 """

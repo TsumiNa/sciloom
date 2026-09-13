@@ -19,6 +19,9 @@ mike = { git = "https://github.com/squidfunk/mike.git", rev = "2d4ad799442f4592d
 [tool.pytest.ini_options]
 # Integration tests import the independent contributor example from the checkout.
 pythonpath = ["."]
+# examples/ has no __init__.py; resolve its modules as namespace packages so the
+# developer examples keep their single-dot relative imports under pytest.
+consider_namespace_packages = true
 
 [tool.ruff]
 # Python only: never reformat code blocks inside Markdown documentation or evidence.
