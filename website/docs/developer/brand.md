@@ -75,6 +75,6 @@ one band width of space around a standalone mark. Prefer 24 px or larger for
 icons; reserve 16 px for browser tabs. Use the monochrome mark when two colors
 are unsuitable. Do not add outlines, shadows or extra colors.
 
-The maintained assets live in `docs/site/assets/brand/`. Update the SVG originals
+The maintained assets live in `website/docs/assets/brand/`. Update the SVG originals
 and their corresponding PNG, ICO and animated exports together. The brand
 version identifies this asset set independently of the Python package version.

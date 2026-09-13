@@ -1,26 +1,33 @@
 # Building documentation
 
-Use a checkout of the source repository with Python 3.14 and uv:
+Use a checkout of the source repository with Python 3.14 and uv. Run these
+commands from the repository root:
 
 ```bash
 uv sync --locked --group docs
-uv run --group docs python docs/tools/site.py serve
+uv run --group docs python website/tools/site.py serve
 ```
 
-Open `http://127.0.0.1:8000/`. Edit English Markdown in `docs/site/`; the server
+Open `http://127.0.0.1:8000/`. Edit English Markdown in `website/docs/`; the server
 reloads those pages. Restart preview after changing example download files so the
 prepared copies are refreshed. API descriptions are extracted statically from
 `src/sciloom`, without importing device classes or running their methods.
 
+The website is self-contained under `website/`: `docs/` holds public pages and
+assets, `theme/` holds templates, `tools/` holds build tools and their tests, and
+`mkdocs.yml` configures Zensical. Internal design records stay in the repository's
+separate root `docs/` directory and are not needed to build the site. Dependencies
+remain in the root `pyproject.toml` and `uv.lock`.
+
 For CI-equivalent validation:
 
 ```bash
-uv run --group docs python docs/tools/site.py build --strict
-uv run --group docs pytest docs/tools
+uv run --group docs python website/tools/site.py build --strict
+uv run --group docs pytest website/tools
 git diff --check
 ```
 
-HTML is written under `.build/docs/`. The source tree's generated downloads and
+HTML is written under `website/.build/site/`. The source tree's generated downloads and
 `build-info.json` are ignored. They are recreated from selected examples and the
 current source revision; do not edit them. Only this public documentation tree,
 selected example files and rendered API descriptions are included in the website.

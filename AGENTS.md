@@ -163,16 +163,19 @@ Run `python autosuite/tools/audit_corpus.py` after reference changes. Syntax-che
 
 ## 9. Documentation location
 
-Keep project/design Markdown under `docs/` and AutoSuite-specific reference Markdown under `autosuite/docs/`. Root Markdown is limited to `README.md` and `AGENTS.md`.
+Keep internal project/design Markdown under `docs/` and AutoSuite-specific reference Markdown under `autosuite/docs/`. Root Markdown is limited to `README.md` and `AGENTS.md`.
 
-Public English documentation lives under `docs/site/`; it is the only website
-source tree. Use `uv run --group docs python docs/tools/site.py serve` to preview
-and `uv run --group docs python docs/tools/site.py build --strict` to build.
-Run `uv run --group docs pytest docs/tools` for documentation tooling changes.
+Public English documentation lives under `website/docs/`; it is the only website
+source tree. Website configuration, theme and tooling live together under
+`website/`; ignored outputs live in `website/.build/`. Dependencies stay in the
+root pyproject and lock file. Run from the repository root:
+`uv run --group docs python website/tools/site.py serve` to preview
+and `uv run --group docs python website/tools/site.py build --strict` to build.
+Run `uv run --group docs pytest website/tools` for documentation tooling changes.
 Public deployment is handled by `.github/workflows/documentation.yml` after
 exact-commit CI checks. Preserve the generated-only `gh-pages` history and release
 immutability; do not publish raw evidence or bypass the version checks. See
-`docs/site/developer/publication.md` for version rules and recovery.
+`website/docs/developer/publication.md` for version rules and recovery.
 Only explicitly listed examples may be copied into generated downloads. Do not
 publish the AutoSuite corpus or internal refactor records. API pages use static
 mkdocstrings extraction; document public APIs with English Google-style docstrings.

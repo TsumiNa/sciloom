@@ -1,7 +1,7 @@
 # Documentation index
 
-The [public handbook](site/index.md) and its
-[local build instructions](site/developer/documentation.md) describe the current
+The [public handbook](../website/docs/index.md) and its
+[local build instructions](../website/docs/developer/documentation.md) describe the current
 implementation. The records below retain design history and
 implementation context; they are not automatically published with the website.
 
@@ -33,6 +33,7 @@ are indexes; design proposals and validation records retain their historical con
 - [Accepted device configuration and lifecycle sequence](refactor/device-abstraction/00-overview.md)
 - [Collected device questions for later confirmation](refactor/device-abstraction/qa.md)
 - [English documentation and versioned publication plan](refactor/documentation-site/00-overview.md)
+- [Standalone website directory contract](refactor/standalone-website/00-overview.md)
 
 ## AutoSuite reference
 

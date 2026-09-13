@@ -23,8 +23,8 @@ class BrandReferences(HTMLParser):
 
 def test_rendered_api_and_revision():
     # Always rebuild: a stale local artifact must not mask a broken API change.
-    output = ROOT / ".build/docs"
-    subprocess.run([sys.executable, str(ROOT / "docs/tools/site.py"), "build", "--strict"], check=True)
+    output = ROOT / "website/.build/site"
+    subprocess.run([sys.executable, str(ROOT / "website/tools/site.py"), "build", "--strict"], check=True)
     api = (output / "api/author/index.html").read_text()
     for symbol in ("Function", "Input", "Output", "Var", "Agitator"):
         assert f'id="sciloom.{symbol}"' in api
@@ -49,7 +49,7 @@ def test_rendered_api_and_revision():
             asset = (page.parent / parsed.path).resolve()
             assert asset.is_relative_to((output / "assets/brand").resolve())
             relative = asset.relative_to(output.resolve())
-            assert asset.read_bytes() == (ROOT / "docs/site" / relative).read_bytes()
+            assert asset.read_bytes() == (ROOT / "website/docs" / relative).read_bytes()
 
     readme = BrandReferences()
     readme.feed((ROOT / "README.md").read_text())

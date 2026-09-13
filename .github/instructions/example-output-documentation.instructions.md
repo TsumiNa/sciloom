@@ -1,7 +1,7 @@
 ---
 description: 'Use when creating or updating runnable examples and their learning documentation, especially examples that compile programs, execute an interpreter, or generate artifacts.'
 name: 'Example Output Documentation'
-applyTo: 'examples/**,docs/**'
+applyTo: 'examples/**,docs/**,website/**'
 ---
 
 # Example Output Documentation

@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[2]
     "developer/compiler", "developer/interpreter", "developer/contributions",
 ))
 def test_complete_handbook_snippet(page, tmp_path):
-    markdown = (ROOT / f"docs/site/{page}.md").read_text()
+    markdown = (ROOT / f"website/docs/{page}.md").read_text()
     source = re.findall(r"```python\n(.*?)\n```", markdown, re.DOTALL)[0]
     example = tmp_path / "handbook_example.py"
     example.write_text(source)
@@ -27,8 +27,8 @@ def test_complete_handbook_snippet(page, tmp_path):
 
 @pytest.fixture(scope="module")
 def rendered():
-    subprocess.run([sys.executable, str(ROOT / "docs/tools/site.py"), "build", "--strict"], check=True)
-    return ROOT / ".build/docs"
+    subprocess.run([sys.executable, str(ROOT / "website/tools/site.py"), "build", "--strict"], check=True)
+    return ROOT / "website/.build/site"
 
 
 class Text(HTMLParser):

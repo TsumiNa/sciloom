@@ -1,6 +1,6 @@
 # Project state
 
-The current handbook is maintained in [Current capabilities](site/introduction/status.md).
+The current handbook is maintained in [Current capabilities](../website/docs/introduction/status.md).
 This file is an index for existing repository links; update the handbook when
 behavior changes, rather than maintaining a second current description here.
 

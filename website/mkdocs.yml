@@ -1,11 +1,11 @@
 site_name: SciLoom
 site_description: Programmable scientific automation from one semantic model.
 site_url: !ENV [SCILOOM_DOCS_SITE_URL, 'https://tsumina.github.io/sciloom/']
-docs_dir: docs/site
-site_dir: .build/docs
+docs_dir: docs
+site_dir: .build/site
 theme:
   name: zensical
-  custom_dir: docs/theme
+  custom_dir: theme
   language: en
   font: false
   logo: assets/brand/svg/sciloom-mark-light.svg
@@ -80,7 +80,7 @@ plugins:
   - mkdocstrings:
       handlers:
         python:
-          paths: [src]
+          paths: [../src]
           options:
             allow_inspection: false
             docstring_style: google
@@ -101,6 +101,7 @@ markdown_extensions:
   - pymdownx.highlight
   - pymdownx.inlinehilite
   - pymdownx.snippets:
+      base_path: [..]
       check_paths: true
   - pymdownx.superfences:
       custom_fences:

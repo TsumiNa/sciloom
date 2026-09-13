@@ -1,6 +1,6 @@
 # Agitation semantics
 
-The current handbook is maintained in [Device configuration and lifecycle](site/user-guide/devices.md).
+The current handbook is maintained in [Device configuration and lifecycle](../website/docs/user-guide/devices.md).
 This file is an index for existing repository links; update the handbook when
 behavior changes, rather than maintaining a second current description here.
 
