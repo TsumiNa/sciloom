@@ -102,7 +102,9 @@ unprovable rather than by range. That is the correct outcome here, and it is a g
 illustration of why a target should inspect the IR it actually receives rather than
 the source it imagines.
 
-Rejecting the unprovable is honest; accepting it and hoping is not. A target that
+Rejecting the unprovable is honest; accepting it and hoping is not.
+[Reject a program](reject-a-program.md) covers every layer that can say no, and when
+to let a program adapt instead. A target that
 could evaluate ranges would accept more, and the message says which kind of target
 this is so the author knows what to change.
 
