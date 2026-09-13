@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from ...core.ir import ListLiteral, ListType, Literal, ScalarType, Variable
+
+from sciloom.core.ir import ListLiteral, ListType, Literal, ScalarType, Variable
 from .xml import XmlNode, xml_node as _xml
 
 

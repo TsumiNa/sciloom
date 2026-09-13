@@ -3,17 +3,21 @@
 import ast
 import inspect
 
-from ..core.ir import CommandArgument, ConfigureProperty, DeviceCommand, StartAgitation, StopAgitation
-from ..core.ir.device_contracts import START_AGITATION_ID, STOP_AGITATION_ID
-from ..devices.declarations import device_contract
+from sciloom.core.ir import CommandArgument, ConfigureProperty, DeviceCommand, StartAgitation, StopAgitation
+from sciloom.core.ir.device_contracts import START_AGITATION_ID, STOP_AGITATION_ID
+from sciloom.devices.declarations import device_contract
 from .context import LoweringContext
 from .device_schema import DeviceReference
 from .expressions import expression
 
 
 def device_member(context: LoweringContext, node: ast.AST) -> tuple[DeviceReference, str] | None:
-    if not (isinstance(node, ast.Attribute) and isinstance(node.value, ast.Attribute)
-            and isinstance(node.value.value, ast.Name) and node.value.value.id == "self"):
+    if not (
+        isinstance(node, ast.Attribute)
+        and isinstance(node.value, ast.Attribute)
+        and isinstance(node.value.value, ast.Name)
+        and node.value.value.id == "self"
+    ):
         return None
     component = context.host_attribute(node.value.attr)
     return (component, node.attr) if isinstance(component, DeviceReference) else None
@@ -63,7 +67,11 @@ def operation(context: LoweringContext, node: ast.Call) -> StartAgitation | Stop
         cls = StartAgitation if command.semantic_id == START_AGITATION_ID else StopAgitation
         return cls(**context.metadata(node), resource_id=resource_id)
     return DeviceCommand(
-        **context.metadata(node), resource_id=resource_id, operation_id=command.semantic_id,
-        arguments=tuple(CommandArgument(name=p.name, value=expression(context, arguments[p.name], p.type))
-                        for p in command.parameters),
+        **context.metadata(node),
+        resource_id=resource_id,
+        operation_id=command.semantic_id,
+        arguments=tuple(
+            CommandArgument(name=p.name, value=expression(context, arguments[p.name], p.type))
+            for p in command.parameters
+        ),
     )

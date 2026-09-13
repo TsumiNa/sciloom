@@ -3,9 +3,22 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Mapping
-from .model import BinaryOp, Expression, FunctionIR, Literal, ListLiteral, ListLength, ListGet, Node, Reference, Unary, UnaryOp, Variable
-from .types import ListType, ScalarType, ValueType, is_assignable
 
+from .model import (
+    BinaryOp,
+    Expression,
+    FunctionIR,
+    ListGet,
+    ListLength,
+    ListLiteral,
+    Literal,
+    Node,
+    Reference,
+    Unary,
+    UnaryOp,
+    Variable,
+)
+from .types import ListType, ScalarType, ValueType, is_assignable
 
 Report = Callable[[str, str, str, Node | None], None]
 
@@ -20,14 +33,21 @@ class ExpressionChecker:
             for i, element in enumerate(expr.elements):
                 element_type = self.check(element, function, f"{path}.elements[{i}]")
                 if element_type is not None and not is_assignable(element_type, expr.type.element_type):
-                    self.report("list_element_type", f"Expected {expr.type.element_type.value} elements.", f"{path}.elements[{i}]", element)
+                    self.report(
+                        "list_element_type",
+                        f"Expected {expr.type.element_type.value} elements.",
+                        f"{path}.elements[{i}]",
+                        element,
+                    )
             return expr.type
         if isinstance(expr, (ListLength, ListGet)):
             container = self.check(expr.value, function, f"{path}.value")
             if isinstance(expr, ListGet):
                 index = self.check(expr.index, function, f"{path}.index")
                 if index is not None and index != ScalarType.INTEGER:
-                    self.report("index_type", "List indices must be integers, excluding bool.", f"{path}.index", expr.index)
+                    self.report(
+                        "index_type", "List indices must be integers, excluding bool.", f"{path}.index", expr.index
+                    )
             if container is not None and not isinstance(container, ListType):
                 self.report("list_type", "Operation requires a list value.", path, expr)
                 return None
@@ -71,11 +91,15 @@ class ExpressionChecker:
         right = self.check(expr.right, function, f"{path}.right")
         return self.binary(expr.op, left, right, path, expr)
 
-    def binary(self, op: BinaryOp, left: ValueType | None, right: ValueType | None, path: str, node: Node) -> ScalarType | None:
+    def binary(
+        self, op: BinaryOp, left: ValueType | None, right: ValueType | None, path: str, node: Node
+    ) -> ScalarType | None:
         if left is None or right is None:
             return None
         if isinstance(left, ListType) or isinstance(right, ListType):
-            self.report("operator_type", "Lists do not support implicit arithmetic, comparisons or truthiness.", path, node)
+            self.report(
+                "operator_type", "Lists do not support implicit arithmetic, comparisons or truthiness.", path, node
+            )
             return None
         numeric = left in (ScalarType.INTEGER, ScalarType.REAL) and right in (ScalarType.INTEGER, ScalarType.REAL)
         if op in (BinaryOp.AND, BinaryOp.OR):
@@ -88,11 +112,7 @@ class ExpressionChecker:
             if numeric:
                 return ScalarType.BOOLEAN
         elif numeric:
-            return (
-                ScalarType.REAL
-                if op == BinaryOp.DIVIDE or ScalarType.REAL in (left, right)
-                else ScalarType.INTEGER
-            )
+            return ScalarType.REAL if op == BinaryOp.DIVIDE or ScalarType.REAL in (left, right) else ScalarType.INTEGER
         self.report(
             "operator_type", f"Operator {op.value!r} cannot combine {left.value} and {right.value}.", path, node
         )

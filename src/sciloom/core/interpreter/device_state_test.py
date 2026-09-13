@@ -3,8 +3,8 @@
 import pytest
 
 from sciloom import Agitator, Function, Input, RotationalSpeed, Var, rpm, runtime
-from ..diagnostics import ExecutionError
-from ..configuration_test import ParentConfigure, ChildConfigure, Start
+from sciloom.core.configuration_test import ChildConfigure, ParentConfigure, Start
+from sciloom.core.diagnostics import ExecutionError
 from .runtime import Interpreter
 
 
@@ -73,16 +73,29 @@ def test_parent_and_child_share_saved_configuration(cls):
 
 def test_list_configuration_captures_an_independent_immutable_value():
     from dataclasses import replace
-    from ..ir import ConfigureProperty, DeviceResource, DeviceTypeContract, PropertyContract, Reference
-    from ..ir.codec_list_test import list_program
-    from ..ir.device_contracts import BASE_DEVICE_CONTRACT
+
+    from sciloom.core.ir import ConfigureProperty, DeviceResource, DeviceTypeContract, PropertyContract, Reference
+    from sciloom.core.ir.codec_list_test import list_program
+    from sciloom.core.ir.device_contracts import BASE_DEVICE_CONTRACT
 
     program = list_program()
     function = program.functions[0]
     prop = PropertyContract(semantic_id="test.values/v1", name="values", type=function.variables[1].type)
-    contract = DeviceTypeContract(type_id="test.list-device/v1", base_type_ids=(BASE_DEVICE_CONTRACT.type_id,), properties=(prop,))
-    capture = ConfigureProperty(node_id="capture", resource_id="device", property_id=prop.semantic_id, value=Reference(node_id="captured", symbol_id="output"))
-    program = replace(program, device_types=(BASE_DEVICE_CONTRACT, contract), resources=(DeviceResource(node_id="device", logical_id="device", device_type_id=contract.type_id),), functions=(replace(function, body=(function.body[0], capture, function.body[1])),))
+    contract = DeviceTypeContract(
+        type_id="test.list-device/v1", base_type_ids=(BASE_DEVICE_CONTRACT.type_id,), properties=(prop,)
+    )
+    capture = ConfigureProperty(
+        node_id="capture",
+        resource_id="device",
+        property_id=prop.semantic_id,
+        value=Reference(node_id="captured", symbol_id="output"),
+    )
+    program = replace(
+        program,
+        device_types=(BASE_DEVICE_CONTRACT, contract),
+        resources=(DeviceResource(node_id="device", logical_id="device", device_type_id=contract.type_id),),
+        functions=(replace(function, body=(function.body[0], capture, function.body[1])),),
+    )
     session = Interpreter(program)
     first = session.run()
     assert first.resources["device"].configuration == {"values": (1.0,)}

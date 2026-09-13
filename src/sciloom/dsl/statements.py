@@ -4,12 +4,27 @@ from __future__ import annotations
 
 import ast
 from collections.abc import Sequence
+
+from sciloom.core.ir import (
+    Assignment,
+    Binary,
+    Call,
+    If,
+    InputBinding,
+    ListSet,
+    ListType,
+    OutputBinding,
+    Reference,
+    ScalarType,
+    Statement,
+    VariableRole,
+    While,
+)
 from .context import LoweringContext
+from .device_conditions import device_if
+from .device_operations import configure, device_member, operation
 from .expressions import BINARY_OPERATORS, expression, is_length_call
 from .model import Function
-from .device_operations import configure, device_member, operation
-from .device_conditions import device_if
-from ..core.ir import Assignment, Binary, Call, If, InputBinding, ListSet, ListType, OutputBinding, Reference, ScalarType, Statement, VariableRole, While
 
 
 def call(context: LoweringContext, node: ast.Call, targets: Sequence[ast.expr]) -> Call:
@@ -43,7 +58,10 @@ def call(context: LoweringContext, node: ast.Call, targets: Sequence[ast.expr]) 
         **context.metadata(node),
         function_id=callee_id,
         inputs=tuple(
-            InputBinding(parameter_id=context.symbol(field.name, callee_id), value=expression(context, bound[field.name], field.type))
+            InputBinding(
+                parameter_id=context.symbol(field.name, callee_id),
+                value=expression(context, bound[field.name], field.type),
+            )
             for field in inputs
         ),
         outputs=tuple(
@@ -58,11 +76,7 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
     for node in body:
         if isinstance(node, ast.Pass):
             continue
-        if (
-            isinstance(node, ast.Expr)
-            and isinstance(node.value, ast.Constant)
-            and isinstance(node.value.value, str)
-        ):
+        if isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant) and isinstance(node.value.value, str):
             continue
         if isinstance(node, ast.Assign) and len(node.targets) == 1:
             configuration = configure(context, node)
@@ -72,24 +86,45 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
             target = node.targets[0]
             if isinstance(node.value, ast.Call) and not is_length_call(node.value):
                 if isinstance(target, ast.Subscript):
-                    context.fail("call_binding", "Function outputs must bind to whole variables, not indexed elements.", target)
+                    context.fail(
+                        "call_binding", "Function outputs must bind to whole variables, not indexed elements.", target
+                    )
                 targets = list(target.elts) if isinstance(target, ast.Tuple) else [target]
                 result.append(call(context, node.value, targets))
             elif isinstance(target, ast.Subscript):
                 destination, element_type = indexed_target(context, target)
-                result.append(ListSet(**context.metadata(node), target=destination, index=expression(context, target.slice), value=expression(context, node.value, element_type)))
+                result.append(
+                    ListSet(
+                        **context.metadata(node),
+                        target=destination,
+                        index=expression(context, target.slice),
+                        value=expression(context, node.value, element_type),
+                    )
+                )
             else:
                 metadata = context.metadata(node)
                 destination = context.target(target)
                 result.append(
-                    Assignment(**metadata, target=destination, value=expression(context, node.value, context.type_of(destination)))
+                    Assignment(
+                        **metadata,
+                        target=destination,
+                        value=expression(context, node.value, context.type_of(destination)),
+                    )
                 )
         elif isinstance(node, ast.AugAssign) and type(node.op) in BINARY_OPERATORS:
             if device_member(context, node.target) is not None:
                 context.fail("device_property_read", "Device properties only support plain assignment.", node)
             if isinstance(node.target, ast.Subscript):
                 destination, element_type = indexed_target(context, node.target)
-                result.append(ListSet(**context.metadata(node), target=destination, index=expression(context, node.target.slice), value=expression(context, node.value, element_type), op=BINARY_OPERATORS[type(node.op)]))
+                result.append(
+                    ListSet(
+                        **context.metadata(node),
+                        target=destination,
+                        index=expression(context, node.target.slice),
+                        value=expression(context, node.value, element_type),
+                        op=BINARY_OPERATORS[type(node.op)],
+                    )
+                )
                 continue
             result.append(
                 Assignment(
@@ -118,7 +153,11 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
             )
         elif isinstance(node, ast.While) and not node.orelse:
             result.append(
-                While(**context.metadata(node), condition=expression(context, node.test), body=statements(context, node.body))
+                While(
+                    **context.metadata(node),
+                    condition=expression(context, node.test),
+                    body=statements(context, node.body),
+                )
             )
         elif isinstance(node, ast.Expr) and isinstance(node.value, ast.Call):
             domain_operation = operation(context, node.value)
@@ -130,7 +169,9 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
 
 def indexed_target(context: LoweringContext, node: ast.Subscript) -> tuple[Reference, ScalarType]:
     if device_member(context, node.value) is not None:
-        context.fail("device_property_read", "Indexed device-property updates require getters, which are unsupported.", node)
+        context.fail(
+            "device_property_read", "Indexed device-property updates require getters, which are unsupported.", node
+        )
     if isinstance(node.slice, ast.Slice):
         context.fail("python_subset", "List slicing is unsupported.", node)
     destination = context.target(node.value)

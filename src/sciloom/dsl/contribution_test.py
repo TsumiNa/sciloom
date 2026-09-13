@@ -1,11 +1,11 @@
 """An external package adds device members without changing shared semantics."""
 
-from dataclasses import replace
-from pathlib import Path
 import shutil
 import subprocess
 import sys
-from typing import ClassVar, Callable
+from dataclasses import replace
+from pathlib import Path
+from typing import Callable, ClassVar
 
 import pytest
 
@@ -132,14 +132,16 @@ def test_contribution_imports_from_outside_sciloom(tmp_path):
     source = Path(__file__).resolve().parents[3] / "examples/developer/demo_contribution"
     shutil.copytree(source, tmp_path / "demo_contribution", ignore=shutil.ignore_patterns("__pycache__"))
     script = tmp_path / "check.py"
-    script.write_text('from demo_contribution import DemoAgitator, DemoTarget\nimport sys\nfrom sciloom.core.compiler import Target\nassert isinstance(DemoTarget(devices={"agitator": DemoAgitator()}), Target)\nassert not any(k.startswith("sciloom.contrib.autosuite") for k in sys.modules)\n')
+    script.write_text(
+        'from demo_contribution import DemoAgitator, DemoTarget\nimport sys\nfrom sciloom.core.compiler import Target\nassert isinstance(DemoTarget(devices={"agitator": DemoAgitator()}), Target)\nassert not any(k.startswith("sciloom.contrib.autosuite") for k in sys.modules)\n'
+    )
     result = subprocess.run([sys.executable, str(script)], cwd=tmp_path, capture_output=True, text=True)
     assert result.returncode == 0, result.stderr
 
 
 @pytest.mark.parametrize("valid", [True, False])
 def test_contributor_mypy_contract(tmp_path, valid):
-    source = '''from typing import assert_type
+    source = """from typing import assert_type
 from examples.developer.demo_contribution import DemoAgitator, DemoTarget
 from sciloom import RotationalSpeed, rpm
 from sciloom.core.compiler import Target
@@ -149,13 +151,13 @@ def configure(device: DemoAgitator) -> None:
     device.calibrate()
     assert_type(device.speed, RotationalSpeed)
 target: Target = DemoTarget(devices={"agitator": DemoAgitator()})
-'''
+"""
     if not valid:
-        source += '''def wrong(device: DemoAgitator) -> None:
+        source += """def wrong(device: DemoAgitator) -> None:
     device.speed = 123
     device.gain = "high"
     device.calibrate(1)
-'''
+"""
     script = tmp_path / "typing_contribution.py"
     script.write_text(source)
     result = subprocess.run([sys.executable, "-m", "mypy", str(script)], capture_output=True, text=True)

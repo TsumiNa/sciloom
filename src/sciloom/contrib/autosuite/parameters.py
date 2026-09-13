@@ -1,6 +1,6 @@
 """Encode parameter declarations and already-evaluated call bindings."""
 
-from ...core.ir import FunctionIR, ListType, VariableRole
+from sciloom.core.ir import FunctionIR, ListType, VariableRole
 from .context import CodegenContext
 from .encoding import SCALARS
 from .xml import XmlNode, xml_node as _xml

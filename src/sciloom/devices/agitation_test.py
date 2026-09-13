@@ -6,7 +6,10 @@ import sys
 
 def test_device_import_is_independent_of_source_and_targets():
     subprocess.run(
-        [sys.executable, "-c", """
+        [
+            sys.executable,
+            "-c",
+            """
 import sys
 class Block:
     def find_spec(self, fullname, *args):
@@ -17,6 +20,7 @@ from sciloom import Agitator
 from sciloom.devices import Agitator as DeviceAgitator
 assert Agitator is DeviceAgitator
 assert Agitator.device_type_id == "sciloom.agitator/v1"
-"""],
+""",
+        ],
         check=True,
     )

@@ -17,12 +17,20 @@ Schema, IR and target validation remain necessary.
 ## Verification workflow
 
 ```bash
+uv run ruff check
+uv run ruff format --check
 uv run pytest src/sciloom
 uv run mypy
 uv run python autosuite/tools/smoke_test.py
 uv run python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
 uv run python -m compileall -q examples/proposed_frontend
 ```
+
+Ruff enforces formatting, import grouping and the ban on parent-relative imports.
+Use single-dot relative imports inside a package and absolute imports everywhere
+else. Enable the repository pre-commit hook once per clone with
+`git config core.hooksPath .githooks`; it fixes and formats staged Python files
+before each commit.
 
 The AutoSuite commands use retained internal reference material in a source
 checkout; that corpus is not distributed by the public documentation site.

@@ -1,9 +1,9 @@
 """Native field aliases retain values and runtime decorators retain signatures."""
 
-from pathlib import Path
 import subprocess
 import sys
 import textwrap
+from pathlib import Path
 
 import pytest
 

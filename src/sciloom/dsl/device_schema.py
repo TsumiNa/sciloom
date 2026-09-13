@@ -8,8 +8,8 @@ from types import MappingProxyType
 from typing import Any, Mapping, get_type_hints
 from weakref import WeakValueDictionary
 
-from ..devices.base import BaseDevice
-from ..devices.declarations import device_contract
+from sciloom.devices.base import BaseDevice
+from sciloom.devices.declarations import device_contract
 
 
 @dataclass(frozen=True, eq=False)
@@ -27,7 +27,10 @@ class DeviceSlot:
     name: str
     device_type: type[BaseDevice]
     _references: WeakValueDictionary[int, DeviceReference] = field(
-        default_factory=WeakValueDictionary, init=False, repr=False, compare=False,
+        default_factory=WeakValueDictionary,
+        init=False,
+        repr=False,
+        compare=False,
     )
 
     def __get__(self, instance: object | None, owner: type | None = None) -> DeviceReference | DeviceSlot:
@@ -46,7 +49,9 @@ class DeviceSlot:
 
     def __set__(self, instance: object, value: object) -> None:
         if not isinstance(value, DeviceReference) or not issubclass(value.device_type, self.device_type):
-            raise TypeError(f"Device slot {self.name!r} requires a compatible logical device reference; bind hardware through Target.")
+            raise TypeError(
+                f"Device slot {self.name!r} requires a compatible logical device reference; bind hardware through Target."
+            )
         vars(instance)[self.name] = value
 
 
@@ -70,8 +75,7 @@ def build_device_schema(cls: type, reserved: Mapping[str, object]) -> Mapping[st
         for base in cls.__mro__[1:]:
             member = base.__dict__.get(name)
             if (name in base.__dict__ and not isinstance(member, DeviceSlot)) or (
-                name in inspect.get_annotations(base)
-                and name not in getattr(base, "device_fields", {})
+                name in inspect.get_annotations(base) and name not in getattr(base, "device_fields", {})
             ):
                 raise TypeError(f"Device slot {name!r} cannot replace an inherited host member.")
         slots[name] = DeviceSlot(name, annotation)

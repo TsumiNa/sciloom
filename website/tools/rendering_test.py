@@ -1,10 +1,10 @@
 """Check public API HTML and strict-link failures with the real renderer."""
 
-from html.parser import HTMLParser
 import json
-from pathlib import Path
 import subprocess
 import sys
+from html.parser import HTMLParser
+from pathlib import Path
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -59,8 +59,7 @@ def test_rendered_api_and_revision():
     brand = output / "assets/brand"
     manifest = json.loads((brand / "manifest.json").read_text())
     assert set(manifest["files"]) == {
-        str(path.relative_to(brand)) for path in brand.rglob("*")
-        if path.is_file() and path.name != "manifest.json"
+        str(path.relative_to(brand)) for path in brand.rglob("*") if path.is_file() and path.name != "manifest.json"
     }
 
 
@@ -72,7 +71,9 @@ def test_strict_renderer_rejects_broken_internal_link(tmp_path):
     config.write_text("site_name: Broken link test\ndocs_dir: docs\nsite_dir: output\n")
     result = subprocess.run(
         [sys.executable, "-m", "zensical", "build", "--strict", "-f", str(config)],
-        cwd=tmp_path, capture_output=True, text=True,
+        cwd=tmp_path,
+        capture_output=True,
+        text=True,
     )
     assert result.returncode != 0
     assert "page does not exist" in result.stdout + result.stderr

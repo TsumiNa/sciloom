@@ -14,6 +14,7 @@ STOP_AGITATION_ID = "sciloom.agitator.stop/v1"
 @dataclass(frozen=True, kw_only=True)
 class PropertyContract:
     """Serializable configuration property identity, user-facing name and value type."""
+
     semantic_id: str
     name: str
     type: ValueType
@@ -22,6 +23,7 @@ class PropertyContract:
 @dataclass(frozen=True, kw_only=True)
 class CommandParameter:
     """Named, typed argument of a no-return device command."""
+
     name: str
     type: ValueType
 
@@ -29,6 +31,7 @@ class CommandParameter:
 @dataclass(frozen=True, kw_only=True)
 class CommandContract:
     """Serializable command signature; no executable Python object is stored."""
+
     semantic_id: str
     name: str
     parameters: tuple[CommandParameter, ...] = ()
@@ -44,6 +47,7 @@ class DeviceTypeContract:
         properties: Declared configuration signatures, including inherited members.
         operations: Declared no-return command signatures.
         required_configuration: Property semantic IDs required before startup."""
+
     type_id: str
     base_type_ids: tuple[str, ...] = ()
     properties: tuple[PropertyContract, ...] = ()

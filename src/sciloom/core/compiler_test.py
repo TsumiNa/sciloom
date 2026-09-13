@@ -6,10 +6,10 @@ from dataclasses import replace
 
 import pytest
 
-from sciloom.core.devices import DeviceBindings
-from sciloom.core.compiler import Artifact, compile_ir
-from sciloom.core.diagnostics import CompilationError, Diagnostic, IRValidationError
-from sciloom.core.ir import FunctionIR, Program
+from .compiler import Artifact, compile_ir
+from .devices import DeviceBindings
+from .diagnostics import CompilationError, Diagnostic, IRValidationError
+from .ir import FunctionIR, Program
 
 
 class TextTarget:

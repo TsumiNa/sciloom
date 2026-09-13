@@ -2,8 +2,8 @@
 
 from dataclasses import dataclass, replace
 
-from ...core.ir import Call, ConfigureProperty, FunctionIR, ScalarType, StartAgitation, Variable, VariableRole
-from ...core.ir.traversal import iter_nodes
+from sciloom.core.ir import Call, ConfigureProperty, FunctionIR, ScalarType, StartAgitation, Variable, VariableRole
+from sciloom.core.ir.traversal import iter_nodes
 from .context import CodegenContext
 from .primitives import set_variable
 from .xml import XmlNode
@@ -48,14 +48,18 @@ def prepare_device_state(context: CodegenContext) -> None:
                 name = f"sciloom_device_{context.sequence}_{role.value}"
                 while name in context.parameter_names.values():
                     name += "_"
-                parameter = Variable(node_id=identity, owner_id=function.node_id, name=name, role=role, type=ScalarType.ROTATIONAL_SPEED)
+                parameter = Variable(
+                    node_id=identity, owner_id=function.node_id, name=name, role=role, type=ScalarType.ROTATIONAL_SPEED
+                )
                 parameters.append(parameter)
                 context.variables[identity] = parameter
                 context.names[identity] = name
                 context.parameter_names[identity] = name
             function = replace(function, variables=(*function.variables, *parameters))
             storage[resource_id] = DeviceStorage(
-                name=parameters[1].name, input_id=parameters[0].node_id, output_id=parameters[1].node_id,
+                name=parameters[1].name,
+                input_id=parameters[0].node_id,
+                output_id=parameters[1].node_id,
             )
         context.functions[function.node_id] = function
         context.device_state[function.node_id] = storage

@@ -3,7 +3,7 @@
 import json
 from typing import Any, cast
 
-from ..diagnostics import IRValidationError
+from sciloom.core.diagnostics import IRValidationError
 from .model import Program
 from .schema import _convert, _fail
 from .validation import validate

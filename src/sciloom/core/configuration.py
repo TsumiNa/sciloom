@@ -2,7 +2,19 @@
 
 from .devices import DeviceBindings
 from .diagnostics import Diagnostic
-from .ir import Call, ConfigureProperty, DeviceCommand, DeviceIf, If, Literal, Program, StartAgitation, Statement, StopAgitation, While
+from .ir import (
+    Call,
+    ConfigureProperty,
+    DeviceCommand,
+    DeviceIf,
+    If,
+    Literal,
+    Program,
+    StartAgitation,
+    Statement,
+    StopAgitation,
+    While,
+)
 from .ir.device_contracts import START_AGITATION_ID, STOP_AGITATION_ID
 from .ir.traversal import iter_nodes
 
@@ -25,13 +37,17 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
             message = "Device conditions must be specialized before capability/configuration validation."
         elif isinstance(node, DeviceCommand):
             binding = resources[node.resource_id]
-            expected_command = next((c for t in program.device_types for c in t.operations if c.semantic_id == node.operation_id), None)
+            expected_command = next(
+                (c for t in program.device_types for c in t.operations if c.semantic_id == node.operation_id), None
+            )
             actual_command = next((c for c in binding.contract.operations if c.semantic_id == node.operation_id), None)
             if node.operation_id not in binding.supported_operations or expected_command != actual_command:
                 message = "The bound device does not implement this command contract."
         elif isinstance(node, ConfigureProperty):
             binding = resources[node.resource_id]
-            expected = next((p for c in program.device_types for p in c.properties if p.semantic_id == node.property_id), None)
+            expected = next(
+                (p for c in program.device_types for p in c.properties if p.semantic_id == node.property_id), None
+            )
             actual = next((p for p in binding.contract.properties if p.semantic_id == node.property_id), None)
             if node.property_id not in binding.writable_properties or expected != actual:
                 message = "The bound device does not implement this writable property contract."
@@ -40,7 +56,11 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
             if operation not in resources[node.resource_id].supported_operations:
                 message = "The bound device does not support this lifecycle operation."
         if message:
-            errors.append(Diagnostic(code="device_capability", message=message, path=path, node_id=node.node_id, source=node.source))
+            errors.append(
+                Diagnostic(
+                    code="device_capability", message=message, path=path, node_id=node.node_id, source=node.source
+                )
+            )
     if errors:
         return tuple(errors)
 
@@ -54,7 +74,9 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
             if isinstance(statement, ConfigureProperty):
                 configured.add((statement.resource_id, statement.property_id))
             elif isinstance(statement, StartAgitation):
-                needs = {(statement.resource_id, p) for p in resources[statement.resource_id].contract.required_configuration}
+                needs = {
+                    (statement.resource_id, p) for p in resources[statement.resource_id].contract.required_configuration
+                }
                 required |= needs - configured
             elif isinstance(statement, Call):
                 required |= requirements[statement.function_id] - configured
@@ -94,9 +116,16 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
                 changed = True
     missing = requirements[program.entry_function_id]
     for resource_id, property_id in sorted(missing):
-        node, path = next((n, p) for n, p in iter_nodes(program) if isinstance(n, StartAgitation) and n.resource_id == resource_id)
-        errors.append(Diagnostic(
-            code="device_configuration", message=f"start() requires {property_id!r} to be configured on every reachable path in this invocation.",
-            path=path, node_id=node.node_id, source=node.source,
-        ))
+        node, path = next(
+            (n, p) for n, p in iter_nodes(program) if isinstance(n, StartAgitation) and n.resource_id == resource_id
+        )
+        errors.append(
+            Diagnostic(
+                code="device_configuration",
+                message=f"start() requires {property_id!r} to be configured on every reachable path in this invocation.",
+                path=path,
+                node_id=node.node_id,
+                source=node.source,
+            )
+        )
     return tuple(errors)

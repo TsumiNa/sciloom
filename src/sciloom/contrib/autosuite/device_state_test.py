@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 import pytest
 
 from sciloom import Agitator, Function, Input, rpm, runtime
-from sciloom.core.configuration_test import ParentConfigure, ChildConfigure, target
+from sciloom.core.configuration_test import ChildConfigure, ParentConfigure, target
 from sciloom.core.ir import to_json
 
 SET = "Chemspeed.SATaskSetVariable.1"

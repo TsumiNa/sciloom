@@ -6,18 +6,19 @@ import json
 import re
 from typing import TYPE_CHECKING
 from uuid import UUID, uuid5
-from ...core.ir import (
-    Program,
+
+from sciloom.core.ir import (
     FunctionIR,
-    ListType,
     ListLiteral,
+    ListType,
     Literal,
+    Program,
     ScalarType,
     ValueType,
     Variable,
     VariableRole,
 )
-from ...core.ir.traversal import iter_nodes
+from sciloom.core.ir.traversal import iter_nodes
 from .agitation import AutoSuiteIndividualShaker
 from .xml import XmlNode, xml_node as _xml
 

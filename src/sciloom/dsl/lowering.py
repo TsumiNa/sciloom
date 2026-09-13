@@ -2,16 +2,11 @@
 
 from __future__ import annotations
 
-from typing import cast
 from dataclasses import replace
-from .context import LoweringContext
-from .device_schema import DeviceReference, component_paths
-from .model import Function
-from .source import runtime_source
-from .statements import statements
-from ..units import RotationalSpeed
-from ..core.diagnostics import IRValidationError
-from ..core.ir import (
+from typing import cast
+
+from sciloom.core.diagnostics import IRValidationError
+from sciloom.core.ir import (
     DeviceResource,
     DeviceTypeContract,
     FunctionIR,
@@ -23,6 +18,12 @@ from ..core.ir import (
     VariableRole,
     validate,
 )
+from sciloom.units import RotationalSpeed
+from .context import LoweringContext
+from .device_schema import DeviceReference, component_paths
+from .model import Function
+from .source import runtime_source
+from .statements import statements
 
 
 def lower(root: Function) -> Program:
@@ -45,7 +46,12 @@ def lower(root: Function) -> Program:
         function = build_function(context)
         functions.append(function)
         index += 1
-    package = Program(entry_function_id="fn:0", functions=tuple(functions), resources=tuple(resources.values()), device_types=tuple(device_types.values()))
+    package = Program(
+        entry_function_id="fn:0",
+        functions=tuple(functions),
+        resources=tuple(resources.values()),
+        device_types=tuple(device_types.values()),
+    )
     diagnostics = validate(package)
     if diagnostics:
         raise IRValidationError(diagnostics)

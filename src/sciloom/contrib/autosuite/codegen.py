@@ -16,11 +16,12 @@ import json
 from dataclasses import asdict
 from typing import Any, Mapping
 from uuid import NAMESPACE_URL, uuid5
-from ...core.ir import Program, to_dict
+
+from sciloom.core.ir import Program, to_dict
 from .agitation import AutoSuiteIndividualShaker
 from .context import CodegenContext
-from .functions import build_functions
 from .device_state import prepare_device_state
+from .functions import build_functions
 from .xml import AutoSuiteVersion, SerializationIR
 
 

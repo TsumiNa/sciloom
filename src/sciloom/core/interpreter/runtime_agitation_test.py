@@ -4,16 +4,16 @@ from dataclasses import replace
 
 import pytest
 
-from sciloom import Agitator, Function, Input, RotationalSpeed, rpm, rps, runtime, Var
+from sciloom import Agitator, Function, Input, RotationalSpeed, Var, rpm, rps, runtime
 from sciloom.core.diagnostics import ExecutionError, IRValidationError
 from sciloom.core.ir import (
+    ConfigureProperty,
     DeviceResource,
     FunctionIR,
     If,
     Program,
     Reference,
     ScalarType,
-    ConfigureProperty,
     StartAgitation,
     StopAgitation,
     Variable,
@@ -22,8 +22,13 @@ from sciloom.core.ir import (
     to_json,
     validate,
 )
+from sciloom.core.ir.device_contracts import (
+    AGITATION_SPEED_ID,
+    AGITATOR_CONTRACT,
+    AGITATOR_TYPE_ID,
+    BASE_DEVICE_CONTRACT,
+)
 from .runtime import Interpreter
-from ..ir.device_contracts import AGITATOR_CONTRACT, BASE_DEVICE_CONTRACT, AGITATOR_TYPE_ID, AGITATION_SPEED_ID
 
 
 class ConfigureAgitation(Function):
@@ -72,7 +77,9 @@ def direct_agitation():
                         condition=Reference(node_id="flag", symbol_id="enabled"),
                         then_body=(
                             ConfigureProperty(
-                                node_id="set", resource_id="mixer", property_id=AGITATION_SPEED_ID,
+                                node_id="set",
+                                resource_id="mixer",
+                                property_id=AGITATION_SPEED_ID,
                                 value=Reference(node_id="rate", symbol_id="speed"),
                             ),
                             StartAgitation(node_id="start", resource_id="mixer"),
@@ -100,8 +107,13 @@ def test_python_direct_and_json_agitation_have_the_same_intent():
         stopped = session.run(inputs={"speed": 1200 * rpm, "enabled": False})
         assert not stopped.resources[resource_id].enabled
         assert stopped.resources[resource_id].applied_configuration["speed"] == 600 * rpm
-        assert [(e.state.enabled, e.state.applied_configuration.get("speed")) for e in started.events] == [(False, None), (True, 600 * rpm)]
-        assert [(e.state.enabled, e.state.applied_configuration.get("speed")) for e in stopped.events] == [(False, 600 * rpm)]
+        assert [(e.state.enabled, e.state.applied_configuration.get("speed")) for e in started.events] == [
+            (False, None),
+            (True, 600 * rpm),
+        ]
+        assert [(e.state.enabled, e.state.applied_configuration.get("speed")) for e in stopped.events] == [
+            (False, 600 * rpm)
+        ]
         assert started.resources[resource_id].enabled  # detached resource snapshot
 
 
@@ -122,8 +134,11 @@ def test_unit_literals_and_host_quantities_lower_without_executing_methods():
 
     result = Interpreter(LiteralSpeed().to_ir()).run()
     assert [(e.state.enabled, e.state.applied_configuration.get("speed")) for e in result.events] == [
-        (False, None), (True, 10 * rps), (True, 10 * rps),
-        (True, 20 * rps), (False, 20 * rps),
+        (False, None),
+        (True, 10 * rps),
+        (True, 10 * rps),
+        (True, 20 * rps),
+        (False, 20 * rps),
     ]
     with pytest.raises(TypeError, match="compiled"):
         LiteralSpeed().agitator.start()
@@ -206,8 +221,10 @@ def test_operations_compose_in_loops_and_functions_with_distinct_resources():
 
     result = Interpreter(Sequence().to_ir()).run()
     assert [(e.resource_id, e.state.enabled) for e in result.events] == [
-        ("resource:first.agitator", False), ("resource:first.agitator", True),
-        ("resource:first.agitator", True), ("resource:first.agitator", True),
+        ("resource:first.agitator", False),
+        ("resource:first.agitator", True),
+        ("resource:first.agitator", True),
+        ("resource:first.agitator", True),
         ("resource:second.agitator", False),
     ]
     assert result.resources["resource:second.agitator"].applied_configuration == {}

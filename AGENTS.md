@@ -19,6 +19,15 @@ required repository rules, not optional reference material.
 - Follow the [example output documentation rules](.github/instructions/example-output-documentation.instructions.md)
   when creating or updating examples: embed short results in module docstrings and
   keep long generated results in same-base-name companion files beside their code.
+- Follow the [Python import rules](.github/instructions/python-imports.instructions.md)
+  when creating, editing or refactoring imports: single-dot relative imports for
+  modules and subpackages inside the current package, absolute imports for parent
+  packages, packages outside the current one, the standard library and third-party
+  modules, never `..` or `...`, and stdlib / third-party / local groups.
+  `uv run ruff check` enforces the grouping (`I`) and the parent-relative ban
+  (`TID252`); preferring single-dot imports inside a package is reviewed by hand.
+  Directories without `__init__.py`, such as `website/tools/` and `autosuite/tools/`,
+  are not packages and keep absolute imports.
 - Recheck applicable instructions when the task expands to new files or activities.
   Do not assume the IDE or agent runtime has loaded them automatically.
 - Explicit user instructions and higher-priority system/developer instructions
@@ -148,11 +157,18 @@ Prefer corpus-derived templates and explicit typed adapters for device-specific 
 Run at minimum:
 
 ```bash
+uv run ruff check
+uv run ruff format --check
 uv run pytest src/sciloom
 uv run mypy
 python autosuite/tools/smoke_test.py
 python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
 ```
+
+Enable the versioned pre-commit hook once per clone with
+`git config core.hooksPath .githooks`. It runs `ruff check --fix-only` and
+`ruff format` on staged Python files, re-stages them, then runs `ruff check` and
+blocks the commit only when errors remain. CI runs the same two ruff commands.
 
 Run the experiment-author examples with `uv run python examples/function_call.py`
 and `uv run python examples/agitation.py`. Run the list author examples with `uv run python examples/scale_values.py` and

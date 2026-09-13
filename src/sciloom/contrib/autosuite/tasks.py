@@ -1,17 +1,17 @@
 """Schedule semantic statements, expression checks and target-private call copies."""
 
-from ...core.diagnostics import CompilationError, Diagnostic
-from ...core.ir import (
+from sciloom.core.diagnostics import CompilationError, Diagnostic
+from sciloom.core.ir import (
     Assignment,
     Call,
+    ConfigureProperty,
     FunctionIR,
     If,
     ListSet,
     ListType,
-    ConfigureProperty,
     StartAgitation,
-    StopAgitation,
     Statement,
+    StopAgitation,
     While,
 )
 from .agitation import agitation_task
@@ -58,12 +58,21 @@ def statements(
         elif isinstance(statement, ConfigureProperty):
             value = plan_expression(context, function, statement.value, tag)
             result.extend(value.prerequisites)
-            result.append(set_variable(
-                context, tag, context.device_state[function.node_id][statement.resource_id].name,
-                value.text, identity=statement.node_id,
-            ))
+            result.append(
+                set_variable(
+                    context,
+                    tag,
+                    context.device_state[function.node_id][statement.resource_id].name,
+                    value.text,
+                    identity=statement.node_id,
+                )
+            )
         elif isinstance(statement, (StartAgitation, StopAgitation)):
-            speed = context.device_state[function.node_id][statement.resource_id].name if isinstance(statement, StartAgitation) else None
+            speed = (
+                context.device_state[function.node_id][statement.resource_id].name
+                if isinstance(statement, StartAgitation)
+                else None
+            )
             result.append(
                 agitation_task(
                     tag=tag,

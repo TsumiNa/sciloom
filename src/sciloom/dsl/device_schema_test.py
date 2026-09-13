@@ -85,30 +85,37 @@ def test_slot_rejects_hardware_plain_values_and_host_operations():
 
 def test_invalid_declarations_and_inherited_role_changes():
     with pytest.raises(TypeError, match="class-level"):
+
         class Default(Function):
             agitator: Agitator = Agitator()
 
     with pytest.raises(TypeError, match="change type"):
+
         class HostOverride(Stage):
             agitator: int
 
     with pytest.raises(TypeError, match="change type"):
+
         class VariableOverride(Stage):
             agitator: Var[int] = 0
 
     with pytest.raises(TypeError, match="shadowed"):
+
         class Shadow(Stage):
             agitator = "host"
 
     with pytest.raises(TypeError, match="Invalid"):
+
         class Reserved(Function):
             compile: Agitator
 
     class Generic(Function):
         device: BaseDevice
+
     assert tuple(Generic.device_fields) == ("device",)
 
     with pytest.raises(IRValidationError, match="class_schema"):
+
         class Wrapped(Function):
             agitator: Input[Agitator]
 
@@ -153,9 +160,13 @@ def test_reference_cache_does_not_leak_functions_or_require_hashability():
 
 @pytest.mark.parametrize("kind", ["value", "annotation", "property"])
 def test_devices_cannot_replace_inherited_host_members(kind):
-    namespace = {"__annotations__": {"stage": int}} if kind == "annotation" else {
-        "stage": property(lambda self: 1) if kind == "property" else 1,
-    }
+    namespace = (
+        {"__annotations__": {"stage": int}}
+        if kind == "annotation"
+        else {
+            "stage": property(lambda self: 1) if kind == "property" else 1,
+        }
+    )
     host = type("Host", (Function,), namespace)
     with pytest.raises(TypeError, match="inherited host"):
         type("Child", (host,), {"__annotations__": {"stage": Agitator}})

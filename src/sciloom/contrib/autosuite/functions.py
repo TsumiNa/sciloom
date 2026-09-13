@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
-from ...core.ir import ListType, VariableRole
-from .context import CodegenContext
-from .parameters import functiondata
-from .tasks import statements
-from .primitives import macro, set_variable
-from .device_state import initialize_device_outputs
 from dataclasses import replace
+
+from sciloom.core.ir import ListType, VariableRole
+from .context import CodegenContext
+from .device_state import initialize_device_outputs
+from .parameters import functiondata
+from .primitives import macro, set_variable
+from .tasks import statements
 from .xml import AutoSuiteVersion, SerializationIR, xml_node as _xml
 
 

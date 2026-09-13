@@ -25,6 +25,7 @@ class DeviceBinding:
         TypeError: The concrete contract is not a DeviceTypeContract.
         IRValidationError: Concrete or ancestor contract fields have invalid shapes.
         ValueError: Identities, ancestry or capability declarations are inconsistent."""
+
     logical_id: str
     contract: DeviceTypeContract
     base_contracts: tuple[DeviceTypeContract, ...]
@@ -74,6 +75,7 @@ class DeviceBindings:
     Raises:
         TypeError: An entry is not a DeviceBinding.
         ValueError: Identities or trusted contract definitions conflict."""
+
     devices: tuple[DeviceBinding, ...] = ()
 
     def __post_init__(self) -> None:
@@ -101,7 +103,10 @@ def validate_bindings(program: Program, bindings: DeviceBindings) -> tuple[Diagn
     for i, resource in enumerate(program.resources):
         binding = provided.get(resource.logical_id)
         code = "missing_resource_binding" if binding is None else "device_type"
-        if binding is None or resource.device_type_id not in (binding.contract.type_id, *binding.contract.base_type_ids):
+        if binding is None or resource.device_type_id not in (
+            binding.contract.type_id,
+            *binding.contract.base_type_ids,
+        ):
             errors.append(
                 Diagnostic(
                     code=code,
@@ -111,9 +116,20 @@ def validate_bindings(program: Program, bindings: DeviceBindings) -> tuple[Diagn
                     source=resource.source,
                 )
             )
-        elif any(c.type_id == trusted.type_id and c != trusted for c in program.device_types
-                 for trusted in (*binding.base_contracts, binding.contract)):
-            errors.append(Diagnostic(code="device_contract", message="Serialized device contract differs from the target's trusted contract.", path=f"$.resources[{i}]", node_id=resource.node_id, source=resource.source))
+        elif any(
+            c.type_id == trusted.type_id and c != trusted
+            for c in program.device_types
+            for trusted in (*binding.base_contracts, binding.contract)
+        ):
+            errors.append(
+                Diagnostic(
+                    code="device_contract",
+                    message="Serialized device contract differs from the target's trusted contract.",
+                    path=f"$.resources[{i}]",
+                    node_id=resource.node_id,
+                    source=resource.source,
+                )
+            )
     for name in sorted(provided.keys() - required):
         errors.append(
             Diagnostic(

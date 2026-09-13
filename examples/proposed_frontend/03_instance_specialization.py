@@ -1,6 +1,6 @@
 """Design example: instance construction is host-time specialization; no @comptime."""
 
-from sciloom import Function, Input, Zone, Array, Volume, runtime, Var
+from sciloom import Array, Function, Input, Var, Volume, Zone, runtime
 
 
 class DynamicTransfer(Function):
@@ -13,15 +13,9 @@ class DynamicTransfer(Function):
     def __init__(self, machine, *, valve_group_size=None, preferred_channels=None):
         # Normal Python executes before compilation.
         self.machine = machine
-        self.valve_group_size = (
-            valve_group_size
-            if valve_group_size is not None
-            else machine.isynth.valve_group_size
-        )
+        self.valve_group_size = valve_group_size if valve_group_size is not None else machine.isynth.valve_group_size
         self.available_channels = tuple(
-            preferred_channels
-            if preferred_channels is not None
-            else machine.four_needle_head.enabled_channels
+            preferred_channels if preferred_channels is not None else machine.four_needle_head.enabled_channels
         )
 
     @runtime

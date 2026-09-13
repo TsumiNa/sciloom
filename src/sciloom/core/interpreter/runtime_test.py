@@ -5,7 +5,7 @@ import sys
 
 import pytest
 
-from sciloom import Function, Input, Output, runtime, Var
+from sciloom import Function, Input, Output, Var, runtime
 from sciloom.core.diagnostics import ExecutionError
 from sciloom.core.ir import (
     Assignment,

@@ -12,7 +12,12 @@ class BaseDevice:
     def __init_subclass__(cls, **kwargs: Any) -> None:
         super().__init_subclass__(**kwargs)
         for name, member in tuple(vars(cls).items()):
-            if isinstance(member, property) and member.fget is not None and getattr(member.fset, "__sciloom_operation_id__", None):
+            if (
+                isinstance(member, property)
+                and member.fget is not None
+                and getattr(member.fset, "__sciloom_operation_id__", None)
+            ):
+
                 @wraps(member.fget)
                 def blocked(instance: object) -> NoReturn:
                     raise TypeError("Device property reads are not supported yet.")

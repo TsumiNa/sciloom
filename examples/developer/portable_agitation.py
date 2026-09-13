@@ -45,9 +45,14 @@ if __name__ == "__main__":
     path = Path(__file__).with_suffix(".json")
     path.write_text(to_json(PortableAgitation().to_ir()), encoding="utf-8")
     program = from_json(path.read_text(encoding="utf-8"))
-    autosuite = compile_ir(program, target=AutoSuiteTarget(devices={
-        "agitator": AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="23"),
-    }))
+    autosuite = compile_ir(
+        program,
+        target=AutoSuiteTarget(
+            devices={
+                "agitator": AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="23"),
+            }
+        ),
+    )
     demo = compile_ir(program, target=DemoTarget(devices={"agitator": DemoAgitator()}))
     autosuite.write(path.with_suffix(".autosuite.asfp"))
     demo.write(path.with_suffix(".demo.json"))
