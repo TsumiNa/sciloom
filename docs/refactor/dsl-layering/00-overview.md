@@ -17,9 +17,9 @@ lands: `sciloom.dsl` stops owning field declarations and model instances, which
 move to `sciloom.flow`, and owns source analysis alone. Nothing else in that
 contract changes.
 
-Stages 1 to 5 are merged as pull requests #41 and #42 (4bf4f68, 02cae6e), #43
-(d4d13f9), #44 (5363abe), #45 (2db4f3e) and #46 (2d90e51). Stage 6 separates the
-authoring vocabulary from the source analysis and lands with this status entry.
+Stages 1 to 6 are merged as pull requests #41 and #42 (4bf4f68, 02cae6e), #43
+(d4d13f9), #44 (5363abe), #45 (2db4f3e), #46 (2d90e51) and #47 (440aff5). Stage 7
+unifies the declaration-time error model and lands with this status entry.
 Each stage updates its callers, examples, status and tests before review and
 squash merge. Do not start a later implementation stage before the preceding pull
 request is merged.
@@ -272,17 +272,28 @@ No published API path changes. `sciloom.Function`, `sciloom.Input`,
 
 ### Declaration-time diagnostics (target, stage 7)
 
-Declaring a class produces structured diagnostics, never a bare exception.
+Declaring a class produces structured diagnostics, never a bare exception. A
+Function declaring device slots reuses the runtime field code and path, beside the
+existing schema errors:
 
 ```python
 raise IRValidationError((Diagnostic(code="class_schema", message=..., path=f"$.schema.{name}"),))
 ```
 
-This covers `build_device_schema` and `device_contract`, which run while a class
-body is executed. Host-access guards that reject reading a device property or
-calling a runtime method keep raising `TypeError`, and `bind_device` keeps
-raising `TypeError` because it reports a target author's binding mistake, not a
-declaration.
+A device class declaring its own identity, properties or commands reports under
+its own code:
+
+```python
+raise IRValidationError((Diagnostic(code="device_contract", message=..., path=f"$.device.{subject}"),))
+```
+
+This covers `build_device_schema` and `device_contract`, which read a class body,
+wherever they are called from. `bind_device` builds a profile's contract and its
+ancestors', so a malformed declaration surfaces there as a diagnostic too: it is
+a declaration error whoever discovers it. Two boundaries stay `TypeError`, because
+neither reports a declaration: host-access guards that reject reading a device
+property or calling a runtime method, and `bind_device`'s own checks, which reject
+a profile that omits a capability list or names a member it never declared.
 
 ### Analysis conventions (target, stage 8)
 

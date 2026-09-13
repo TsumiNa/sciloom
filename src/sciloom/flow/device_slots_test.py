@@ -79,27 +79,27 @@ def test_slot_rejects_hardware_plain_values_and_host_operations():
 
 
 def test_invalid_declarations_and_inherited_role_changes():
-    with pytest.raises(TypeError, match="class-level"):
+    with pytest.raises(IRValidationError, match="class-level"):
 
         class Default(Function):
             agitator: Agitator = Agitator()
 
-    with pytest.raises(TypeError, match="change type"):
+    with pytest.raises(IRValidationError, match="change type"):
 
         class HostOverride(Stage):
             agitator: int
 
-    with pytest.raises(TypeError, match="change type"):
+    with pytest.raises(IRValidationError, match="change type"):
 
         class VariableOverride(Stage):
             agitator: Var[int] = 0
 
-    with pytest.raises(TypeError, match="shadowed"):
+    with pytest.raises(IRValidationError, match="shadowed"):
 
         class Shadow(Stage):
             agitator = "host"
 
-    with pytest.raises(TypeError, match="Invalid"):
+    with pytest.raises(IRValidationError, match="Invalid"):
 
         class Reserved(Function):
             compile: Agitator
@@ -163,5 +163,5 @@ def test_devices_cannot_replace_inherited_host_members(kind):
         }
     )
     host = type("Host", (Function,), namespace)
-    with pytest.raises(TypeError, match="inherited host"):
+    with pytest.raises(IRValidationError, match="inherited host"):
         type("Child", (host,), {"__annotations__": {"stage": Agitator}})
