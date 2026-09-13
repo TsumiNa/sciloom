@@ -12,12 +12,12 @@ from .values import OutputValue, RuntimeValue, coerce, fail, output_value
 @dataclass(frozen=True, kw_only=True)
 class DeviceState:
     """Separate saved configuration, last-applied configuration and enabled state.
-    
+
     Attributes:
         configuration: Captured property values keyed by property name.
         applied_configuration: Complete configuration last applied by start.
         enabled: Whether the reference device is enabled.
-    
+
     Stopping preserves both mappings. Configuration writes do not change applied values."""
     configuration: Mapping[str, OutputValue] = field(default_factory=dict)
     applied_configuration: Mapping[str, OutputValue] = field(default_factory=dict)

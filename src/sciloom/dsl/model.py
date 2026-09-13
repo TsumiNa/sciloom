@@ -17,13 +17,13 @@ R = TypeVar("R")
 
 def runtime(method: Callable[P, R]) -> Callable[P, R]:
     """Register a method's source for compilation, preserving its type signature.
-    
+
     Args:
         method: Runtime method declared in an ordinary Python source file.
-    
+
     Returns:
         A guarded method whose body is analyzed rather than executed by Python.
-    
+
     Raises:
         TypeError: The decorated method is called by host Python."""
 
@@ -56,13 +56,13 @@ class Function:
 
     def to_ir(self) -> Program:
         """Build target-independent IR from this specialized instance.
-        
+
         Returns:
             The authored program, including both sides of device conditions.
-        
+
         Raises:
             IRValidationError: Declarations or runtime source violate the DSL.
-        
+
         The instance's host configuration and runtime schema are not mutated."""
         from .lowering import lower
 
@@ -70,13 +70,13 @@ class Function:
 
     def compile(self, *, target: Target) -> CompileResult:
         """Compile this instance for an explicitly selected platform.
-        
+
         Args:
             target: Target providing trusted device bindings, validation and emission.
-        
+
         Returns:
             Authored and specialized IR together with the target artifact.
-        
+
         Raises:
             IRValidationError: The source or semantic model is invalid.
             CompilationError: Bindings, capabilities or target rules reject the program.

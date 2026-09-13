@@ -104,7 +104,7 @@ Expression = Literal | Reference | Unary | Binary | ListLiteral | ListLength | L
 @dataclass(frozen=True, kw_only=True)
 class Variable(Node):
     """Function-owned runtime field.
-    
+
     Attributes:
         owner_id: Owning FunctionIR occurrence ID.
         name: User-facing field name.

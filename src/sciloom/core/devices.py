@@ -12,7 +12,7 @@ from .ir.schema import _convert
 @dataclass(frozen=True, kw_only=True)
 class DeviceBinding:
     """Trusted deployment facts for one logical device.
-    
+
     Attributes:
         logical_id: Declared field/component path.
         contract: Concrete device's trusted data contract.
@@ -20,7 +20,7 @@ class DeviceBinding:
         physical_id: Target-defined unique hardware identity.
         writable_properties: Supported property semantic IDs.
         supported_operations: Supported command semantic IDs.
-    
+
     Raises:
         TypeError: A contract has an invalid record type or shape.
         ValueError: Identities, ancestry or capability declarations are inconsistent."""
@@ -66,10 +66,10 @@ class DeviceBinding:
 @dataclass(frozen=True, kw_only=True)
 class DeviceBindings:
     """Immutable, conflict-checked collection of trusted device bindings.
-    
+
     Args:
         devices: Bindings with unique logical and physical identities.
-    
+
     Raises:
         TypeError: An entry is not a DeviceBinding.
         ValueError: Identities or trusted contract definitions conflict."""

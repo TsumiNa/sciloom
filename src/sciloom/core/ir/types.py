@@ -17,7 +17,7 @@ class ScalarType(StrEnum):
 @dataclass(frozen=True, kw_only=True)
 class ListType:
     """One-dimensional homogeneous list type with explicit scalar elements.
-    
+
     Args:
         element_type: Element type; nested lists and untyped lists are not supported."""
     element_type: ScalarType

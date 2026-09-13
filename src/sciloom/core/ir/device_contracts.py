@@ -37,7 +37,7 @@ class CommandContract:
 @dataclass(frozen=True, kw_only=True)
 class DeviceTypeContract:
     """Versioned device interface and its required configuration.
-    
+
     Attributes:
         type_id: Namespaced, versioned semantic identity.
         base_type_ids: Complete ancestor identities.

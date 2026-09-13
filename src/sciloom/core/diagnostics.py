@@ -15,7 +15,7 @@ class SourceSpan:
 @dataclass(frozen=True, kw_only=True)
 class Diagnostic:
     """A structured error attached to a semantic path and optional source occurrence.
-    
+
     Attributes:
         code: Machine-readable category.
         message: Human-readable explanation.
@@ -31,7 +31,7 @@ class Diagnostic:
 
 class DiagnosticError(ValueError):
     """Base ValueError carrying an ordered tuple of structured diagnostics.
-    
+
     Args:
         diagnostics: Errors rendered in the exception message and retained unchanged."""
     def __init__(self, diagnostics: tuple[Diagnostic, ...]) -> None:

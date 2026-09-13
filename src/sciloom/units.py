@@ -8,12 +8,12 @@ from enum import Enum
 @dataclass(frozen=True, kw_only=True)
 class RotationalSpeed:
     """A nonnegative, finite rotational speed in canonical revolutions per second.
-    
+
     Use unit literals such as `600 * rpm` in experiment code.
-    
+
     Args:
         rps: Canonical revolutions per second; integers widen to float.
-    
+
     Raises:
         TypeError: The value is not an int or float (bool is rejected).
         ValueError: The value is negative, nonfinite or cannot be represented."""

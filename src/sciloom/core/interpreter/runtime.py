@@ -43,11 +43,11 @@ from .expressions import apply_binary, evaluate
 @dataclass(frozen=True, kw_only=True)
 class ExecutionConfig:
     """Per-run budgets for bounded reference execution.
-    
+
     Args:
         max_steps: Positive step budget, covering expression/control-flow evaluation.
         max_call_depth: Maximum nested call depth, from 1 through 100.
-    
+
     Raises:
         ValueError: Either budget is outside its supported integer range."""
     max_steps: int = 10_000
@@ -63,14 +63,14 @@ class ExecutionConfig:
 @dataclass(frozen=True, kw_only=True)
 class ExecutionResult:
     """Read-only snapshot returned by a successful Interpreter run.
-    
+
     Attributes:
         outputs: Entry output names to exported values; lists are tuples.
         state: Function and variable IDs to canonical internal values.
         steps: Steps consumed by this run.
         resources: Resource IDs to saved/applied device state.
         events: Ordered device events from this run.
-    
+
     Snapshots returned by the interpreter do not change after later runs."""
     outputs: Mapping[str, OutputValue]
     state: Mapping[str, Mapping[str, RuntimeValue]]
@@ -88,11 +88,11 @@ class Interpreter:
 
     def __init__(self, program: Program, *, config: ExecutionConfig | None = None) -> None:
         """Create an independent reference session and initialize internal defaults.
-        
+
         Args:
             program: Valid semantic program with device conditions already specialized.
             config: Optional execution budgets.
-        
+
         Raises:
             IRValidationError: The semantic model is invalid.
             ExecutionError: Unselected device conditions remain."""
@@ -124,17 +124,17 @@ class Interpreter:
 
     def run(self, *, inputs: Mapping[str, InputValue] | None = None) -> ExecutionResult:
         """Execute the selected entry with fresh call frames and persistent session state.
-        
+
         Args:
             inputs: Exactly the entry's named inputs; omit for a parameterless entry.
-        
+
         Returns:
             An independent snapshot of outputs, internal state and device events.
-        
+
         Raises:
             ExecutionError: Inputs, operations or indices are invalid, state is
                 uninitialized, an extension lacks semantics, or a budget is exhausted.
-        
+
         Earlier state writes survive a failure. This is not hardware simulation."""
         entry = self._functions[self.program.entry_function_id]
         values = {} if inputs is None else dict(inputs)
