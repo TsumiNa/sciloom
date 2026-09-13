@@ -12,14 +12,16 @@ Add `src/sciloom/dsl/layering_test.py`. It parses every frontend module with
 explicit allow list, currently four entries; no declaration module imports an
 analysis module at module level; and touching `sciloom.Function`,
 `sciloom.Input` and `sciloom.comptime` in a subprocess leaves the analysis
-modules out of `sys.modules`. Record the module-level dependency graph and the
-current cycle count as an asserted value. Add the module to the mypy override
-list in `pyproject.toml`.
+modules out of `sys.modules`. Assert that the module-level dependency graph is
+acyclic, which already holds: every cycle runs through a recorded seam, so the
+allow list is the cycle inventory. Cover both import forms, so a plain
+`import sciloom.dsl.x` inside a function cannot add a seam unnoticed. Add the
+module to the mypy override list in `pyproject.toml`.
 
 ## Non-goals
 
-No production code change. The graph assertion records today's cycles rather than
-forbidding them; stage 5 flips it to acyclic.
+No production code change. The allow list records today's seams rather than
+forbidding them; stages 3 to 5 shrink it to one.
 
 ## Acceptance
 
