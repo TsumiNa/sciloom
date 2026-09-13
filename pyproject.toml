@@ -51,7 +51,14 @@ max-complexity = 10
 [tool.mypy]
 # Production package and runnable examples share the public type contract.
 # Colocated tests intentionally construct invalid runtime schemas and IR values.
-files = ["src/sciloom", "examples/function_call.py", "examples/agitation.py", "examples/scale_values.py", "examples/non_zero_array_min.py", "examples/developer"]
+files = [
+    "src/sciloom",
+    "examples/function_call.py",
+    "examples/agitation.py",
+    "examples/scale_values.py",
+    "examples/non_zero_array_min.py",
+    "examples/developer",
+]
 exclude = ["(_test|conftest)\\.py$"]
 explicit_package_bases = true
 mypy_path = "$MYPY_CONFIG_FILE_DIR/src"
@@ -104,13 +111,10 @@ disallow_untyped_defs = false
 disallow_incomplete_defs = false
 
 [dependency-groups]
-dev = [
-    "mypy>=2.3.1",
-    "pytest>=9.1.1",
-]
+dev = ["mypy>=2.3.1", "pytest>=9.1.1"]
 docs = [
-    "griffelib==2.3.0",
+    "griffelib>=2.3.0",
     "mike",
-    "mkdocstrings-python==2.0.8",
-    "zensical==0.0.61",
+    "mkdocstrings-python>=2.0.8",
+    "zensical>=0.0.61",
 ]
