@@ -43,6 +43,7 @@ nav:
       - Compilation: user-guide/compilation.md
   - Developer Guide:
       - Architecture: developer/architecture.md
+      - 'Tutorial: add a device': developer/add-a-device.md
       - Semantic IR and JSON: developer/ir.md
       - Compiler and specialization: developer/compiler.md
       - Reference execution: developer/interpreter.md
