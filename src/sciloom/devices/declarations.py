@@ -142,7 +142,8 @@ def bind_device(*, logical_id: str, device: BaseDevice, physical_id: str) -> Dev
         An immutable binding with the complete trusted ancestor directory.
 
     Raises:
-        TypeError: Profile declarations or capability lists are malformed.
+        TypeError: The profile omits a capability list or names an undeclared member.
+        IRValidationError: The profile's own or an ancestor's contract is invalid.
         ValueError: The resulting binding violates trusted-contract invariants.
     """
     cls = type(device)

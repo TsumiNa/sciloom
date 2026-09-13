@@ -287,11 +287,13 @@ its own code:
 raise IRValidationError((Diagnostic(code="device_contract", message=..., path=f"$.device.{subject}"),))
 ```
 
-This covers `build_device_schema` and `device_contract`, which run while a class
-body is executed. Host-access guards that reject reading a device property or
-calling a runtime method keep raising `TypeError`, and `bind_device` keeps
-raising `TypeError` because it reports a target author's binding mistake, not a
-declaration.
+This covers `build_device_schema` and `device_contract`, which read a class body,
+wherever they are called from. `bind_device` builds a profile's contract and its
+ancestors', so a malformed declaration surfaces there as a diagnostic too: it is
+a declaration error whoever discovers it. Two boundaries stay `TypeError`, because
+neither reports a declaration: host-access guards that reject reading a device
+property or calling a runtime method, and `bind_device`'s own checks, which reject
+a profile that omits a capability list or names a member it never declared.
 
 ### Analysis conventions (target, stage 8)
 
