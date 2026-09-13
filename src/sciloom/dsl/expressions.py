@@ -58,7 +58,7 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
             **context.metadata(node), value=expression(context, node.value), index=expression(context, node.slice)
         )
     if is_length_call(node):
-        if not context.allows_len:
+        if not context.source.allows_len:
             context.fail(
                 "python_subset", "len must resolve to the Python builtin; shadowed calls are unsupported.", node
             )
@@ -75,7 +75,7 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
         isinstance(node, ast.BinOp)
         and isinstance(node.op, ast.Mult)
         and isinstance(node.right, ast.Name)
-        and node.right.id in context.unit_names
+        and node.right.id in context.source.unit_names
     ):
         number = expression(context, node.left)
         if not isinstance(number, Literal) or number.type not in (ScalarType.INTEGER, ScalarType.REAL):
@@ -85,7 +85,7 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
                 node,
             )
         try:
-            speed = context.unit_names[node.right.id].__rmul__(number.value)
+            speed = context.source.unit_names[node.right.id].__rmul__(number.value)
         except (ValueError, TypeError) as error:
             context.fail("quantity_literal", str(error), node)
         return Literal(**context.metadata(node), type=ScalarType.ROTATIONAL_SPEED, value=speed.rps)
