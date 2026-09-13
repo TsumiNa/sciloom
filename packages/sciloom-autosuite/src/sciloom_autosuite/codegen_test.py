@@ -7,16 +7,54 @@ from pathlib import Path
 
 import pytest
 
-from sciloom import Function, Var, runtime
+from sciloom import Function, Input, Output, Var, runtime
 from sciloom.core.compiler import compile_ir
 from sciloom.core.diagnostics import CompilationError
 from sciloom.core.ir import IRValidationError, SourceSpan, from_json, to_json
-from sciloom.flow.function_test import Caller, Counter
 from . import AutoSuiteTarget
 from .xml import SerializationIR
 
 # Evidence corpus at the workspace root, outside this distribution.
 FIXTURES = Path(__file__).resolve().parents[4] / "autosuite/asfp"
+
+
+class Identity(Function):
+    x: Input[float]
+    y: Output[float]
+
+    @runtime
+    def run(self):
+        self.y = self.x
+
+
+class Caller(Function):
+    result: Var[float] = 0.0
+
+    def __init__(self, value=2.5):
+        self.value = value
+        self.identity = Identity()
+
+    @runtime
+    def run(self):
+        self.result = self.identity(x=self.value)
+
+
+class Counter(Function):
+    count: Var[int] = 0
+    done: Var[bool] = False
+    limit: int = 3
+
+    @runtime
+    def run(self):
+        self.count = 0
+        while self.count < self.limit:
+            if self.count == 1:
+                self.done = True
+            elif self.count == 2:
+                self.done = not self.done
+            else:
+                self.done = False
+            self.count += 1
 
 
 class Empty(Function):

@@ -5,7 +5,7 @@ from dataclasses import replace
 import pytest
 
 from sciloom import Agitator, Function, Input, rpm, runtime
-from sciloom_autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
+from sciloom.conftest import RecordingTarget, StubShaker
 from .configuration import validate_device_usage
 from .devices import DeviceBinding, DeviceBindings
 from .diagnostics import CompilationError
@@ -71,7 +71,7 @@ class ChildConfigure(Function):
 
 
 def target():
-    return AutoSuiteTarget(devices={"agitator": AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="23")})
+    return RecordingTarget(devices={"agitator": StubShaker()})
 
 
 @pytest.mark.parametrize("cls", [ParentConfigure, ChildConfigure])

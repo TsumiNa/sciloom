@@ -5,15 +5,15 @@ from dataclasses import FrozenInstanceError
 import pytest
 
 from sciloom import Agitator, rpm
+from sciloom.conftest import StubShaker
 from sciloom.core.diagnostics import IRValidationError
 from sciloom.core.ir.device_contracts import AGITATOR_CONTRACT
-from sciloom_autosuite import AutoSuiteIndividualShaker
 from .declarations import bind_device, device_contract, operation
 
 
 def test_builtin_signatures_and_explicit_profile_capabilities():
     assert device_contract(Agitator) == AGITATOR_CONTRACT
-    profile = AutoSuiteIndividualShaker(zone="A", device_id="23")
+    profile = StubShaker()
     binding = bind_device(logical_id="agitator", device=profile, physical_id="test:23")
     assert binding.contract.required_configuration == binding.writable_properties
     assert len(binding.supported_operations) == 2

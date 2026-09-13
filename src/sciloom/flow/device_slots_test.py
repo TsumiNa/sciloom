@@ -3,10 +3,10 @@
 import pytest
 
 from sciloom import Agitator, Function, Input, Var, rpm, runtime
+from sciloom.conftest import RecordingTarget, StubShaker
 from sciloom.core.diagnostics import IRValidationError
 from sciloom.core.interpreter import Interpreter
 from sciloom.devices import BaseDevice
-from sciloom_autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
 
 
 class Stage(Function):
@@ -46,8 +46,8 @@ def test_annotation_slots_share_identity_and_state_without_runtime_variables():
     assert len(result.resources) == 1
     assert result.resources["resource:agitator"].applied_configuration["speed"] == 600 * rpm
     assert not result.resources["resource:agitator"].enabled
-    target = AutoSuiteTarget(devices={"agitator": AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="23")})
-    assert model.compile(target=target).artifact.content.startswith(b"<?xml")
+    target = RecordingTarget(devices={"agitator": StubShaker()})
+    assert model.compile(target=target).artifact.suffix == ".json"
 
 
 def test_inherited_and_class_composed_devices_keep_declarations():
@@ -67,7 +67,7 @@ def test_inherited_and_class_composed_devices_keep_declarations():
 
 def test_slot_rejects_hardware_plain_values_and_host_operations():
     stage = Stage()
-    for value in (42, Agitator(), BaseDevice(), AutoSuiteIndividualShaker(zone="A", device_id="23")):
+    for value in (42, Agitator(), BaseDevice(), StubShaker()):
         with pytest.raises(TypeError, match="logical device reference"):
             stage.agitator = value
     with pytest.raises(TypeError, match="compiled"):
