@@ -58,7 +58,19 @@ nav:
       - Independent device: examples/demo-device.md
       - Portable agitation: examples/portable-agitation.md
   - API Reference:
+      - Overview: api/index.md
       - Author API: api/author.md
+      - Units: api/units.md
+      - Compile-time queries: api/comptime.md
+      - AutoSuite: api/autosuite.md
+      - Device declarations: api/devices.md
+      - IR values: api/ir-values.md
+      - IR programs and flow: api/ir-flow.md
+      - IR devices and conditions: api/ir-devices.md
+      - IR validation and JSON: api/ir-json.md
+      - Compiler and specialization: api/compiler.md
+      - Interpreter: api/interpreter.md
+      - Diagnostics: api/diagnostics.md
 plugins:
   - search
   - mkdocstrings:
@@ -69,6 +81,9 @@ plugins:
             allow_inspection: false
             docstring_style: google
             show_source: false
+            show_bases: true
+            show_if_no_docstring: true
+            filters: ["!^_"]
             show_root_heading: true
             show_root_full_path: true
             show_signature_annotations: true

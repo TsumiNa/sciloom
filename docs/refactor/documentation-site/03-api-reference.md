@@ -25,3 +25,16 @@ Strict build; verify Input/Output/Var, property types, decorated methods, datacl
 fields and Target signatures. Search representative symbols and follow results to
 their API descriptions. Run catalogue tests plus existing checks; check that
 docstring-only edits preserve semantic output. Review and squash merge before 4.
+
+## Implementation evidence
+
+The explicit catalogue covers all root, IR, device, interpreter and AutoSuite
+exports, plus the selected compiler, binding, declaration and diagnostic APIs.
+Static Griffe checks require a source docstring for every indexed object; real
+HTML checks verify all catalogue anchors, properties and protocol methods.
+Private/dunder helpers are filtered from generated members.
+
+All 344 tests, mypy, smoke/recipe validation and eight runnable examples pass.
+Example companions remain byte-identical. Browser search for ConfigureProperty
+opens its exact generated object anchor; Target signatures and dataclass fields
+render with source-derived types. No runtime semantics or signatures change.

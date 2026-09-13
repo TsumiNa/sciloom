@@ -1,7 +1,7 @@
 # English documentation and versioned publication
 
 Status: plan merged in PR #28 (`4a62f2e`); foundation merged in PR #29 (`3f91340`).
-Stage 2 is implemented in its review branch.
+Stage 2 merged in PR #30 (`fb853ca5`); stage 3 is implemented in its review branch.
 This document is
 the authoritative contract for this sequence. It changes documentation tooling,
 not SciLoom execution semantics, Python APIs, package visibility or PyPI releases.
@@ -131,8 +131,8 @@ review → corrections → checks on latest head → confirmed squash merge → 
 | Stage | Plan | Status |
 |---|---|---|
 | 1 | [Site foundation](01-site-foundation.md) | Merged: PR #29, 3f91340 |
-| 2 | [Reader handbooks](02-reader-handbooks.md) | Implemented; awaiting review/merge |
-| 3 | [Generated API reference](03-api-reference.md) | Pending |
+| 2 | [Reader handbooks](02-reader-handbooks.md) | Merged: PR #30, fb853ca5 |
+| 3 | [Generated API reference](03-api-reference.md) | Implemented; awaiting review/merge |
 | 4 | [Versioned publication](04-versioned-publication.md) | Pending |
 
 ## Acceptance

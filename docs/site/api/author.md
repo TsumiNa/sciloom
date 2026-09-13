@@ -1,12 +1,13 @@
 # Author API
 
-Import experiment-author interfaces from `sciloom`. This initial reference covers
-the source model, field declarations and logical agitator; the complete contributor
-catalogue is added separately.
+Import experiment-author interfaces from `sciloom`. See also [units](units.md),
+[device queries](comptime.md) and the [AutoSuite contribution](autosuite.md).
 
 ::: sciloom.Function
     options:
       members: [compile, to_ir]
+
+::: sciloom.runtime
 
 ## Field declarations
 
