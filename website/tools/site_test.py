@@ -15,7 +15,7 @@ SPEC.loader.exec_module(site)
 
 @pytest.fixture
 def checkout(tmp_path):
-    (tmp_path / "docs/site").mkdir(parents=True)
+    (tmp_path / "website/docs").mkdir(parents=True)
     (tmp_path / "pyproject.toml").write_text('[project]\nversion = "0.1.0"\n')
     for name in site.EXAMPLES:
         p = tmp_path / "examples" / name
@@ -45,7 +45,7 @@ def test_prepare_only_copies_explicit_examples(checkout):
     (checkout / "autosuite/raw.app").write_text("not public")
     info = site.source_info(checkout)
     site.prepare(checkout, info)
-    public = checkout / "docs/site"
+    public = checkout / "website/docs"
     copied = public / "_generated/examples"
     assert {str(p.relative_to(copied)) for p in copied.rglob("*") if p.is_file()} == set(site.EXAMPLES)
     assert json.loads((public / "build-info.json").read_text()) == info
@@ -69,14 +69,14 @@ def test_symlink_cannot_copy_unselected_evidence(checkout):
 def test_metadata_symlink_does_not_overwrite_source(checkout):
     source = checkout / "pyproject.toml"
     before = source.read_bytes()
-    (checkout / "docs/site/build-info.json").symlink_to(source)
+    (checkout / "website/docs/build-info.json").symlink_to(source)
     with pytest.raises(ValueError, match="metadata"):
         site.prepare(checkout, site.source_info(checkout))
     assert source.read_bytes() == before
 
 
 def test_public_directory_symlink_is_rejected(checkout):
-    public = checkout / "docs/site"
+    public = checkout / "website/docs"
     public.rmdir()
     public.symlink_to(checkout / "examples", target_is_directory=True)
     with pytest.raises(ValueError, match="documentation"):

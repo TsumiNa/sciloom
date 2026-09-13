@@ -1,6 +1,6 @@
 # Function compilation to ASFP
 
-The current handbook is maintained in [Compiling a program](site/user-guide/compilation.md).
+The current handbook is maintained in [Compiling a program](../website/docs/user-guide/compilation.md).
 This file is an index for existing repository links; update the handbook when
 behavior changes, rather than maintaining a second current description here.
 

@@ -1,5 +1,9 @@
 # English documentation and versioned publication
 
+The original directory layout is superseded by the
+[standalone website contract](../standalone-website/00-overview.md). Paths and
+commands below point to the maintained locations; the stage history is preserved.
+
 Status: plan merged in PR #28 (`4a62f2e`); foundation merged in PR #29 (`3f91340`).
 Stage 2 merged in PR #30 (`fb853ca5`); stage 3 merged in PR #31 (`b361be6f`).
 Stage 4 is implemented in [PR #32](https://github.com/TsumiNa/sciloom/pull/32).
@@ -11,7 +15,7 @@ not SciLoom execution semantics, Python APIs, package visibility or PyPI release
 
 ## Decision
 
-Use Zensical with mkdocstrings-python, English Markdown under `docs/site/`, and
+Use Zensical with mkdocstrings-python, English Markdown under `website/docs/`, and
 the Zensical-maintained mike fork pinned to a commit. Sphinx/MyST was considered;
 the selected Zensical stack provides the desired reading experience while keeping
 Python signatures generated from source. The mike integration is transitional:
@@ -45,12 +49,12 @@ The following commands become runnable in stage 1:
 
 ```bash
 uv sync --locked --group docs
-uv run --group docs python docs/tools/site.py serve
-uv run --group docs python docs/tools/site.py build --strict
-uv run --group docs pytest docs/tools
+uv run --group docs python website/tools/site.py serve
+uv run --group docs python website/tools/site.py build --strict
+uv run --group docs pytest website/tools
 ```
 
-`mkdocs.yml` configures Zensical. The small site tool prepares allowlisted assets
+`website/mkdocs.yml` configures Zensical. The small site tool prepares allowlisted assets
 and source-version metadata, then invokes Zensical. Preview listens locally;
 strict builds fail on documentation warnings. Generated inputs/output and caches
 are ignored and may be recreated; source/example companions are not rewritten.

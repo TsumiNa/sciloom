@@ -1,9 +1,9 @@
 # SciLoom
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/site/assets/brand/svg/sciloom-banner-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="docs/site/assets/brand/svg/sciloom-banner-light.svg">
-  <img src="docs/site/assets/brand/svg/sciloom-banner-light.svg" alt="SciLoom — programmable scientific automation" width="1800">
+  <source media="(prefers-color-scheme: dark)" srcset="website/docs/assets/brand/svg/sciloom-banner-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="website/docs/assets/brand/svg/sciloom-banner-light.svg">
+  <img src="website/docs/assets/brand/svg/sciloom-banner-light.svg" alt="SciLoom — programmable scientific automation" width="1800">
 </picture>
 
 SciLoom — programmable scientific automation from one semantic model.
@@ -38,7 +38,7 @@ The distribution name is `SciLoom`; the Python import name is `sciloom`.
 The examples show Function authoring, target configuration and `.compile()`.
 They write `examples/function_call.asfp` and `examples/agitation.asfp`. Compilation does
 not send commands to hardware; no knowledge of compiler internals is required.
-See the [compilation guide](docs/site/user-guide/compilation.md) for usage and validation scope.
+See the [compilation guide](website/docs/user-guide/compilation.md) for usage and validation scope.
 
 ## AutoSuite reference materials
 
@@ -52,12 +52,12 @@ organization and provenance.
 
 ## Documentation
 
-- [English handbook](docs/site/index.md)
-- [Brand assets and usage](docs/site/developer/brand.md)
-- [Getting started](docs/site/introduction/getting-started.md)
-- [Functions and fields](docs/site/user-guide/functions.md)
-- [Device configuration](docs/site/user-guide/devices.md)
-- [Example walkthroughs](docs/site/examples/index.md)
+- [English handbook](website/docs/index.md)
+- [Brand assets and usage](website/docs/developer/brand.md)
+- [Getting started](website/docs/introduction/getting-started.md)
+- [Functions and fields](website/docs/user-guide/functions.md)
+- [Device configuration](website/docs/user-guide/devices.md)
+- [Example walkthroughs](website/docs/examples/index.md)
 - [Runnable function-call example](examples/function_call.py)
 - [Runnable agitation example](examples/agitation.py)
 - [List copying and scaling](examples/scale_values.py)
@@ -66,7 +66,7 @@ organization and provenance.
 ## For SciLoom developers
 
 - [Architecture and design](docs/INDEX.md)
-- [Developer handbook](docs/site/developer/architecture.md)
+- [Developer handbook](website/docs/developer/architecture.md)
 - [IR persistence and reference execution example](examples/developer/agitation_ir.py)
 - [Proposed Python examples](examples/proposed_frontend/) — illustrative, not runnable yet.
 - [Contributor and agent guidelines](AGENTS.md)

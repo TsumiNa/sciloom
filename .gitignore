@@ -10,8 +10,10 @@ __pycache__/
 /dist/
 /.build/
 /.cache/
-/docs/site/_generated/
-/docs/site/build-info.json
+/website/.build/
+/website/.cache/
+/website/docs/_generated/
+/website/docs/build-info.json
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/

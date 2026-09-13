@@ -1,6 +1,6 @@
 # Static typing
 
-The current handbook is maintained in [Typing and tests](site/developer/typing-and-tests.md).
+The current handbook is maintained in [Typing and tests](../website/docs/developer/typing-and-tests.md).
 This file is an index for existing repository links; update the handbook when
 behavior changes, rather than maintaining a second current description here.
 

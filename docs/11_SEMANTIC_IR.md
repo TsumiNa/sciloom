@@ -1,6 +1,6 @@
 # Semantic IR and JSON API
 
-The current handbook is maintained in [Semantic IR and JSON v4](site/developer/ir.md).
+The current handbook is maintained in [Semantic IR and JSON v4](../website/docs/developer/ir.md).
 This file is an index for existing repository links; update the handbook when
 behavior changes, rather than maintaining a second current description here.
 
