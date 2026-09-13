@@ -27,7 +27,7 @@ def configure(context: LoweringContext, node: ast.Assign) -> ConfigureProperty |
     )
 
 
-def operation(context: LoweringContext, node: ast.Call) -> StartAgitation | StopAgitation | DeviceCommand | None:
+def device_command(context: LoweringContext, node: ast.Call) -> StartAgitation | StopAgitation | DeviceCommand | None:
     member = context.device_member(node.func)
     if member is None:
         return None

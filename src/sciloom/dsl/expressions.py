@@ -50,7 +50,7 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
     if isinstance(node, ast.List):
         element_type = expected.element_type if isinstance(expected, ListType) else None
         elements = tuple(expression(context, item, element_type) for item in node.elts)
-        return list_literal(context, node, elements, expected)
+        return _list_literal(context, node, elements, expected)
     if isinstance(node, ast.Subscript):
         if isinstance(node.slice, ast.Slice):
             context.fail("python_subset", "List slicing is unsupported.", node)
@@ -131,7 +131,7 @@ def is_length_call(node: ast.AST) -> TypeGuard[ast.Call]:
     return isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "len"
 
 
-def list_literal(
+def _list_literal(
     context: LoweringContext, node: ast.AST, elements: tuple[Expression, ...], expected: ValueType | None
 ) -> ListLiteral:
     if isinstance(expected, ListType):

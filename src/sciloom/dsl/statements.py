@@ -27,7 +27,7 @@ from sciloom.core.ir import (
 from sciloom.flow.function import Function
 from .context import LoweringContext
 from .device_conditions import device_condition
-from .device_operations import configure, operation
+from .device_operations import configure, device_command
 from .expressions import BINARY_OPERATORS, expression, is_length_call
 
 
@@ -96,7 +96,7 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
                 targets = list(target.elts) if isinstance(target, ast.Tuple) else [target]
                 result.append(call(context, node.value, targets))
             elif isinstance(target, ast.Subscript):
-                destination, element_type = indexed_target(context, target)
+                destination, element_type = _indexed_target(context, target)
                 result.append(
                     ListSet(
                         **context.metadata(node),
@@ -119,7 +119,7 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
             if context.device_member(node.target) is not None:
                 context.fail("device_property_read", "Device properties only support plain assignment.", node)
             if isinstance(node.target, ast.Subscript):
-                destination, element_type = indexed_target(context, node.target)
+                destination, element_type = _indexed_target(context, node.target)
                 result.append(
                     ListSet(
                         **context.metadata(node),
@@ -174,14 +174,14 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
                 )
             )
         elif isinstance(node, ast.Expr) and isinstance(node.value, ast.Call):
-            domain_operation = operation(context, node.value)
+            domain_operation = device_command(context, node.value)
             result.append(domain_operation if domain_operation is not None else call(context, node.value, []))
         else:
             context.fail("python_subset", f"Unsupported runtime statement: {type(node).__name__}.", node)
     return tuple(result)
 
 
-def indexed_target(context: LoweringContext, node: ast.Subscript) -> tuple[Reference, ScalarType]:
+def _indexed_target(context: LoweringContext, node: ast.Subscript) -> tuple[Reference, ScalarType]:
     if context.device_member(node.value) is not None:
         context.fail(
             "device_property_read", "Indexed device-property updates require getters, which are unsupported.", node

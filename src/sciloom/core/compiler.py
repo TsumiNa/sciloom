@@ -94,7 +94,9 @@ def compile_ir(program: Program, *, target: Target) -> CompileResult:
         Both semantic programs and the emitted artifact.
 
     Raises:
-        TypeError: The target or returned bindings violate the compiler protocol.
+        TypeError: The target is missing a required member, or the returned bindings
+            are not DeviceBindings. Argument and return types are a static contract,
+            checked by a type checker rather than here.
         IRValidationError: The authored or specialized IR is invalid.
         CompilationError: Binding, configuration or target validation fails.
 
