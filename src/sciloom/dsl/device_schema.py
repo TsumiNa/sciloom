@@ -84,23 +84,3 @@ def build_device_schema(cls: type, reserved: Mapping[str, object]) -> Mapping[st
         if inspect.getattr_static(cls, name) is not slot:
             raise TypeError(f"Inherited device slot {name!r} cannot be shadowed.")
     return MappingProxyType(slots)
-
-
-def component_paths(root: object) -> dict[int, str]:
-    """Find stable host composition paths without invoking user descriptors."""
-    from .model import Function
-
-    paths = {id(root): ""}
-    pending = [root]
-    for instance in pending:
-        attributes: dict[str, object] = {}
-        for cls in reversed(type(instance).__mro__):
-            attributes.update(vars(cls))
-        attributes.update(vars(instance))
-        for name, value in sorted(attributes.items()):
-            if isinstance(value, Function) and id(value) not in paths:
-                if not name.isidentifier() or name.startswith("_"):
-                    raise TypeError("Composed Function names must be public Python identifiers.")
-                paths[id(value)] = ".".join(filter(None, (paths[id(instance)], name)))
-                pending.append(value)
-    return paths
