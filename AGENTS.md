@@ -165,6 +165,14 @@ Run `python autosuite/tools/audit_corpus.py` after reference changes. Syntax-che
 
 Keep project/design Markdown under `docs/` and AutoSuite-specific reference Markdown under `autosuite/docs/`. Root Markdown is limited to `README.md` and `AGENTS.md`.
 
+Public English documentation lives under `docs/site/`; it is the only website
+source tree. Use `uv run --group docs python docs/tools/site.py serve` to preview
+and `uv run --group docs python docs/tools/site.py build --strict` to build.
+Run `uv run --group docs pytest docs/tools` for documentation tooling changes.
+Only explicitly listed examples may be copied into generated downloads. Do not
+publish the AutoSuite corpus or internal refactor records. API pages use static
+mkdocstrings extraction; document public APIs with English Google-style docstrings.
+
 ## 10. Compiler and reference-execution boundaries
 
 The Python DSL (`sciloom.dsl`), shared semantic/compiler tools (`sciloom.core`)
