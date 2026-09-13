@@ -11,7 +11,7 @@ from sciloom import Function, Var, runtime
 from sciloom.core.compiler import compile_ir
 from sciloom.core.diagnostics import CompilationError
 from sciloom.core.ir import IRValidationError, SourceSpan, from_json, to_json
-from sciloom.dsl.model_test import Caller, Counter
+from sciloom.flow.function_test import Caller, Counter
 from . import AutoSuiteTarget
 from .xml import SerializationIR
 

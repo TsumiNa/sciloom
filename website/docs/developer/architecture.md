@@ -5,7 +5,7 @@ authoring DSL; targets own platform-specific validation and serialization.
 
 ```mermaid
 flowchart TD
-    Python["Python Function instance"] --> DSL["DSL source analysis"]
+    Python["Python Function instance: flow and devices"] --> DSL["DSL source analysis"]
     DSL --> IR["Semantic IR"]
     JSON["JSON v4"] <--> IR
     IR --> Validate["Structure and types"]
@@ -21,9 +21,10 @@ flowchart TD
 | Package | Responsibility |
 |---|---|
 | sciloom | Lazy experiment-author imports |
-| sciloom.dsl | Schemas, composition and restricted Python source conversion |
+| sciloom.flow | Procedure and control vocabulary: Function, runtime fields, device slots, compile-time queries |
+| sciloom.devices | Controlled things: device families, member declarations, contracts and bindings |
+| sciloom.dsl | DSL source analysis: one Python Function instance to validated IR |
 | sciloom.units | Independent physical quantities |
-| sciloom.devices | Python device families and member declarations |
 | sciloom.core.ir | Typed nodes/types, validation and JSON |
 | sciloom.core.compiler | Target protocol, pipeline and artifacts |
 | sciloom.core.devices / specialization | Data-only binding facts and branch selection |
@@ -31,13 +32,20 @@ flowchart TD
 | sciloom.core.diagnostics | Errors, diagnostics and source spans |
 | sciloom.contrib.autosuite | AutoSuite device profiles, legality and XML generation |
 
-Core imports neither the Python DSL/device classes nor any target. Independent
-equipment packages implement the same Target protocol without joining the contrib
-namespace or registering a plugin. Unit types remain independent.
+`flow` and `devices` are the two vocabularies an author writes; `dsl` is the only
+layer that reads Python source; `core` imports neither. Dependencies run dsl to
+flow to devices to core, with one deliberate exception: `Function.to_ir` defers an
+import of the analysis driver, because the author-facing type owns the entry point
+while the analysis needs that type at runtime. An equipment target declares and
+binds devices, so it may import `sciloom.devices`; no target imports the flow
+vocabulary or the source analysis. Independent equipment packages implement the
+same Target protocol without joining the contrib namespace or registering a
+plugin. Unit types remain independent.
 
-Within the DSL, model/schema construction, source discovery, expression conversion
-and statement/control-flow conversion have separate responsibilities. IR structure
-checking, expression typing, program validation and JSON conversion are distinct.
+Within the analysis, shared state, source discovery, expression conversion and
+statement conversion have separate responsibilities, and every statement recursion
+lives in one module. IR structure checking, expression typing, program validation
+and JSON conversion are distinct.
 The interpreter separates values, expression evaluation and session/device state.
 AutoSuite code generation retains a thin serialization model below semantic IR.
 

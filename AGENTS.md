@@ -198,9 +198,16 @@ mkdocstrings extraction; document public APIs with English Google-style docstrin
 
 ## 10. Compiler and reference-execution boundaries
 
-The Python DSL (`sciloom.dsl`), shared semantic/compiler tools (`sciloom.core`)
-and equipment targets (`sciloom.contrib`, or independent packages) have separate
-ownership. Experiment authors import their API from `sciloom`; contributors import
+The authoring vocabulary (`sciloom.flow` for procedure and control, `sciloom.devices`
+for controlled things), the source analysis that turns it into IR (`sciloom.dsl`),
+shared semantic/compiler tools (`sciloom.core`) and equipment targets
+(`sciloom.contrib`, or independent packages) have separate ownership. `flow` and
+`devices` are what an author writes; `dsl` is the only layer that reads Python
+source; `core` imports neither. A target may import `sciloom.devices` to declare
+and bind hardware, never the flow vocabulary or the analysis. `Function.to_ir`
+defers one import of the analysis driver; that seam is the frontend's only back
+edge and `src/sciloom/dsl/layering_test.py` enforces it. See
+[the layering plan](docs/refactor/dsl-layering/00-overview.md). Experiment authors import their API from `sciloom`; contributors import
 `Target`, `Artifact`, `CompileResult` and `compile_ir` from `sciloom.core.compiler`.
 Core must not import `sciloom.devices`, DSL, contrib or Studio; data-only
 `sciloom.core.devices` binding records belong to core. The root author API stays lazy. Target
