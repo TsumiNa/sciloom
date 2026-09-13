@@ -9,6 +9,28 @@ permissions:
   contents: read
 
 jobs:
+  docs:
+    runs-on: ubuntu-latest
+    env:
+      SCILOOM_DOCS_PR_NUMBER: ${{ github.event.pull_request.number }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+        with:
+          version: "0.12.10"
+          python-version: "3.14"
+      - run: uv sync --locked --group docs
+      - run: uv run --group docs python docs/tools/site.py build --strict
+      - run: uv run --group docs pytest docs/tools
+      - run: git diff --exit-code
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: documentation-${{ github.event.pull_request.head.sha || github.sha }}
+          path: .build/docs
+          retention-days: 14
+          if-no-files-found: error
   check:
     runs-on: ubuntu-latest
     strategy:

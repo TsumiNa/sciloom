@@ -8,6 +8,10 @@ __pycache__/
 # Build and test outputs
 /build/
 /dist/
+/.build/
+/.cache/
+/docs/site/_generated/
+/docs/site/build-info.json
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/

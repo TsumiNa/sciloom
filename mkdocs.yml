@@ -1,0 +1,73 @@
+site_name: SciLoom
+site_description: Programmable scientific automation from one semantic model.
+site_url: !ENV [SCILOOM_DOCS_SITE_URL, 'http://127.0.0.1:8000/']
+docs_dir: docs/site
+site_dir: .build/docs
+theme:
+  name: zensical
+  custom_dir: docs/theme
+  language: en
+  font: false
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.footer
+    - content.code.copy
+    - search.highlight
+  palette:
+    - scheme: default
+      primary: teal
+      accent: teal
+      toggle:
+        icon: lucide/moon
+        name: Switch to dark mode
+    - scheme: slate
+      primary: teal
+      accent: teal
+      toggle:
+        icon: lucide/sun
+        name: Switch to light mode
+nav:
+  - Introduction:
+      - Welcome: index.md
+      - Current capabilities: introduction/status.md
+  - Developer Guide:
+      - Building documentation: developer/documentation.md
+  - API Reference:
+      - Author API: api/author.md
+plugins:
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            allow_inspection: false
+            docstring_style: google
+            show_source: false
+            show_root_heading: true
+            show_root_full_path: true
+            show_signature_annotations: true
+            separate_signature: true
+            members_order: source
+            show_attribute_values: false
+            merge_init_into_class: true
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      check_paths: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+validation:
+  invalid_links: true
+  invalid_link_anchors: true
+extra:
+  source_version: !ENV [SCILOOM_DOCS_VERSION, local]
+  source_ref: !ENV [SCILOOM_DOCS_REF, HEAD]
+  source_commit: !ENV [SCILOOM_DOCS_COMMIT, unknown]
+  package_version: !ENV [SCILOOM_DOCS_PACKAGE_VERSION, unknown]

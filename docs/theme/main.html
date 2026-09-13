@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<aside class="admonition note" aria-label="Documentation version">
+  <p>
+    <strong>{{ config.extra.source_version }}</strong>
+    · SciLoom {{ config.extra.package_version }}
+    · <code title="{{ config.extra.source_commit }}">{{ config.extra.source_commit[:8] }}</code>
+  </p>
+</aside>
+{{ super() }}
+{% endblock %}

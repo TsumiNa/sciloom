@@ -25,3 +25,12 @@ types, metadata, build failure on invalid links and publication exclusions. Run
 existing pytest, mypy, smoke, recipe, all current examples and proposed-example
 syntax checks. Check git diff --check and that builds do not modify tracked files.
 Review and squash merge before stage 2 begins.
+
+## Implementation evidence
+
+The real Zensical build renders Function, Annotated aliases and Agitator property
+types through the public root exports. Five tooling regressions cover source
+metadata, exact allowlisted copies, symlink escape rejection, API HTML/revision
+stamping and strict broken-link failure. Local acceptance: 326 tests, mypy on 63
+source files, smoke, recipe, eight examples, proposed syntax and diff checks pass.
+Remote review/CI and merge remain the gate for the next stage.
