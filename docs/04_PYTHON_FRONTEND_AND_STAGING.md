@@ -1,5 +1,9 @@
 # Restricted Python frontend and staging model
 
+Historical design context. Use the maintained [Function guide](site/user-guide/functions.md)
+and [source subset](site/user-guide/control-flow.md) for implemented behavior. The
+broader device/event/error examples below remain proposals and are not runnable.
+
 ## Design goal
 
 A class such as `DynamicTransfer(Function)` defines the static schema of an AutoSuite program unit. An **instance** of that class is the concrete, compile-time-specialized program that is compiled.

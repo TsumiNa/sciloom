@@ -28,7 +28,7 @@ The distribution name is `SciLoom`; the Python import name is `sciloom`.
 The examples show Function authoring, target configuration and `.compile()`.
 They write `examples/function_call.asfp` and `examples/agitation.asfp`. Compilation does
 not send commands to hardware; no knowledge of compiler internals is required.
-See the [compiler guide](docs/13_ASFP_COMPILER.md) for the API and validation scope.
+See the [compilation guide](docs/site/user-guide/compilation.md) for usage and validation scope.
 
 ## AutoSuite reference materials
 
@@ -42,10 +42,11 @@ organization and provenance.
 
 ## Documentation
 
-- [Public handbook source](docs/site/index.md) — English guides and source-generated API documentation.
-- [Project status](docs/00_PROJECT_STATE.md)
-- [Python Function frontend](docs/12_PYTHON_FRONTEND.md)
-- [ASFP compilation](docs/13_ASFP_COMPILER.md)
+- [English handbook](docs/site/index.md)
+- [Getting started](docs/site/introduction/getting-started.md)
+- [Functions and fields](docs/site/user-guide/functions.md)
+- [Device configuration](docs/site/user-guide/devices.md)
+- [Example walkthroughs](docs/site/examples/index.md)
 - [Runnable function-call example](examples/function_call.py)
 - [Runnable agitation example](examples/agitation.py)
 - [List copying and scaling](examples/scale_values.py)
@@ -54,7 +55,7 @@ organization and provenance.
 ## For SciLoom developers
 
 - [Architecture and design](docs/INDEX.md)
-- [Semantic IR and JSON API](docs/11_SEMANTIC_IR.md)
+- [Developer handbook](docs/site/developer/architecture.md)
 - [IR persistence and reference execution example](examples/developer/agitation_ir.py)
 - [Proposed Python examples](examples/proposed_frontend/) — illustrative, not runnable yet.
 - [Contributor and agent guidelines](AGENTS.md)

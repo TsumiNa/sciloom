@@ -18,9 +18,12 @@ The current implementation supports Function programs, scalar and list state,
 physical rotational-speed values, device configuration and explicit start/stop.
 AutoSuite is the first maintained target. Compilation does not operate equipment.
 
-- [Current capabilities](introduction/status.md)
+- [Get started](introduction/getting-started.md)
+- [User guide](user-guide/functions.md)
+- [Developer guide](developer/architecture.md)
+- [Example walkthroughs](examples/index.md)
 - [Author API reference](api/author.md)
-- [Build and preview these docs](developer/documentation.md)
 
-This is a development project. The public handbook is being assembled from the
-implemented behavior; the source repository currently requires access.
+This is a development project. The handbook describes implemented behavior;
+[future capabilities](introduction/status.md) are identified separately. The
+source repository currently requires access.

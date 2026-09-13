@@ -1,13 +1,14 @@
 # Documentation index
 
-The [public handbook source](site/index.md) and its
-[local build instructions](site/developer/documentation.md) are being assembled
-from the current implementation. The records below retain design history and
+The [public handbook](site/index.md) and its
+[local build instructions](site/developer/documentation.md) describe the current
+implementation. The records below retain design history and
 implementation context; they are not automatically published with the website.
 
 ## Architecture and implementation direction
 
-Read in numeric order, from the current project state through design and validation.
+Use the handbook for implemented behavior. Numbered current-guide files below
+are indexes; design proposals and validation records retain their historical context.
 
 - [Project state](00_PROJECT_STATE.md)
 - [Target architecture](01_TARGET_ARCHITECTURE.md)
