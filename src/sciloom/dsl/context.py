@@ -69,6 +69,18 @@ class LoweringContext:
             return vars(self.instance)[name]
         return inspect.getattr_static(type(self.instance), name, _MISSING)
 
+    def device_member(self, node: ast.AST) -> tuple[DeviceReference, str] | None:
+        """Recognize `self.<device slot>.<member>`; any other shape returns None."""
+        if not (
+            isinstance(node, ast.Attribute)
+            and isinstance(node.value, ast.Attribute)
+            and isinstance(node.value.value, ast.Name)
+            and node.value.value.id == "self"
+        ):
+            return None
+        component = self.host_attribute(node.value.attr)
+        return (component, node.attr) if isinstance(component, DeviceReference) else None
+
     def device_resource(self, reference: DeviceReference) -> DeviceResource:
         if id(reference.owner) not in self.paths:
             self.fail("device_reference", "Shared device owner must belong to this Function composition.")

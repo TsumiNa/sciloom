@@ -22,7 +22,7 @@ from sciloom.core.ir import (
 )
 from .context import LoweringContext
 from .device_conditions import device_if
-from .device_operations import configure, device_member, operation
+from .device_operations import configure, operation
 from .expressions import BINARY_OPERATORS, expression, is_length_call
 from .model import Function
 
@@ -112,7 +112,7 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
                     )
                 )
         elif isinstance(node, ast.AugAssign) and type(node.op) in BINARY_OPERATORS:
-            if device_member(context, node.target) is not None:
+            if context.device_member(node.target) is not None:
                 context.fail("device_property_read", "Device properties only support plain assignment.", node)
             if isinstance(node.target, ast.Subscript):
                 destination, element_type = indexed_target(context, node.target)
@@ -168,7 +168,7 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
 
 
 def indexed_target(context: LoweringContext, node: ast.Subscript) -> tuple[Reference, ScalarType]:
-    if device_member(context, node.value) is not None:
+    if context.device_member(node.value) is not None:
         context.fail(
             "device_property_read", "Indexed device-property updates require getters, which are unsupported.", node
         )

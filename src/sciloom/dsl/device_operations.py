@@ -7,24 +7,11 @@ from sciloom.core.ir import CommandArgument, ConfigureProperty, DeviceCommand, S
 from sciloom.core.ir.device_contracts import START_AGITATION_ID, STOP_AGITATION_ID
 from sciloom.devices.declarations import device_contract
 from .context import LoweringContext
-from .device_schema import DeviceReference
 from .expressions import expression
 
 
-def device_member(context: LoweringContext, node: ast.AST) -> tuple[DeviceReference, str] | None:
-    if not (
-        isinstance(node, ast.Attribute)
-        and isinstance(node.value, ast.Attribute)
-        and isinstance(node.value.value, ast.Name)
-        and node.value.value.id == "self"
-    ):
-        return None
-    component = context.host_attribute(node.value.attr)
-    return (component, node.attr) if isinstance(component, DeviceReference) else None
-
-
 def configure(context: LoweringContext, node: ast.Assign) -> ConfigureProperty | None:
-    member = device_member(context, node.targets[0])
+    member = context.device_member(node.targets[0])
     if member is None:
         return None
     reference, name = member
@@ -41,7 +28,7 @@ def configure(context: LoweringContext, node: ast.Assign) -> ConfigureProperty |
 
 
 def operation(context: LoweringContext, node: ast.Call) -> StartAgitation | StopAgitation | DeviceCommand | None:
-    member = device_member(context, node.func)
+    member = context.device_member(node.func)
     if member is None:
         return None
     reference, name = member

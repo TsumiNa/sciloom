@@ -21,7 +21,6 @@ DEFERRED_IMPORTS = frozenset(
     {
         ("device_conditions", "statements"),
         ("device_schema", "model"),
-        ("expressions", "device_operations"),
         ("model", "lowering"),
     }
 )
