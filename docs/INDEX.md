@@ -26,6 +26,7 @@ Read in numeric order, from the current project state through design and validat
 - [Accepted package layout, native types and list implementation sequence](refactor/package-layout/00-overview.md)
 - [Accepted device configuration and lifecycle sequence](refactor/device-abstraction/00-overview.md)
 - [Collected device questions for later confirmation](refactor/device-abstraction/qa.md)
+- [English documentation and versioned publication plan](refactor/documentation-site/00-overview.md)
 
 ## AutoSuite reference
 
