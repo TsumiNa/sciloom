@@ -64,6 +64,18 @@ def targets(node: ast.Import | ast.ImportFrom, package: str) -> set[str]:
     return qualify(node.module)
 
 
+def package_imports(tree: ast.Module) -> set[str]:
+    """Frontend packages imported whole, which would hide a module edge."""
+    whole = {f"sciloom.{name}" for name in PACKAGES}
+    found: set[str] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            found |= {alias.name.removeprefix("sciloom.") for alias in node.names if alias.name in whole}
+        elif isinstance(node, ast.ImportFrom) and node.level == 0 and node.module == "sciloom":
+            found |= {alias.name for alias in node.names if alias.name in PACKAGES}
+    return found
+
+
 def imports(tree: ast.Module, package: str) -> tuple[set[str], set[str]]:
     """Split frontend imports into module-level and function-local ones."""
     local = {
@@ -88,6 +100,13 @@ def edges() -> dict[str, tuple[set[str], set[str]]]:
 def test_the_scanner_covers_both_import_forms():
     tree = ast.parse("import sciloom.dsl.context\n\n\ndef lower():\n    from sciloom.flow import function\n")
     assert imports(tree, "dsl") == ({"dsl.context"}, {"flow.function"})
+    assert package_imports(ast.parse("import sciloom.dsl\nfrom sciloom import flow\n")) == {"dsl", "flow"}
+    assert package_imports(tree) == set()
+
+
+def test_no_module_imports_a_frontend_package_as_a_whole():
+    for name, tree in modules().items():
+        assert not package_imports(tree), name
 
 
 def test_every_production_module_is_classified():

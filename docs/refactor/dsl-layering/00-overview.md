@@ -17,9 +17,12 @@ lands: `sciloom.dsl` stops owning field declarations and model instances, which
 move to `sciloom.flow`, and owns source analysis alone. Nothing else in that
 contract changes.
 
-No stage is implemented yet. Each stage updates its callers, examples, status and
-tests before review and squash merge. Do not start a later implementation stage
-before the preceding pull request is merged.
+Stages 1 to 5 are merged as pull requests #41 and #42 (4bf4f68, 02cae6e), #43
+(d4d13f9), #44 (5363abe), #45 (2db4f3e) and #46 (2d90e51). Stage 6 separates the
+authoring vocabulary from the source analysis and lands with this status entry.
+Each stage updates its callers, examples, status and tests before review and
+squash merge. Do not start a later implementation stage before the preceding pull
+request is merged.
 
 | Stage | Plan | Available after merge |
 | --- | --- | --- |

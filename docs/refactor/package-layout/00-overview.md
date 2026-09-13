@@ -50,7 +50,7 @@ the same PR. No temporary aliases, plugins or later-stage parallel implementatio
 | Package/module | Owns |
 |---|---|
 | sciloom | Lazy experiment-author exports |
-| sciloom.dsl | Field declarations, model instances, Python source lowering |
+| sciloom.dsl | Field declarations, model instances, Python source lowering (superseded by the [DSL layering contract](../dsl-layering/00-overview.md): declarations and model instances moved to `sciloom.flow`, and `sciloom.dsl` owns source analysis alone) |
 | sciloom.units | Independent physical values and units shared by authoring/core |
 | sciloom.core.ir | Types, semantic records, structural codec, semantic validation |
 | sciloom.core.compiler | Target protocol, generic pipeline, artifacts/results |
