@@ -30,9 +30,33 @@ theme:
 nav:
   - Introduction:
       - Welcome: index.md
+      - Getting started: introduction/getting-started.md
       - Current capabilities: introduction/status.md
+  - User Guide:
+      - Functions and fields: user-guide/functions.md
+      - Values, units and lists: user-guide/values.md
+      - Runtime control flow: user-guide/control-flow.md
+      - Composition: user-guide/composition.md
+      - Devices: user-guide/devices.md
+      - Compilation: user-guide/compilation.md
   - Developer Guide:
+      - Architecture: developer/architecture.md
+      - Semantic IR and JSON: developer/ir.md
+      - Compiler and specialization: developer/compiler.md
+      - Reference execution: developer/interpreter.md
+      - Device and target contributions: developer/contributions.md
+      - Typing and tests: developer/typing-and-tests.md
       - Building documentation: developer/documentation.md
+  - Examples:
+      - Overview: examples/index.md
+      - Function calls: examples/function-call.md
+      - Agitation: examples/agitation.md
+      - Scale values: examples/scale-values.md
+      - Non Zero Array Min: examples/non-zero-array-min.md
+      - Agitation IR: examples/agitation-ir.md
+      - List IR: examples/list-ir.md
+      - Independent device: examples/demo-device.md
+      - Portable agitation: examples/portable-agitation.md
   - API Reference:
       - Author API: api/author.md
 plugins:
