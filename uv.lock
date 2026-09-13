@@ -607,10 +607,10 @@ dev = [
     { name = "pytest", specifier = ">=9.1.1" },
 ]
 docs = [
-    { name = "griffelib", specifier = "==2.3.0" },
+    { name = "griffelib", specifier = ">=2.3.0" },
     { name = "mike", git = "https://github.com/squidfunk/mike.git?rev=2d4ad799442f4592db8ad53b179bfb33db8c69ac" },
-    { name = "mkdocstrings-python", specifier = "==2.0.8" },
-    { name = "zensical", specifier = "==0.0.61" },
+    { name = "mkdocstrings-python", specifier = ">=2.0.8" },
+    { name = "zensical", specifier = ">=0.0.61" },
 ]
 
 [[package]]
