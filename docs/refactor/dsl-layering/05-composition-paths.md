@@ -12,7 +12,8 @@ narrow its parameter to `Function`. Keep the `vars(...)` traversal that avoids
 firing descriptors. Move its black-box test to a driver test module and add the
 missing coverage for the private-name rejection. Comment the two runtime imports
 of `Function` so they are not later demoted to type-checking imports. Shrink the
-allow list to one and flip the graph assertion to acyclic.
+allow list to one, leaving the facade seam as the frontend's only deferred
+import.
 
 ## Non-goals
 
