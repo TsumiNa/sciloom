@@ -64,7 +64,7 @@ def lower(root: Function) -> Program:
             reference = context.host_attribute(name)
             assert isinstance(reference, DeviceReference)
             context.device_resource(reference)
-        function = build_function(context)
+        function = _build_function(context)
         functions.append(function)
         index += 1
     package = Program(
@@ -79,7 +79,7 @@ def lower(root: Function) -> Program:
     return package
 
 
-def build_function(context: LoweringContext) -> FunctionIR:
+def _build_function(context: LoweringContext) -> FunctionIR:
     node = runtime_source(context)
     variables = []
     for field in context.instance.model_fields.values():
