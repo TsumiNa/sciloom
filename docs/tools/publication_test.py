@@ -6,6 +6,7 @@ import os
 import shutil
 import subprocess
 import sys
+import tomllib
 
 import pytest
 
@@ -138,7 +139,8 @@ def test_locked_checkout_pipeline_and_stale_dev_rejection(tmp_path, monkeypatch)
     pub.main()
     output = root / ".build/publication"
     info = json.loads((output / "site/dev/build-info.json").read_text())
-    assert info == {"version": "dev", "ref": "main", "commit": sha, "package_version": "0.1.0"}
+    package_version = tomllib.loads((root / "pyproject.toml").read_text())["project"]["version"]
+    assert info == {"version": "dev", "ref": "main", "commit": sha, "package_version": package_version}
     html = (output / "site/dev/index.html").read_text()
     assert 'href="https://tsumina.github.io/sci-loom/dev/"' in html
     assert '"provider":"mike"' in html
