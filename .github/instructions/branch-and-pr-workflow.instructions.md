@@ -31,12 +31,16 @@ Check these conditions in order and stop at the first match:
 
 ## Version bump
 
-Every PR, and every PR plan file, ends with a version decision. Make it after the
-change is complete, when its real extent is known, and apply it as the last change
-before requesting review. The package version is `[project].version` in
-`pyproject.toml`; a bump changes that value in the same PR. Record the decision
-and its one-sentence reason as the last section of the plan file (**Version**) and
-as a `Version:` line at the end of the PR description.
+Every PR, and every PR plan file created or updated after this rule landed, ends
+with a version decision. Make it after the change is complete, when its real
+extent is known, and apply it as the last change before requesting review. If
+review fixes change the PR's extent, re-evaluate the decision after the last fix,
+immediately before the merge, and update the bump and the `Version:` line when the
+outcome changed. The package version is `[project].version` in `pyproject.toml`;
+a bump changes that value in the same PR. Record the decision and its
+one-sentence reason as the last section of the plan file (**Version**) and as a
+`Version:` line at the end of the PR description. Earlier plan files keep their
+recorded sections; add a **Version** section only when such a plan is next updated.
 
 Choose exactly one outcome:
 
@@ -61,7 +65,7 @@ with lower precedence, and uv rejects it. Keep the suffix a record identifier: d
 not write it into `[project].version`, because the merge commit id exists only
 after the merge and release tags must equal the plain `[project].version`. A bump
 alone does not create a release either; release tags follow
-`docs/site/developer/publication.md`.
+`website/docs/developer/publication.md`.
 
 ## Splitting a Complex Refactor
 
@@ -80,7 +84,7 @@ For these, decide the PR sequence **before editing any file**. Do not open one b
 Record the plan under `docs/refactor/<refactor-slug>/` before implementation:
 
 - `00-overview.md` — why the refactor exists, the decision with alternatives and consequences, explicit non-goals, and the ordered list of planned PRs.
-- one plan file per planned PR, each with **Goal**, **Scope**, **Non-goals**, **Acceptance** and, last, **Version** sections (see [Version bump](#version-bump)). Follow the plan-filename convention in `repository-doc-boundaries.instructions.md`; documentation validation enforces it.
+- one plan file per planned PR, each with **Goal**, **Scope**, **Non-goals**, **Acceptance** and, last, **Version** sections (see [Version bump](#version-bump); plans that predate that rule gain the section when next updated). Follow the plan-filename convention in `repository-doc-boundaries.instructions.md`; documentation validation enforces it.
 
 If the user requests a complex refactor without a plan, propose the split and get agreement before writing code.
 
@@ -135,7 +139,7 @@ Before the gate may advance:
 2. Push the complete change and wait for required CI and configured human or automated review. Passing CI alone does not complete the review gate.
 3. Inspect every review surface: submitted reviews, inline review threads, and general PR comments.
 4. Address every actionable comment with a code or documentation change and regression coverage where appropriate. If a suggestion should not be implemented, reply with a concrete technical reason instead of silently ignoring it.
-5. Push the follow-up commits, wait for the checks on the latest head commit, reply to each handled thread, and resolve it. Recheck that no new or unresolved review thread remains.
+5. Push the follow-up commits, wait for the checks on the latest head commit, reply to each handled thread, and resolve it. Recheck that no new or unresolved review thread remains. If the fixes changed the PR's extent, re-evaluate the version decision (see [Version bump](#version-bump)) before merging.
 6. Squash-merge the PR. Confirm the remote PR state is `MERGED` and record the resulting merge commit; a local worktree warning is not evidence that the remote merge failed. For a PR without a bump, this merge commit's short id completes the `MAJOR.MINOR.PATCH+<short commit id>` identifier.
 7. Fetch the merged default branch, then create the next PR's branch or worktree from that updated default branch. Never base the next stage on the unmerged predecessor branch.
 
