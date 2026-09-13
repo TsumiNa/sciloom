@@ -3,11 +3,19 @@
 ## Authority and status
 
 This is the accepted interface contract for a nine-stage layering refactor of the
-Python frontend. It completes, rather than supersedes, the package-layout
-contract: that plan's stage 4 already required "explicit context objects and
-direct functions" with "no new import cycles", and its acceptance was not
-reached. Every constraint it states remains in force, including the absence of a
-pass registry, mixin hierarchy, compatibility facade or generic pass framework.
+Python frontend. It extends the package-layout contract, whose nine stages are
+merged. Every constraint that plan states remains in force, including explicit
+context objects, direct functions and the absence of a pass registry, mixin
+hierarchy, compatibility facade or generic pass framework. Its stage 4 acceptance
+required no *new* import cycles, which this plan does not dispute: the cycles
+recorded here predate that stage and were never covered by an executable check.
+Stage 2 adds that check, and stages 3 to 5 remove the cycles within the
+constraints the earlier plan set.
+
+This plan supersedes one row of the package-layout ownership table when stage 6
+lands: `sciloom.dsl` stops owning field declarations and model instances, which
+move to `sciloom.flow`, and owns source analysis alone. Nothing else in that
+contract changes.
 
 No stage is implemented yet. Each stage updates its callers, examples, status and
 tests before review and squash merge. Do not start a later implementation stage
@@ -65,11 +73,13 @@ contract and unjustified with one frontend implementation.
 
 ## Organisation rule
 
-> `flow` and `devices` are the two vocabularies an author writes; `dsl` only
-> turns them into IR; nothing after `core` knows about Python.
+> `flow` and `devices` are the two vocabularies an author writes; `dsl` is the
+> only layer that reads Python source; `core` imports neither.
 
 Dependencies run `dsl` to `flow` to `devices` to `core`. The single edge in the
-other direction is the facade seam recorded below.
+other direction is the facade seam recorded below. An equipment target declares
+and binds devices, so it may import `sciloom.devices`, as the AutoSuite target
+already does; no target imports the flow vocabulary or the source analysis.
 
 | Location | Responsibility |
 | --- | --- |
