@@ -1,6 +1,6 @@
 # Standalone documentation website
 
-Status: accepted; implementation belongs to one migration PR.
+Status: implemented in [PR #37](https://github.com/TsumiNa/sciloom/pull/37).
 
 The public documentation, theme and build tools were mixed with internal design
 records. Group all website-specific sources under `website/`, while keeping
@@ -50,3 +50,8 @@ Python APIs, runtime semantics, public URLs, navigation and version metadata do
 not change. Preserve generated `gh-pages` history and immutable published releases.
 There are no formal tags at migration time, so no old-layout build adapter is
 needed. Raw AutoSuite evidence and example companion files remain unchanged.
+
+## Version decision
+
+No package version bump: this migration changes documentation organization and
+tool paths, without changing the public Python API or runtime behavior.
