@@ -4,8 +4,8 @@ Device contracts define parameters and commands. Targets validate and emit platf
 programs. Independent packages use the same public interfaces as sciloom.contrib;
 no plugin registry or namespace installation is required.
 
-This page is the reference. For a worked walkthrough that builds a device family
-step by step and compiles it, start with [add a device](add-a-device.md).
+This page is the reference. For worked walkthroughs, start with
+[add a device](add-a-device.md) and [add a target](add-a-target.md).
 
 ## A minimal target
 

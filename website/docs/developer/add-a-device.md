@@ -122,8 +122,7 @@ the trusted facts the compiler checks against.
 `bind_device` reads the profile's declarations and capability lists and returns a
 `DeviceBinding`: the logical name the program used, the physical identity you chose,
 the profile's contract, and every ancestor contract. The complete target is at the
-end of this page, and [device and target contributions](contributions.md) covers
-the target interface in full.
+end of this page, and [add a target](add-a-target.md) builds one step by step.
 
 ## Step 5: compile and read back what you declared
 
