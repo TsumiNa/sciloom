@@ -7,6 +7,16 @@ from enum import Enum
 
 @dataclass(frozen=True, kw_only=True)
 class RotationalSpeed:
+    """A nonnegative, finite rotational speed in canonical revolutions per second.
+    
+    Use unit literals such as `600 * rpm` in experiment code.
+    
+    Args:
+        rps: Canonical revolutions per second; integers widen to float.
+    
+    Raises:
+        TypeError: The value is not an int or float (bool is rejected).
+        ValueError: The value is negative, nonfinite or cannot be represented."""
     rps: float
 
     def __post_init__(self) -> None:
@@ -22,6 +32,7 @@ class RotationalSpeed:
 
 
 class SpeedUnit(Enum):
+    """Unit for constructing a rotational speed by multiplying a numeric literal."""
     RPM = "rpm"
     RPS = "rps"
 
@@ -36,4 +47,6 @@ class SpeedUnit(Enum):
 
 
 rpm = SpeedUnit.RPM
+"""Revolutions per minute; multiply a numeric literal by this unit."""
 rps = SpeedUnit.RPS
+"""Revolutions per second; the canonical rotational-speed unit."""

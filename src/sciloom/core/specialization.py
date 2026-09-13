@@ -14,6 +14,17 @@ def specialize(program: Program, *, bindings: DeviceBindings) -> Program:
     Node identities and source spans survive selection. Resources receive trusted
     concrete interface types; deployment addresses and private backend state never
     enter this program. Missing bindings are errors even for a false device query.
+
+    Args:
+        program: Authored program; not modified by this function.
+        bindings: Trusted deployment facts supplied by the selected target.
+
+    Returns:
+        A new program with selected branches and reachable functions.
+
+    Raises:
+        IRValidationError: Input or resulting semantics are invalid.
+        CompilationError: Bindings are missing, incompatible or untrusted.
     """
     diagnostics = validate(program)
     if diagnostics:

@@ -16,7 +16,16 @@ R = TypeVar("R")
 
 
 def runtime(method: Callable[P, R]) -> Callable[P, R]:
-    """Register source for compilation and prevent accidental host execution."""
+    """Register a method's source for compilation, preserving its type signature.
+    
+    Args:
+        method: Runtime method declared in an ordinary Python source file.
+    
+    Returns:
+        A guarded method whose body is analyzed rather than executed by Python.
+    
+    Raises:
+        TypeError: The decorated method is called by host Python."""
 
     @wraps(method)
     def registered(*args: P.args, **kwargs: P.kwargs) -> R:
@@ -46,13 +55,32 @@ class Function:
         cls.device_fields = build_device_schema(cls, Function.__dict__)
 
     def to_ir(self) -> Program:
-        """Lower this instance without changing its configuration or runtime schema."""
+        """Build target-independent IR from this specialized instance.
+        
+        Returns:
+            The authored program, including both sides of device conditions.
+        
+        Raises:
+            IRValidationError: Declarations or runtime source violate the DSL.
+        
+        The instance's host configuration and runtime schema are not mutated."""
         from .lowering import lower
 
         return lower(self)
 
     def compile(self, *, target: Target) -> CompileResult:
-        """Compile this specialized instance using an explicit compilation target."""
+        """Compile this instance for an explicitly selected platform.
+        
+        Args:
+            target: Target providing trusted device bindings, validation and emission.
+        
+        Returns:
+            Authored and specialized IR together with the target artifact.
+        
+        Raises:
+            IRValidationError: The source or semantic model is invalid.
+            CompilationError: Bindings, capabilities or target rules reject the program.
+            TypeError: The target does not implement the compiler protocol."""
         return compile_ir(self.to_ir(), target=target)
 
     def __call__(self, *args: Any, **kwargs: Any) -> Any:

@@ -19,7 +19,18 @@ P = ParamSpec("P")
 
 
 def operation(*, id: str) -> Callable[[Callable[P, None]], Callable[P, None]]:
-    """Register a semantic identifier while preserving the Python type signature."""
+    """Register a setter or no-return command, preserving its Python signature.
+
+    Args:
+        id: Stable namespaced and versioned semantic identity.
+
+    Returns:
+        A decorator that registers the method and blocks host execution.
+
+    Raises:
+        ValueError: The semantic ID is malformed.
+        TypeError: The decorated operation is called by host Python.
+    """
     if not semantic_id(id):
         raise ValueError("Operation IDs must be namespaced and versioned.")
 
@@ -47,7 +58,17 @@ def value_type(annotation: object) -> ValueType:
 
 
 def device_contract(cls: type[BaseDevice]) -> DeviceTypeContract:
-    """Read descriptors and signatures without executing getter/setter bodies."""
+    """Read descriptors and signatures without executing device method bodies.
+
+    Args:
+        cls: Device category or concrete profile with its own semantic type ID.
+
+    Returns:
+        A serializable contract containing inherited declarations and ancestry.
+
+    Raises:
+        TypeError: A type identity, property or command declaration is invalid.
+    """
     type_id = cls.__dict__.get("device_type_id")
     if not isinstance(type_id, str) or not semantic_id(type_id):
         raise TypeError("Each device class requires its own versioned device_type_id.")
@@ -99,7 +120,20 @@ def device_contract(cls: type[BaseDevice]) -> DeviceTypeContract:
 
 
 def bind_device(*, logical_id: str, device: BaseDevice, physical_id: str) -> "DeviceBinding":
-    """Translate an explicit concrete profile into contributor-neutral facts."""
+    """Translate an explicit concrete profile into contributor-neutral facts.
+
+    Args:
+        logical_id: Declared logical device field/component path.
+        device: Concrete profile explicitly declaring its supported capabilities.
+        physical_id: Target-defined hardware identity, unique across bindings.
+
+    Returns:
+        An immutable binding with the complete trusted ancestor directory.
+
+    Raises:
+        TypeError: Profile declarations or capability lists are malformed.
+        ValueError: The resulting binding violates trusted-contract invariants.
+    """
     from ..core.devices import DeviceBinding
 
     cls = type(device)

@@ -19,6 +19,17 @@ from .validation import validate_array_outputs
 
 @dataclass(frozen=True, kw_only=True)
 class AutoSuiteTarget:
+    """Compile validated SciLoom programs to AutoSuite function-package XML.
+    
+    Args:
+        version: Supported AutoSuite serialization profile.
+        devices: Logical field/component paths mapped to individual shaker profiles.
+    
+    Raises:
+        TypeError: A binding is not an AutoSuiteIndividualShaker.
+        ValueError: A profile/version/path is invalid or physical bindings are duplicated.
+    
+    Generated XML still requires AutoSuite Executor validation on the deployment host."""
     version: AutoSuiteVersion = AutoSuiteVersion.V2_47_1_1
     devices: Mapping[str, AutoSuiteIndividualShaker] = field(default_factory=dict)
 
@@ -42,6 +53,7 @@ class AutoSuiteTarget:
             zones.add(binding.zone)
 
     def resolve_devices(self, program: Program) -> DeviceBindings:
+        """Translate explicit deployment profiles into trusted, contributor-neutral facts."""
         return DeviceBindings(
             devices=tuple(
                 bind_device(
@@ -55,9 +67,17 @@ class AutoSuiteTarget:
 
     @property
     def target_id(self) -> str:
+        """Return the selected AutoSuite format identity."""
         return self.version.value
 
     def validate(self, program: Program) -> tuple[Diagnostic, ...]:
+        """Return platform diagnostics for recursion, Boolean operations and array outputs.
+        
+        Args:
+            program: Structurally valid, specialized semantic IR.
+        
+        Returns:
+            An empty tuple when the currently implemented target checks pass."""
         calls = {
             f.node_id: [(n, p) for n, p in iter_nodes(f, f"$.functions[{i}]") if isinstance(n, Call)]
             for i, f in enumerate(program.functions)
@@ -105,6 +125,18 @@ class AutoSuiteTarget:
         return tuple(errors)
 
     def emit(self, program: Program) -> Artifact:
+        """Generate an ASFP artifact from a validated, specialized program.
+        
+        Args:
+            program: IR already checked by the public compilation pipeline.
+        
+        Returns:
+            UTF-8 XML bytes with application/xml media type and .asfp suffix.
+        
+        Raises:
+            CompilationError: Generation cannot represent the program or produce valid XML.
+        
+        Use compile_ir or Function.compile to run all preceding validation stages."""
         serialization_ir = lower_asfp(program, self.version, devices=self.devices)
         try:
             content = serialization_ir.to_xml()
