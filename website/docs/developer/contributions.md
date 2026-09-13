@@ -61,6 +61,13 @@ returns None. Registered parameters use assignment, not parallel set_* methods.
 Commands also use operation with typed arguments and None return. The compiler
 reads declarations without executing their bodies; host access is protected.
 
+A rejected declaration raises IRValidationError carrying a structured Diagnostic,
+under code class_schema when a Function declares device slots and device_contract
+when a device class declares its own type identity, properties or commands. Host
+access guards are different: reading a device property or calling a runtime method
+from host Python still raises TypeError, and so does bind_device, which reports a
+target author's binding mistake rather than a declaration.
+
 The [independent contribution example](../examples/demo-device.md) includes the
 full DemoAgitator and DemoTarget implementation. It adds gain and a native calibrate
 command without changing core. `bind_device` and `device_contract` from
