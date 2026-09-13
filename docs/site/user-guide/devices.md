@@ -51,7 +51,8 @@ self.agitator.start()
 
 The fragment uses `comptime` from sciloom and the example's DemoAgitator definition.
 `is_device` narrows the true branch's type. `can_write(device, "name")` and
-`supports(device, DeviceType.command)` query explicit capabilities without narrowing.
+`supports(device, Agitator.start)` query explicit capabilities without narrowing.
+The second argument to `supports` is a registered command method.
 Property names must be declared, unambiguous string literals.
 
 Queries take two positional arguments and occur only as whole if/elif conditions.
