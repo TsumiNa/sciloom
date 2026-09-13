@@ -32,6 +32,17 @@ def test_complete_handbook_snippet(page, tmp_path):
     subprocess.run([sys.executable, str(example)], cwd=tmp_path, env=env, check=True)
 
 
+@pytest.mark.parametrize("page", ("developer/add-a-device",))
+def test_complete_tutorial_snippet(page, tmp_path):
+    """Tutorials build up in steps, so their complete program is the last block."""
+    markdown = (ROOT / f"website/docs/{page}.md").read_text()
+    source = re.findall(r"```python\n(.*?)\n```", markdown, re.DOTALL)[-1]
+    example = tmp_path / "tutorial_example.py"
+    example.write_text(source)
+    env = {**os.environ, "PYTHONPATH": str(ROOT)}
+    subprocess.run([sys.executable, str(example)], cwd=tmp_path, env=env, check=True)
+
+
 @pytest.fixture(scope="module")
 def rendered():
     subprocess.run([sys.executable, str(ROOT / "website/tools/site.py"), "build", "--strict"], check=True)
