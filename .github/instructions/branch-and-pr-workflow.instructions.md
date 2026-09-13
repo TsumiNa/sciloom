@@ -50,13 +50,17 @@ Choose exactly one outcome:
 - **No bump** — when the change is too small to justify even a PATCH bump (for
   example a typo, comment, instruction or documentation-only change), leave
   `[project].version` unchanged and identify the resulting state as
-  `MAJOR.MINOR.PATCH-<short commit id>`, where the short commit id is the
-  squash-merge commit on the default branch (for example `0.1.0-7e46bb1`). Before
-  the merge, write `0.1.0-<merge commit>`; fill in the id once the merge is confirmed.
+  `MAJOR.MINOR.PATCH+<short commit id>`, where the short commit id is the
+  squash-merge commit on the default branch (for example `0.1.0+7e46bb1`). Before
+  the merge, write `0.1.0+<merge commit>`; fill in the id once the merge is confirmed.
 
-The `-<short commit id>` form is only a record identifier. It is not a valid
-`[project].version` value (uv rejects it) and it never becomes a release tag. A
-bump alone does not create a release either; release tags follow
+The `+<short commit id>` suffix is SemVer 2.0.0 build metadata (a PEP 440 local
+version): it does not change precedence, so the state still counts as
+`MAJOR.MINOR.PATCH`. Never use a `-` suffix; SemVer reads that as a pre-release
+with lower precedence, and uv rejects it. Keep the suffix a record identifier: do
+not write it into `[project].version`, because the merge commit id exists only
+after the merge and release tags must equal the plain `[project].version`. A bump
+alone does not create a release either; release tags follow
 `docs/site/developer/publication.md`.
 
 ## Splitting a Complex Refactor
@@ -132,7 +136,7 @@ Before the gate may advance:
 3. Inspect every review surface: submitted reviews, inline review threads, and general PR comments.
 4. Address every actionable comment with a code or documentation change and regression coverage where appropriate. If a suggestion should not be implemented, reply with a concrete technical reason instead of silently ignoring it.
 5. Push the follow-up commits, wait for the checks on the latest head commit, reply to each handled thread, and resolve it. Recheck that no new or unresolved review thread remains.
-6. Squash-merge the PR. Confirm the remote PR state is `MERGED` and record the resulting merge commit; a local worktree warning is not evidence that the remote merge failed. For a PR without a bump, this merge commit's short id completes the `MAJOR.MINOR.PATCH-<short commit id>` identifier.
+6. Squash-merge the PR. Confirm the remote PR state is `MERGED` and record the resulting merge commit; a local worktree warning is not evidence that the remote merge failed. For a PR without a bump, this merge commit's short id completes the `MAJOR.MINOR.PATCH+<short commit id>` identifier.
 7. Fetch the merged default branch, then create the next PR's branch or worktree from that updated default branch. Never base the next stage on the unmerged predecessor branch.
 
 Keep every later plan item pending until the preceding PR has passed this complete gate. If review requests changes or the latest checks fail, remain on the current PR and fix it; do not advance the sequence. A separately submitted refactor-plan PR is subject to the same gate before PR1 starts.
@@ -153,4 +157,4 @@ Keep every later plan item pending until the preceding PR has passed this comple
 - Advancing from a local branch state without confirming the remote squash merge and updating from the default branch.
 - Bumping MAJOR without explicit human approval, or bumping PATCH for a change that does not justify it.
 - Finishing a PR or plan file without a recorded version decision.
-- Writing the `-<short commit id>` form into `[project].version` or tagging it as a release.
+- Writing the `+<short commit id>` form into `[project].version` or tagging it as a release, or spelling it with a `-` suffix, which SemVer reads as a pre-release.
