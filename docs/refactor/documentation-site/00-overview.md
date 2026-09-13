@@ -2,7 +2,9 @@
 
 Status: plan merged in PR #28 (`4a62f2e`); foundation merged in PR #29 (`3f91340`).
 Stage 2 merged in PR #30 (`fb853ca5`); stage 3 merged in PR #31 (`b361be6f`).
-Stage 4 is implemented in its review branch; its merge enables the first deployment.
+Stage 4 is implemented in [PR #32](https://github.com/TsumiNa/sci-loom/pull/32).
+The publication workflow records live deployment outcomes; the implementing PR
+records the first deployed source SHA after merge and successful main CI.
 This document is
 the authoritative contract for this sequence. It changes documentation tooling,
 not SciLoom execution semantics, Python APIs, package visibility or PyPI releases.
@@ -134,7 +136,7 @@ review → corrections → checks on latest head → confirmed squash merge → 
 | 1 | [Site foundation](01-site-foundation.md) | Merged: PR #29, 3f91340 |
 | 2 | [Reader handbooks](02-reader-handbooks.md) | Merged: PR #30, fb853ca5 |
 | 3 | [Generated API reference](03-api-reference.md) | Merged: PR #31, b361be6f |
-| 4 | [Versioned publication](04-versioned-publication.md) | Implemented; awaiting review/merge and first deployment |
+| 4 | [Versioned publication](04-versioned-publication.md) | Implemented: PR #32; deployment receipts in Pages workflow |
 
 ## Acceptance
 
