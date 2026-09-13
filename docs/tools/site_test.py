@@ -81,3 +81,21 @@ def test_public_directory_symlink_is_rejected(checkout):
     public.symlink_to(checkout / "examples", target_is_directory=True)
     with pytest.raises(ValueError, match="documentation"):
         site.prepare(checkout, site.source_info(checkout))
+
+
+def test_release_and_dev_metadata_require_exact_clean_refs(checkout):
+    sha = site.git(checkout, "rev-parse", "HEAD")
+    site.git(checkout, "update-ref", "refs/remotes/origin/main", sha)
+    site.git(checkout, "tag", "v0.1.0")
+    site.git(checkout, "tag", "v0.2.0")
+    assert site.source_info(checkout, publish_ref="main")["version"] == "dev"
+    assert site.source_info(checkout, publish_ref="v0.1.0")["commit"] == sha
+    with pytest.raises(ValueError, match="package version"):
+        site.source_info(checkout, publish_ref="v0.2.0")
+    with pytest.raises(ValueError, match="Publish only"):
+        site.source_info(checkout, publish_ref="v0.1.0-rc1")
+    with pytest.raises(ValueError, match="non-PR"):
+        site.source_info(checkout, preview="1", publish_ref="main")
+    (checkout / "pyproject.toml").write_text('[project]\nversion = "0.3.0"\n')
+    with pytest.raises(ValueError, match="clean"):
+        site.source_info(checkout, publish_ref="main")
