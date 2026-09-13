@@ -18,8 +18,9 @@ move to `sciloom.flow`, and owns source analysis alone. Nothing else in that
 contract changes.
 
 Stages 1 to 6 are merged as pull requests #41 and #42 (4bf4f68, 02cae6e), #43
-(d4d13f9), #44 (5363abe), #45 (2db4f3e), #46 (2d90e51) and #47 (440aff5). Stage 7
-unifies the declaration-time error model and lands with this status entry.
+(d4d13f9), #44 (5363abe), #45 (2db4f3e), #46 (2d90e51), #47 (440aff5) and #48
+(9ea3a62). Stage 8 names the analysis conventions and lands with this status
+entry.
 Each stage updates its callers, examples, status and tests before review and
 squash merge. Do not start a later implementation stage before the preceding pull
 request is merged.

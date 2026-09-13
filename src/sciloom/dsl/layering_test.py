@@ -104,6 +104,43 @@ def test_the_scanner_covers_both_import_forms():
     assert package_imports(tree) == set()
 
 
+def test_lowering_state_is_always_the_first_parameter_named_context():
+    for name, tree in modules().items():
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef):
+                continue
+            positional = node.args.posonlyargs + node.args.args
+            declared = positional + node.args.kwonlyargs + [node.args.vararg, node.args.kwarg]
+            carriers = [
+                argument.arg
+                for argument in declared
+                if argument is not None
+                and isinstance(argument.annotation, ast.Name)
+                and argument.annotation.id == "LoweringContext"
+            ]
+            if not carriers:
+                continue
+            assert carriers == ["context"], f"{name}.{node.name}"
+            assert positional and positional[0].arg == "context", f"{name}.{node.name}"
+
+
+def test_every_deferred_import_says_which_cycle_it_breaks():
+    for package in PACKAGES:
+        for path in sorted((FRONTEND / package).glob("*.py")):
+            if path.stem.endswith("_test"):
+                continue
+            lines = path.read_text(encoding="utf-8").splitlines()
+            tree = ast.parse("\n".join(lines))
+            for node in ast.walk(tree):
+                if not isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef):
+                    continue
+                for inner in ast.walk(node):
+                    if not isinstance(inner, ast.Import | ast.ImportFrom):
+                        continue
+                    above = [line.strip() for line in lines[: inner.lineno - 1] if line.strip()]
+                    assert above and above[-1].startswith("#"), f"{path.name}:{inner.lineno}"
+
+
 def test_no_module_imports_a_frontend_package_as_a_whole():
     for name, tree in modules().items():
         assert not package_imports(tree), name
