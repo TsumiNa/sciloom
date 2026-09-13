@@ -21,6 +21,8 @@ mike = { git = "https://github.com/squidfunk/mike.git", rev = "2d4ad799442f4592d
 pythonpath = ["."]
 
 [tool.ruff]
+# Python only: never reformat code blocks inside Markdown documentation or evidence.
+include = ["*.py", "*.pyi"]
 exclude = [".venv", "venv", "__pycache__", ".git"]
 line-length = 120
 indent-width = 4
@@ -31,6 +33,8 @@ select = [
     "F", # Pyflakes
     "E", # pycodestyle
     "W", # pycodestyle
+    "I", # isort: stdlib / third-party / local import groups
+    "TID252", # flake8-tidy-imports: no parent-relative imports
 ]
 ignore = [
     "F841", # unused-variable
@@ -39,6 +43,15 @@ ignore = [
     "E501", # line-too-long (handled by formatter)
 ]
 fixable = ["ALL"]
+
+[tool.ruff.lint.per-file-ignores]
+# Proposed frontend examples are syntax-checked design material, not runnable code.
+"examples/proposed_frontend/*.py" = ["F821"]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+# Absolute sciloom.* imports and single-dot relative imports form one local group.
+no-lines-before = ["local-folder"]
 
 [tool.ruff.format]
 quote-style = "double"
@@ -111,7 +124,11 @@ disallow_untyped_defs = false
 disallow_incomplete_defs = false
 
 [dependency-groups]
-dev = ["mypy>=2.3.1", "pytest>=9.1.1"]
+dev = [
+    "mypy>=2.3.1",
+    "pytest>=9.1.1",
+    "ruff>=0.16.7",
+]
 docs = [
     "griffelib>=2.3.0",
     "mike",
