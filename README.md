@@ -1,5 +1,11 @@
 # SciLoom
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/site/assets/brand/svg/sciloom-banner-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="docs/site/assets/brand/svg/sciloom-banner-light.svg">
+  <img src="docs/site/assets/brand/svg/sciloom-banner-light.svg" alt="SciLoom — programmable scientific automation" width="1800" height="600">
+</picture>
+
 SciLoom — programmable scientific automation from one semantic model.
 
 [Documentation](https://tsumina.github.io/sciloom/) ·
@@ -47,6 +53,7 @@ organization and provenance.
 ## Documentation
 
 - [English handbook](docs/site/index.md)
+- [Brand assets and usage](docs/site/developer/brand.md)
 - [Getting started](docs/site/introduction/getting-started.md)
 - [Functions and fields](docs/site/user-guide/functions.md)
 - [Device configuration](docs/site/user-guide/devices.md)
