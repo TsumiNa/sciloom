@@ -14,13 +14,32 @@ source visibility later does not require a new documentation address.
 Before the first release tag, publication contains only `dev`.
 The package version alone does not create a release. Automatic release candidates
 must match `vMAJOR.MINOR.PATCH` exactly, without leading zeroes or prerelease suffixes,
-and their version must equal `[project].version` in that commit.
+and their version must equal `[project].version` in that commit, in the root
+`pyproject.toml` and in every workspace member under `packages/`. The site build
+refuses a commit whose members disagree.
 
 Each page displays the documentation version, package version and short source
 SHA. Each version's `build-info.json` stores the full SHA and source ref. Source,
 API, examples, build configuration and `uv.lock` all come from that same checkout.
 The current publisher only assembles those completed builds into mike's history;
 it never rebuilds an old release against the current source environment.
+
+## Version bump
+
+All workspace members carry one version. Bump every member in the same pull
+request, from the repository root; each `uv version` call re-locks and syncs:
+
+```bash
+uv version --bump <major|minor|patch>
+uv version --bump <major|minor|patch> --package sciloom-autosuite
+uv lock --check
+uv run --group docs python website/tools/site.py build --strict
+```
+
+The build fails with "Workspace members must share the root version" when a
+member was missed. One `vMAJOR.MINOR.PATCH` tag then publishes the repository
+release. The branch and pull request workflow instructions decide whether a
+pull request bumps at all.
 
 ## Automation and permissions
 

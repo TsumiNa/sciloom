@@ -13,10 +13,20 @@ site = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(site)
 
 
+def write_versions(root, version):
+    """Write the root project and one workspace member at the same version."""
+    (root / "pyproject.toml").write_text(
+        f'[project]\nname = "sciloom"\nversion = "{version}"\n\n[tool.uv.workspace]\nmembers = ["packages/*"]\n'
+    )
+    member = root / "packages/member"
+    member.mkdir(parents=True, exist_ok=True)
+    (member / "pyproject.toml").write_text(f'[project]\nname = "member"\nversion = "{version}"\n')
+
+
 @pytest.fixture
 def checkout(tmp_path):
     (tmp_path / "website/docs").mkdir(parents=True)
-    (tmp_path / "pyproject.toml").write_text('[project]\nversion = "0.1.0"\n')
+    write_versions(tmp_path, "0.1.0")
     for name in site.EXAMPLES:
         p = tmp_path / "examples" / name
         p.parent.mkdir(parents=True, exist_ok=True)
@@ -40,7 +50,7 @@ def test_metadata_identifies_checkout_and_dirty_changes(checkout):
     }
     preview = site.source_info(checkout, preview="29")
     assert (preview["version"], preview["ref"]) == ("preview", "refs/pull/29/head")
-    (checkout / "pyproject.toml").write_text('[project]\nversion = "0.2.0"\n')
+    write_versions(checkout, "0.2.0")
     assert site.source_info(checkout)["version"] == "local-dirty"
     with pytest.raises(ValueError, match="clean"):
         site.source_info(checkout, preview="29")
@@ -103,6 +113,20 @@ def test_release_and_dev_metadata_require_exact_clean_refs(checkout):
         site.source_info(checkout, publish_ref="v0.1.0-rc1")
     with pytest.raises(ValueError, match="non-PR"):
         site.source_info(checkout, preview="1", publish_ref="main")
-    (checkout / "pyproject.toml").write_text('[project]\nversion = "0.3.0"\n')
+    write_versions(checkout, "0.3.0")
     with pytest.raises(ValueError, match="clean"):
         site.source_info(checkout, publish_ref="main")
+
+
+def test_workspace_member_version_drift_is_rejected(checkout):
+    assert site.package_version(checkout) == "0.1.0"
+    (checkout / "packages/member/pyproject.toml").write_text('[project]\nname = "member"\nversion = "0.2.0"\n')
+    with pytest.raises(ValueError, match="share the root version"):
+        site.source_info(checkout)
+    site.git(checkout, "add", ".")
+    site.git(checkout, "-c", "user.name=Docs Test", "-c", "user.email=docs@example.invalid", "commit", "-qm", "drift")
+    site.git(checkout, "tag", "v0.1.0")
+    with pytest.raises(ValueError, match="member is 0.2.0, root is 0.1.0"):
+        site.source_info(checkout, publish_ref="v0.1.0")
+    (checkout / "pyproject.toml").write_text('[project]\nname = "sciloom"\nversion = "0.1.0"\n')
+    assert site.source_info(checkout)["package_version"] == "0.1.0"

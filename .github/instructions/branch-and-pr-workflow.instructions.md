@@ -36,8 +36,11 @@ with a version decision. Make it after the change is complete, when its real
 extent is known, and apply it as the last change before requesting review. If
 review fixes change the PR's extent, re-evaluate the decision after the last fix,
 immediately before the merge, and update the bump and the `Version:` line when the
-outcome changed. The package version is `[project].version` in `pyproject.toml`;
-a bump changes that value in the same PR. Record the decision and its
+outcome changed. The package version is `[project].version` in the root
+`pyproject.toml` and in every workspace member under `packages/`, kept identical
+(lockstep); a bump changes all of them in the same PR, with
+`uv version --bump <kind>` followed by `uv version --bump <kind> --package <member>`
+for each member, and the documentation build refuses drift. Record the decision and its
 one-sentence reason as the last section of the plan file (**Version**) and as a
 `Version:` line at the end of the PR description. Earlier plan files keep their
 recorded sections; add a **Version** section only when such a plan is next updated.
