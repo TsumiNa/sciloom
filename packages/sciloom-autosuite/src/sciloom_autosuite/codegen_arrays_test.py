@@ -22,6 +22,24 @@ ROOT = Path(__file__).resolve().parents[4]
 EXTRACTED = ROOT / "autosuite/extracted/latest_app/functions"
 
 
+class ScaleValues(Function):
+    """Copy and scale values using ordinary Python list expressions."""
+
+    values: Input[list[float]]
+    factor: Input[float]
+    result: Output[list[float]]
+    index: Var[int] = 0
+    batch_size: int = 8
+
+    @runtime
+    def run(self) -> None:
+        self.result = self.values
+        self.index = 0
+        while self.index < len(self.result):
+            self.result[self.index] *= self.factor
+            self.index += 1
+
+
 class WireModel:
     """Execute only the emitted task subset under explicitly assumed wire semantics.
 
@@ -319,8 +337,6 @@ def test_array_encoding_matches_raw_evidence_and_composed_scalar_types():
 
 
 def test_whole_copy_and_indexed_write_fields_match_observed_modes():
-    from sciloom.dsl.driver_list_test import ScaleValues
-
     root = ET.fromstring(compiled(ScaleValues()).artifact.content)
     raw = ET.fromstring(gzip.decompress((ROOT / "autosuite/app/config20260902_2.app").read_bytes()))
     whole = next(n for n in raw.iter() if n.findtext("elementselectmode") == "4")

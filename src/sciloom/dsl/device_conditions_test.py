@@ -7,8 +7,8 @@ from dataclasses import replace
 import pytest
 
 from examples.developer.demo_contribution import DemoAgitator, DemoTarget
-from examples.developer.portable_agitation import PortableAgitation
-from sciloom import Agitator, Function, Var, comptime, rpm, runtime
+from sciloom import Agitator, Function, Input, RotationalSpeed, Var, comptime, rpm, runtime
+from sciloom.conftest import RecordingTarget, StubShaker
 from sciloom.core.compiler import compile_ir
 from sciloom.core.devices import DeviceBindings
 from sciloom.core.diagnostics import CompilationError, ExecutionError, IRValidationError
@@ -16,15 +16,28 @@ from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import DeviceCommand, DeviceIf, from_json, to_json, validate
 from sciloom.core.specialization import specialize
 from sciloom.devices import BaseDevice
-from sciloom_autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
 
 
-def autosuite():
-    return AutoSuiteTarget(devices={"agitator": AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="23")})
+def recording():
+    return RecordingTarget(devices={"agitator": StubShaker()})
 
 
 def demo():
     return DemoTarget(devices={"agitator": DemoAgitator()})
+
+
+class PortableAgitation(Function):
+    """The portable example program, restated so this test needs no equipment package."""
+
+    agitator: Agitator
+    speed: Input[RotationalSpeed]
+
+    @runtime
+    def run(self):
+        if comptime.is_device(self.agitator, DemoAgitator):
+            self.agitator.gain = 0.5
+        self.agitator.speed = self.speed
+        self.agitator.start()
 
 
 def test_portable_json_rebinding_is_pure_and_retains_source_identity():
@@ -32,7 +45,7 @@ def test_portable_json_rebinding_is_pure_and_retains_source_identity():
     original = to_json(program)
     with pytest.raises(ExecutionError, match="unspecialized"):
         Interpreter(program)
-    for target, expected in ((autosuite(), {"speed"}), (demo(), {"speed", "gain"})):
+    for target, expected in ((recording(), {"speed"}), (demo(), {"speed", "gain"})):
         result = compile_ir(from_json(original), target=target)
         selected = result.specialized_ir
         assert validate(selected) == ()
@@ -65,7 +78,7 @@ def test_nested_queries_and_native_command_capabilities():
     selected = compile_ir(program, target=demo()).specialized_ir
     assert isinstance(selected.functions[0].body[-1], DeviceCommand)
     assert not any(isinstance(s, DeviceIf) for s in selected.functions[0].body)
-    Conditional().compile(target=autosuite())
+    Conditional().compile(target=recording())
 
     class NoCalibration(DemoTarget):
         def resolve_devices(self, program):
@@ -87,7 +100,7 @@ def test_can_write_resolves_declared_compatible_extensions_without_narrowing():
             if comptime.can_write(self.agitator, "gain"):
                 self.result = True
 
-    for target in (autosuite(), demo()):
+    for target in (recording(), demo()):
         Query().compile(target=target)
 
     class Invalid(Query):
@@ -126,7 +139,7 @@ def test_unselected_branches_still_require_valid_source_and_types():
 
     for cls in (Invalid, WrongElse, AfterGuard):
         with pytest.raises(IRValidationError):
-            cls().compile(target=autosuite())
+            cls().compile(target=recording())
 
 
 def test_queries_are_restricted_markers():
@@ -211,7 +224,7 @@ def test_unrelated_and_sibling_query_types_are_rejected():
         @runtime
         def run(self):
             if comptime.is_device(self.agitator, DemoAgitator):
-                if comptime.is_device(self.agitator, AutoSuiteIndividualShaker):
+                if comptime.is_device(self.agitator, StubShaker):
                     pass
 
     for cls in (Unrelated, Sibling):
@@ -233,7 +246,7 @@ def test_missing_binding_and_configuration_are_not_false_queries():
                 self.agitator.speed = 600 * rpm
                 self.agitator.start()
 
-    MissingGain().compile(target=autosuite())
+    MissingGain().compile(target=recording())
     with pytest.raises(CompilationError, match="device_configuration"):
         MissingGain().compile(target=demo())
 
@@ -261,7 +274,7 @@ def test_selected_child_configuration_flows_to_parent_start():
             self.agitator.speed = 600 * rpm
             self.agitator.start()
 
-    for target, count in ((autosuite(), 1), (demo(), 2)):
+    for target, count in ((recording(), 1), (demo(), 2)):
         result = Parent().compile(target=target)
         assert len(result.specialized_ir.functions) == count
         assert Interpreter(result.specialized_ir).run().resources["resource:agitator"].enabled
