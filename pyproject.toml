@@ -101,6 +101,7 @@ module = [
     "sciloom.core.devices_test",
     "sciloom.dsl.lowering_list_test",
     "sciloom.dsl.layering_test",
+    "sciloom.dsl.lowering_test",
     "sciloom.dsl.model_test",
     "sciloom.dsl.schema_test",
     "sciloom.dsl.schema_typing_test",

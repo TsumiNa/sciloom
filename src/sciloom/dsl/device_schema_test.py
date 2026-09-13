@@ -50,11 +50,6 @@ def test_annotation_slots_share_identity_and_state_without_runtime_variables():
     assert model.compile(target=target).artifact.content.startswith(b"<?xml")
 
 
-def test_distinct_slots_have_stable_component_paths():
-    program = Workflow(share=False).to_ir()
-    assert [resource.logical_id for resource in program.resources] == ["agitator", "stage.agitator"]
-
-
 def test_inherited_and_class_composed_devices_keep_declarations():
     class Inherited(Stage):
         pass

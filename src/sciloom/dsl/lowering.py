@@ -20,10 +20,31 @@ from sciloom.core.ir import (
 )
 from sciloom.units import RotationalSpeed
 from .context import LoweringContext
-from .device_schema import DeviceReference, component_paths
+from .device_schema import DeviceReference
+
+# Function is read at runtime below, not only in annotations. Do not move this
+# import behind TYPE_CHECKING: component_paths tests instances with isinstance.
 from .model import Function
 from .source import runtime_source
 from .statements import statements
+
+
+def component_paths(root: Function) -> dict[int, str]:
+    """Find stable host composition paths without invoking user descriptors."""
+    paths = {id(root): ""}
+    pending: list[object] = [root]
+    for instance in pending:
+        attributes: dict[str, object] = {}
+        for cls in reversed(type(instance).__mro__):
+            attributes.update(vars(cls))
+        attributes.update(vars(instance))
+        for name, value in sorted(attributes.items()):
+            if isinstance(value, Function) and id(value) not in paths:
+                if not name.isidentifier() or name.startswith("_"):
+                    raise TypeError("Composed Function names must be public Python identifiers.")
+                paths[id(value)] = ".".join(filter(None, (paths[id(instance)], name)))
+                pending.append(value)
+    return paths
 
 
 def lower(root: Function) -> Program:
