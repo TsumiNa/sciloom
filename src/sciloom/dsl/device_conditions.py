@@ -30,7 +30,7 @@ class DeviceCondition:
 def _static_object(context: LoweringContext, node: ast.AST) -> object:
     """Resolve names/static attributes without evaluating host calls/descriptors."""
     if isinstance(node, ast.Name):
-        return context.static_names.get(node.id)
+        return context.source.static_names.get(node.id)
     if isinstance(node, ast.Attribute):
         return inspect.getattr_static(_static_object(context, node.value), node.attr, None)
     return None
@@ -94,7 +94,7 @@ def device_condition(context: LoweringContext, node: ast.If) -> DeviceCondition 
             declared,
             *(
                 value
-                for value in context.static_names.values()
+                for value in context.source.static_names.values()
                 if isinstance(value, type) and issubclass(value, declared)
             ),
         ]

@@ -7,8 +7,6 @@ from typing import cast
 
 from sciloom.core.diagnostics import IRValidationError
 from sciloom.core.ir import (
-    DeviceResource,
-    DeviceTypeContract,
     FunctionIR,
     ListLiteral,
     ListType,
@@ -24,7 +22,7 @@ from sciloom.flow.device_slots import DeviceReference
 # import behind TYPE_CHECKING: component_paths tests instances with isinstance.
 from sciloom.flow.function import Function
 from sciloom.units import RotationalSpeed
-from .context import LoweringContext
+from .context import LoweringContext, ProgramScope
 from .source import runtime_source
 from .statements import statements
 
@@ -49,17 +47,12 @@ def component_paths(root: Function) -> dict[int, str]:
 
 def lower(root: Function) -> Program:
     """Build a deterministic package from source and scalar instance configuration."""
-    instances: list[Function] = [root]
-    ids = {id(root): "fn:0"}
+    scope = ProgramScope(paths=component_paths(root), instances=[root], ids={id(root): "fn:0"})
     functions: list[FunctionIR] = []
-    resources: dict[str, DeviceResource] = {}
-    paths = component_paths(root)
-    device_types: dict[str, DeviceTypeContract] = {}
     index = 0
-    while index < len(instances):
-        instance = instances[index]
-        function_id = ids[id(instance)]
-        context = LoweringContext(instance, function_id, instances, ids, resources, paths, device_types)
+    while index < len(scope.instances):
+        instance = scope.instances[index]
+        context = LoweringContext(instance, scope.ids[id(instance)], scope)
         for name in instance.device_fields:
             reference = context.host_attribute(name)
             assert isinstance(reference, DeviceReference)
@@ -70,8 +63,8 @@ def lower(root: Function) -> Program:
     package = Program(
         entry_function_id="fn:0",
         functions=tuple(functions),
-        resources=tuple(resources.values()),
-        device_types=tuple(device_types.values()),
+        resources=tuple(scope.resources.values()),
+        device_types=tuple(scope.device_types.values()),
     )
     diagnostics = validate(package)
     if diagnostics:
