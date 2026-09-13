@@ -36,8 +36,12 @@ def modules() -> dict[str, ast.Module]:
     }
 
 
-def siblings(node: ast.ImportFrom) -> set[str]:
+def siblings(node: ast.Import | ast.ImportFrom) -> set[str]:
     """Return the sibling modules of this package that one statement imports."""
+    if isinstance(node, ast.Import):
+        return {
+            alias.name[len(PREFIX) + 1 :].split(".")[0] for alias in node.names if alias.name.startswith(f"{PREFIX}.")
+        }
     if node.level == 1:
         if node.module is None:
             return {alias.name for alias in node.names}
@@ -56,14 +60,19 @@ def imports(tree: ast.Module) -> tuple[set[str], set[str]]:
         for node in ast.walk(tree)
         if isinstance(node, ast.FunctionDef | ast.AsyncFunctionDef)
         for inner in ast.walk(node)
-        if isinstance(inner, ast.ImportFrom)
+        if isinstance(inner, ast.Import | ast.ImportFrom)
     }
     top_level: set[str] = set()
     deferred: set[str] = set()
     for node in ast.walk(tree):
-        if isinstance(node, ast.ImportFrom):
+        if isinstance(node, ast.Import | ast.ImportFrom):
             (deferred if id(node) in local else top_level).update(siblings(node))
     return top_level, deferred
+
+
+def test_the_scanner_covers_both_import_forms():
+    tree = ast.parse("import sciloom.dsl.context\n\n\ndef lower():\n    from sciloom.dsl import statements\n")
+    assert imports(tree) == ({"context"}, {"statements"})
 
 
 def test_every_production_module_is_classified():
