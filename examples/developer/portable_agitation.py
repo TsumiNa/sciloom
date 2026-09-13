@@ -8,8 +8,9 @@ Expected output:
     Demo: ['gain', 'speed']
 
 The same-name JSON keeps both device branches; .autosuite.asfp and .demo.json
-are target artifacts. SourceSpan diagnostic paths depend on the checkout. The
-reference interpreter reports configured parameters, not measured hardware state.
+are target artifacts. SourceSpan paths are rewritten relative to the repository
+root, so every committed companion file is reproducible. The reference interpreter
+reports configured parameters, not measured hardware state.
 """
 
 from pathlib import Path
@@ -20,6 +21,7 @@ from sciloom.core.compiler import compile_ir
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import from_json, to_json
 from .demo_contribution import DemoAgitator, DemoTarget
+from .source_paths import repository_relative
 
 
 class PortableAgitation(Function):
@@ -43,7 +45,7 @@ class PortableAgitation(Function):
 
 if __name__ == "__main__":
     path = Path(__file__).with_suffix(".json")
-    path.write_text(to_json(PortableAgitation().to_ir()), encoding="utf-8")
+    path.write_text(to_json(repository_relative(PortableAgitation().to_ir())), encoding="utf-8")
     program = from_json(path.read_text(encoding="utf-8"))
     autosuite = compile_ir(
         program,
