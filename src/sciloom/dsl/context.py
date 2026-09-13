@@ -14,9 +14,9 @@ from sciloom.core.ir.expressions import ExpressionChecker
 from sciloom.core.ir.model import Node
 from sciloom.devices.base import BaseDevice
 from sciloom.devices.declarations import device_contract
+from sciloom.flow.device_slots import DeviceReference
+from sciloom.flow.function import Function
 from sciloom.units import SpeedUnit
-from .device_schema import DeviceReference
-from .model import Function
 
 _MISSING = object()
 

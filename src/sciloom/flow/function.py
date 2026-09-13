@@ -8,8 +8,8 @@ from typing import Any, Callable, ClassVar, Mapping, ParamSpec, TypeVar
 
 from sciloom.core.compiler import CompileResult, Target, compile_ir
 from sciloom.core.ir import Program
-from .device_schema import DeviceSlot, build_device_schema
-from .schema import RuntimeField, build_schema
+from .device_slots import DeviceSlot, build_device_schema
+from .fields import RuntimeField, build_schema
 
 P = ParamSpec("P")
 R = TypeVar("R")
@@ -64,7 +64,9 @@ class Function:
             IRValidationError: Declarations or runtime source violate the DSL.
 
         The instance's host configuration and runtime schema are not mutated."""
-        from .lowering import lower
+        # The author-facing entry reaches the analysis layer, which needs this class
+        # at runtime; deferring the import keeps that the frontend's only back edge.
+        from sciloom.dsl.driver import lower
 
         return lower(self)
 

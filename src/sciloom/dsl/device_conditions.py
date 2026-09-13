@@ -7,9 +7,9 @@ from dataclasses import dataclass
 from sciloom.core.ir import CanWrite, IsDevice, SupportsOperation
 from sciloom.devices import BaseDevice
 from sciloom.devices.declarations import device_contract
-from . import comptime
+from sciloom.flow import comptime
+from sciloom.flow.device_slots import DeviceReference
 from .context import LoweringContext
-from .device_schema import DeviceReference
 
 
 @dataclass(frozen=True, kw_only=True)
