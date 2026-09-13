@@ -147,10 +147,11 @@ recompiling from Python. That is the same mechanism the
 
 ## Limits worth knowing before you ship
 
-Reference execution rejects your native command:
+Reference execution rejects your native command. The last lines of the complete
+example below print its refusal:
 
 ```text
-[unsupported_operation] $.execution :: Cannot execute DeviceCommand.
+interpreter: unsupported_operation Cannot execute DeviceCommand.
 ```
 
 That is by design. The interpreter defines SciLoom semantics, and it will not
@@ -279,5 +280,6 @@ try:
     Interpreter(result.specialized_ir).run(inputs={"temperature": 60.0})
     raise AssertionError("reference execution should refuse an undefined native command")
 except ExecutionError as error:
+    assert error.diagnostics[0].code == "unsupported_operation"
     print("interpreter:", error.diagnostics[0].code, error.diagnostics[0].message)
 ```
