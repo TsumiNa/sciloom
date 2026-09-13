@@ -1,6 +1,6 @@
 """Design example: class schema is known before instantiation; instance holds specialization."""
 
-from sciloom import Function, Input, Output, Zone, Array, Volume, runtime, Var
+from sciloom import Array, Function, Input, Output, Var, Volume, Zone, runtime
 
 
 class LoadReagent(Function):

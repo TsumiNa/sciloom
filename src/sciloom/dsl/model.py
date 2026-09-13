@@ -5,11 +5,11 @@ from __future__ import annotations
 from functools import wraps
 from types import MappingProxyType
 from typing import Any, Callable, ClassVar, Mapping, ParamSpec, TypeVar
-from ..core.ir import Program
-from ..core.compiler import CompileResult, Target, compile_ir
-from .schema import RuntimeField, build_schema
-from .device_schema import DeviceSlot, build_device_schema
 
+from sciloom.core.compiler import CompileResult, Target, compile_ir
+from sciloom.core.ir import Program
+from .device_schema import DeviceSlot, build_device_schema
+from .schema import RuntimeField, build_schema
 
 P = ParamSpec("P")
 R = TypeVar("R")

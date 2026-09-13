@@ -5,8 +5,8 @@ from typing import TYPE_CHECKING, Any
 from .units import RotationalSpeed, rpm, rps
 
 if TYPE_CHECKING:
-    from .dsl import comptime
     from .devices.agitation import Agitator
+    from .dsl import comptime
     from .dsl.model import Function, runtime
     from .dsl.schema import Input, Output, Var
 

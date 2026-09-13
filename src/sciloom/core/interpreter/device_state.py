@@ -4,8 +4,8 @@ from collections.abc import Mapping
 from dataclasses import dataclass, field, replace
 from types import MappingProxyType
 
-from ..ir import ConfigureProperty, Program, StartAgitation, StopAgitation
-from ..ir.device_contracts import START_AGITATION_ID, STOP_AGITATION_ID
+from sciloom.core.ir import ConfigureProperty, Program, StartAgitation, StopAgitation
+from sciloom.core.ir.device_contracts import START_AGITATION_ID, STOP_AGITATION_ID
 from .values import OutputValue, RuntimeValue, coerce, fail, output_value
 
 
@@ -19,6 +19,7 @@ class DeviceState:
         enabled: Whether the reference device is enabled.
 
     Stopping preserves both mappings. Configuration writes do not change applied values."""
+
     configuration: Mapping[str, OutputValue] = field(default_factory=dict)
     applied_configuration: Mapping[str, OutputValue] = field(default_factory=dict)
     enabled: bool = False
@@ -31,6 +32,7 @@ class DeviceState:
 @dataclass(frozen=True, kw_only=True)
 class DeviceEvent:
     """Device operation occurrence and its resulting immutable state snapshot."""
+
     node_id: str
     resource_id: str
     operation_id: str
@@ -40,10 +42,14 @@ class DeviceEvent:
 class DeviceSession:
     def __init__(self, program: Program) -> None:
         self.states = {r.node_id: DeviceState() for r in program.resources}
-        self.contracts = {r.node_id: next(c for c in program.device_types if c.type_id == r.device_type_id) for r in program.resources}
+        self.contracts = {
+            r.node_id: next(c for c in program.device_types if c.type_id == r.device_type_id) for r in program.resources
+        }
         self.properties = {p.semantic_id: p for c in program.device_types for p in c.properties}
 
-    def apply(self, statement: ConfigureProperty | StartAgitation | StopAgitation, value: RuntimeValue | None = None) -> DeviceEvent:
+    def apply(
+        self, statement: ConfigureProperty | StartAgitation | StopAgitation, value: RuntimeValue | None = None
+    ) -> DeviceEvent:
         previous = self.states[statement.resource_id]
         if isinstance(statement, ConfigureProperty):
             assert value is not None
@@ -61,4 +67,6 @@ class DeviceSession:
             state = replace(previous, enabled=False)
             operation = STOP_AGITATION_ID
         self.states[statement.resource_id] = state
-        return DeviceEvent(node_id=statement.node_id, resource_id=statement.resource_id, operation_id=operation, state=state)
+        return DeviceEvent(
+            node_id=statement.node_id, resource_id=statement.resource_id, operation_id=operation, state=state
+        )

@@ -4,7 +4,7 @@ from dataclasses import replace
 
 import pytest
 
-from sciloom.core.ir import (
+from . import (
     Assignment,
     Binary,
     BinaryOp,

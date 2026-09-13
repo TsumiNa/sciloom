@@ -2,7 +2,7 @@
 
 from typing import Callable, TypeGuard, TypeVar
 
-from ..devices import BaseDevice
+from sciloom.devices import BaseDevice
 
 T = TypeVar("T", bound=BaseDevice)
 

@@ -5,16 +5,16 @@ from __future__ import annotations
 import ast
 import inspect
 from typing import Any, NoReturn, cast
-from .model import Function
-from .device_schema import DeviceReference
-from ..devices.base import BaseDevice
-from ..devices.declarations import device_contract
-from ..units import SpeedUnit
-from ..core.diagnostics import Diagnostic, IRValidationError, SourceSpan
-from ..core.ir import DeviceResource, DeviceTypeContract, Expression, FunctionIR, Reference, ValueType
-from ..core.ir.expressions import ExpressionChecker
-from ..core.ir.model import Node
 
+from sciloom.core.diagnostics import Diagnostic, IRValidationError, SourceSpan
+from sciloom.core.ir import DeviceResource, DeviceTypeContract, Expression, FunctionIR, Reference, ValueType
+from sciloom.core.ir.expressions import ExpressionChecker
+from sciloom.core.ir.model import Node
+from sciloom.devices.base import BaseDevice
+from sciloom.devices.declarations import device_contract
+from sciloom.units import SpeedUnit
+from .device_schema import DeviceReference
+from .model import Function
 
 _MISSING = object()
 
@@ -76,7 +76,11 @@ class LoweringContext:
         self.register_device_type(reference.device_type)
         return self.resources.setdefault(
             logical_id,
-            DeviceResource(node_id=f"resource:{logical_id}", logical_id=logical_id, device_type_id=reference.device_type.device_type_id),
+            DeviceResource(
+                node_id=f"resource:{logical_id}",
+                logical_id=logical_id,
+                device_type_id=reference.device_type.device_type_id,
+            ),
         )
 
     def register_device_type(self, device_type: type[BaseDevice]) -> None:
@@ -106,7 +110,15 @@ class LoweringContext:
         errors: list[Diagnostic] = []
 
         def report(code: str, message: str, path: str, node: Node | None) -> None:
-            errors.append(Diagnostic(code=code, message=message, path=path, node_id=node.node_id if node else None, source=node.source if node else None))
+            errors.append(
+                Diagnostic(
+                    code=code,
+                    message=message,
+                    path=path,
+                    node_id=node.node_id if node else None,
+                    source=node.source if node else None,
+                )
+            )
 
         checker = ExpressionChecker({v.node_id: v for v in self.function_schema.variables}, report)
         value_type = checker.check(expression, self.function_schema, f"$.python.{self.function_id}")

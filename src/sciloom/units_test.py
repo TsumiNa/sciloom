@@ -1,6 +1,6 @@
 import pytest
 
-from sciloom.units import RotationalSpeed, SpeedUnit, rpm, rps
+from .units import RotationalSpeed, SpeedUnit, rpm, rps
 
 
 def test_speed_units_have_one_canonical_value():

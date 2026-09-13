@@ -31,7 +31,6 @@ from sciloom import rpm
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import from_json, to_json
 
-
 if __name__ == "__main__":
     function = ConfigureAgitation()
     program = function.to_ir()

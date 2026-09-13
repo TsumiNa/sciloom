@@ -1,21 +1,21 @@
 """Conservative array-output initialization checks for reusable vendor storage."""
 
-from ...core.diagnostics import Diagnostic
-from ...core.ir import (
+from sciloom.core.diagnostics import Diagnostic
+from sciloom.core.ir import (
     Assignment,
     Call,
+    ConfigureProperty,
     Expression,
     If,
     ListSet,
     ListType,
     Program,
     Reference,
-    ConfigureProperty,
     Statement,
     VariableRole,
     While,
 )
-from ...core.ir.traversal import iter_nodes
+from sciloom.core.ir.traversal import iter_nodes
 
 
 def validate_array_outputs(program: Program) -> tuple[Diagnostic, ...]:

@@ -5,7 +5,7 @@ from dataclasses import replace
 
 import pytest
 
-from sciloom.core.ir import (
+from . import (
     IRValidationError,
     SourceSpan,
     from_dict,

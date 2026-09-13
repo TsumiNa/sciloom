@@ -6,23 +6,34 @@ import argparse
 import json
 import os
 import re
-from pathlib import Path
 import shutil
 import subprocess
 import sys
 import tomllib
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 # No recursive repository copy: additions to the public downloads are deliberate.
 EXAMPLES = (
-    "function_call.py", "function_call.asfp", "agitation.py", "agitation.asfp",
-    "scale_values.py", "scale_values.asfp", "non_zero_array_min.py", "non_zero_array_min.asfp",
-    "developer/agitation_ir.py", "developer/agitation_ir.json",
-    "developer/list_ir.py", "developer/list_ir.json",
-    "developer/demo_device.py", "developer/demo_device.json",
+    "function_call.py",
+    "function_call.asfp",
+    "agitation.py",
+    "agitation.asfp",
+    "scale_values.py",
+    "scale_values.asfp",
+    "non_zero_array_min.py",
+    "non_zero_array_min.asfp",
+    "developer/agitation_ir.py",
+    "developer/agitation_ir.json",
+    "developer/list_ir.py",
+    "developer/list_ir.json",
+    "developer/demo_device.py",
+    "developer/demo_device.json",
     "developer/demo_contribution/__init__.py",
-    "developer/portable_agitation.py", "developer/portable_agitation.json",
-    "developer/portable_agitation.autosuite.asfp", "developer/portable_agitation.demo.json",
+    "developer/portable_agitation.py",
+    "developer/portable_agitation.json",
+    "developer/portable_agitation.autosuite.asfp",
+    "developer/portable_agitation.demo.json",
 )
 
 
@@ -88,8 +99,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=("serve", "build"))
     parser.add_argument("--strict", action="store_true")
-    parser.add_argument("--preview", default=os.environ.get("SCILOOM_DOCS_PR_NUMBER"),
-                        help="Stamp a clean PR head checkout with its PR number")
+    parser.add_argument(
+        "--preview",
+        default=os.environ.get("SCILOOM_DOCS_PR_NUMBER"),
+        help="Stamp a clean PR head checkout with its PR number",
+    )
     parser.add_argument("--publish-ref", help="Stamp an exact main/release checkout for publication")
     args = parser.parse_args()
     if args.publish_ref and args.command != "build":

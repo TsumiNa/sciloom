@@ -1,21 +1,28 @@
 """Keep complete handbook snippets executable and example pages tied to source."""
 
-from html.parser import HTMLParser
 import os
-from pathlib import Path
 import re
 import subprocess
 import sys
+from html.parser import HTMLParser
+from pathlib import Path
 
 import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
 
 
-@pytest.mark.parametrize("page", (
-    "user-guide/values", "user-guide/compilation", "developer/ir",
-    "developer/compiler", "developer/interpreter", "developer/contributions",
-))
+@pytest.mark.parametrize(
+    "page",
+    (
+        "user-guide/values",
+        "user-guide/compilation",
+        "developer/ir",
+        "developer/compiler",
+        "developer/interpreter",
+        "developer/contributions",
+    ),
+)
 def test_complete_handbook_snippet(page, tmp_path):
     markdown = (ROOT / f"website/docs/{page}.md").read_text()
     source = re.findall(r"```python\n(.*?)\n```", markdown, re.DOTALL)[0]
@@ -40,12 +47,19 @@ class Text(HTMLParser):
         self.parts.append(value)
 
 
-@pytest.mark.parametrize("slug, source", (
-    ("function-call", "function_call"), ("agitation", "agitation"),
-    ("scale-values", "scale_values"), ("non-zero-array-min", "non_zero_array_min"),
-    ("agitation-ir", "developer/agitation_ir"), ("list-ir", "developer/list_ir"),
-    ("demo-device", "developer/demo_device"), ("portable-agitation", "developer/portable_agitation"),
-))
+@pytest.mark.parametrize(
+    "slug, source",
+    (
+        ("function-call", "function_call"),
+        ("agitation", "agitation"),
+        ("scale-values", "scale_values"),
+        ("non-zero-array-min", "non_zero_array_min"),
+        ("agitation-ir", "developer/agitation_ir"),
+        ("list-ir", "developer/list_ir"),
+        ("demo-device", "developer/demo_device"),
+        ("portable-agitation", "developer/portable_agitation"),
+    ),
+)
 def test_walkthrough_includes_actual_source(rendered, slug, source):
     text = Text()
     text.feed((rendered / f"examples/{slug}/index.html").read_text())

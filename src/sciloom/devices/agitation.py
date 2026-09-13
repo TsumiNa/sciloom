@@ -2,7 +2,7 @@
 
 from typing import Callable, ClassVar
 
-from ..units import RotationalSpeed
+from sciloom.units import RotationalSpeed
 from .base import BaseDevice
 from .declarations import operation
 

@@ -3,9 +3,9 @@
 import ast
 import inspect
 
-from ..core.ir import CanWrite, DeviceIf, IsDevice, SupportsOperation
-from ..devices import BaseDevice
-from ..devices.declarations import device_contract
+from sciloom.core.ir import CanWrite, DeviceIf, IsDevice, SupportsOperation
+from sciloom.devices import BaseDevice
+from sciloom.devices.declarations import device_contract
 from . import comptime
 from .context import LoweringContext
 from .device_schema import DeviceReference
@@ -32,7 +32,9 @@ def device_if(context: LoweringContext, node: ast.If) -> DeviceIf | None:
     if len(call.args) != 2 or call.keywords:
         context.fail("device_condition", "Device queries require two positional arguments.", call)
     receiver = call.args[0]
-    if not (isinstance(receiver, ast.Attribute) and isinstance(receiver.value, ast.Name) and receiver.value.id == "self"):
+    if not (
+        isinstance(receiver, ast.Attribute) and isinstance(receiver.value, ast.Name) and receiver.value.id == "self"
+    ):
         context.fail("device_condition", "Device queries require a declared self.<device> slot.", receiver)
     reference = context.host_attribute(receiver.attr)
     if not isinstance(reference, DeviceReference):
@@ -46,7 +48,11 @@ def device_if(context: LoweringContext, node: ast.If) -> DeviceIf | None:
         if not isinstance(cls, type) or not issubclass(cls, BaseDevice):
             context.fail("device_condition", "is_device requires a declared device class.", call.args[1])
         if not (issubclass(cls, declared) or issubclass(declared, cls)):
-            context.fail("device_condition", "is_device requires a type on the current device interface's inheritance chain.", call.args[1])
+            context.fail(
+                "device_condition",
+                "is_device requires a type on the current device interface's inheritance chain.",
+                call.args[1],
+            )
         context.register_device_type(cls)
         condition = IsDevice(**context.metadata(call), resource_id=resource_id, device_type_id=cls.device_type_id)
         narrowed = declared if issubclass(declared, cls) else cls
@@ -62,13 +68,21 @@ def device_if(context: LoweringContext, node: ast.If) -> DeviceIf | None:
         if command is None:
             context.fail("device_condition", "supports accepts commands, not properties or getters.", member)
         context.register_device_type(owner)
-        condition = SupportsOperation(**context.metadata(call), resource_id=resource_id, operation_id=command.semantic_id)
+        condition = SupportsOperation(
+            **context.metadata(call), resource_id=resource_id, operation_id=command.semantic_id
+        )
     else:
         name = call.args[1]
         if not isinstance(name, ast.Constant) or not isinstance(name.value, str):
             context.fail("device_condition", "can_write requires a declared property name as a string literal.", name)
-        candidates = [declared, *(value for value in context.static_names.values()
-                                  if isinstance(value, type) and issubclass(value, declared))]
+        candidates = [
+            declared,
+            *(
+                value
+                for value in context.static_names.values()
+                if isinstance(value, type) and issubclass(value, declared)
+            ),
+        ]
         matches = {}
         for cls in candidates:
             contract = device_contract(cls)
@@ -77,7 +91,11 @@ def device_if(context: LoweringContext, node: ast.If) -> DeviceIf | None:
                     matches[prop.semantic_id] = prop
                     context.register_device_type(cls)
         if len(matches) != 1:
-            context.fail("device_condition", "can_write needs one unambiguous property declared by a compatible device type in scope.", name)
+            context.fail(
+                "device_condition",
+                "can_write needs one unambiguous property declared by a compatible device type in scope.",
+                name,
+            )
         condition = CanWrite(**context.metadata(call), resource_id=resource_id, property_id=next(iter(matches)))
 
     metadata = context.metadata(node)

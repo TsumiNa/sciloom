@@ -1,6 +1,6 @@
 """Design example only: proposed restricted-Python frontend, not a runnable API."""
 
-from sciloom import Function, Input, Output, Zone, Volume, runtime, Var
+from sciloom import Function, Input, Output, Var, Volume, Zone, runtime
 
 
 class TransferOne(Function):

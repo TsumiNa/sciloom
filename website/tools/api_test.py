@@ -1,9 +1,9 @@
 """Verify the curated reference against static exports and rendered object anchors."""
 
-from pathlib import Path
 import re
 import subprocess
 import sys
+from pathlib import Path
 
 from griffe import GriffeLoader
 
@@ -16,7 +16,13 @@ def test_catalogue_covers_exports_with_static_docstrings():
     loader.resolve_aliases(implicit=True, external=False)
     pages = list((ROOT / "website/docs/api").glob("*.md"))
     paths = {p for page in pages for p in re.findall(r"^::: (\S+)", page.read_text(), re.M)}
-    for module in ("sciloom", "sciloom.core.ir", "sciloom.devices", "sciloom.core.interpreter", "sciloom.contrib.autosuite"):
+    for module in (
+        "sciloom",
+        "sciloom.core.ir",
+        "sciloom.devices",
+        "sciloom.core.interpreter",
+        "sciloom.contrib.autosuite",
+    ):
         obj = package if module == "sciloom" else package[module.removeprefix("sciloom.")]
         for name in obj.exports:
             exported = obj[name]
@@ -35,7 +41,11 @@ def test_catalogue_covers_exports_with_static_docstrings():
 def test_catalogue_objects_have_html_anchors():
     subprocess.run([sys.executable, str(ROOT / "website/tools/site.py"), "build", "--strict"], check=True)
     for page in (ROOT / "website/docs/api").glob("*.md"):
-        html = (ROOT / "website/.build/site/api" / page.stem / "index.html") if page.stem != "index" else ROOT / "website/.build/site/api/index.html"
+        html = (
+            (ROOT / "website/.build/site/api" / page.stem / "index.html")
+            if page.stem != "index"
+            else ROOT / "website/.build/site/api/index.html"
+        )
         rendered = html.read_text()
         for path in re.findall(r"^::: (\S+)", page.read_text(), re.M):
             assert f'id="{path}"' in rendered, path

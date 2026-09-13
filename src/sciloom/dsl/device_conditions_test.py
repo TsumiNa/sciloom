@@ -1,8 +1,8 @@
 """All source branches are typed before target-dependent branch selection."""
 
-from dataclasses import replace
 import subprocess
 import sys
+from dataclasses import replace
 
 import pytest
 
@@ -174,7 +174,11 @@ def test_queries_are_restricted_markers():
     for cls in (Unknown, Dynamic, Getter, Loop, Combined, Assigned):
         with pytest.raises(IRValidationError):
             cls().to_ir()
-    for query, arg in ((comptime.can_write, "speed"), (comptime.supports, Agitator.start), (comptime.is_device, DemoAgitator)):
+    for query, arg in (
+        (comptime.can_write, "speed"),
+        (comptime.supports, Agitator.start),
+        (comptime.is_device, DemoAgitator),
+    ):
         with pytest.raises(TypeError, match="if/elif"):
             query(DemoAgitator(), arg)
 
@@ -265,7 +269,7 @@ def test_selected_child_configuration_flows_to_parent_start():
 
 @pytest.mark.parametrize("valid", [True, False])
 def test_mypy_typeguard_and_property_types(tmp_path, valid):
-    source = '''from typing import assert_type
+    source = """from typing import assert_type
 from sciloom import Agitator, comptime
 from examples.developer.demo_contribution import DemoAgitator
 def configure(device: Agitator) -> None:
@@ -274,12 +278,12 @@ def configure(device: Agitator) -> None:
         device.gain = 0.5
         device.calibrate()
     assert_type(device, Agitator)
-'''
+"""
     if not valid:
-        source += '''    device.gain = 1.0
+        source += """    device.gain = 1.0
     if comptime.is_device(device, DemoAgitator):
         device.gain = "invalid"
-'''
+"""
     path = tmp_path / "guard_types.py"
     path.write_text(source)
     result = subprocess.run([sys.executable, "-m", "mypy", str(path)], capture_output=True, text=True)

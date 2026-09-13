@@ -1,6 +1,6 @@
 """Design example: fatal AutoSuite faults versus recoverable result-style errors."""
 
-from sciloom import Function, Input, Zone, AutoSuiteError, runtime, Var
+from sciloom import AutoSuiteError, Function, Input, Var, Zone, runtime
 
 
 class LoadAndReact(Function):

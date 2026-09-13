@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass
 
-from ...core.ir import (
+from sciloom.core.ir import (
     BinaryOp,
     Expression,
     FunctionIR,
@@ -16,7 +16,7 @@ from ...core.ir import (
     Unary,
     ValueType,
 )
-from ...core.ir.expressions import ExpressionChecker
+from sciloom.core.ir.expressions import ExpressionChecker
 from .context import CodegenContext
 from .encoding import number
 from .primitives import macro, set_variable

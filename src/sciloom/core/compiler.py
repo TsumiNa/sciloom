@@ -4,10 +4,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Protocol, runtime_checkable
 
+from .configuration import validate_device_usage
+from .devices import DeviceBindings
 from .diagnostics import CompilationError, Diagnostic, IRValidationError
 from .ir import Program, validate
-from .devices import DeviceBindings
-from .configuration import validate_device_usage
 from .specialization import specialize
 
 
@@ -19,6 +19,7 @@ class Artifact:
         content: Complete output bytes, without implicit text decoding.
         media_type: MIME type chosen by the target.
         suffix: Recommended filename extension, including its leading dot."""
+
     content: bytes
     media_type: str
     suffix: str
@@ -58,6 +59,7 @@ class CompileResult:
         diagnostics: Empty for results returned by compile_ir; any validation
             diagnostic currently raises an exception instead of returning a result.
     """
+
     semantic_ir: Program
     specialized_ir: Program
     target_id: str
@@ -98,7 +100,9 @@ def compile_ir(program: Program, *, target: Target) -> CompileResult:
 
     Neither XML assumptions nor backend-private state belong in this pipeline."""
     if not isinstance(target, Target):
-        raise TypeError("target must implement target_id, resolve_devices(program), validate(program) and emit(program).")
+        raise TypeError(
+            "target must implement target_id, resolve_devices(program), validate(program) and emit(program)."
+        )
     diagnostics = validate(program)
     if diagnostics:
         raise IRValidationError(diagnostics)

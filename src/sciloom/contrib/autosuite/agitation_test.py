@@ -2,7 +2,7 @@
 
 import pytest
 
-from . import AutoSuiteTarget, AutoSuiteIndividualShaker
+from . import AutoSuiteIndividualShaker, AutoSuiteTarget
 
 
 @pytest.mark.parametrize(

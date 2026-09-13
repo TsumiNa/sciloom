@@ -2,8 +2,8 @@
 
 import importlib.util
 import json
-from pathlib import Path
 import subprocess
+from pathlib import Path
 
 import pytest
 
@@ -21,16 +21,23 @@ def checkout(tmp_path):
         p = tmp_path / "examples" / name
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text("learning asset\n")
-    for args in (("init", "-b", "main"), ("add", "."),
-                 ("-c", "user.name=Docs Test", "-c", "user.email=docs@example.invalid", "commit", "-m", "initial")):
+    for args in (
+        ("init", "-b", "main"),
+        ("add", "."),
+        ("-c", "user.name=Docs Test", "-c", "user.email=docs@example.invalid", "commit", "-m", "initial"),
+    ):
         subprocess.run(["git", "-C", str(tmp_path), *args], check=True, capture_output=True)
     return tmp_path
 
 
 def test_metadata_identifies_checkout_and_dirty_changes(checkout):
     info = site.source_info(checkout)
-    assert info == {"version": "local", "ref": "main", "package_version": "0.1.0",
-                    "commit": site.git(checkout, "rev-parse", "HEAD")}
+    assert info == {
+        "version": "local",
+        "ref": "main",
+        "package_version": "0.1.0",
+        "commit": site.git(checkout, "rev-parse", "HEAD"),
+    }
     preview = site.source_info(checkout, preview="29")
     assert (preview["version"], preview["ref"]) == ("preview", "refs/pull/29/head")
     (checkout / "pyproject.toml").write_text('[project]\nversion = "0.2.0"\n')

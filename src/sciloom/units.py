@@ -17,6 +17,7 @@ class RotationalSpeed:
     Raises:
         TypeError: The value is not an int or float (bool is rejected).
         ValueError: The value is negative, nonfinite or cannot be represented."""
+
     rps: float
 
     def __post_init__(self) -> None:
@@ -33,6 +34,7 @@ class RotationalSpeed:
 
 class SpeedUnit(Enum):
     """Unit for constructing a rotational speed by multiplying a numeric literal."""
+
     RPM = "rpm"
     RPS = "rps"
 

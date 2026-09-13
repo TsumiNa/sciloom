@@ -1,7 +1,8 @@
 """Properties and methods retain Python typing while contributing data contracts."""
 
-import pytest
 from dataclasses import FrozenInstanceError
+
+import pytest
 
 from sciloom import Agitator, rpm
 from sciloom.contrib.autosuite import AutoSuiteIndividualShaker

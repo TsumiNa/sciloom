@@ -1,6 +1,6 @@
 """Design example: application/event semantic roles."""
 
-from sciloom import Application, on_start, on_error, on_stop, main, Var
+from sciloom import Application, Var, main, on_error, on_start, on_stop
 
 
 class PolymerizationApplication(Application):

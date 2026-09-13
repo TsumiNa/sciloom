@@ -41,8 +41,8 @@ Generated ASFP excerpts (parameter IDs and other fields omitted):
 
 from pathlib import Path
 
-from sciloom.contrib.autosuite import AutoSuiteTarget
 from sciloom import Function, Input, Output, Var, runtime
+from sciloom.contrib.autosuite import AutoSuiteTarget
 
 
 class Identity(Function):

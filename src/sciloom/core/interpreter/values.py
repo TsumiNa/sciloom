@@ -4,11 +4,11 @@ from __future__ import annotations
 
 import math
 from typing import NoReturn, overload
-from ...units import RotationalSpeed
-from ..diagnostics import Diagnostic, ExecutionError
-from ..ir.model import Literal, ListLiteral, Node
-from ..ir.types import ListType, ScalarType, ValueType
 
+from sciloom.core.diagnostics import Diagnostic, ExecutionError
+from sciloom.core.ir.model import ListLiteral, Literal, Node
+from sciloom.core.ir.types import ListType, ScalarType, ValueType
+from sciloom.units import RotationalSpeed
 
 ScalarValue = bool | int | float
 RuntimeValue = ScalarValue | tuple[ScalarValue, ...]

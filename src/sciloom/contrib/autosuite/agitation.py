@@ -9,8 +9,7 @@ import re
 from dataclasses import dataclass
 from typing import Callable, ClassVar
 
-from ...devices.agitation import Agitator
-
+from sciloom.devices.agitation import Agitator
 from .xml import XmlNode, xml_node as _xml
 
 
