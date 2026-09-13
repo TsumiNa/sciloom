@@ -64,3 +64,20 @@ def test_symlink_cannot_copy_unselected_evidence(checkout):
     example.symlink_to(secret)
     with pytest.raises(ValueError, match="allowlist"):
         site.prepare(checkout, site.source_info(checkout))
+
+
+def test_metadata_symlink_does_not_overwrite_source(checkout):
+    source = checkout / "pyproject.toml"
+    before = source.read_bytes()
+    (checkout / "docs/site/build-info.json").symlink_to(source)
+    with pytest.raises(ValueError, match="metadata"):
+        site.prepare(checkout, site.source_info(checkout))
+    assert source.read_bytes() == before
+
+
+def test_public_directory_symlink_is_rejected(checkout):
+    public = checkout / "docs/site"
+    public.rmdir()
+    public.symlink_to(checkout / "examples", target_is_directory=True)
+    with pytest.raises(ValueError, match="documentation"):
+        site.prepare(checkout, site.source_info(checkout))

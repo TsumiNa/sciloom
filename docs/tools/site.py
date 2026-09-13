@@ -50,18 +50,21 @@ def prepare(root: Path, info: dict[str, str]) -> None:
     """Copy only selected learning assets; leave all source files unchanged."""
     public = root / "docs/site"
     generated = public / "_generated"
+    metadata = public / "build-info.json"
+    if public.resolve() != root.resolve() / "docs/site" or metadata.is_symlink():
+        raise ValueError("public documentation and metadata must not be symlinks")
     if generated.is_symlink():
         raise ValueError("generated documentation directory must not be a symlink")
     if generated.exists():
         shutil.rmtree(generated)
     for name in EXAMPLES:
         source = root / "examples" / name
-        if not source.resolve().is_relative_to((root / "examples").resolve()):
+        if source.resolve() != root.resolve() / "examples" / name:
             raise ValueError(f"example escapes the publication allowlist: {name}")
         destination = generated / "examples" / name
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, destination)
-    (public / "build-info.json").write_text(json.dumps(info, indent=2) + "\n")
+    metadata.write_text(json.dumps(info, indent=2) + "\n")
 
 
 def main() -> None:

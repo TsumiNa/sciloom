@@ -36,6 +36,7 @@ nav:
   - API Reference:
       - Author API: api/author.md
 plugins:
+  - search
   - mkdocstrings:
       handlers:
         python:
