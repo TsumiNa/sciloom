@@ -14,7 +14,7 @@ This page continues the heater from [add a device](add-a-device.md).
 
 | Member | The compiler calls it to |
 | --- | --- |
-| `target_id` | Label the result, so an artifact says which platform produced it |
+| `target_id` | Label the compile result, so a caller knows which platform produced it |
 | `resolve_devices(program)` | Turn your deployment configuration into trusted binding facts |
 | `validate(program)` | Collect the reasons your platform cannot run this program |
 | `emit(program)` | Produce the artifact bytes |
@@ -74,17 +74,10 @@ raises once, so an author sees every problem in a program rather than the first.
             if not (isinstance(node, DeviceCommand) and node.operation_id == HOLD_ID):
                 continue
             seconds = node.arguments[0].value
-            provable = isinstance(seconds, Literal) and type(seconds.value) in (int, float)
-            if not provable or seconds.value > self.max_hold_seconds:
-                diagnostics.append(
-                    Diagnostic(
-                        code="bench_hold_limit",
-                        message=f"hold() must be a literal of at most {self.max_hold_seconds} s; this target proves literals only.",
-                        path=path,
-                        node_id=node.node_id,
-                        source=node.source,
-                    )
-                )
+            if not isinstance(seconds, Literal) or not isinstance(seconds.value, int | float):
+                diagnostics.append(self.rejected(node, path, "a literal duration"))
+            elif not 0.0 <= seconds.value <= self.max_hold_seconds:
+                diagnostics.append(self.rejected(node, path, f"a duration in [0, {self.max_hold_seconds}] s"))
         return tuple(diagnostics)
 ```
 
@@ -94,9 +87,20 @@ a runtime input, and this target cannot prove anything about it, so it rejects:
 
 ```text
 rejected: [bench_hold_limit] $.functions[0].body[1]
-message: hold() must be a literal of at most 600.0 s; this target proves literals only.
+message: hold() requires a literal duration; this target proves literals only.
 source attached: True
 ```
+
+A literal of `900.0` reaches the second branch instead and is rejected for its
+value: `hold() requires a duration in [0, 600.0] s`. Writing the bound as an
+interval rather than a maximum costs nothing and rules out a negative duration.
+
+One subtlety is worth seeing early, because it decides how conservative a target
+must be. `hold(-1.0)` is not a literal in the IR: Python parses it as a negation of
+`1.0`, and it lowers to a `Unary` node. This target therefore refuses it as
+unprovable rather than by range. That is the correct outcome here, and it is a good
+illustration of why a target should inspect the IR it actually receives rather than
+the source it imagines.
 
 Rejecting the unprovable is honest; accepting it and hoping is not. A target that
 could evaluate ranges would accept more, and the message says which kind of target
@@ -226,21 +230,20 @@ class BenchTarget:
             if not (isinstance(node, DeviceCommand) and node.operation_id == HOLD_ID):
                 continue
             seconds = node.arguments[0].value
-            provable = isinstance(seconds, Literal) and type(seconds.value) in (int, float)
-            if not provable or seconds.value > self.max_hold_seconds:
-                diagnostics.append(
-                    Diagnostic(
-                        code="bench_hold_limit",
-                        message=(
-                            f"hold() must be a literal of at most {self.max_hold_seconds} s; "
-                            "this target proves literals only."
-                        ),
-                        path=path,
-                        node_id=node.node_id,
-                        source=node.source,
-                    )
-                )
+            if not isinstance(seconds, Literal) or not isinstance(seconds.value, int | float):
+                diagnostics.append(self.rejected(node, path, "a literal duration"))
+            elif not 0.0 <= seconds.value <= self.max_hold_seconds:
+                diagnostics.append(self.rejected(node, path, f"a duration in [0, {self.max_hold_seconds}] s"))
         return tuple(diagnostics)
+
+    def rejected(self, node: DeviceCommand, path: str, expected: str) -> Diagnostic:
+        return Diagnostic(
+            code="bench_hold_limit",
+            message=f"hold() requires {expected}; this target proves literals only.",
+            path=path,
+            node_id=node.node_id,
+            source=node.source,
+        )
 
     def emit(self, program: Program) -> Artifact:
         self.calls.append("emit")
