@@ -290,3 +290,12 @@ def configure(device: Agitator) -> None:
     assert result.returncode == (0 if valid else 1), result.stdout + result.stderr
     if not valid:
         assert result.stdout.count(" error: ") == 2, result.stdout
+
+
+def sequence(node_id: str) -> int:
+    return int(node_id.rsplit(":", 1)[1])
+
+
+def test_device_query_identifier_precedes_its_branch_identifier():
+    branch = next(node for node in PortableAgitation().to_ir().functions[0].body if isinstance(node, DeviceIf))
+    assert sequence(branch.condition.node_id) < sequence(branch.node_id)

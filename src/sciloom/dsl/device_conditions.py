@@ -1,14 +1,30 @@
-"""Recognize trusted predicate markers and lower both typed device branches."""
+"""Recognize trusted predicate markers and the narrowing they authorize."""
 
 import ast
 import inspect
+from dataclasses import dataclass
 
-from sciloom.core.ir import CanWrite, DeviceIf, IsDevice, SupportsOperation
+from sciloom.core.ir import CanWrite, IsDevice, SupportsOperation
 from sciloom.devices import BaseDevice
 from sciloom.devices.declarations import device_contract
 from . import comptime
 from .context import LoweringContext
 from .device_schema import DeviceReference
+
+
+@dataclass(frozen=True, kw_only=True)
+class DeviceCondition:
+    """One recognized compile-time query and the narrowing its then-branch gets.
+
+    Attributes:
+        predicate: Semantic query retained in authored IR for later selection.
+        resource_id: Logical device the query asks about.
+        narrowed_type: Device interface the then-branch may assume, when narrower.
+    """
+
+    predicate: CanWrite | SupportsOperation | IsDevice
+    resource_id: str
+    narrowed_type: type[BaseDevice] | None
 
 
 def static_object(context: LoweringContext, node: ast.AST) -> object:
@@ -20,9 +36,8 @@ def static_object(context: LoweringContext, node: ast.AST) -> object:
     return None
 
 
-def device_if(context: LoweringContext, node: ast.If) -> DeviceIf | None:
-    from .statements import statements
-
+def device_condition(context: LoweringContext, node: ast.If) -> DeviceCondition | None:
+    """Return the device query in `node.test`, or None for an ordinary condition."""
     call = node.test
     if not isinstance(call, ast.Call):
         return None
@@ -98,12 +113,4 @@ def device_if(context: LoweringContext, node: ast.If) -> DeviceIf | None:
             )
         condition = CanWrite(**context.metadata(call), resource_id=resource_id, property_id=next(iter(matches)))
 
-    metadata = context.metadata(node)
-    original = context.narrowed_devices.copy()
-    try:
-        if narrowed is not None:
-            context.narrowed_devices[resource_id] = narrowed
-        then_body = statements(context, node.body)
-    finally:
-        context.narrowed_devices = original
-    return DeviceIf(**metadata, condition=condition, then_body=then_body, else_body=statements(context, node.orelse))
+    return DeviceCondition(predicate=condition, resource_id=resource_id, narrowed_type=narrowed)
