@@ -1,5 +1,9 @@
 # Instance specialization and compile API
 
+Historical design context. The current [compilation guide](site/user-guide/compilation.md)
+and [compiler interface](site/developer/compiler.md) are maintained in the handbook.
+Application and broader task examples below remain proposals.
+
 **Status:** accepted pre-refactor architecture decision, 2026-09-10.
 
 ## Decision
