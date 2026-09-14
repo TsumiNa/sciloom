@@ -37,6 +37,7 @@ are indexes; design proposals and validation records retain their historical con
 - [uv workspace and lockstep versioning](refactor/uv-workspace/00-overview.md)
 - [Keeping the AutoSuite corpus out of git](refactor/corpus-privacy/00-overview.md)
 - [Renaming the core binding records module](refactor/core-bindings/00-overview.md)
+- [Example-led handbooks](refactor/handbook-restructure/00-overview.md)
 
 ## AutoSuite reference
 
