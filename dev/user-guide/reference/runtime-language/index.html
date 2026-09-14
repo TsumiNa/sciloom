@@ -10,36 +10,36 @@
       
       
       
-        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/user-guide/control-flow/">
+        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/user-guide/reference/runtime-language/">
       
       
-        <link rel="prev" href="../values/">
+        <link rel="prev" href="../declarations/">
       
       
-        <link rel="next" href="../composition/">
+        <link rel="next" href="../devices-and-targets/">
       
       
         
       
       
-      <link rel="icon" href="../../assets/brand/favicon.svg">
+      <link rel="icon" href="../../../assets/brand/favicon.svg">
       <meta name="generator" content="zensical-0.0.61">
     
     
       
-        <title>Runtime control flow - SciLoom</title>
+        <title>Runtime language - SciLoom</title>
       
     
     
       
         
       
-      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.ce62732f.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/modern/main.ce62732f.min.css">
       
         
           
         
-        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.812a03bb.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/modern/palette.812a03bb.min.css">
       
       
 
@@ -52,9 +52,9 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/brand.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/brand.css">
     
-    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    <script>__md_scope=new URL("../../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
     
       
 
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#runtime-control-flow" class="md-skip">
+        <a href="#runtime-language" class="md-skip">
           Skip to content
         </a>
       
@@ -97,9 +97,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="SciLoom" class="md-header__button md-logo" aria-label="SciLoom" data-md-component="logo">
-      <img class="sciloom-brand-light" src="../../assets/brand/svg/sciloom-mark-light.svg" alt="SciLoom">
-<img class="sciloom-brand-dark" src="../../assets/brand/svg/sciloom-mark-dark.svg" alt="SciLoom">
+    <a href="../../.." title="SciLoom" class="md-header__button md-logo" aria-label="SciLoom" data-md-component="logo">
+      <img class="sciloom-brand-light" src="../../../assets/brand/svg/sciloom-mark-light.svg" alt="SciLoom">
+<img class="sciloom-brand-dark" src="../../../assets/brand/svg/sciloom-mark-dark.svg" alt="SciLoom">
     </a>
     <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Runtime control flow
+              Runtime language
             
           </span>
         </div>
@@ -194,7 +194,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../.." class="md-tabs__link">
+        <a href="../../.." class="md-tabs__link">
           
   
   Introduction
@@ -217,29 +217,14 @@
     
     
     
-      
-  
-  
-  
-    
-  
-  
-    
-      
-    
-    
-    
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../tutorial/" class="md-tabs__link">
+        <a href="../../" class="md-tabs__link">
           
   
   User Guide
 
         </a>
       </li>
-    
-  
-
     
   
 
@@ -255,7 +240,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../developer/architecture/" class="md-tabs__link">
+        <a href="../../../developer/architecture/" class="md-tabs__link">
           
   
   Developer Guide
@@ -277,7 +262,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../examples/" class="md-tabs__link">
+        <a href="../../../examples/" class="md-tabs__link">
           
   
   Examples
@@ -299,7 +284,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../api/" class="md-tabs__link">
+        <a href="../../../api/" class="md-tabs__link">
           
   
   API Reference
@@ -332,9 +317,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="SciLoom" class="md-nav__button md-logo" aria-label="SciLoom" data-md-component="logo">
-      <img class="sciloom-brand-light" src="../../assets/brand/svg/sciloom-mark-light.svg" alt="SciLoom">
-<img class="sciloom-brand-dark" src="../../assets/brand/svg/sciloom-mark-dark.svg" alt="SciLoom">
+    <a href="../../.." title="SciLoom" class="md-nav__button md-logo" aria-label="SciLoom" data-md-component="logo">
+      <img class="sciloom-brand-light" src="../../../assets/brand/svg/sciloom-mark-light.svg" alt="SciLoom">
+<img class="sciloom-brand-dark" src="../../../assets/brand/svg/sciloom-mark-dark.svg" alt="SciLoom">
     </a>
     SciLoom
   </label>
@@ -398,7 +383,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -425,7 +410,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../introduction/getting-started/" class="md-nav__link">
+      <a href="../../../introduction/getting-started/" class="md-nav__link">
         
   
   
@@ -452,7 +437,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../introduction/status/" class="md-nav__link">
+      <a href="../../../introduction/status/" class="md-nav__link">
         
   
   
@@ -540,6 +525,33 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Overview
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
     
@@ -557,10 +569,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
         
           
-          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="">
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
             
   
   
@@ -577,8 +589,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_1">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -594,7 +606,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorial/" class="md-nav__link">
+      <a href="../../tutorial/" class="md-nav__link">
         
   
   
@@ -621,7 +633,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorial/first-function/" class="md-nav__link">
+      <a href="../../tutorial/first-function/" class="md-nav__link">
         
   
   
@@ -648,7 +660,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorial/inputs-and-units/" class="md-nav__link">
+      <a href="../../tutorial/inputs-and-units/" class="md-nav__link">
         
   
   
@@ -675,7 +687,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorial/lists-and-loops/" class="md-nav__link">
+      <a href="../../tutorial/lists-and-loops/" class="md-nav__link">
         
   
   
@@ -702,7 +714,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorial/agitator/" class="md-nav__link">
+      <a href="../../tutorial/agitator/" class="md-nav__link">
         
   
   
@@ -729,7 +741,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorial/compile/" class="md-nav__link">
+      <a href="../../tutorial/compile/" class="md-nav__link">
         
   
   
@@ -763,15 +775,68 @@
   
   
   
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Advanced
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Advanced
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../functions/" class="md-nav__link">
+      <a href="../../advanced/composition/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Functions and fields
+  Composition and shared devices
 
     
   </span>
@@ -791,14 +856,158 @@
   
   
     <li class="md-nav__item">
-      <a href="../values/" class="md-nav__link">
+      <a href="../../advanced/specialization/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Values, units and lists
+  Host-time specialization
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced/device-branches/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Device-dependent branches
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced/autosuite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  AutoSuite rules
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Reference
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Reference
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../declarations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Declarations
 
     
   </span>
@@ -834,7 +1043,7 @@
   <span class="md-ellipsis">
     
   
-  Runtime control flow
+  Runtime language
 
     
   </span>
@@ -851,7 +1060,7 @@
   <span class="md-ellipsis">
     
   
-  Runtime control flow
+  Runtime language
 
     
   </span>
@@ -877,10 +1086,43 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#target-restrictions" class="md-nav__link">
+  <a href="#values" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Target restrictions
+        Values
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Expressions
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statements" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Statements
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calls" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Calls
       </span>
     </span>
   </a>
@@ -903,14 +1145,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../composition/" class="md-nav__link">
+      <a href="../devices-and-targets/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Composition
+  Devices and targets
 
     
   </span>
@@ -923,55 +1165,9 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../devices/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Devices
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../compilation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Compilation
-
-    
-  </span>
-  
-  
-
-      </a>
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1041,7 +1237,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/architecture/" class="md-nav__link">
+      <a href="../../../developer/architecture/" class="md-nav__link">
         
   
   
@@ -1068,7 +1264,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/add-a-device/" class="md-nav__link">
+      <a href="../../../developer/add-a-device/" class="md-nav__link">
         
   
   
@@ -1095,7 +1291,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/add-a-target/" class="md-nav__link">
+      <a href="../../../developer/add-a-target/" class="md-nav__link">
         
   
   
@@ -1122,7 +1318,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/reject-a-program/" class="md-nav__link">
+      <a href="../../../developer/reject-a-program/" class="md-nav__link">
         
   
   
@@ -1149,7 +1345,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/ir/" class="md-nav__link">
+      <a href="../../../developer/ir/" class="md-nav__link">
         
   
   
@@ -1176,7 +1372,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/compiler/" class="md-nav__link">
+      <a href="../../../developer/compiler/" class="md-nav__link">
         
   
   
@@ -1203,7 +1399,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/interpreter/" class="md-nav__link">
+      <a href="../../../developer/interpreter/" class="md-nav__link">
         
   
   
@@ -1230,7 +1426,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/contributions/" class="md-nav__link">
+      <a href="../../../developer/contributions/" class="md-nav__link">
         
   
   
@@ -1257,7 +1453,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/typing-and-tests/" class="md-nav__link">
+      <a href="../../../developer/typing-and-tests/" class="md-nav__link">
         
   
   
@@ -1284,7 +1480,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/documentation/" class="md-nav__link">
+      <a href="../../../developer/documentation/" class="md-nav__link">
         
   
   
@@ -1311,7 +1507,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/publication/" class="md-nav__link">
+      <a href="../../../developer/publication/" class="md-nav__link">
         
   
   
@@ -1338,7 +1534,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/brand/" class="md-nav__link">
+      <a href="../../../developer/brand/" class="md-nav__link">
         
   
   
@@ -1422,7 +1618,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/" class="md-nav__link">
+      <a href="../../../examples/" class="md-nav__link">
         
   
   
@@ -1449,7 +1645,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/function-call/" class="md-nav__link">
+      <a href="../../../examples/function-call/" class="md-nav__link">
         
   
   
@@ -1476,7 +1672,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/agitation/" class="md-nav__link">
+      <a href="../../../examples/agitation/" class="md-nav__link">
         
   
   
@@ -1503,7 +1699,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/scale-values/" class="md-nav__link">
+      <a href="../../../examples/scale-values/" class="md-nav__link">
         
   
   
@@ -1530,7 +1726,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/non-zero-array-min/" class="md-nav__link">
+      <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
   
@@ -1557,7 +1753,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/stir-rack/" class="md-nav__link">
+      <a href="../../../examples/stir-rack/" class="md-nav__link">
         
   
   
@@ -1584,7 +1780,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/agitation-ir/" class="md-nav__link">
+      <a href="../../../examples/agitation-ir/" class="md-nav__link">
         
   
   
@@ -1611,7 +1807,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/list-ir/" class="md-nav__link">
+      <a href="../../../examples/list-ir/" class="md-nav__link">
         
   
   
@@ -1638,7 +1834,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/demo-device/" class="md-nav__link">
+      <a href="../../../examples/demo-device/" class="md-nav__link">
         
   
   
@@ -1665,7 +1861,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/portable-agitation/" class="md-nav__link">
+      <a href="../../../examples/portable-agitation/" class="md-nav__link">
         
   
   
@@ -1749,7 +1945,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/" class="md-nav__link">
+      <a href="../../../api/" class="md-nav__link">
         
   
   
@@ -1776,7 +1972,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/author/" class="md-nav__link">
+      <a href="../../../api/author/" class="md-nav__link">
         
   
   
@@ -1803,7 +1999,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/units/" class="md-nav__link">
+      <a href="../../../api/units/" class="md-nav__link">
         
   
   
@@ -1830,7 +2026,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/comptime/" class="md-nav__link">
+      <a href="../../../api/comptime/" class="md-nav__link">
         
   
   
@@ -1857,7 +2053,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/autosuite/" class="md-nav__link">
+      <a href="../../../api/autosuite/" class="md-nav__link">
         
   
   
@@ -1884,7 +2080,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/devices/" class="md-nav__link">
+      <a href="../../../api/devices/" class="md-nav__link">
         
   
   
@@ -1911,7 +2107,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/ir-values/" class="md-nav__link">
+      <a href="../../../api/ir-values/" class="md-nav__link">
         
   
   
@@ -1938,7 +2134,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/ir-flow/" class="md-nav__link">
+      <a href="../../../api/ir-flow/" class="md-nav__link">
         
   
   
@@ -1965,7 +2161,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/ir-devices/" class="md-nav__link">
+      <a href="../../../api/ir-devices/" class="md-nav__link">
         
   
   
@@ -1992,7 +2188,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/ir-json/" class="md-nav__link">
+      <a href="../../../api/ir-json/" class="md-nav__link">
         
   
   
@@ -2019,7 +2215,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/compiler/" class="md-nav__link">
+      <a href="../../../api/compiler/" class="md-nav__link">
         
   
   
@@ -2046,7 +2242,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/interpreter/" class="md-nav__link">
+      <a href="../../../api/interpreter/" class="md-nav__link">
         
   
   
@@ -2073,7 +2269,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../api/diagnostics/" class="md-nav__link">
+      <a href="../../../api/diagnostics/" class="md-nav__link">
         
   
   
@@ -2141,10 +2337,43 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#target-restrictions" class="md-nav__link">
+  <a href="#values" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Target restrictions
+        Values
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Expressions
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statements" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Statements
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calls" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Calls
       </span>
     </span>
   </a>
@@ -2168,36 +2397,159 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="3128e49c5645f928014778cdb5592e4f90a904dd">3128e49c</code>
+    · <code title="a4cdf697a02f3e9dbe2892f7309485b62dc43560">a4cdf697</code>
   </p>
 </aside>
 
                   
 
-<h1 id="runtime-control-flow">Runtime control flow</h1>
-<p>Inside <code>@runtime</code>, write ordinary assignments, <code>if/elif/else</code> and <code>while</code> statements.
-SciLoom deliberately accepts a restricted source language rather than arbitrary
-Python. Unsupported constructs produce diagnostics pointing to their source.</p>
-<p>Supported expressions include scalar/list literals, registered <code>self</code> fields,
-host scalar configuration, arithmetic <code>+ - * /</code>, unary signs, individual comparisons,
-Boolean <code>not</code>, and list length/indexing. Division produces float. If and While
-conditions must be Boolean.</p>
-<p>Assignment and augmented assignment are supported. Function calls are statements:
-bind their outputs directly rather than nesting calls inside arithmetic.
-<code>pass</code> and string/docstring statements have no execution effect.</p>
-<p>Python local temporaries, arbitrary helper calls, module-global value lookups,
-chained comparisons, <code>for</code>, <code>break</code>, <code>continue</code>, loop <code>else</code>, <code>return</code>, exception
-handlers and arbitrary attribute chains are not implemented. Runtime state must
-be declared on the class. Device properties have their own restricted write-only
-contract described in <a href="../devices/">Devices</a>.</p>
-<h2 id="target-restrictions">Target restrictions</h2>
-<p>The semantic model and reference interpreter support short-circuit <code>and</code>/<code>or</code>.
-The AutoSuite target currently rejects them because equivalent target behavior
-has not been established. Use nested <code>if</code> statements for AutoSuite, as in the
-<a href="../../examples/non-zero-array-min/">minimum example</a>. AutoSuite also rejects
-recursive calls even though the semantic model can represent them.</p>
-<p>Device-dependent compilation uses the separate <a href="../devices/#device-dependent-branches">compile-time queries</a>.
-Their arguments cannot depend on runtime values.</p>
+<h1 id="runtime-language">Runtime language</h1>
+<p>What a <code>@runtime</code> method may contain. SciLoom reads the source and accepts a
+restricted subset of Python; the first construct outside it is named in a
+diagnostic.</p>
+<h2 id="values">Values</h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>int</code>, <code>float</code></td>
+<td>an integer widens to a float where needed; a float never narrows</td>
+</tr>
+<tr>
+<td><code>bool</code></td>
+<td>its own type; not an integer, not an index, the only valid condition</td>
+</tr>
+<tr>
+<td><code>RotationalSpeed</code></td>
+<td>written <code>600 * rpm</code> or <code>10 * rps</code> from a host number; canonical unit is revolutions per second; the only physical quantity in this release</td>
+</tr>
+<tr>
+<td><code>list[T]</code></td>
+<td>one-dimensional, homogeneous, <code>T</code> one of the four above</td>
+</tr>
+</tbody>
+</table>
+<p>There is no implicit truthiness: a condition is a Boolean expression, not a
+number or a list. Lists have no arithmetic, comparison or truthiness of their own.</p>
+<h2 id="expressions">Expressions</h2>
+<table>
+<thead>
+<tr>
+<th>Supported</th>
+<th>Not supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>literals; <code>self.&lt;field&gt;</code>; a host scalar through <code>self</code></td>
+<td>local names, module globals, attribute chains</td>
+</tr>
+<tr>
+<td><code>+ - * /</code> (division yields <code>float</code>); unary <code>+ - not</code></td>
+<td><code>** % //</code>, bitwise operators</td>
+</tr>
+<tr>
+<td>one comparison <code>== != &lt; &lt;= &gt; &gt;=</code></td>
+<td>chained comparisons, <code>in</code>, <code>is</code></td>
+</tr>
+<tr>
+<td><code>and</code>, <code>or</code> (refused by AutoSuite; see <a href="../../advanced/autosuite/">AutoSuite rules</a>)</td>
+<td>conditional expressions</td>
+</tr>
+<tr>
+<td><code>[a, b]</code>, <code>self.items[i]</code>, <code>len(self.items)</code></td>
+<td>slicing, comprehensions, list methods, any other call</td>
+</tr>
+<tr>
+<td><code>300 * rpm</code> with a host number</td>
+<td>a unit applied to a runtime value; use <code>Input[RotationalSpeed]</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="statements">Statements</h2>
+<table>
+<thead>
+<tr>
+<th>Supported</th>
+<th>Not supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>self.x = expr</code>, <code>self.x += expr</code> and the other augmented forms</td>
+<td>assignment to anything but a declared field</td>
+</tr>
+<tr>
+<td><code>self.items[i] = expr</code>, <code>self.items[i] += expr</code></td>
+<td>writes that extend a list</td>
+</tr>
+<tr>
+<td><code>if</code> / <code>elif</code> / <code>else</code></td>
+<td>conditional expressions</td>
+</tr>
+<tr>
+<td><code>while cond:</code></td>
+<td><code>for</code>, <code>break</code>, <code>continue</code>, <code>while ... else</code></td>
+</tr>
+<tr>
+<td><code>self.x = self.child(...)</code>, <code>self.a, self.b = self.child(...)</code>, <code>self.child()</code></td>
+<td>calls nested in expressions, helper functions</td>
+</tr>
+<tr>
+<td><code>self.shaker.speed = expr</code>; <code>self.shaker.start()</code></td>
+<td>reading a device property; <code>+=</code> on one</td>
+</tr>
+<tr>
+<td><code>if comptime.is_device(...)</code>, <code>can_write</code>, <code>supports</code> as the whole condition</td>
+<td>queries combined with <code>and</code>, or with runtime arguments</td>
+</tr>
+<tr>
+<td><code>pass</code>, docstrings</td>
+<td><code>return</code>, <code>try</code>, <code>with</code>, <code>assert</code>, <code>del</code>, nested <code>def</code></td>
+</tr>
+</tbody>
+</table>
+<p>Lists are values: assignment copies, and a call copies inputs in and outputs
+out. Indices are non-negative integers; negative or out-of-range access is an
+execution error, and a write never grows a list. An empty literal needs a
+declared element type. Explained in <a href="../../tutorial/lists-and-loops/">tutorial 3</a>.</p>
+<h2 id="calls">Calls</h2>
+<table>
+<thead>
+<tr>
+<th>Form</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>inputs</td>
+<td>positional or keyword, each exactly once</td>
+</tr>
+<tr>
+<td>one output</td>
+<td>one assignment destination</td>
+</tr>
+<tr>
+<td>several outputs</td>
+<td>a tuple destination in declaration order</td>
+</tr>
+<tr>
+<td>no outputs</td>
+<td>a bare call statement</td>
+</tr>
+<tr>
+<td>destinations</td>
+<td>whole fields only, never list elements</td>
+</tr>
+</tbody>
+</table>
+<p>Explained in <a href="../../advanced/composition/">composition</a>.</p>
 
 
 
@@ -2230,7 +2582,7 @@ Their arguments cannot depend on runtime values.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../values/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Values, units and lists">
+          <a href="../declarations/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Declarations">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -2240,20 +2592,20 @@ Their arguments cannot depend on runtime values.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Values, units and lists
+                Declarations
               </div>
             </div>
           </a>
         
         
           
-          <a href="../composition/" class="md-footer__link md-footer__link--next" aria-label="Next: Composition">
+          <a href="../devices-and-targets/" class="md-footer__link md-footer__link--next" aria-label="Next: Devices and targets">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Composition
+                Devices and targets
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -2294,10 +2646,10 @@ Their arguments cannot depend on runtime values.</p>
       
         
         
-      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["navigation.tabs","navigation.sections","navigation.footer","content.code.copy","search.highlight"],"redirect":null,"search":"../../assets/javascripts/workers/search.7d14d953.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"provider":"mike"}}</script>
+      <script id="__config" type="application/json">{"annotate":null,"base":"../../..","features":["navigation.tabs","navigation.sections","navigation.footer","content.code.copy","search.highlight"],"redirect":null,"search":"../../../assets/javascripts/workers/search.7d14d953.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"provider":"mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.df5d1f2b.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.df5d1f2b.min.js"></script>
       
     
   </body>

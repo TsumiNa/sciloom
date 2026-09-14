@@ -10,6 +10,9 @@
         <loc>https://tsumina.github.io/sciloom/dev/introduction/status/</loc>
       </url>
       <url>
+        <loc>https://tsumina.github.io/sciloom/dev/user-guide/</loc>
+      </url>
+      <url>
         <loc>https://tsumina.github.io/sciloom/dev/user-guide/tutorial/</loc>
       </url>
       <url>
@@ -28,22 +31,25 @@
         <loc>https://tsumina.github.io/sciloom/dev/user-guide/tutorial/compile/</loc>
       </url>
       <url>
-        <loc>https://tsumina.github.io/sciloom/dev/user-guide/functions/</loc>
+        <loc>https://tsumina.github.io/sciloom/dev/user-guide/advanced/composition/</loc>
       </url>
       <url>
-        <loc>https://tsumina.github.io/sciloom/dev/user-guide/values/</loc>
+        <loc>https://tsumina.github.io/sciloom/dev/user-guide/advanced/specialization/</loc>
       </url>
       <url>
-        <loc>https://tsumina.github.io/sciloom/dev/user-guide/control-flow/</loc>
+        <loc>https://tsumina.github.io/sciloom/dev/user-guide/advanced/device-branches/</loc>
       </url>
       <url>
-        <loc>https://tsumina.github.io/sciloom/dev/user-guide/composition/</loc>
+        <loc>https://tsumina.github.io/sciloom/dev/user-guide/advanced/autosuite/</loc>
       </url>
       <url>
-        <loc>https://tsumina.github.io/sciloom/dev/user-guide/devices/</loc>
+        <loc>https://tsumina.github.io/sciloom/dev/user-guide/reference/declarations/</loc>
       </url>
       <url>
-        <loc>https://tsumina.github.io/sciloom/dev/user-guide/compilation/</loc>
+        <loc>https://tsumina.github.io/sciloom/dev/user-guide/reference/runtime-language/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/user-guide/reference/devices-and-targets/</loc>
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/developer/architecture/</loc>
