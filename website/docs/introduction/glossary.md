@@ -114,7 +114,8 @@ or command, carried into JSON. [Device contracts](../developer/reference/device-
 rejection carries. [Reject a program](../developer/tutorial/reject-a-program.md#reading-a-diagnostic).
 
 **Native command.** A `DeviceCommand`: a command with a semantic id and typed
-arguments, emitted by targets and refused by the interpreter. [Native commands](../developer/advanced/native-commands.md).
+arguments, produced by the source analysis, lowered by a target that supports it
+and refused by the interpreter. [Native commands](../developer/advanced/native-commands.md).
 
 **Reference execution.** Running a selected program with SciLoom's interpreter
 to define its semantics. [Reference execution](../developer/reference/interpreter.md).

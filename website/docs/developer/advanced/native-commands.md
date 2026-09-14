@@ -1,8 +1,10 @@
 # Native commands
 
-A command declared with `@operation` on a family other than agitation becomes a
-`DeviceCommand` node: a semantic id and typed arguments, nothing more. That is
-enough to serialize, bind and emit it, and not enough to execute it.
+Every command declared with `@operation`, except the two built-in agitation
+lifecycle commands, becomes a `DeviceCommand` node: a semantic id and typed
+arguments, nothing more. That includes an extension command on an `Agitator`
+subclass, such as `DemoAgitator.calibrate`. The node is enough to serialize,
+bind and emit, and not enough to execute.
 
 ## What a command carries
 

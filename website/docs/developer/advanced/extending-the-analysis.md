@@ -30,8 +30,9 @@ session state.
 2. Insert it in the chain at the position its precedence requires.
 3. Add the colocated `<module>_test.py` case that exercises the shape and the
    diagnostic for its nearest wrong form.
-4. If the shape adds a module, add the module to the mypy override list in
-   `pyproject.toml`, as [typing and tests](../typing-and-tests.md) describes.
+4. Add the new test module to the mypy override list in `pyproject.toml`; the
+   list exists for excluded test modules, and production modules are already
+   covered, as [typing and tests](../typing-and-tests.md) describes.
 5. Run the [verification](../reference/verification.md) list.
 
 A shape that needs a new IR node is a change to the semantic contract and starts

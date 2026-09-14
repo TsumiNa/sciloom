@@ -33,7 +33,6 @@ Raised while a `DeviceBinding` or `DeviceBindings` is built, before compilation.
 | Required device configuration must be writable. | a property in `required_configuration` but not in `writable_properties` | make it writable or drop the requirement |
 | Duplicate device binding `<field>`. | two bindings share a logical or physical id | one binding per resource and per instrument |
 | Conflicting trusted device contracts across bindings. | two bindings describe one type id differently | one contract per type id |
-| max_steps must be a positive integer. / max_call_depth must be an integer between 1 and 100. | an `ExecutionConfig` outside its range | stay within the range |
 
 ## IRValidationError
 
@@ -78,9 +77,18 @@ and configuration pass, and `Target.validate`.
 | `device_configuration` | start() requires `<property>` to be configured on every reachable path in this invocation. | a `StartAgitation` reachable without its required writes |
 | your own code | your own message | whatever your `validate` proves; keep the code stable and the message actionable |
 
+## ValueError from ExecutionConfig
+
+Raised when the interpreter's configuration is constructed, before any run.
+
+| Message | What it proves | Fix |
+|---|---|---|
+| max_steps must be a positive integer. | a non-positive step budget | a positive integer |
+| max_call_depth must be an integer between 1 and 100. | a depth outside the range | stay within 1 to 100 |
+
 ## ExecutionError
 
-Raised by the reference interpreter.
+Raised by the reference interpreter during a run.
 
 | Code | Message | Cause |
 |---|---|---|
