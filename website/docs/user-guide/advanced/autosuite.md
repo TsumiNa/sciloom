@@ -63,6 +63,10 @@ try:
 except Exception as error:
     print(error)
 ```
+```text
+application/xml
+$.functions[0].body[0].value: AutoSuite short-circuit equivalence is unverified; lower to explicit If statements. [unsupported_short_circuit]
+```
 
 ## Version and artifact
 

@@ -37,6 +37,9 @@ autosuite = Portable().compile(
 demo = Portable().compile(target=DemoTarget(devices={"shaker": DemoAgitator()}))
 print(autosuite.artifact.suffix, demo.artifact.suffix)
 ```
+```text
+.asfp .json
+```
 
 `DemoAgitator` and `DemoTarget` come from the
 [independent device example](../../examples/demo-device.md): an agitator with an

@@ -68,6 +68,11 @@ try:
 except Exception as error:
     print(error)
 ```
+```text
+vials choose_vials.asfp
+flasks choose_flasks.asfp
+$.python.fn:0: Only scalar bool/int/float host values can enter runtime expressions. [host_value]
+```
 
 ## What can be embedded
 
