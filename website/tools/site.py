@@ -23,6 +23,8 @@ EXAMPLES = (
     "scale_values.asfp",
     "non_zero_array_min.py",
     "non_zero_array_min.asfp",
+    "stir_rack.py",
+    "stir_rack.asfp",
     "developer/agitation_ir.py",
     "developer/agitation_ir.json",
     "developer/list_ir.py",
