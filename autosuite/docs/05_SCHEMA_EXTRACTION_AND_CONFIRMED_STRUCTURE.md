@@ -20,8 +20,8 @@ suffix (for example, `Chemspeed.SATaskSetVariable.1`). Do not calculate the suff
 from statement order, variable type or nesting, or add support for hypothetical
 suffix variants before there is evidence for them.
 
-A scan on 2026-09-11 of `autosuite/app/*.app` (68 gzip-compressed XML files) and
-`autosuite/asfp/*.asfp` (58 XML files), counting every `typeid` attribute, found
+A scan on 2026-09-11 of `autosuite/corpus/app/*.app` (68 gzip-compressed XML files) and
+`autosuite/corpus/asfp/*.asfp` (58 XML files), counting every `typeid` attribute, found
 67 distinct identifiers, all ending in `.1`. `Chemspeed.SATaskSetVariable.1`
 occurred 3,475 times, including 133 times in
 `app/config20260909_polymerization.app`. This scan excludes extracted copies and

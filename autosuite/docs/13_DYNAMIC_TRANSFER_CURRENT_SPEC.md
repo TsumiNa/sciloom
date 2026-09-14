@@ -76,4 +76,4 @@ The implementation computes usable capacity from syringe capacity minus margin v
 
 It converts a logical request of the form "transfer this volume array to this destination zone" into a bounded series of hardware-executable aspiration/dispense chunks. CSV loading is upstream; 4NH and valve operations are downstream. Keeping this boundary separate is what allowed later valve-group limits and channel policies to be added without rewriting the reagent-table parser.
 
-For exact structure, inspect `autosuite/extracted/latest_app/functions/30_Dynamic Transfer Volumectrically.asfp`. Use `autosuite/tools/inspect_structure.py` for a structural outline. The former summarized text views have been removed.
+For exact structure, inspect `autosuite/corpus/extracted/latest_app/functions/30_Dynamic Transfer Volumectrically.asfp`. Use `autosuite/tools/inspect_structure.py` for a structural outline. The former summarized text views have been removed.

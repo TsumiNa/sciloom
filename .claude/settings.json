@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "deny": [
+      "Write(./autosuite/corpus/**)",
+      "Edit(./autosuite/corpus/**)"
+    ]
+  }
+}

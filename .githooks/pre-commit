@@ -3,6 +3,16 @@
 # Enable once per clone: git config core.hooksPath .githooks
 set -eu
 
+# Vendor and instrument material must never be committed, even with `git add -f`.
+# Deletions are fine: they are how material leaves the repository.
+evidence=$(git -c core.quotePath=false diff --cached --name-only --diff-filter=ACMR -- "autosuite" \
+    ":(exclude)autosuite/README.md" ":(exclude)autosuite/docs" \
+    ":(exclude)autosuite/recipe" ":(exclude)autosuite/schema" ":(exclude)autosuite/tools")
+if [ -n "$evidence" ]; then
+    printf "pre-commit: refusing to commit AutoSuite evidence; see autosuite/README.md:\n%s\n" "$evidence" >&2
+    exit 1
+fi
+
 staged=$(git -c core.quotePath=false diff --cached --name-only --diff-filter=ACMR -- "*.py" "*.pyi")
 [ -n "$staged" ] || exit 0
 
