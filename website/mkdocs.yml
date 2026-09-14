@@ -60,6 +60,7 @@ nav:
       - Agitation: examples/agitation.md
       - Scale values: examples/scale-values.md
       - Non Zero Array Min: examples/non-zero-array-min.md
+      - Stir a rack of samples: examples/stir-rack.md
       - Agitation IR: examples/agitation-ir.md
       - List IR: examples/list-ir.md
       - Independent device: examples/demo-device.md

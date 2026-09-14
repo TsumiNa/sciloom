@@ -13,6 +13,7 @@ to the repository root.
 | [Agitation](agitation.md) | Logical device, target binding, saved configuration and explicit lifecycle |
 | [Scale values](scale-values.md) | Typed lists, copying, indexing and loop state |
 | [Non Zero Array Min](non-zero-array-min.md) | A real numerical algorithm adapted without volume units |
+| [Stir a rack of samples](stir-rack.md) | The User Guide tutorial's complete program: composition, a loop, a device and a binding |
 
 ## For contributors
 

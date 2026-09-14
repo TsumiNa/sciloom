@@ -103,6 +103,7 @@ class Text(HTMLParser):
         ("examples/agitation", "agitation"),
         ("examples/scale-values", "scale_values"),
         ("examples/non-zero-array-min", "non_zero_array_min"),
+        ("examples/stir-rack", "stir_rack"),
         ("examples/agitation-ir", "developer/agitation_ir"),
         ("examples/list-ir", "developer/list_ir"),
         ("examples/demo-device", "developer/demo_device"),

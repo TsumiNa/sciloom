@@ -31,6 +31,7 @@ uv run python examples/function_call.py
 uv run python examples/agitation.py
 uv run python examples/scale_values.py
 uv run python examples/non_zero_array_min.py
+uv run python examples/stir_rack.py
 ```
 
 The distribution name is `SciLoom`; the Python import name is `sciloom`. The
@@ -64,6 +65,7 @@ organization and provenance.
 - [Runnable agitation example](examples/agitation.py)
 - [List copying and scaling](examples/scale_values.py)
 - [Numeric Non Zero Array Min](examples/non_zero_array_min.py)
+- [The tutorial's stirring program](examples/stir_rack.py)
 
 ## For SciLoom developers
 
