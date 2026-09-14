@@ -43,7 +43,13 @@ partial move followed by an update is the very data loss this avoids. Omit a lin
 for anything your checkout does not have; `manual/` in particular has never been
 in git, so it is there only if you already had it locally.
 
+The reset moves whichever branch is checked out, so switch to `main` first. Any
+branch of your own is built on the old history: it can no longer be merged, so
+save the work you need (`git format-patch`, or a copy of the files) and re-create
+it from the new `main` afterwards.
+
 ```bash
+git switch main && \
 mkdir -p autosuite/corpus && \
 mv autosuite/app autosuite/corpus/app && \
 mv autosuite/asfp autosuite/corpus/asfp && \
@@ -60,12 +66,14 @@ uv run python autosuite/tools/audit_corpus.py --write-manifest
 ```
 
 `git reset --hard` leaves untracked files alone, and the corpus is untracked by
-the time it runs, so it survives. Commit or stash your own work first: the reset
-discards tracked changes.
+the time it runs, so it survives. It does discard tracked changes on `main`, so
+commit or stash them first.
 
 If the chain stops early, nothing has been fetched yet: finish the remaining
 moves by hand, confirm that `autosuite/` holds only `corpus/`, `docs/`,
-`recipe/`, `schema/` and `tools/`, then run the last three commands.
+`recipe/`, `schema/` and `tools/`, then run the last three commands. The switch
+to `main` has already happened by then; only the fetch, the reset and the audit
+are left.
 
 The final step rewrites `MANIFEST.csv`, whose paths are now relative to `corpus/`.
 If you have already updated and lost the files, restore them from your own copy
