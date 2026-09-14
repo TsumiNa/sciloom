@@ -22,6 +22,10 @@ def test_blocks_keep_marked_fences_in_order_and_ignore_fragments():
 def test_malformed_markers_are_errors():
     with pytest.raises(ValueError, match="step needs a python fence"):
         tutorials.blocks("<!-- tutorial: step -->\n```text\nno code\n```\n")
+    with pytest.raises(ValueError, match="step needs a python fence"):
+        tutorials.blocks("<!-- tutorial: step -->\n\n```python\nnot adjacent = True\n```\n")
+    with pytest.raises(ValueError, match="checkpoint needs a text fence"):
+        tutorials.blocks("<!-- tutorial: checkpoint -->\n```python\nprint(1)\n```\n\n```text\n1\n```\n")
     with pytest.raises(ValueError, match="checkpoint needs a text fence"):
         tutorials.blocks("<!-- tutorial: checkpoint -->\n```python\nprint(1)\n```\n")
 
@@ -66,3 +70,4 @@ def test_same_program_ignores_docstring_and_import_layout_but_not_statements():
     assert not tutorials.same_program(steps, module.replace("x = 1", "x = 2"))
     assert not tutorials.same_program(steps, module.replace('"""Doc."""', '"""Other."""'))
     assert not tutorials.same_program(steps, module.replace("runtime, Var", "Var"))
+    assert not tutorials.same_program("from .helpers import x\n", "from helpers import x\n")

@@ -1,7 +1,7 @@
 """Cumulative tutorial series: marked fences across pages form one program.
 
 A series is an ordered list of pages. Each page marks the fences that belong to
-the series with an HTML comment on the preceding line: a ``step`` fence is
+the series with an HTML comment on the line immediately before the fence: a ``step`` fence is
 appended to the program, and a ``checkpoint`` runs the program built so far
 (plus its own optional code) and states the stdout that run adds. Fences without
 a marker are illustration and are never executed.
@@ -13,8 +13,8 @@ from dataclasses import dataclass
 from pathlib import Path
 
 MARK = re.compile(r"<!-- tutorial: (step|checkpoint) -->")
-PYTHON = re.compile(r"\s*```python\n(.*?)\n```", re.DOTALL)
-TEXT = re.compile(r"\s*```text\n(.*?)\n```", re.DOTALL)
+PYTHON = re.compile(r"\n```python\n(.*?)\n```", re.DOTALL)
+TEXT = re.compile(r"\n```text\n(.*?)\n```", re.DOTALL)
 ANY_PYTHON = re.compile(r"```python\n(.*?)\n```", re.DOTALL)
 
 
@@ -100,17 +100,20 @@ def complete_program(root: Path, series: Series) -> str:
     return (root / series.complete).read_text()
 
 
-def _imports(node: ast.Import | ast.ImportFrom) -> set[tuple[str | None, str, str | None]]:
-    module = None if isinstance(node, ast.Import) else node.module
-    return {(module, alias.name, alias.asname) for alias in node.names}
+Imported = tuple[str | None, int, str, str | None]
 
 
-def _shape(source: str) -> tuple[frozenset[tuple[str | None, str, str | None]], list[str]]:
+def _imports(node: ast.Import | ast.ImportFrom) -> set[Imported]:
+    module, level = (None, 0) if isinstance(node, ast.Import) else (node.module, node.level)
+    return {(module, level, alias.name, alias.asname) for alias in node.names}
+
+
+def _shape(source: str) -> tuple[frozenset[Imported], list[str]]:
     body = ast.parse(source).body
     if body and isinstance(body[0], ast.Expr) and isinstance(body[0].value, ast.Constant):
         if isinstance(body[0].value.value, str):
             body = body[1:]
-    imports: set[tuple[str | None, str, str | None]] = set()
+    imports: set[Imported] = set()
     rest = []
     for node in body:
         if isinstance(node, ast.Import | ast.ImportFrom):
