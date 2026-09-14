@@ -1925,7 +1925,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="3a3c242624c9e3cfc13dc98be515980058aeefb5">3a3c2426</code>
+    · <code title="bdc0bcd3c83cb610838dd91c7e9af419a556978f">bdc0bcd3</code>
   </p>
 </aside>
 
@@ -1959,11 +1959,14 @@ and AutoSuite list outputs that are not initialized on every path.</p>
 isolates list parameters to preserve value-copy semantics. These details do not
 change the experiment's public input/output signature.</p>
 <h2 id="what-validation-establishes">What validation establishes</h2>
-<p>Compilation and XML/reference checks validate the generated structure and mapped
-semantics. They are separate from AutoSuite Executor simulation and hardware
-acceptance. Array guard behavior, device mappings and platform fault/recovery
-details still require real-platform validation; reference execution cannot prove
-vendor numeric or physical equivalence.</p>
+<div class="admonition note">
+<p class="admonition-title">Compilation is not hardware acceptance</p>
+<p>Compilation and reference execution check a program's structure and its
+mapped semantics. They do not operate equipment, and they do not replace
+AutoSuite Executor validation on the deployment host.</p>
+</div>
+<p><a href="../../introduction/status/#what-compilation-establishes">Current capabilities</a>
+states what still requires validation on the platform.</p>
 <p>Developers can inspect the authored and selected IR using the
 <a href="../../developer/compiler/">compiler contract</a>.</p>
 

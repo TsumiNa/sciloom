@@ -1925,7 +1925,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="3a3c242624c9e3cfc13dc98be515980058aeefb5">3a3c2426</code>
+    · <code title="bdc0bcd3c83cb610838dd91c7e9af419a556978f">bdc0bcd3</code>
   </p>
 </aside>
 
@@ -1937,8 +1937,13 @@
 <div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/agitation.py
 </code></pre></div>
 <p>When enabled is true, the procedure captures shaker_speed and explicitly starts agitation. Otherwise it stops. Assignment alone never starts the device, and zero speed is not a stop. The source's XML excerpts are abbreviated; the companion is the complete generated package. This is a focused operation from an original workflow, not a reproduction of the full experiment.</p>
-<p>The module docstring below records expected terminal output. Compilation and
-reference execution do not operate hardware or replace AutoSuite Executor checks.</p>
+<p>The module docstring below records expected terminal output.</p>
+<div class="admonition note">
+<p class="admonition-title">Compilation is not hardware acceptance</p>
+<p>Compilation and reference execution check a program's structure and its
+mapped semantics. They do not operate equipment, and they do not replace
+AutoSuite Executor validation on the deployment host.</p>
+</div>
 <h2 id="source-and-generated-files">Source and generated files</h2>
 <p><a href="../../_generated/examples/agitation.py">Download Python source</a></p>
 <ul>

@@ -1947,7 +1947,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="3a3c242624c9e3cfc13dc98be515980058aeefb5">3a3c2426</code>
+    · <code title="bdc0bcd3c83cb610838dd91c7e9af419a556978f">bdc0bcd3</code>
   </p>
 </aside>
 
@@ -1959,8 +1959,13 @@
 <div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>examples.developer.demo_device
 </code></pre></div>
 <p>The emitted node sequence is ConfigureProperty, ConfigureProperty, StartAgitation, DeviceCommand, StopAgitation. The target conservatively accepts only literal gain values in [0, 1]. The extension adds a property and command without changes to core. calibrate has no reference execution semantics, so recording its request does not imply the interpreter or hardware can execute it. SourceSpan paths in the JSON are relative to the repository root, so the companion file is reproducible.</p>
-<p>The module docstring below records expected terminal output. Compilation and
-reference execution do not operate hardware or replace AutoSuite Executor checks.</p>
+<p>The module docstring below records expected terminal output.</p>
+<div class="admonition note">
+<p class="admonition-title">Compilation is not hardware acceptance</p>
+<p>Compilation and reference execution check a program's structure and its
+mapped semantics. They do not operate equipment, and they do not replace
+AutoSuite Executor validation on the deployment host.</p>
+</div>
 <h2 id="source-and-generated-files">Source and generated files</h2>
 <p><a href="../../_generated/examples/developer/demo_device.py">Download Python source</a></p>
 <ul>

@@ -1925,7 +1925,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="3a3c242624c9e3cfc13dc98be515980058aeefb5">3a3c2426</code>
+    · <code title="bdc0bcd3c83cb610838dd91c7e9af419a556978f">bdc0bcd3</code>
   </p>
 </aside>
 
@@ -1937,8 +1937,13 @@
 <div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/non_zero_array_min.py
 </code></pre></div>
 <p>This is a dimensionless adaptation of the retained Non Zero Array Min procedure from config20260909_polymerization.app. It removes the original volume unit while retaining the numerical threshold and sentinel. Values at or below the threshold are ignored; values above the sentinel do not replace it. Nested if statements preserve the intended conditional evaluation on AutoSuite without using unverified and/or lowering.</p>
-<p>The module docstring below records expected terminal output. Compilation and
-reference execution do not operate hardware or replace AutoSuite Executor checks.</p>
+<p>The module docstring below records expected terminal output.</p>
+<div class="admonition note">
+<p class="admonition-title">Compilation is not hardware acceptance</p>
+<p>Compilation and reference execution check a program's structure and its
+mapped semantics. They do not operate equipment, and they do not replace
+AutoSuite Executor validation on the deployment host.</p>
+</div>
 <h2 id="source-and-generated-files">Source and generated files</h2>
 <p><a href="../../_generated/examples/non_zero_array_min.py">Download Python source</a></p>
 <ul>

@@ -1925,7 +1925,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="3a3c242624c9e3cfc13dc98be515980058aeefb5">3a3c2426</code>
+    · <code title="bdc0bcd3c83cb610838dd91c7e9af419a556978f">bdc0bcd3</code>
   </p>
 </aside>
 
@@ -1937,8 +1937,13 @@
 <div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>examples.developer.list_ir
 </code></pre></div>
 <p>The read-only result exposes (9.0, 2.0); the caller's input remains [1.0, 2.0]. ListType describes the element type, Assignment copies the whole value and ListSet retains indexed-write intent. Every node occurrence has its own ID, while references share the destination symbol's ID. The example emits JSON, not equipment commands.</p>
-<p>The module docstring below records expected terminal output. Compilation and
-reference execution do not operate hardware or replace AutoSuite Executor checks.</p>
+<p>The module docstring below records expected terminal output.</p>
+<div class="admonition note">
+<p class="admonition-title">Compilation is not hardware acceptance</p>
+<p>Compilation and reference execution check a program's structure and its
+mapped semantics. They do not operate equipment, and they do not replace
+AutoSuite Executor validation on the deployment host.</p>
+</div>
 <h2 id="source-and-generated-files">Source and generated files</h2>
 <p><a href="../../_generated/examples/developer/list_ir.py">Download Python source</a></p>
 <ul>

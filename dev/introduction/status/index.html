@@ -451,6 +451,23 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Current capabilities
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="././" class="md-nav__link md-nav__link--active">
         
   
@@ -466,6 +483,37 @@
   
 
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-compilation-establishes" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        What compilation establishes
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1804,6 +1852,11 @@
                       
                     
                     
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
                   
                   <div class="md-sidebar__inner">
                     
@@ -1815,6 +1868,25 @@
   
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-compilation-establishes" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        What compilation establishes
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1831,7 +1903,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="3a3c242624c9e3cfc13dc98be515980058aeefb5">3a3c2426</code>
+    · <code title="bdc0bcd3c83cb610838dd91c7e9af419a556978f">bdc0bcd3</code>
   </p>
 </aside>
 
@@ -1850,8 +1922,13 @@ Device-dependent branches can be selected at compile time.</p>
 the extension boundary. A reference interpreter defines SciLoom execution
 behavior; it does not simulate laboratory hardware.</p>
 <p>GUI/server, public Application/global APIs, measured property reads, Notebook and
-interactive source support remain future work. XML checks and reference execution
-do not establish acceptance by AutoSuite Executor or real equipment.</p>
+interactive source support remain future work.</p>
+<h2 id="what-compilation-establishes">What compilation establishes</h2>
+<p>Compilation and XML/reference checks validate the generated structure and mapped
+semantics. They are separate from AutoSuite Executor simulation and hardware
+acceptance. Array guard behavior, device mappings and platform fault/recovery
+details still require real-platform validation; reference execution cannot prove
+vendor numeric or physical equivalence.</p>
 
 
 
