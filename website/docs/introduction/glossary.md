@@ -78,5 +78,44 @@ define its semantics; a developer tool that proves nothing about equipment.
 
 ## Contributor terms
 
-Defined when the Developer Guide is restructured; until then, see
-the [Target contract](../developer/reference/target-contract.md) and [device contracts](../developer/reference/device-contracts.md).
+**Family.** A subclass of `BaseDevice` declaring what any instrument of its kind
+can be asked to do; never a specific instrument. [Declare a family](../developer/tutorial/declare-a-family.md).
+
+**Profile.** A concrete subclass of a family carrying immutable deployment data
+and the three capability lists. [Declare profiles](../developer/tutorial/declare-profiles.md).
+
+**Slot.** A Function field typed with a family; the program's declared need for
+an instrument. [Write a Function](../developer/tutorial/write-a-function.md).
+
+**Contract.** The data form of a declaration: a `DeviceTypeContract` with its
+ancestors, properties, commands and required configuration, read statically. [Device contracts](../developer/reference/device-contracts.md).
+
+**Binding.** A `DeviceBinding`: the trusted facts a target answers for one
+resource, built by `bind_device`. [Target contract](../developer/reference/target-contract.md#bindings).
+
+**Target.** Four members the compiler calls by name: `target_id`,
+`resolve_devices`, `validate`, `emit`. [Target contract](../developer/reference/target-contract.md).
+
+**Artifact.** Bytes with a media type and a suffix; what `emit` returns. [Target contract](../developer/reference/target-contract.md#members).
+
+**Authored and selected program.** The program as written, with every device
+branch, versus the program after specialization for one deployment. [Compilation pipeline](../developer/reference/pipeline.md#steps).
+
+**Specialization.** The pure function that answers device-dependent branches
+from bindings and retypes resources to their profiles. [Specialization internals](../developer/advanced/specialization.md).
+
+**Definite configuration.** The compiler's proof that every property a lifecycle
+start requires was written on every reachable path. [Required configuration](../developer/reference/device-contracts.md#required-configuration).
+
+**Semantic id.** The namespaced, versioned identifier of a device type, property
+or command, carried into JSON. [Device contracts](../developer/reference/device-contracts.md#identity).
+
+**Diagnostic.** Code, message, path, node id and source span; what every
+rejection carries. [Reject a program](../developer/tutorial/reject-a-program.md#reading-a-diagnostic).
+
+**Native command.** A `DeviceCommand`: a command with a semantic id and typed
+arguments, produced by the source analysis, lowered by a target that supports it
+and refused by the interpreter. [Native commands](../developer/advanced/native-commands.md).
+
+**Reference execution.** Running a selected program with SciLoom's interpreter
+to define its semantics. [Reference execution](../developer/reference/interpreter.md).

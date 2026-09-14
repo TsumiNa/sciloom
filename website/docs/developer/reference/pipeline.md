@@ -35,28 +35,13 @@ Target resolution sees the authored program once; validation and emission see
 the selected program. What step 4 proves about required configuration is stated
 on [device contracts](device-contracts.md#required-configuration).
 
-```python
-from examples.scale_values import ScaleValues
-from sciloom_autosuite import AutoSuiteTarget
-from sciloom.core.compiler import compile_ir
-from sciloom.core.ir import from_json, to_json
-from sciloom.core.specialization import specialize
-
-program = from_json(to_json(ScaleValues().to_ir()))
-target = AutoSuiteTarget()
-selected = specialize(program, bindings=target.resolve_devices(program))
-result = compile_ir(program, target=target)
-assert result.semantic_ir == program
-assert result.specialized_ir == selected
-assert result.artifact.media_type == "application/xml"
-```
 
 `CompileResult` retains `semantic_ir` (authored), `specialized_ir` (selected),
 `target_id`, `artifact` and `diagnostics`, which is empty for a returned result
 because every failure raises. `write(path)` writes the artifact's bytes and
 returns the path. Backend-private variables and parameters never enter either
-public program. Bindings and specialization are described on the
-[Target contract](target-contract.md#bindings).
+public program. Bindings are described on the [Target contract](target-contract.md#bindings)
+and the selection step on [specialization internals](../advanced/specialization.md).
 
 ## Who can say no
 
@@ -77,15 +62,5 @@ no Python source.
 
 The walkthrough [reject a program](../tutorial/reject-a-program.md) shows five of
 these layers on one program and explains where a contributor's own check belongs.
-
-## AutoSuite boundary
-
-The target validates platform restrictions and translates high-level operations
-to a private serialization model. Property writes save configuration, start emits
-Stir with the stored speed and enabled state, and stop emits the disabled state.
-Hidden call parameters propagate shared device configuration without changing
-author entry parameters. Context copyback follows normal function return; recovery
-after exceptional termination is not promised equivalent across platforms.
-
-Typed array encoding covers initialization, I/O binding, copies, lengths and
-checked indexing. Static XML checks do not establish Executor acceptance.
+How the shipped target lowers device intent is on
+[native commands](../advanced/native-commands.md).

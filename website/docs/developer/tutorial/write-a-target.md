@@ -132,9 +132,8 @@ last gate before bytes, and it is the only one that knows your platform. The
 member signatures and the binding rules are on the
 [Target contract](../reference/target-contract.md).
 
-`Target` is a structural protocol: you do not import it and you do not subclass
-it; your class matches it by having the four members, and `compile_ir` only
-checks that they exist. Argument and return types are a static contract; run
-`uv run mypy` over your package to check them.
+`Target` is a structural protocol: your class matches it by having the four
+members. [Typing without inheritance](../advanced/typing-without-inheritance.md)
+explains what the type checker sees.
 
 Next: [5. Reject a program](reject-a-program.md).

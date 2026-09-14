@@ -5,15 +5,8 @@ Run `uv sync --locked` followed by `uv run mypy`. CI checks Python 3.12, 3.13 an
 unannotated function bodies are checked. Both distributions carry py.typed; no
 custom mypy plugin is needed.
 
-Input/Output/Var are Annotated aliases. Mypy sees the Python value type, while
-SciLoom reads role metadata. Wrong scalar/list assignments and invalid device
-property types are caught statically. Runtime and operation decorators preserve
-signatures; is_device uses TypeGuard to narrow compatible device interfaces.
-
-Mypy does not enforce host-time field protection, role nesting, mandatory Var
-initializers, every Function call binding, the source subset or vendor constraints.
-Python's bool/int subtype relationship also differs from SciLoom's index rules.
-Schema, IR and target validation remain necessary.
+What the type checker sees and what it cannot enforce is on
+[typing without inheritance](advanced/typing-without-inheritance.md).
 
 ## Verification workflow
 
