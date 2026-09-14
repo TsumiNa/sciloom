@@ -64,9 +64,11 @@ nav:
       - Reference:
           - Architecture and ownership: developer/reference/architecture.md
           - Semantic IR and JSON v4: developer/reference/ir.md
-          - Compiler and specialization: developer/reference/pipeline.md
+          - Compilation pipeline: developer/reference/pipeline.md
+          - Target contract: developer/reference/target-contract.md
+          - Device contracts: developer/reference/device-contracts.md
           - Reference execution: developer/reference/interpreter.md
-          - Contributing a device or target: developer/reference/target-contract.md
+          - Verification: developer/reference/verification.md
       - Project:
           - Typing and tests: developer/typing-and-tests.md
           - Building documentation: developer/documentation.md

@@ -157,9 +157,10 @@ That is by design. The interpreter defines SciLoom semantics, and it will not
 invent behavior for a command only your hardware understands. Compilation and
 target emission still work; only simulated execution stops.
 
-`required_configuration` is checked when an agitation lifecycle starts, and
-agitation is the only family with such a node today. Your heater can declare it,
-and a target can enforce it in `validate`, but nothing checks it for you yet.
+`required_configuration` is enforced for agitation only, because only agitation
+has a lifecycle node; your heater can declare it, and a target can enforce it in
+`validate`. [Device contracts](reference/device-contracts.md#required-configuration)
+states the rule precisely.
 
 Adding a profile to an existing family is Step 2 alone. The
 [independent device example](../examples/demo-device.md) is exactly that: DemoAgitator

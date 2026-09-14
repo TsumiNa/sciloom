@@ -1,12 +1,10 @@
-# Contributing a device or target
+# Target contract
 
-Device contracts define parameters and commands. Targets validate and emit platform
-programs. Independent packages use the same public interfaces as the shipped
-`sciloom-autosuite` member; no plugin registry or namespace installation is required.
-
-This page is the reference. For worked walkthroughs, start with
-[add a device](../add-a-device.md), then [add a target](../add-a-target.md) and
-[reject a program](../reject-a-program.md).
+A target turns a selected program into a platform artifact. Independent packages
+use the same public interfaces as the shipped `sciloom-autosuite` member; no
+plugin registry or namespace installation is required. This page is the
+reference; the walkthrough is [add a target](../add-a-target.md), and device
+declarations are on [device contracts](device-contracts.md).
 
 ## A minimal target
 
@@ -37,50 +35,47 @@ program = Program(entry_function_id="empty", functions=(FunctionIR(node_id="empt
 assert compile_ir(program, target=SummaryTarget()).artifact.content == b"functions=1\n"
 ```
 
-Returning empty bindings cannot satisfy a program with device resources. Device
-targets should use their immutable deployment configuration to provide the complete
-trusted binding envelope. Target validation returns diagnostics; emission returns
-an Artifact, not an arbitrary string or a hardware connection.
+It has the same four members as the tutorial's `BenchTarget`; that target adds
+deployment data checked in its constructor, real bindings and a platform rule in
+`validate`. A target is recognised structurally: it implements the four members, and no
+target base class is required.
 
-## Device families and concrete profiles
+## Members
 
-```mermaid
-classDiagram
-    BaseDevice <|-- Agitator
-    Agitator <|-- AutoSuiteIndividualShaker
-    Agitator <|-- DemoAgitator
-    AutoSuiteTarget --> AutoSuiteIndividualShaker
-    DemoTarget --> DemoAgitator
-```
+| Member | Signature | Contract |
+|---|---|---|
+| `target_id` | `str` | a namespaced, versioned identifier recorded in `CompileResult` |
+| `resolve_devices` | `(program: Program) -> DeviceBindings` | answers each declared resource from the target's own deployment data; sees the authored program |
+| `validate` | `(program: Program) -> tuple[Diagnostic, ...]` | returns diagnostics for what the platform cannot do; sees the selected program |
+| `emit` | `(program: Program) -> Artifact` | returns bytes, a media type and a suffix, never a hardware connection |
 
-BaseDevice imposes no universal start/stop methods. Agitator defines its family's
-speed/configuration/lifecycle contract. Concrete profiles use immutable deployment
-data and stable versioned device_type_id identifiers. Inheritance establishes type
-relationships; writable_properties, required_configuration and supported_operations
-explicitly declare capability and startup requirements.
+`Artifact(content, media_type, suffix)` is immutable; `CompileResult.write(path)`
+writes its bytes. A target rejects only what it can prove: an unprovable
+declared limit is a rejection, never a clamp.
 
-Use a Python property with `@operation(id=...)` on its setter for configuration.
-Setter and getter value types must match; the setter takes one typed value and
-returns None. Registered parameters use assignment, not parallel set_* methods.
-Commands also use operation with typed arguments and None return. The compiler
-reads declarations without executing their bodies; host access is protected.
+## Bindings
 
-A rejected declaration raises IRValidationError carrying a structured Diagnostic,
-under code class_schema when a Function declares device slots and device_contract
-when a device class declares its own type identity, properties or commands. That
-holds wherever the declaration is read, including when bind_device builds a
-profile's contract or its ancestors'. Two boundaries stay TypeError, because
-neither reports a declaration: host access guards, which reject reading a device
-property or calling a runtime method from host Python, and bind_device's own
-checks, which reject a profile that omits a capability list or names a member it
-never declared.
+`resolve_devices` returns `DeviceBindings`, an envelope of `DeviceBinding`
+records that `bind_device(logical_id=..., device=..., physical_id=...)` builds
+from a profile:
 
-The [independent contribution example](../../examples/demo-device.md) includes the
-full DemoAgitator and DemoTarget implementation. It adds gain and a native calibrate
-command without changing core. `bind_device` and `device_contract` from
-sciloom.devices.declarations convert Python declarations to trusted data contracts.
+| Field | Meaning |
+|---|---|
+| `logical_id` | the slot name the program used: a field name or component path |
+| `physical_id` | the target-defined identity of the instrument |
+| `contract` | the profile's trusted data contract |
+| `base_contracts` | the complete ancestor directory, family and `BaseDevice` included |
+| `writable_properties` | semantic ids the profile accepts writes to |
+| `supported_operations` | semantic ids the profile runs |
 
-Capabilities may use existing scalar/quantity/list types. Do not add arbitrary
-Python objects or dynamic imports to JSON. Define actual target constraints with
-evidence; a target may reject values whose range it cannot prove. A registered
-native command is not automatically executable by the reference interpreter.
+| Rule | Detail |
+|---|---|
+| empty envelope | valid only for a device-free program |
+| coverage | every declared resource needs exactly one compatible binding; a binding with no resource, a duplicate logical or physical id, or a conflicting contract for one type id is an error |
+| trust | the compiler substitutes the binding's contracts for the serialized ones; a serialized contract that differs from the trusted one is `device_contract` |
+| purity | specialization is a pure function of the program and the bindings: it selects device branches, prunes unreachable functions and retypes resources, leaving the authored program unchanged |
+| no discovery | inactive branches need no implementation package; no implementation is imported from a JSON identifier |
+
+Capabilities may use scalar, quantity and list value types only; no arbitrary
+Python objects or dynamic imports enter JSON. A registered native command is not
+automatically executable by the reference interpreter.

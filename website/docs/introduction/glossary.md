@@ -79,4 +79,4 @@ define its semantics; a developer tool that proves nothing about equipment.
 ## Contributor terms
 
 Defined when the Developer Guide is restructured; until then, see
-[contributing a device or target](../developer/reference/target-contract.md).
+the [Target contract](../developer/reference/target-contract.md) and [device contracts](../developer/reference/device-contracts.md).

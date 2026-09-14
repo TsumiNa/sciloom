@@ -41,11 +41,13 @@ assert validate(program) == ()
 assert from_json(to_json(program)) == program
 ```
 
-JSON requires kind="Program" and format_version=4. Records carry their public
-dataclass kind; enums use strings and tuples become arrays. Unknown fields/kinds,
-earlier versions, duplicate keys, wrong scalar types, NaN and Infinity fail.
-Exports include defaults, sorted keys, two-space indentation and a final newline;
-ordered bodies and bindings keep their order. Exported mappings are detached.
+| Rule | Detail |
+|---|---|
+| envelope | `kind="Program"` and `format_version=4`; earlier versions are not upgraded |
+| records | each carries its public dataclass `kind`; enums are strings, tuples become arrays |
+| rejected on import | unknown fields or kinds, duplicate keys, wrong scalar types, `NaN`, `Infinity`; node ids are required, never generated |
+| export | includes defaults, sorted keys, two-space indentation, a final newline; bodies and bindings keep their order; exported mappings are detached |
+| stability | semantic JSON changes can change deterministic UUID hashes in generated artifacts; compare structure rather than bytes across semantic-contract revisions |
 
 SourceSpan records one-based lines and zero-based UTF-8 byte columns. Source IDs
 and spans survive round trips. Lowering records the absolute path of the defining

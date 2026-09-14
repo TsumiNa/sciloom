@@ -10,10 +10,12 @@ rejections a contributor writes: [add a device](add-a-device.md),
 [add a target](add-a-target.md) and [reject a program](reject-a-program.md).
 
 **Reference.** [Architecture and ownership](reference/architecture.md), the
-[semantic IR and JSON v4](reference/ir.md), the
-[compiler and specialization](reference/pipeline.md),
+[compilation pipeline](reference/pipeline.md), the
+[Target contract](reference/target-contract.md),
+[device contracts](reference/device-contracts.md), the
+[semantic IR and JSON v4](reference/ir.md),
 [reference execution](reference/interpreter.md) and
-[contributing a device or target](reference/target-contract.md).
+[verification](reference/verification.md).
 
 **Project.** [Typing and tests](typing-and-tests.md),
 [building documentation](documentation.md),
