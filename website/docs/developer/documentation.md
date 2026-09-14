@@ -47,6 +47,38 @@ Use Google-style English docstrings. Explain arguments, results, errors and
 execution semantics where relevant. Short example results belong in the example's
 module docstring; long results belong in same-basename companion files.
 
+## Tutorial series
+
+A tutorial series builds one program across several pages. Mark the fences that
+belong to it with an HTML comment on the line before the fence; fences without a
+marker are illustration and never run.
+
+````markdown
+<!-- tutorial: step -->
+```python
+class CountStirs(Function):
+    ...
+```
+
+<!-- tutorial: checkpoint -->
+```python
+print(CountStirs().compile(target=AutoSuiteTarget()).write("count_stirs.asfp").name)
+```
+```text
+count_stirs.asfp
+```
+````
+
+A `step` fence is appended to the series program. A `checkpoint` runs the
+program built so far plus its own optional code, and its `text` fence states the
+stdout that this page adds beyond the pages before it; a checkpoint with only a
+`text` fence records what the page's step itself prints. `website/tools/tutorials.py`
+parses the markers, and `website/tools/handbook_test.py` registers each series
+in `SERIES` with its pages in order and, optionally, the repository path of the
+complete program (otherwise the last `python` fence of the last page). The tests
+run every checkpoint and prove that the steps, joined, are that complete program:
+a module docstring and the import layout may differ, the statements may not.
+
 Local pages show `local` or `local-dirty` and the source SHA. PR artifacts identify
 the PR head commit. [Versioned publication](publication.md) explains checked
 development builds, release snapshots and deployment recovery.
