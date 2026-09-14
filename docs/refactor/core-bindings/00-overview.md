@@ -44,4 +44,4 @@ One PR: [rename the module and its references](01-rename-core-bindings.md).
 ## Version
 
 No bump: a rename of an unreleased contributor import path; the merged state is
-`0.1.0+<merge commit>`.
+`0.1.0+d937864`.
