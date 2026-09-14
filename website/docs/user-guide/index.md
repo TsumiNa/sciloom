@@ -21,7 +21,7 @@ it: [declarations](reference/declarations.md), the
 [runtime language](reference/runtime-language.md) and
 [devices and targets](reference/devices-and-targets.md).
 
-The [glossary](../glossary.md) defines the terms used across the site. The
+The [glossary](../introduction/glossary.md) defines the terms used across the site. The
 [example walkthroughs](../examples/index.md) show complete source files with
 their generated packages, and the [API reference](../api/index.md) documents the
 author API extracted from the source.

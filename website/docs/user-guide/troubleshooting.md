@@ -62,8 +62,16 @@ Raised as soon as Python executes the `class` statement.
 | `class_schema` | Device slot `<name>` cannot have a class-level value. | `shaker: Agitator = ...` | bind hardware through the target ([tutorial 5](tutorial/compile.md)) |
 | `class_schema` | Invalid or conflicting device slot name `<name>`. | a private or reserved slot name | a public identifier |
 | `class_schema` | Inherited device slot `<name>` cannot be shadowed. | redeclaring a base class slot | keep the base slot |
-| `runtime_field_read` | Runtime fields cannot be read by host Python. | `instance.field` in host code | read it only inside the runtime method |
-| `runtime_field_write` | Instance configuration shadows runtime field `<name>`. | assigning a runtime field in `__init__` | store host configuration under another name |
+
+## When host Python touches a runtime field
+
+Raised when host code reads or assigns a runtime field on an instance, for
+example in `__init__` or in a script.
+
+| Code | Message | Cause | Fix |
+|---|---|---|---|
+| `runtime_field_read` | Runtime fields cannot be read by host Python. | `instance.field` in host code | read it only inside the runtime method ([tutorial 1](tutorial/first-function.md)) |
+| `runtime_field_write` | Instance configuration shadows runtime field `<name>`. | assigning a runtime field in `__init__` | store host configuration under another name ([specialization](advanced/specialization.md)) |
 
 ## When the source is read
 
@@ -129,9 +137,12 @@ statement.
 
 | Code | Message | Cause | Fix |
 |---|---|---|---|
-| `missing_resource_binding` | No compatible binding for device `<slot>`. | no entry in `devices`, or an incompatible profile | bind every declared slot ([tutorial 5](tutorial/compile.md)) |
+| `missing_resource_binding` | No compatible binding for device `<slot>`. | no entry in `devices` for this slot | bind every declared slot ([tutorial 5](tutorial/compile.md)) |
+| `device_type` | No compatible binding for device `<slot>`. | the entry's profile is not a subtype of the slot's family | bind a profile of the declared family |
 | `unknown_resource_binding` | Device binding `<name>` has no declared resource. | a key that matches no slot | use the field name or component path ([composition](advanced/composition.md)) |
-| `device_capability` | The bound device does not implement this ... | the selected branch uses a property or command the profile lacks | guard it with a query ([device branches](advanced/device-branches.md)) |
+| `device_capability` | The bound device does not implement this writable property contract. | the selected branch writes a property the profile does not list as writable | guard it with `comptime.can_write` ([device branches](advanced/device-branches.md)) |
+| `device_capability` | The bound device does not implement this command contract. | the selected branch calls a command the profile does not support | guard it with `comptime.supports` |
+| `device_capability` | The bound device does not support this lifecycle operation. | `start()` or `stop()` on a profile that does not support it | guard it with `comptime.supports` |
 | `device_configuration` | start() requires `<property>` to be configured on every reachable path in this invocation. | a path reaches `start()` without assigning `speed` | assign the speed on every path first ([tutorial 4](tutorial/agitator.md)) |
 | `unsupported_short_circuit` | AutoSuite short-circuit equivalence is unverified; lower to explicit If statements. | `and` / `or` | nested `if` ([AutoSuite rules](advanced/autosuite.md)) |
 | `recursive_call` | AutoSuite does not support recursive calls. | a Function calling itself, directly or indirectly | a loop |

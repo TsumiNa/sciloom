@@ -34,7 +34,7 @@ nav:
       - Welcome: index.md
       - Getting started: introduction/getting-started.md
       - Current capabilities: introduction/status.md
-      - Glossary: glossary.md
+      - Glossary: introduction/glossary.md
   - User Guide:
       - Overview: user-guide/index.md
       - Tutorial:
