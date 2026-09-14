@@ -217,14 +217,27 @@
     
     
     
+      
+  
+  
+  
+  
+    
+      
+    
+    
+    
       <li class="md-tabs__item">
-        <a href="../../user-guide/functions/" class="md-tabs__link">
+        <a href="../../user-guide/tutorial/" class="md-tabs__link">
           
   
   User Guide
 
         </a>
       </li>
+    
+  
+
     
   
 
@@ -576,6 +589,226 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tutorial
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Tutorial
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Stir a rack of samples
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/tutorial/first-function/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1. Your first Function
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/tutorial/inputs-and-units/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2. Inputs, outputs and speeds
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/tutorial/lists-and-loops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3. Lists and loops
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/tutorial/agitator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4. Stirring with an Agitator
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/tutorial/compile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5. Bind and compile
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
             
               
                 
@@ -1930,7 +2163,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="9865b6bdc49311397cd79c02f081778de958e36b">9865b6bd</code>
+    · <code title="3128e49c5645f928014778cdb5592e4f90a904dd">3128e49c</code>
   </p>
 </aside>
 
@@ -1947,13 +2180,14 @@ documentation release.</p>
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:TsumiNa/sciloom.git
 <span class="nb">cd</span><span class="w"> </span>sciloom
 uv<span class="w"> </span>sync<span class="w"> </span>--locked
-uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/scale_values.py
+uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/stir_rack.py
 </code></pre></div>
-<p>The command prints <code>scale_values.asfp</code> and writes the package beside its Python
+<p>The command prints <code>stir_rack.asfp</code> and writes the package beside its Python
 source. It compiles the experiment; it does not run it on equipment.</p>
 <h2 id="your-first-function">Your first Function</h2>
-<p>The <a href="../../examples/scale-values/">ScaleValues example</a> copies a list and scales
-its elements. Its declarations use familiar Python types:</p>
+<p>The <a href="../../user-guide/tutorial/">tutorial</a> builds that program one class at
+a time, from a three-line counter to the compiled package. Its declarations use
+familiar Python types:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">Var</span><span class="p">,</span> <span class="n">runtime</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteTarget</span>
 </code></pre></div>
@@ -1962,9 +2196,9 @@ exchanged at execution time. <code>Var</code> declares persistent internal state
 experiment's assignments and control flow in one <code>@runtime</code> method, then compile
 an instance with an explicit target. Host Python constructs and specializes the
 instance before compilation.</p>
-<p>Read <a href="../../user-guide/functions/">Functions and fields</a> next. For equipment
-operations, continue with <a href="../../user-guide/devices/">Devices</a> and the
-<a href="../../examples/agitation/">agitation walkthrough</a>.</p>
+<p>Continue with <a href="../../user-guide/tutorial/first-function/">1. Your first Function</a>.
+The rest of the <a href="../../user-guide/functions/">User Guide</a> states the rules the
+tutorial applies.</p>
 
 
 
