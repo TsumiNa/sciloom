@@ -3,7 +3,7 @@
 StirRack is the program the User Guide tutorial builds one class per page:
 measure the largest volume in a rack, choose a speed for it, then configure and
 start the bound shaker or stop it. This page is the runnable, downloadable form;
-the User Guide tutorial explains each step.
+the [tutorial](../user-guide/tutorial/index.md) explains each step.
 
 ## Run and inspect
 

@@ -13,16 +13,17 @@ documentation release.
 git clone git@github.com:TsumiNa/sciloom.git
 cd sciloom
 uv sync --locked
-uv run python examples/scale_values.py
+uv run python examples/stir_rack.py
 ```
 
-The command prints `scale_values.asfp` and writes the package beside its Python
+The command prints `stir_rack.asfp` and writes the package beside its Python
 source. It compiles the experiment; it does not run it on equipment.
 
 ## Your first Function
 
-The [ScaleValues example](../examples/scale-values.md) copies a list and scales
-its elements. Its declarations use familiar Python types:
+The [tutorial](../user-guide/tutorial/index.md) builds that program one class at
+a time, from a three-line counter to the compiled package. Its declarations use
+familiar Python types:
 
 ```python
 from sciloom import Function, Input, Output, Var, runtime
@@ -35,6 +36,6 @@ experiment's assignments and control flow in one `@runtime` method, then compile
 an instance with an explicit target. Host Python constructs and specializes the
 instance before compilation.
 
-Read [Functions and fields](../user-guide/functions.md) next. For equipment
-operations, continue with [Devices](../user-guide/devices.md) and the
-[agitation walkthrough](../examples/agitation.md).
+Continue with [1. Your first Function](../user-guide/tutorial/first-function.md).
+The rest of the [User Guide](../user-guide/functions.md) states the rules the
+tutorial applies.
