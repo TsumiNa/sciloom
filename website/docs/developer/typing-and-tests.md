@@ -17,29 +17,10 @@ Schema, IR and target validation remain necessary.
 
 ## Verification workflow
 
-```bash
-uv run ruff check
-uv run ruff format --check
-uv run pytest src/sciloom packages/sciloom-autosuite/src examples
-uv run mypy
-uv run python autosuite/tools/smoke_test.py
-uv run python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
-uv run python -m compileall -q examples/proposed_frontend
-```
-
-Ruff enforces formatting, import grouping and the ban on parent-relative imports.
-Use single-dot relative imports inside a package and absolute imports everywhere
-else. Enable the repository pre-commit hook once per clone with
-`git config core.hooksPath .githooks`; it fixes and formats staged Python files
-before each commit.
-
-The AutoSuite commands use internal reference material that is shared inside the
-team rather than through this repository, so a checkout may not have it. The
-smoke and corpus checks skip their evidence sections when it is absent, and the
-tests that compare generated XML against it skip themselves. Everything the
-repository carries still runs. Run all eight current examples using commands on
-their walkthrough pages. Proposed frontend examples are syntax-checked design
-material, not runnable supported APIs.
+The full check list, the example commands and the pre-commit hook are on
+[verification](reference/verification.md). Ruff enforces formatting, import
+grouping and the ban on parent-relative imports: use single-dot relative imports
+inside a package and absolute imports everywhere else.
 
 Colocate tests as `<module>_test.py`. Production mypy traversal excludes these
 intentional negative runtime fixtures; when adding test modules under src, also
@@ -51,7 +32,3 @@ in the authoritative design document before implementation. Keep that contract
 consistent across sequential PRs. Review, address feedback, pass latest checks and
 squash merge before starting the next stage. See
 [documentation development](documentation.md) for site-specific checks.
-
-Raw AutoSuite evidence is never rewritten to make generated code pass. Static
-structure tests, reference execution, Executor simulation and physical validation
-are separate forms of evidence.

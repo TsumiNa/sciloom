@@ -141,11 +141,12 @@ The complete example prints the order the compiler used:
 pipeline: resolve_devices -> validate -> emit
 ```
 
-Between your first and second call the compiler validates the program's structure
-and types, selects device branches against your bindings, checks that every bound
-profile supports what the program does with it, and checks that a lifecycle start
-has its required configuration on every reachable path. Your `validate` is the last
-gate before bytes, and it is the only one that knows your platform.
+Between your first and second call the compiler runs the target-independent steps
+of the [compilation pipeline](reference/pipeline.md#steps): structure and types,
+branch selection against your bindings, capabilities and, for agitation,
+[required configuration](reference/device-contracts.md#required-configuration).
+Your `validate` is the last gate before bytes, and it is the only one that knows
+your platform.
 
 ## Typing, without inheritance
 

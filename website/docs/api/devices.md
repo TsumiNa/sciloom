@@ -1,6 +1,6 @@
 # Device declarations
 
-[Contribution guide](../developer/reference/target-contract.md) explains contract declaration and trusted deployment facts.
+[Device contracts](../developer/reference/device-contracts.md) explains declarations and the [Target contract](../developer/reference/target-contract.md) trusted deployment facts.
 
 ::: sciloom.devices.BaseDevice
 

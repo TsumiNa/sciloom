@@ -22,13 +22,8 @@ repository is a uv workspace: dependency groups and `uv.lock` remain in the root
 `pyproject.toml`, and each member under `packages/` declares only its own runtime
 dependencies.
 
-For CI-equivalent validation:
-
-```bash
-uv run --group docs python website/tools/site.py build --strict
-uv run --group docs pytest website/tools
-git diff --check
-```
+The strict build, the website tests and `git diff --check` are part of the
+[verification](reference/verification.md) list that CI runs.
 
 HTML is written under `website/.build/site/`. The source tree's generated downloads and
 `build-info.json` are ignored. They are recreated from selected examples and the

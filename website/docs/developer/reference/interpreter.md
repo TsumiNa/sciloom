@@ -50,7 +50,11 @@ An ordinary indexed assignment evaluates its RHS before the target/index access.
 An augmented indexed assignment reads and checks the selected element/index once
 before evaluating the RHS. A failure does not undo earlier state writes.
 
-ExecutionConfig defaults to 10,000 steps and call depth 64. Expressions, statements
-and function entries consume steps. Configured call depth must be within 1–100;
-host nesting exhaustion becomes a diagnostic. These limits bound reference work
-and say nothing about real equipment timing or numeric limits.
+| Budget | Default | Range |
+|---|---|---|
+| `max_steps`: expressions, statements and function entries | 10,000 | positive |
+| `max_call_depth` | 64 | 1 to 100 |
+| host nesting | the interpreter's own recursion | exhaustion becomes a diagnostic |
+
+These limits bound reference work and say nothing about real equipment timing or
+numeric limits.

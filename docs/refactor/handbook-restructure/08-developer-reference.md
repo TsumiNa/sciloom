@@ -45,7 +45,8 @@ No new tutorial pages. No Advanced, FAQ or Troubleshooting pages.
 ## Acceptance
 
 - `grep -n "every reachable path" website/docs` finds only
-  `reference/device-contracts.md`.
+  `reference/device-contracts.md` and the verbatim diagnostic message on the
+  User Guide troubleshooting page.
 - The rendered `api/compiler/` and `developer/reference/pipeline/` pages have
   different titles.
 - `uv run --group docs pytest website/tools`; `uv run --group docs python website/tools/site.py build --strict`.

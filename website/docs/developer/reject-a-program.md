@@ -10,18 +10,8 @@ from [add a target](add-a-target.md).
 
 ## The layers, in order
 
-| When | What it proves | Raises |
-| --- | --- | --- |
-| The class body runs | Declarations are well formed: field roles, device slots, device contracts | `IRValidationError` |
-| `to_ir()` | The runtime method is in the supported source subset and types agree | `IRValidationError` |
-| `compile_ir` starts | The IR itself is structurally valid, whatever produced it | `IRValidationError` |
-| `resolve_devices` | Your deployment data is the kind you support | Your own `TypeError` or `ValueError` |
-| Bindings are checked | Every bound profile implements what the program does with it | `CompilationError` |
-| Configuration is checked | A lifecycle start has its required configuration on every reachable path | `CompilationError` |
-| `Target.validate` | The program fits your platform | `CompilationError` |
-| Reference execution | The program has defined semantics to simulate | `ExecutionError` |
-
-Each layer only knows what it can see. The class body has no target, so it cannot
+The [compilation pipeline](reference/pipeline.md#who-can-say-no) lists the
+eight layers, what each proves and what it raises. Each layer only knows what it can see. The class body has no target, so it cannot
 know your heater is read-only. The target has no Python source, so it cannot know
 which variable the author called `seconds`, only that the argument is not a literal.
 That is why a diagnostic carries a source span: the layer that proves the problem is
