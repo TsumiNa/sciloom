@@ -475,9 +475,9 @@ unconfirmed runtime guards. Current speed quantity rules still apply.
 ## Evidence and limits
 
 See [existing mapping evidence](../../../autosuite/docs/16_AGITATION_MAPPING.md).
-The latest [Sample and Run GPC](../../../autosuite/extracted/latest_app/functions/24_Sample%20and%20Run%20GPC.asfp)
+The latest [Sample and Run GPC](../../../autosuite/corpus/extracted/latest_app/functions/24_Sample%20and%20Run%20GPC.asfp)
 stops, calls sampling, then starts with an explicit shaker_speed expression.
-[functionsPackage_3](../../../autosuite/asfp/functionsPackage_3.asfp) likewise has
+[functionsPackage_3](../../../autosuite/corpus/asfp/functionsPackage_3.asfp) likewise has
 Stir, thermal tasks, Wait and a later stop. Timing is outside the Stir payload.
 
 Manual 3.6.19 (p73–74) describes Stir state/speed; 3.6.24 (p76–77) describes Wait
@@ -504,7 +504,7 @@ Add positive/negative mypy examples, including wrong property types and TypeGuar
 Keep short learning outputs in module docstrings and long outputs in same-basename
 companions. Update live architecture/DSL/reference execution docs and AGENTS with
 each implemented stage; mark old plans superseded for their changed portions.
-For changes to files tracked in autosuite/MANIFEST.csv (including reference docs),
+For changes to files tracked in autosuite/corpus/MANIFEST.csv (including reference docs),
 update their hashes and run audit_corpus.py. Project docs under docs/ do not require
 manifest updates. Do not change raw evidence to satisfy a compiler test. Static XML
 checks do not establish Executor acceptance; retain the real simulation gate.

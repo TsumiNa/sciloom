@@ -35,9 +35,11 @@ are indexes; design proposals and validation records retain their historical con
 - [English documentation and versioned publication plan](refactor/documentation-site/00-overview.md)
 - [Standalone website directory contract](refactor/standalone-website/00-overview.md)
 - [uv workspace and lockstep versioning](refactor/uv-workspace/00-overview.md)
+- [Keeping the AutoSuite corpus out of git](refactor/corpus-privacy/00-overview.md)
 
 ## AutoSuite reference
 
-Original files, the manual, schema evidence, workflow notes and reference tools
-are centralized under `autosuite/`. Start with the
-[AutoSuite reference guide](../autosuite/docs/00_REFERENCE_GUIDE.md).
+Workflow notes, distilled schema conclusions and reference tools are under
+`autosuite/`. The original files and the manual are shared inside the team and
+are not in this repository; see [the directory guide](../autosuite/README.md).
+Start with the [AutoSuite reference guide](../autosuite/docs/00_REFERENCE_GUIDE.md).

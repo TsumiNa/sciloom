@@ -42,7 +42,7 @@ It performs two Import CSV operations:
    - CSV column 1 -> `expid_array_txt`, default `__SKIP__`;
    - current reagent column -> `reagent_array_vol`, default 0 mL.
 
-The exact imported column/task fields can be inspected in `autosuite/extracted/latest_app/functions/28_Load Reagent Table.asfp`.
+The exact imported column/task fields can be inspected in `autosuite/corpus/extracted/latest_app/functions/28_Load Reagent Table.asfp`.
 
 ## Main polymerization dispatch
 

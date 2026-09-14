@@ -1,6 +1,6 @@
 # Semantic construct -> AutoSuite XML mapping reference
 
-This is a compact map of what the supplied golden fixtures actually establish. For exact bytes, inspect `autosuite/asfp/` and the normalized diffs in `autosuite/schema/golden_diffs/`.
+This is a compact map of what the supplied golden fixtures actually establish. For exact bytes, inspect `autosuite/corpus/asfp/` and the normalized diffs in `autosuite/corpus/golden_diffs/`.
 
 ## Function definition
 
@@ -173,8 +173,8 @@ Real code may combine sequential execution with conditional mode. Treat these as
 Device-independent and device-specific task nodes are distinguished primarily by `typeid` and a set of task-specific child fields. The supplied corpus contains 67 observed `typeid`s. See:
 
 - `autosuite/schema/empirical_type_catalog.json`
-- `autosuite/schema/type_templates/INDEX.csv`
-- `autosuite/schema/type_templates/*_representative.xml`
+- `autosuite/corpus/type_templates/INDEX.csv`
+- `autosuite/corpus/type_templates/*_representative.xml`
 
 This is the recommended starting point for backend task adapters.
 

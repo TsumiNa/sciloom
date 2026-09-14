@@ -3,7 +3,6 @@
 import re
 import xml.etree.ElementTree as ET
 from dataclasses import replace
-from pathlib import Path
 
 import pytest
 
@@ -12,10 +11,8 @@ from sciloom.core.compiler import compile_ir
 from sciloom.core.diagnostics import CompilationError
 from sciloom.core.ir import IRValidationError, SourceSpan, from_json, to_json
 from . import AutoSuiteTarget
+from .conftest import corpus_file
 from .xml import SerializationIR
-
-# Evidence corpus at the workspace root, outside this distribution.
-FIXTURES = Path(__file__).resolve().parents[4] / "autosuite/asfp"
 
 
 class Identity(Function):
@@ -161,7 +158,7 @@ def normalized(root, names):
 def test_structure_and_id_relationships_match_fixed_exports(program, fixture, names):
     result = program.compile(target=AutoSuiteTarget())
     assert normalized(ET.fromstring(result.artifact.content), names) == normalized(
-        ET.parse(FIXTURES / fixture).getroot(), names
+        ET.parse(corpus_file(f"asfp/{fixture}")).getroot(), names
     )
 
 
@@ -196,7 +193,7 @@ def test_corrupt_call_parameter_is_detected_by_comparison():
     call.find("functiondata/inputs/item0/id").text = call.findtext("functiondata/outputs/item0/id")
     names = {"Caller": "Caller", "Identity": "Callee", "TEST12_FIXED_Caller": "Caller", "TEST12_FIXED_Callee": "Callee"}
     assert normalized(root, names) != normalized(
-        ET.parse(FIXTURES / "Test12_FIXED_CallBinding_RealInOut.asfp").getroot(), names
+        ET.parse(corpus_file("asfp/Test12_FIXED_CallBinding_RealInOut.asfp")).getroot(), names
     )
 
 

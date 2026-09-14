@@ -15,11 +15,11 @@ from sciloom.core.compiler import compile_ir
 from sciloom.core.diagnostics import CompilationError
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import from_json, to_json
+from .conftest import corpus_file
 from .target import AutoSuiteTarget
 
-# Evidence corpus at the workspace root, outside this distribution.
+# The workspace root, for importing the author examples under examples/.
 ROOT = Path(__file__).resolve().parents[4]
-EXTRACTED = ROOT / "autosuite/extracted/latest_app/functions"
 
 
 class ScaleValues(Function):
@@ -323,7 +323,7 @@ def test_array_encoding_matches_raw_evidence_and_composed_scalar_types():
 
     root = ET.fromstring(compiled(Values()).artifact.content)
     variables = {v.findtext("name"): v for v in root.iter("variable")}
-    raw = ET.fromstring(gzip.decompress((ROOT / "autosuite/app/Suzuki-Miyaura-automation.app").read_bytes()))
+    raw = ET.fromstring(gzip.decompress(corpus_file("app/Suzuki-Miyaura-automation.app").read_bytes()))
     integer = next(v for v in raw.iter("variable") if v.findtext("name") == "int_base_array")
     for path in ("values/count", "type", "siunit", "unit", "array", "constant"):
         assert variables["integers"].findtext(path) == integer.findtext(path)
@@ -338,13 +338,13 @@ def test_array_encoding_matches_raw_evidence_and_composed_scalar_types():
 
 def test_whole_copy_and_indexed_write_fields_match_observed_modes():
     root = ET.fromstring(compiled(ScaleValues()).artifact.content)
-    raw = ET.fromstring(gzip.decompress((ROOT / "autosuite/app/config20260902_2.app").read_bytes()))
+    raw = ET.fromstring(gzip.decompress(corpus_file("app/config20260902_2.app").read_bytes()))
     whole = next(n for n in raw.iter() if n.findtext("elementselectmode") == "4")
     generated = next(n for n in root.iter() if n.findtext("elementselectmode") == "4")
     assert [c.tag for c in generated] == [c.tag for c in whole]
     for tag in ("elementselectmode", "elementnumber", "numberofelements", "startindex", "clearvariable"):
         assert generated.findtext(tag) == whole.findtext(tag)
-    raw_index = ET.parse(EXTRACTED / "44_Set ISynth Drawer State.asfp")
+    raw_index = ET.parse(corpus_file("extracted/latest_app/functions/44_Set ISynth Drawer State.asfp"))
     indexed = next(n for n in raw_index.iter() if n.findtext("variablename") == "g_drawer_state")
     generated = next(n for n in root.iter() if n.findtext("elementnumber"))
     assert generated.findtext("elementselectmode") == indexed.findtext("elementselectmode") == "0"
