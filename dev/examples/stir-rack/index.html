@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/developer/ir/">
+        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/examples/stir-rack/">
       
       
-        <link rel="prev" href="../reject-a-program/">
+        <link rel="prev" href="../non-zero-array-min/">
       
       
-        <link rel="next" href="../compiler/">
+        <link rel="next" href="../agitation-ir/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Semantic IR and JSON - SciLoom</title>
+        <title>Stir a rack of samples - SciLoom</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#semantic-ir-and-json-v4" class="md-skip">
+        <a href="#stir-a-rack-of-samples" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Semantic IR and JSON
+              Stir a rack of samples
             
           </span>
         </div>
@@ -231,16 +231,14 @@
   
   
   
-    
-  
   
     
       
     
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../architecture/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../developer/architecture/" class="md-tabs__link">
           
   
   Developer Guide
@@ -255,14 +253,16 @@
   
   
   
+    
+  
   
     
       
     
     
     
-      <li class="md-tabs__item">
-        <a href="../../examples/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   Examples
@@ -687,31 +687,26 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
             
   
   
@@ -728,7 +723,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -745,7 +740,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../architecture/" class="md-nav__link">
+      <a href="../../developer/architecture/" class="md-nav__link">
         
   
   
@@ -772,7 +767,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../add-a-device/" class="md-nav__link">
+      <a href="../../developer/add-a-device/" class="md-nav__link">
         
   
   
@@ -799,7 +794,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../add-a-target/" class="md-nav__link">
+      <a href="../../developer/add-a-target/" class="md-nav__link">
         
   
   
@@ -826,7 +821,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reject-a-program/" class="md-nav__link">
+      <a href="../../developer/reject-a-program/" class="md-nav__link">
         
   
   
@@ -834,6 +829,419 @@
     
   
   Tutorial: reject a program
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Semantic IR and JSON
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/compiler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Compiler and specialization
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/interpreter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Reference execution
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/contributions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Device and target contributions
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/typing-and-tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typing and tests
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/documentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Building documentation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Versioned publication
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/brand/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Brand assets
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Examples
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Examples
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Overview
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../function-call/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Function calls
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Agitation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scale-values/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Scale values
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../non-zero-array-min/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Non Zero Array Min
 
     
   </span>
@@ -869,7 +1277,7 @@
   <span class="md-ellipsis">
     
   
-  Semantic IR and JSON
+  Stir a rack of samples
 
     
   </span>
@@ -886,7 +1294,7 @@
   <span class="md-ellipsis">
     
   
-  Semantic IR and JSON
+  Stir a rack of samples
 
     
   </span>
@@ -912,10 +1320,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#types-ownership-and-identity" class="md-nav__link">
+  <a href="#run-and-inspect" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Types, ownership and identity
+        Run and inspect
       </span>
     </span>
   </a>
@@ -923,10 +1331,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#validation-and-serialization" class="md-nav__link">
+  <a href="#source-and-generated-files" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Validation and serialization
+        Source and generated files
       </span>
     </span>
   </a>
@@ -949,415 +1357,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../compiler/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Compiler and specialization
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../interpreter/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Reference execution
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../contributions/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Device and target contributions
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../typing-and-tests/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Typing and tests
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../documentation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Building documentation
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../publication/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Versioned publication
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../brand/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Brand assets
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Examples
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-  Examples
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Overview
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/function-call/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Function calls
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/agitation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Agitation
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/scale-values/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Scale values
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/non-zero-array-min/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Non Zero Array Min
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/stir-rack/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Stir a rack of samples
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/agitation-ir/" class="md-nav__link">
+      <a href="../agitation-ir/" class="md-nav__link">
         
   
   
@@ -1384,7 +1384,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/list-ir/" class="md-nav__link">
+      <a href="../list-ir/" class="md-nav__link">
         
   
   
@@ -1411,7 +1411,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/demo-device/" class="md-nav__link">
+      <a href="../demo-device/" class="md-nav__link">
         
   
   
@@ -1438,7 +1438,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/portable-agitation/" class="md-nav__link">
+      <a href="../portable-agitation/" class="md-nav__link">
         
   
   
@@ -1914,10 +1914,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#types-ownership-and-identity" class="md-nav__link">
+  <a href="#run-and-inspect" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Types, ownership and identity
+        Run and inspect
       </span>
     </span>
   </a>
@@ -1925,10 +1925,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#validation-and-serialization" class="md-nav__link">
+  <a href="#source-and-generated-files" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Validation and serialization
+        Source and generated files
       </span>
     </span>
   </a>
@@ -1958,48 +1958,150 @@
 
                   
 
-<h1 id="semantic-ir-and-json-v4">Semantic IR and JSON v4</h1>
-<p>Use <code>sciloom.core.ir</code> to construct or exchange typed programs. The
-<a href="../../examples/list-ir/">direct-list example</a> builds a complete Program without
-the Python DSL. Experiment authors normally use Function instead.</p>
-<p>Program selects an entry FunctionIR and contains referenced functions, resources
-and a declarative device-type directory. Frozen semantic nodes retain structured
-If/While, calls, list operations, property configuration and lifecycle intent.
-They do not contain AutoSuite UUIDs, task encodings or hidden context parameters.</p>
-<h2 id="types-ownership-and-identity">Types, ownership and identity</h2>
-<p>Variables have an owner function, role and value type. Scalars are INTEGER, REAL,
-BOOLEAN and ROTATIONAL_SPEED internally; a ListType contains one scalar element
-type. Public Python authors use native int/float/bool rather than these IR enums.
-Internal variables require literal initializers. Input/output defaults are not
-supported. Conditions are Boolean and list element types are invariant.</p>
-<p>IDs identify node occurrences in a program-wide namespace. Two reads of one
-variable use different node IDs but the same symbol_id. References cannot cross
-function ownership. Calls use callee variable IDs for their complete I/O bindings.
-Global ownership and public Application APIs remain deferred.</p>
-<p>Use ListLiteral, ListLength, ListGet and ListSet for list intent. DeviceResource,
-ConfigureProperty, StartAgitation, StopAgitation and DeviceCommand retain equipment
-intent. DeviceIf and its typed predicates retain branches until specialization.</p>
-<h2 id="validation-and-serialization">Validation and serialization</h2>
-<p><code>validate(program)</code> returns a tuple of Diagnostic records. <code>to_dict/from_dict</code>
-operate on mappings; <code>to_json/from_json</code> operate on strings. Import and export
-validate and raise IRValidationError on invalid data.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">examples.developer.list_ir</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_program</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.ir</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_json</span><span class="p">,</span> <span class="n">to_json</span><span class="p">,</span> <span class="n">validate</span>
-
-<span class="n">program</span> <span class="o">=</span> <span class="n">build_program</span><span class="p">()</span>
-<span class="k">assert</span> <span class="n">validate</span><span class="p">(</span><span class="n">program</span><span class="p">)</span> <span class="o">==</span> <span class="p">()</span>
-<span class="k">assert</span> <span class="n">from_json</span><span class="p">(</span><span class="n">to_json</span><span class="p">(</span><span class="n">program</span><span class="p">))</span> <span class="o">==</span> <span class="n">program</span>
+<h1 id="stir-a-rack-of-samples">Stir a rack of samples</h1>
+<p>StirRack is the program the User Guide tutorial builds one class per page:
+measure the largest volume in a rack, choose a speed for it, then configure and
+start the bound shaker or stop it. This page is the runnable, downloadable form;
+the User Guide tutorial explains each step.</p>
+<h2 id="run-and-inspect">Run and inspect</h2>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/stir_rack.py
 </code></pre></div>
-<p>JSON requires kind="Program" and format_version=4. Records carry their public
-dataclass kind; enums use strings and tuples become arrays. Unknown fields/kinds,
-earlier versions, duplicate keys, wrong scalar types, NaN and Infinity fail.
-Exports include defaults, sorted keys, two-space indentation and a final newline;
-ordered bodies and bindings keep their order. Exported mappings are detached.</p>
-<p>SourceSpan records one-based lines and zero-based UTF-8 byte columns. Source IDs
-and spans survive round trips. Lowering records the absolute path of the defining
-file, so paths identify the generating checkout; the developer examples rewrite
-them relative to the repository root before writing their companion files. JSON is declarative data: implementation IDs never
-cause dynamic Python imports. See <a href="../compiler/">binding and specialization</a>.</p>
+<p>The program composes three child Functions: a loop with a persistent index that
+is reset on every call, a two-branch speed choice, and a counter whose state
+survives across calls. The parent binds their outputs by assignment, then either
+saves the chosen speed and starts the shaker or stops it.</p>
+<p>The module docstring below records expected terminal output.</p>
+<div class="admonition note">
+<p class="admonition-title">Compilation is not hardware acceptance</p>
+<p>Compilation and reference execution check a program's structure and its
+mapped semantics. They do not operate equipment, and they do not replace
+AutoSuite Executor validation on the deployment host.</p>
+</div>
+<h2 id="source-and-generated-files">Source and generated files</h2>
+<p><a href="../../_generated/examples/stir_rack.py">Download Python source</a></p>
+<ul>
+<li><a href="../../_generated/examples/stir_rack.asfp">stir_rack.asfp</a></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="sd">"""For experiment authors: the User Guide tutorial's stirring program, compiled to ASFP.</span>
+
+<span class="sd">Run from the repository root:</span>
+<span class="sd">    uv run python examples/stir_rack.py</span>
+
+<span class="sd">Expected terminal output:</span>
+<span class="sd">    stir_rack.asfp</span>
+
+<span class="sd">StirRack measures the largest sample volume in a rack, chooses a stirring speed</span>
+<span class="sd">for it, and either configures and starts the bound shaker or stops it. Each</span>
+<span class="sd">class is introduced by one page of the User Guide tutorial; this file is the</span>
+<span class="sd">complete program those pages build. Compiling writes the package beside this</span>
+<span class="sd">file; it does not operate the shaker.</span>
+
+<span class="sd">Full generated output: stir_rack.asfp, beside this source file.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agitator</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">RotationalSpeed</span><span class="p">,</span> <span class="n">Var</span><span class="p">,</span> <span class="n">rpm</span><span class="p">,</span> <span class="n">runtime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteIndividualShaker</span><span class="p">,</span> <span class="n">AutoSuiteTarget</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">CountStirs</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Count how many times stirring has been requested in this session.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        stirs: Number of requests so far; persists across calls.</span>
+<span class="sd">    """</span>
+
+    <span class="n">stirs</span><span class="p">:</span> <span class="n">Var</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stirs</span> <span class="o">+=</span> <span class="mi">1</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ChooseSpeed</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Choose a stirring speed from a sample volume.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        volume: Sample volume in millilitres.</span>
+<span class="sd">        speed: A gentle speed for small volumes, a faster one otherwise.</span>
+<span class="sd">    """</span>
+
+    <span class="n">volume</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">speed</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="n">RotationalSpeed</span><span class="p">]</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">&lt;</span> <span class="mf">2.0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">300</span> <span class="o">*</span> <span class="n">rpm</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">600</span> <span class="o">*</span> <span class="n">rpm</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">LargestVolume</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Find the largest volume in a rack.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        volumes: Volume of every vial in the rack.</span>
+<span class="sd">        largest: The largest volume, or 0.0 for an empty rack.</span>
+<span class="sd">        index: Loop position, reset on every call.</span>
+<span class="sd">    """</span>
+
+    <span class="n">volumes</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span>
+    <span class="n">largest</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">index</span><span class="p">:</span> <span class="n">Var</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">largest</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">volumes</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">volumes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">largest</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">largest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">volumes</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">StirRack</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Stir a rack at a speed chosen from its largest sample, or stop.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        volumes: Volume of every vial in the rack.</span>
+<span class="sd">        enabled: Whether the rack should be stirring after this call.</span>
+<span class="sd">        shaker: Logical agitator; the target binds the hardware.</span>
+<span class="sd">        largest: Largest volume measured on this call.</span>
+<span class="sd">        speed: Speed chosen for that volume.</span>
+<span class="sd">    """</span>
+
+    <span class="n">volumes</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span>
+    <span class="n">enabled</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">shaker</span><span class="p">:</span> <span class="n">Agitator</span>
+    <span class="n">largest</span><span class="p">:</span> <span class="n">Var</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">speed</span><span class="p">:</span> <span class="n">Var</span><span class="p">[</span><span class="n">RotationalSpeed</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">rpm</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">measure</span> <span class="o">=</span> <span class="n">LargestVolume</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">choose</span> <span class="o">=</span> <span class="n">ChooseSpeed</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="n">CountStirs</span><span class="p">()</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">largest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">volumes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">volumes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">choose</span><span class="p">(</span><span class="n">volume</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">largest</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speed</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">AutoSuiteTarget</span><span class="p">(</span>
+        <span class="n">devices</span><span class="o">=</span><span class="p">{</span><span class="s2">"shaker"</span><span class="p">:</span> <span class="n">AutoSuiteIndividualShaker</span><span class="p">(</span><span class="n">zone</span><span class="o">=</span><span class="s2">"Heater Shaker 23"</span><span class="p">,</span> <span class="n">device_id</span><span class="o">=</span><span class="s2">"23"</span><span class="p">)},</span>
+    <span class="p">)</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">StirRack</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".asfp"</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</code></pre></div>
 
 
 
@@ -2032,7 +2134,7 @@ cause dynamic Python imports. See <a href="../compiler/">binding and specializat
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../reject-a-program/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Tutorial: reject a program">
+          <a href="../non-zero-array-min/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Non Zero Array Min">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -2042,20 +2144,20 @@ cause dynamic Python imports. See <a href="../compiler/">binding and specializat
                 Previous
               </span>
               <div class="md-ellipsis">
-                Tutorial: reject a program
+                Non Zero Array Min
               </div>
             </div>
           </a>
         
         
           
-          <a href="../compiler/" class="md-footer__link md-footer__link--next" aria-label="Next: Compiler and specialization">
+          <a href="../agitation-ir/" class="md-footer__link md-footer__link--next" aria-label="Next: Agitation IR">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Compiler and specialization
+                Agitation IR
               </div>
             </div>
             <div class="md-footer__button md-icon">
