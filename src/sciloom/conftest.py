@@ -11,8 +11,8 @@ from dataclasses import dataclass
 from types import MappingProxyType
 from typing import Callable, ClassVar
 
+from .core.bindings import DeviceBindings
 from .core.compiler import Artifact
-from .core.devices import DeviceBindings
 from .core.diagnostics import Diagnostic
 from .core.ir import Program, to_json
 from .devices import Agitator

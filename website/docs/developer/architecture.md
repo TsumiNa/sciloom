@@ -27,7 +27,8 @@ flowchart TD
 | sciloom.units | Independent physical quantities |
 | sciloom.core.ir | Typed nodes/types, validation and JSON |
 | sciloom.core.compiler | Target protocol, pipeline and artifacts |
-| sciloom.core.devices / specialization | Data-only binding facts and branch selection |
+| sciloom.core.bindings / specialization | Data-only binding facts and branch selection |
+| sciloom.core.configuration | Capability checks and definite device configuration |
 | sciloom.core.interpreter | Reference execution sessions |
 | sciloom.core.diagnostics | Errors, diagnostics and source spans |
 | sciloom_autosuite | AutoSuite device profiles, legality and XML generation; the workspace member `sciloom-autosuite` under `packages/` |

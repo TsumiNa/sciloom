@@ -4,9 +4,9 @@ from dataclasses import replace
 
 import pytest
 
+from .bindings import DeviceBinding, DeviceBindings, validate_bindings
 from .compiler import compile_ir
 from .compiler_test import TextTarget, program
-from .devices import DeviceBinding, DeviceBindings, validate_bindings
 from .diagnostics import CompilationError
 from .ir import DeviceResource
 from .ir.device_contracts import (

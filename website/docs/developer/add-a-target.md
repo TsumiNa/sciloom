@@ -169,7 +169,7 @@ from typing import Callable, ClassVar
 
 from sciloom import Function, Input, Output, runtime
 from sciloom.core.compiler import Artifact
-from sciloom.core.devices import DeviceBindings
+from sciloom.core.bindings import DeviceBindings
 from sciloom.core.diagnostics import CompilationError, Diagnostic
 from sciloom.core.ir import DeviceCommand, Literal, Program, to_json
 from sciloom.core.ir.traversal import iter_nodes

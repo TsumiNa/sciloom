@@ -176,7 +176,7 @@ from typing import Callable, ClassVar
 
 from sciloom import Function, Input, Output, runtime
 from sciloom.core.compiler import Artifact
-from sciloom.core.devices import DeviceBindings
+from sciloom.core.bindings import DeviceBindings
 from sciloom.core.diagnostics import Diagnostic, ExecutionError
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import Program, to_json

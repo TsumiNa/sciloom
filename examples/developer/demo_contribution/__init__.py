@@ -9,8 +9,8 @@ from dataclasses import dataclass
 from types import MappingProxyType
 from typing import Callable, ClassVar
 
+from sciloom.core.bindings import DeviceBindings
 from sciloom.core.compiler import Artifact
-from sciloom.core.devices import DeviceBindings
 from sciloom.core.diagnostics import Diagnostic
 from sciloom.core.ir import ConfigureProperty, Literal, Program, to_json
 from sciloom.core.ir.traversal import iter_nodes

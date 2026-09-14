@@ -12,8 +12,8 @@ import pytest
 from examples.developer.demo_contribution import DemoAgitator, DemoTarget
 from examples.developer.demo_device import DemoExperiment
 from sciloom import Agitator, Function, Input, rpm, runtime
+from sciloom.core.bindings import DeviceBindings
 from sciloom.core.compiler import compile_ir
-from sciloom.core.devices import DeviceBindings
 from sciloom.core.diagnostics import CompilationError, ExecutionError, IRValidationError
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import DeviceCommand, from_json, to_json

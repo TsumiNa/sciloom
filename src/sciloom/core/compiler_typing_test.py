@@ -13,7 +13,7 @@ def test_compiler_type_contract(tmp_path, valid):
     source = """
 from pathlib import Path
 from typing import assert_type
-from sciloom.core.devices import DeviceBindings
+from sciloom.core.bindings import DeviceBindings
 from sciloom.core.compiler import Artifact, CompileResult, Target, compile_ir
 from sciloom.core.diagnostics import Diagnostic
 from sciloom.core.ir import FunctionIR, ListType, Literal, Program, ScalarType

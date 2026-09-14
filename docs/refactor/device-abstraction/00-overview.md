@@ -52,7 +52,7 @@ it into XML-oriented nodes in the DSL.
 | sciloom.devices | BaseDevice, device family contracts, member declarations |
 | sciloom.dsl | Device-slot schema and restricted Python source conversion |
 | sciloom.core.ir | Typed device resources, contracts, configuration and commands |
-| sciloom.core.devices | Immutable binding facts without Python device classes |
+| sciloom.core.devices | Immutable binding facts without Python device classes (superseded by the [core bindings rename](../core-bindings/00-overview.md): now `sciloom.core.bindings`) |
 | sciloom.core.specialization | Pure selection of device-dependent branches |
 | sciloom.core.compiler | Target protocol, validation pipeline and artifacts |
 | sciloom.core.interpreter | Reference sessions and configuration/applied snapshots |

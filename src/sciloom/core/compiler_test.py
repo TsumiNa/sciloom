@@ -6,8 +6,8 @@ from dataclasses import replace
 
 import pytest
 
+from .bindings import DeviceBindings
 from .compiler import Artifact, compile_ir
-from .devices import DeviceBindings
 from .diagnostics import CompilationError, Diagnostic, IRValidationError
 from .ir import FunctionIR, Program
 

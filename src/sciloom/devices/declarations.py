@@ -6,7 +6,7 @@ import inspect
 from functools import wraps
 from typing import Callable, NoReturn, ParamSpec, get_args, get_origin, get_type_hints
 
-from sciloom.core.devices import DeviceBinding
+from sciloom.core.bindings import DeviceBinding
 from sciloom.core.diagnostics import Diagnostic, IRValidationError
 from sciloom.core.ir.device_contracts import CommandContract, CommandParameter, DeviceTypeContract, PropertyContract
 from sciloom.core.ir.device_validation import semantic_id

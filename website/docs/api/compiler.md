@@ -10,10 +10,10 @@
 
 ::: sciloom.core.compiler.compile_ir
 
-::: sciloom.core.devices.DeviceBinding
+::: sciloom.core.bindings.DeviceBinding
 
-::: sciloom.core.devices.DeviceBindings
+::: sciloom.core.bindings.DeviceBindings
 
-::: sciloom.core.devices.validate_bindings
+::: sciloom.core.bindings.validate_bindings
 
 ::: sciloom.core.specialization.specialize

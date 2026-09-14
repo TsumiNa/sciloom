@@ -231,7 +231,7 @@ edge and `src/sciloom/dsl/layering_test.py` enforces it. See
 [the layering plan](docs/refactor/dsl-layering/00-overview.md). Experiment authors import their API from `sciloom`; contributors import
 `Target`, `Artifact`, `CompileResult` and `compile_ir` from `sciloom.core.compiler`.
 Core must not import `sciloom.devices`, DSL, `sciloom_autosuite` or Studio; data-only
-`sciloom.core.devices` binding records belong to core. The root author API stays lazy. Target
+`sciloom.core.bindings` binding records belong to core. The root author API stays lazy. Target
 selection is explicit. Generic compilation must not import AutoSuite or assume
 XML. Program/JSON v4 is the current semantic contract; see
 [reference execution](docs/14_REFERENCE_EXECUTION.md). Keep vendor restrictions
