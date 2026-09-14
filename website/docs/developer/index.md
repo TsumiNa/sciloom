@@ -5,9 +5,9 @@ write an equipment target, or work on SciLoom itself. It assumes the
 [User Guide](../user-guide/index.md) and uses the semantic IR where an author
 never needs to.
 
-**Tutorial.** Three walkthroughs build a heater family, a target for it and the
-rejections a contributor writes: [add a device](add-a-device.md),
-[add a target](add-a-target.md) and [reject a program](reject-a-program.md).
+**[Tutorial](tutorial/index.md).** Eight pages build a heater family, two
+profiles, a target, the rejections a contributor writes, an adaptive program and
+a reference execution, one step per page, verified on every change.
 
 **Reference.** [Architecture and ownership](reference/architecture.md), the
 [compilation pipeline](reference/pipeline.md), the

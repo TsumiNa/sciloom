@@ -2,7 +2,7 @@
 
 How a device family, a profile and their members are declared, and how those
 declarations become semantic IR. The walkthrough is
-[add a device](../add-a-device.md); the shipped families and profiles are
+[declare a family](../tutorial/declare-a-family.md); the shipped families and profiles are
 `Agitator`, `AutoSuiteIndividualShaker` and, outside core, `DemoAgitator` in the
 [independent contribution example](../../examples/demo-device.md).
 

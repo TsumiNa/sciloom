@@ -58,9 +58,15 @@ nav:
   - Developer Guide:
       - Overview: developer/index.md
       - Tutorial:
-          - Add a device: developer/add-a-device.md
-          - Add a target: developer/add-a-target.md
-          - Reject a program: developer/reject-a-program.md
+          - The heater story: developer/tutorial/index.md
+          - 1. Declare a family: developer/tutorial/declare-a-family.md
+          - 2. Declare profiles: developer/tutorial/declare-profiles.md
+          - 3. Write a Function against the family: developer/tutorial/write-a-function.md
+          - 4. Write a target: developer/tutorial/write-a-target.md
+          - 5. Reject a program: developer/tutorial/reject-a-program.md
+          - 6. Adapt with comptime: developer/tutorial/adapt-with-comptime.md
+          - 7. Execute what you can: developer/tutorial/execute-what-you-can.md
+          - 8. The complete program: developer/tutorial/complete-program.md
       - Reference:
           - Architecture and ownership: developer/reference/architecture.md
           - Semantic IR and JSON v4: developer/reference/ir.md

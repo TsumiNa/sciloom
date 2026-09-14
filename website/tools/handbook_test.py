@@ -25,6 +25,18 @@ SERIES: dict[str, tutorials.Series] = {
         ),
         complete="examples/stir_rack.py",
     ),
+    "developer/tutorial": tutorials.Series(
+        pages=(
+            "developer/tutorial/declare-a-family",
+            "developer/tutorial/declare-profiles",
+            "developer/tutorial/write-a-function",
+            "developer/tutorial/write-a-target",
+            "developer/tutorial/reject-a-program",
+            "developer/tutorial/adapt-with-comptime",
+            "developer/tutorial/execute-what-you-can",
+            "developer/tutorial/complete-program",
+        ),
+    ),
 }
 
 
@@ -58,20 +70,6 @@ def test_complete_handbook_snippet(page, tmp_path):
     stdout = run_series_script(tmp_path / "handbook_example.py", program.group(1), tmp_path)
     if program.group(2) is not None:
         assert stdout.rstrip("\n") == program.group(2)
-
-
-@pytest.mark.parametrize(
-    "page",
-    ("developer/add-a-device", "developer/add-a-target", "developer/reject-a-program"),
-)
-def test_complete_tutorial_snippet(page, tmp_path):
-    """Tutorials build up in steps, so their complete program is the last block."""
-    markdown = (ROOT / f"website/docs/{page}.md").read_text()
-    source = re.findall(r"```python\n(.*?)\n```", markdown, re.DOTALL)[-1]
-    example = tmp_path / "tutorial_example.py"
-    example.write_text(source)
-    env = {**os.environ, "PYTHONPATH": str(ROOT)}
-    subprocess.run([sys.executable, str(example)], cwd=tmp_path, env=env, check=True)
 
 
 @pytest.mark.parametrize(
