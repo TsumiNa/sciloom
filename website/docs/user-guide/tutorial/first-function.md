@@ -56,7 +56,8 @@ print(CountStirs().compile(target=AutoSuiteTarget()).write("count_stirs.asfp").n
 count_stirs.asfp
 ```
 
-The package is written beside your script. Nothing was executed: the target was
+The package is written to the directory you ran the command from, because the
+name is relative; page 5 writes it beside the script instead. Nothing was executed: the target was
 chosen explicitly, the program was checked, and the file was produced.
 
 Host Python never touches runtime state. Reading a `Var` from outside the
