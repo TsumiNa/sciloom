@@ -9,7 +9,12 @@ from pathlib import Path
 
 import pytest
 
+from website.tools import tutorials
+
 ROOT = Path(__file__).resolve().parents[2]
+
+# Cumulative tutorial series; see website/docs/developer/documentation.md.
+SERIES: dict[str, tutorials.Series] = {}
 
 
 @pytest.mark.parametrize(
@@ -46,6 +51,36 @@ def test_complete_tutorial_snippet(page, tmp_path):
     subprocess.run([sys.executable, str(example)], cwd=tmp_path, env=env, check=True)
 
 
+def run_series_script(script, source, tmp_path):
+    script.write_text(source)
+    env = {**os.environ, "PYTHONPATH": str(ROOT)}
+    completed = subprocess.run(
+        [sys.executable, str(script)], cwd=tmp_path, env=env, check=True, capture_output=True, text=True
+    )
+    return completed.stdout
+
+
+@pytest.mark.parametrize(
+    "name, index, block",
+    [(name, index, block) for name, series in SERIES.items() for index, block in tutorials.checkpoints(ROOT, series)],
+)
+def test_tutorial_checkpoint(name, index, block, tmp_path):
+    """A checkpoint's text is the stdout its page adds to the pages before it."""
+    series = SERIES[name]
+    script = tmp_path / Path(series.complete or "tutorial.py").name
+    before = run_series_script(script, tutorials.program(ROOT, series, index - 1), tmp_path)
+    after = run_series_script(script, tutorials.program(ROOT, series, index) + "\n\n" + block.code, tmp_path)
+    assert after.startswith(before)
+    assert after[len(before) :].rstrip("\n") == block.expected
+
+
+@pytest.mark.parametrize("name", list(SERIES))
+def test_tutorial_series_is_the_complete_program(name):
+    series = SERIES[name]
+    steps = tutorials.program(ROOT, series, len(series.pages) - 1)
+    assert tutorials.same_program(steps, tutorials.complete_program(ROOT, series))
+
+
 @pytest.fixture(scope="module")
 def rendered():
     subprocess.run([sys.executable, str(ROOT / "website/tools/site.py"), "build", "--strict"], check=True)
@@ -62,21 +97,21 @@ class Text(HTMLParser):
 
 
 @pytest.mark.parametrize(
-    "slug, source",
+    "page, source",
     (
-        ("function-call", "function_call"),
-        ("agitation", "agitation"),
-        ("scale-values", "scale_values"),
-        ("non-zero-array-min", "non_zero_array_min"),
-        ("agitation-ir", "developer/agitation_ir"),
-        ("list-ir", "developer/list_ir"),
-        ("demo-device", "developer/demo_device"),
-        ("portable-agitation", "developer/portable_agitation"),
+        ("examples/function-call", "function_call"),
+        ("examples/agitation", "agitation"),
+        ("examples/scale-values", "scale_values"),
+        ("examples/non-zero-array-min", "non_zero_array_min"),
+        ("examples/agitation-ir", "developer/agitation_ir"),
+        ("examples/list-ir", "developer/list_ir"),
+        ("examples/demo-device", "developer/demo_device"),
+        ("examples/portable-agitation", "developer/portable_agitation"),
     ),
 )
-def test_walkthrough_includes_actual_source(rendered, slug, source):
+def test_walkthrough_includes_actual_source(rendered, page, source):
     text = Text()
-    text.feed((rendered / f"examples/{slug}/index.html").read_text())
+    text.feed((rendered / f"{page}/index.html").read_text())
     expected = (ROOT / f"examples/{source}.py").read_text()
     assert expected.strip() in "".join(text.parts)
     assert (rendered / f"_generated/examples/{source}.py").read_text() == expected
