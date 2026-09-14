@@ -64,13 +64,31 @@
         <loc>https://tsumina.github.io/sciloom/dev/developer/</loc>
       </url>
       <url>
-        <loc>https://tsumina.github.io/sciloom/dev/developer/add-a-device/</loc>
+        <loc>https://tsumina.github.io/sciloom/dev/developer/tutorial/</loc>
       </url>
       <url>
-        <loc>https://tsumina.github.io/sciloom/dev/developer/add-a-target/</loc>
+        <loc>https://tsumina.github.io/sciloom/dev/developer/tutorial/declare-a-family/</loc>
       </url>
       <url>
-        <loc>https://tsumina.github.io/sciloom/dev/developer/reject-a-program/</loc>
+        <loc>https://tsumina.github.io/sciloom/dev/developer/tutorial/declare-profiles/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/developer/tutorial/write-a-function/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/developer/tutorial/write-a-target/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/developer/tutorial/reject-a-program/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/developer/tutorial/adapt-with-comptime/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/developer/tutorial/execute-what-you-can/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/developer/tutorial/complete-program/</loc>
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/developer/reference/architecture/</loc>

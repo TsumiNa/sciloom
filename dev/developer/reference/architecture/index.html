@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/developer/reference/architecture/">
       
       
-        <link rel="prev" href="../../reject-a-program/">
+        <link rel="prev" href="../../tutorial/complete-program/">
       
       
         <link rel="next" href="../ir/">
@@ -1296,14 +1296,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../add-a-device/" class="md-nav__link">
+      <a href="../../tutorial/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Add a device
+  The heater story
 
     
   </span>
@@ -1323,14 +1323,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../add-a-target/" class="md-nav__link">
+      <a href="../../tutorial/declare-a-family/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Add a target
+  1. Declare a family
 
     
   </span>
@@ -1350,14 +1350,176 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reject-a-program/" class="md-nav__link">
+      <a href="../../tutorial/declare-profiles/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Reject a program
+  2. Declare profiles
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/write-a-function/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3. Write a Function against the family
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/write-a-target/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4. Write a target
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/reject-a-program/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5. Reject a program
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/adapt-with-comptime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6. Adapt with comptime
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/execute-what-you-can/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7. Execute what you can
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/complete-program/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8. The complete program
 
     
   </span>
@@ -2733,7 +2895,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="f3e21e870a8aa3596d9fd9bb22714fc6ad5594b4">f3e21e87</code>
+    · <code title="f16a85243a9c117cf44e852143a9b031130ff327">f16a8524</code>
   </p>
 </aside>
 
@@ -2829,7 +2991,7 @@ generic family such as <code>Agitator</code>, and an author's own subclass of th
 adding the properties and operations their instrument needs, the way
 <code>DemoAgitator</code> adds <code>gain</code> and <code>calibrate</code>. Authors extend by subclassing the
 family and never modify <code>BaseDevice</code> or the family itself; a capability the
-family lacks belongs in a subclass, as <a href="../../add-a-device/">Add a device</a> shows.
+family lacks belongs in a subclass, as the <a href="../../tutorial/">tutorial</a> shows.
 The target side is the concrete profile that a target binds to each slot at
 compile time. How declarations of either kind appear in the IR, and why neither
 the IR nor the compiler special-cases an author subclass, is stated on
@@ -2884,7 +3046,7 @@ AI-authored Python remains subject to the same schema, source and target validat
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../reject-a-program/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Reject a program">
+          <a href="../../tutorial/complete-program/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 8. The complete program">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -2894,7 +3056,7 @@ AI-authored Python remains subject to the same schema, source and target validat
                 Previous
               </span>
               <div class="md-ellipsis">
-                Reject a program
+                8. The complete program
               </div>
             </div>
           </a>
