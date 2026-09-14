@@ -1,21 +1,24 @@
 # Remove the corpus from history
 
+Status: the rewrite ran on 2026-09-14. `main` is rewritten and force-pushed; two
+remote cleanup steps remain, listed under [What remains](#what-remains).
+
 ## Goal
 
 Make the repository publishable by removing vendor and instrument material from
 every commit, not just from the current tree.
 
-Untracking alone is not enough: the corpus is reachable from all 66 commits, so
-`git checkout <old-sha>` on a public clone would still produce it.
+Untracking alone was not enough: the corpus was reachable from every commit, so
+`git checkout <old-sha>` on a public clone would still have produced it.
 
 ## Scope
 
-This is a repository operation, not a pull request. It runs after
-[the migration](01-move-corpus.md) has merged, at a moment when no other branch
-or agent session is in flight.
+This is a repository operation, not a pull request. It ran after
+[the migration](01-move-corpus.md) merged, at a moment with no other branch or
+agent session in flight.
 
-Strip these historical paths, which are where the corpus lived before the
-migration untracked it:
+The stripped historical paths, where the corpus lived before the migration
+untracked it:
 
 ```
 autosuite/app  autosuite/asfp  autosuite/archives  autosuite/extracted
@@ -23,39 +26,66 @@ autosuite/catalogs  autosuite/MANIFEST.csv
 autosuite/schema/type_templates  autosuite/schema/golden_diffs
 ```
 
-`autosuite/manual/` was never tracked and needs no entry.
+`autosuite/manual/` was never tracked and needed no entry.
 
-## What it costs
+## What it cost
 
-Measured on `origin/main` at `63db7a6`:
+`git filter-repo 2.47.0 --invert-paths`, run on a single-branch clone of `main`:
 
-| Item | Count |
-| --- | --- |
-| Commits on main | 66 |
-| Commits that become empty and are pruned | 1 |
-| Commits retained with messages and non-corpus content intact | 65 |
-| `docs/refactor/` records lost | 0 |
+| Item | Before | After |
+| --- | --- | --- |
+| Commits on main | 68 | 67 |
+| `docs/refactor/` files | 54 | 54 |
+| Commits touching `docs/refactor/` | 43 | 43 |
+| Packed `.git` in that clone | 15 MB | 1.9 MB |
+| Tree hash at `main` | `e55477a` | `e55477a` |
 
 The corpus entered in the initial commit and was never modified again apart from
-`MANIFEST.csv`. The single pruned commit is the manifest refresh, which touched
-that file alone. Every commit SHA changes, which has four consequences:
+`MANIFEST.csv`. Exactly one commit became empty and was pruned:
+`chore: refresh the corpus manifest after the tool reformat (#57)`, which touched
+that file alone. Every other commit kept its message, author, date and content:
+the tree hash at `main` is unchanged, because the migration had already removed
+those paths from the current tree.
 
-1. `docs/refactor/uv-workspace/00-overview.md` and `02-lockstep-version.md` cite
-   a merge commit; replace those with pull request links.
-2. Version identifiers of the form `0.1.0+<merge commit>` recorded in merged pull
-   request descriptions point at commits that no longer exist. Those live on
-   GitHub, not in the repository.
-3. `website/tools/publication.py` checks that the published `dev` commit is an
-   ancestor of the new `main` and will refuse to publish. Reconcile `gh-pages`
-   once, deliberately, as its guidance intends.
-4. Every clone must be re-cloned or hard reset.
+Five `.asfp` files remain in history and are correct: `examples/*.asfp` and
+`examples/developer/portable_agitation.autosuite.asfp` are SciLoom's own compiler
+output, written by the example scripts and already published as example
+downloads.
 
-## Acceptance
+Every commit SHA changed. `main` went from `54bd4de` to `b231075`.
 
-A fresh clone of the rewritten history contains no `.app`, `.asfp`, `.zip` or
-manual under any commit; `docs/refactor/` is complete; the packed repository is
-single-digit megabytes; CI passes on the rewritten `main`; documentation
-publication succeeds after the one-time `gh-pages` reconciliation.
+## What remains
+
+1. **Delete the 35 stale remote branches.** Every one belongs to a merged pull
+   request, and each still holds the pre-rewrite history, so the corpus is still
+   reachable on the remote and in any clone that fetches them.
+
+   ```bash
+   for b in $(git ls-remote --heads origin | awk '{print $2}' | sed 's|refs/heads/||' \
+       | grep -vE '^(main|gh-pages)$'); do git push origin --delete "$b"; done
+   git remote prune origin && git reflog expire --expire=now --all && git gc --prune=now
+   ```
+
+2. **Reconcile `gh-pages`.** `website/tools/publication.py` refuses with
+   `Refusing stale or divergent dev history`, exactly as designed, because the
+   published `dev/build-info.json` names `54bd4de`, which no longer exists. There
+   are no release snapshots yet, only the rolling `dev`, so deleting the branch
+   loses nothing immutable and lets the publisher rebuild it from the rewritten
+   `main`.
+
+   ```bash
+   git push origin --delete gh-pages
+   gh workflow run "Publish documentation" --ref main
+   ```
+
+   A local backup exists at `~/sciloom-pre-rewrite.bundle`; restore with
+   `git fetch ~/sciloom-pre-rewrite.bundle 'refs/*:refs/*'` if needed.
+
+## Outcome so far
+
+CI passes on the rewritten `main` (`b231075`, push event). The working checkout
+was reset onto it with the corpus untouched, since the corpus is no longer
+tracked. Documentation publication stays blocked until step 2 runs.
 
 ## Version
 

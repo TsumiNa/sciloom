@@ -31,15 +31,17 @@ manual retains reference value.
 
 ## Migrating a checkout that predates this layout
 
-The commit that introduced `corpus/` untracked the vendor directories, so pulling
-it into a checkout that still has them at the old paths **deletes them from your
-working tree**. Move them first, then pull:
+Two things happened at once. The commit that introduced `corpus/` untracked the
+vendor directories, so updating a checkout that still has them at the old paths
+**deletes them from your working tree**. Then history was rewritten to remove
+those paths from every commit, so your old history no longer connects to the new
+one and an ordinary pull cannot fast-forward.
 
-Run it as one chain. Every step is joined with `&&`, so a move that fails stops
-the sequence before `git pull`: a partial move followed by a pull is the very
-data loss this avoids. Omit a line for anything your checkout does not have;
-`manual/` in particular has never been in git, so it is there only if you already
-had it locally.
+Move the directories first, then reset onto the new history. Every step is joined
+with `&&`, so a move that fails stops the sequence before anything is fetched: a
+partial move followed by an update is the very data loss this avoids. Omit a line
+for anything your checkout does not have; `manual/` in particular has never been
+in git, so it is there only if you already had it locally.
 
 ```bash
 mkdir -p autosuite/corpus && \
@@ -52,17 +54,26 @@ mv autosuite/manual autosuite/corpus/manual && \
 mv autosuite/schema/type_templates autosuite/corpus/type_templates && \
 mv autosuite/schema/golden_diffs autosuite/corpus/golden_diffs && \
 mv autosuite/MANIFEST.csv autosuite/corpus/MANIFEST.csv && \
-git pull && \
+git fetch origin && \
+git reset --hard origin/main && \
 uv run python autosuite/tools/audit_corpus.py --write-manifest
 ```
 
-If the chain stops early, nothing has been pulled yet: finish the remaining moves
-by hand, confirm that `autosuite/` holds only `corpus/`, `docs/`, `recipe/`,
-`schema/` and `tools/`, then run the last two commands.
+`git reset --hard` leaves untracked files alone, and the corpus is untracked by
+the time it runs, so it survives. Commit or stash your own work first: the reset
+discards tracked changes.
+
+If the chain stops early, nothing has been fetched yet: finish the remaining
+moves by hand, confirm that `autosuite/` holds only `corpus/`, `docs/`,
+`recipe/`, `schema/` and `tools/`, then run the last three commands.
 
 The final step rewrites `MANIFEST.csv`, whose paths are now relative to `corpus/`.
-If you have already pulled and lost the files, restore them from your own copy
+If you have already updated and lost the files, restore them from your own copy
 into `autosuite/corpus/` and run that same command.
+
+Prefer `git fetch` plus `git reset --hard` over `git pull` here. A pull refuses
+to run with unstaged changes when `pull.rebase` is set, and after the history
+rewrite there is nothing to fast-forward.
 
 ## Rules
 

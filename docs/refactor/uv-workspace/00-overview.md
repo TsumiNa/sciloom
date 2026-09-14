@@ -166,8 +166,7 @@ procedure. PR3 changes no public page. Verify
 Each PR follows review, fixes, latest-head checks and remote squash merge before
 the next starts. Later stages never begin on an unmerged predecessor. PR2 extends
 the Version bump section that [PR #36](https://github.com/TsumiNa/sciloom/pull/36)
-(`6a1343a`) added to `branch-and-pr-workflow.instructions.md`; that rule is
-already on `main`.
+added to `branch-and-pr-workflow.instructions.md`; that rule is already on `main`.
 
 ## Version
 

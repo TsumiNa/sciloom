@@ -29,9 +29,9 @@ inheritance mechanism; no bump.
 writing; the end-to-end publication test still produces the four-field
 `build-info.json`; `git diff --check` passes. After merge,
 `dev/developer/publication/` shows the lockstep rule. This PR extends the Version
-bump section that [PR #36](https://github.com/TsumiNa/sciloom/pull/36) (`6a1343a`)
-added to the branch workflow, so it is based on `main` at or after that commit
-and after PR1 has merged.
+bump section that [PR #36](https://github.com/TsumiNa/sciloom/pull/36) added to
+the branch workflow, so it is based on `main` at or after that change and after
+PR1 has merged.
 
 ## Version
 
