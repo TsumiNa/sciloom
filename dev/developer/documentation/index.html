@@ -997,6 +997,23 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Building documentation
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="././" class="md-nav__link md-nav__link--active">
         
   
@@ -1012,6 +1029,37 @@
   
 
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tutorial-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Tutorial series
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1804,6 +1852,11 @@
                       
                     
                     
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
                   
                   <div class="md-sidebar__inner">
                     
@@ -1815,6 +1868,25 @@
   
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tutorial-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Tutorial series
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1831,7 +1903,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="f943982694d61454ba387867519741c34d64f36e">f9439826</code>
+    · <code title="3a3c242624c9e3cfc13dc98be515980058aeefb5">3a3c2426</code>
   </p>
 </aside>
 
@@ -1872,6 +1944,33 @@ selected example files and rendered API descriptions are included in the website
 <p>Use Google-style English docstrings. Explain arguments, results, errors and
 execution semantics where relevant. Short example results belong in the example's
 module docstring; long results belong in same-basename companion files.</p>
+<h2 id="tutorial-series">Tutorial series</h2>
+<p>A tutorial series builds one program across several pages. Mark the fences that
+belong to it with an HTML comment on the line before the fence; fences without a
+marker are illustration and never run.</p>
+<div class="highlight"><pre><span></span><code>&lt;!-- tutorial: step --&gt;
+<span class="sb">```python</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CountStirs</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+    <span class="o">...</span>
+<span class="sb">```</span>
+
+&lt;!-- tutorial: checkpoint --&gt;
+<span class="sb">```python</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">CountStirs</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">())</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"count_stirs.asfp"</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="sb">```</span>
+<span class="sb">```text</span>
+count_stirs.asfp
+<span class="sb">```</span>
+</code></pre></div>
+<p>A <code>step</code> fence is appended to the series program. A <code>checkpoint</code> runs the
+program built so far plus its own optional code, and its <code>text</code> fence states the
+stdout that this page adds beyond the pages before it; a checkpoint with only a
+<code>text</code> fence records what the page's step itself prints. <code>website/tools/tutorials.py</code>
+parses the markers, and <code>website/tools/handbook_test.py</code> registers each series
+in <code>SERIES</code> with its pages in order and, optionally, the repository path of the
+complete program (otherwise the last <code>python</code> fence of the last page). The tests
+run every checkpoint and prove that the steps, joined, are that complete program:
+a module docstring and the import layout may differ, the statements may not.</p>
 <p>Local pages show <code>local</code> or <code>local-dirty</code> and the source SHA. PR artifacts identify
 the PR head commit. <a href="../publication/">Versioned publication</a> explains checked
 development builds, release snapshots and deployment recovery.</p>
