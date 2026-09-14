@@ -61,7 +61,7 @@
         <loc>https://tsumina.github.io/sciloom/dev/user-guide/reference/devices-and-targets/</loc>
       </url>
       <url>
-        <loc>https://tsumina.github.io/sciloom/dev/developer/architecture/</loc>
+        <loc>https://tsumina.github.io/sciloom/dev/developer/</loc>
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/developer/add-a-device/</loc>
@@ -73,16 +73,19 @@
         <loc>https://tsumina.github.io/sciloom/dev/developer/reject-a-program/</loc>
       </url>
       <url>
-        <loc>https://tsumina.github.io/sciloom/dev/developer/ir/</loc>
+        <loc>https://tsumina.github.io/sciloom/dev/developer/reference/architecture/</loc>
       </url>
       <url>
-        <loc>https://tsumina.github.io/sciloom/dev/developer/compiler/</loc>
+        <loc>https://tsumina.github.io/sciloom/dev/developer/reference/ir/</loc>
       </url>
       <url>
-        <loc>https://tsumina.github.io/sciloom/dev/developer/interpreter/</loc>
+        <loc>https://tsumina.github.io/sciloom/dev/developer/reference/pipeline/</loc>
       </url>
       <url>
-        <loc>https://tsumina.github.io/sciloom/dev/developer/contributions/</loc>
+        <loc>https://tsumina.github.io/sciloom/dev/developer/reference/interpreter/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/developer/reference/target-contract/</loc>
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/developer/typing-and-tests/</loc>
