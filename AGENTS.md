@@ -245,10 +245,12 @@ properties and operations their instrument needs (`DemoAgitator` in
 `examples/developer/demo_contribution` adds `gain` and `calibrate`). Authors extend
 by subclassing the family; they never modify `BaseDevice` or the family, and a
 missing capability is not a reason to change either. The target side is the
-concrete profile that `resolve_devices` binds to a slot at compile time. The IR
-expresses every property and operation through the generic nodes with semantic
-ids, and the compiler decides only whether the current IR compiles for the
-selected target; neither layer knows or special-cases any author subclass.
+concrete profile that `resolve_devices` binds to a slot at compile time. 
+The IR expresses property writes as `ConfigureProperty` and every operation that
+has no dedicated node as `DeviceCommand`, each carrying the semantic id from the
+author's class (today only agitation start/stop have dedicated nodes), and the
+compiler decides only whether the current IR compiles for the selected target;
+neither layer knows nor special-cases any author subclass.
 
 Agitation intent stays in IR; AutoSuite zone/shaker bindings belong to the target.
 Declare logical dependencies with `agitator: Agitator`, independently of runtime
