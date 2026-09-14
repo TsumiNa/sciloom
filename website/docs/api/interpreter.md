@@ -1,6 +1,6 @@
 # Reference interpreter
 
-[Reference execution](../developer/interpreter.md) specifies session state, value copying and limitations. This interpreter does not run physical equipment.
+[Reference execution](../developer/reference/interpreter.md) specifies session state, value copying and limitations. This interpreter does not run physical equipment.
 
 ::: sciloom.core.interpreter.ExecutionConfig
 

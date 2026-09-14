@@ -1,6 +1,6 @@
 # IR programs and flow
 
-Construct ordered immutable statements rather than target-specific tasks. IDs identify semantic occurrences. [IR guide](../developer/ir.md) covers ownership and validation.
+Construct ordered immutable statements rather than target-specific tasks. IDs identify semantic occurrences. [IR guide](../developer/reference/ir.md) covers ownership and validation.
 
 ::: sciloom.core.ir.Program
 

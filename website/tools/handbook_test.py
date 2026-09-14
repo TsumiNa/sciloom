@@ -45,10 +45,10 @@ def run_series_script(script, source, tmp_path):
         "user-guide/advanced/device-branches",
         "user-guide/advanced/autosuite",
         "user-guide/troubleshooting",
-        "developer/ir",
-        "developer/compiler",
-        "developer/interpreter",
-        "developer/contributions",
+        "developer/reference/ir",
+        "developer/reference/pipeline",
+        "developer/reference/interpreter",
+        "developer/reference/target-contract",
     ),
 )
 def test_complete_handbook_snippet(page, tmp_path):

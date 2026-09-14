@@ -12,7 +12,7 @@ result = session.run(inputs={"values": [1.0, 2.0, 3.0], "factor": 2.5})
 assert result.outputs["result"] == (2.5, 5.0, 7.5)
 ```
 
-JSON persistence is optional. The [agitation IR example](../examples/agitation-ir.md)
+JSON persistence is optional. The [agitation IR example](../../examples/agitation-ir.md)
 deliberately exercises it to verify the boundary. DeviceIf requires specialization
 before interpreter construction; after compilation use result.specialized_ir.
 Native commands without reference semantics fail explicitly.

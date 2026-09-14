@@ -6,7 +6,7 @@ Separate conversion and execution responsibilities, following the [authoritative
 
 ## Scope
 
-The implemented ownership map is in [compiler architecture](../../../website/docs/developer/architecture.md).
+The implemented ownership map is in [compiler architecture](../../../website/docs/developer/reference/architecture.md).
 Conversion uses explicit context objects and direct functions; there is no pass
 registry, mixin hierarchy or compatibility facade. Schema default tests move next
 to schema.py; existing API and end-to-end tests continue to cover the full pipeline.

@@ -26,7 +26,7 @@ package. Compilation does not operate equipment.
 
 - [Get started](introduction/getting-started.md)
 - [User guide](user-guide/index.md)
-- [Developer guide](developer/architecture.md)
+- [Developer guide](developer/index.md)
 - [Example walkthroughs](examples/index.md)
 - [Author API reference](api/author.md)
 
