@@ -29,6 +29,26 @@ pin. As `sciloom-autosuite` grows, the fragments a test actually asserts on move
 into the test as committed fixtures; when that migration finishes, only the
 manual retains reference value.
 
+## Migrating a checkout that predates this layout
+
+The commit that introduced `corpus/` untracked the vendor directories, so pulling
+it into a checkout that still has them at the old paths **deletes them from your
+working tree**. Move them first, then pull:
+
+```bash
+mkdir -p autosuite/corpus
+for d in app asfp archives extracted catalogs manual; do mv "autosuite/$d" "autosuite/corpus/$d"; done
+mv autosuite/schema/type_templates autosuite/corpus/type_templates
+mv autosuite/schema/golden_diffs autosuite/corpus/golden_diffs
+mv autosuite/MANIFEST.csv autosuite/corpus/MANIFEST.csv
+git pull
+uv run python autosuite/tools/audit_corpus.py --write-manifest
+```
+
+The final step rewrites `MANIFEST.csv`, whose paths are now relative to `corpus/`.
+If you have already pulled and lost the files, restore them from your own copy
+into `autosuite/corpus/` and run that same command.
+
 ## Rules
 
 Raw vendor material is evidence. Do not rewrite a file here to make a test pass.
