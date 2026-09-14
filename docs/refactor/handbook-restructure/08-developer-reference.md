@@ -44,7 +44,7 @@ No new tutorial pages. No Advanced, FAQ or Troubleshooting pages.
 
 ## Acceptance
 
-- `grep -n "every reachable path" website/docs` finds only
+- `grep -rn "every reachable path" website/docs` finds only
   `reference/device-contracts.md` and the verbatim diagnostic message on the
   User Guide troubleshooting page.
 - The rendered `api/compiler/` and `developer/reference/pipeline/` pages have

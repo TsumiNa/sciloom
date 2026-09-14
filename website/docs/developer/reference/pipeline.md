@@ -22,14 +22,14 @@ flowchart TD
 
 ## Steps
 
-| Step | Function | Program it sees | Raises |
+| Step | Function | Program it sees | Raises or returns |
 |---|---|---|---|
 | 1 | `validate(program)` | authored | `IRValidationError` |
 | 2 | `target.resolve_devices(program)` | authored: the only step that sees device branches unselected | the target's own `TypeError` or `ValueError`; `TypeError` when the result is not `DeviceBindings` |
 | 3 | `specialize(program, bindings)` | authored in, selected out: bindings validated, branches selected, unreachable functions pruned, resources retyped to the bound profile, re-validated | `CompilationError` (`missing_resource_binding`, `unknown_resource_binding`, `device_type`, `device_contract`) |
 | 4 | capability and definite-configuration checks | selected | `CompilationError` (`device_capability`, `device_configuration`) |
 | 5 | `target.validate(program)` | selected | `CompilationError` with the target's own codes |
-| 6 | `target.emit(program)` | selected | an `Artifact` |
+| 6 | `target.emit(program)` | selected | returns an `Artifact` |
 
 Target resolution sees the authored program once; validation and emission see
 the selected program. What step 4 proves about required configuration is stated

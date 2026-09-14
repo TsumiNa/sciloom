@@ -37,8 +37,8 @@ assert compile_ir(program, target=SummaryTarget()).artifact.content == b"functio
 
 It has the same four members as the tutorial's `BenchTarget`; that target adds
 deployment data checked in its constructor, real bindings and a platform rule in
-`validate`. A target is recognised structurally: it implements the members, it
-does not inherit from anything.
+`validate`. A target is recognised structurally: it implements the four members, and no
+target base class is required.
 
 ## Members
 
@@ -46,7 +46,7 @@ does not inherit from anything.
 |---|---|---|
 | `target_id` | `str` | a namespaced, versioned identifier recorded in `CompileResult` |
 | `resolve_devices` | `(program: Program) -> DeviceBindings` | answers each declared resource from the target's own deployment data; sees the authored program |
-| `validate` | `(program: Program) -> Sequence[Diagnostic]` | returns diagnostics for what the platform cannot do; sees the selected program |
+| `validate` | `(program: Program) -> tuple[Diagnostic, ...]` | returns diagnostics for what the platform cannot do; sees the selected program |
 | `emit` | `(program: Program) -> Artifact` | returns bytes, a media type and a suffix, never a hardware connection |
 
 `Artifact(content, media_type, suffix)` is immutable; `CompileResult.write(path)`

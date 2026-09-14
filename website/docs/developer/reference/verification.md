@@ -1,7 +1,9 @@
 # Verification
 
-The checks a change must pass, in the order CI runs them, from the repository
-root after `uv sync --locked`:
+The local checklist a change must pass, run from the repository root after
+`uv sync --locked`. CI runs the same commands across its `check` and `docs` jobs;
+`git diff --check` is the local whitespace guard, while CI's `check` job ends with
+`git diff --exit-code` after running the examples:
 
 ```bash
 uv run ruff check
@@ -16,8 +18,8 @@ uv run --group docs pytest website/tools
 git diff --check
 ```
 
-Then run every example; CI ends with `git diff --exit-code`, so each must leave
-its committed companion files unchanged:
+Then run every example; each must leave its committed companion files
+unchanged:
 
 ```bash
 uv run python examples/function_call.py
