@@ -238,6 +238,20 @@ XML. Program/JSON v4 is the current semantic contract; see
 (such as recursion) in target validation. The reference interpreter specifies
 SciLoom behavior and is not evidence of vendor numerical or physical equivalence.
 
+Two device abstractions exist and must not be conflated, in concept or in code
+structure. The author side is a chain in `sciloom.devices`: `BaseDevice`, a generic
+family such as `Agitator`, and an author's own subclass of that family adding the
+properties and operations their instrument needs (`DemoAgitator` in
+`examples/developer/demo_contribution` adds `gain` and `calibrate`). Authors extend
+by subclassing the family; they never modify `BaseDevice` or the family, and a
+missing capability is not a reason to change either. The target side is the
+concrete profile that `resolve_devices` binds to a slot at compile time. The IR
+expresses property writes as `ConfigureProperty` and every operation that has no
+dedicated node as `DeviceCommand`, each carrying the semantic id from the author's
+class (today only agitation start/stop have dedicated nodes), and the compiler
+decides only whether the current IR compiles for the selected target; neither
+layer knows nor special-cases any author subclass.
+
 Agitation intent stays in IR; AutoSuite zone/shaker bindings belong to the target.
 Declare logical dependencies with `agitator: Agitator`, independently of runtime
 variables. Share existing logical references during host composition; do not

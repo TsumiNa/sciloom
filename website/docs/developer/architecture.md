@@ -44,6 +44,21 @@ same Target protocol without joining the SciLoom source tree or registering a
 plugin; the shipped AutoSuite target is itself a separate workspace member with
 its own distribution. Unit types remain independent.
 
+Two device abstractions meet in that pipeline and are kept apart on purpose. The
+author side is a chain of Python classes in `sciloom.devices`: `BaseDevice`, a
+generic family such as `Agitator`, and an author's own subclass of that family
+adding the properties and operations their instrument needs, the way
+`DemoAgitator` adds `gain` and `calibrate`. Authors extend by subclassing the
+family and never modify `BaseDevice` or the family itself; a capability the
+family lacks belongs in a subclass, as [Add a device](add-a-device.md) shows. The
+target side is the concrete profile that a target binds to each slot at compile
+time. The IR expresses property writes as `ConfigureProperty` and every
+operation that has no dedicated node as `DeviceCommand`, each carrying the
+semantic id from the author's class (today only agitation start/stop have
+dedicated nodes), and the compiler decides only whether the current IR compiles
+for the selected target; neither layer knows nor special-cases any author
+subclass.
+
 Within the analysis, shared state, source discovery, expression conversion and
 statement conversion have separate responsibilities, and every statement recursion
 lives in one module. A function that needs lowering state takes the context first,
