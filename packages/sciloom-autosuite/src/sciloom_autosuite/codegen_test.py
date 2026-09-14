@@ -3,7 +3,6 @@
 import re
 import xml.etree.ElementTree as ET
 from dataclasses import replace
-from pathlib import Path
 
 import pytest
 
@@ -12,10 +11,10 @@ from sciloom.core.compiler import compile_ir
 from sciloom.core.diagnostics import CompilationError
 from sciloom.core.ir import IRValidationError, SourceSpan, from_json, to_json
 from . import AutoSuiteTarget
+from .conftest import CORPUS, requires_corpus
 from .xml import SerializationIR
 
-# Evidence corpus at the workspace root, outside this distribution.
-FIXTURES = Path(__file__).resolve().parents[4] / "autosuite/asfp"
+FIXTURES = CORPUS / "asfp"
 
 
 class Identity(Function):
@@ -158,6 +157,7 @@ def normalized(root, names):
         ),
     ],
 )
+@requires_corpus
 def test_structure_and_id_relationships_match_fixed_exports(program, fixture, names):
     result = program.compile(target=AutoSuiteTarget())
     assert normalized(ET.fromstring(result.artifact.content), names) == normalized(
@@ -190,6 +190,7 @@ def test_different_specializations_have_disjoint_xml_ids():
     assert ids(2.5).isdisjoint(ids(3.5))
 
 
+@requires_corpus
 def test_corrupt_call_parameter_is_detected_by_comparison():
     root = ET.fromstring(Caller().compile(target=AutoSuiteTarget()).artifact.content)
     call = root.find(".//*[@typeid='Chemspeed.SATaskExecuteFunction.1']")

@@ -33,10 +33,13 @@ else. Enable the repository pre-commit hook once per clone with
 `git config core.hooksPath .githooks`; it fixes and formats staged Python files
 before each commit.
 
-The AutoSuite commands use retained internal reference material in a source
-checkout; that corpus is not distributed by the public documentation site.
-Run all eight current examples using commands on their walkthrough pages. Proposed
-frontend examples are syntax-checked design material, not runnable supported APIs.
+The AutoSuite commands use internal reference material that is shared inside the
+team rather than through this repository, so a checkout may not have it. The
+smoke and corpus checks skip their evidence sections when it is absent, and the
+tests that compare generated XML against it skip themselves. Everything the
+repository carries still runs. Run all eight current examples using commands on
+their walkthrough pages. Proposed frontend examples are syntax-checked design
+material, not runnable supported APIs.
 
 Colocate tests as `<module>_test.py`. Production mypy traversal excludes these
 intentional negative runtime fixtures; when adding test modules under src, also

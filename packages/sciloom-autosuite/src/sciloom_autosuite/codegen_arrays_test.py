@@ -15,11 +15,11 @@ from sciloom.core.compiler import compile_ir
 from sciloom.core.diagnostics import CompilationError
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import from_json, to_json
+from .conftest import CORPUS, requires_corpus
 from .target import AutoSuiteTarget
 
-# Evidence corpus at the workspace root, outside this distribution.
 ROOT = Path(__file__).resolve().parents[4]
-EXTRACTED = ROOT / "autosuite/extracted/latest_app/functions"
+EXTRACTED = CORPUS / "extracted/latest_app/functions"
 
 
 class ScaleValues(Function):
@@ -310,6 +310,7 @@ def test_rhs_and_augmented_index_fault_order():
         WireModel(compiled(Augmented()).artifact.content).run()
 
 
+@requires_corpus
 def test_array_encoding_matches_raw_evidence_and_composed_scalar_types():
     class Values(Function):
         integers: Var[list[int]] = []
@@ -323,7 +324,7 @@ def test_array_encoding_matches_raw_evidence_and_composed_scalar_types():
 
     root = ET.fromstring(compiled(Values()).artifact.content)
     variables = {v.findtext("name"): v for v in root.iter("variable")}
-    raw = ET.fromstring(gzip.decompress((ROOT / "autosuite/app/Suzuki-Miyaura-automation.app").read_bytes()))
+    raw = ET.fromstring(gzip.decompress((CORPUS / "app/Suzuki-Miyaura-automation.app").read_bytes()))
     integer = next(v for v in raw.iter("variable") if v.findtext("name") == "int_base_array")
     for path in ("values/count", "type", "siunit", "unit", "array", "constant"):
         assert variables["integers"].findtext(path) == integer.findtext(path)
@@ -336,9 +337,10 @@ def test_array_encoding_matches_raw_evidence_and_composed_scalar_types():
     assert variables["speeds"].findtext("unit") == "rpm"
 
 
+@requires_corpus
 def test_whole_copy_and_indexed_write_fields_match_observed_modes():
     root = ET.fromstring(compiled(ScaleValues()).artifact.content)
-    raw = ET.fromstring(gzip.decompress((ROOT / "autosuite/app/config20260902_2.app").read_bytes()))
+    raw = ET.fromstring(gzip.decompress((CORPUS / "app/config20260902_2.app").read_bytes()))
     whole = next(n for n in raw.iter() if n.findtext("elementselectmode") == "4")
     generated = next(n for n in root.iter() if n.findtext("elementselectmode") == "4")
     assert [c.tag for c in generated] == [c.tag for c in whole]

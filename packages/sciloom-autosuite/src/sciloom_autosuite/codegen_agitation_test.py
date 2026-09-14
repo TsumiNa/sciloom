@@ -2,7 +2,6 @@
 
 import xml.etree.ElementTree as ET
 from dataclasses import replace
-from pathlib import Path
 
 import pytest
 
@@ -12,9 +11,8 @@ from sciloom.core.diagnostics import CompilationError
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import ConfigureProperty, from_json, to_json
 from . import AutoSuiteIndividualShaker, AutoSuiteTarget
+from .conftest import CORPUS, requires_corpus
 
-# Evidence corpus at the workspace root, outside this distribution.
-CORPUS = Path(__file__).resolve().parents[4] / "autosuite"
 AGITATION = "Chemspeed.SATaskSetAgitation.1"
 
 
@@ -49,6 +47,7 @@ def shape(element):
     return element.attrib, tuple(visit(child) for child in element)
 
 
+@requires_corpus
 def test_production_task_payload_and_typed_input_relationship():
     source = ET.parse(CORPUS / "extracted/latest_app/functions/24_Sample and Run GPC.asfp")
     reference = sorted(
@@ -77,6 +76,7 @@ def test_production_task_payload_and_typed_input_relationship():
     assert len(result.semantic_ir.functions[0].variables) == 2
 
 
+@requires_corpus
 def test_concrete_zone_address_and_canonical_speed_match_standalone_export():
     class Start(Function):
         agitator: Agitator
@@ -234,6 +234,7 @@ def test_missing_or_unknown_target_bindings_fail_before_emission(monkeypatch):
         ConfigureAgitation().compile(target=config)
 
 
+@requires_corpus
 def test_example_binding_matches_latest_application_configuration():
     app = ET.parse(CORPUS / "extracted/latest_app/application.xml")
     zone = next(z for z in app.iter("zone") if z.findtext("name") == "Heater Shaker 23")

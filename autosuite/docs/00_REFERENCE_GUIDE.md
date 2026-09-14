@@ -63,8 +63,8 @@ The 18 reference documents are in one directory, numbered 00–17. This guide is
 uv run python autosuite/tools/audit_corpus.py
 uv run python autosuite/tools/smoke_test.py
 uv run python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
-uv run python autosuite/tools/inspect_structure.py autosuite/app/config20260909_polymerization.app
-uv run python autosuite/tools/validate_structure.py autosuite/asfp/Test11_FIXED_RealInOut_DirectSet.asfp
+uv run python autosuite/tools/inspect_structure.py autosuite/corpus/app/config20260909_polymerization.app
+uv run python autosuite/tools/validate_structure.py autosuite/corpus/asfp/Test11_FIXED_RealInOut_DirectSet.asfp
 ```
 
 After an intentional reviewed reference update, regenerate the manifest and

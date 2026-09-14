@@ -26,5 +26,12 @@ htmlcov/
 .env.*
 !.env.example
 
-# Local AutoSuite manual
-/autosuite/manual/
+# AutoSuite material from the vendor and the instruments never enters git: the
+# repository must stay publishable. Deny the whole directory and re-allow only
+# what this project writes, so material added later is excluded by default.
+/autosuite/*
+!/autosuite/README.md
+!/autosuite/docs/
+!/autosuite/recipe/
+!/autosuite/schema/
+!/autosuite/tools/

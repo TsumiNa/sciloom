@@ -8,7 +8,7 @@ The complete generated package is beside this file. For input [0, 4, 2, 0],
 the algorithm returns 2; empty/all-zero input returns the sentinel 999999.
 The developer tests verify these results with the reference interpreter.
 
-Source: autosuite/extracted/latest_app/functions/51_Non Zero Array Min.asfp,
+Source: autosuite/corpus/extracted/latest_app/functions/51_Non Zero Array Min.asfp,
 extracted from config20260909_polymerization.app. This numeric adaptation removes
 volume units, retains the numeric 1e-8 threshold and 999999 sentinel, and uses
 nested conditions to express short-circuit intent. It does not model physical

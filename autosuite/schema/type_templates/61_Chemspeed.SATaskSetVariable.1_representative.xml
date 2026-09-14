@@ -1,6 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<task typeid="Chemspeed.SATaskSetVariable.1">
-  <name>Set Variable</name>
-  <variablename>x</variablename>
-  <expressiontext>1</expressiontext>
-</task>

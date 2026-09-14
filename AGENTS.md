@@ -53,7 +53,7 @@ required repository rules, not optional reference material.
 
 When facts conflict, prefer in this order:
 
-1. `autosuite/app/config20260909_polymerization.app`
+1. `autosuite/corpus/app/config20260909_polymerization.app`
 2. functions extracted from that app
 3. AutoSuite-produced FIXED/re-exported schema fixtures
 4. latest standalone `.asfp` snapshots
@@ -63,9 +63,24 @@ When facts conflict, prefer in this order:
 
 The manual is authoritative for documented **semantics**, but not for `.asfp/.app` XML serialization; no official function/application XSD is present in the supplied manual.
 
-## 3. Do not mutate evidence silently
+## 3. The evidence corpus is not in git, and agents do not write to it
 
-Raw APP/ASFP files, archives, manual, extracted XML and schema fixtures under `autosuite/` are evidence. Do not rewrite them to make a serializer test pass. Create new generated outputs elsewhere and compare them. `autosuite/MANIFEST.csv` records current reference hashes; `autosuite/catalogs/relocation.csv` records the original locations of preserved material.
+Everything from the vendor and the instruments lives under `autosuite/corpus/`,
+which `.gitignore` excludes so this repository can be made public. It is shared
+inside the team; see [`autosuite/README.md`](autosuite/README.md) for how to obtain
+it and what stays tracked (`docs/`, `schema/`, `tools/`, `recipe/`). Two developers
+holding different corpora is normal, so nothing pins a canonical set.
+
+Raw APP/ASFP files, archives, manual, extracted XML and type templates are
+evidence. Do not rewrite them to make a serializer test pass. Create new generated
+outputs elsewhere and compare them. An agent must not write into `autosuite/corpus/`
+without a human asking for it; `.claude/settings.json` denies those writes, and
+`.githooks/pre-commit` refuses to commit anything under `autosuite/` outside the
+tracked directories. Temporary output belongs in a scratch directory.
+
+Tests that compare generated XML against the corpus carry `@requires_corpus` and
+skip when it is absent. `autosuite/corpus/MANIFEST.csv` travels with the corpus and
+records the hashes `autosuite/tools/audit_corpus.py` checks.
 
 ## 4. Python frontend rules
 
@@ -148,7 +163,7 @@ Read:
 - `autosuite/docs/06_SEMANTIC_TO_XML_MAPPING_REFERENCE.md`
 - `autosuite/docs/07_GOLDEN_FIXTURE_MATRIX.md`
 - `autosuite/schema/empirical_type_catalog.*`
-- `autosuite/schema/type_templates/`
+- `autosuite/corpus/type_templates/`
 
 Prefer corpus-derived templates and explicit typed adapters for device-specific task payloads.
 
@@ -175,7 +190,9 @@ and `uv run python examples/agitation.py`. Run the list author examples with `uv
 `uv run python examples/non_zero_array_min.py`. Also run the developer example
 with `uv run python -m examples.developer.agitation_ir` from the repository root.
 Run `uv run python -m examples.developer.list_ir` for direct list IR and JSON v4.
-Run `python autosuite/tools/audit_corpus.py` after reference changes. Syntax-check `examples/proposed_frontend/*.py`. On the AutoSuite host, generated `.app` files must additionally pass Executor simulation. The historical compiler, ASPY inputs and text views have been removed; refactor work starts from the retained XML and semantic documentation.
+The AutoSuite smoke check and `python autosuite/tools/audit_corpus.py` (run after
+reference changes) skip their corpus sections when `autosuite/corpus/` is absent,
+so CI exercises only what the repository carries. Syntax-check `examples/proposed_frontend/*.py`. On the AutoSuite host, generated `.app` files must additionally pass Executor simulation. The historical compiler, ASPY inputs and text views have been removed; refactor work starts from the retained XML and semantic documentation.
 
 ## 9. Documentation location
 
