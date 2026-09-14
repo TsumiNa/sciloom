@@ -48,6 +48,7 @@ every change so the package stays reproducible.
 [Download Python source](../../_generated/examples/stir_rack.py) and the
 generated [stir_rack.asfp](../../_generated/examples/stir_rack.asfp).
 
-Where next: the [User Guide](../functions.md) explains the rules the tutorial
-applied, and the [agitation example](../../examples/agitation.md) is the
-smallest device program.
+Where next: the [Advanced pages](../index.md) each open with a program that
+goes one step beyond this one, the [Reference](../reference/declarations.md)
+states the rules the tutorial applied, and the
+[agitation example](../../examples/agitation.md) is the smallest device program.

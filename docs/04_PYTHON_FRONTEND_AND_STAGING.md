@@ -1,7 +1,7 @@
 # Restricted Python frontend and staging model
 
-Historical design context. Use the maintained [Function guide](../website/docs/user-guide/functions.md)
-and [source subset](../website/docs/user-guide/control-flow.md) for implemented behavior. The
+Historical design context. Use the maintained [declarations reference](../website/docs/user-guide/reference/declarations.md)
+and [runtime language](../website/docs/user-guide/reference/runtime-language.md) for implemented behavior. The
 broader device/event/error examples below remain proposals and are not runnable.
 
 ## Design goal

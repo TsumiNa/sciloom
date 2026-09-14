@@ -9,7 +9,7 @@
 SciLoom — programmable scientific automation from one semantic model.
 
 [Documentation](https://tsumina.github.io/sciloom/) ·
-[User guide](https://tsumina.github.io/sciloom/dev/user-guide/functions/) ·
+[User guide](https://tsumina.github.io/sciloom/dev/user-guide/) ·
 [API reference](https://tsumina.github.io/sciloom/dev/api/)
 
 SciLoom aims to let scientists and engineers author automation workflows through
@@ -41,7 +41,8 @@ member `sciloom-autosuite` from `packages/`, imported as `sciloom_autosuite`.
 The examples show Function authoring, target configuration and `.compile()`.
 They write `examples/function_call.asfp` and `examples/agitation.asfp`. Compilation does
 not send commands to hardware; no knowledge of compiler internals is required.
-See the [compilation guide](website/docs/user-guide/compilation.md) for usage and validation scope.
+See the [tutorial](website/docs/user-guide/tutorial/index.md) for usage and the
+[AutoSuite rules](website/docs/user-guide/advanced/autosuite.md) for validation scope.
 
 ## AutoSuite reference materials
 
@@ -58,8 +59,8 @@ organization and provenance.
 - [English handbook](website/docs/index.md)
 - [Brand assets and usage](website/docs/developer/brand.md)
 - [Getting started](website/docs/introduction/getting-started.md)
-- [Functions and fields](website/docs/user-guide/functions.md)
-- [Device configuration](website/docs/user-guide/devices.md)
+- [User guide](website/docs/user-guide/index.md)
+- [Devices and targets](website/docs/user-guide/reference/devices-and-targets.md)
 - [Example walkthroughs](website/docs/examples/index.md)
 - [Runnable function-call example](examples/function_call.py)
 - [Runnable agitation example](examples/agitation.py)

@@ -1,6 +1,6 @@
 # Instance specialization and compile API
 
-Historical design context. The current [compilation guide](../website/docs/user-guide/compilation.md)
+Historical design context. The current [host-time specialization page](../website/docs/user-guide/advanced/specialization.md)
 and [compiler interface](../website/docs/developer/compiler.md) are maintained in the handbook.
 Application and broader task examples below remain proposals.
 

@@ -25,7 +25,7 @@ AutoSuite is the first maintained target, shipped as the `sciloom-autosuite`
 package. Compilation does not operate equipment.
 
 - [Get started](introduction/getting-started.md)
-- [User guide](user-guide/functions.md)
+- [User guide](user-guide/index.md)
 - [Developer guide](developer/architecture.md)
 - [Example walkthroughs](examples/index.md)
 - [Author API reference](api/author.md)

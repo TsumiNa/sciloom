@@ -31,8 +31,10 @@ SERIES: dict[str, tutorials.Series] = {
 @pytest.mark.parametrize(
     "page",
     (
-        "user-guide/values",
-        "user-guide/compilation",
+        "user-guide/advanced/composition",
+        "user-guide/advanced/specialization",
+        "user-guide/advanced/device-branches",
+        "user-guide/advanced/autosuite",
         "developer/ir",
         "developer/compiler",
         "developer/interpreter",
