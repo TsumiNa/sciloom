@@ -71,7 +71,9 @@ commit or stash them first.
 
 If the chain stops early, nothing has been fetched yet: finish the remaining
 moves by hand, confirm that `autosuite/` holds only `corpus/`, `docs/`,
-`recipe/`, `schema/` and `tools/`, then run the last four commands.
+`recipe/`, `schema/` and `tools/`, then run the last three commands. The switch
+to `main` has already happened by then; only the fetch, the reset and the audit
+are left.
 
 The final step rewrites `MANIFEST.csv`, whose paths are now relative to `corpus/`.
 If you have already updated and lost the files, restore them from your own copy
