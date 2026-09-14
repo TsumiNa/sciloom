@@ -1,5 +1,8 @@
 # Reader handbooks
 
+Historical stage record. The User Guide and Developer Guide it produced are
+superseded by the [example-led handbooks plan](../handbook-restructure/00-overview.md).
+
 ## Goal
 
 Explain current SciLoom behavior to experiment authors and contributors.
