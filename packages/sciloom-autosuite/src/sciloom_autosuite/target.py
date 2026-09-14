@@ -5,8 +5,8 @@ from dataclasses import dataclass, field
 from types import MappingProxyType
 from typing import Mapping
 
+from sciloom.core.bindings import DeviceBindings
 from sciloom.core.compiler import Artifact
-from sciloom.core.devices import DeviceBindings
 from sciloom.core.diagnostics import CompilationError, Diagnostic
 from sciloom.core.ir import Binary, BinaryOp, Call, Program
 from sciloom.core.ir.traversal import iter_nodes

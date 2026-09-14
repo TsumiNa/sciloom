@@ -106,7 +106,7 @@ module = [
     "sciloom.core.interpreter.device_state_test",
     "sciloom_autosuite.device_state_test",
     "sciloom.flow.device_slots_test",
-    "sciloom.core.devices_test",
+    "sciloom.core.bindings_test",
     "sciloom.dsl.driver_list_test",
     "sciloom.dsl.layering_test",
     "sciloom.dsl.driver_test",

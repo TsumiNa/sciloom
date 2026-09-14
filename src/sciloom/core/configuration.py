@@ -1,6 +1,6 @@
 """Capability checks and interprocedural definite device configuration analysis."""
 
-from .devices import DeviceBindings
+from .bindings import DeviceBindings
 from .diagnostics import Diagnostic
 from .ir import (
     Call,

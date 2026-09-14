@@ -6,9 +6,9 @@ from dataclasses import replace
 
 import pytest
 
+from .bindings import DeviceBindings
+from .bindings_test import binding as reference_binding
 from .compiler import Artifact, compile_ir
-from .devices import DeviceBindings
-from .devices_test import binding as reference_binding
 from .diagnostics import CompilationError
 from .ir import Call, CanWrite, DeviceIf, FunctionIR, IsDevice, ScalarType, from_json, to_json
 from .ir.codec_devices_test import extension_program
@@ -54,7 +54,7 @@ sys.meta_path.insert(0, Block())
 from pathlib import Path
 from sciloom.core.ir import from_json
 from sciloom.core.ir.device_contracts import AGITATOR_CONTRACT, BASE_DEVICE_CONTRACT
-from sciloom.core.devices import DeviceBinding, DeviceBindings
+from sciloom.core.bindings import DeviceBinding, DeviceBindings
 from sciloom.core.specialization import specialize
 from sciloom.core.interpreter import Interpreter
 program = from_json(Path(sys.argv[1]).read_text())

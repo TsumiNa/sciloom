@@ -6,8 +6,8 @@ import pytest
 
 from sciloom import Agitator, Function, Input, rpm, runtime
 from sciloom.conftest import RecordingTarget, StubShaker
+from .bindings import DeviceBinding, DeviceBindings
 from .configuration import validate_device_usage
-from .devices import DeviceBinding, DeviceBindings
 from .diagnostics import CompilationError
 from .ir import (
     ConfigureProperty,

@@ -14,7 +14,7 @@ This complete target accepts a device-free program and emits a textual summary:
 
 ```python
 from sciloom.core.compiler import Artifact, compile_ir
-from sciloom.core.devices import DeviceBindings
+from sciloom.core.bindings import DeviceBindings
 from sciloom.core.diagnostics import Diagnostic
 from sciloom.core.ir import FunctionIR, Program
 

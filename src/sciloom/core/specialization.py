@@ -2,7 +2,7 @@
 
 from dataclasses import replace
 
-from .devices import DeviceBindings, validate_bindings
+from .bindings import DeviceBindings, validate_bindings
 from .diagnostics import CompilationError, Diagnostic, IRValidationError
 from .ir import Call, CanWrite, DeviceIf, If, IsDevice, Program, Statement, SupportsOperation, While, validate
 from .ir.traversal import iter_nodes

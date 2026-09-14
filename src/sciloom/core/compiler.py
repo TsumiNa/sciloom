@@ -4,8 +4,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Protocol, runtime_checkable
 
+from .bindings import DeviceBindings
 from .configuration import validate_device_usage
-from .devices import DeviceBindings
 from .diagnostics import CompilationError, Diagnostic, IRValidationError
 from .ir import Program, validate
 from .specialization import specialize

@@ -9,8 +9,8 @@ import pytest
 from examples.developer.demo_contribution import DemoAgitator, DemoTarget
 from sciloom import Agitator, Function, Input, RotationalSpeed, Var, comptime, rpm, runtime
 from sciloom.conftest import RecordingTarget, StubShaker
+from sciloom.core.bindings import DeviceBindings
 from sciloom.core.compiler import compile_ir
-from sciloom.core.devices import DeviceBindings
 from sciloom.core.diagnostics import CompilationError, ExecutionError, IRValidationError
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import DeviceCommand, DeviceIf, from_json, to_json, validate
