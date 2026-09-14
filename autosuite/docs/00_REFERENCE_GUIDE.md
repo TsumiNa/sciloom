@@ -4,19 +4,30 @@ This directory collects the evidence needed to build SciLoom's Semantic IR and
 versioned AutoSuite backend. It is reference material, not an implementation of
 the new compiler. Paths in code-formatted examples are relative to the repository root.
 
-| Location under `autosuite/` | Contents and purpose |
+Material from the vendor and the instruments lives under `corpus/`, which is
+shared inside the team and is not in git; see [the directory guide](../README.md)
+for how to obtain it. Everything else is written by this project and is tracked.
+A checkout may hold no corpus, or only the part a developer needed, so the
+commands and tests that read it skip what is absent.
+
+| Location under `autosuite/corpus/` | Contents and purpose |
 |---|---|
-| `app/` | 68 distinct original applications; start with `config20260909_polymerization.app` |
-| `asfp/` | 58 distinct function packages, including minimal probes and FIXED/re-export counterparts |
+| `app/` | Original applications; start with `config20260909_polymerization.app` |
+| `asfp/` | Function packages, including minimal probes and FIXED/re-export counterparts |
 | `archives/` | Unchanged original APP and ASFP ZIP archives |
 | `manual/` | Original AutoSuite 2.47.1.1 PDF |
-| `extracted/latest_app/` | Decompressed current app, 52 matching function XML packages, indexes and analysis |
-| `schema/` | Empirical profiles, 67 representative type templates and normalized comparison diffs |
-| `recipe/` | Original CSV recipe, analysis and validator |
+| `extracted/latest_app/` | Decompressed current app, its matching function XML packages, indexes and analysis |
+| `type_templates/` | Representative type templates extracted from the applications |
+| `golden_diffs/` | Normalized comparison diffs between fixture pairs |
 | `catalogs/` | File catalogs, function evolution and byte-level provenance |
-| `tools/` | Read/inspect/validate XML and verify corpus integrity |
+| `MANIFEST.csv` | Hashes of the corpus as it stands in this checkout |
+
+| Location under `autosuite/` | Contents and purpose |
+|---|---|
+| `schema/` | Empirical type catalog, path profiles and variable-storage observations |
+| `recipe/` | CSV recipe, analysis and validator |
+| `tools/` | Read/inspect/validate XML and check a received corpus |
 | `docs/` | AutoSuite semantics, serialization evidence and current workflow notes |
-| `MANIFEST.csv` | Current hashes for the reference collection |
 
 There are no symbolic-link aliases or ASPY source/view files in this collection.
 XML candidates remain for comparison; use FIXED/re-export evidence and the real
@@ -67,9 +78,12 @@ uv run python autosuite/tools/inspect_structure.py autosuite/corpus/app/config20
 uv run python autosuite/tools/validate_structure.py autosuite/corpus/asfp/Test11_FIXED_RealInOut_DirectSet.asfp
 ```
 
-After an intentional reviewed reference update, regenerate the manifest and
-archive mapping with `uv run python autosuite/tools/audit_corpus.py --write-manifest`.
-Default audit mode verifies without rewriting evidence or its manifest.
+The first three commands work without a corpus; the last two read one. After
+intentionally adding or updating references, regenerate the manifest and archive
+mapping with `uv run python autosuite/tools/audit_corpus.py --write-manifest`.
+Default audit mode verifies without rewriting evidence or its manifest: a file
+whose content changed is an error, while files you added or have not received are
+reported rather than rejected.
 
 `canonicalize_xml.py` is a lossy comparison helper that removes IDs and metadata;
 its output must not be used for identity-preserving deduplication or serialization.

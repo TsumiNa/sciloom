@@ -37,9 +37,14 @@ change to which examples or pages exist.
 - A staged file under `autosuite/corpus/` is refused by the pre-commit hook.
 - `uv run --group docs python website/tools/site.py build --strict` and
   `uv run --group docs pytest website/tools`.
-- No tracked file references the old `autosuite/app`, `asfp`, `archives`,
-  `extracted`, `catalogs`, `manual`, `MANIFEST.csv`, `schema/type_templates` or
-  `schema/golden_diffs` paths.
+- No live code, configuration or documentation references the old
+  `autosuite/app`, `asfp`, `archives`, `extracted`, `catalogs`, `manual`,
+  `MANIFEST.csv`, `schema/type_templates` or `schema/golden_diffs` paths. The
+  plans under `docs/refactor/corpus-privacy/` name them deliberately, as the
+  record of what moved and what the rewrite removes, and are excluded from this
+  check.
+- `--write-manifest` is idempotent: running it, then running the audit again,
+  reports no drift.
 
 ## Version
 

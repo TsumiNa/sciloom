@@ -190,7 +190,6 @@ def main():
     members = archives_and_catalogs()
     sources = derived_references()
     templates = templates_and_relocations()
-    files = inventory()
     mapping = CORPUS / "catalogs/archive_members.csv"
     function_mapping = CORPUS / "extracted/latest_app/function_sources.csv"
     manifest = CORPUS / "MANIFEST.csv"
@@ -199,9 +198,13 @@ def main():
             write_rows(mapping, ["archive", "member", "path", "bytes", "sha256"], members)
         if sources:
             write_rows(function_mapping, list(sources[0]), sources)
+        # Take the inventory after those two writes, so the manifest records the
+        # catalogs as they now stand and a following audit is clean.
+        files = inventory()
         write_rows(manifest, ["path", "bytes", "sha256"], files)
         added, removed = [], []
     else:
+        files = inventory()
         if mapping.is_file():
             compare(rows(mapping), members, lambda record: (record["archive"], record["member"]))
         if function_mapping.is_file() and sources:

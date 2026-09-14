@@ -11,10 +11,8 @@ from sciloom.core.compiler import compile_ir
 from sciloom.core.diagnostics import CompilationError
 from sciloom.core.ir import IRValidationError, SourceSpan, from_json, to_json
 from . import AutoSuiteTarget
-from .conftest import CORPUS, requires_corpus
+from .conftest import corpus_file
 from .xml import SerializationIR
-
-FIXTURES = CORPUS / "asfp"
 
 
 class Identity(Function):
@@ -157,11 +155,10 @@ def normalized(root, names):
         ),
     ],
 )
-@requires_corpus
 def test_structure_and_id_relationships_match_fixed_exports(program, fixture, names):
     result = program.compile(target=AutoSuiteTarget())
     assert normalized(ET.fromstring(result.artifact.content), names) == normalized(
-        ET.parse(FIXTURES / fixture).getroot(), names
+        ET.parse(corpus_file(f"asfp/{fixture}")).getroot(), names
     )
 
 
@@ -190,14 +187,13 @@ def test_different_specializations_have_disjoint_xml_ids():
     assert ids(2.5).isdisjoint(ids(3.5))
 
 
-@requires_corpus
 def test_corrupt_call_parameter_is_detected_by_comparison():
     root = ET.fromstring(Caller().compile(target=AutoSuiteTarget()).artifact.content)
     call = root.find(".//*[@typeid='Chemspeed.SATaskExecuteFunction.1']")
     call.find("functiondata/inputs/item0/id").text = call.findtext("functiondata/outputs/item0/id")
     names = {"Caller": "Caller", "Identity": "Callee", "TEST12_FIXED_Caller": "Caller", "TEST12_FIXED_Callee": "Callee"}
     assert normalized(root, names) != normalized(
-        ET.parse(FIXTURES / "Test12_FIXED_CallBinding_RealInOut.asfp").getroot(), names
+        ET.parse(corpus_file("asfp/Test12_FIXED_CallBinding_RealInOut.asfp")).getroot(), names
     )
 
 

@@ -11,7 +11,7 @@ from sciloom.core.diagnostics import CompilationError
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import ConfigureProperty, from_json, to_json
 from . import AutoSuiteIndividualShaker, AutoSuiteTarget
-from .conftest import CORPUS, requires_corpus
+from .conftest import corpus_file
 
 AGITATION = "Chemspeed.SATaskSetAgitation.1"
 
@@ -47,9 +47,8 @@ def shape(element):
     return element.attrib, tuple(visit(child) for child in element)
 
 
-@requires_corpus
 def test_production_task_payload_and_typed_input_relationship():
-    source = ET.parse(CORPUS / "extracted/latest_app/functions/24_Sample and Run GPC.asfp")
+    source = ET.parse(corpus_file("extracted/latest_app/functions/24_Sample and Run GPC.asfp"))
     reference = sorted(
         source.findall(f".//*[@typeid='{AGITATION}']"), key=lambda t: t.findtext("switchon"), reverse=True
     )
@@ -76,7 +75,6 @@ def test_production_task_payload_and_typed_input_relationship():
     assert len(result.semantic_ir.functions[0].variables) == 2
 
 
-@requires_corpus
 def test_concrete_zone_address_and_canonical_speed_match_standalone_export():
     class Start(Function):
         agitator: Agitator
@@ -90,7 +88,7 @@ def test_concrete_zone_address_and_canonical_speed_match_standalone_export():
     generated = root.find(f".//*[@typeid='{AGITATION}']")
     reference = next(
         task
-        for task in ET.parse(CORPUS / "asfp/functionsPackage_3.asfp").getroot().iter()
+        for task in ET.parse(corpus_file("asfp/functionsPackage_3.asfp")).getroot().iter()
         if task.get("typeid") == AGITATION and task.findtext("zone") == "1st_vial" and task.findtext("switchon") == "1"
     )
     assert reference.findtext("taskdatas/taskdata0/speed") == "10"
@@ -234,9 +232,8 @@ def test_missing_or_unknown_target_bindings_fail_before_emission(monkeypatch):
         ConfigureAgitation().compile(target=config)
 
 
-@requires_corpus
 def test_example_binding_matches_latest_application_configuration():
-    app = ET.parse(CORPUS / "extracted/latest_app/application.xml")
+    app = ET.parse(corpus_file("extracted/latest_app/application.xml"))
     zone = next(z for z in app.iter("zone") if z.findtext("name") == "Heater Shaker 23")
     well = zone.find("well")
     shaker = next(
