@@ -1,0 +1,163 @@
+{
+  "device_types": [
+    {
+      "base_type_ids": [],
+      "kind": "DeviceTypeContract",
+      "operations": [],
+      "properties": [],
+      "required_configuration": [],
+      "type_id": "sciloom.device/v1"
+    },
+    {
+      "base_type_ids": [
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "kind": "CommandContract",
+          "name": "start",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.start/v1"
+        },
+        {
+          "kind": "CommandContract",
+          "name": "stop",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.stop/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "speed",
+          "semantic_id": "sciloom.agitator.speed/v1",
+          "type": "rotational_speed"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.agitator.speed/v1"
+      ],
+      "type_id": "sciloom.agitator/v1"
+    }
+  ],
+  "entry_function_id": "fn:0",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "condition": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:2",
+            "source": {
+              "column": 11,
+              "kind": "SourceSpan",
+              "line": 74,
+              "path": "examples/agitation.py"
+            },
+            "symbol_id": "fn:0:var:enabled"
+          },
+          "else_body": [
+            {
+              "kind": "StopAgitation",
+              "node_id": "fn:0:node:6",
+              "resource_id": "resource:agitator",
+              "source": {
+                "column": 12,
+                "kind": "SourceSpan",
+                "line": 78,
+                "path": "examples/agitation.py"
+              }
+            }
+          ],
+          "kind": "If",
+          "node_id": "fn:0:node:1",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 74,
+            "path": "examples/agitation.py"
+          },
+          "then_body": [
+            {
+              "kind": "ConfigureProperty",
+              "node_id": "fn:0:node:3",
+              "property_id": "sciloom.agitator.speed/v1",
+              "resource_id": "resource:agitator",
+              "source": {
+                "column": 12,
+                "kind": "SourceSpan",
+                "line": 75,
+                "path": "examples/agitation.py"
+              },
+              "value": {
+                "kind": "Reference",
+                "node_id": "fn:0:node:4",
+                "source": {
+                  "column": 34,
+                  "kind": "SourceSpan",
+                  "line": 75,
+                  "path": "examples/agitation.py"
+                },
+                "symbol_id": "fn:0:var:shaker_speed"
+              }
+            },
+            {
+              "kind": "StartAgitation",
+              "node_id": "fn:0:node:5",
+              "resource_id": "resource:agitator",
+              "source": {
+                "column": 12,
+                "kind": "SourceSpan",
+                "line": 76,
+                "path": "examples/agitation.py"
+              }
+            }
+          ]
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "ConfigureAgitation",
+      "node_id": "fn:0",
+      "source": {
+        "column": 4,
+        "kind": "SourceSpan",
+        "line": 73,
+        "path": "examples/agitation.py"
+      },
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "shaker_speed",
+          "node_id": "fn:0:var:shaker_speed",
+          "owner_id": "fn:0",
+          "role": "input",
+          "source": null,
+          "type": "rotational_speed"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "enabled",
+          "node_id": "fn:0:var:enabled",
+          "owner_id": "fn:0",
+          "role": "input",
+          "source": null,
+          "type": "boolean"
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": [
+    {
+      "device_type_id": "sciloom.agitator/v1",
+      "kind": "DeviceResource",
+      "logical_id": "agitator",
+      "node_id": "resource:agitator",
+      "source": null
+    }
+  ]
+}

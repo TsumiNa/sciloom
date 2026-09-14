@@ -1,0 +1,314 @@
+{
+  "version": "1.0.0",
+  "date": "2026-09-13",
+  "design": "Parallel fold",
+  "banner": {
+    "viewBox": [
+      0,
+      0,
+      1800,
+      600
+    ],
+    "bandWidth": 82,
+    "normalGap": 30,
+    "centerOffsets": [
+      56,
+      -56
+    ],
+    "outlineCornerRadius": 14,
+    "diagonalDegrees": 45
+  },
+  "icon": {
+    "viewBox": [
+      0,
+      0,
+      512,
+      512
+    ],
+    "mainBandWidth": 60,
+    "outlineCornerRadius": 7,
+    "diagonalDegrees": 30
+  },
+  "palette": {
+    "dark": {
+      "bg": "#04353B",
+      "ink": "#F3FAF9",
+      "teal": "#00C4BE",
+      "mint": "#8DE8DC",
+      "sub": "#8DE8DC"
+    },
+    "light": {
+      "bg": "#F3F8F4",
+      "ink": "#04353B",
+      "teal": "#008E8B",
+      "mint": "#38BEAC",
+      "sub": "#44746F"
+    }
+  },
+  "assets": [
+    {
+      "file": "icons/sciloom-icon-dark-16.png",
+      "width": 16,
+      "height": 16
+    },
+    {
+      "file": "icons/sciloom-icon-dark-24.png",
+      "width": 24,
+      "height": 24
+    },
+    {
+      "file": "icons/sciloom-icon-dark-32.png",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "file": "icons/sciloom-icon-dark-48.png",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "file": "icons/sciloom-icon-dark-64.png",
+      "width": 64,
+      "height": 64
+    },
+    {
+      "file": "icons/sciloom-icon-dark-128.png",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "file": "icons/sciloom-icon-dark-180.png",
+      "width": 180,
+      "height": 180
+    },
+    {
+      "file": "icons/sciloom-icon-dark-192.png",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "file": "icons/sciloom-icon-dark-256.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "file": "icons/sciloom-icon-dark-512.png",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "file": "icons/sciloom-icon-dark-1024.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "icons/sciloom-mark-dark-128.png",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "file": "icons/sciloom-mark-dark-256.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "file": "icons/sciloom-mark-dark-512.png",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "file": "icons/sciloom-mark-dark-1024.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "banners/sciloom-banner-dark-1800x600.png",
+      "width": 1800,
+      "height": 600
+    },
+    {
+      "file": "banners/sciloom-banner-dark-1500x500.png",
+      "width": 1500,
+      "height": 500
+    },
+    {
+      "file": "banners/sciloom-banner-dark-1200x400.png",
+      "width": 1200,
+      "height": 400
+    },
+    {
+      "file": "banners/sciloom-banner-dark-900x300.png",
+      "width": 900,
+      "height": 300
+    },
+    {
+      "file": "social/sciloom-social-dark-1200x630.png",
+      "width": 1200,
+      "height": 630
+    },
+    {
+      "file": "icons/sciloom-icon-light-16.png",
+      "width": 16,
+      "height": 16
+    },
+    {
+      "file": "icons/sciloom-icon-light-24.png",
+      "width": 24,
+      "height": 24
+    },
+    {
+      "file": "icons/sciloom-icon-light-32.png",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "file": "icons/sciloom-icon-light-48.png",
+      "width": 48,
+      "height": 48
+    },
+    {
+      "file": "icons/sciloom-icon-light-64.png",
+      "width": 64,
+      "height": 64
+    },
+    {
+      "file": "icons/sciloom-icon-light-128.png",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "file": "icons/sciloom-icon-light-180.png",
+      "width": 180,
+      "height": 180
+    },
+    {
+      "file": "icons/sciloom-icon-light-192.png",
+      "width": 192,
+      "height": 192
+    },
+    {
+      "file": "icons/sciloom-icon-light-256.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "file": "icons/sciloom-icon-light-512.png",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "file": "icons/sciloom-icon-light-1024.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "icons/sciloom-mark-light-128.png",
+      "width": 128,
+      "height": 128
+    },
+    {
+      "file": "icons/sciloom-mark-light-256.png",
+      "width": 256,
+      "height": 256
+    },
+    {
+      "file": "icons/sciloom-mark-light-512.png",
+      "width": 512,
+      "height": 512
+    },
+    {
+      "file": "icons/sciloom-mark-light-1024.png",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "file": "banners/sciloom-banner-light-1800x600.png",
+      "width": 1800,
+      "height": 600
+    },
+    {
+      "file": "banners/sciloom-banner-light-1500x500.png",
+      "width": 1500,
+      "height": 500
+    },
+    {
+      "file": "banners/sciloom-banner-light-1200x400.png",
+      "width": 1200,
+      "height": 400
+    },
+    {
+      "file": "banners/sciloom-banner-light-900x300.png",
+      "width": 900,
+      "height": 300
+    },
+    {
+      "file": "social/sciloom-social-light-1200x630.png",
+      "width": 1200,
+      "height": 630
+    }
+  ],
+  "files": [
+    "apple-touch-icon.png",
+    "banners/sciloom-banner-dark-1200x400.png",
+    "banners/sciloom-banner-dark-1500x500.png",
+    "banners/sciloom-banner-dark-1800x600.png",
+    "banners/sciloom-banner-dark-900x300.png",
+    "banners/sciloom-banner-light-1200x400.png",
+    "banners/sciloom-banner-light-1500x500.png",
+    "banners/sciloom-banner-light-1800x600.png",
+    "banners/sciloom-banner-light-900x300.png",
+    "favicon.ico",
+    "favicon.svg",
+    "icons/favicon-dark.ico",
+    "icons/favicon-light.ico",
+    "icons/sciloom-icon-dark-1024.png",
+    "icons/sciloom-icon-dark-128.png",
+    "icons/sciloom-icon-dark-16.png",
+    "icons/sciloom-icon-dark-180.png",
+    "icons/sciloom-icon-dark-192.png",
+    "icons/sciloom-icon-dark-24.png",
+    "icons/sciloom-icon-dark-256.png",
+    "icons/sciloom-icon-dark-32.png",
+    "icons/sciloom-icon-dark-48.png",
+    "icons/sciloom-icon-dark-512.png",
+    "icons/sciloom-icon-dark-64.png",
+    "icons/sciloom-icon-light-1024.png",
+    "icons/sciloom-icon-light-128.png",
+    "icons/sciloom-icon-light-16.png",
+    "icons/sciloom-icon-light-180.png",
+    "icons/sciloom-icon-light-192.png",
+    "icons/sciloom-icon-light-24.png",
+    "icons/sciloom-icon-light-256.png",
+    "icons/sciloom-icon-light-32.png",
+    "icons/sciloom-icon-light-48.png",
+    "icons/sciloom-icon-light-512.png",
+    "icons/sciloom-icon-light-64.png",
+    "icons/sciloom-mark-dark-1024.png",
+    "icons/sciloom-mark-dark-128.png",
+    "icons/sciloom-mark-dark-256.png",
+    "icons/sciloom-mark-dark-512.png",
+    "icons/sciloom-mark-light-1024.png",
+    "icons/sciloom-mark-light-128.png",
+    "icons/sciloom-mark-light-256.png",
+    "icons/sciloom-mark-light-512.png",
+    "motion/sciloom-banner-dark-animated.svg",
+    "motion/sciloom-banner-light-animated.svg",
+    "site.webmanifest",
+    "social/sciloom-social-dark-1200x630.png",
+    "social/sciloom-social-light-1200x630.png",
+    "svg/sciloom-banner-dark.svg",
+    "svg/sciloom-banner-light.svg",
+    "svg/sciloom-icon-dark.svg",
+    "svg/sciloom-icon-light.svg",
+    "svg/sciloom-lockup-dark.svg",
+    "svg/sciloom-lockup-light.svg",
+    "svg/sciloom-lockup-tagline-dark.svg",
+    "svg/sciloom-lockup-tagline-light.svg",
+    "svg/sciloom-mark-dark.svg",
+    "svg/sciloom-mark-light.svg",
+    "svg/sciloom-mark-mono-dark.svg",
+    "svg/sciloom-mark-mono-light.svg",
+    "svg/sciloom-social-dark.svg",
+    "svg/sciloom-social-light.svg"
+  ]
+}

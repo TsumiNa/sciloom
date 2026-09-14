@@ -1,0 +1,16 @@
+.sciloom-banner {
+  margin: 1rem 0 1.5rem;
+}
+
+.sciloom-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.4rem;
+}
+
+body[data-md-color-scheme="default"] img.sciloom-brand-dark,
+body[data-md-color-scheme="slate"] img.sciloom-brand-light {
+  /* Override the mobile drawer's more specific image display rule as well. */
+  display: none !important;
+}

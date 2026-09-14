@@ -1,0 +1,88 @@
+{
+  "device_types": [],
+  "entry_function_id": "edit",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "Assignment",
+          "node_id": "copy",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "copy-out",
+            "source": null,
+            "symbol_id": "result"
+          },
+          "value": {
+            "kind": "Reference",
+            "node_id": "copy-in",
+            "source": null,
+            "symbol_id": "values"
+          }
+        },
+        {
+          "index": {
+            "kind": "Literal",
+            "node_id": "index",
+            "source": null,
+            "type": "integer",
+            "value": 0
+          },
+          "kind": "ListSet",
+          "node_id": "set",
+          "op": null,
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "set-out",
+            "source": null,
+            "symbol_id": "result"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "value",
+            "source": null,
+            "type": "real",
+            "value": 9.0
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "EditCopy",
+      "node_id": "edit",
+      "source": null,
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "values",
+          "node_id": "values",
+          "owner_id": "edit",
+          "role": "input",
+          "source": null,
+          "type": {
+            "element_type": "real",
+            "kind": "ListType"
+          }
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "result",
+          "node_id": "result",
+          "owner_id": "edit",
+          "role": "output",
+          "source": null,
+          "type": {
+            "element_type": "real",
+            "kind": "ListType"
+          }
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": []
+}
