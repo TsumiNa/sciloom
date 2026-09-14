@@ -45,30 +45,26 @@ one-sentence reason as the last section of the plan file (**Version**) and as a
 `Version:` line at the end of the PR description. Earlier plan files keep their
 recorded sections; add a **Version** section only when such a plan is next updated.
 
-Choose exactly one outcome:
+Choose exactly one outcome. Judge it by what the change does to code that ships
+in a distribution (`src/`, `packages/*/src/`) and to the interfaces documented on
+the public site. Whether any version has been tagged or released is not a
+criterion; "nothing is released yet" is never a reason to skip a bump.
 
 - **MAJOR** — requires explicit human approval. Propose the bump with its reason
   (for example a breaking change to the public author API, the semantic IR or JSON
   contract, or serialization output) and wait for the answer before committing it.
   Never bump MAJOR on your own judgment.
-- **MINOR or PATCH** — decide yourself from the extent of the code change: MINOR
-  for new capability or a noticeable behavior change, PATCH for fixes and contained
-  changes.
-- **No bump** — when the change is too small to justify even a PATCH bump (for
-  example a typo, comment, instruction or documentation-only change), leave
-  `[project].version` unchanged and identify the resulting state as
-  `MAJOR.MINOR.PATCH+<short commit id>`, where the short commit id is the
-  squash-merge commit on the default branch (for example `0.1.0+7e46bb1`). Before
-  the merge, write `0.1.0+<merge commit>`; fill in the id once the merge is confirmed.
+- **MINOR or PATCH** — decide yourself from the extent of the change to shipped
+  code: MINOR for new capability, a new distribution or import path, or a change
+  an author or contributor would notice; PATCH for fixes and contained changes.
+- **None** — the change does not touch shipped code: documentation, instructions,
+  plans, tests, tooling, reference data, comments. Leave `[project].version`
+  unchanged and record `none` with the reason.
 
-The `+<short commit id>` suffix is SemVer 2.0.0 build metadata (a PEP 440 local
-version): it does not change precedence, so the state still counts as
-`MAJOR.MINOR.PATCH`. Never use a `-` suffix; SemVer reads that as a pre-release
-with lower precedence, and uv rejects it. Keep the suffix a record identifier: do
-not write it into `[project].version`, because the merge commit id exists only
-after the merge and release tags must equal the plain `[project].version`. A bump
-alone does not create a release either; release tags follow
-`website/docs/developer/publication.md`.
+Write the decision as `Version: MINOR 0.1.0 → 0.2.0, <reason>` or
+`Version: none, <reason>`. A bump alone does not create a release; release tags
+follow `website/docs/developer/publication.md` and must equal the plain
+`[project].version`, so never write a `-` or `+` suffix into it.
 
 ## Splitting a Complex Refactor
 
@@ -143,7 +139,7 @@ Before the gate may advance:
 3. Inspect every review surface: submitted reviews, inline review threads, and general PR comments.
 4. Address every actionable comment with a code or documentation change and regression coverage where appropriate. If a suggestion should not be implemented, reply with a concrete technical reason instead of silently ignoring it.
 5. Push the follow-up commits, wait for the checks on the latest head commit, reply to each handled thread, and resolve it. Recheck that no new or unresolved review thread remains. If the fixes changed the PR's extent, re-evaluate the version decision (see [Version bump](#version-bump)) before merging.
-6. Squash-merge the PR. Confirm the remote PR state is `MERGED` and record the resulting merge commit; a local worktree warning is not evidence that the remote merge failed. For a PR without a bump, this merge commit's short id completes the `MAJOR.MINOR.PATCH+<short commit id>` identifier.
+6. Squash-merge the PR. Confirm the remote PR state is `MERGED`; a local worktree warning is not evidence that the remote merge failed. Nothing is written back after the merge.
 7. Fetch the merged default branch, then create the next PR's branch or worktree from that updated default branch. Never base the next stage on the unmerged predecessor branch.
 
 Keep every later plan item pending until the preceding PR has passed this complete gate. If review requests changes or the latest checks fail, remain on the current PR and fix it; do not advance the sequence. A separately submitted refactor-plan PR is subject to the same gate before PR1 starts.
@@ -164,4 +160,4 @@ Keep every later plan item pending until the preceding PR has passed this comple
 - Advancing from a local branch state without confirming the remote squash merge and updating from the default branch.
 - Bumping MAJOR without explicit human approval, or bumping PATCH for a change that does not justify it.
 - Finishing a PR or plan file without a recorded version decision.
-- Writing the `+<short commit id>` form into `[project].version` or tagging it as a release, or spelling it with a `-` suffix, which SemVer reads as a pre-release.
+- Skipping a bump for a change to shipped code because no version has been tagged yet.
