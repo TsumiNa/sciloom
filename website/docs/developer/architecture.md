@@ -52,11 +52,12 @@ adding the properties and operations their instrument needs, the way
 family and never modify `BaseDevice` or the family itself; a capability the
 family lacks belongs in a subclass, as [Add a device](add-a-device.md) shows. The
 target side is the concrete profile that a target binds to each slot at compile
-time. The IR expresses property writes as `ConfigureProperty` and every operation that
-has no dedicated node as `DeviceCommand`, each carrying the semantic id from the
-author's class (today only agitation start/stop have dedicated nodes), and the
-compiler decides only whether the current IR compiles for the selected target;
-neither layer knows nor special-cases any author subclass.
+time. The IR expresses property writes as `ConfigureProperty` and every
+operation that has no dedicated node as `DeviceCommand`, each carrying the
+semantic id from the author's class (today only agitation start/stop have
+dedicated nodes), and the compiler decides only whether the current IR compiles
+for the selected target; neither layer knows nor special-cases any author
+subclass.
 
 Within the analysis, shared state, source discovery, expression conversion and
 statement conversion have separate responsibilities, and every statement recursion
