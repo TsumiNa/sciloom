@@ -35,6 +35,13 @@ nav:
       - Getting started: introduction/getting-started.md
       - Current capabilities: introduction/status.md
   - User Guide:
+      - Tutorial:
+          - Stir a rack of samples: user-guide/tutorial/index.md
+          - 1. Your first Function: user-guide/tutorial/first-function.md
+          - 2. Inputs, outputs and speeds: user-guide/tutorial/inputs-and-units.md
+          - 3. Lists and loops: user-guide/tutorial/lists-and-loops.md
+          - 4. Stirring with an Agitator: user-guide/tutorial/agitator.md
+          - 5. Bind and compile: user-guide/tutorial/compile.md
       - Functions and fields: user-guide/functions.md
       - Values, units and lists: user-guide/values.md
       - Runtime control flow: user-guide/control-flow.md

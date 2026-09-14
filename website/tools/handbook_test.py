@@ -14,7 +14,18 @@ from website.tools import tutorials
 ROOT = Path(__file__).resolve().parents[2]
 
 # Cumulative tutorial series; see website/docs/developer/documentation.md.
-SERIES: dict[str, tutorials.Series] = {}
+SERIES: dict[str, tutorials.Series] = {
+    "user-guide/tutorial": tutorials.Series(
+        pages=(
+            "user-guide/tutorial/first-function",
+            "user-guide/tutorial/inputs-and-units",
+            "user-guide/tutorial/lists-and-loops",
+            "user-guide/tutorial/agitator",
+            "user-guide/tutorial/compile",
+        ),
+        complete="examples/stir_rack.py",
+    ),
+}
 
 
 @pytest.mark.parametrize(
@@ -104,6 +115,7 @@ class Text(HTMLParser):
         ("examples/scale-values", "scale_values"),
         ("examples/non-zero-array-min", "non_zero_array_min"),
         ("examples/stir-rack", "stir_rack"),
+        ("user-guide/tutorial/compile", "stir_rack"),
         ("examples/agitation-ir", "developer/agitation_ir"),
         ("examples/list-ir", "developer/list_ir"),
         ("examples/demo-device", "developer/demo_device"),
