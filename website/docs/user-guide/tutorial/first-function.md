@@ -75,6 +75,6 @@ $.schema.stirs: Runtime fields cannot be read by host Python. [runtime_field_rea
 ```
 
 Every SciLoom error reads this way: a path into the program, a message, and a
-code in brackets.
+code in brackets. [Troubleshooting](../troubleshooting.md) lists the codes.
 
 Next: [2. Inputs, outputs and speeds](inputs-and-units.md).

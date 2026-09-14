@@ -44,6 +44,7 @@ def run_series_script(script, source, tmp_path):
         "user-guide/advanced/specialization",
         "user-guide/advanced/device-branches",
         "user-guide/advanced/autosuite",
+        "user-guide/troubleshooting",
         "developer/ir",
         "developer/compiler",
         "developer/interpreter",
