@@ -10,8 +10,9 @@ uv run python examples/function_call.py
 
 The source separates host specialization from execution: changing Caller(value=...) before compilation changes the embedded input. A child call binds a typed input and copies its output back on normal return. The ASFP contains both procedures; compiling the file does not execute either procedure.
 
-The module docstring below records expected terminal output. Compilation and
-reference execution do not operate hardware or replace AutoSuite Executor checks.
+The module docstring below records expected terminal output.
+
+--8<-- "website/snippets/hardware-boundary.md"
 
 ## Source and generated files
 

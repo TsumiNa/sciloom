@@ -15,5 +15,12 @@ the extension boundary. A reference interpreter defines SciLoom execution
 behavior; it does not simulate laboratory hardware.
 
 GUI/server, public Application/global APIs, measured property reads, Notebook and
-interactive source support remain future work. XML checks and reference execution
-do not establish acceptance by AutoSuite Executor or real equipment.
+interactive source support remain future work.
+
+## What compilation establishes
+
+Compilation and XML/reference checks validate the generated structure and mapped
+semantics. They are separate from AutoSuite Executor simulation and hardware
+acceptance. Array guard behavior, device mappings and platform fault/recovery
+details still require real-platform validation; reference execution cannot prove
+vendor numeric or physical equivalence.

@@ -10,8 +10,9 @@ uv run python examples/non_zero_array_min.py
 
 This is a dimensionless adaptation of the retained Non Zero Array Min procedure from config20260909_polymerization.app. It removes the original volume unit while retaining the numerical threshold and sentinel. Values at or below the threshold are ignored; values above the sentinel do not replace it. Nested if statements preserve the intended conditional evaluation on AutoSuite without using unverified and/or lowering.
 
-The module docstring below records expected terminal output. Compilation and
-reference execution do not operate hardware or replace AutoSuite Executor checks.
+The module docstring below records expected terminal output.
+
+--8<-- "website/snippets/hardware-boundary.md"
 
 ## Source and generated files
 

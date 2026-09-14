@@ -37,11 +37,10 @@ change the experiment's public input/output signature.
 
 ## What validation establishes
 
-Compilation and XML/reference checks validate the generated structure and mapped
-semantics. They are separate from AutoSuite Executor simulation and hardware
-acceptance. Array guard behavior, device mappings and platform fault/recovery
-details still require real-platform validation; reference execution cannot prove
-vendor numeric or physical equivalence.
+--8<-- "website/snippets/hardware-boundary.md"
+
+[Current capabilities](../introduction/status.md#what-compilation-establishes)
+states what still requires validation on the platform.
 
 Developers can inspect the authored and selected IR using the
 [compiler contract](../developer/compiler.md).

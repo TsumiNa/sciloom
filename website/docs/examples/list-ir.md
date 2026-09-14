@@ -10,8 +10,9 @@ uv run python -m examples.developer.list_ir
 
 The read-only result exposes (9.0, 2.0); the caller's input remains [1.0, 2.0]. ListType describes the element type, Assignment copies the whole value and ListSet retains indexed-write intent. Every node occurrence has its own ID, while references share the destination symbol's ID. The example emits JSON, not equipment commands.
 
-The module docstring below records expected terminal output. Compilation and
-reference execution do not operate hardware or replace AutoSuite Executor checks.
+The module docstring below records expected terminal output.
+
+--8<-- "website/snippets/hardware-boundary.md"
 
 ## Source and generated files
 
