@@ -5,8 +5,8 @@ programs. Independent packages use the same public interfaces as the shipped
 `sciloom-autosuite` member; no plugin registry or namespace installation is required.
 
 This page is the reference. For worked walkthroughs, start with
-[add a device](add-a-device.md), then [add a target](add-a-target.md) and
-[reject a program](reject-a-program.md).
+[add a device](../add-a-device.md), then [add a target](../add-a-target.md) and
+[reject a program](../reject-a-program.md).
 
 ## A minimal target
 
@@ -75,7 +75,7 @@ property or calling a runtime method from host Python, and bind_device's own
 checks, which reject a profile that omits a capability list or names a member it
 never declared.
 
-The [independent contribution example](../examples/demo-device.md) includes the
+The [independent contribution example](../../examples/demo-device.md) includes the
 full DemoAgitator and DemoTarget implementation. It adds gain and a native calibrate
 command without changing core. `bind_device` and `device_contract` from
 sciloom.devices.declarations convert Python declarations to trusted data contracts.

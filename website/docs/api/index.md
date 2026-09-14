@@ -12,6 +12,6 @@ searching a symbol such as `ConfigureProperty` links directly to its definition.
 | Reference execution and errors | [Interpreter](interpreter.md), [diagnostics](diagnostics.md) |
 
 The [user guide](../user-guide/index.md) explains how to write experiments.
-The [developer guide](../developer/architecture.md) explains how these interfaces
+The [developer guide](../developer/index.md) explains how these interfaces
 fit together. Private helpers, tests and internal XML generation are not part of
 this catalogue.

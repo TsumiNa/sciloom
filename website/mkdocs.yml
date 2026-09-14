@@ -56,18 +56,22 @@ nav:
           - Runtime language: user-guide/reference/runtime-language.md
           - Devices and targets: user-guide/reference/devices-and-targets.md
   - Developer Guide:
-      - Architecture: developer/architecture.md
-      - 'Tutorial: add a device': developer/add-a-device.md
-      - 'Tutorial: add a target': developer/add-a-target.md
-      - 'Tutorial: reject a program': developer/reject-a-program.md
-      - Semantic IR and JSON: developer/ir.md
-      - Compiler and specialization: developer/compiler.md
-      - Reference execution: developer/interpreter.md
-      - Device and target contributions: developer/contributions.md
-      - Typing and tests: developer/typing-and-tests.md
-      - Building documentation: developer/documentation.md
-      - Versioned publication: developer/publication.md
-      - Brand assets: developer/brand.md
+      - Overview: developer/index.md
+      - Tutorial:
+          - Add a device: developer/add-a-device.md
+          - Add a target: developer/add-a-target.md
+          - Reject a program: developer/reject-a-program.md
+      - Reference:
+          - Architecture and ownership: developer/reference/architecture.md
+          - Semantic IR and JSON v4: developer/reference/ir.md
+          - Compiler and specialization: developer/reference/pipeline.md
+          - Reference execution: developer/reference/interpreter.md
+          - Contributing a device or target: developer/reference/target-contract.md
+      - Project:
+          - Typing and tests: developer/typing-and-tests.md
+          - Building documentation: developer/documentation.md
+          - Versioned publication: developer/publication.md
+          - Brand assets: developer/brand.md
   - Examples:
       - Overview: examples/index.md
       - Function calls: examples/function-call.md

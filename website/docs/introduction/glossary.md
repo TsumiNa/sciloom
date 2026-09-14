@@ -74,9 +74,9 @@ compilation does not replace. [What compilation establishes](status.md#what-comp
 
 **Reference execution.** Running a program with SciLoom's own interpreter to
 define its semantics; a developer tool that proves nothing about equipment.
-[Reference execution](../developer/interpreter.md).
+[Reference execution](../developer/reference/interpreter.md).
 
 ## Contributor terms
 
 Defined when the Developer Guide is restructured; until then, see
-[contributing a device or target](../developer/contributions.md).
+[contributing a device or target](../developer/reference/target-contract.md).

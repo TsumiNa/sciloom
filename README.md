@@ -71,7 +71,7 @@ organization and provenance.
 ## For SciLoom developers
 
 - [Architecture and design](docs/INDEX.md)
-- [Developer handbook](website/docs/developer/architecture.md)
+- [Developer handbook](website/docs/developer/index.md)
 - [IR persistence and reference execution example](examples/developer/agitation_ir.py)
 - [Proposed Python examples](examples/proposed_frontend/) — illustrative, not runnable yet.
 - [Contributor and agent guidelines](AGENTS.md)

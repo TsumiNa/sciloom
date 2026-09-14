@@ -1,7 +1,7 @@
 # Semantic IR and JSON v4
 
 Use `sciloom.core.ir` to construct or exchange typed programs. The
-[direct-list example](../examples/list-ir.md) builds a complete Program without
+[direct-list example](../../examples/list-ir.md) builds a complete Program without
 the Python DSL. Experiment authors normally use Function instead.
 
 Program selects an entry FunctionIR and contains referenced functions, resources
@@ -51,4 +51,4 @@ SourceSpan records one-based lines and zero-based UTF-8 byte columns. Source IDs
 and spans survive round trips. Lowering records the absolute path of the defining
 file, so paths identify the generating checkout; the developer examples rewrite
 them relative to the repository root before writing their companion files. JSON is declarative data: implementation IDs never
-cause dynamic Python imports. See [binding and specialization](compiler.md).
+cause dynamic Python imports. See [binding and specialization](pipeline.md).

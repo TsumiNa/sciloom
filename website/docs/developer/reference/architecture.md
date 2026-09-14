@@ -50,7 +50,7 @@ generic family such as `Agitator`, and an author's own subclass of that family
 adding the properties and operations their instrument needs, the way
 `DemoAgitator` adds `gain` and `calibrate`. Authors extend by subclassing the
 family and never modify `BaseDevice` or the family itself; a capability the
-family lacks belongs in a subclass, as [Add a device](add-a-device.md) shows. The
+family lacks belongs in a subclass, as [Add a device](../add-a-device.md) shows. The
 target side is the concrete profile that a target binds to each slot at compile
 time. The IR expresses property writes as `ConfigureProperty` and every
 operation that has no dedicated node as `DeviceCommand`, each carrying the

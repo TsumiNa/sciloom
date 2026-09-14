@@ -1,6 +1,6 @@
 # Compiler and specialization
 
-[Compiler guide](../developer/compiler.md) describes ordering and target responsibilities.
+[Compiler guide](../developer/reference/pipeline.md) describes ordering and target responsibilities.
 
 ::: sciloom.core.compiler.Target
 

@@ -1,7 +1,7 @@
 # Instance specialization and compile API
 
 Historical design context. The current [host-time specialization page](../website/docs/user-guide/advanced/specialization.md)
-and [compiler interface](../website/docs/developer/compiler.md) are maintained in the handbook.
+and [compiler interface](../website/docs/developer/reference/pipeline.md) are maintained in the handbook.
 Application and broader task examples below remain proposals.
 
 **Status:** accepted pre-refactor architecture decision, 2026-09-10.
