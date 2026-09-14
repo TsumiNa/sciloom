@@ -10,6 +10,9 @@
         <loc>https://tsumina.github.io/sciloom/dev/introduction/status/</loc>
       </url>
       <url>
+        <loc>https://tsumina.github.io/sciloom/dev/introduction/glossary/</loc>
+      </url>
+      <url>
         <loc>https://tsumina.github.io/sciloom/dev/user-guide/</loc>
       </url>
       <url>
@@ -41,6 +44,12 @@
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/user-guide/advanced/autosuite/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/user-guide/faq/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/user-guide/troubleshooting/</loc>
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/user-guide/reference/declarations/</loc>
