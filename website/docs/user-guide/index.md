@@ -13,11 +13,15 @@ the documentation tests execute: [composition and shared devices](advanced/compo
 [device-dependent branches](advanced/device-branches.md) and the
 [AutoSuite rules](advanced/autosuite.md).
 
+**[FAQ](faq.md) and [Troubleshooting](troubleshooting.md).** Short answers to
+the questions authors ask, and every diagnostic code with its cause and fix.
+
 **Reference.** The rules as tables, each row linking to the page that explains
 it: [declarations](reference/declarations.md), the
 [runtime language](reference/runtime-language.md) and
 [devices and targets](reference/devices-and-targets.md).
 
-The [example walkthroughs](../examples/index.md) show complete source files with
+The [glossary](../introduction/glossary.md) defines the terms used across the site. The
+[example walkthroughs](../examples/index.md) show complete source files with
 their generated packages, and the [API reference](../api/index.md) documents the
 author API extracted from the source.

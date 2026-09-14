@@ -13,14 +13,17 @@ Give authors the three pages they open when something is unclear or fails.
   running without hardware; supported AutoSuite versions; notebooks and REPLs;
   sharing one shaker; one program for two instruments; docstrings; where codes
   are explained.
-- `user-guide/troubleshooting.md`: opens with the "Reading a diagnostic" program
-  from today's compilation page (executed first fence), then tables grouped by
-  when the error fires (class creation, source analysis, type checking, target
-  compilation), each row `Code | Message | Cause | Fix | See`, followed by the
-  host-time `TypeError`/`ValueError` messages. Messages are verbatim from source.
+- `user-guide/troubleshooting.md`: opens with a "Reading a diagnostic" program
+  (executed first fence, output asserted), then tables grouped by when the error
+  fires (class creation, host access to a runtime field, source analysis, type
+  checking, target compilation), each row `Code | Message | Cause | Fix`, the
+  fix carrying the link to the explaining page, followed by the host-time
+  `TypeError`/`ValueError` messages. Messages are verbatim from source.
   Codes that arise only from hand-built IR or reference execution are left to the
   Developer Guide page.
-- `website/docs/glossary.md` with the "Authoring terms" section (Function,
+- `website/docs/introduction/glossary.md` (the publication check allows only the
+  existing directories at the site root, so the glossary lives under
+  Introduction, where its nav entry is) with the "Authoring terms" section (Function,
   runtime method, host time, Input/Output/Var, host configuration, child Function,
   logical device and slot, profile, binding, target, artifact, compile-time query,
   specialization, definite configuration, diagnostic, rotational speed, whole-list

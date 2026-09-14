@@ -29,7 +29,7 @@ the contributor half of the glossary.
 - `troubleshooting.md`: `TypeError` at host time, `ValueError` from bindings,
   `IRValidationError`, `CompilationError`, `ExecutionError`; one row per code
   with message fragment, what it proves, fix.
-- `website/docs/glossary.md`: the "Contributor terms" section (family, profile,
+- `website/docs/introduction/glossary.md`: the "Contributor terms" section (family, profile,
   slot, contract, binding, target, artifact, authored versus selected program,
   specialization, definite configuration, semantic id, diagnostic, native
   command, reference execution).

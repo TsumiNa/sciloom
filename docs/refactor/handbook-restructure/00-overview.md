@@ -131,7 +131,7 @@ their paths in a **Project** group.
 
 ### Shared
 
-- `website/docs/glossary.md` under Introduction, with "Authoring terms" and
+- `website/docs/introduction/glossary.md`, with "Authoring terms" and
   "Contributor terms"; both guide overviews link to it.
 - `website/snippets/hardware-boundary.md`: one admonition without links, included
   where the boundary must be visible. The directory is outside `website/docs/` so
