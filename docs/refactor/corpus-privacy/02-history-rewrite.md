@@ -43,9 +43,10 @@ autosuite/schema/type_templates  autosuite/schema/golden_diffs
 The corpus entered in the initial commit and was never modified again apart from
 `MANIFEST.csv`. Exactly one commit became empty and was pruned:
 `chore: refresh the corpus manifest after the tool reformat (#57)`, which touched
-that file alone. Every other commit kept its message, author, date and content:
-the tree hash at `main` is unchanged, because the migration had already removed
-those paths from the current tree.
+that file alone. Every other commit kept its message, author, date and all of its
+non-corpus content; the corpus paths were removed from each of their trees, which
+is the point. The tree at `main` is byte-identical because the migration had
+already removed those paths from the current tree.
 
 Five `.asfp` files remain in history and are correct: `examples/*.asfp` and
 `examples/developer/portable_agitation.autosuite.asfp` are SciLoom's own compiler
@@ -56,15 +57,37 @@ Every commit SHA changed. `main` went from `54bd4de` to `b231075`.
 
 ## What remains
 
-1. **Delete the 35 stale remote branches.** Every one belongs to a merged pull
-   request, and each still holds the pre-rewrite history, so the corpus is still
-   reachable on the remote and in any clone that fetches them.
+1. **Delete the 34 stale remote branches listed below.** Every one belongs to a
+   merged pull request, and each still holds the pre-rewrite history, so the
+   corpus stays reachable on the remote and in any clone that fetches them.
+
+   Delete these names explicitly. Do not derive the list with a filter such as
+   "every branch except `main` and `gh-pages`": that would also delete any branch
+   opened after this list was taken.
 
    ```bash
-   for b in $(git ls-remote --heads origin | awk '{print $2}' | sed 's|refs/heads/||' \
-       | grep -vE '^(main|gh-pages)$'); do git push origin --delete "$b"; done
+   git push origin --delete \
+     codex/sciloom-brand-integration docs/api-reference \
+     docs/device-abstraction-contract docs/documentation-site-plan \
+     docs/package-layout-contract docs/reader-handbooks \
+     docs/reference-api-compat-rules docs/sciloom-repository-url \
+     docs/site-foundation docs/typeid-suffix-assumption \
+     docs/versioned-publication feat/agitation-domain-semantics \
+     feat/asfp-compiler feat/autosuite-agitation-backend feat/autosuite-arrays \
+     feat/declarative-device-bindings feat/device-configuration-lifecycle \
+     feat/device-specialization feat/independent-device-contribution \
+     feat/ir-reference-execution feat/list-ir-semantics \
+     feat/native-runtime-declarations feat/python-frontend \
+     feat/python-list-lowering feat/semantic-ir-json fix/mypy-test-annotations \
+     refactor/autosuite-codegen refactor/compiler-module-boundaries \
+     refactor/compiler-responsibilities refactor/core-layout \
+     refactor/device-module refactor/dsl-contrib-layout \
+     refactor/explicit-compilation-targets refactor/standalone-website
    git remote prune origin && git reflog expire --expire=now --all && git gc --prune=now
    ```
+
+   Confirm each name still belongs to a merged pull request before running this,
+   in case one was reused since.
 
 2. **Reconcile `gh-pages`.** `website/tools/publication.py` refuses with
    `Refusing stale or divergent dev history`, exactly as designed, because the
