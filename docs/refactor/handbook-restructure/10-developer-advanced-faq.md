@@ -44,7 +44,8 @@ No change to the tutorial's code. No `api/` change.
 
 - Every code in `troubleshooting.md` exists in `src/` or `packages/`.
 - No fact from the [ownership table](00-overview.md#ownership) is stated on two
-  pages (checked by grepping each owner's key phrase).
+  pages, except the two short/long and teaching/table pairs the table names
+  (checked by grepping each owner's key phrase).
 - `uv run --group docs pytest website/tools`; `uv run --group docs python website/tools/site.py build --strict`.
 - `git diff --check`.
 

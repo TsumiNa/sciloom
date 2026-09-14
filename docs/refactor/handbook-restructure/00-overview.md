@@ -54,8 +54,8 @@ Alternatives rejected:
   fences, with a companion to regenerate on every edit; the series test already
   executes it.
 
-Consequences: eleven pull requests, all documentation and test tooling, none
-touching shipped code. Two test-tooling additions (`website/tools/tutorials.py`
+Consequences: ten pull requests after this plan, all documentation and test
+tooling, none touching shipped code. Two test-tooling additions (`website/tools/tutorials.py`
 and its test) and one shared snippet directory `website/snippets/`. The reader
 handbooks stage of the documentation-site plan is superseded by this plan for the
 two guides; the examples, API and publication stages are untouched.
@@ -140,6 +140,11 @@ their paths in a **Project** group.
 - Tutorial slugs carry no numbers; navigation titles do.
 
 ## Ownership
+
+Each fact below is stated on its owner page; every other page links there. Two
+rows name two owners on purpose: the hardware boundary has a short form (the
+shared snippet) and a long form, and the agitator lifecycle has a teaching
+form and a table form. Those pairs are the only allowed duplicates.
 
 | Fact | Owner |
 |---|---|

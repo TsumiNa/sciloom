@@ -30,8 +30,8 @@ in PR 8). `brand.md`, `publication.md`, `documentation.md` and
 
 ## Acceptance
 
-- `grep -rn "developer/\(architecture\|ir\|interpreter\|compiler\|contributions\)\.md" README.md docs website .github`
-  returns nothing (`developer/reference/...` excluded).
+- `grep -rn --exclude-dir=refactor --exclude-dir=.build "developer/\(architecture\|ir\|interpreter\|compiler\|contributions\)\.md" README.md docs website .github`
+  returns nothing; `docs/refactor/` keeps the old paths as history.
 - `uv run --group docs pytest website/tools`; `uv run --group docs python website/tools/site.py build --strict`.
 - `git diff --check`; `git diff -M --stat` shows the five files as renames.
 

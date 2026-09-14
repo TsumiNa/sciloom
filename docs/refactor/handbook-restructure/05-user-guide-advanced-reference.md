@@ -47,8 +47,8 @@ No FAQ, Troubleshooting or Glossary. No Developer Guide change.
 
 ## Acceptance
 
-- `grep -rn "user-guide/\(functions\|values\|control-flow\|composition\|devices\|compilation\)" README.md docs website .github`
-  returns nothing.
+- `grep -rn --exclude-dir=refactor --exclude-dir=.build "user-guide/\(functions\|values\|control-flow\|composition\|devices\|compilation\)" README.md docs website .github`
+  returns nothing; `docs/refactor/` keeps the old paths as history.
 - `uv run --group docs pytest website/tools`: the four Advanced programs execute.
 - `uv run --group docs python website/tools/site.py build --strict`.
 - `git diff --check`.
