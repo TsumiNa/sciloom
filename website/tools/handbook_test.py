@@ -28,11 +28,22 @@ SERIES: dict[str, tutorials.Series] = {
 }
 
 
+def run_series_script(script, source, tmp_path):
+    script.write_text(source)
+    env = {**os.environ, "PYTHONPATH": str(ROOT)}
+    completed = subprocess.run(
+        [sys.executable, str(script)], cwd=tmp_path, env=env, check=True, capture_output=True, text=True
+    )
+    return completed.stdout
+
+
 @pytest.mark.parametrize(
     "page",
     (
-        "user-guide/values",
-        "user-guide/compilation",
+        "user-guide/advanced/composition",
+        "user-guide/advanced/specialization",
+        "user-guide/advanced/device-branches",
+        "user-guide/advanced/autosuite",
         "developer/ir",
         "developer/compiler",
         "developer/interpreter",
@@ -40,12 +51,12 @@ SERIES: dict[str, tutorials.Series] = {
     ),
 )
 def test_complete_handbook_snippet(page, tmp_path):
+    """A page's first program runs; a text fence right after it states its stdout."""
     markdown = (ROOT / f"website/docs/{page}.md").read_text()
-    source = re.findall(r"```python\n(.*?)\n```", markdown, re.DOTALL)[0]
-    example = tmp_path / "handbook_example.py"
-    example.write_text(source)
-    env = {**os.environ, "PYTHONPATH": str(ROOT)}
-    subprocess.run([sys.executable, str(example)], cwd=tmp_path, env=env, check=True)
+    program = re.search(r"```python\n(.*?)\n```(?:\n```text\n(.*?)\n```)?", markdown, re.DOTALL)
+    stdout = run_series_script(tmp_path / "handbook_example.py", program.group(1), tmp_path)
+    if program.group(2) is not None:
+        assert stdout.rstrip("\n") == program.group(2)
 
 
 @pytest.mark.parametrize(
@@ -60,15 +71,6 @@ def test_complete_tutorial_snippet(page, tmp_path):
     example.write_text(source)
     env = {**os.environ, "PYTHONPATH": str(ROOT)}
     subprocess.run([sys.executable, str(example)], cwd=tmp_path, env=env, check=True)
-
-
-def run_series_script(script, source, tmp_path):
-    script.write_text(source)
-    env = {**os.environ, "PYTHONPATH": str(ROOT)}
-    completed = subprocess.run(
-        [sys.executable, str(script)], cwd=tmp_path, env=env, check=True, capture_output=True, text=True
-    )
-    return completed.stdout
 
 
 @pytest.mark.parametrize(

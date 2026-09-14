@@ -79,6 +79,10 @@ complete program (otherwise the last `python` fence of the last page). The tests
 run every checkpoint and prove that the steps, joined, are that complete program:
 a module docstring and the import layout may differ, the statements may not.
 
+Pages outside a series that open with a complete program are listed in the same
+file; the first `python` fence runs, and a `text` fence placed directly after it
+states the stdout the test compares.
+
 Local pages show `local` or `local-dirty` and the source SHA. PR artifacts identify
 the PR head commit. [Versioned publication](publication.md) explains checked
 development builds, release snapshots and deployment recovery.

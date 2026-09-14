@@ -37,5 +37,5 @@ an instance with an explicit target. Host Python constructs and specializes the
 instance before compilation.
 
 Continue with [1. Your first Function](../user-guide/tutorial/first-function.md).
-The rest of the [User Guide](../user-guide/functions.md) states the rules the
+The rest of the [User Guide](../user-guide/index.md) states the rules the
 tutorial applies.

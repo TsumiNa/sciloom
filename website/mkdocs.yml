@@ -35,6 +35,7 @@ nav:
       - Getting started: introduction/getting-started.md
       - Current capabilities: introduction/status.md
   - User Guide:
+      - Overview: user-guide/index.md
       - Tutorial:
           - Stir a rack of samples: user-guide/tutorial/index.md
           - 1. Your first Function: user-guide/tutorial/first-function.md
@@ -42,12 +43,15 @@ nav:
           - 3. Lists and loops: user-guide/tutorial/lists-and-loops.md
           - 4. Stirring with an Agitator: user-guide/tutorial/agitator.md
           - 5. Bind and compile: user-guide/tutorial/compile.md
-      - Functions and fields: user-guide/functions.md
-      - Values, units and lists: user-guide/values.md
-      - Runtime control flow: user-guide/control-flow.md
-      - Composition: user-guide/composition.md
-      - Devices: user-guide/devices.md
-      - Compilation: user-guide/compilation.md
+      - Advanced:
+          - Composition and shared devices: user-guide/advanced/composition.md
+          - Host-time specialization: user-guide/advanced/specialization.md
+          - Device-dependent branches: user-guide/advanced/device-branches.md
+          - AutoSuite rules: user-guide/advanced/autosuite.md
+      - Reference:
+          - Declarations: user-guide/reference/declarations.md
+          - Runtime language: user-guide/reference/runtime-language.md
+          - Devices and targets: user-guide/reference/devices-and-targets.md
   - Developer Guide:
       - Architecture: developer/architecture.md
       - 'Tutorial: add a device': developer/add-a-device.md
