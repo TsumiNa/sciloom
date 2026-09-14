@@ -9,6 +9,16 @@ never needs to.
 profiles, a target, the rejections a contributor writes, an adaptive program and
 a reference execution, one step per page, verified on every change.
 
+**Advanced.** [JSON interchange and portability](advanced/json-interchange.md),
+[specialization internals](advanced/specialization.md),
+[native commands](advanced/native-commands.md),
+[extending the analysis](advanced/extending-the-analysis.md) and
+[typing without inheritance](advanced/typing-without-inheritance.md).
+
+**[FAQ](faq.md) and [Troubleshooting](troubleshooting.md).** Short answers to
+the questions contributors ask, and the contributor-facing errors by exception
+type.
+
 **Reference.** [Architecture and ownership](reference/architecture.md), the
 [compilation pipeline](reference/pipeline.md), the
 [Target contract](reference/target-contract.md),

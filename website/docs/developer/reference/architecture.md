@@ -61,18 +61,8 @@ the IR nor the compiler special-cases an author subclass, is stated on
 
 ## Conventions inside the analysis
 
-Within the analysis, shared state, source discovery, expression conversion and
-statement conversion have separate responsibilities, and every statement recursion
-lives in one module. A function that needs lowering state takes the context first,
-named context. A recognizer returns None for a shape it does not own, and once it
-has matched it reports through context.fail rather than returning None, because
-the statement pass reads None as "try the next recognizer"; recognizer order is
-therefore meaningful. Names used only inside their module are underscore-prefixed,
-and the one function-local import in the frontend carries a comment naming the
-cycle it breaks. IR structure checking, expression typing, program validation and
-JSON conversion are distinct. The interpreter separates values, expression
-evaluation and session/device state. AutoSuite code generation retains a thin
-serialization model below semantic IR.
+The recognizer chain and its conventions are described on
+[extending the analysis](../advanced/extending-the-analysis.md).
 
 ## Future editing tools
 

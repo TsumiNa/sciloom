@@ -51,7 +51,9 @@ semantics for every family, so the session runs, reports the output, and shows
 the saved configuration on the resource. The interpreter takes the **selected**
 program: a program with device branches still in it is refused at construction.
 What a session records, and its limits, are on
-[reference execution](../reference/interpreter.md).
+[reference execution](../reference/interpreter.md); why a native command has no
+reference semantics, and how AutoSuite lowers one, is on
+[native commands](../advanced/native-commands.md).
 
 --8<-- "website/snippets/hardware-boundary.md"
 

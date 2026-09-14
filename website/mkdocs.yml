@@ -67,6 +67,14 @@ nav:
           - 6. Adapt with comptime: developer/tutorial/adapt-with-comptime.md
           - 7. Execute what you can: developer/tutorial/execute-what-you-can.md
           - 8. The complete program: developer/tutorial/complete-program.md
+      - Advanced:
+          - JSON interchange and portability: developer/advanced/json-interchange.md
+          - Specialization internals: developer/advanced/specialization.md
+          - Native commands: developer/advanced/native-commands.md
+          - Extending the analysis: developer/advanced/extending-the-analysis.md
+          - Typing without inheritance: developer/advanced/typing-without-inheritance.md
+      - FAQ: developer/faq.md
+      - Troubleshooting: developer/troubleshooting.md
       - Reference:
           - Architecture and ownership: developer/reference/architecture.md
           - Semantic IR and JSON v4: developer/reference/ir.md
