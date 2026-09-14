@@ -1499,6 +1499,39 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#layering" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Layering
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#two-device-abstractions" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Two device abstractions
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conventions-inside-the-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Conventions inside the analysis
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#future-editing-tools" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -1559,7 +1592,61 @@
   <span class="md-ellipsis">
     
   
-  Compiler and specialization
+  Compilation pipeline
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../target-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Target contract
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../device-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Device contracts
 
     
   </span>
@@ -1606,14 +1693,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../target-contract/" class="md-nav__link">
+      <a href="../verification/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Contributing a device or target
+  Verification
 
     
   </span>
@@ -2586,6 +2673,39 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#layering" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Layering
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#two-device-abstractions" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Two device abstractions
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conventions-inside-the-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Conventions inside the analysis
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#future-editing-tools" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2613,7 +2733,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="9f8ba8555dc0b792a9406914380a878f8a540c38">9f8ba855</code>
+    · <code title="f3e21e870a8aa3596d9fd9bb22714fc6ad5594b4">f3e21e87</code>
   </p>
 </aside>
 
@@ -2621,19 +2741,9 @@
 
 <h1 id="architecture-and-ownership">Architecture and ownership</h1>
 <p>The typed semantic Program is the source of execution meaning. Python is the
-authoring DSL; targets own platform-specific validation and serialization.</p>
-<pre class="mermaid"><code>flowchart TD
-    Python["Python Function instance: flow and devices"] --&gt; DSL["DSL source analysis"]
-    DSL --&gt; IR["Semantic IR"]
-    JSON["JSON v4"] &lt;--&gt; IR
-    IR --&gt; Validate["Structure and types"]
-    Validate --&gt; Resolve["Target.resolve_devices"]
-    Resolve --&gt; Specialize["Device specialization"]
-    Specialize --&gt; Config["Capabilities and definite configuration"]
-    Config --&gt; Target["Target.validate and emit"]
-    Target --&gt; Artifact["Platform artifact"]
-    Specialize --&gt; Interpreter["Reference interpreter"]
-    Future["Future Studio / xyflow editor"] &lt;-.-&gt; IR</code></pre>
+authoring DSL; targets own platform-specific validation and serialization. The
+<a href="../pipeline/">compilation pipeline</a> shows how a program moves through the layers
+below.</p>
 <table>
 <thead>
 <tr>
@@ -2692,6 +2802,7 @@ authoring DSL; targets own platform-specific validation and serialization.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="layering">Layering</h2>
 <p><code>flow</code> and <code>devices</code> are the two vocabularies an author writes; <code>dsl</code> is the only
 layer that reads Python source; <code>core</code> imports neither. Dependencies run dsl to
 flow to devices to core, with one deliberate exception: <code>Function.to_ir</code> defers an
@@ -2699,23 +2810,31 @@ import of the analysis driver, because the author-facing type owns the entry poi
 while the analysis needs that type at runtime. An equipment target declares and
 binds devices, so it may import <code>sciloom.devices</code>; no target imports the flow
 vocabulary or the source analysis. Independent equipment packages implement the
-same Target protocol without joining the SciLoom source tree or registering a
-plugin; the shipped AutoSuite target is itself a separate workspace member with
-its own distribution. Unit types remain independent.</p>
-<p>Two device abstractions meet in that pipeline and are kept apart on purpose. The
+same <a href="../target-contract/">Target contract</a> without joining the SciLoom source
+tree or registering a plugin; the shipped AutoSuite target is itself a separate
+workspace member with its own distribution. Unit types remain independent.</p>
+<h2 id="two-device-abstractions">Two device abstractions</h2>
+<pre class="mermaid"><code>classDiagram
+    BaseDevice &lt;|-- Agitator
+    BaseDevice &lt;|-- Heater
+    Agitator &lt;|-- AutoSuiteIndividualShaker
+    Agitator &lt;|-- DemoAgitator
+    Heater &lt;|-- BenchHeater
+    AutoSuiteTarget --&gt; AutoSuiteIndividualShaker
+    DemoTarget --&gt; DemoAgitator
+    BenchTarget --&gt; BenchHeater</code></pre>
+<p>Two device abstractions meet in the pipeline and are kept apart on purpose. The
 author side is a chain of Python classes in <code>sciloom.devices</code>: <code>BaseDevice</code>, a
 generic family such as <code>Agitator</code>, and an author's own subclass of that family
 adding the properties and operations their instrument needs, the way
 <code>DemoAgitator</code> adds <code>gain</code> and <code>calibrate</code>. Authors extend by subclassing the
 family and never modify <code>BaseDevice</code> or the family itself; a capability the
-family lacks belongs in a subclass, as <a href="../../add-a-device/">Add a device</a> shows. The
-target side is the concrete profile that a target binds to each slot at compile
-time. The IR expresses property writes as <code>ConfigureProperty</code> and every
-operation that has no dedicated node as <code>DeviceCommand</code>, each carrying the
-semantic id from the author's class (today only agitation start/stop have
-dedicated nodes), and the compiler decides only whether the current IR compiles
-for the selected target; neither layer knows nor special-cases any author
-subclass.</p>
+family lacks belongs in a subclass, as <a href="../../add-a-device/">Add a device</a> shows.
+The target side is the concrete profile that a target binds to each slot at
+compile time. How declarations of either kind appear in the IR, and why neither
+the IR nor the compiler special-cases an author subclass, is stated on
+<a href="../device-contracts/#declarations-become-ir">device contracts</a>.</p>
+<h2 id="conventions-inside-the-analysis">Conventions inside the analysis</h2>
 <p>Within the analysis, shared state, source discovery, expression conversion and
 statement conversion have separate responsibilities, and every statement recursion
 lives in one module. A function that needs lowering state takes the context first,
@@ -2725,9 +2844,9 @@ the statement pass reads None as "try the next recognizer"; recognizer order is
 therefore meaningful. Names used only inside their module are underscore-prefixed,
 and the one function-local import in the frontend carries a comment naming the
 cycle it breaks. IR structure checking, expression typing, program validation and
-JSON conversion are distinct.
-The interpreter separates values, expression evaluation and session/device state.
-AutoSuite code generation retains a thin serialization model below semantic IR.</p>
+JSON conversion are distinct. The interpreter separates values, expression
+evaluation and session/device state. AutoSuite code generation retains a thin
+serialization model below semantic IR.</p>
 <h2 id="future-editing-tools">Future editing tools</h2>
 <p>Studio will compose semantic IR directly. Function schemas can describe node ports
 and docstrings can describe their purpose. Layout stays outside semantic state.

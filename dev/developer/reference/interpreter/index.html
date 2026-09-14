@@ -13,10 +13,10 @@
         <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/developer/reference/interpreter/">
       
       
-        <link rel="prev" href="../pipeline/">
+        <link rel="prev" href="../device-contracts/">
       
       
-        <link rel="next" href="../target-contract/">
+        <link rel="next" href="../verification/">
       
       
         
@@ -1501,7 +1501,61 @@
   <span class="md-ellipsis">
     
   
-  Compiler and specialization
+  Compilation pipeline
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../target-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Target contract
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../device-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Device contracts
 
     
   </span>
@@ -1617,14 +1671,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../target-contract/" class="md-nav__link">
+      <a href="../verification/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Contributing a device or target
+  Verification
 
     
   </span>
@@ -2635,7 +2689,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="9f8ba8555dc0b792a9406914380a878f8a540c38">9f8ba855</code>
+    · <code title="f3e21e870a8aa3596d9fd9bb22714fc6ad5594b4">f3e21e87</code>
   </p>
 </aside>
 
@@ -2680,10 +2734,34 @@ List bounds checks reject negative, Boolean and out-of-range indices without gro
 <p>An ordinary indexed assignment evaluates its RHS before the target/index access.
 An augmented indexed assignment reads and checks the selected element/index once
 before evaluating the RHS. A failure does not undo earlier state writes.</p>
-<p>ExecutionConfig defaults to 10,000 steps and call depth 64. Expressions, statements
-and function entries consume steps. Configured call depth must be within 1–100;
-host nesting exhaustion becomes a diagnostic. These limits bound reference work
-and say nothing about real equipment timing or numeric limits.</p>
+<table>
+<thead>
+<tr>
+<th>Budget</th>
+<th>Default</th>
+<th>Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>max_steps</code>: expressions, statements and function entries</td>
+<td>10,000</td>
+<td>positive</td>
+</tr>
+<tr>
+<td><code>max_call_depth</code></td>
+<td>64</td>
+<td>1 to 100</td>
+</tr>
+<tr>
+<td>host nesting</td>
+<td>the interpreter's own recursion</td>
+<td>exhaustion becomes a diagnostic</td>
+</tr>
+</tbody>
+</table>
+<p>These limits bound reference work and say nothing about real equipment timing or
+numeric limits.</p>
 
 
 
@@ -2716,7 +2794,7 @@ and say nothing about real equipment timing or numeric limits.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../pipeline/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Compiler and specialization">
+          <a href="../device-contracts/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Device contracts">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -2726,20 +2804,20 @@ and say nothing about real equipment timing or numeric limits.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Compiler and specialization
+                Device contracts
               </div>
             </div>
           </a>
         
         
           
-          <a href="../target-contract/" class="md-footer__link md-footer__link--next" aria-label="Next: Contributing a device or target">
+          <a href="../verification/" class="md-footer__link md-footer__link--next" aria-label="Next: Verification">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Contributing a device or target
+                Verification
               </div>
             </div>
             <div class="md-footer__button md-icon">

@@ -16,7 +16,7 @@
         <link rel="prev" href="../ir/">
       
       
-        <link rel="next" href="../interpreter/">
+        <link rel="next" href="../target-contract/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Compiler and specialization - SciLoom</title>
+        <title>Compilation pipeline - SciLoom</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#compiler-and-specialization" class="md-skip">
+        <a href="#compilation-pipeline" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Compiler and specialization
+              Compilation pipeline
             
           </span>
         </div>
@@ -1510,7 +1510,7 @@
   <span class="md-ellipsis">
     
   
-  Compiler and specialization
+  Compilation pipeline
 
     
   </span>
@@ -1527,7 +1527,7 @@
   <span class="md-ellipsis">
     
   
-  Compiler and specialization
+  Compilation pipeline
 
     
   </span>
@@ -1553,10 +1553,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#trusted-bindings" class="md-nav__link">
+  <a href="#steps" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Trusted bindings
+        Steps
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#who-can-say-no" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Who can say no
       </span>
     </span>
   </a>
@@ -1578,6 +1589,60 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../target-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Target contract
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../device-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Device contracts
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1617,14 +1682,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../target-contract/" class="md-nav__link">
+      <a href="../verification/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Contributing a device or target
+  Verification
 
     
   </span>
@@ -2597,10 +2662,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#trusted-bindings" class="md-nav__link">
+  <a href="#steps" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Trusted bindings
+        Steps
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#who-can-say-no" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Who can say no
       </span>
     </span>
   </a>
@@ -2635,19 +2711,81 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="9f8ba8555dc0b792a9406914380a878f8a540c38">9f8ba855</code>
+    · <code title="f3e21e870a8aa3596d9fd9bb22714fc6ad5594b4">f3e21e87</code>
   </p>
 </aside>
 
                   
 
-<h1 id="compiler-and-specialization">Compiler and specialization</h1>
-<p><code>Function.compile(target=...)</code> first converts the instance to IR. The public
-<code>compile_ir(program, target=...)</code> accepts directly constructed or JSON-loaded IR.</p>
-<p>The shared compiler validates authored IR, resolves explicit device bindings,
-specializes device branches, checks capabilities and definite configuration, then
-calls Target.validate and Target.emit. Target resolution sees authored IR once;
-validation and emission see the selected high-level program.</p>
+<h1 id="compilation-pipeline">Compilation pipeline</h1>
+<p><code>Function.compile(target=...)</code> converts the instance to IR and hands it to the
+shared compiler; <code>compile_ir(program, target=...)</code> accepts directly constructed
+or JSON-loaded IR. The pipeline is fixed and target-independent until its last
+two steps.</p>
+<pre class="mermaid"><code>flowchart TD
+    Python["Python Function instance: flow and devices"] --&gt; DSL["DSL source analysis"]
+    DSL --&gt; IR["Semantic IR"]
+    JSON["JSON v4"] &lt;--&gt; IR
+    IR --&gt; Validate["Structure and types"]
+    Validate --&gt; Resolve["Target.resolve_devices"]
+    Resolve --&gt; Specialize["Device specialization"]
+    Specialize --&gt; Config["Capabilities and definite configuration"]
+    Config --&gt; Target["Target.validate and emit"]
+    Target --&gt; Artifact["Platform artifact"]
+    Specialize --&gt; Interpreter["Reference interpreter"]
+    Future["Future Studio / xyflow editor"] &lt;-.-&gt; IR</code></pre>
+<h2 id="steps">Steps</h2>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Function</th>
+<th>Program it sees</th>
+<th>Raises or returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>validate(program)</code></td>
+<td>authored</td>
+<td><code>IRValidationError</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>target.resolve_devices(program)</code></td>
+<td>authored: the only step that sees device branches unselected</td>
+<td>the target's own <code>TypeError</code> or <code>ValueError</code>; <code>TypeError</code> when the result is not <code>DeviceBindings</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>specialize(program, bindings)</code></td>
+<td>authored in, selected out: bindings validated, branches selected, unreachable functions pruned, resources retyped to the bound profile, re-validated</td>
+<td><code>CompilationError</code> (<code>missing_resource_binding</code>, <code>unknown_resource_binding</code>, <code>device_type</code>, <code>device_contract</code>)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>capability and definite-configuration checks</td>
+<td>selected</td>
+<td><code>CompilationError</code> (<code>device_capability</code>, <code>device_configuration</code>)</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>target.validate(program)</code></td>
+<td>selected</td>
+<td><code>CompilationError</code> with the target's own codes</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>target.emit(program)</code></td>
+<td>selected</td>
+<td>returns an <code>Artifact</code></td>
+</tr>
+</tbody>
+</table>
+<p>Target resolution sees the authored program once; validation and emission see
+the selected program. What step 4 proves about required configuration is stated
+on <a href="../device-contracts/#required-configuration">device contracts</a>.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">examples.scale_values</span><span class="w"> </span><span class="kn">import</span> <span class="n">ScaleValues</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteTarget</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.compiler</span><span class="w"> </span><span class="kn">import</span> <span class="n">compile_ir</span>
@@ -2662,20 +2800,69 @@ validation and emission see the selected high-level program.</p>
 <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">specialized_ir</span> <span class="o">==</span> <span class="n">selected</span>
 <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">artifact</span><span class="o">.</span><span class="n">media_type</span> <span class="o">==</span> <span class="s2">"application/xml"</span>
 </code></pre></div>
-<p>CompileResult retains semantic_ir, specialized_ir, target_id, artifact and
-diagnostics. Artifact carries bytes, a media type and a file suffix. Its write
-operation belongs to CompileResult. Backend-private variables/parameters never
-enter either public semantic Program.</p>
-<h2 id="trusted-bindings">Trusted bindings</h2>
-<p>DeviceBindings contains DeviceBinding facts: logical/physical identity, concrete
-contract, complete base_contracts, writable property IDs and supported command IDs.
-An empty envelope is valid only for a device-free program. Duplicate/missing/unknown
-bindings, incompatible types and inconsistent ancestry are errors.</p>
-<p>Specialization is a pure function: it retains source identity, selects device
-branches and prunes unreachable functions, leaving the authored Program unchanged.
-Serialized selected extensions must match the target's trusted contract directory.
-Inactive extension branches do not require importing an implementation package.
-No implementation is discovered or imported from a JSON identifier.</p>
+<p><code>CompileResult</code> retains <code>semantic_ir</code> (authored), <code>specialized_ir</code> (selected),
+<code>target_id</code>, <code>artifact</code> and <code>diagnostics</code>, which is empty for a returned result
+because every failure raises. <code>write(path)</code> writes the artifact's bytes and
+returns the path. Backend-private variables and parameters never enter either
+public program. Bindings and specialization are described on the
+<a href="../target-contract/#bindings">Target contract</a>.</p>
+<h2 id="who-can-say-no">Who can say no</h2>
+<p>Every layer answers at the earliest point that can prove a program wrong, and
+each only knows what it can see: the class body has no target, and the target has
+no Python source.</p>
+<table>
+<thead>
+<tr>
+<th>When</th>
+<th>What it proves</th>
+<th>Raises</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>the class body runs</td>
+<td>declarations are well formed: field roles, device slots, device contracts</td>
+<td><code>IRValidationError</code></td>
+</tr>
+<tr>
+<td><code>to_ir()</code></td>
+<td>the runtime method is in the supported source subset and types agree</td>
+<td><code>IRValidationError</code></td>
+</tr>
+<tr>
+<td><code>compile_ir</code> starts</td>
+<td>the IR is structurally valid, whatever produced it</td>
+<td><code>IRValidationError</code></td>
+</tr>
+<tr>
+<td><code>resolve_devices</code></td>
+<td>the deployment data is the kind the target supports; each profile declares its capability lists</td>
+<td>the target's own <code>TypeError</code> or <code>ValueError</code>; <code>bind_device</code>'s <code>TypeError</code></td>
+</tr>
+<tr>
+<td>bindings are checked</td>
+<td>every declared resource has one compatible binding and no binding is stray</td>
+<td><code>CompilationError</code></td>
+</tr>
+<tr>
+<td>capabilities and configuration are checked</td>
+<td>every bound profile implements what the selected program does with it, and every agitation start has its <a href="../device-contracts/#required-configuration">required configuration</a></td>
+<td><code>CompilationError</code></td>
+</tr>
+<tr>
+<td><code>Target.validate</code></td>
+<td>the program fits the platform</td>
+<td><code>CompilationError</code></td>
+</tr>
+<tr>
+<td>reference execution</td>
+<td>the program has defined semantics to simulate</td>
+<td><code>ExecutionError</code></td>
+</tr>
+</tbody>
+</table>
+<p>The walkthrough <a href="../../reject-a-program/">reject a program</a> shows the first four
+layers on one program and explains where a contributor's own check belongs.</p>
 <h2 id="autosuite-boundary">AutoSuite boundary</h2>
 <p>The target validates platform restrictions and translates high-level operations
 to a private serialization model. Property writes save configuration, start emits
@@ -2684,9 +2871,7 @@ Hidden call parameters propagate shared device configuration without changing
 author entry parameters. Context copyback follows normal function return; recovery
 after exceptional termination is not promised equivalent across platforms.</p>
 <p>Typed array encoding covers initialization, I/O binding, copies, lengths and
-checked indexing. Static XML checks do not establish Executor acceptance. Semantic
-JSON changes can change deterministic UUID hashes; compare structure rather than
-claiming byte stability across semantic-contract revisions.</p>
+checked indexing. Static XML checks do not establish Executor acceptance.</p>
 
 
 
@@ -2736,13 +2921,13 @@ claiming byte stability across semantic-contract revisions.</p>
         
         
           
-          <a href="../interpreter/" class="md-footer__link md-footer__link--next" aria-label="Next: Reference execution">
+          <a href="../target-contract/" class="md-footer__link md-footer__link--next" aria-label="Next: Target contract">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Reference execution
+                Target contract
               </div>
             </div>
             <div class="md-footer__button md-icon">

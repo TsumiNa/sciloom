@@ -1570,7 +1570,61 @@
   <span class="md-ellipsis">
     
   
-  Compiler and specialization
+  Compilation pipeline
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../target-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Target contract
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../device-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Device contracts
 
     
   </span>
@@ -1617,14 +1671,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../target-contract/" class="md-nav__link">
+      <a href="../verification/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Contributing a device or target
+  Verification
 
     
   </span>
@@ -2635,7 +2689,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="9f8ba8555dc0b792a9406914380a878f8a540c38">9f8ba855</code>
+    · <code title="f3e21e870a8aa3596d9fd9bb22714fc6ad5594b4">f3e21e87</code>
   </p>
 </aside>
 
@@ -2673,11 +2727,36 @@ validate and raise IRValidationError on invalid data.</p>
 <span class="k">assert</span> <span class="n">validate</span><span class="p">(</span><span class="n">program</span><span class="p">)</span> <span class="o">==</span> <span class="p">()</span>
 <span class="k">assert</span> <span class="n">from_json</span><span class="p">(</span><span class="n">to_json</span><span class="p">(</span><span class="n">program</span><span class="p">))</span> <span class="o">==</span> <span class="n">program</span>
 </code></pre></div>
-<p>JSON requires kind="Program" and format_version=4. Records carry their public
-dataclass kind; enums use strings and tuples become arrays. Unknown fields/kinds,
-earlier versions, duplicate keys, wrong scalar types, NaN and Infinity fail.
-Exports include defaults, sorted keys, two-space indentation and a final newline;
-ordered bodies and bindings keep their order. Exported mappings are detached.</p>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>envelope</td>
+<td><code>kind="Program"</code> and <code>format_version=4</code>; earlier versions are not upgraded</td>
+</tr>
+<tr>
+<td>records</td>
+<td>each carries its public dataclass <code>kind</code>; enums are strings, tuples become arrays</td>
+</tr>
+<tr>
+<td>rejected on import</td>
+<td>unknown fields or kinds, duplicate keys, wrong scalar types, <code>NaN</code>, <code>Infinity</code>; node ids are required, never generated</td>
+</tr>
+<tr>
+<td>export</td>
+<td>includes defaults, sorted keys, two-space indentation, a final newline; bodies and bindings keep their order; exported mappings are detached</td>
+</tr>
+<tr>
+<td>stability</td>
+<td>semantic JSON changes can change deterministic UUID hashes in generated artifacts; compare structure rather than bytes across semantic-contract revisions</td>
+</tr>
+</tbody>
+</table>
 <p>SourceSpan records one-based lines and zero-based UTF-8 byte columns. Source IDs
 and spans survive round trips. Lowering records the absolute path of the defining
 file, so paths identify the generating checkout; the developer examples rewrite
@@ -2732,13 +2811,13 @@ cause dynamic Python imports. See <a href="../pipeline/">binding and specializat
         
         
           
-          <a href="../pipeline/" class="md-footer__link md-footer__link--next" aria-label="Next: Compiler and specialization">
+          <a href="../pipeline/" class="md-footer__link md-footer__link--next" aria-label="Next: Compilation pipeline">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Compiler and specialization
+                Compilation pipeline
               </div>
             </div>
             <div class="md-footer__button md-icon">

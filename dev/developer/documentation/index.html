@@ -1499,7 +1499,61 @@
   <span class="md-ellipsis">
     
   
-  Compiler and specialization
+  Compilation pipeline
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/target-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Target contract
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/device-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Device contracts
 
     
   </span>
@@ -1546,14 +1600,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/target-contract/" class="md-nav__link">
+      <a href="../reference/verification/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Contributing a device or target
+  Verification
 
     
   </span>
@@ -2613,7 +2667,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="9f8ba8555dc0b792a9406914380a878f8a540c38">9f8ba855</code>
+    · <code title="f3e21e870a8aa3596d9fd9bb22714fc6ad5594b4">f3e21e87</code>
   </p>
 </aside>
 
@@ -2637,11 +2691,8 @@ separate root <code>docs/</code> directory and are not needed to build the site.
 repository is a uv workspace: dependency groups and <code>uv.lock</code> remain in the root
 <code>pyproject.toml</code>, and each member under <code>packages/</code> declares only its own runtime
 dependencies.</p>
-<p>For CI-equivalent validation:</p>
-<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>--group<span class="w"> </span>docs<span class="w"> </span>python<span class="w"> </span>website/tools/site.py<span class="w"> </span>build<span class="w"> </span>--strict
-uv<span class="w"> </span>run<span class="w"> </span>--group<span class="w"> </span>docs<span class="w"> </span>pytest<span class="w"> </span>website/tools
-git<span class="w"> </span>diff<span class="w"> </span>--check
-</code></pre></div>
+<p>The strict build, the website tests and <code>git diff --check</code> are part of the
+<a href="../reference/verification/">verification</a> list that CI runs.</p>
 <p>HTML is written under <code>website/.build/site/</code>. The source tree's generated downloads and
 <code>build-info.json</code> are ignored. They are recreated from selected examples and the
 current source revision; do not edit them. Only this public documentation tree,

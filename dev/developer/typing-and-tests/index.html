@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/developer/typing-and-tests/">
       
       
-        <link rel="prev" href="../reference/target-contract/">
+        <link rel="prev" href="../reference/verification/">
       
       
         <link rel="next" href="../documentation/">
@@ -1499,7 +1499,61 @@
   <span class="md-ellipsis">
     
   
-  Compiler and specialization
+  Compilation pipeline
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/target-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Target contract
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/device-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Device contracts
 
     
   </span>
@@ -1546,14 +1600,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/target-contract/" class="md-nav__link">
+      <a href="../reference/verification/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Contributing a device or target
+  Verification
 
     
   </span>
@@ -2613,7 +2667,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="9f8ba8555dc0b792a9406914380a878f8a540c38">9f8ba855</code>
+    · <code title="f3e21e870a8aa3596d9fd9bb22714fc6ad5594b4">f3e21e87</code>
   </p>
 </aside>
 
@@ -2633,26 +2687,10 @@ initializers, every Function call binding, the source subset or vendor constrain
 Python's bool/int subtype relationship also differs from SciLoom's index rules.
 Schema, IR and target validation remain necessary.</p>
 <h2 id="verification-workflow">Verification workflow</h2>
-<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check
-uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>format<span class="w"> </span>--check
-uv<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>src/sciloom<span class="w"> </span>packages/sciloom-autosuite/src<span class="w"> </span>examples
-uv<span class="w"> </span>run<span class="w"> </span>mypy
-uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>autosuite/tools/smoke_test.py
-uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>autosuite/recipe/validate_recipe.py<span class="w"> </span>autosuite/recipe/input_0908.csv
-uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>compileall<span class="w"> </span>-q<span class="w"> </span>examples/proposed_frontend
-</code></pre></div>
-<p>Ruff enforces formatting, import grouping and the ban on parent-relative imports.
-Use single-dot relative imports inside a package and absolute imports everywhere
-else. Enable the repository pre-commit hook once per clone with
-<code>git config core.hooksPath .githooks</code>; it fixes and formats staged Python files
-before each commit.</p>
-<p>The AutoSuite commands use internal reference material that is shared inside the
-team rather than through this repository, so a checkout may not have it. The
-smoke and corpus checks skip their evidence sections when it is absent, and the
-tests that compare generated XML against it skip themselves. Everything the
-repository carries still runs. Run all eight current examples using commands on
-their walkthrough pages. Proposed frontend examples are syntax-checked design
-material, not runnable supported APIs.</p>
+<p>The full check list, the example commands and the pre-commit hook are on
+<a href="../reference/verification/">verification</a>. Ruff enforces formatting, import
+grouping and the ban on parent-relative imports: use single-dot relative imports
+inside a package and absolute imports everywhere else.</p>
 <p>Colocate tests as <code>&lt;module&gt;_test.py</code>. Production mypy traversal excludes these
 intentional negative runtime fixtures; when adding test modules under src, also
 maintain pyproject's explicit IDE override list. Positive and negative typing
@@ -2662,9 +2700,6 @@ in the authoritative design document before implementation. Keep that contract
 consistent across sequential PRs. Review, address feedback, pass latest checks and
 squash merge before starting the next stage. See
 <a href="../documentation/">documentation development</a> for site-specific checks.</p>
-<p>Raw AutoSuite evidence is never rewritten to make generated code pass. Static
-structure tests, reference execution, Executor simulation and physical validation
-are separate forms of evidence.</p>
 
 
 
@@ -2697,7 +2732,7 @@ are separate forms of evidence.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../reference/target-contract/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Contributing a device or target">
+          <a href="../reference/verification/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Verification">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -2707,7 +2742,7 @@ are separate forms of evidence.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Contributing a device or target
+                Verification
               </div>
             </div>
           </a>

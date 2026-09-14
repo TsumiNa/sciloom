@@ -82,10 +82,16 @@
         <loc>https://tsumina.github.io/sciloom/dev/developer/reference/pipeline/</loc>
       </url>
       <url>
+        <loc>https://tsumina.github.io/sciloom/dev/developer/reference/target-contract/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/developer/reference/device-contracts/</loc>
+      </url>
+      <url>
         <loc>https://tsumina.github.io/sciloom/dev/developer/reference/interpreter/</loc>
       </url>
       <url>
-        <loc>https://tsumina.github.io/sciloom/dev/developer/reference/target-contract/</loc>
+        <loc>https://tsumina.github.io/sciloom/dev/developer/reference/verification/</loc>
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/developer/typing-and-tests/</loc>

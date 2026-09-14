@@ -1625,7 +1625,61 @@
   <span class="md-ellipsis">
     
   
-  Compiler and specialization
+  Compilation pipeline
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/target-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Target contract
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/device-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Device contracts
 
     
   </span>
@@ -1672,14 +1726,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/target-contract/" class="md-nav__link">
+      <a href="../reference/verification/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Contributing a device or target
+  Verification
 
     
   </span>
@@ -2745,7 +2799,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="9f8ba8555dc0b792a9406914380a878f8a540c38">9f8ba855</code>
+    · <code title="f3e21e870a8aa3596d9fd9bb22714fc6ad5594b4">f3e21e87</code>
   </p>
 </aside>
 
@@ -2759,58 +2813,8 @@ others only once a target is chosen.</p>
 <p>This page continues the heater from <a href="../add-a-device/">add a device</a> and the target
 from <a href="../add-a-target/">add a target</a>.</p>
 <h2 id="the-layers-in-order">The layers, in order</h2>
-<table>
-<thead>
-<tr>
-<th>When</th>
-<th>What it proves</th>
-<th>Raises</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>The class body runs</td>
-<td>Declarations are well formed: field roles, device slots, device contracts</td>
-<td><code>IRValidationError</code></td>
-</tr>
-<tr>
-<td><code>to_ir()</code></td>
-<td>The runtime method is in the supported source subset and types agree</td>
-<td><code>IRValidationError</code></td>
-</tr>
-<tr>
-<td><code>compile_ir</code> starts</td>
-<td>The IR itself is structurally valid, whatever produced it</td>
-<td><code>IRValidationError</code></td>
-</tr>
-<tr>
-<td><code>resolve_devices</code></td>
-<td>Your deployment data is the kind you support</td>
-<td>Your own <code>TypeError</code> or <code>ValueError</code></td>
-</tr>
-<tr>
-<td>Bindings are checked</td>
-<td>Every bound profile implements what the program does with it</td>
-<td><code>CompilationError</code></td>
-</tr>
-<tr>
-<td>Configuration is checked</td>
-<td>A lifecycle start has its required configuration on every reachable path</td>
-<td><code>CompilationError</code></td>
-</tr>
-<tr>
-<td><code>Target.validate</code></td>
-<td>The program fits your platform</td>
-<td><code>CompilationError</code></td>
-</tr>
-<tr>
-<td>Reference execution</td>
-<td>The program has defined semantics to simulate</td>
-<td><code>ExecutionError</code></td>
-</tr>
-</tbody>
-</table>
-<p>Each layer only knows what it can see. The class body has no target, so it cannot
+<p>The <a href="../reference/pipeline/#who-can-say-no">compilation pipeline</a> lists the
+eight layers, what each proves and what it raises. Each layer only knows what it can see. The class body has no target, so it cannot
 know your heater is read-only. The target has no Python source, so it cannot know
 which variable the author called <code>seconds</code>, only that the argument is not a literal.
 That is why a diagnostic carries a source span: the layer that proves the problem is

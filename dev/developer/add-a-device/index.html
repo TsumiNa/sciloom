@@ -1625,7 +1625,61 @@
   <span class="md-ellipsis">
     
   
-  Compiler and specialization
+  Compilation pipeline
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/target-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Target contract
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/device-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Device contracts
 
     
   </span>
@@ -1672,14 +1726,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/target-contract/" class="md-nav__link">
+      <a href="../reference/verification/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Contributing a device or target
+  Verification
 
     
   </span>
@@ -2745,7 +2799,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="9f8ba8555dc0b792a9406914380a878f8a540c38">9f8ba855</code>
+    · <code title="f3e21e870a8aa3596d9fd9bb22714fc6ad5594b4">f3e21e87</code>
   </p>
 </aside>
 
@@ -2868,9 +2922,10 @@ example below print its refusal:</p>
 <p>That is by design. The interpreter defines SciLoom semantics, and it will not
 invent behavior for a command only your hardware understands. Compilation and
 target emission still work; only simulated execution stops.</p>
-<p><code>required_configuration</code> is checked when an agitation lifecycle starts, and
-agitation is the only family with such a node today. Your heater can declare it,
-and a target can enforce it in <code>validate</code>, but nothing checks it for you yet.</p>
+<p><code>required_configuration</code> is enforced for agitation only, because only agitation
+has a lifecycle node; your heater can declare it, and a target can enforce it in
+<code>validate</code>. <a href="../reference/device-contracts/#required-configuration">Device contracts</a>
+states the rule precisely.</p>
 <p>Adding a profile to an existing family is Step 2 alone. The
 <a href="../../examples/demo-device/">independent device example</a> is exactly that: DemoAgitator
 adds one parameter and one native command to the shipped Agitator family, with no

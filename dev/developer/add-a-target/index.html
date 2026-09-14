@@ -1636,7 +1636,61 @@
   <span class="md-ellipsis">
     
   
-  Compiler and specialization
+  Compilation pipeline
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/target-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Target contract
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/device-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Device contracts
 
     
   </span>
@@ -1683,14 +1737,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/target-contract/" class="md-nav__link">
+      <a href="../reference/verification/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Contributing a device or target
+  Verification
 
     
   </span>
@@ -2767,7 +2821,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="9f8ba8555dc0b792a9406914380a878f8a540c38">9f8ba855</code>
+    · <code title="f3e21e870a8aa3596d9fd9bb22714fc6ad5594b4">f3e21e87</code>
   </p>
 </aside>
 
@@ -2900,11 +2954,12 @@ asks for a file.</p>
 <p>The complete example prints the order the compiler used:</p>
 <div class="highlight"><pre><span></span><code>pipeline: resolve_devices -&gt; validate -&gt; emit
 </code></pre></div>
-<p>Between your first and second call the compiler validates the program's structure
-and types, selects device branches against your bindings, checks that every bound
-profile supports what the program does with it, and checks that a lifecycle start
-has its required configuration on every reachable path. Your <code>validate</code> is the last
-gate before bytes, and it is the only one that knows your platform.</p>
+<p>Between your first and second call the compiler runs the target-independent steps
+of the <a href="../reference/pipeline/#steps">compilation pipeline</a>: structure and types,
+branch selection against your bindings, capabilities and, for agitation,
+<a href="../reference/device-contracts/#required-configuration">required configuration</a>.
+Your <code>validate</code> is the last gate before bytes, and it is the only one that knows
+your platform.</p>
 <h2 id="typing-without-inheritance">Typing, without inheritance</h2>
 <p><code>Target</code> is a structural protocol. You do not import it and you do not subclass it;
 your class matches it by having the four members. <code>target_id</code> may be a plain class
