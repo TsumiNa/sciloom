@@ -10,8 +10,9 @@ uv run python -m examples.developer.portable_agitation
 
 The same source has configured properties ['speed'] for AutoSuite and ['gain', 'speed'] for Demo. Both selected programs can be reference-executed because this example does not request native calibration. The base JSON preserves the conditional; .autosuite.asfp and .demo.json are the target artifacts. All branches are type-checked before selection, and compile-time binding remains explicit. JSON diagnostic paths are relative to the repository root.
 
-The module docstring below records expected terminal output. Compilation and
-reference execution do not operate hardware or replace AutoSuite Executor checks.
+The module docstring below records expected terminal output.
+
+--8<-- "website/snippets/hardware-boundary.md"
 
 ## Source and generated files
 

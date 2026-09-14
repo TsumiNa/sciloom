@@ -10,8 +10,9 @@ uv run python examples/scale_values.py
 
 The whole-list assignment establishes an independent output before the loop, including empty input. index is persistent Var state but is explicitly reset for each invocation. batch_size is ordinary host configuration; it is not used by this runtime algorithm and does not become an ASFP runtime field.
 
-The module docstring below records expected terminal output. Compilation and
-reference execution do not operate hardware or replace AutoSuite Executor checks.
+The module docstring below records expected terminal output.
+
+--8<-- "website/snippets/hardware-boundary.md"
 
 ## Source and generated files
 
