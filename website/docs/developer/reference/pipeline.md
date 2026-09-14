@@ -75,8 +75,8 @@ no Python source.
 | `Target.validate` | the program fits the platform | `CompilationError` |
 | reference execution | the program has defined semantics to simulate | `ExecutionError` |
 
-The walkthrough [reject a program](../reject-a-program.md) shows the first four
-layers on one program and explains where a contributor's own check belongs.
+The walkthrough [reject a program](../tutorial/reject-a-program.md) shows five of
+these layers on one program and explains where a contributor's own check belongs.
 
 ## AutoSuite boundary
 

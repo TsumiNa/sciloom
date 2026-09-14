@@ -3,7 +3,7 @@
 A target turns a selected program into a platform artifact. Independent packages
 use the same public interfaces as the shipped `sciloom-autosuite` member; no
 plugin registry or namespace installation is required. This page is the
-reference; the walkthrough is [add a target](../add-a-target.md), and device
+reference; the walkthrough is [write a target](../tutorial/write-a-target.md), and device
 declarations are on [device contracts](device-contracts.md).
 
 ## A minimal target
