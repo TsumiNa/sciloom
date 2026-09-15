@@ -112,6 +112,7 @@ class Text(HTMLParser):
 @pytest.mark.parametrize(
     "page, source",
     (
+        ("introduction/getting-started", "tutorial/start_shaker"),
         ("examples/function-call", "function_call"),
         ("examples/agitation", "agitation"),
         ("examples/scale-values", "scale_values"),

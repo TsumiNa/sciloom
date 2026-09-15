@@ -15,6 +15,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 # No recursive repository copy: additions to the public downloads are deliberate.
 EXAMPLES = (
+    "tutorial/start_shaker.py",
+    "tutorial/start_shaker.asfp",
     "function_call.py",
     "function_call.asfp",
     "agitation.py",

@@ -44,6 +44,30 @@ module docstring; long results belong in same-basename companion files.
 
 ## Tutorial series
 
+The Developer Guide uses a cumulative series. The User Guide is moving to
+independently runnable lesson snapshots: include the actual example source,
+provide its companion download, and verify its behaviour and generated package.
+Do not make the teaching order depend on appending code to an earlier page.
+
+## Writing for experiment authors
+
+Assume readers know variables, functions and if/while. Explain class, self and
+__init__ briefly when the experiment first needs them. Begin with a concrete
+task, show what to change, and explain the result. Put deliberate failure cases
+in troubleshooting and keep their execution tests.
+
+Use ordinary names for things the author handles: an input list, a saved speed,
+a generated file. Keep compiler internals and documentation test procedures out
+of introductory prose. Repeat a short rule at its point of use when that saves
+a detour; link to one reference page for its complete definition. Avoid claims
+such as "nothing executes" when only the runtime method is deferred.
+
+Read the rendered page to judge the explanation. There is no fixed word count,
+paragraph template or vocabulary blacklist. Preserve the distinction between
+compiling a program, reference execution and running equipment.
+
+## Maintaining cumulative series
+
 A tutorial series builds one program across several pages. Mark the fences that
 belong to it with an HTML comment on the line before the fence; fences without a
 marker are illustration and never run.
