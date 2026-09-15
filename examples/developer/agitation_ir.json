@@ -53,7 +53,7 @@
             "source": {
               "column": 11,
               "kind": "SourceSpan",
-              "line": 74,
+              "line": 41,
               "path": "examples/agitation.py"
             },
             "symbol_id": "fn:0:var:enabled"
@@ -66,7 +66,7 @@
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 78,
+                "line": 45,
                 "path": "examples/agitation.py"
               }
             }
@@ -76,7 +76,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 74,
+            "line": 41,
             "path": "examples/agitation.py"
           },
           "then_body": [
@@ -88,7 +88,7 @@
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 75,
+                "line": 42,
                 "path": "examples/agitation.py"
               },
               "value": {
@@ -97,7 +97,7 @@
                 "source": {
                   "column": 34,
                   "kind": "SourceSpan",
-                  "line": 75,
+                  "line": 42,
                   "path": "examples/agitation.py"
                 },
                 "symbol_id": "fn:0:var:shaker_speed"
@@ -110,7 +110,7 @@
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 76,
+                "line": 43,
                 "path": "examples/agitation.py"
               }
             }
@@ -123,7 +123,7 @@
       "source": {
         "column": 4,
         "kind": "SourceSpan",
-        "line": 73,
+        "line": 40,
         "path": "examples/agitation.py"
       },
       "variables": [

@@ -10,7 +10,9 @@ Rewrite the four Advanced pages and five author example walkthroughs. Keep
 complete runnable code, but move deliberate failures into troubleshooting and
 retain execution checks. Explain copying and configuration through their effects.
 Shorten agitation's module docstring by removing the long XML excerpt; preserve
-the full companion and existing example behaviour.
+the ASFP companion and existing example behaviour. Regenerate the developer JSON
+companion's source spans when shortening the docstring moves the method's lines;
+only diagnostic positions change, not the semantic nodes or ASFP.
 
 ## Non-goals
 
@@ -19,7 +21,8 @@ No broad Developer Guide rewrite, API or compiler changes.
 ## Acceptance
 
 Run PR1's full checks. Execute revised snippets and relocated error cases, check
-source/download agreement and compare existing example companions unchanged.
+source/download agreement and compare existing ASFP companions unchanged; inspect
+any regenerated developer JSON for source-position-only changes.
 Read the rendered pages for an identifiable task, editable values and result.
 
 ## Commands
