@@ -2198,6 +2198,28 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#writing-for-experiment-authors" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Writing for experiment authors
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maintaining-cumulative-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Maintaining cumulative series
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3062,6 +3084,28 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#writing-for-experiment-authors" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Writing for experiment authors
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maintaining-cumulative-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Maintaining cumulative series
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3079,7 +3123,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="271edb24e0d3f7bb12ca053c4915351d803acb7b">271edb24</code>
+    · <code title="5d69676a13d69d7e65f0364f13d6a14039f71921">5d69676a</code>
   </p>
 </aside>
 
@@ -3118,6 +3162,24 @@ selected example files and rendered API descriptions are included in the website
 execution semantics where relevant. Short example results belong in the example's
 module docstring; long results belong in same-basename companion files.</p>
 <h2 id="tutorial-series">Tutorial series</h2>
+<p>The Developer Guide uses a cumulative series. The User Guide is moving to
+independently runnable lesson snapshots: include the actual example source,
+provide its companion download, and verify its behaviour and generated package.
+Do not make the teaching order depend on appending code to an earlier page.</p>
+<h2 id="writing-for-experiment-authors">Writing for experiment authors</h2>
+<p>Assume readers know variables, functions and if/while. Explain class, self and
+<strong>init</strong> briefly when the experiment first needs them. Begin with a concrete
+task, show what to change, and explain the result. Put deliberate failure cases
+in troubleshooting and keep their execution tests.</p>
+<p>Use ordinary names for things the author handles: an input list, a saved speed,
+a generated file. Keep compiler internals and documentation test procedures out
+of introductory prose. Repeat a short rule at its point of use when that saves
+a detour; link to one reference page for its complete definition. Avoid claims
+such as "nothing executes" when only the runtime method is deferred.</p>
+<p>Read the rendered page to judge the explanation. There is no fixed word count,
+paragraph template or vocabulary blacklist. Preserve the distinction between
+compiling a program, reference execution and running equipment.</p>
+<h2 id="maintaining-cumulative-series">Maintaining cumulative series</h2>
 <p>A tutorial series builds one program across several pages. Mark the fences that
 belong to it with an HTML comment on the line before the fence; fences without a
 marker are illustration and never run.</p>

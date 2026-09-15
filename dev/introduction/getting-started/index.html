@@ -474,10 +474,32 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#your-first-function" class="md-nav__link">
+  <a href="#install-the-checkout" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Your first Function
+        Install the checkout
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compile-your-first-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Compile your first procedure
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adapt-it-to-your-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Adapt it to your setup
       </span>
     </span>
   </a>
@@ -3038,10 +3060,32 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#your-first-function" class="md-nav__link">
+  <a href="#install-the-checkout" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Your first Function
+        Install the checkout
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compile-your-first-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Compile your first procedure
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adapt-it-to-your-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Adapt it to your setup
       </span>
     </span>
   </a>
@@ -3065,42 +3109,99 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="271edb24e0d3f7bb12ca053c4915351d803acb7b">271edb24</code>
+    · <code title="5d69676a13d69d7e65f0364f13d6a14039f71921">5d69676a</code>
   </p>
 </aside>
 
                   
 
 <h1 id="getting-started">Getting started</h1>
-<p>SciLoom currently targets Python 3.12–3.14; development is pinned to Python 3.14.
-The distribution is named <code>SciLoom</code>, and the import is <code>sciloom</code>. The AutoSuite
-target ships as the workspace member <code>sciloom-autosuite</code>, imported as
-<code>sciloom_autosuite</code>; <code>uv sync --locked</code> installs both.</p>
-<p>The documentation is public before the source repository. The following setup
-requires repository access. A public PyPI installation is not offered by this
-documentation release.</p>
+<p>Start by generating an AutoSuite function that sets a shaker to 300 rpm and
+starts it. You can compile this example without a connected instrument.</p>
+<h2 id="install-the-checkout">Install the checkout</h2>
+<p>You need Python 3.12–3.14, <a href="https://docs.astral.sh/uv/getting-started/installation/">uv</a>
+and access to the SciLoom source repository, which is currently private. There
+is no public PyPI installation for this release.</p>
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:TsumiNa/sciloom.git
 <span class="nb">cd</span><span class="w"> </span>sciloom
 uv<span class="w"> </span>sync<span class="w"> </span>--locked
-uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/stir_rack.py
 </code></pre></div>
-<p>The command prints <code>stir_rack.asfp</code> and writes the package beside its Python
-source. It compiles the experiment; it does not run it on equipment.</p>
-<h2 id="your-first-function">Your first Function</h2>
-<p>The <a href="../../user-guide/tutorial/">tutorial</a> builds that program one class at
-a time, from a three-line counter to the compiled package. Its declarations use
-familiar Python types:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">Var</span><span class="p">,</span> <span class="n">runtime</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteTarget</span>
+<p>This installs SciLoom and its AutoSuite target. In Python, their import names
+are <code>sciloom</code> and <code>sciloom_autosuite</code>.</p>
+<h2 id="compile-your-first-procedure">Compile your first procedure</h2>
+<p>Run the supplied example from the repository root:</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/tutorial/start_shaker.py
 </code></pre></div>
-<p>Define a Function class in a normal <code>.py</code> file. Inputs and outputs describe values
-exchanged at execution time. <code>Var</code> declares persistent internal state. Put the
-experiment's assignments and control flow in one <code>@runtime</code> method, then compile
-an instance with an explicit target. Host Python constructs and specializes the
-instance before compilation.</p>
-<p>Continue with <a href="../../user-guide/tutorial/first-function/">1. Your first Function</a>.
-The rest of the <a href="../../user-guide/">User Guide</a> states the rules the
-tutorial applies.</p>
+<p>The command prints:</p>
+<div class="highlight"><pre><span></span><code>start_shaker.asfp
+</code></pre></div>
+<p>The generated file is <code>examples/tutorial/start_shaker.asfp</code>, beside the source.
+Here is the complete program:</p>
+<div class="highlight"><pre><span></span><code><span class="sd">"""For experiment authors: compile a fixed-speed stirring procedure.</span>
+
+<span class="sd">Run from the repository root:</span>
+<span class="sd">    uv run python examples/tutorial/start_shaker.py</span>
+
+<span class="sd">Expected terminal output:</span>
+<span class="sd">    start_shaker.asfp</span>
+
+<span class="sd">When AutoSuite calls the generated function, it saves 300 rpm and starts the</span>
+<span class="sd">bound shaker. Compiling this file does not run the experiment. The speed is a</span>
+<span class="sd">programming example, not a recommendation for a particular sample.</span>
+
+<span class="sd">Full generated output: start_shaker.asfp, beside this source file.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agitator</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">rpm</span><span class="p">,</span> <span class="n">runtime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteIndividualShaker</span><span class="p">,</span> <span class="n">AutoSuiteTarget</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">StirRack</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Start the shaker at 300 rpm.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        shaker: Shaker used for the samples.</span>
+<span class="sd">    """</span>
+
+    <span class="n">shaker</span><span class="p">:</span> <span class="n">Agitator</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">300</span> <span class="o">*</span> <span class="n">rpm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">AutoSuiteTarget</span><span class="p">(</span>
+        <span class="n">devices</span><span class="o">=</span><span class="p">{</span><span class="s2">"shaker"</span><span class="p">:</span> <span class="n">AutoSuiteIndividualShaker</span><span class="p">(</span><span class="n">zone</span><span class="o">=</span><span class="s2">"Heater Shaker 23"</span><span class="p">,</span> <span class="n">device_id</span><span class="o">=</span><span class="s2">"23"</span><span class="p">)},</span>
+    <span class="p">)</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">StirRack</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".asfp"</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</code></pre></div>
+<p><code>StirRack</code> describes the procedure. The two lines in <code>run</code> save a speed and then
+start the shaker. <code>@runtime</code> tells SciLoom to compile those steps; it does not
+run them when you execute this Python file. The code below the class constructs
+the program, selects an AutoSuite target and writes the function package.</p>
+<h2 id="adapt-it-to-your-setup">Adapt it to your setup</h2>
+<p>Change <code>300 * rpm</code> to change the fixed speed in the generated procedure. This
+value is for learning the syntax; choose experimental settings for your samples
+and instrument.</p>
+<p><code>"shaker"</code> matches the Python field <code>shaker: Agitator</code>. The zone name
+<code>"Heater Shaker 23"</code> and device ID <code>"23"</code> are example AutoSuite configuration
+values. For your instrument, use the zone name and individual shaker ID from
+its existing AutoSuite configuration. The ID identifies the shaker, not a vial
+or rack. SciLoom does not discover those values or connect to the device.</p>
+<p>The <code>.asfp</code> is a callable AutoSuite function package. This first function has
+no inputs; its speed is fixed in the source. Generating it does not run an
+experiment. Before using generated packages on equipment, validate them with
+AutoSuite Executor on the deployment computer. See
+<a href="../status/#what-compilation-establishes">current validation limits</a>.</p>
+<p><a href="../../_generated/examples/tutorial/start_shaker.py">Download the Python file</a>
+or its <a href="../../_generated/examples/tutorial/start_shaker.asfp">generated package</a>.
+Continue with the <a href="../../user-guide/tutorial/">User Guide tutorial</a> for
+Function declarations, inputs and reusable steps.</p>
 
 
 
