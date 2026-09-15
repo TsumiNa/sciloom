@@ -12,31 +12,6 @@ Compilation writes these instructions; it does not execute them.
 
 Full generated output: function_call.asfp, beside this source file.
 
-Generated ASFP excerpts (parameter IDs and other fields omitted):
-
-    Execute Function input binding:
-        <item0>
-          <!-- parameter ID omitted -->
-          <name>x</name>
-          <variablename />
-          <variabletype>realnumber</variabletype>
-          <isarray>0</isarray>
-          <expression>2.5</expression>
-        </item0>
-
-    Execute Function output binding:
-        <item0>
-          <!-- parameter ID omitted -->
-          <name>y</name>
-          <variablename>result</variablename>
-          <variabletype>realnumber</variabletype>
-          <isarray>0</isarray>
-          <expression />
-        </item0>
-
-    Identity's Set Variable task:
-        <variablename>y</variablename>
-        <expressiontext>x</expressiontext>
 """
 
 from pathlib import Path

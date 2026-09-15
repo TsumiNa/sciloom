@@ -14,39 +14,6 @@ commands to hardware.
 
 Full generated output: agitation.asfp, beside this source file.
 
-Generated ASFP excerpts (metadata and other fields omitted):
-
-    Enabled branch:
-        <condition>enabled</condition>
-        ...
-        <component typeid="Chemspeed.SATaskSetVariable.1">
-          <!-- metadata omitted -->
-          <variablename>sciloom_tmp_1</variablename>
-          <expressiontext>shaker_speed</expressiontext>
-          <!-- remaining fields omitted -->
-        </component>
-        <component typeid="Chemspeed.SATaskSetAgitation.1">
-          <zone>Heater Shaker 23</zone>
-          <!-- metadata omitted -->
-          <taskdatas>
-            <count>1</count>
-            <taskdata0>
-              <progid>Chemspeed.SADeviceIndividualShaker.1</progid>
-              <deviceid>23</deviceid>
-              <wellid>-1</wellid>
-              <speed>sciloom_tmp_1</speed>
-            </taskdata0>
-          </taskdatas>
-          <switchon>1</switchon>
-          <speedunit>rpm</speedunit>
-          <!-- remaining fields omitted -->
-        </component>
-
-    Disabled branch's Stir task:
-        <switchon>0</switchon>
-
-The operation comes from Sample and Run GPC; this is not that entire workflow.
-The fixed zone/shaker binding is taken from the latest application configuration.
 """
 
 from pathlib import Path

@@ -178,7 +178,7 @@ covered by the Developer Guide.
 
 ## Try common failures
 
-Save this complete example to a `.py` file to reproduce four errors. Use the
+Save this complete example to a `.py` file to reproduce these errors. Use the
 codes to find the cause and correction in the tables above.
 
 <!-- example: failures -->
@@ -227,11 +227,51 @@ class UnboundShaker(Function):
         self.shaker.stop()
 
 
+class Limits(Function):
+    """A host list cannot enter a runtime expression.
+
+    Attributes:
+        volume: Sample volume in millilitres.
+        small: Whether the volume is below the first limit.
+    """
+
+    volume: Input[float]
+    small: Output[bool]
+
+    def __init__(self) -> None:
+        self.limits = [1.0, 5.0]
+
+    @runtime
+    def run(self) -> None:
+        self.small = self.volume < self.limits
+
+
+class Both(Function):
+    """A condition AutoSuite refuses.
+
+    Attributes:
+        a: First flag.
+        b: Second flag.
+        both: Whether both flags are set.
+    """
+
+    a: Input[bool]
+    b: Input[bool]
+    both: Output[bool]
+
+    @runtime
+    def run(self) -> None:
+        self.both = self.a and self.b
+
+
+
 for action in (
     lambda: Counter().count,
     lambda: BareSpeed().compile(target=AutoSuiteTarget()),
     lambda: ForLoop().compile(target=AutoSuiteTarget()),
     lambda: UnboundShaker().compile(target=AutoSuiteTarget()),
+    lambda: Limits().compile(target=AutoSuiteTarget()),
+    lambda: Both().compile(target=AutoSuiteTarget()),
 ):
     try:
         action()
@@ -243,4 +283,6 @@ runtime_field_read
 type_mismatch
 python_subset
 missing_resource_binding
+host_value
+unsupported_short_circuit
 ```

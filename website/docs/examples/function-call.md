@@ -1,26 +1,37 @@
-# Function composition
+# Call another Function
 
-Identity copies its float input to its output. Caller creates that child in host Python, embeds the host value 2.5 and stores the call result in persistent runtime state.
+Use a child Function when several procedures need the same calculation.
+This small example copies a value so you can see the input and output passing
+without additional experimental logic.
 
-## Run and inspect
+`Caller` creates an `Identity` child in its constructor. Its runtime method
+calls the child with `x=self.value` and stores the returned `y` in
+`self.result`. With the default constructor argument, that value is 2.5.
+
+To use another fixed value, construct `Caller(value=7.0)` before compiling.
+The generated package contains both Functions. `result` is internal
+`Var` state; it is not an output parameter of `Caller`.
+
+## Compile the example
 
 ```bash
 uv run python examples/function_call.py
 ```
 
-The source separates host specialization from execution: changing Caller(value=...) before compilation changes the embedded input. A child call binds a typed input and copies its output back on normal return. The ASFP contains both procedures; compiling the file does not execute either procedure.
+```text
+function_call.asfp
+```
 
-The module docstring below records expected terminal output.
+The package is written beside the source. This command compiles the two
+Functions; it does not execute the copy. See
+[reusing a calculation](../user-guide/tutorial/agitator.md) for the same pattern
+in the stirring procedure.
 
---8<-- "website/snippets/hardware-boundary.md"
+## Source and generated package
 
-## Source and generated files
-
-[Download Python source](../_generated/examples/function_call.py)
-
-- [function_call.asfp](../_generated/examples/function_call.asfp)
+[Download Python source](../_generated/examples/function_call.py) ·
+[Download ASFP](../_generated/examples/function_call.asfp)
 
 ```python
 --8<-- "examples/function_call.py"
 ```
-

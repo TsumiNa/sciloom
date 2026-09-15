@@ -1,9 +1,11 @@
-# Composition and shared devices
+# Share a shaker between steps
 
-A Function can call other Functions. The child is created in the parent's
-`__init__`, called from the parent's runtime method, and its outputs are bound
-by assignment. This program goes one step further: the child and the parent use
-the same shaker.
+You may want one Function to choose or save a setting and another to start
+the device. Give both steps a reference to the same shaker.
+
+In this example, `SetSpeed` saves the requested speed. `StirStage` calls it
+and then starts the shaker. Save the complete program to a `.py` file to
+compile it.
 
 ```python
 from sciloom import Agitator, Function, Input, RotationalSpeed, runtime
@@ -51,34 +53,41 @@ target = AutoSuiteTarget(
     devices={"shaker": AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="23")},
 )
 result = StirStage().compile(target=target)
-assert result.artifact.suffix == ".asfp"
+print(result.write("shared_shaker.asfp").name)
+```
+```text
+shared_shaker.asfp
 ```
 
-## Calling a child
+## Share the device in the constructor
 
-A call is a statement. Supply each input exactly once, positionally or by
-keyword. Bind one output with one assignment destination, several outputs with a
-tuple destination in declaration order, and call a child with no outputs as a
-bare statement. Outputs bind to whole fields, never to list elements. Calls are
-never nested inside arithmetic: bind the output, then use the field.
+`self.stage = SetSpeed()` creates the child. The next line,
+`self.stage.shaker = self.shaker`, makes it use the parent's logical shaker.
+Both steps now save settings on the same device, so the target needs just one
+binding, under `"shaker"`.
 
-Inputs are copied into a fresh frame and outputs are copied back after the call
-returns, so parent and child never share a list. A child's `Var` state persists
-across calls; calling the same instance twice continues its state, while a second
-instance created in `__init__` has state of its own. A child the runtime method
-never calls is left out of the compiled program. The
-[function-call example](../../examples/function-call.md) shows the plain form.
+Without the sharing assignment, the child has its own shaker. Bind that separate
+device using the name `"stage.shaker"`. Share a logical reference in the
+constructor; supply concrete AutoSuite hardware data in the target.
 
-## Sharing a logical device
+## Pass values between steps
 
-`self.stage.shaker = self.shaker` in the constructor makes the child's slot refer
-to the parent's logical device. Without that line the child's slot is a device
-of its own, bound by the target under the component path `stage.shaker`. With it,
-both procedures name one resource with one configuration state, bound once under
-`shaker`.
+`self.stage(speed=self.speed)` supplies the child's input. This child has no
+outputs. For a child with an output, receive it with an assignment, as in the
+[volume calculation](../tutorial/agitator.md). Several outputs use a tuple
+assignment in declaration order.
 
-Sharing lets configuration and lifecycle live in different Functions: here the
-child saves the speed and the parent starts. The compiler still proves that every
-required value is configured on every path that reaches a `start()`, following
-calls in both directions, within one invocation of the entry Function. It never
-assumes that an earlier invocation left the device configured.
+Supply each input once, by position or keyword. A call result must go to a
+whole field; if you need it in a list element or an arithmetic expression,
+store it in a field first.
+
+A child receives a copy of each input list. Updating that copy does not change
+the parent's list; output lists are copied back when the child returns.
+Each child instance also keeps its own `Var` values between calls.
+
+## Configure before starting
+
+Here the child saves the speed and the parent starts. SciLoom checks the
+configuration across both calls. If a branch skips `SetSpeed` but still
+reaches `start()`, compilation fails. The check does not assume that a
+previous call to the entry Function configured the device.

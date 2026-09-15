@@ -1,26 +1,46 @@
 # Copy and scale a list
 
-ScaleValues copies a typed numeric input list and multiplies each element by factor. Input [1, 2, 3] with factor 2.5 produces [2.5, 5, 7.5] under reference semantics, leaving the input unchanged.
+Use `ScaleValues` to multiply a list by a factor while keeping the original
+values. It starts with `self.result = self.values`, which copies the whole
+list, then updates each element of `result`.
 
-## Run and inspect
+Expected procedure results:
+
+| Inputs | Output `result` |
+| --- | --- |
+| `values=[1.0, 2.0, 3.0]`, `factor=2.5` | `[2.5, 5.0, 7.5]` |
+| `values=[]`, `factor=2.5` | `[]` |
+| `values=[1.0, 2.0]`, `factor=0.0` | `[0.0, 0.0]` |
+
+The caller's list stays unchanged. The initial whole-list assignment also
+gives the output a value when the input is empty and the loop runs zero times.
+
+`index` is a `Var`, so the method resets it before each loop. The unwrapped
+`batch_size: int = 8` declaration is ordinary Python configuration and is
+unused in this calculation; it does not set the list length.
+
+## Compile the example
 
 ```bash
 uv run python examples/scale_values.py
 ```
 
-The whole-list assignment establishes an independent output before the loop, including empty input. index is persistent Var state but is explicitly reset for each invocation. batch_size is ordinary host configuration; it is not used by this runtime algorithm and does not become an ASFP runtime field.
+```text
+scale_values.asfp
+```
 
-The module docstring below records expected terminal output.
+The generated function accepts `values` and `factor` on each call and returns
+`result`. The Python command writes the package beside the source, without
+running the calculation on equipment. The results above are covered by reference
+execution; generated packages still need AutoSuite Executor validation.
 
---8<-- "website/snippets/hardware-boundary.md"
+For the loop syntax, see [working with samples](../user-guide/tutorial/lists-and-loops.md).
 
-## Source and generated files
+## Source and generated package
 
-[Download Python source](../_generated/examples/scale_values.py)
-
-- [scale_values.asfp](../_generated/examples/scale_values.asfp)
+[Download Python source](../_generated/examples/scale_values.py) ·
+[Download ASFP](../_generated/examples/scale_values.asfp)
 
 ```python
 --8<-- "examples/scale_values.py"
 ```
-

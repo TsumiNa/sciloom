@@ -45,10 +45,10 @@ nav:
           - 4. Work with a list of samples: user-guide/tutorial/lists-and-loops.md
           - 5. Keep a count across calls: user-guide/tutorial/compile.md
       - Advanced:
-          - Composition and shared devices: user-guide/advanced/composition.md
-          - Host-time specialization: user-guide/advanced/specialization.md
-          - Device-dependent branches: user-guide/advanced/device-branches.md
-          - AutoSuite rules: user-guide/advanced/autosuite.md
+          - Share a shaker between steps: user-guide/advanced/composition.md
+          - Choose settings before compilation: user-guide/advanced/specialization.md
+          - Adapt to different devices: user-guide/advanced/device-branches.md
+          - Compile for AutoSuite: user-guide/advanced/autosuite.md
       - FAQ: user-guide/faq.md
       - Troubleshooting: user-guide/troubleshooting.md
       - Reference:

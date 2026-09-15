@@ -1,8 +1,11 @@
-# Device-dependent branches
+# Adapt to different devices
 
-One program can serve two instruments. A compile-time query asks what the bound
-device is or can do, and the compiler keeps only the branch that applies to the
-selected target.
+Suppose one agitator accepts a gain setting and another does not. Keep the
+shared stirring steps in one Function, and put the extra setting in a device
+condition.
+
+This example uses AutoSuite and a demonstration target from the checkout.
+The demo is a test implementation, not another supported physical instrument.
 
 ```python
 from examples.developer.demo_contribution import DemoAgitator, DemoTarget
@@ -41,35 +44,41 @@ print(autosuite.artifact.suffix, demo.artifact.suffix)
 .asfp .json
 ```
 
-`DemoAgitator` and `DemoTarget` come from the
-[independent device example](../../examples/demo-device.md): an agitator with an
-extra `gain` property, and a target that emits JSON. The same source compiles for
-AutoSuite, where the gain branch is dropped, and for the demo target, where it is
-kept. The [portable agitation example](../../examples/portable-agitation.md)
-shows the two artifacts.
+The same `Portable` source produces an AutoSuite `.asfp` and a demo `.json`.
+The compiler keeps the gain assignment for `DemoAgitator` and removes it for
+the AutoSuite shaker. Both versions save the requested speed and start.
 
-## The three queries
+To run this example, save it at the checkout root so the
+`examples.developer.demo_contribution` import is available, then run it with
+`uv run python <your_file>.py`. The
+[portable agitation example](../../examples/portable-agitation.md) provides a
+ready-to-run file and both generated outputs.
 
-| Query | Asks | Effect on the branch |
-|---|---|---|
-| `comptime.is_device(self.shaker, DemoAgitator)` | is the bound device this class or a subclass | the branch sees the device as that class, so `self.shaker.gain` type-checks |
-| `comptime.can_write(self.shaker, "speed")` | does the bound device accept writes to this property | none beyond selection |
-| `comptime.supports(self.shaker, Agitator.start)` | does the bound device support this command | none beyond selection |
+## Choose a condition
 
-A query takes two positional arguments: a declared device slot and, in order, a
-device class, a property name as a string literal, or a command method. It must
-be the whole condition of an `if` or `elif`; combine queries by nesting, not with
-`and`. The arguments never depend on runtime values.
+Use `comptime.is_device` when you need a property introduced by a particular
+device type. Inside that branch, `self.shaker.gain` is recognized as a property
+of `DemoAgitator`.
 
-Every branch is compiled and type-checked, so a branch for an instrument you are
-not deploying today must still be valid source. Only the selected branch must be
-supported by the chosen target. A missing binding is an error, never a false
-answer. A query about a device class unrelated to the slot's declared type, or
-about a sibling class inside an already narrowed branch, is refused.
+Use `comptime.can_write(self.shaker, "speed")` to ask whether the selected
+device accepts a declared property. Use
+`comptime.supports(self.shaker, Agitator.start)` to ask about a command.
 
-## Portability has limits
+A device query must be the entire condition of an `if` or `elif`. To require
+two conditions, nest the `if` statements. Property names are string literals;
+the other arguments identify a declared device slot and a device class or command.
 
-The target reports what its instrument can do; SciLoom does not clamp a value,
-substitute a command or invent behaviour. If the selected branch uses an
-operation the bound profile lacks, or a target's own rule cannot be proven,
-compilation fails with a diagnostic naming the statement.
+## What is checked?
+
+The compiler checks the source and types in every branch. It then chooses
+branches using the target's bindings and checks whether the selected device
+supports those operations. A missing binding is an error; it is not treated as
+a false condition.
+
+Keep runtime decisions, such as `if self.enabled:`, separate from device
+queries. A device query is decided during compilation and does not inspect a
+running instrument.
+
+Different hardware may need different settings or experimental steps. Device
+conditions let you write those differences explicitly; SciLoom does not invent
+equivalent commands or adjust values for you.

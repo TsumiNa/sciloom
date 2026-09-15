@@ -1,30 +1,45 @@
 # Stir a rack of samples
 
-StirRack is the completed program from the User Guide's five lessons. It finds
-the largest supplied sample volume, chooses a speed, then starts or stops the
-bound shaker. The [last lesson](../user-guide/tutorial/compile.md) adds a counter;
-the [tutorial overview](../user-guide/tutorial/index.md) links all earlier versions.
+This is the completed program from the [five-lesson tutorial](../user-guide/tutorial/index.md).
+Use it to see how calculations and device steps fit into one procedure.
 
-## Run and inspect
+The caller supplies `volumes`, a list of sample volumes, and `enabled`,
+which selects starting or stopping. The program reads those supplied numbers;
+it does not measure the samples.
+
+| Child Function | Job |
+| --- | --- |
+| `LargestVolume` | Find the largest supplied volume, or 0.0 for an empty list |
+| `ChooseSpeed` | Choose 300 rpm below 2.0, otherwise 600 rpm |
+| `CountStirs` | Count requests after the start operation completes |
+
+With `volumes=[1.0, 2.5, 0.5]` and `enabled=True`, the procedure selects
+600 rpm, saves that speed, starts the shaker and increments the counter.
+With the same volumes and `enabled=False`, it stops without incrementing.
+Both inputs are required on every call.
+
+The speeds and threshold are example choices. Change `ChooseSpeed` to express
+your own decision. The list loop resets its index each call, while the counter
+keeps its value; [lesson 5](../user-guide/tutorial/compile.md) explains the difference.
+
+## Compile for your rack
 
 ```bash
 uv run python examples/stir_rack.py
 ```
 
-The program composes three child Functions: a loop with a persistent index that
-is reset on every call, a two-branch speed choice, and a counter whose state
-survives across calls. The parent binds their outputs by assignment, then either
-saves the chosen speed and starts the shaker or stops it.
+```text
+stir_rack.asfp
+```
 
-The module docstring below records expected terminal output.
+The package is written beside the source. Match the target's zone and shaker ID
+to your AutoSuite configuration, and validate the package with AutoSuite Executor
+before using it on equipment. Compiling the file does not execute the experiment.
 
---8<-- "website/snippets/hardware-boundary.md"
+## Source and generated package
 
-## Source and generated files
-
-[Download Python source](../_generated/examples/stir_rack.py)
-
-- [stir_rack.asfp](../_generated/examples/stir_rack.asfp)
+[Download Python source](../_generated/examples/stir_rack.py) ·
+[Download ASFP](../_generated/examples/stir_rack.asfp)
 
 ```python
 --8<-- "examples/stir_rack.py"
