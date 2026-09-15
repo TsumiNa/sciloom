@@ -19,7 +19,7 @@ program executes on equipment. [Host-time specialization](../user-guide/advanced
 
 **Input, Output, Var.** The three field roles: a value supplied at each call, a
 value written back at each call, and persistent state of the instance.
-[Tutorial 2](../user-guide/tutorial/inputs-and-units.md).
+[Field declarations](../user-guide/reference/declarations.md).
 
 **Host configuration.** An attribute stored in `__init__` or an unwrapped class
 annotation; a scalar one becomes a literal in the program. [Host-time specialization](../user-guide/advanced/specialization.md).
@@ -29,11 +29,11 @@ called from the parent's runtime method. [Composition](../user-guide/advanced/co
 
 **Logical device, device slot.** A field declared with a device family type,
 `shaker: Agitator`: the program's need for an instrument, not the instrument.
-[Tutorial 4](../user-guide/tutorial/agitator.md).
+[Lesson 1](../user-guide/tutorial/first-function.md).
 
 **Profile.** Deployment data for one concrete instrument, such as
 `AutoSuiteIndividualShaker(zone=..., device_id=...)`, that a target binds to a
-slot. [Tutorial 5](../user-guide/tutorial/compile.md).
+slot. [Lesson 1](../user-guide/tutorial/first-function.md).
 
 **Binding.** The mapping from a slot's name, a field name or a component path
 such as `stage.shaker`, to a profile. [Devices and targets](../user-guide/reference/devices-and-targets.md).
@@ -42,7 +42,7 @@ such as `stage.shaker`, to a profile. [Devices and targets](../user-guide/refere
 explicitly: `AutoSuiteTarget`. [AutoSuite rules](../user-guide/advanced/autosuite.md).
 
 **Artifact.** What a target produces: for AutoSuite, an `.asfp` package.
-[Tutorial 5](../user-guide/tutorial/compile.md).
+[Lesson 1](../user-guide/tutorial/first-function.md).
 
 **Compile-time query.** `comptime.is_device`, `can_write` or `supports`, asked
 as the whole condition of an `if`; the compiler keeps the branch that applies to
@@ -52,8 +52,8 @@ the bound device. [Device-dependent branches](../user-guide/advanced/device-bran
 literals, and device-dependent branches are selected. [Host-time specialization](../user-guide/advanced/specialization.md).
 
 **Definite configuration.** The proof, made by the compiler, that every
-property a `start()` requires was assigned on every path that reaches it.
-[Tutorial 4](../user-guide/tutorial/agitator.md).
+property an agitation `start()` requires was assigned on every path that reaches it.
+[Device operations](../user-guide/reference/devices-and-targets.md#agitator).
 
 **Diagnostic.** A structured error: code, message, path into the program and,
 when known, the source line. [Troubleshooting](../user-guide/troubleshooting.md).
@@ -104,7 +104,7 @@ branch, versus the program after specialization for one deployment. [Compilation
 **Specialization.** The pure function that answers device-dependent branches
 from bindings and retypes resources to their profiles. [Specialization internals](../developer/advanced/specialization.md).
 
-**Definite configuration.** The compiler's proof that every property a lifecycle
+**Definite configuration.** The compiler's proof that every property an agitation
 start requires was written on every reachable path. [Required configuration](../developer/reference/device-contracts.md#required-configuration).
 
 **Semantic id.** The namespaced, versioned identifier of a device type, property

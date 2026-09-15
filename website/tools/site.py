@@ -17,6 +17,12 @@ ROOT = Path(__file__).resolve().parents[2]
 EXAMPLES = (
     "tutorial/start_shaker.py",
     "tutorial/start_shaker.asfp",
+    "tutorial/control_shaker.py",
+    "tutorial/control_shaker.asfp",
+    "tutorial/choose_stirring_speed.py",
+    "tutorial/choose_stirring_speed.asfp",
+    "tutorial/stir_sample_rack.py",
+    "tutorial/stir_sample_rack.asfp",
     "function_call.py",
     "function_call.asfp",
     "agitation.py",

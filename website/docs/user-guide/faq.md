@@ -2,11 +2,11 @@
 
 **Why can't I write a `for` loop?** The runtime language has `while` only.
 Declare an index as a `Var`, reset it at the top of the method, and loop while
-it is below `len(...)`. See [tutorial 3](tutorial/lists-and-loops.md).
+it is below `len(...)`. See [lesson 4](tutorial/lists-and-loops.md).
 
 **Why is there no `return`?** A Function hands results back through `Output`
 fields, which must be assigned on every path through the method. See
-[tutorial 2](tutorial/inputs-and-units.md).
+[lesson 3](tutorial/agitator.md).
 
 **Can I use a local variable inside `@runtime`?** No. Every name the method
 assigns is a declared field; use a `Var`. See the
@@ -15,7 +15,7 @@ assigns is a declared field; use a `Var`. See the
 **Does a `Var` reset on every call?** No. Its literal is the state when the
 session starts, and later calls continue from where the last one stopped. Reset
 it inside the method when a call should start fresh. See
-[tutorial 1](tutorial/first-function.md).
+[lesson 5](tutorial/compile.md).
 
 **Can an `Input` have a default value?** No; `Input` and `Output` have no
 defaults. Pass the value from the caller, or store it in the constructor as host
@@ -23,7 +23,7 @@ configuration. See [host-time specialization](advanced/specialization.md).
 
 **Why is `speed = 0 * rpm` not a stop?** Assigning a property saves a
 configuration; only `stop()` disables the device. See
-[tutorial 4](tutorial/agitator.md).
+[lesson 2](tutorial/inputs-and-units.md).
 
 **Can I read the shaker's current speed?** No. Device properties are write-only
 in this release; keep the value you configured in a `Var`. See

@@ -1,79 +1,77 @@
-# 2. Inputs, outputs and speeds
+# 2. Supply a speed and switch
 
-The counter kept state but exchanged nothing. Most Functions receive values and
-hand results back. Add a Function that turns a sample volume into a stirring
-speed.
+The first program always starts at 300 rpm. Change it so its caller can supply
+a speed and choose whether to start or stop.
 
-<!-- tutorial: step -->
+Add these declarations to `StirRack`, along with the existing `shaker` field:
+
 ```python
-from sciloom import Input, Output, RotationalSpeed, rpm
-
-
-class ChooseSpeed(Function):
-    """Choose a stirring speed from a sample volume.
-
-    Attributes:
-        volume: Sample volume in millilitres.
-        speed: A gentle speed for small volumes, a faster one otherwise.
-    """
-
-    volume: Input[float]
-    speed: Output[RotationalSpeed]
-
-    @runtime
-    def run(self) -> None:
-        if self.volume < 2.0:
-            self.speed = 300 * rpm
-        else:
-            self.speed = 600 * rpm
+speed: Input[RotationalSpeed]
+enabled: Input[bool]
 ```
 
-An `Input` is supplied by whoever calls the Function; an `Output` is written back
-when the call returns. Neither has a default on the class, and every `Output`
-must be assigned on every path through the method, which is why the `else`
-branch is not optional here.
+An `Input` is a value supplied each time the generated function is called.
+Here the AutoSuite caller supplies both inputs. Compiling the Python file does
+not choose their values. Inputs do not have class-level defaults.
 
-`RotationalSpeed` is the one physical quantity in this release. A speed is
-written as a number times a unit, `300 * rpm`; revolutions per second, `rps`,
-is the canonical form and the two compare equal:
+Replace the two lines in `run` with:
 
-<!-- tutorial: checkpoint -->
 ```python
-from sciloom import rps
-
-print(600 * rpm == 10 * rps)
-print(ChooseSpeed().compile(target=AutoSuiteTarget()).write("choose_speed.asfp").name)
+if self.enabled:
+    self.shaker.speed = self.speed
+    self.shaker.start()
+else:
+    self.shaker.stop()
 ```
+
+This is an ordinary `if/else` written inside a runtime method. When
+`enabled` is false, the procedure skips the speed assignment and stops.
+
+## What the inputs mean
+
+The table describes what the generated function does when called:
+
+| Inputs | Behaviour |
+| --- | --- |
+| `enabled=True`, `speed=300*rpm` | Save 300 rpm, then start |
+| `enabled=True`, `speed=600*rpm` | Save 600 rpm, then start |
+| `enabled=False`, `speed=300*rpm` | Stop and retain the previously saved configuration |
+
+Both inputs are required on every call, including a stop request. In that branch
+the supplied speed is not applied.
+
+In Python source, write a speed with its unit, for example `300 * rpm`.
+`RotationalSpeed` keeps a speed distinct from a plain number. You can also
+use `rps`: `600 * rpm` and `10 * rps` represent the same speed.
+The expressions in the table describe values; they are not AutoSuite UI input
+instructions.
+
+Calling `start()` again applies the newly saved speed. Setting a speed of zero
+does not call `stop()`; use the explicit stop branch to disable agitation.
+
+## Complete file
+
+This version includes the new imports, both inputs and the unchanged equipment
+binding. Use it as a replacement for the first lesson's file.
+
+??? example "Show control_shaker.py"
+
+    ```python
+    --8<-- "examples/tutorial/control_shaker.py"
+    ```
+
+```bash
+uv run python examples/tutorial/control_shaker.py
+```
+
 ```text
-True
-choose_speed.asfp
+control_shaker.asfp
 ```
 
-A bare number is not a speed. Types are checked before anything is generated,
-so assigning `600` to a speed output is refused with the path of the offending
-statement:
+The package is written beside its source. It now expects `speed` and `enabled`
+when AutoSuite calls it.
 
-<!-- tutorial: checkpoint -->
-```python
-class BareNumber(Function):
-    speed: Output[RotationalSpeed]
+[Python source](../../_generated/examples/tutorial/control_shaker.py) ·
+[Generated package](../../_generated/examples/tutorial/control_shaker.asfp)
 
-    @runtime
-    def run(self) -> None:
-        self.speed = 600
-
-
-try:
-    BareNumber().compile(target=AutoSuiteTarget())
-except Exception as error:
-    print(error)
-```
-```text
-$.functions[0].body[0]: Cannot assign integer to rotational_speed. [type_mismatch]
-```
-
-The same checker widens an integer to a float where that is safe and never
-narrows a float to an integer; `bool` is its own type, and a condition must be
-a Boolean rather than a number.
-
-Next: [3. Lists and loops](lists-and-loops.md).
+Next: [3. Reuse a calculation](agitator.md).

@@ -1,38 +1,21 @@
-"""For experiment authors: the User Guide tutorial's stirring program, compiled to ASFP.
+"""For experiment authors: choose a stirring speed from a list of volumes.
 
 Run from the repository root:
-    uv run python examples/stir_rack.py
+    uv run python examples/tutorial/stir_sample_rack.py
 
 Expected terminal output:
-    stir_rack.asfp
+    stir_sample_rack.asfp
 
-StirRack calculates the largest supplied sample volume in a rack, chooses a stirring speed
-for it, and either configures and starts the bound shaker or stops it. Each
-step is introduced in the User Guide tutorial; this file is the
-complete program those pages build. Compiling writes the package beside this
-file; it does not operate the shaker.
-
-Full generated output: stir_rack.asfp, beside this source file.
+The largest supplied volume selects the speed. No volume is measured.
+Compiling writes a package without running equipment; the thresholds and speeds
+are programming examples.
+Full generated output: stir_sample_rack.asfp, beside this source file.
 """
 
 from pathlib import Path
 
 from sciloom import Agitator, Function, Input, Output, RotationalSpeed, Var, rpm, runtime
 from sciloom_autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
-
-
-class CountStirs(Function):
-    """Count how many times stirring has been requested in this session.
-
-    Attributes:
-        stirs: Number of requests so far; persists across calls.
-    """
-
-    stirs: Var[int] = 0
-
-    @runtime
-    def run(self) -> None:
-        self.stirs += 1
 
 
 class ChooseSpeed(Function):
@@ -97,7 +80,6 @@ class StirRack(Function):
     def __init__(self) -> None:
         self.measure = LargestVolume()
         self.choose = ChooseSpeed()
-        self.counter = CountStirs()
 
     @runtime
     def run(self) -> None:
@@ -106,7 +88,6 @@ class StirRack(Function):
         if self.enabled:
             self.shaker.speed = self.speed
             self.shaker.start()
-            self.counter()
         else:
             self.shaker.stop()
 

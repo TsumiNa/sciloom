@@ -38,12 +38,12 @@ nav:
   - User Guide:
       - Overview: user-guide/index.md
       - Tutorial:
-          - Stir a rack of samples: user-guide/tutorial/index.md
-          - 1. Your first Function: user-guide/tutorial/first-function.md
-          - 2. Inputs, outputs and speeds: user-guide/tutorial/inputs-and-units.md
-          - 3. Lists and loops: user-guide/tutorial/lists-and-loops.md
-          - 4. Stirring with an Agitator: user-guide/tutorial/agitator.md
-          - 5. Bind and compile: user-guide/tutorial/compile.md
+          - Write a stirring procedure: user-guide/tutorial/index.md
+          - 1. Start a shaker: user-guide/tutorial/first-function.md
+          - 2. Supply a speed and switch: user-guide/tutorial/inputs-and-units.md
+          - 3. Reuse a calculation: user-guide/tutorial/agitator.md
+          - 4. Work with a list of samples: user-guide/tutorial/lists-and-loops.md
+          - 5. Keep a count across calls: user-guide/tutorial/compile.md
       - Advanced:
           - Composition and shared devices: user-guide/advanced/composition.md
           - Host-time specialization: user-guide/advanced/specialization.md

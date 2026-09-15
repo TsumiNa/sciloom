@@ -1,9 +1,9 @@
 # Stir a rack of samples
 
-StirRack is the program the User Guide tutorial builds one class per page:
-measure the largest volume in a rack, choose a speed for it, then configure and
-start the bound shaker or stop it. This page is the runnable, downloadable form;
-the [tutorial](../user-guide/tutorial/index.md) explains each step.
+StirRack is the completed program from the User Guide's five lessons. It finds
+the largest supplied sample volume, chooses a speed, then starts or stops the
+bound shaker. The [last lesson](../user-guide/tutorial/compile.md) adds a counter;
+the [tutorial overview](../user-guide/tutorial/index.md) links all earlier versions.
 
 ## Run and inspect
 

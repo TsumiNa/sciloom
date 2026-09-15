@@ -44,15 +44,15 @@ module docstring; long results belong in same-basename companion files.
 
 ## Tutorial series
 
-The Developer Guide uses a cumulative series. The User Guide is moving to
+The Developer Guide uses a cumulative series. The User Guide uses
 independently runnable lesson snapshots: include the actual example source,
 provide its companion download, and verify its behaviour and generated package.
 Do not make the teaching order depend on appending code to an earlier page.
 
 ## Writing for experiment authors
 
-Assume readers know variables, functions and if/while. Explain class, self and
-__init__ briefly when the experiment first needs them. Begin with a concrete
+Assume readers know variables, functions and if/while. Explain `class`, `self` and
+`__init__` briefly when the experiment first needs them. Begin with a concrete
 task, show what to change, and explain the result. Put deliberate failure cases
 in troubleshooting and keep their execution tests.
 

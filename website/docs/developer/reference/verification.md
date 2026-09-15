@@ -27,6 +27,10 @@ uv run python examples/agitation.py
 uv run python examples/scale_values.py
 uv run python examples/non_zero_array_min.py
 uv run python examples/stir_rack.py
+uv run python examples/tutorial/start_shaker.py
+uv run python examples/tutorial/control_shaker.py
+uv run python examples/tutorial/choose_stirring_speed.py
+uv run python examples/tutorial/stir_sample_rack.py
 uv run python -m examples.developer.agitation_ir
 uv run python -m examples.developer.list_ir
 uv run python -m examples.developer.demo_device

@@ -190,6 +190,11 @@ and `uv run python examples/agitation.py`. Run the list author examples with `uv
 `uv run python examples/non_zero_array_min.py`. Also run the developer example
 with `uv run python -m examples.developer.agitation_ir` from the repository root.
 Run `uv run python -m examples.developer.list_ir` for direct list IR and JSON v4.
+Run each independent user lesson with `uv run python examples/tutorial/start_shaker.py`,
+`uv run python examples/tutorial/control_shaker.py`,
+`uv run python examples/tutorial/choose_stirring_speed.py` and
+`uv run python examples/tutorial/stir_sample_rack.py`; the completed lesson is
+`uv run python examples/stir_rack.py`. Their companions must remain reproducible.
 The AutoSuite smoke check and `python autosuite/tools/audit_corpus.py` (run after
 reference changes) skip their corpus sections when `autosuite/corpus/` is absent,
 so CI exercises only what the repository carries. Syntax-check `examples/proposed_frontend/*.py`. On the AutoSuite host, generated `.app` files must additionally pass Executor simulation. The historical compiler, ASPY inputs and text views have been removed; refactor work starts from the retained XML and semantic documentation.
