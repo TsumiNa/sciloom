@@ -88,9 +88,10 @@ Effectful reads, writes, clock access, messages, waits, logs and device actions
 are ordered statements. They cannot be duplicated or moved as pure expressions.
 First-version result-bearing external calls occupy an entire assignment RHS;
 capture their result in declared fields before further computation. Parameters
-are captured once at operation entry. Multi-result destinations are distinct
-fields; commit results together after the operation accepts them. A failure does
-not roll back earlier state changes, device actions or file writes.
+are captured once at operation entry. New external reads use distinct multi-result
+destination fields and commit results together after accepting them. This does
+not retroactively change existing Call output-binding or return-copy semantics.
+A failure does not roll back earlier state changes, device actions or file writes.
 
 Stage 5 extends, without breaking existing calls:
 
