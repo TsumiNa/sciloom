@@ -1,58 +1,86 @@
 # Runtime language
 
-What a `@runtime` method may contain. SciLoom reads the source and accepts a
-restricted subset of Python; the first construct outside it is named in a
-diagnostic.
+This reference applies inside `@runtime` methods. Constructors and the rest
+of the Python script use ordinary Python.
 
 ## Values
 
-| Type | Notes |
-|---|---|
-| `int`, `float` | an integer widens to a float where needed; a float never narrows |
-| `bool` | its own type; not an integer, not an index, the only valid condition |
-| `RotationalSpeed` | written `600 * rpm` or `10 * rps` from a host number; canonical unit is revolutions per second; the only physical quantity in this release |
-| `list[T]` | one-dimensional, homogeneous, `T` one of the four above |
+| Type | Rules |
+| --- | --- |
+| `int`, `float` | Integers can widen to floats; floats do not narrow to integers |
+| `bool` | Separate from integers; only Boolean expressions are valid conditions |
+| `RotationalSpeed` | `600 * rpm` or `10 * rps`; the only physical quantity currently supported |
+| `list[T]` | One-dimensional list of `int`, `float`, `bool` or `RotationalSpeed` |
 
-There is no implicit truthiness: a condition is a Boolean expression, not a
-number or a list. Lists have no arithmetic, comparison or truthiness of their own.
+A speed literal uses a number known when the program is compiled. For a speed
+supplied by the caller, use `Input[RotationalSpeed]`.
+The internal unit for speed is revolutions per second.
+
+Lists require an element type: no bare `list`, `list[Any]`, mixed types
+or nested lists. An empty `[]` gets its element type from its destination.
+List-to-list assignment requires the same element type; a literal assigned to
+`list[float]` may contain integers.
 
 ## Expressions
 
-| Supported | Not supported |
-|---|---|
-| literals; `self.<field>`; a host scalar through `self` | local names, module globals, attribute chains |
-| `+ - * /` (division yields `float`); unary `+ - not` | `** % //`, bitwise operators |
-| one comparison `== != < <= > >=` | chained comparisons, `in`, `is` |
-| `and`, `or` (refused by AutoSuite; see [AutoSuite rules](../advanced/autosuite.md)) | conditional expressions |
-| `[a, b]`, `self.items[i]`, `len(self.items)` | slicing, comprehensions, list methods, any other call |
-| `300 * rpm` with a host number | a unit applied to a runtime value; use `Input[RotationalSpeed]` |
+| Supported | Outside the source language |
+| --- | --- |
+| Literals, runtime fields, scalar host settings through `self` | Local variable names, arbitrary module globals or attribute chains |
+| `+ - * /`, unary `+ - not` | `** % //`, bitwise operators |
+| A single comparison: `== != < <= > >=` | Chained comparisons, `in`, `is` |
+| `and`, `or` | Conditional expressions such as `a if flag else b` |
+| List literals, indexing, `len(self.items)` | Slicing, comprehensions, list methods such as `append` |
+| `300 * rpm` from a host number | Attaching a unit to a runtime number |
+
+Arithmetic and ordering comparisons require numeric operands. Division produces
+a float. Speeds support equality and inequality, but no runtime arithmetic. A condition
+must be Boolean: use `self.count > 0`, not `self.count`.
+Lists have no implicit truth value, whole-list comparisons or arithmetic.
+
+**AutoSuite restriction:** although SciLoom accepts `and` and `or`,
+this target rejects them. Use [nested conditions](../troubleshooting.md#autosuite-rejects-boolean-combinations).
 
 ## Statements
 
-| Supported | Not supported |
-|---|---|
-| `self.x = expr`, `self.x += expr` and the other augmented forms | assignment to anything but a declared field |
-| `self.items[i] = expr`, `self.items[i] += expr` | writes that extend a list |
-| `if` / `elif` / `else` | conditional expressions |
-| `while cond:` | `for`, `break`, `continue`, `while ... else` |
-| `self.x = self.child(...)`, `self.a, self.b = self.child(...)`, `self.child()` | calls nested in expressions, helper functions |
-| `self.shaker.speed = expr`; `self.shaker.start()` | reading a device property; `+=` on one |
-| `if comptime.is_device(...)`, `can_write`, `supports` as the whole condition | queries combined with `and`, or with runtime arguments |
-| `pass`, docstrings | `return`, `try`, `with`, `assert`, `del`, nested `def` |
+| Supported | Outside the source language |
+| --- | --- |
+| Assignments to declared runtime fields; `+= -= *= /=` | Assignments to local names or undeclared fields |
+| Assignments and augmented assignments to list elements | Slicing assignments, such as `self.items[1:] = ...` |
+| `if` / `elif` / `else`, `while` | `for`, `break`, `continue`, `while ... else` |
+| Calls to child Functions stored on `self` | Arbitrary helper calls, calls nested in expressions |
+| Device property assignment and declared commands | Property reads or augmented property assignments |
+| Whole `if/elif` conditions using `comptime` queries | Combining these queries with `and` / `or` or runtime arguments |
+| `pass`, docstrings | `return`, `try`, `with`, `assert`, `del`, nested definitions |
 
-Lists are values: assignment copies, and a call copies inputs in and outputs
-out. Indices are non-negative integers; negative or out-of-range access is an
-execution error, and a write never grows a list. An empty literal needs a
-declared element type. Explained in [lesson 4](../tutorial/lists-and-loops.md).
+See the [device reference](devices-and-targets.md) for property, command and
+query forms.
 
-## Calls
+## Lists and indices
 
-| Form | Rule |
-|---|---|
-| inputs | positional or keyword, each exactly once |
-| one output | one assignment destination |
-| several outputs | a tuple destination in declaration order |
-| no outputs | a bare call statement |
-| destinations | whole fields only, never list elements |
+`self.result = self.values` copies the complete list. Changing
+`self.result[0]` afterwards does not change `self.values[0]`. A child
+also receives copies of list inputs, and its output lists are copied back.
 
-Explained in [composition](../advanced/composition.md).
+Indices start at zero and must be integers, excluding Booleans. Negative and
+out-of-range indices are execution errors; writes never extend a list.
+When each call should scan the list from the beginning, reset the loop index
+at the start of the method.
+See [lesson 4](../tutorial/lists-and-loops.md).
+
+**AutoSuite restriction:** assign each output list as a whole on every return
+path, before reading or updating its elements. A loop can run zero times.
+An empty assignment is a valid empty result but supplies no elements to update.
+
+## Child Function calls
+
+| Result | Call form |
+| --- | --- |
+| No outputs | `self.child(...)` |
+| One output | `self.result = self.child(...)` |
+| Several outputs | `self.a, self.b = self.child(...)`, in output declaration order |
+
+Supply every input exactly once, by position or keyword. Output destinations
+must be whole fields. To use a result in an expression or a list element,
+store it in a field first. See [composition](../advanced/composition.md).
+
+**AutoSuite restriction:** recursive calls, direct or indirect, are refused.

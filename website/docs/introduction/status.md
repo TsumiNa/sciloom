@@ -1,26 +1,31 @@
 # Current capabilities
 
-SciLoom supports Python 3.12–3.14. Runtime methods come from ordinary Python files
-and are translated by source analysis; arbitrary Python execution is not part of
-the language. The semantic interchange format is Program/JSON v4.
+With Python 3.12–3.14, you can write a procedure in a `.py` file and generate an
+AutoSuite function package (`.asfp`). The current author API lets you:
 
-Implemented features include typed Function inputs/outputs/state, scalar and
-one-dimensional homogeneous lists, assignments, expressions, if/while, Function
-calls, logical device slots and explicit target bindings. Agitator configuration
-is captured by property assignment and applied by `start()`; `stop()` is explicit.
-Device-dependent branches can be selected at compile time.
+- Declare inputs, outputs and working values, including typed lists.
+- Calculate values, use `if` and `while`, and call reusable child Functions.
+- Save shaker settings and explicitly start or stop agitation.
+- Share a logical device between steps and bind it to an AutoSuite shaker.
+- Choose device-specific branches when compiling for a target.
 
-The AutoSuite target emits ASFP. An independent demonstration target validates
-the extension boundary. A reference interpreter defines SciLoom execution
-behavior; it does not simulate laboratory hardware.
+The runtime method accepts a [restricted Python subset](../user-guide/reference/runtime-language.md).
+Constructors and the surrounding script remain ordinary Python.
 
-GUI/server, public Application/global APIs, measured property reads, Notebook and
-interactive source support remain future work.
+Contributors can define devices and targets. The developer examples include a
+demonstration target, JSON v4 interchange and a reference interpreter for checking
+calculations and state changes. That interpreter does not simulate laboratory hardware.
+
+A visual editor, server, public Application/global API, measured property reads,
+and notebook or interactive source support are not yet available.
 
 ## What compilation establishes
 
-Compilation and XML/reference checks validate the generated structure and mapped
-semantics. They are separate from AutoSuite Executor simulation and hardware
-acceptance. Array guard behavior, device mappings and platform fault/recovery
-details still require real-platform validation; reference execution cannot prove
-vendor numeric or physical equivalence.
+Compilation checks the source, value types, declared device bindings and required
+configuration before generating XML. It does not connect to the instrument or
+prove that the procedure will run correctly on your deployment.
+
+Generated packages still need AutoSuite Executor validation and equipment
+acceptance. Array bounds checks, device mappings and fault/recovery behaviour
+require platform verification; SciLoom's reference execution cannot establish
+the instrument's numerical or physical behaviour.

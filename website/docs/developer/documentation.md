@@ -98,6 +98,13 @@ complete program (otherwise the last `python` fence of the last page). The tests
 run every checkpoint and prove that the steps, joined, are that complete program:
 a module docstring and the import layout may differ, the statements may not.
 
+The User Guide's troubleshooting page marks wrong/fixed runtime fragments with
+`<!-- correction: name wrong -->` and `<!-- correction: name fixed -->`.
+The explicit cases in `handbook_test.py` supply their declared fields, check
+the failure code and run the correction with representative inputs. When moving
+an example, move its test registration too. The complete diagnostic inspection
+and collected failure script live in developer troubleshooting.
+
 Pages outside a series that open with a complete program are listed in the same
 file; the first `python` fence runs, and a `text` fence placed directly after it
 states the stdout the test compares.

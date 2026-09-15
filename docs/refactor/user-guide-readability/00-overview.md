@@ -48,8 +48,8 @@ The first has no inputs and writes `300 * rpm`; the second has `speed` and
 `enabled`. Chapter 3 introduces Var as working storage; chapters 4 and 5 explain
 resetting versus preserving it. Example speeds and thresholds are illustrative.
 
-The initial public interface is already implemented; this example becomes a
-runnable learning file in PR1. Its expected output must be obtained by running it:
+The public interface is implemented. PR1 added this runnable learning file and
+verified its output by execution:
 
 ```python
 from pathlib import Path
@@ -88,8 +88,10 @@ inputs. Ordinary Python and constructors execute on the author's computer.
 
 ## Sequence and verification
 
-Stages 1 and 2 landed in PR #80 and PR #81. Stage 3 rewrites the advanced
-guides and author walkthroughs; the reference/help stage remains as planned.
+Stages 1–3 landed in PR #80, PR #81 and PR #82. Stage 4 completes the FAQ,
+symptom-based troubleshooting, reference tables and consistency review. Its
+verification includes the retained 30 author diagnostic codes, six executable
+wrong/fixed examples, and the moved developer diagnostic demonstrations.
 
 | PR | Plan | Outcome |
 | --- | --- | --- |

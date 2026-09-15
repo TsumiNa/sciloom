@@ -1,56 +1,72 @@
 # Devices and targets
 
+Declare the device your procedure needs; bind it to an instrument when compiling.
+
 ## Agitator
 
-`Agitator` is the one device family in this release. Declare a slot with
-`shaker: Agitator`; never construct a device or put a profile in the Function.
-Explained in [lesson 1](../tutorial/first-function.md).
+`Agitator` is the built-in device family. Declare `shaker: Agitator` in
+the Function. The slot already provides a logical reference; you do not need to
+create an Agitator object. Concrete hardware profiles belong in the target.
+See [lesson 1](../tutorial/first-function.md).
 
 | Operation | Effect |
-|---|---|
-| `self.shaker.speed = value` | evaluate now and save the configuration; running state unchanged |
-| `self.shaker.start()` | apply the complete saved configuration and enable agitation |
-| repeated `start()` | reapply the current configuration, staying enabled |
-| `self.shaker.stop()` | disable; saved and last-applied values are kept |
-| `self.shaker.speed = 0 * rpm` | configure zero speed; not a stop |
+| --- | --- |
+| `self.shaker.speed = value` | Save the value for the next start; leave running state unchanged |
+| `self.shaker.start()` | Apply the complete saved configuration and enable agitation |
+| Repeated `start()` | Apply the current configuration again and remain enabled |
+| `self.shaker.stop()` | Stop agitation; retain saved and last-applied configurations |
+| `self.shaker.speed = 0 * rpm` | Save zero speed; this assignment does not stop the device |
 
-Changing the source variable after the assignment does not change the saved
-value. Writing configuration while running does not change the applied snapshot
-until the next `start()`. A missing parameter is not read as zero. Property reads
-and `+=` are refused; there is no measured getter. Timing and timed stops are not
-part of `Agitator`. Before every `start()`, `speed` must have been assigned on
-every path that reaches it, across calls within the same invocation.
+Assignment captures the value immediately. Changing the variable that supplied
+it does not change the saved configuration. While running, a new assignment
+takes effect at the next `start()`.
+
+Before agitation starts, all properties required by the bound device must be
+configured on every path that reaches the call. For the AutoSuite shaker, this
+means `speed`. Configuration may come from a child called earlier in the
+same invocation; compilation does not assume a previous invocation supplied it.
+
+Property reads and augmented assignments such as `+=` are not supported.
+There is no measured getter, generic duration parameter or timed stop.
 
 ## Binding names
 
-| Slot | Name in `devices` |
-|---|---|
-| a field on the entry Function | the field name, `shaker` |
-| a field on a child that is not shared | the component path, `stage.shaker` |
-| a child's slot shared with the parent | the parent's name only |
+| Logical device | Key in the target's `devices` |
+| --- | --- |
+| Entry Function field | `"shaker"` |
+| Separate device on a child | `"stage.shaker"` |
+| Child sharing the parent's logical reference | The parent's `"shaker"` only |
 
-Every declared slot needs a binding, whether or not the runtime method uses it.
-Explained in [composition](../advanced/composition.md).
+Every declared slot needs a binding, including unused slots. Share a logical
+reference in the constructor with `self.stage.shaker = self.shaker`;
+do not assign a hardware profile to a Function field.
+See [the complete sharing example](../advanced/composition.md).
 
 ## AutoSuite target
 
-| Parameter | Value |
-|---|---|
-| `AutoSuiteTarget(version=..., devices={...})` | `version` defaults to `AutoSuiteVersion.V2_47_1_1`, the only supported version |
-| `AutoSuiteIndividualShaker(zone=..., device_id=...)` | a non-empty single-line zone name; a positive decimal shaker id |
-| uniqueness | no two slots may share a `device_id` or a `zone` |
-| artifact | UTF-8 XML, media type `application/xml`, suffix `.asfp` |
-| `result.write(path)` | writes the bytes, creates parent directories, returns the path; no suffix is added |
+| Item | Rule |
+| --- | --- |
+| Import | `from sciloom_autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget` |
+| `AutoSuiteTarget(version=..., devices={...})` | Defaults to `AutoSuiteVersion.V2_47_1_1`, the only supported serialization version |
+| `AutoSuiteIndividualShaker(zone=..., device_id=...)` | Existing zone name and positive decimal individual shaker ID |
+| Separate logical devices | Must have different IDs and zones |
+| Generated file | UTF-8 XML function package, with an `.asfp` extension |
+| `result.write(path)` | Write bytes, create parent directories and return the path; no extension added |
 
-The target's own rules are listed on [AutoSuite rules](../advanced/autosuite.md).
+Zone names must be nonempty single-line strings. SciLoom does not discover
+zones or check which physical instrument is connected.
+See [AutoSuite compilation](../advanced/autosuite.md) for package handoff and
+target-specific language restrictions.
 
 ## Compile-time queries
 
-| Query | Second argument |
-|---|---|
-| `comptime.is_device(self.shaker, DemoAgitator)` | a device class on the slot's inheritance chain; narrows the branch |
-| `comptime.can_write(self.shaker, "speed")` | a declared property name as a string literal |
-| `comptime.supports(self.shaker, Agitator.start)` | a command method |
+| Whole `if` / `elif` condition | Meaning |
+| --- | --- |
+| `comptime.is_device(self.shaker, DemoAgitator)` | Select by a device class on the slot's inheritance chain; narrow the type within that branch |
+| `comptime.can_write(self.shaker, "speed")` | Check a declared property's writability; name must be a string literal |
+| `comptime.supports(self.shaker, Agitator.start)` | Check a declared command |
 
-Queries appear only as the whole condition of an `if` or `elif`. Explained in
-[device-dependent branches](../advanced/device-branches.md).
+All source branches must satisfy SciLoom's language and type rules. The target's
+capabilities are checked for the selected branch. Queries use the supplied
+device bindings, not live instrument detection.
+See [device-dependent branches](../advanced/device-branches.md).

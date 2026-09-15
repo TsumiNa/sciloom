@@ -6,6 +6,7 @@ import subprocess
 import sys
 from html.parser import HTMLParser
 from pathlib import Path
+from textwrap import indent
 
 import pytest
 
@@ -89,7 +90,7 @@ def run_series_script(script, source, tmp_path):
         "user-guide/advanced/specialization",
         "user-guide/advanced/device-branches",
         "user-guide/advanced/autosuite",
-        "user-guide/troubleshooting",
+        "developer/troubleshooting",
         "developer/reference/ir",
         "developer/advanced/specialization",
         "developer/advanced/json-interchange",
@@ -107,10 +108,131 @@ def test_complete_handbook_snippet(page, tmp_path):
 
 
 def test_troubleshooting_failure_examples(tmp_path):
-    markdown = (ROOT / "website/docs/user-guide/troubleshooting.md").read_text()
+    markdown = (ROOT / "website/docs/developer/troubleshooting.md").read_text()
     program = re.search(r"<!-- example: failures -->\n```python\n(.*?)\n```\n```text\n(.*?)\n```", markdown, re.DOTALL)
     assert program is not None
     assert run_series_script(tmp_path / "failures.py", program.group(1), tmp_path).rstrip("\n") == program.group(2)
+
+
+@pytest.mark.parametrize(
+    "name,fields,code,checks",
+    (
+        (
+            "speed",
+            "speed: Output[RotationalSpeed]",
+            "type_mismatch",
+            'assert session.run(inputs={}).outputs == {"speed": 600 * rpm}',
+        ),
+        (
+            "loop",
+            "values: Input[list[float]]\ntotal: Output[float]\nindex: Var[int] = 0",
+            "python_subset",
+            "for values, total in (([1.0, 2.0], 3.0), ([], 0.0), ([4.0], 4.0)):\n"
+            '    assert session.run(inputs={"values": values}).outputs == {"total": total}',
+        ),
+        (
+            "condition",
+            "count: Input[int]\nselected: Output[bool]",
+            "condition_type",
+            "for count, selected in ((2, True), (0, False), (-1, False)):\n"
+            '    assert session.run(inputs={"count": count}).outputs == {"selected": selected}',
+        ),
+        (
+            "boolean",
+            "a: Input[bool]\nb: Input[bool]\nboth: Output[bool]",
+            "unsupported_short_circuit",
+            "for a in (False, True):\n"
+            "    for b in (False, True):\n"
+            '        assert session.run(inputs={"a": a, "b": b}).outputs == {"both": a and b}',
+        ),
+        (
+            "list-output",
+            "values: Input[list[float]]\nresult: Output[list[float]]\nindex: Var[int] = 0",
+            "list_output_initialization",
+            "for values in ([1.0, 2.0], [], [4.0]):\n"
+            '    assert session.run(inputs={"values": values}).outputs == {"result": tuple(x * 2 for x in values)}',
+        ),
+        (
+            "configuration",
+            "shaker: Agitator\nspeed: Input[RotationalSpeed]\nenabled: Input[bool]",
+            "device_configuration",
+            "for enabled in (False, True, False):\n"
+            '    result = session.run(inputs={"speed": 300 * rpm, "enabled": enabled})\n'
+            '    assert result.resources["resource:shaker"].enabled == enabled',
+        ),
+    ),
+)
+def test_troubleshooting_corrections(name, fields, code, checks, tmp_path):
+    """Compile the published failure and run its correction, including boundary inputs."""
+    markdown = (ROOT / "website/docs/user-guide/troubleshooting.md").read_text()
+    imports = (
+        "from sciloom import Agitator, Function, Input, Output, RotationalSpeed, Var, rpm, runtime\n"
+        "from sciloom.core.diagnostics import DiagnosticError\n"
+        "from sciloom.core.interpreter import Interpreter\n"
+        "from sciloom_autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget\n\n"
+    )
+    target = "AutoSuiteTarget()"
+    if name == "configuration":
+        target = (
+            'AutoSuiteTarget(devices={"shaker": AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="23")})'
+        )
+    for form in ("wrong", "fixed"):
+        snippet = re.search(rf"<!-- correction: {name} {form} -->\n```python\n(.*?)\n```", markdown, re.DOTALL)
+        assert snippet is not None
+        source = imports + "class Example(Function):\n" + indent(fields, "    ")
+        source += "\n\n    @runtime\n    def run(self) -> None:\n" + indent(snippet.group(1), "        ")
+        source += f"\n\ntarget = {target}\n"
+        if form == "wrong":
+            source += (
+                "try:\n    Example().compile(target=target)\n"
+                "except DiagnosticError as error:\n    print(error.diagnostics[0].code)\n"
+            )
+            expected = code
+        else:
+            source += "session = Interpreter(Example().compile(target=target).specialized_ir)\n"
+            source += checks + '\nprint("ok")\n'
+            expected = "ok"
+        assert run_series_script(tmp_path / f"{name}_{form}.py", source, tmp_path).strip() == expected
+
+
+def test_troubleshooting_retains_diagnostic_catalogue():
+    """Reorganizing help must not drop codes from the previous author catalogue."""
+    markdown = (ROOT / "website/docs/user-guide/troubleshooting.md").read_text()
+    entries = re.findall(r"^\| `([a-z_]+)` \|", markdown, re.MULTILINE)
+    assert len(entries) == 66
+    codes = set(entries)
+    assert codes >= {
+        "call_binding",
+        "class_schema",
+        "condition_type",
+        "device_capability",
+        "device_condition",
+        "device_configuration",
+        "device_property",
+        "device_property_read",
+        "device_reference",
+        "device_type",
+        "host_value",
+        "index_type",
+        "list_element_type",
+        "list_output_initialization",
+        "list_type",
+        "missing_resource_binding",
+        "operation_binding",
+        "operator_type",
+        "python_subset",
+        "quantity_literal",
+        "recursive_call",
+        "runtime_field",
+        "runtime_field_read",
+        "runtime_field_write",
+        "runtime_method",
+        "source_unavailable",
+        "type_mismatch",
+        "unknown_resource_binding",
+        "unsupported_operation",
+        "unsupported_short_circuit",
+    }
 
 
 @pytest.mark.parametrize(
