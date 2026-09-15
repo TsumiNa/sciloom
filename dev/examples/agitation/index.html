@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#configure-and-switch-an-agitator" class="md-skip">
+        <a href="#start-or-stop-an-agitator" class="md-skip">
           Skip to content
         </a>
       
@@ -852,7 +852,7 @@
   <span class="md-ellipsis">
     
   
-  Composition and shared devices
+  Share a shaker between steps
 
     
   </span>
@@ -879,7 +879,7 @@
   <span class="md-ellipsis">
     
   
-  Host-time specialization
+  Choose settings before compilation
 
     
   </span>
@@ -906,7 +906,7 @@
   <span class="md-ellipsis">
     
   
-  Device-dependent branches
+  Adapt to different devices
 
     
   </span>
@@ -933,7 +933,7 @@
   <span class="md-ellipsis">
     
   
-  AutoSuite rules
+  Compile for AutoSuite
 
     
   </span>
@@ -2374,10 +2374,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-and-inspect" class="md-nav__link">
+  <a href="#compile-for-your-shaker" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Run and inspect
+        Compile for your shaker
       </span>
     </span>
   </a>
@@ -2385,10 +2385,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#source-and-generated-files" class="md-nav__link">
+  <a href="#source-and-generated-package" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Source and generated files
+        Source and generated package
       </span>
     </span>
   </a>
@@ -3049,10 +3049,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-and-inspect" class="md-nav__link">
+  <a href="#compile-for-your-shaker" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Run and inspect
+        Compile for your shaker
       </span>
     </span>
   </a>
@@ -3060,10 +3060,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#source-and-generated-files" class="md-nav__link">
+  <a href="#source-and-generated-package" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Source and generated files
+        Source and generated package
       </span>
     </span>
   </a>
@@ -3087,30 +3087,52 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="fc0ed4f1055c2b0282b93e099e0e864699fa2dd9">fc0ed4f1</code>
+    · <code title="210db19c5fd71d6c77f51774de33fc29ad81a0ac">210db19c</code>
   </p>
 </aside>
 
                   
 
-<h1 id="configure-and-switch-an-agitator">Configure and switch an agitator</h1>
-<p>ConfigureAgitation declares a logical agitator and two runtime inputs. The target binds that resource to Heater Shaker 23.</p>
-<h2 id="run-and-inspect">Run and inspect</h2>
+<h1 id="start-or-stop-an-agitator">Start or stop an agitator</h1>
+<p>Use this procedure when the caller supplies both a requested speed and an
+enable/disable choice. The logical device is named <code>agitator</code>; the target maps
+it to the example AutoSuite shaker.</p>
+<p>When the generated function is called:</p>
+<table>
+<thead>
+<tr>
+<th>Inputs</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>shaker_speed=600*rpm</code>, <code>enabled=True</code></td>
+<td>Save the supplied speed, then start</td>
+</tr>
+<tr>
+<td><code>shaker_speed=300*rpm</code>, <code>enabled=False</code></td>
+<td>Stop; leave the saved speed unchanged</td>
+</tr>
+</tbody>
+</table>
+<p>Both inputs are required on either branch. The speed supplied on a stop call
+is not applied. Assigning a property saves its value; only <code>start()</code> applies
+it, and only <code>stop()</code> disables agitation.</p>
+<h2 id="compile-for-your-shaker">Compile for your shaker</h2>
 <div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/agitation.py
 </code></pre></div>
-<p>When enabled is true, the procedure captures shaker_speed and explicitly starts agitation. Otherwise it stops. Assignment alone never starts the device, and zero speed is not a stop. The source's XML excerpts are abbreviated; the companion is the complete generated package. This is a focused operation from an original workflow, not a reproduction of the full experiment.</p>
-<p>The module docstring below records expected terminal output.</p>
-<div class="admonition note">
-<p class="admonition-title">Compilation is not hardware acceptance</p>
-<p>Compilation and reference execution check a program's structure and its
-mapped semantics. They do not operate equipment, and they do not replace
-AutoSuite Executor validation on the deployment host.</p>
-</div>
-<h2 id="source-and-generated-files">Source and generated files</h2>
-<p><a href="../../_generated/examples/agitation.py">Download Python source</a></p>
-<ul>
-<li><a href="../../_generated/examples/agitation.asfp">agitation.asfp</a></li>
-</ul>
+<div class="highlight"><pre><span></span><code>agitation.asfp
+</code></pre></div>
+<p>Change the <code>zone</code> and <code>device_id</code> in the target to match your AutoSuite
+configuration. They identify a zone and an individual shaker, not a sample.
+The runtime inputs remain parameters of the generated function.</p>
+<p>The package is written beside the source. Before equipment use, validate it
+with AutoSuite Executor on the deployment computer. Compilation does not
+operate the shaker. See <a href="../../user-guide/advanced/autosuite/">binding and validation</a>.</p>
+<h2 id="source-and-generated-package">Source and generated package</h2>
+<p><a href="../../_generated/examples/agitation.py">Download Python source</a> ·
+<a href="../../_generated/examples/agitation.asfp">Download ASFP</a></p>
 <div class="highlight"><pre><span></span><code><span class="sd">"""For experiment authors: define conditional agitation and export an ASFP.</span>
 
 <span class="sd">Run from the repository root:</span>
@@ -3127,39 +3149,6 @@ AutoSuite Executor validation on the deployment host.</p>
 
 <span class="sd">Full generated output: agitation.asfp, beside this source file.</span>
 
-<span class="sd">Generated ASFP excerpts (metadata and other fields omitted):</span>
-
-<span class="sd">    Enabled branch:</span>
-<span class="sd">        &lt;condition&gt;enabled&lt;/condition&gt;</span>
-<span class="sd">        ...</span>
-<span class="sd">        &lt;component typeid="Chemspeed.SATaskSetVariable.1"&gt;</span>
-<span class="sd">          &lt;!-- metadata omitted --&gt;</span>
-<span class="sd">          &lt;variablename&gt;sciloom_tmp_1&lt;/variablename&gt;</span>
-<span class="sd">          &lt;expressiontext&gt;shaker_speed&lt;/expressiontext&gt;</span>
-<span class="sd">          &lt;!-- remaining fields omitted --&gt;</span>
-<span class="sd">        &lt;/component&gt;</span>
-<span class="sd">        &lt;component typeid="Chemspeed.SATaskSetAgitation.1"&gt;</span>
-<span class="sd">          &lt;zone&gt;Heater Shaker 23&lt;/zone&gt;</span>
-<span class="sd">          &lt;!-- metadata omitted --&gt;</span>
-<span class="sd">          &lt;taskdatas&gt;</span>
-<span class="sd">            &lt;count&gt;1&lt;/count&gt;</span>
-<span class="sd">            &lt;taskdata0&gt;</span>
-<span class="sd">              &lt;progid&gt;Chemspeed.SADeviceIndividualShaker.1&lt;/progid&gt;</span>
-<span class="sd">              &lt;deviceid&gt;23&lt;/deviceid&gt;</span>
-<span class="sd">              &lt;wellid&gt;-1&lt;/wellid&gt;</span>
-<span class="sd">              &lt;speed&gt;sciloom_tmp_1&lt;/speed&gt;</span>
-<span class="sd">            &lt;/taskdata0&gt;</span>
-<span class="sd">          &lt;/taskdatas&gt;</span>
-<span class="sd">          &lt;switchon&gt;1&lt;/switchon&gt;</span>
-<span class="sd">          &lt;speedunit&gt;rpm&lt;/speedunit&gt;</span>
-<span class="sd">          &lt;!-- remaining fields omitted --&gt;</span>
-<span class="sd">        &lt;/component&gt;</span>
-
-<span class="sd">    Disabled branch's Stir task:</span>
-<span class="sd">        &lt;switchon&gt;0&lt;/switchon&gt;</span>
-
-<span class="sd">The operation comes from Sample and Run GPC; this is not that entire workflow.</span>
-<span class="sd">The fixed zone/shaker binding is taken from the latest application configuration.</span>
 <span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>

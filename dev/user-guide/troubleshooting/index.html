@@ -863,7 +863,7 @@
   <span class="md-ellipsis">
     
   
-  Composition and shared devices
+  Share a shaker between steps
 
     
   </span>
@@ -890,7 +890,7 @@
   <span class="md-ellipsis">
     
   
-  Host-time specialization
+  Choose settings before compilation
 
     
   </span>
@@ -917,7 +917,7 @@
   <span class="md-ellipsis">
     
   
-  Device-dependent branches
+  Adapt to different devices
 
     
   </span>
@@ -944,7 +944,7 @@
   <span class="md-ellipsis">
     
   
-  AutoSuite rules
+  Compile for AutoSuite
 
     
   </span>
@@ -3206,7 +3206,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="fc0ed4f1055c2b0282b93e099e0e864699fa2dd9">fc0ed4f1</code>
+    · <code title="210db19c5fd71d6c77f51774de33fc29ad81a0ac">210db19c</code>
   </p>
 </aside>
 
@@ -3811,7 +3811,7 @@ statement.</p>
 <p>Codes that arise only from hand-built programs or reference execution are
 covered by the Developer Guide.</p>
 <h2 id="try-common-failures">Try common failures</h2>
-<p>Save this complete example to a <code>.py</code> file to reproduce four errors. Use the
+<p>Save this complete example to a <code>.py</code> file to reproduce these errors. Use the
 codes to find the cause and correction in the tables above.</p>
 <!-- example: failures -->
 <p><div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agitator</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">RotationalSpeed</span><span class="p">,</span> <span class="n">Var</span><span class="p">,</span> <span class="n">runtime</span>
@@ -3858,11 +3858,51 @@ codes to find the cause and correction in the tables above.</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
 
 
+<span class="k">class</span><span class="w"> </span><span class="nc">Limits</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""A host list cannot enter a runtime expression.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        volume: Sample volume in millilitres.</span>
+<span class="sd">        small: Whether the volume is below the first limit.</span>
+<span class="sd">    """</span>
+
+    <span class="n">volume</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">small</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">limits</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">]</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">small</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">limits</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Both</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""A condition AutoSuite refuses.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        a: First flag.</span>
+<span class="sd">        b: Second flag.</span>
+<span class="sd">        both: Whether both flags are set.</span>
+<span class="sd">    """</span>
+
+    <span class="n">a</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">b</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">both</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">both</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
+
+
+
 <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">(</span>
     <span class="k">lambda</span><span class="p">:</span> <span class="n">Counter</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">,</span>
     <span class="k">lambda</span><span class="p">:</span> <span class="n">BareSpeed</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">()),</span>
     <span class="k">lambda</span><span class="p">:</span> <span class="n">ForLoop</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">()),</span>
     <span class="k">lambda</span><span class="p">:</span> <span class="n">UnboundShaker</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">()),</span>
+    <span class="k">lambda</span><span class="p">:</span> <span class="n">Limits</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">()),</span>
+    <span class="k">lambda</span><span class="p">:</span> <span class="n">Both</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">()),</span>
 <span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">action</span><span class="p">()</span>
@@ -3873,6 +3913,8 @@ codes to find the cause and correction in the tables above.</p>
 type_mismatch
 python_subset
 missing_resource_binding
+host_value
+unsupported_short_circuit
 </code></pre></div></p>
 
 

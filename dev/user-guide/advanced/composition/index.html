@@ -27,7 +27,7 @@
     
     
       
-        <title>Composition and shared devices - SciLoom</title>
+        <title>Share a shaker between steps - SciLoom</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#composition-and-shared-devices" class="md-skip">
+        <a href="#share-a-shaker-between-steps" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Composition and shared devices
+              Share a shaker between steps
             
           </span>
         </div>
@@ -874,7 +874,7 @@
   <span class="md-ellipsis">
     
   
-  Composition and shared devices
+  Share a shaker between steps
 
     
   </span>
@@ -891,7 +891,7 @@
   <span class="md-ellipsis">
     
   
-  Composition and shared devices
+  Share a shaker between steps
 
     
   </span>
@@ -917,10 +917,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#calling-a-child" class="md-nav__link">
+  <a href="#share-the-device-in-the-constructor" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Calling a child
+        Share the device in the constructor
       </span>
     </span>
   </a>
@@ -928,10 +928,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sharing-a-logical-device" class="md-nav__link">
+  <a href="#pass-values-between-steps" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Sharing a logical device
+        Pass values between steps
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-before-starting" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Configure before starting
       </span>
     </span>
   </a>
@@ -961,7 +972,7 @@
   <span class="md-ellipsis">
     
   
-  Host-time specialization
+  Choose settings before compilation
 
     
   </span>
@@ -988,7 +999,7 @@
   <span class="md-ellipsis">
     
   
-  Device-dependent branches
+  Adapt to different devices
 
     
   </span>
@@ -1015,7 +1026,7 @@
   <span class="md-ellipsis">
     
   
-  AutoSuite rules
+  Compile for AutoSuite
 
     
   </span>
@@ -3060,10 +3071,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#calling-a-child" class="md-nav__link">
+  <a href="#share-the-device-in-the-constructor" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Calling a child
+        Share the device in the constructor
       </span>
     </span>
   </a>
@@ -3071,10 +3082,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sharing-a-logical-device" class="md-nav__link">
+  <a href="#pass-values-between-steps" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Sharing a logical device
+        Pass values between steps
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configure-before-starting" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Configure before starting
       </span>
     </span>
   </a>
@@ -3098,18 +3120,19 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="fc0ed4f1055c2b0282b93e099e0e864699fa2dd9">fc0ed4f1</code>
+    · <code title="210db19c5fd71d6c77f51774de33fc29ad81a0ac">210db19c</code>
   </p>
 </aside>
 
                   
 
-<h1 id="composition-and-shared-devices">Composition and shared devices</h1>
-<p>A Function can call other Functions. The child is created in the parent's
-<code>__init__</code>, called from the parent's runtime method, and its outputs are bound
-by assignment. This program goes one step further: the child and the parent use
-the same shaker.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agitator</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">RotationalSpeed</span><span class="p">,</span> <span class="n">runtime</span>
+<h1 id="share-a-shaker-between-steps">Share a shaker between steps</h1>
+<p>You may want one Function to choose or save a setting and another to start
+the device. Give both steps a reference to the same shaker.</p>
+<p>In this example, <code>SetSpeed</code> saves the requested speed. <code>StirStage</code> calls it
+and then starts the shaker. Save the complete program to a <code>.py</code> file to
+compile it.</p>
+<p><div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agitator</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">RotationalSpeed</span><span class="p">,</span> <span class="n">runtime</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteIndividualShaker</span><span class="p">,</span> <span class="n">AutoSuiteTarget</span>
 
 
@@ -3154,31 +3177,34 @@ the same shaker.</p>
     <span class="n">devices</span><span class="o">=</span><span class="p">{</span><span class="s2">"shaker"</span><span class="p">:</span> <span class="n">AutoSuiteIndividualShaker</span><span class="p">(</span><span class="n">zone</span><span class="o">=</span><span class="s2">"Heater Shaker 23"</span><span class="p">,</span> <span class="n">device_id</span><span class="o">=</span><span class="s2">"23"</span><span class="p">)},</span>
 <span class="p">)</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">StirStage</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">artifact</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">".asfp"</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"shared_shaker.asfp"</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="calling-a-child">Calling a child</h2>
-<p>A call is a statement. Supply each input exactly once, positionally or by
-keyword. Bind one output with one assignment destination, several outputs with a
-tuple destination in declaration order, and call a child with no outputs as a
-bare statement. Outputs bind to whole fields, never to list elements. Calls are
-never nested inside arithmetic: bind the output, then use the field.</p>
-<p>Inputs are copied into a fresh frame and outputs are copied back after the call
-returns, so parent and child never share a list. A child's <code>Var</code> state persists
-across calls; calling the same instance twice continues its state, while a second
-instance created in <code>__init__</code> has state of its own. A child the runtime method
-never calls is left out of the compiled program. The
-<a href="../../../examples/function-call/">function-call example</a> shows the plain form.</p>
-<h2 id="sharing-a-logical-device">Sharing a logical device</h2>
-<p><code>self.stage.shaker = self.shaker</code> in the constructor makes the child's slot refer
-to the parent's logical device. Without that line the child's slot is a device
-of its own, bound by the target under the component path <code>stage.shaker</code>. With it,
-both procedures name one resource with one configuration state, bound once under
-<code>shaker</code>.</p>
-<p>Sharing lets configuration and lifecycle live in different Functions: here the
-child saves the speed and the parent starts. The compiler still proves that every
-required value is configured on every path that reaches a <code>start()</code>, following
-calls in both directions, within one invocation of the entry Function. It never
-assumes that an earlier invocation left the device configured.</p>
+<div class="highlight"><pre><span></span><code>shared_shaker.asfp
+</code></pre></div></p>
+<h2 id="share-the-device-in-the-constructor">Share the device in the constructor</h2>
+<p><code>self.stage = SetSpeed()</code> creates the child. The next line,
+<code>self.stage.shaker = self.shaker</code>, makes it use the parent's logical shaker.
+Both steps now use the same device, so the target needs just one
+binding, under <code>"shaker"</code>.</p>
+<p>Without the sharing assignment, the child has its own shaker. Bind that separate
+device using the name <code>"stage.shaker"</code>. Share a logical reference in the
+constructor; supply concrete AutoSuite hardware data in the target.</p>
+<h2 id="pass-values-between-steps">Pass values between steps</h2>
+<p><code>self.stage(speed=self.speed)</code> supplies the child's input. This child has no
+outputs. For a child with an output, receive it with an assignment, as in the
+<a href="../../tutorial/agitator/">volume calculation</a>. Several outputs use a tuple
+assignment in declaration order.</p>
+<p>Supply each input once, by position or keyword. A call result must go to a
+whole field; if you need it in a list element or an arithmetic expression,
+store it in a field first.</p>
+<p>A child receives a copy of each input list. Updating that copy does not change
+the parent's list; output lists are copied back when the child returns.
+Each child instance also keeps its own <code>Var</code> values between calls.</p>
+<h2 id="configure-before-starting">Configure before starting</h2>
+<p>Here the child saves the speed and the parent starts. SciLoom checks the
+configuration across both calls. If a branch skips <code>SetSpeed</code> but still
+reaches <code>start()</code>, compilation fails. The check does not assume that a
+previous call to the entry Function configured the device.</p>
 
 
 
@@ -3228,13 +3254,13 @@ assumes that an earlier invocation left the device configured.</p>
         
         
           
-          <a href="../specialization/" class="md-footer__link md-footer__link--next" aria-label="Next: Host-time specialization">
+          <a href="../specialization/" class="md-footer__link md-footer__link--next" aria-label="Next: Choose settings before compilation">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Host-time specialization
+                Choose settings before compilation
               </div>
             </div>
             <div class="md-footer__button md-icon">

@@ -27,7 +27,7 @@
     
     
       
-        <title>Host-time specialization - SciLoom</title>
+        <title>Choose settings before compilation - SciLoom</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#host-time-specialization" class="md-skip">
+        <a href="#choose-settings-before-compilation" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Host-time specialization
+              Choose settings before compilation
             
           </span>
         </div>
@@ -865,7 +865,7 @@
   <span class="md-ellipsis">
     
   
-  Composition and shared devices
+  Share a shaker between steps
 
     
   </span>
@@ -901,7 +901,7 @@
   <span class="md-ellipsis">
     
   
-  Host-time specialization
+  Choose settings before compilation
 
     
   </span>
@@ -918,7 +918,7 @@
   <span class="md-ellipsis">
     
   
-  Host-time specialization
+  Choose settings before compilation
 
     
   </span>
@@ -944,10 +944,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-can-be-embedded" class="md-nav__link">
+  <a href="#change-a-build-time-setting-or-a-runtime-input" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        What can be embedded
+        Change a build-time setting or a runtime input
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#which-settings-can-enter-the-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Which settings can enter the procedure?
       </span>
     </span>
   </a>
@@ -977,7 +988,7 @@
   <span class="md-ellipsis">
     
   
-  Device-dependent branches
+  Adapt to different devices
 
     
   </span>
@@ -1004,7 +1015,7 @@
   <span class="md-ellipsis">
     
   
-  AutoSuite rules
+  Compile for AutoSuite
 
     
   </span>
@@ -3049,10 +3060,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#what-can-be-embedded" class="md-nav__link">
+  <a href="#change-a-build-time-setting-or-a-runtime-input" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        What can be embedded
+        Change a build-time setting or a runtime input
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#which-settings-can-enter-the-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Which settings can enter the procedure?
       </span>
     </span>
   </a>
@@ -3076,16 +3098,19 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="fc0ed4f1055c2b0282b93e099e0e864699fa2dd9">fc0ed4f1</code>
+    · <code title="210db19c5fd71d6c77f51774de33fc29ad81a0ac">210db19c</code>
   </p>
 </aside>
 
                   
 
-<h1 id="host-time-specialization">Host-time specialization</h1>
-<p><code>__init__</code> runs on your computer. Values it stores on the instance are read when
-the source is compiled and become literals in the program, so one class can
-yield differently tuned programs.</p>
+<h1 id="choose-settings-before-compilation">Choose settings before compilation</h1>
+<p>Use constructor arguments for settings that should stay fixed in a generated
+program. For example, vials and flasks can use the same speed-selection logic
+with different thresholds.</p>
+<p>The program below produces two packages. Each still takes a <code>volume</code> input;
+its threshold and two speed choices are fixed when you compile it. The numbers
+are examples of configuration, not experimental recommendations.</p>
 <p><div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">RotationalSpeed</span><span class="p">,</span> <span class="n">rpm</span><span class="p">,</span> <span class="n">runtime</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteTarget</span>
 
@@ -3123,50 +3148,50 @@ yield differently tuned programs.</p>
 <span class="n">flasks</span> <span class="o">=</span> <span class="n">ChooseSpeed</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">gentle</span><span class="o">=</span><span class="mi">300</span> <span class="o">*</span> <span class="n">rpm</span><span class="p">,</span> <span class="n">fast</span><span class="o">=</span><span class="mi">600</span> <span class="o">*</span> <span class="n">rpm</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">function</span> <span class="ow">in</span> <span class="p">((</span><span class="s2">"vials"</span><span class="p">,</span> <span class="n">vials</span><span class="p">),</span> <span class="p">(</span><span class="s2">"flasks"</span><span class="p">,</span> <span class="n">flasks</span><span class="p">)):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">function</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">())</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">"choose_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.asfp"</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-
-
-<span class="k">class</span><span class="w"> </span><span class="nc">Limits</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""A host list cannot enter a runtime expression.</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        volume: Sample volume in millilitres.</span>
-<span class="sd">        small: Whether the volume is below the first limit.</span>
-<span class="sd">    """</span>
-
-    <span class="n">volume</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
-    <span class="n">small</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">limits</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">]</span>
-
-    <span class="nd">@runtime</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">small</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">limits</span>
-
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">Limits</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">())</span>
-<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>vials choose_vials.asfp
 flasks choose_flasks.asfp
-$.python.fn:0: Only scalar bool/int/float host values can enter runtime expressions. [host_value]
 </code></pre></div></p>
-<h2 id="what-can-be-embedded">What can be embedded</h2>
-<p>A host attribute read through <code>self</code> inside the runtime method is embedded as a
-literal if it is a <code>bool</code>, <code>int</code>, <code>float</code> or <code>RotationalSpeed</code>. Anything else,
-a list, a string, an object, is refused with <code>host_value</code>, as the second program
-shows. An unwrapped class annotation such as <code>batch_size: int = 8</code> is host data
-of the same kind, not runtime state.</p>
-<p>Embedding happens when the source is read, so two instances built with different
-constructor arguments compile to two different programs; the runtime inputs stay
-inputs. Host attributes are ordinary Python: reading <code>self.threshold</code> from host
-code works, and only the runtime fields are protected.</p>
-<p>A constructor must not assign a name that is declared as a runtime field; that is
-refused with <code>runtime_field_write</code>, because the class declaration owns the
-schema. Child Function instances are stored the same way, as host attributes,
-which is how <a href="../composition/">composition</a> works.</p>
+<h2 id="change-a-build-time-setting-or-a-runtime-input">Change a build-time setting or a runtime input</h2>
+<p><code>ChooseSpeed(threshold=..., gentle=..., fast=...)</code> runs the Python constructor
+and stores three settings. SciLoom reads them during compilation. Change them
+and compile again to generate another program.</p>
+<p>The <code>volume: Input[float]</code> field works differently: its value is supplied
+each time the generated function is called. You do not need to compile again
+for each volume.</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>When you choose it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>threshold</code>, <code>gentle</code>, <code>fast</code></td>
+<td>Before compilation, through the constructor</td>
+</tr>
+<tr>
+<td><code>volume</code></td>
+<td>At each call to the generated function</td>
+</tr>
+<tr>
+<td><code>speed</code></td>
+<td>Calculated by the runtime method and returned as an output</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>for</code> loop below the class is ordinary Python. It runs on your computer
+to produce two files. The restrictions inside <code>@runtime</code>, such as using
+<code>while</code> instead of <code>for</code>, do not apply to this build code.</p>
+<h2 id="which-settings-can-enter-the-procedure">Which settings can enter the procedure?</h2>
+<p>An ordinary attribute read through <code>self</code> can supply a <code>bool</code>, <code>int</code>,
+<code>float</code> or <code>RotationalSpeed</code>. An unwrapped class declaration such as
+<code>batch_size: int = 8</code> works the same way. A host list, string or arbitrary
+object cannot be used as a runtime value.</p>
+<p>Use a different name for host settings and runtime fields: a constructor must
+not assign an <code>Input</code>, <code>Output</code> or <code>Var</code>. For an error involving a host
+value, see <a href="../../troubleshooting/">troubleshooting</a>.</p>
 
 
 
@@ -3199,7 +3224,7 @@ which is how <a href="../composition/">composition</a> works.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../composition/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Composition and shared devices">
+          <a href="../composition/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Share a shaker between steps">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -3209,20 +3234,20 @@ which is how <a href="../composition/">composition</a> works.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Composition and shared devices
+                Share a shaker between steps
               </div>
             </div>
           </a>
         
         
           
-          <a href="../device-branches/" class="md-footer__link md-footer__link--next" aria-label="Next: Device-dependent branches">
+          <a href="../device-branches/" class="md-footer__link md-footer__link--next" aria-label="Next: Adapt to different devices">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Device-dependent branches
+                Adapt to different devices
               </div>
             </div>
             <div class="md-footer__button md-icon">

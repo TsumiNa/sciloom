@@ -852,7 +852,7 @@
   <span class="md-ellipsis">
     
   
-  Composition and shared devices
+  Share a shaker between steps
 
     
   </span>
@@ -879,7 +879,7 @@
   <span class="md-ellipsis">
     
   
-  Host-time specialization
+  Choose settings before compilation
 
     
   </span>
@@ -906,7 +906,7 @@
   <span class="md-ellipsis">
     
   
-  Device-dependent branches
+  Adapt to different devices
 
     
   </span>
@@ -933,7 +933,7 @@
   <span class="md-ellipsis">
     
   
-  AutoSuite rules
+  Compile for AutoSuite
 
     
   </span>
@@ -2455,10 +2455,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-and-inspect" class="md-nav__link">
+  <a href="#compile-for-your-rack" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Run and inspect
+        Compile for your rack
       </span>
     </span>
   </a>
@@ -2466,10 +2466,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#source-and-generated-files" class="md-nav__link">
+  <a href="#source-and-generated-package" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Source and generated files
+        Source and generated package
       </span>
     </span>
   </a>
@@ -3049,10 +3049,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-and-inspect" class="md-nav__link">
+  <a href="#compile-for-your-rack" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Run and inspect
+        Compile for your rack
       </span>
     </span>
   </a>
@@ -3060,10 +3060,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#source-and-generated-files" class="md-nav__link">
+  <a href="#source-and-generated-package" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Source and generated files
+        Source and generated package
       </span>
     </span>
   </a>
@@ -3087,36 +3087,58 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="fc0ed4f1055c2b0282b93e099e0e864699fa2dd9">fc0ed4f1</code>
+    · <code title="210db19c5fd71d6c77f51774de33fc29ad81a0ac">210db19c</code>
   </p>
 </aside>
 
                   
 
 <h1 id="stir-a-rack-of-samples">Stir a rack of samples</h1>
-<p>StirRack is the completed program from the User Guide's five lessons. It finds
-the largest supplied sample volume, chooses a speed, then starts or stops the
-bound shaker. The <a href="../../user-guide/tutorial/compile/">last lesson</a> adds a counter;
-the <a href="../../user-guide/tutorial/">tutorial overview</a> links all earlier versions.</p>
-<h2 id="run-and-inspect">Run and inspect</h2>
+<p>This is the completed program from the <a href="../../user-guide/tutorial/">five-lesson tutorial</a>.
+Use it to see how calculations and device steps fit into one procedure.</p>
+<p>The caller supplies <code>volumes</code>, a list of sample volumes, and <code>enabled</code>,
+which selects starting or stopping. The program reads those supplied numbers;
+it does not measure the samples.</p>
+<table>
+<thead>
+<tr>
+<th>Child Function</th>
+<th>Job</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LargestVolume</code></td>
+<td>Find the largest supplied volume, or 0.0 for an empty list</td>
+</tr>
+<tr>
+<td><code>ChooseSpeed</code></td>
+<td>Choose 300 rpm below 2.0, otherwise 600 rpm</td>
+</tr>
+<tr>
+<td><code>CountStirs</code></td>
+<td>Count requests after the start operation completes</td>
+</tr>
+</tbody>
+</table>
+<p>With <code>volumes=[1.0, 2.5, 0.5]</code> and <code>enabled=True</code>, the procedure selects
+600 rpm, saves that speed, starts the shaker and increments the counter.
+With the same volumes and <code>enabled=False</code>, it stops without incrementing.
+Both inputs are required on every call.</p>
+<p>The speeds and threshold are example choices. Change <code>ChooseSpeed</code> to express
+your own decision. The list loop resets its index each call, while the counter
+keeps its value; <a href="../../user-guide/tutorial/compile/">lesson 5</a> explains the difference.</p>
+<h2 id="compile-for-your-rack">Compile for your rack</h2>
 <div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/stir_rack.py
 </code></pre></div>
-<p>The program composes three child Functions: a loop with a persistent index that
-is reset on every call, a two-branch speed choice, and a counter whose state
-survives across calls. The parent binds their outputs by assignment, then either
-saves the chosen speed and starts the shaker or stops it.</p>
-<p>The module docstring below records expected terminal output.</p>
-<div class="admonition note">
-<p class="admonition-title">Compilation is not hardware acceptance</p>
-<p>Compilation and reference execution check a program's structure and its
-mapped semantics. They do not operate equipment, and they do not replace
-AutoSuite Executor validation on the deployment host.</p>
-</div>
-<h2 id="source-and-generated-files">Source and generated files</h2>
-<p><a href="../../_generated/examples/stir_rack.py">Download Python source</a></p>
-<ul>
-<li><a href="../../_generated/examples/stir_rack.asfp">stir_rack.asfp</a></li>
-</ul>
+<div class="highlight"><pre><span></span><code>stir_rack.asfp
+</code></pre></div>
+<p>The package is written beside the source. Match the target's zone and shaker ID
+to your AutoSuite configuration, and validate the package with AutoSuite Executor
+before using it on equipment. Compiling the file does not execute the experiment.</p>
+<h2 id="source-and-generated-package">Source and generated package</h2>
+<p><a href="../../_generated/examples/stir_rack.py">Download Python source</a> ·
+<a href="../../_generated/examples/stir_rack.asfp">Download ASFP</a></p>
 <div class="highlight"><pre><span></span><code><span class="sd">"""For experiment authors: the User Guide tutorial's stirring program, compiled to ASFP.</span>
 
 <span class="sd">Run from the repository root:</span>

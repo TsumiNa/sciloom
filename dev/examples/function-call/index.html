@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#function-composition" class="md-skip">
+        <a href="#call-another-function" class="md-skip">
           Skip to content
         </a>
       
@@ -852,7 +852,7 @@
   <span class="md-ellipsis">
     
   
-  Composition and shared devices
+  Share a shaker between steps
 
     
   </span>
@@ -879,7 +879,7 @@
   <span class="md-ellipsis">
     
   
-  Host-time specialization
+  Choose settings before compilation
 
     
   </span>
@@ -906,7 +906,7 @@
   <span class="md-ellipsis">
     
   
-  Device-dependent branches
+  Adapt to different devices
 
     
   </span>
@@ -933,7 +933,7 @@
   <span class="md-ellipsis">
     
   
-  AutoSuite rules
+  Compile for AutoSuite
 
     
   </span>
@@ -2347,10 +2347,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-and-inspect" class="md-nav__link">
+  <a href="#compile-the-example" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Run and inspect
+        Compile the example
       </span>
     </span>
   </a>
@@ -2358,10 +2358,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#source-and-generated-files" class="md-nav__link">
+  <a href="#source-and-generated-package" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Source and generated files
+        Source and generated package
       </span>
     </span>
   </a>
@@ -3049,10 +3049,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-and-inspect" class="md-nav__link">
+  <a href="#compile-the-example" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Run and inspect
+        Compile the example
       </span>
     </span>
   </a>
@@ -3060,10 +3060,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#source-and-generated-files" class="md-nav__link">
+  <a href="#source-and-generated-package" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Source and generated files
+        Source and generated package
       </span>
     </span>
   </a>
@@ -3087,30 +3087,34 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="fc0ed4f1055c2b0282b93e099e0e864699fa2dd9">fc0ed4f1</code>
+    · <code title="210db19c5fd71d6c77f51774de33fc29ad81a0ac">210db19c</code>
   </p>
 </aside>
 
                   
 
-<h1 id="function-composition">Function composition</h1>
-<p>Identity copies its float input to its output. Caller creates that child in host Python, embeds the host value 2.5 and stores the call result in persistent runtime state.</p>
-<h2 id="run-and-inspect">Run and inspect</h2>
+<h1 id="call-another-function">Call another Function</h1>
+<p>Use a child Function when several procedures need the same calculation.
+This small example copies a value so you can see the input and output passing
+without additional experimental logic.</p>
+<p><code>Caller</code> creates an <code>Identity</code> child in its constructor. Its runtime method
+calls the child with <code>x=self.value</code> and stores the returned <code>y</code> in
+<code>self.result</code>. With the default constructor argument, that value is 2.5.</p>
+<p>To use another fixed value, construct <code>Caller(value=7.0)</code> before compiling.
+The generated package contains both Functions. <code>result</code> is internal
+<code>Var</code> state; it is not an output parameter of <code>Caller</code>.</p>
+<h2 id="compile-the-example">Compile the example</h2>
 <div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/function_call.py
 </code></pre></div>
-<p>The source separates host specialization from execution: changing Caller(value=...) before compilation changes the embedded input. A child call binds a typed input and copies its output back on normal return. The ASFP contains both procedures; compiling the file does not execute either procedure.</p>
-<p>The module docstring below records expected terminal output.</p>
-<div class="admonition note">
-<p class="admonition-title">Compilation is not hardware acceptance</p>
-<p>Compilation and reference execution check a program's structure and its
-mapped semantics. They do not operate equipment, and they do not replace
-AutoSuite Executor validation on the deployment host.</p>
-</div>
-<h2 id="source-and-generated-files">Source and generated files</h2>
-<p><a href="../../_generated/examples/function_call.py">Download Python source</a></p>
-<ul>
-<li><a href="../../_generated/examples/function_call.asfp">function_call.asfp</a></li>
-</ul>
+<div class="highlight"><pre><span></span><code>function_call.asfp
+</code></pre></div>
+<p>The package is written beside the source. This command compiles the two
+Functions; it does not execute the copy. See
+<a href="../../user-guide/tutorial/agitator/">reusing a calculation</a> for the same pattern
+in the stirring procedure.</p>
+<h2 id="source-and-generated-package">Source and generated package</h2>
+<p><a href="../../_generated/examples/function_call.py">Download Python source</a> ·
+<a href="../../_generated/examples/function_call.asfp">Download ASFP</a></p>
 <div class="highlight"><pre><span></span><code><span class="sd">"""For experiment authors: compose functions and export an ASFP package.</span>
 
 <span class="sd">Run from the repository root:</span>
@@ -3125,31 +3129,6 @@ AutoSuite Executor validation on the deployment host.</p>
 
 <span class="sd">Full generated output: function_call.asfp, beside this source file.</span>
 
-<span class="sd">Generated ASFP excerpts (parameter IDs and other fields omitted):</span>
-
-<span class="sd">    Execute Function input binding:</span>
-<span class="sd">        &lt;item0&gt;</span>
-<span class="sd">          &lt;!-- parameter ID omitted --&gt;</span>
-<span class="sd">          &lt;name&gt;x&lt;/name&gt;</span>
-<span class="sd">          &lt;variablename /&gt;</span>
-<span class="sd">          &lt;variabletype&gt;realnumber&lt;/variabletype&gt;</span>
-<span class="sd">          &lt;isarray&gt;0&lt;/isarray&gt;</span>
-<span class="sd">          &lt;expression&gt;2.5&lt;/expression&gt;</span>
-<span class="sd">        &lt;/item0&gt;</span>
-
-<span class="sd">    Execute Function output binding:</span>
-<span class="sd">        &lt;item0&gt;</span>
-<span class="sd">          &lt;!-- parameter ID omitted --&gt;</span>
-<span class="sd">          &lt;name&gt;y&lt;/name&gt;</span>
-<span class="sd">          &lt;variablename&gt;result&lt;/variablename&gt;</span>
-<span class="sd">          &lt;variabletype&gt;realnumber&lt;/variabletype&gt;</span>
-<span class="sd">          &lt;isarray&gt;0&lt;/isarray&gt;</span>
-<span class="sd">          &lt;expression /&gt;</span>
-<span class="sd">        &lt;/item0&gt;</span>
-
-<span class="sd">    Identity's Set Variable task:</span>
-<span class="sd">        &lt;variablename&gt;y&lt;/variablename&gt;</span>
-<span class="sd">        &lt;expressiontext&gt;x&lt;/expressiontext&gt;</span>
 <span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>

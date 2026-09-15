@@ -852,7 +852,7 @@
   <span class="md-ellipsis">
     
   
-  Composition and shared devices
+  Share a shaker between steps
 
     
   </span>
@@ -879,7 +879,7 @@
   <span class="md-ellipsis">
     
   
-  Host-time specialization
+  Choose settings before compilation
 
     
   </span>
@@ -906,7 +906,7 @@
   <span class="md-ellipsis">
     
   
-  Device-dependent branches
+  Adapt to different devices
 
     
   </span>
@@ -933,7 +933,7 @@
   <span class="md-ellipsis">
     
   
-  AutoSuite rules
+  Compile for AutoSuite
 
     
   </span>
@@ -2401,10 +2401,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-and-inspect" class="md-nav__link">
+  <a href="#compile-the-example" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Run and inspect
+        Compile the example
       </span>
     </span>
   </a>
@@ -2412,10 +2412,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#source-and-generated-files" class="md-nav__link">
+  <a href="#source-and-generated-package" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Source and generated files
+        Source and generated package
       </span>
     </span>
   </a>
@@ -3049,10 +3049,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#run-and-inspect" class="md-nav__link">
+  <a href="#compile-the-example" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Run and inspect
+        Compile the example
       </span>
     </span>
   </a>
@@ -3060,10 +3060,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#source-and-generated-files" class="md-nav__link">
+  <a href="#source-and-generated-package" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Source and generated files
+        Source and generated package
       </span>
     </span>
   </a>
@@ -3087,30 +3087,57 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="fc0ed4f1055c2b0282b93e099e0e864699fa2dd9">fc0ed4f1</code>
+    · <code title="210db19c5fd71d6c77f51774de33fc29ad81a0ac">210db19c</code>
   </p>
 </aside>
 
                   
 
 <h1 id="copy-and-scale-a-list">Copy and scale a list</h1>
-<p>ScaleValues copies a typed numeric input list and multiplies each element by factor. Input [1, 2, 3] with factor 2.5 produces [2.5, 5, 7.5] under reference semantics, leaving the input unchanged.</p>
-<h2 id="run-and-inspect">Run and inspect</h2>
+<p>Use <code>ScaleValues</code> to multiply a list by a factor while keeping the original
+values. It starts with <code>self.result = self.values</code>, which copies the whole
+list, then updates each element of <code>result</code>.</p>
+<p>Expected procedure results:</p>
+<table>
+<thead>
+<tr>
+<th>Inputs</th>
+<th>Output <code>result</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>values=[1.0, 2.0, 3.0]</code>, <code>factor=2.5</code></td>
+<td><code>[2.5, 5.0, 7.5]</code></td>
+</tr>
+<tr>
+<td><code>values=[]</code>, <code>factor=2.5</code></td>
+<td><code>[]</code></td>
+</tr>
+<tr>
+<td><code>values=[1.0, 2.0]</code>, <code>factor=0.0</code></td>
+<td><code>[0.0, 0.0]</code></td>
+</tr>
+</tbody>
+</table>
+<p>The caller's list stays unchanged. The initial whole-list assignment also
+gives the output a value when the input is empty and the loop runs zero times.</p>
+<p><code>index</code> is a <code>Var</code>, so the method resets it before each loop. The unwrapped
+<code>batch_size: int = 8</code> declaration is ordinary Python configuration and is
+unused in this calculation; it does not set the list length.</p>
+<h2 id="compile-the-example">Compile the example</h2>
 <div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/scale_values.py
 </code></pre></div>
-<p>The whole-list assignment establishes an independent output before the loop, including empty input. index is persistent Var state but is explicitly reset for each invocation. batch_size is ordinary host configuration; it is not used by this runtime algorithm and does not become an ASFP runtime field.</p>
-<p>The module docstring below records expected terminal output.</p>
-<div class="admonition note">
-<p class="admonition-title">Compilation is not hardware acceptance</p>
-<p>Compilation and reference execution check a program's structure and its
-mapped semantics. They do not operate equipment, and they do not replace
-AutoSuite Executor validation on the deployment host.</p>
-</div>
-<h2 id="source-and-generated-files">Source and generated files</h2>
-<p><a href="../../_generated/examples/scale_values.py">Download Python source</a></p>
-<ul>
-<li><a href="../../_generated/examples/scale_values.asfp">scale_values.asfp</a></li>
-</ul>
+<div class="highlight"><pre><span></span><code>scale_values.asfp
+</code></pre></div>
+<p>The generated function accepts <code>values</code> and <code>factor</code> on each call and returns
+<code>result</code>. The Python command writes the package beside the source, without
+running the calculation on equipment. The results above are covered by reference
+execution; generated packages still need AutoSuite Executor validation.</p>
+<p>For the loop syntax, see <a href="../../user-guide/tutorial/lists-and-loops/">working with samples</a>.</p>
+<h2 id="source-and-generated-package">Source and generated package</h2>
+<p><a href="../../_generated/examples/scale_values.py">Download Python source</a> ·
+<a href="../../_generated/examples/scale_values.asfp">Download ASFP</a></p>
 <div class="highlight"><pre><span></span><code><span class="sd">"""Experiment-author example: compile a list-copying and scaling function.</span>
 
 <span class="sd">Run: uv run python examples/scale_values.py</span>

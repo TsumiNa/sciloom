@@ -27,7 +27,7 @@
     
     
       
-        <title>AutoSuite rules - SciLoom</title>
+        <title>Compile for AutoSuite - SciLoom</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#autosuite-rules" class="md-skip">
+        <a href="#compile-for-autosuite" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              AutoSuite rules
+              Compile for AutoSuite
             
           </span>
         </div>
@@ -865,7 +865,7 @@
   <span class="md-ellipsis">
     
   
-  Composition and shared devices
+  Share a shaker between steps
 
     
   </span>
@@ -892,7 +892,7 @@
   <span class="md-ellipsis">
     
   
-  Host-time specialization
+  Choose settings before compilation
 
     
   </span>
@@ -919,7 +919,7 @@
   <span class="md-ellipsis">
     
   
-  Device-dependent branches
+  Adapt to different devices
 
     
   </span>
@@ -955,7 +955,7 @@
   <span class="md-ellipsis">
     
   
-  AutoSuite rules
+  Compile for AutoSuite
 
     
   </span>
@@ -972,7 +972,7 @@
   <span class="md-ellipsis">
     
   
-  AutoSuite rules
+  Compile for AutoSuite
 
     
   </span>
@@ -998,10 +998,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#version-and-artifact" class="md-nav__link">
+  <a href="#supply-the-binding" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Version and artifact
+        Supply the binding
       </span>
     </span>
   </a>
@@ -1009,10 +1009,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#binding-shakers" class="md-nav__link">
+  <a href="#save-and-use-the-package" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Binding shakers
+        Save and use the package
       </span>
     </span>
   </a>
@@ -1020,10 +1020,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-autosuite-refuses" class="md-nav__link">
+  <a href="#current-autosuite-restrictions" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        What AutoSuite refuses
+        Current AutoSuite restrictions
       </span>
     </span>
   </a>
@@ -3071,10 +3071,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#version-and-artifact" class="md-nav__link">
+  <a href="#supply-the-binding" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Version and artifact
+        Supply the binding
       </span>
     </span>
   </a>
@@ -3082,10 +3082,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#binding-shakers" class="md-nav__link">
+  <a href="#save-and-use-the-package" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Binding shakers
+        Save and use the package
       </span>
     </span>
   </a>
@@ -3093,10 +3093,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-autosuite-refuses" class="md-nav__link">
+  <a href="#current-autosuite-restrictions" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        What AutoSuite refuses
+        Current AutoSuite restrictions
       </span>
     </span>
   </a>
@@ -3120,17 +3120,19 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="fc0ed4f1055c2b0282b93e099e0e864699fa2dd9">fc0ed4f1</code>
+    · <code title="210db19c5fd71d6c77f51774de33fc29ad81a0ac">210db19c</code>
   </p>
 </aside>
 
                   
 
-<h1 id="autosuite-rules">AutoSuite rules</h1>
-<p><code>AutoSuiteTarget</code> compiles a program into an <code>.asfp</code> package. Beyond the checks
-every target performs, it applies rules of its own, and it refuses what it cannot
-express rather than approximating.</p>
-<p><div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agitator</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">RotationalSpeed</span><span class="p">,</span> <span class="n">runtime</span>
+<h1 id="compile-for-autosuite">Compile for AutoSuite</h1>
+<p>Bind each shaker your procedure needs to an existing AutoSuite configuration,
+then write the function package. For example, this program starts two shakers
+at the same supplied speed.</p>
+<p>The example names and IDs below must be replaced with values from your own
+configuration before deployment.</p>
+<p><div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agitator</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">RotationalSpeed</span><span class="p">,</span> <span class="n">runtime</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteIndividualShaker</span><span class="p">,</span> <span class="n">AutoSuiteTarget</span><span class="p">,</span> <span class="n">AutoSuiteVersion</span>
 
 
@@ -3162,92 +3164,61 @@ express rather than approximating.</p>
         <span class="s2">"right"</span><span class="p">:</span> <span class="n">AutoSuiteIndividualShaker</span><span class="p">(</span><span class="n">zone</span><span class="o">=</span><span class="s2">"Heater Shaker 24"</span><span class="p">,</span> <span class="n">device_id</span><span class="o">=</span><span class="s2">"24"</span><span class="p">),</span>
     <span class="p">},</span>
 <span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">TwoShakers</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">artifact</span><span class="o">.</span><span class="n">media_type</span><span class="p">)</span>
-
-
-<span class="k">class</span><span class="w"> </span><span class="nc">Both</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""A condition AutoSuite refuses.</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        a: First flag.</span>
-<span class="sd">        b: Second flag.</span>
-<span class="sd">        both: Whether both flags are set.</span>
-<span class="sd">    """</span>
-
-    <span class="n">a</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
-    <span class="n">b</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
-    <span class="n">both</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
-
-    <span class="nd">@runtime</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">both</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
-
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">Both</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">())</span>
-<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">TwoShakers</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"two_shakers.asfp"</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>application/xml
-$.functions[0].body[0].value: AutoSuite short-circuit equivalence is unverified; lower to explicit If statements. [unsupported_short_circuit]
+<div class="highlight"><pre><span></span><code>two_shakers.asfp
 </code></pre></div></p>
-<h2 id="version-and-artifact">Version and artifact</h2>
-<p><code>AutoSuiteVersion.V2_47_1_1</code> is the only supported version and the default. The
-artifact is UTF-8 XML with media type <code>application/xml</code> and suffix <code>.asfp</code>;
-<code>write</code> adds no suffix of its own. The package contains a callable procedure
-whose runtime inputs are supplied when AutoSuite runs it. The adapter keeps saved
-device configuration in its own storage and isolates list parameters so that
-lists keep value semantics; none of this changes the program's input and output
-signature.</p>
-<div class="admonition note">
-<p class="admonition-title">Compilation is not hardware acceptance</p>
-<p>Compilation and reference execution check a program's structure and its
-mapped semantics. They do not operate equipment, and they do not replace
-AutoSuite Executor validation on the deployment host.</p>
-</div>
-<h2 id="binding-shakers">Binding shakers</h2>
-<p><code>devices</code> maps each declared slot, by field name or component path, to an
-<code>AutoSuiteIndividualShaker(zone=..., device_id=...)</code>. The profile is deployment
-data: the zone is the instrument's AutoSuite zone name and the id is the
-individual shaker's positive decimal id. Two slots cannot share a device id or a
-zone. Every declared slot needs an entry, including one the runtime method never
-uses, and an entry without a declared slot is an error. A program with no device
-compiles with <code>AutoSuiteTarget()</code>.</p>
-<h2 id="what-autosuite-refuses">What AutoSuite refuses</h2>
+<h2 id="supply-the-binding">Supply the binding</h2>
+<p><code>"left"</code> and <code>"right"</code> match the Function's field names. Each profile supplies
+a zone name and individual shaker ID from the installed AutoSuite configuration.
+The ID identifies the shaker, not a vial or rack. Two separate logical devices
+cannot bind to the same shaker ID or zone; to share one device between steps,
+use <a href="../composition/">a shared logical reference</a>.</p>
+<p>Bind every declared device, including one its runtime method does not use.
+Remove declarations you no longer need. For a child with a separate device,
+use its component path, such as <code>"stage.shaker"</code>.</p>
+<h2 id="save-and-use-the-package">Save and use the package</h2>
+<p>The example writes <code>two_shakers.asfp</code> in the directory where you run the
+Python script. The package includes the procedure and any called Functions.
+Here its caller supplies <code>speed</code> when AutoSuite runs it; that input is not a
+parameter to <code>.compile()</code>.</p>
+<p><code>AutoSuiteVersion.V2_47_1_1</code> is the only supported serialization version and
+the default, so you can omit the explicit <code>version=</code> argument. Keep the
+<code>.asfp</code> extension when choosing a filename; <code>write()</code> does not add it.</p>
+<p>Before equipment use, validate the generated package with AutoSuite Executor
+on the deployment computer. SciLoom does not establish physical speed limits
+or prove that a zone matches your instrument. See
+<a href="../../../introduction/status/#what-compilation-establishes">current validation limits</a>.</p>
+<h2 id="current-autosuite-restrictions">Current AutoSuite restrictions</h2>
 <table>
 <thead>
 <tr>
-<th>Rule</th>
-<th>Code</th>
-<th>Write instead</th>
+<th>If your procedure needs…</th>
+<th>Use…</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>and</code> / <code>or</code> in any expression</td>
-<td><code>unsupported_short_circuit</code></td>
-<td>nested <code>if</code> statements, as in the <a href="../../../examples/non-zero-array-min/">minimum example</a></td>
+<td>Two Boolean conditions</td>
+<td>Nested <code>if</code> statements; this target refuses <code>and</code> and <code>or</code></td>
 </tr>
 <tr>
-<td>a Function that calls itself, directly or through another</td>
-<td><code>recursive_call</code></td>
-<td>a <code>while</code> loop</td>
+<td>Repeated work</td>
+<td>A <code>while</code> loop; recursive Function calls are unsupported</td>
 </tr>
 <tr>
-<td>a list output read or updated before it was assigned as a whole list on every path</td>
-<td><code>list_output_initialization</code></td>
-<td><code>self.result = self.values</code> or <code>self.result = []</code> first, before any loop that may run zero times</td>
-</tr>
-<tr>
-<td>a statement the package format has no form for</td>
-<td><code>unsupported_operation</code></td>
-<td>a supported operation</td>
+<td>An output list updated element by element</td>
+<td>A whole-list assignment first, such as <code>self.result = self.values</code></td>
 </tr>
 </tbody>
 </table>
-<p>The semantic model and the reference interpreter accept short-circuit operators
-and recursion; only this target rejects them, because equivalent behaviour on
-the platform has not been established.</p>
+<p>Assigning <code>self.result = []</code> is suitable when an empty list is the intended
+output. It does not allocate elements for later indexed writes. To update
+existing elements, initialize the required list values first.</p>
+<p>A list output must be initialized on every path before it is read or updated.
+A loop might run zero times, so initialize before the loop. For exact errors
+and fixes, use <a href="../../troubleshooting/">troubleshooting</a>; for the complete source
+subset, see <a href="../../reference/runtime-language/">runtime syntax</a>.</p>
 
 
 
@@ -3280,7 +3251,7 @@ the platform has not been established.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../device-branches/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Device-dependent branches">
+          <a href="../device-branches/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Adapt to different devices">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -3290,7 +3261,7 @@ the platform has not been established.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Device-dependent branches
+                Adapt to different devices
               </div>
             </div>
           </a>
