@@ -36,7 +36,7 @@ because they capture distinct configurations and task/version combinations.
 
 ## Reading order
 
-The 18 reference documents are in one directory, numbered 00–17. This guide is
+The 19 reference documents are in one directory, numbered 00–18. This guide is
 00; read the following documents in order or jump to the relevant group.
 
 ### Sources and runtime semantics
@@ -54,6 +54,7 @@ The 18 reference documents are in one directory, numbered 00–17. This guide is
 - [08 · Type templates](08_TYPE_TEMPLATES.md)
 - [16 · Agitation mapping evidence](16_AGITATION_MAPPING.md)
 - [17 · Array mapping and checked-index evidence](17_ARRAY_MAPPING.md)
+- [18 · Capability gaps and runtime Zone parameters](18_CAPABILITY_GAPS_AND_ZONE_PARAMETERS.md)
 
 ### Current application and workflow
 
