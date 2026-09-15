@@ -8,7 +8,7 @@ The example names and IDs below must be replaced with values from your own
 configuration before deployment.
 
 ```python
-from sciloom import Agitator, Function, Input, Output, RotationalSpeed, runtime
+from sciloom import Agitator, Function, Input, RotationalSpeed, runtime
 from sciloom_autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget, AutoSuiteVersion
 
 
@@ -41,7 +41,6 @@ target = AutoSuiteTarget(
     },
 )
 print(TwoShakers().compile(target=target).write("two_shakers.asfp").name)
-
 ```
 ```text
 two_shakers.asfp

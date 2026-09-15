@@ -63,7 +63,7 @@ shared_shaker.asfp
 
 `self.stage = SetSpeed()` creates the child. The next line,
 `self.stage.shaker = self.shaker`, makes it use the parent's logical shaker.
-Both steps now save settings on the same device, so the target needs just one
+Both steps now use the same device, so the target needs just one
 binding, under `"shaker"`.
 
 Without the sharing assignment, the child has its own shaker. Bind that separate
