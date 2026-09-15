@@ -3142,65 +3142,68 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="210db19c5fd71d6c77f51774de33fc29ad81a0ac">210db19c</code>
+    · <code title="9d818d89367b524585ed8f63f0ebaaefa15397a1">9d818d89</code>
   </p>
 </aside>
 
                   
 
 <h1 id="declarations">Declarations</h1>
-<p>Rules for the class body of a Function. Each row links to the page that explains
-it.</p>
+<p>Use these declarations in the class body. Import the authoring names from
+<code>sciloom</code>; import <code>AutoSuiteTarget</code> and its hardware profiles from
+<code>sciloom_autosuite</code>.</p>
 <h2 id="fields">Fields</h2>
 <table>
 <thead>
 <tr>
 <th>Declaration</th>
 <th>Meaning</th>
-<th>Default</th>
-<th>Explained on</th>
+<th>Initial value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>volume: Input[float]</code></td>
-<td>value supplied by the caller at each call</td>
-<td>not allowed</td>
-<td><a href="../../tutorial/agitator/">lesson 3</a></td>
+<td>Caller supplies a value on every call</td>
+<td>Not allowed</td>
 </tr>
 <tr>
 <td><code>speed: Output[RotationalSpeed]</code></td>
-<td>value written back when the call returns; assigned on every path</td>
-<td>not allowed</td>
-<td><a href="../../tutorial/agitator/">lesson 3</a></td>
+<td>Result returned to the caller; assign on every path</td>
+<td>Not allowed</td>
 </tr>
 <tr>
 <td><code>index: Var[int] = 0</code></td>
-<td>persistent state of the instance; the literal is the initial state, not a per-call reset</td>
-<td>required literal</td>
-<td><a href="../../tutorial/compile/">lesson 5</a></td>
+<td>Working value or persistent state; reset explicitly when needed</td>
+<td>Required</td>
 </tr>
 <tr>
 <td><code>batch_size: int = 8</code></td>
-<td>host-time configuration, embedded as a literal when read in the runtime method</td>
-<td>ordinary Python</td>
-<td><a href="../../advanced/specialization/">host-time specialization</a></td>
+<td>Ordinary Python configuration; a supported scalar becomes a fixed value in the generated procedure</td>
+<td>Ordinary Python rules</td>
 </tr>
 <tr>
 <td><code>shaker: Agitator</code></td>
-<td>logical device slot; the target binds the hardware</td>
-<td>none; no class-level value</td>
-<td><a href="../../tutorial/first-function/">lesson 1</a></td>
+<td>Logical device dependency, bound to hardware through the target</td>
+<td>No class-level value</td>
 </tr>
 </tbody>
 </table>
-<p>Import <code>Function</code>, <code>Input</code>, <code>Output</code>, <code>Var</code>, <code>runtime</code>, <code>Agitator</code>,
-<code>RotationalSpeed</code>, <code>rpm</code>, <code>rps</code> and <code>comptime</code> from <code>sciloom</code>. A field has
-exactly one role; a bare <code>Annotated</code> alias or a nested role is refused. A list
-<code>Var</code> needs a list literal, which is copied and frozen when the class is built.
-Inherited runtime fields and methods work; redeclaring an inherited field, or
-shadowing an inherited device slot, is refused. A field name must not collide
-with the Function API.</p>
+<p><a href="../../tutorial/inputs-and-units/">Lesson 2</a> introduces inputs;
+<a href="../../tutorial/agitator/">lesson 3</a> introduces outputs and working values;
+<a href="../../tutorial/compile/">lesson 5</a> explains persistent state.</p>
+<p>Each runtime field has exactly one role: <code>Input[T]</code>, <code>Output[T]</code> or
+<code>Var[T]</code>. Supply a supported <a href="../runtime-language/#values">value type</a>.
+Bare <code>Var</code>, nested roles and untyped lists are invalid.</p>
+<p>A <code>Var</code> initial value is evaluated when Python creates the class, then checked
+against the declared type. For example, <code>speed: Var[RotationalSpeed] = 300 * rpm</code>
+is valid. A list initial value must be a Python list; SciLoom copies it so later
+changes to the original cannot change the declaration. Each instance starts
+with independent state. Initial values do not reset fields on later calls.</p>
+<p>Inherited declarations remain available. Do not change an inherited field's
+role, type or initial value, or replace an inherited device slot with another
+attribute. Use public names that do not conflict with Function methods such as
+<code>compile</code>.</p>
 <h2 id="the-runtime-method">The runtime method</h2>
 <table>
 <thead>
@@ -3211,36 +3214,41 @@ with the Function API.</p>
 </thead>
 <tbody>
 <tr>
-<td>exactly one <code>@runtime</code> method</td>
-<td>a class with none or two is refused</td>
+<td>Exactly one method marked <code>@runtime</code></td>
+<td>It may be inherited</td>
 </tr>
 <tr>
-<td>signature <code>def run(self) -&gt; None</code></td>
-<td>no other parameters; inputs are fields</td>
+<td>Signature such as <code>def run(self) -&gt; None</code></td>
+<td>Only <code>self</code>; declare inputs as fields</td>
 </tr>
 <tr>
-<td>source on disk</td>
-<td>an ordinary <code>.py</code> file; notebook cells, <code>exec()</code> and <code>async def</code> are refused</td>
+<td>Source in an ordinary <code>.py</code> file</td>
+<td>No notebook, REPL, <code>exec()</code> or asynchronous runtime method</td>
 </tr>
 <tr>
-<td>never executed by host Python</td>
-<td>calling it, or an instance, raises <code>TypeError</code></td>
+<td>Compiled from source</td>
+<td>The method body is not executed during compilation</td>
 </tr>
 <tr>
-<td>runtime fields are sealed</td>
-<td>host reads and writes are refused (<code>runtime_field_read</code>, <code>runtime_field_write</code>)</td>
+<td>Runtime values used inside the method</td>
+<td>Host Python cannot read or assign <code>Input</code>, <code>Output</code> or <code>Var</code> values</td>
 </tr>
 </tbody>
 </table>
+<p>Calling <code>instance.run()</code> or <code>instance()</code> in your Python script raises
+<code>TypeError</code>. Generate a program with <code>instance.compile(target=...)</code>.
+Child Function calls belong inside the runtime method.</p>
 <h2 id="the-constructor">The constructor</h2>
-<p><code>__init__</code> is ordinary Python. It stores host configuration and child Function
-instances as attributes, and may share a device slot with a child
-(<code>self.stage.shaker = self.shaker</code>). It must not assign a runtime field. See
-<a href="../../advanced/composition/">composition</a>.</p>
+<p>Python calls <code>__init__</code> when an instance is created. Use it to store fixed
+settings, create child Functions and share existing logical device references:</p>
+<p><code>self.stage.shaker = self.shaker</code> lets the child use the parent's shaker.
+Do not assign hardware profiles or runtime field values there.
+See <a href="../../advanced/composition/">shared devices</a> and
+<a href="../../advanced/specialization/">constructor settings</a>.</p>
 <h2 id="docstrings">Docstrings</h2>
-<p>Write an English class docstring describing the procedure, with an <code>Attributes:</code>
-section naming the declared fields and an <code>Args:</code> section for constructor
-parameters. Docstrings inform readers and tools; they never change what compiles.</p>
+<p>Describe the procedure in an English class docstring. Use <code>Attributes:</code> to
+explain its fields and <code>Args:</code> for constructor parameters. These descriptions
+help readers and tools; they do not determine execution.</p>
 
 
 

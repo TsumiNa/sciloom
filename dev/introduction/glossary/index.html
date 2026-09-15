@@ -3087,7 +3087,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="210db19c5fd71d6c77f51774de33fc29ad81a0ac">210db19c</code>
+    · <code title="9d818d89367b524585ed8f63f0ebaaefa15397a1">9d818d89</code>
   </p>
 </aside>
 
@@ -3098,9 +3098,9 @@
 what an experiment author meets; contributor terms belong to people who extend
 SciLoom with devices and targets.</p>
 <h2 id="authoring-terms">Authoring terms</h2>
-<p><strong>Function.</strong> A Python class whose body declares a procedure's fields and whose
-one <code>@runtime</code> method holds its steps; SciLoom compiles it rather than running
-it. <a href="../../user-guide/tutorial/first-function/">Tutorial 1</a>.</p>
+<p><strong>Function.</strong> A procedure described by a Python class. Its declarations name
+inputs, outputs, working values and devices; its <code>@runtime</code> method holds the
+steps to compile. The constructor still runs as ordinary Python. <a href="../../user-guide/tutorial/first-function/">Tutorial 1</a>.</p>
 <p><strong>Runtime method.</strong> The single method marked <code>@runtime</code>, taking only <code>self</code>,
 whose source SciLoom reads. <a href="../../user-guide/reference/declarations/">Declarations</a>.</p>
 <p><strong>Host time and runtime.</strong> Host time is when your Python runs: constructing
@@ -3138,8 +3138,9 @@ when known, the source line. <a href="../../user-guide/troubleshooting/">Trouble
 <p><strong>Rotational speed, rpm, rps.</strong> The one physical quantity in this release,
 written as a number times a unit; revolutions per second is canonical.
 <a href="../../user-guide/tutorial/inputs-and-units/">Tutorial 2</a>.</p>
-<p><strong>Whole-list assignment.</strong> Assigning a complete list to a list output before
-any element is read or written, which AutoSuite requires on every path.
+<p><strong>Whole-list assignment.</strong> Copying all values from a list into a field, such as
+<code>self.result = self.values</code>. AutoSuite requires output lists to be assigned
+this way before individual elements are read or updated.
 <a href="../../user-guide/advanced/autosuite/">AutoSuite rules</a>.</p>
 <p><strong>Zone, device id.</strong> The two facts an AutoSuite shaker profile carries: the
 instrument's zone name and its positive decimal id. <a href="../../user-guide/advanced/autosuite/">AutoSuite rules</a>.</p>

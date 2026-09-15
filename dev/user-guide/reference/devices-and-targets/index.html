@@ -3142,17 +3142,19 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="210db19c5fd71d6c77f51774de33fc29ad81a0ac">210db19c</code>
+    · <code title="9d818d89367b524585ed8f63f0ebaaefa15397a1">9d818d89</code>
   </p>
 </aside>
 
                   
 
 <h1 id="devices-and-targets">Devices and targets</h1>
+<p>Declare the device your procedure needs; bind it to an instrument when compiling.</p>
 <h2 id="agitator">Agitator</h2>
-<p><code>Agitator</code> is the one device family in this release. Declare a slot with
-<code>shaker: Agitator</code>; never construct a device or put a profile in the Function.
-Explained in <a href="../../tutorial/first-function/">lesson 1</a>.</p>
+<p><code>Agitator</code> is the built-in device family. Declare <code>shaker: Agitator</code> in
+the Function. The slot already provides a logical reference; you do not need to
+create an Agitator object. Concrete hardware profiles belong in the target.
+See <a href="../../tutorial/first-function/">lesson 1</a>.</p>
 <table>
 <thead>
 <tr>
@@ -3163,114 +3165,128 @@ Explained in <a href="../../tutorial/first-function/">lesson 1</a>.</p>
 <tbody>
 <tr>
 <td><code>self.shaker.speed = value</code></td>
-<td>evaluate now and save the configuration; running state unchanged</td>
+<td>Save the value for the next start; leave running state unchanged</td>
 </tr>
 <tr>
 <td><code>self.shaker.start()</code></td>
-<td>apply the complete saved configuration and enable agitation</td>
+<td>Apply the complete saved configuration and enable agitation</td>
 </tr>
 <tr>
-<td>repeated <code>start()</code></td>
-<td>reapply the current configuration, staying enabled</td>
+<td>Repeated <code>start()</code></td>
+<td>Apply the current configuration again and remain enabled</td>
 </tr>
 <tr>
 <td><code>self.shaker.stop()</code></td>
-<td>disable; saved and last-applied values are kept</td>
+<td>Stop agitation; retain saved and last-applied configurations</td>
 </tr>
 <tr>
 <td><code>self.shaker.speed = 0 * rpm</code></td>
-<td>configure zero speed; not a stop</td>
+<td>Save zero speed; this assignment does not stop the device</td>
 </tr>
 </tbody>
 </table>
-<p>Changing the source variable after the assignment does not change the saved
-value. Writing configuration while running does not change the applied snapshot
-until the next <code>start()</code>. A missing parameter is not read as zero. Property reads
-and <code>+=</code> are refused; there is no measured getter. Timing and timed stops are not
-part of <code>Agitator</code>. Before every <code>start()</code>, <code>speed</code> must have been assigned on
-every path that reaches it, across calls within the same invocation.</p>
+<p>Assignment captures the value immediately. Changing the variable that supplied
+it does not change the saved configuration. While running, a new assignment
+takes effect at the next <code>start()</code>.</p>
+<p>Before agitation starts, all properties required by the bound device must be
+configured on every path that reaches the call. For the AutoSuite shaker, this
+means <code>speed</code>. Configuration may come from a child called earlier in the
+same invocation; compilation does not assume a previous invocation supplied it.</p>
+<p>Property reads and augmented assignments such as <code>+=</code> are not supported.
+There is no measured getter, generic duration parameter or timed stop.</p>
 <h2 id="binding-names">Binding names</h2>
 <table>
 <thead>
 <tr>
-<th>Slot</th>
-<th>Name in <code>devices</code></th>
+<th>Logical device</th>
+<th>Key in the target's <code>devices</code></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>a field on the entry Function</td>
-<td>the field name, <code>shaker</code></td>
+<td>Entry Function field</td>
+<td><code>"shaker"</code></td>
 </tr>
 <tr>
-<td>a field on a child that is not shared</td>
-<td>the component path, <code>stage.shaker</code></td>
+<td>Separate device on a child</td>
+<td><code>"stage.shaker"</code></td>
 </tr>
 <tr>
-<td>a child's slot shared with the parent</td>
-<td>the parent's name only</td>
+<td>Child sharing the parent's logical reference</td>
+<td>The parent's <code>"shaker"</code> only</td>
 </tr>
 </tbody>
 </table>
-<p>Every declared slot needs a binding, whether or not the runtime method uses it.
-Explained in <a href="../../advanced/composition/">composition</a>.</p>
+<p>Every declared slot needs a binding, including unused slots. Share a logical
+reference in the constructor with <code>self.stage.shaker = self.shaker</code>;
+do not assign a hardware profile to a Function field.
+See <a href="../../advanced/composition/">the complete sharing example</a>.</p>
 <h2 id="autosuite-target">AutoSuite target</h2>
 <table>
 <thead>
 <tr>
-<th>Parameter</th>
-<th>Value</th>
+<th>Item</th>
+<th>Rule</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td>Import</td>
+<td><code>from sciloom_autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget</code></td>
+</tr>
+<tr>
 <td><code>AutoSuiteTarget(version=..., devices={...})</code></td>
-<td><code>version</code> defaults to <code>AutoSuiteVersion.V2_47_1_1</code>, the only supported version</td>
+<td>Defaults to <code>AutoSuiteVersion.V2_47_1_1</code>, the only supported serialization version</td>
 </tr>
 <tr>
 <td><code>AutoSuiteIndividualShaker(zone=..., device_id=...)</code></td>
-<td>a non-empty single-line zone name; a positive decimal shaker id</td>
+<td>Existing zone name and positive decimal individual shaker ID</td>
 </tr>
 <tr>
-<td>uniqueness</td>
-<td>no two slots may share a <code>device_id</code> or a <code>zone</code></td>
+<td>Separate logical devices</td>
+<td>Must have different IDs and zones</td>
 </tr>
 <tr>
-<td>artifact</td>
-<td>UTF-8 XML, media type <code>application/xml</code>, suffix <code>.asfp</code></td>
+<td>Generated file</td>
+<td>UTF-8 XML function package, with an <code>.asfp</code> extension</td>
 </tr>
 <tr>
 <td><code>result.write(path)</code></td>
-<td>writes the bytes, creates parent directories, returns the path; no suffix is added</td>
+<td>Write bytes, create parent directories and return the path; no extension added</td>
 </tr>
 </tbody>
 </table>
-<p>The target's own rules are listed on <a href="../../advanced/autosuite/">AutoSuite rules</a>.</p>
+<p>Zone names must be nonempty single-line strings. SciLoom does not discover
+zones or check which physical instrument is connected.
+See <a href="../../advanced/autosuite/">AutoSuite compilation</a> for package handoff and
+target-specific language restrictions.</p>
 <h2 id="compile-time-queries">Compile-time queries</h2>
 <table>
 <thead>
 <tr>
-<th>Query</th>
-<th>Second argument</th>
+<th>Whole <code>if</code> / <code>elif</code> condition</th>
+<th>Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>comptime.is_device(self.shaker, DemoAgitator)</code></td>
-<td>a device class on the slot's inheritance chain; narrows the branch</td>
+<td>Select by a device class on the slot's inheritance chain; narrow the type within that branch</td>
 </tr>
 <tr>
 <td><code>comptime.can_write(self.shaker, "speed")</code></td>
-<td>a declared property name as a string literal</td>
+<td>Check a declared property's writability; name must be a string literal</td>
 </tr>
 <tr>
 <td><code>comptime.supports(self.shaker, Agitator.start)</code></td>
-<td>a command method</td>
+<td>Check a declared command</td>
 </tr>
 </tbody>
 </table>
-<p>Queries appear only as the whole condition of an <code>if</code> or <code>elif</code>. Explained in
-<a href="../../advanced/device-branches/">device-dependent branches</a>.</p>
+<p>All source branches must satisfy SciLoom's language and type rules. The target's
+capabilities are checked for the selected branch. Queries use the supplied
+device bindings, not live instrument detection.
+See <a href="../../advanced/device-branches/">device-dependent branches</a>.</p>
 
 
 

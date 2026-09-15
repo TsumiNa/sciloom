@@ -1200,10 +1200,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#calls" class="md-nav__link">
+  <a href="#lists-and-indices" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Calls
+        Lists and indices
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#child-function-calls" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Child Function calls
       </span>
     </span>
   </a>
@@ -3115,10 +3126,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#calls" class="md-nav__link">
+  <a href="#lists-and-indices" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Calls
+        Lists and indices
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#child-function-calls" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Child Function calls
       </span>
     </span>
   </a>
@@ -3142,159 +3164,170 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="210db19c5fd71d6c77f51774de33fc29ad81a0ac">210db19c</code>
+    · <code title="9d818d89367b524585ed8f63f0ebaaefa15397a1">9d818d89</code>
   </p>
 </aside>
 
                   
 
 <h1 id="runtime-language">Runtime language</h1>
-<p>What a <code>@runtime</code> method may contain. SciLoom reads the source and accepts a
-restricted subset of Python; the first construct outside it is named in a
-diagnostic.</p>
+<p>This reference applies inside <code>@runtime</code> methods. Constructors and the rest
+of the Python script use ordinary Python.</p>
 <h2 id="values">Values</h2>
 <table>
 <thead>
 <tr>
 <th>Type</th>
-<th>Notes</th>
+<th>Rules</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>int</code>, <code>float</code></td>
-<td>an integer widens to a float where needed; a float never narrows</td>
+<td>Integers can widen to floats; floats do not narrow to integers</td>
 </tr>
 <tr>
 <td><code>bool</code></td>
-<td>its own type; not an integer, not an index, the only valid condition</td>
+<td>Separate from integers; only Boolean expressions are valid conditions</td>
 </tr>
 <tr>
 <td><code>RotationalSpeed</code></td>
-<td>written <code>600 * rpm</code> or <code>10 * rps</code> from a host number; canonical unit is revolutions per second; the only physical quantity in this release</td>
+<td><code>600 * rpm</code> or <code>10 * rps</code>; the only physical quantity currently supported</td>
 </tr>
 <tr>
 <td><code>list[T]</code></td>
-<td>one-dimensional, homogeneous, <code>T</code> one of the four above</td>
+<td>One-dimensional list of <code>int</code>, <code>float</code>, <code>bool</code> or <code>RotationalSpeed</code></td>
 </tr>
 </tbody>
 </table>
-<p>There is no implicit truthiness: a condition is a Boolean expression, not a
-number or a list. Lists have no arithmetic, comparison or truthiness of their own.</p>
+<p>A speed literal uses a number known when the program is compiled. For a speed
+supplied by the caller, use <code>Input[RotationalSpeed]</code>.
+The internal unit for speed is revolutions per second.</p>
+<p>Lists require an element type: no bare <code>list</code>, <code>list[Any]</code>, mixed types
+or nested lists. An empty <code>[]</code> gets its element type from its destination.
+List-to-list assignment requires the same element type; a literal assigned to
+<code>list[float]</code> may contain integers.</p>
 <h2 id="expressions">Expressions</h2>
 <table>
 <thead>
 <tr>
 <th>Supported</th>
-<th>Not supported</th>
+<th>Outside the source language</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>literals; <code>self.&lt;field&gt;</code>; a host scalar through <code>self</code></td>
-<td>local names, module globals, attribute chains</td>
+<td>Literals, runtime fields, scalar host settings through <code>self</code></td>
+<td>Local variable names, arbitrary module globals or attribute chains</td>
 </tr>
 <tr>
-<td><code>+ - * /</code> (division yields <code>float</code>); unary <code>+ - not</code></td>
+<td><code>+ - * /</code>, unary <code>+ - not</code></td>
 <td><code>** % //</code>, bitwise operators</td>
 </tr>
 <tr>
-<td>one comparison <code>== != &lt; &lt;= &gt; &gt;=</code></td>
-<td>chained comparisons, <code>in</code>, <code>is</code></td>
+<td>A single comparison: <code>== != &lt; &lt;= &gt; &gt;=</code></td>
+<td>Chained comparisons, <code>in</code>, <code>is</code></td>
 </tr>
 <tr>
-<td><code>and</code>, <code>or</code> (refused by AutoSuite; see <a href="../../advanced/autosuite/">AutoSuite rules</a>)</td>
-<td>conditional expressions</td>
+<td><code>and</code>, <code>or</code></td>
+<td>Conditional expressions such as <code>a if flag else b</code></td>
 </tr>
 <tr>
-<td><code>[a, b]</code>, <code>self.items[i]</code>, <code>len(self.items)</code></td>
-<td>slicing, comprehensions, list methods, any other call</td>
+<td>List literals, indexing, <code>len(self.items)</code></td>
+<td>Slicing, comprehensions, list methods such as <code>append</code></td>
 </tr>
 <tr>
-<td><code>300 * rpm</code> with a host number</td>
-<td>a unit applied to a runtime value; use <code>Input[RotationalSpeed]</code></td>
+<td><code>300 * rpm</code> from a host number</td>
+<td>Attaching a unit to a runtime number</td>
 </tr>
 </tbody>
 </table>
+<p>Arithmetic and ordering comparisons require numeric operands. Division produces
+a float. Speeds support equality and inequality, but no runtime arithmetic. A condition
+must be Boolean: use <code>self.count &gt; 0</code>, not <code>self.count</code>.
+Lists have no implicit truth value, whole-list comparisons or arithmetic.</p>
+<p><strong>AutoSuite restriction:</strong> although SciLoom accepts <code>and</code> and <code>or</code>,
+this target rejects them. Use <a href="../../troubleshooting/#autosuite-rejects-boolean-combinations">nested conditions</a>.</p>
 <h2 id="statements">Statements</h2>
 <table>
 <thead>
 <tr>
 <th>Supported</th>
-<th>Not supported</th>
+<th>Outside the source language</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>self.x = expr</code>, <code>self.x += expr</code> and the other augmented forms</td>
-<td>assignment to anything but a declared field</td>
+<td>Assignments to declared runtime fields; <code>+= -= *= /=</code></td>
+<td>Assignments to local names or undeclared fields</td>
 </tr>
 <tr>
-<td><code>self.items[i] = expr</code>, <code>self.items[i] += expr</code></td>
-<td>writes that extend a list</td>
+<td>Assignments and augmented assignments to list elements</td>
+<td>Slicing assignments, such as <code>self.items[1:] = ...</code></td>
 </tr>
 <tr>
-<td><code>if</code> / <code>elif</code> / <code>else</code></td>
-<td>conditional expressions</td>
-</tr>
-<tr>
-<td><code>while cond:</code></td>
+<td><code>if</code> / <code>elif</code> / <code>else</code>, <code>while</code></td>
 <td><code>for</code>, <code>break</code>, <code>continue</code>, <code>while ... else</code></td>
 </tr>
 <tr>
-<td><code>self.x = self.child(...)</code>, <code>self.a, self.b = self.child(...)</code>, <code>self.child()</code></td>
-<td>calls nested in expressions, helper functions</td>
+<td>Calls to child Functions stored on <code>self</code></td>
+<td>Arbitrary helper calls, calls nested in expressions</td>
 </tr>
 <tr>
-<td><code>self.shaker.speed = expr</code>; <code>self.shaker.start()</code></td>
-<td>reading a device property; <code>+=</code> on one</td>
+<td>Device property assignment and declared commands</td>
+<td>Property reads or augmented property assignments</td>
 </tr>
 <tr>
-<td><code>if comptime.is_device(...)</code>, <code>can_write</code>, <code>supports</code> as the whole condition</td>
-<td>queries combined with <code>and</code>, or with runtime arguments</td>
+<td>Whole <code>if/elif</code> conditions using <code>comptime</code> queries</td>
+<td>Combining these queries with <code>and</code> / <code>or</code> or runtime arguments</td>
 </tr>
 <tr>
 <td><code>pass</code>, docstrings</td>
-<td><code>return</code>, <code>try</code>, <code>with</code>, <code>assert</code>, <code>del</code>, nested <code>def</code></td>
+<td><code>return</code>, <code>try</code>, <code>with</code>, <code>assert</code>, <code>del</code>, nested definitions</td>
 </tr>
 </tbody>
 </table>
-<p>Lists are values: assignment copies, and a call copies inputs in and outputs
-out. Indices are non-negative integers; negative or out-of-range access is an
-execution error, and a write never grows a list. An empty literal needs a
-declared element type. Explained in <a href="../../tutorial/lists-and-loops/">lesson 4</a>.</p>
-<h2 id="calls">Calls</h2>
+<p>See the <a href="../devices-and-targets/">device reference</a> for property, command and
+query forms.</p>
+<h2 id="lists-and-indices">Lists and indices</h2>
+<p><code>self.result = self.values</code> copies the complete list. Changing
+<code>self.result[0]</code> afterwards does not change <code>self.values[0]</code>. A child
+also receives copies of list inputs, and its output lists are copied back.</p>
+<p>Indices start at zero and must be integers, excluding Booleans. Negative and
+out-of-range indices are execution errors; writes never extend a list.
+When each call should scan the list from the beginning, reset the loop index
+at the start of the method.
+See <a href="../../tutorial/lists-and-loops/">lesson 4</a>.</p>
+<p><strong>AutoSuite restriction:</strong> assign each output list as a whole on every return
+path, before reading or updating its elements. A loop can run zero times.
+An empty assignment is a valid empty result but supplies no elements to update.</p>
+<h2 id="child-function-calls">Child Function calls</h2>
 <table>
 <thead>
 <tr>
-<th>Form</th>
-<th>Rule</th>
+<th>Result</th>
+<th>Call form</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>inputs</td>
-<td>positional or keyword, each exactly once</td>
+<td>No outputs</td>
+<td><code>self.child(...)</code></td>
 </tr>
 <tr>
-<td>one output</td>
-<td>one assignment destination</td>
+<td>One output</td>
+<td><code>self.result = self.child(...)</code></td>
 </tr>
 <tr>
-<td>several outputs</td>
-<td>a tuple destination in declaration order</td>
-</tr>
-<tr>
-<td>no outputs</td>
-<td>a bare call statement</td>
-</tr>
-<tr>
-<td>destinations</td>
-<td>whole fields only, never list elements</td>
+<td>Several outputs</td>
+<td><code>self.a, self.b = self.child(...)</code>, in output declaration order</td>
 </tr>
 </tbody>
 </table>
-<p>Explained in <a href="../../advanced/composition/">composition</a>.</p>
+<p>Supply every input exactly once, by position or keyword. Output destinations
+must be whole fields. To use a result in an expression or a list element,
+store it in a field first. See <a href="../../advanced/composition/">composition</a>.</p>
+<p><strong>AutoSuite restriction:</strong> recursive calls, direct or indirect, are refused.</p>
 
 
 

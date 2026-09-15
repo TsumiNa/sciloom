@@ -3065,32 +3065,37 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="210db19c5fd71d6c77f51774de33fc29ad81a0ac">210db19c</code>
+    · <code title="9d818d89367b524585ed8f63f0ebaaefa15397a1">9d818d89</code>
   </p>
 </aside>
 
                   
 
 <h1 id="current-capabilities">Current capabilities</h1>
-<p>SciLoom supports Python 3.12–3.14. Runtime methods come from ordinary Python files
-and are translated by source analysis; arbitrary Python execution is not part of
-the language. The semantic interchange format is Program/JSON v4.</p>
-<p>Implemented features include typed Function inputs/outputs/state, scalar and
-one-dimensional homogeneous lists, assignments, expressions, if/while, Function
-calls, logical device slots and explicit target bindings. Agitator configuration
-is captured by property assignment and applied by <code>start()</code>; <code>stop()</code> is explicit.
-Device-dependent branches can be selected at compile time.</p>
-<p>The AutoSuite target emits ASFP. An independent demonstration target validates
-the extension boundary. A reference interpreter defines SciLoom execution
-behavior; it does not simulate laboratory hardware.</p>
-<p>GUI/server, public Application/global APIs, measured property reads, Notebook and
-interactive source support remain future work.</p>
+<p>With Python 3.12–3.14, you can write a procedure in a <code>.py</code> file and generate an
+AutoSuite function package (<code>.asfp</code>). The current author API lets you:</p>
+<ul>
+<li>Declare inputs, outputs and working values, including typed lists.</li>
+<li>Calculate values, use <code>if</code> and <code>while</code>, and call reusable child Functions.</li>
+<li>Save shaker settings and explicitly start or stop agitation.</li>
+<li>Share a logical device between steps and bind it to an AutoSuite shaker.</li>
+<li>Choose device-specific branches when compiling for a target.</li>
+</ul>
+<p>The runtime method accepts a <a href="../../user-guide/reference/runtime-language/">restricted Python subset</a>.
+Constructors and the surrounding script remain ordinary Python.</p>
+<p>Contributors can define devices and targets. The developer examples include a
+demonstration target, JSON v4 interchange and a reference interpreter for checking
+calculations and state changes. That interpreter does not simulate laboratory hardware.</p>
+<p>A visual editor, server, public Application/global API, measured property reads,
+and notebook or interactive source support are not yet available.</p>
 <h2 id="what-compilation-establishes">What compilation establishes</h2>
-<p>Compilation and XML/reference checks validate the generated structure and mapped
-semantics. They are separate from AutoSuite Executor simulation and hardware
-acceptance. Array guard behavior, device mappings and platform fault/recovery
-details still require real-platform validation; reference execution cannot prove
-vendor numeric or physical equivalence.</p>
+<p>Compilation checks the source, value types, declared device bindings and required
+configuration before generating XML. It does not connect to the instrument or
+prove that the procedure will run correctly on your deployment.</p>
+<p>Generated packages still need AutoSuite Executor validation and equipment
+acceptance. Array bounds checks, device mappings and fault/recovery behaviour
+require platform verification; SciLoom's reference execution cannot establish
+the instrument's numerical or physical behaviour.</p>
 
 
 

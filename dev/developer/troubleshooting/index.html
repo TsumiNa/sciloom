@@ -1829,6 +1829,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#read-diagnostic-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Read diagnostic fields
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#typeerror-at-host-time" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -1888,6 +1899,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         ExecutionError
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reproduce-author-facing-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Reproduce author-facing failures
       </span>
     </span>
   </a>
@@ -3105,6 +3127,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#read-diagnostic-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Read diagnostic fields
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#typeerror-at-host-time" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3170,6 +3203,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#reproduce-author-facing-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Reproduce author-facing failures
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3187,18 +3231,58 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="210db19c5fd71d6c77f51774de33fc29ad81a0ac">210db19c</code>
+    · <code title="9d818d89367b524585ed8f63f0ebaaefa15397a1">9d818d89</code>
   </p>
 </aside>
 
                   
 
 <h1 id="troubleshooting">Troubleshooting</h1>
-<p>Contributor-facing errors, grouped by exception type. The author-facing codes,
-those a runtime method or a class body can provoke, are on the User Guide's
-<a href="../../user-guide/troubleshooting/">troubleshooting</a> page and are not repeated
-here. A diagnostic's fields are described on
+<p>Contributor-facing errors, grouped by exception type, with complete examples of
+diagnostic inspection and author-facing failures. For corrections to a runtime
+method or class body, start with the User Guide's symptom-based
+<a href="../../user-guide/troubleshooting/">troubleshooting</a>. A diagnostic's fields are described on
 <a href="../tutorial/reject-a-program/#reading-a-diagnostic">reject a program</a>.</p>
+<h2 id="read-diagnostic-fields">Read diagnostic fields</h2>
+<p>Source and compilation validation errors derive from <code>DiagnosticError</code>. A
+diagnostic carries a code, message, program path and optional source position.
+Ordinary Python construction errors may instead raise <code>TypeError</code> or
+<code>ValueError</code>; they do not have a <code>diagnostics</code> attribute.</p>
+<p>Save this complete example to a <code>.py</code> file. The reported line is relative to
+the code below; adding lines before the class changes it.</p>
+<p><div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">RotationalSpeed</span><span class="p">,</span> <span class="n">runtime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.diagnostics</span><span class="w"> </span><span class="kn">import</span> <span class="n">DiagnosticError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteTarget</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">BareNumber</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Assign a number where a speed is declared.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        speed: A rotational speed.</span>
+<span class="sd">    """</span>
+
+    <span class="n">speed</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="n">RotationalSpeed</span><span class="p">]</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">600</span>
+
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">BareNumber</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">())</span>
+<span class="k">except</span> <span class="n">DiagnosticError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">diagnostic</span> <span class="ow">in</span> <span class="n">error</span><span class="o">.</span><span class="n">diagnostics</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">diagnostic</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">diagnostic</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">diagnostic</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">diagnostic</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">line</span> <span class="k">if</span> <span class="n">diagnostic</span><span class="o">.</span><span class="n">source</span> <span class="k">else</span> <span class="s2">"no source position"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>type_mismatch
+Cannot assign integer to rotational_speed.
+$.functions[0].body[0]
+17
+</code></pre></div></p>
 <h2 id="typeerror-at-host-time">TypeError at host time</h2>
 <table>
 <thead>
@@ -3554,6 +3638,113 @@ and configuration pass, and <code>Target.validate</code>.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="reproduce-author-facing-failures">Reproduce author-facing failures</h2>
+<p>This complete script keeps the examples from the author lessons and advanced
+guides executable in one place. It prints only each diagnostic code; the
+<a href="../../user-guide/troubleshooting/">User Guide</a> shows corrections by symptom.</p>
+<!-- example: failures -->
+<p><div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agitator</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">RotationalSpeed</span><span class="p">,</span> <span class="n">Var</span><span class="p">,</span> <span class="n">runtime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.diagnostics</span><span class="w"> </span><span class="kn">import</span> <span class="n">DiagnosticError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteTarget</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Counter</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Count calls with a runtime field."""</span>
+    <span class="n">count</span><span class="p">:</span> <span class="n">Var</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">BareSpeed</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Demonstrate a missing speed unit."""</span>
+    <span class="n">speed</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="n">RotationalSpeed</span><span class="p">]</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">600</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ForLoop</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Demonstrate unsupported iteration syntax."""</span>
+    <span class="n">values</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span>
+    <span class="n">total</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">+=</span> <span class="n">value</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">UnboundShaker</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Declare a shaker that still needs a target binding."""</span>
+    <span class="n">shaker</span><span class="p">:</span> <span class="n">Agitator</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Limits</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""A host list cannot enter a runtime expression.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        volume: Sample volume in millilitres.</span>
+<span class="sd">        small: Whether the volume is below the first limit.</span>
+<span class="sd">    """</span>
+
+    <span class="n">volume</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">small</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">limits</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">]</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">small</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">limits</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Both</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""A condition AutoSuite refuses.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        a: First flag.</span>
+<span class="sd">        b: Second flag.</span>
+<span class="sd">        both: Whether both flags are set.</span>
+<span class="sd">    """</span>
+
+    <span class="n">a</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">b</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">both</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">both</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
+
+
+
+<span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">(</span>
+    <span class="k">lambda</span><span class="p">:</span> <span class="n">Counter</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">,</span>
+    <span class="k">lambda</span><span class="p">:</span> <span class="n">BareSpeed</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">()),</span>
+    <span class="k">lambda</span><span class="p">:</span> <span class="n">ForLoop</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">()),</span>
+    <span class="k">lambda</span><span class="p">:</span> <span class="n">UnboundShaker</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">()),</span>
+    <span class="k">lambda</span><span class="p">:</span> <span class="n">Limits</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">()),</span>
+    <span class="k">lambda</span><span class="p">:</span> <span class="n">Both</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">()),</span>
+<span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">action</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">DiagnosticError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">diagnostics</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>runtime_field_read
+type_mismatch
+python_subset
+missing_resource_binding
+host_value
+unsupported_short_circuit
+</code></pre></div></p>
 
 
 

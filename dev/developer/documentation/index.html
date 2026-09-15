@@ -3123,7 +3123,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="210db19c5fd71d6c77f51774de33fc29ad81a0ac">210db19c</code>
+    · <code title="9d818d89367b524585ed8f63f0ebaaefa15397a1">9d818d89</code>
   </p>
 </aside>
 
@@ -3206,6 +3206,12 @@ in <code>SERIES</code> with its pages in order and, optionally, the repository p
 complete program (otherwise the last <code>python</code> fence of the last page). The tests
 run every checkpoint and prove that the steps, joined, are that complete program:
 a module docstring and the import layout may differ, the statements may not.</p>
+<p>The User Guide's troubleshooting page marks wrong/fixed runtime fragments with
+<code>&lt;!-- correction: name wrong --&gt;</code> and <code>&lt;!-- correction: name fixed --&gt;</code>.
+The explicit cases in <code>handbook_test.py</code> supply their declared fields, check
+the failure code and run the correction with representative inputs. When moving
+an example, move its test registration too. The complete diagnostic inspection
+and collected failure script live in developer troubleshooting.</p>
 <p>Pages outside a series that open with a complete program are listed in the same
 file; the first <code>python</code> fence runs, and a <code>text</code> fence placed directly after it
 states the stdout the test compares.</p>
