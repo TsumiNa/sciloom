@@ -27,7 +27,7 @@
     
     
       
-        <title>Stir a rack of samples - SciLoom</title>
+        <title>Write a stirring procedure - SciLoom</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#stir-a-rack-of-samples" class="md-skip">
+        <a href="#write-a-stirring-procedure" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Stir a rack of samples
+              Write a stirring procedure
             
           </span>
         </div>
@@ -651,7 +651,7 @@
   <span class="md-ellipsis">
     
   
-  Stir a rack of samples
+  Write a stirring procedure
 
     
   </span>
@@ -679,7 +679,7 @@
   <span class="md-ellipsis">
     
   
-  1. Your first Function
+  1. Start a shaker
 
     
   </span>
@@ -706,34 +706,7 @@
   <span class="md-ellipsis">
     
   
-  2. Inputs, outputs and speeds
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="./lists-and-loops/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  3. Lists and loops
+  2. Supply a speed and switch
 
     
   </span>
@@ -760,7 +733,34 @@
   <span class="md-ellipsis">
     
   
-  4. Stirring with an Agitator
+  3. Reuse a calculation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./lists-and-loops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4. Work with a list of samples
 
     
   </span>
@@ -787,7 +787,7 @@
   <span class="md-ellipsis">
     
   
-  5. Bind and compile
+  5. Keep a count across calls
 
     
   </span>
@@ -3004,66 +3004,54 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="5d69676a13d69d7e65f0364f13d6a14039f71921">5d69676a</code>
+    · <code title="fc0ed4f1055c2b0282b93e099e0e864699fa2dd9">fc0ed4f1</code>
   </p>
 </aside>
 
                   
 
-<h1 id="stir-a-rack-of-samples">Stir a rack of samples</h1>
-<p>This tutorial builds one experiment from nothing to a compiled AutoSuite
-package. A rack of vials sits on an individual shaker. The program measures the
-largest sample volume in the rack, chooses a stirring speed for it, and either
-configures the shaker and starts it or stops it. Each page adds one class to the
-program; the last page shows the complete file, which is also the runnable
-<a href="../../examples/stir-rack/">stir-rack example</a>.</p>
+<h1 id="write-a-stirring-procedure">Write a stirring procedure</h1>
+<p>Begin with a shaker running at a fixed speed. Then let the caller choose the
+speed, extract a reusable calculation, handle a rack of samples and count start
+requests.</p>
 <table>
 <thead>
 <tr>
-<th>Page</th>
-<th>You add</th>
-<th>You learn</th>
+<th>Lesson</th>
+<th>What you will change</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="first-function/">1. Your first Function</a></td>
-<td><code>CountStirs</code></td>
-<td>a Function class, persistent state, the one runtime method</td>
+<td><a href="first-function/">1. Start a shaker</a></td>
+<td>Write and compile two experimental steps</td>
 </tr>
 <tr>
-<td><a href="inputs-and-units/">2. Inputs, outputs and speeds</a></td>
-<td><code>ChooseSpeed</code></td>
-<td>values exchanged per call, rotational speed, <code>if</code>/<code>else</code></td>
+<td><a href="inputs-and-units/">2. Supply a speed and switch</a></td>
+<td>Replace a fixed value with inputs and add a stop branch</td>
 </tr>
 <tr>
-<td><a href="lists-and-loops/">3. Lists and loops</a></td>
-<td><code>LargestVolume</code></td>
-<td>list inputs, <code>while</code> with an index, <code>len</code></td>
+<td><a href="agitator/">3. Reuse a calculation</a></td>
+<td>Choose a speed from sample volume in a separate Function</td>
 </tr>
 <tr>
-<td><a href="agitator/">4. Stirring with an Agitator</a></td>
-<td><code>StirRack</code></td>
-<td>a logical device, child Functions, configure then start, stop</td>
+<td><a href="lists-and-loops/">4. Work with a list of samples</a></td>
+<td>Find the largest supplied volume</td>
 </tr>
 <tr>
-<td><a href="compile/">5. Bind and compile</a></td>
-<td>the <code>__main__</code> block</td>
-<td>binding a real shaker and writing the <code>.asfp</code></td>
+<td><a href="compile/">5. Keep a count across calls</a></td>
+<td>Add a persistent counter and complete the procedure</td>
 </tr>
 </tbody>
 </table>
-<p>Before you start, follow <a href="../../introduction/getting-started/">getting started</a>
-so that <code>uv run python</code> finds <code>sciloom</code> and <code>sciloom_autosuite</code>. Keep one file,
-for example <code>stir_rack.py</code>, and paste each page's step into it in order; the
-checkpoints on each page are short extra lines you can run and then delete.
-Every checkpoint output shown here was produced by running that code.</p>
-<div class="admonition note">
-<p class="admonition-title">Compilation is not hardware acceptance</p>
-<p>Compilation and reference execution check a program's structure and its
-mapped semantics. They do not operate equipment, and they do not replace
-AutoSuite Executor validation on the deployment host.</p>
-</div>
+<p>Follow <a href="../../introduction/getting-started/">Getting started</a> to install the
+checkout. Each lesson supplies a complete Python file and its generated package.
+Use that lesson's file as your working copy; you do not need to paste all five
+files into one script.</p>
+<p>The examples use supplied volume data. They do not measure samples. The speeds
+and thresholds illustrate the language, rather than a validated experimental
+method. Running the Python files compiles them; equipment execution requires
+AutoSuite and validation on the deployment computer.</p>
 
 
 
@@ -3113,13 +3101,13 @@ AutoSuite Executor validation on the deployment host.</p>
         
         
           
-          <a href="./first-function/" class="md-footer__link md-footer__link--next" aria-label="Next: 1. Your first Function">
+          <a href="./first-function/" class="md-footer__link md-footer__link--next" aria-label="Next: 1. Start a shaker">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                1. Your first Function
+                1. Start a shaker
               </div>
             </div>
             <div class="md-footer__button md-icon">

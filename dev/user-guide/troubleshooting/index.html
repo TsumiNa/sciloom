@@ -640,7 +640,7 @@
   <span class="md-ellipsis">
     
   
-  Stir a rack of samples
+  Write a stirring procedure
 
     
   </span>
@@ -667,7 +667,7 @@
   <span class="md-ellipsis">
     
   
-  1. Your first Function
+  1. Start a shaker
 
     
   </span>
@@ -694,34 +694,7 @@
   <span class="md-ellipsis">
     
   
-  2. Inputs, outputs and speeds
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tutorial/lists-and-loops/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  3. Lists and loops
+  2. Supply a speed and switch
 
     
   </span>
@@ -748,7 +721,34 @@
   <span class="md-ellipsis">
     
   
-  4. Stirring with an Agitator
+  3. Reuse a calculation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/lists-and-loops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4. Work with a list of samples
 
     
   </span>
@@ -775,7 +775,7 @@
   <span class="md-ellipsis">
     
   
-  5. Bind and compile
+  5. Keep a count across calls
 
     
   </span>
@@ -1117,6 +1117,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         Errors raised at host time
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#try-common-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Try common failures
       </span>
     </span>
   </a>
@@ -3167,6 +3178,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#try-common-failures" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Try common failures
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3184,13 +3206,16 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="5d69676a13d69d7e65f0364f13d6a14039f71921">5d69676a</code>
+    · <code title="fc0ed4f1055c2b0282b93e099e0e864699fa2dd9">fc0ed4f1</code>
   </p>
 </aside>
 
                   
 
 <h1 id="troubleshooting">Troubleshooting</h1>
+<!-- Error demonstrations formerly embedded in the introductory lessons are
+kept executable here. The main tutorial follows successful programs. -->
+
 <p>Every SciLoom error carries structured diagnostics: a machine-readable code, a
 message, a path into the program and, when the source is known, the line that
 caused it. Printing the error shows <code>path: message [code]</code> per diagnostic. To
@@ -3264,7 +3289,7 @@ generated package. The tables below are grouped by when the error fires.</p>
 <td><code>class_schema</code></td>
 <td>Var requires an explicit scalar literal initial value.</td>
 <td>a <code>Var</code> without <code>= literal</code></td>
-<td>add the literal (<a href="../tutorial/first-function/">tutorial 1</a>)</td>
+<td>add the literal (<a href="../tutorial/compile/">lesson 5</a>)</td>
 </tr>
 <tr>
 <td><code>class_schema</code></td>
@@ -3300,7 +3325,7 @@ generated package. The tables below are grouped by when the error fires.</p>
 <td><code>class_schema</code></td>
 <td>Device slot <code>&lt;name&gt;</code> cannot have a class-level value.</td>
 <td><code>shaker: Agitator = ...</code></td>
-<td>bind hardware through the target (<a href="../tutorial/compile/">tutorial 5</a>)</td>
+<td>bind hardware through the target (<a href="../tutorial/first-function/">lesson 1</a>)</td>
 </tr>
 <tr>
 <td><code>class_schema</code></td>
@@ -3333,7 +3358,7 @@ example in <code>__init__</code> or in a script.</p>
 <td><code>runtime_field_read</code></td>
 <td>Runtime fields cannot be read by host Python.</td>
 <td><code>instance.field</code> in host code</td>
-<td>read it only inside the runtime method (<a href="../tutorial/first-function/">tutorial 1</a>)</td>
+<td>read it only inside the runtime method (<a href="../tutorial/compile/">lesson 5</a>)</td>
 </tr>
 <tr>
 <td><code>runtime_field_write</code></td>
@@ -3372,7 +3397,7 @@ The path names the function, <code>$.python.fn:0</code>.</p>
 <td><code>python_subset</code></td>
 <td>Unsupported runtime statement: <code>&lt;Node&gt;</code>.</td>
 <td><code>For</code>, <code>Return</code>, <code>Try</code>, <code>Break</code>, ...</td>
-<td>see the <a href="../reference/runtime-language/">runtime language</a>; loops use <code>while</code> (<a href="../tutorial/lists-and-loops/">tutorial 3</a>)</td>
+<td>see the <a href="../reference/runtime-language/">runtime language</a>; loops use <code>while</code> (<a href="../tutorial/lists-and-loops/">lesson 4</a>)</td>
 </tr>
 <tr>
 <td><code>python_subset</code></td>
@@ -3636,7 +3661,7 @@ statement.</p>
 <td><code>missing_resource_binding</code></td>
 <td>No compatible binding for device <code>&lt;slot&gt;</code>.</td>
 <td>no entry in <code>devices</code> for this slot</td>
-<td>bind every declared slot (<a href="../tutorial/compile/">tutorial 5</a>)</td>
+<td>bind every declared slot (<a href="../tutorial/first-function/">lesson 1</a>)</td>
 </tr>
 <tr>
 <td><code>device_type</code></td>
@@ -3672,7 +3697,7 @@ statement.</p>
 <td><code>device_configuration</code></td>
 <td>start() requires <code>&lt;property&gt;</code> to be configured on every reachable path in this invocation.</td>
 <td>a path reaches <code>start()</code> without assigning <code>speed</code></td>
-<td>assign the speed on every path first (<a href="../tutorial/agitator/">tutorial 4</a>)</td>
+<td>assign the speed on every path first (<a href="../tutorial/inputs-and-units/">lesson 2</a>)</td>
 </tr>
 <tr>
 <td><code>unsupported_short_circuit</code></td>
@@ -3785,6 +3810,70 @@ statement.</p>
 </table>
 <p>Codes that arise only from hand-built programs or reference execution are
 covered by the Developer Guide.</p>
+<h2 id="try-common-failures">Try common failures</h2>
+<p>Save this complete example to a <code>.py</code> file to reproduce four errors. Use the
+codes to find the cause and correction in the tables above.</p>
+<!-- example: failures -->
+<p><div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agitator</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">RotationalSpeed</span><span class="p">,</span> <span class="n">Var</span><span class="p">,</span> <span class="n">runtime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.diagnostics</span><span class="w"> </span><span class="kn">import</span> <span class="n">DiagnosticError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteTarget</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Counter</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Count calls with a runtime field."""</span>
+    <span class="n">count</span><span class="p">:</span> <span class="n">Var</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">BareSpeed</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Demonstrate a missing speed unit."""</span>
+    <span class="n">speed</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="n">RotationalSpeed</span><span class="p">]</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">600</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ForLoop</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Demonstrate unsupported iteration syntax."""</span>
+    <span class="n">values</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span>
+    <span class="n">total</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">+=</span> <span class="n">value</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">UnboundShaker</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Declare a shaker that still needs a target binding."""</span>
+    <span class="n">shaker</span><span class="p">:</span> <span class="n">Agitator</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+
+<span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="p">(</span>
+    <span class="k">lambda</span><span class="p">:</span> <span class="n">Counter</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">,</span>
+    <span class="k">lambda</span><span class="p">:</span> <span class="n">BareSpeed</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">()),</span>
+    <span class="k">lambda</span><span class="p">:</span> <span class="n">ForLoop</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">()),</span>
+    <span class="k">lambda</span><span class="p">:</span> <span class="n">UnboundShaker</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">()),</span>
+<span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">action</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">DiagnosticError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="o">.</span><span class="n">diagnostics</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">code</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>runtime_field_read
+type_mismatch
+python_subset
+missing_resource_binding
+</code></pre></div></p>
 
 
 

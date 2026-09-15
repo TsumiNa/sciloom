@@ -16,7 +16,7 @@
         <link rel="prev" href="../first-function/">
       
       
-        <link rel="next" href="../lists-and-loops/">
+        <link rel="next" href="../agitator/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>2. Inputs, outputs and speeds - SciLoom</title>
+        <title>2. Supply a speed and switch - SciLoom</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#2-inputs-outputs-and-speeds" class="md-skip">
+        <a href="#2-supply-a-speed-and-switch" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              2. Inputs, outputs and speeds
+              2. Supply a speed and switch
             
           </span>
         </div>
@@ -642,7 +642,7 @@
   <span class="md-ellipsis">
     
   
-  Stir a rack of samples
+  Write a stirring procedure
 
     
   </span>
@@ -669,7 +669,7 @@
   <span class="md-ellipsis">
     
   
-  1. Your first Function
+  1. Start a shaker
 
     
   </span>
@@ -698,6 +698,23 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2. Supply a speed and switch
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="././" class="md-nav__link md-nav__link--active">
         
   
@@ -705,7 +722,7 @@
   <span class="md-ellipsis">
     
   
-  2. Inputs, outputs and speeds
+  2. Supply a speed and switch
 
     
   </span>
@@ -714,33 +731,48 @@
 
       </a>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../lists-and-loops/" class="md-nav__link">
         
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
   
   
-  <span class="md-ellipsis">
+  
     
   
-  3. Lists and loops
-
-    
-  </span>
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-inputs-mean" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        What the inputs mean
+      </span>
+    </span>
+  </a>
   
-
-      </a>
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Complete file
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -760,7 +792,34 @@
   <span class="md-ellipsis">
     
   
-  4. Stirring with an Agitator
+  3. Reuse a calculation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lists-and-loops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4. Work with a list of samples
 
     
   </span>
@@ -787,7 +846,7 @@
   <span class="md-ellipsis">
     
   
-  5. Bind and compile
+  5. Keep a count across calls
 
     
   </span>
@@ -2977,6 +3036,11 @@
                       
                     
                     
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
                   
                   <div class="md-sidebar__inner">
                     
@@ -2988,6 +3052,36 @@
   
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-inputs-mean" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        What the inputs mean
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Complete file
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -3004,77 +3098,127 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="5d69676a13d69d7e65f0364f13d6a14039f71921">5d69676a</code>
+    · <code title="fc0ed4f1055c2b0282b93e099e0e864699fa2dd9">fc0ed4f1</code>
   </p>
 </aside>
 
                   
 
-<h1 id="2-inputs-outputs-and-speeds">2. Inputs, outputs and speeds</h1>
-<p>The counter kept state but exchanged nothing. Most Functions receive values and
-hand results back. Add a Function that turns a sample volume into a stirring
-speed.</p>
-<!-- tutorial: step -->
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">RotationalSpeed</span><span class="p">,</span> <span class="n">rpm</span>
+<h1 id="2-supply-a-speed-and-switch">2. Supply a speed and switch</h1>
+<p>The first program always starts at 300 rpm. Change it so its caller can supply
+a speed and choose whether to start or stop.</p>
+<p>Add these declarations to <code>StirRack</code>, along with the existing <code>shaker</code> field:</p>
+<div class="highlight"><pre><span></span><code><span class="n">speed</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="n">RotationalSpeed</span><span class="p">]</span>
+<span class="n">enabled</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+</code></pre></div>
+<p>An <code>Input</code> is a value supplied each time the generated function is called.
+Here the AutoSuite caller supplies both inputs. Compiling the Python file does
+not choose their values. Inputs do not have class-level defaults.</p>
+<p>Replace the two lines in <code>run</code> with:</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speed</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</code></pre></div>
+<p>This is an ordinary <code>if/else</code> written inside a runtime method. When
+<code>enabled</code> is false, the procedure skips the speed assignment and stops.</p>
+<h2 id="what-the-inputs-mean">What the inputs mean</h2>
+<p>The table describes what the generated function does when called:</p>
+<table>
+<thead>
+<tr>
+<th>Inputs</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enabled=True</code>, <code>speed=300*rpm</code></td>
+<td>Save 300 rpm, then start</td>
+</tr>
+<tr>
+<td><code>enabled=True</code>, <code>speed=600*rpm</code></td>
+<td>Save 600 rpm, then start</td>
+</tr>
+<tr>
+<td><code>enabled=False</code>, <code>speed=300*rpm</code></td>
+<td>Stop and retain the previously saved configuration</td>
+</tr>
+</tbody>
+</table>
+<p>Both inputs are required on every call, including a stop request. In that branch
+the supplied speed is not applied.</p>
+<p>In Python source, write a speed with its unit, for example <code>300 * rpm</code>.
+<code>RotationalSpeed</code> keeps a speed distinct from a plain number. You can also
+use <code>rps</code>: <code>600 * rpm</code> and <code>10 * rps</code> represent the same speed.
+The expressions in the table describe values; they are not AutoSuite UI input
+instructions.</p>
+<p>Calling <code>start()</code> again applies the newly saved speed. Setting a speed of zero
+does not call <code>stop()</code>; use the explicit stop branch to disable agitation.</p>
+<h2 id="complete-file">Complete file</h2>
+<p>This version includes the new imports, both inputs and the unchanged equipment
+binding. Use it as a replacement for the first lesson's file.</p>
+<details class="example">
+<summary>Show control_shaker.py</summary>
+<div class="highlight"><pre><span></span><code><span class="sd">"""For experiment authors: supply the speed and choose whether to stir.</span>
+
+<span class="sd">Run from the repository root:</span>
+<span class="sd">    uv run python examples/tutorial/control_shaker.py</span>
+
+<span class="sd">Expected terminal output:</span>
+<span class="sd">    control_shaker.asfp</span>
+
+<span class="sd">Compilation writes the function package; it does not run equipment.</span>
+<span class="sd">The speed input illustrates programming, not experimental guidance.</span>
+<span class="sd">Full generated output: control_shaker.asfp, beside this source file.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agitator</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">RotationalSpeed</span><span class="p">,</span> <span class="n">runtime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteIndividualShaker</span><span class="p">,</span> <span class="n">AutoSuiteTarget</span>
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">ChooseSpeed</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Choose a stirring speed from a sample volume.</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">StirRack</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Start at the supplied speed, or stop the shaker.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        volume: Sample volume in millilitres.</span>
-<span class="sd">        speed: A gentle speed for small volumes, a faster one otherwise.</span>
+<span class="sd">        shaker: Shaker used for the samples.</span>
+<span class="sd">        speed: Requested speed when enabled.</span>
+<span class="sd">        enabled: Whether to start or stop.</span>
 <span class="sd">    """</span>
 
-    <span class="n">volume</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
-    <span class="n">speed</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="n">RotationalSpeed</span><span class="p">]</span>
+    <span class="n">shaker</span><span class="p">:</span> <span class="n">Agitator</span>
+    <span class="n">speed</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="n">RotationalSpeed</span><span class="p">]</span>
+    <span class="n">enabled</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
 
     <span class="nd">@runtime</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">&lt;</span> <span class="mf">2.0</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">300</span> <span class="o">*</span> <span class="n">rpm</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speed</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">600</span> <span class="o">*</span> <span class="n">rpm</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">AutoSuiteTarget</span><span class="p">(</span>
+        <span class="n">devices</span><span class="o">=</span><span class="p">{</span><span class="s2">"shaker"</span><span class="p">:</span> <span class="n">AutoSuiteIndividualShaker</span><span class="p">(</span><span class="n">zone</span><span class="o">=</span><span class="s2">"Heater Shaker 23"</span><span class="p">,</span> <span class="n">device_id</span><span class="o">=</span><span class="s2">"23"</span><span class="p">)},</span>
+    <span class="p">)</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">StirRack</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".asfp"</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </code></pre></div>
-<p>An <code>Input</code> is supplied by whoever calls the Function; an <code>Output</code> is written back
-when the call returns. Neither has a default on the class, and every <code>Output</code>
-must be assigned on every path through the method, which is why the <code>else</code>
-branch is not optional here.</p>
-<p><code>RotationalSpeed</code> is the one physical quantity in this release. A speed is
-written as a number times a unit, <code>300 * rpm</code>; revolutions per second, <code>rps</code>,
-is the canonical form and the two compare equal:</p>
-<!-- tutorial: checkpoint -->
-<p><div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">rps</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="mi">600</span> <span class="o">*</span> <span class="n">rpm</span> <span class="o">==</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">rps</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ChooseSpeed</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">())</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"choose_speed.asfp"</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</details>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/tutorial/control_shaker.py
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>True
-choose_speed.asfp
-</code></pre></div></p>
-<p>A bare number is not a speed. Types are checked before anything is generated,
-so assigning <code>600</code> to a speed output is refused with the path of the offending
-statement:</p>
-<!-- tutorial: checkpoint -->
-<p><div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">BareNumber</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
-    <span class="n">speed</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="n">RotationalSpeed</span><span class="p">]</span>
-
-    <span class="nd">@runtime</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">600</span>
-
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">BareNumber</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">())</span>
-<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code>control_shaker.asfp
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>$.functions[0].body[0]: Cannot assign integer to rotational_speed. [type_mismatch]
-</code></pre></div></p>
-<p>The same checker widens an integer to a float where that is safe and never
-narrows a float to an integer; <code>bool</code> is its own type, and a condition must be
-a Boolean rather than a number.</p>
-<p>Next: <a href="../lists-and-loops/">3. Lists and loops</a>.</p>
+<p>The package is written beside its source. It now expects <code>speed</code> and <code>enabled</code>
+when AutoSuite calls it.</p>
+<p><a href="../../../_generated/examples/tutorial/control_shaker.py">Python source</a> ·
+<a href="../../../_generated/examples/tutorial/control_shaker.asfp">Generated package</a></p>
+<p>Next: <a href="../agitator/">3. Reuse a calculation</a>.</p>
 
 
 
@@ -3107,7 +3251,7 @@ a Boolean rather than a number.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../first-function/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1. Your first Function">
+          <a href="../first-function/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1. Start a shaker">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -3117,20 +3261,20 @@ a Boolean rather than a number.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                1. Your first Function
+                1. Start a shaker
               </div>
             </div>
           </a>
         
         
           
-          <a href="../lists-and-loops/" class="md-footer__link md-footer__link--next" aria-label="Next: 3. Lists and loops">
+          <a href="../agitator/" class="md-footer__link md-footer__link--next" aria-label="Next: 3. Reuse a calculation">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                3. Lists and loops
+                3. Reuse a calculation
               </div>
             </div>
             <div class="md-footer__button md-icon">

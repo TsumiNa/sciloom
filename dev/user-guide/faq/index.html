@@ -640,7 +640,7 @@
   <span class="md-ellipsis">
     
   
-  Stir a rack of samples
+  Write a stirring procedure
 
     
   </span>
@@ -667,7 +667,7 @@
   <span class="md-ellipsis">
     
   
-  1. Your first Function
+  1. Start a shaker
 
     
   </span>
@@ -694,34 +694,7 @@
   <span class="md-ellipsis">
     
   
-  2. Inputs, outputs and speeds
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tutorial/lists-and-loops/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  3. Lists and loops
+  2. Supply a speed and switch
 
     
   </span>
@@ -748,7 +721,34 @@
   <span class="md-ellipsis">
     
   
-  4. Stirring with an Agitator
+  3. Reuse a calculation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorial/lists-and-loops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4. Work with a list of samples
 
     
   </span>
@@ -775,7 +775,7 @@
   <span class="md-ellipsis">
     
   
-  5. Bind and compile
+  5. Keep a count across calls
 
     
   </span>
@@ -3002,7 +3002,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="5d69676a13d69d7e65f0364f13d6a14039f71921">5d69676a</code>
+    · <code title="fc0ed4f1055c2b0282b93e099e0e864699fa2dd9">fc0ed4f1</code>
   </p>
 </aside>
 
@@ -3011,23 +3011,23 @@
 <h1 id="faq">FAQ</h1>
 <p><strong>Why can't I write a <code>for</code> loop?</strong> The runtime language has <code>while</code> only.
 Declare an index as a <code>Var</code>, reset it at the top of the method, and loop while
-it is below <code>len(...)</code>. See <a href="../tutorial/lists-and-loops/">tutorial 3</a>.</p>
+it is below <code>len(...)</code>. See <a href="../tutorial/lists-and-loops/">lesson 4</a>.</p>
 <p><strong>Why is there no <code>return</code>?</strong> A Function hands results back through <code>Output</code>
 fields, which must be assigned on every path through the method. See
-<a href="../tutorial/inputs-and-units/">tutorial 2</a>.</p>
+<a href="../tutorial/agitator/">lesson 3</a>.</p>
 <p><strong>Can I use a local variable inside <code>@runtime</code>?</strong> No. Every name the method
 assigns is a declared field; use a <code>Var</code>. See the
 <a href="../reference/runtime-language/">runtime language</a>.</p>
 <p><strong>Does a <code>Var</code> reset on every call?</strong> No. Its literal is the state when the
 session starts, and later calls continue from where the last one stopped. Reset
 it inside the method when a call should start fresh. See
-<a href="../tutorial/first-function/">tutorial 1</a>.</p>
+<a href="../tutorial/compile/">lesson 5</a>.</p>
 <p><strong>Can an <code>Input</code> have a default value?</strong> No; <code>Input</code> and <code>Output</code> have no
 defaults. Pass the value from the caller, or store it in the constructor as host
 configuration. See <a href="../advanced/specialization/">host-time specialization</a>.</p>
 <p><strong>Why is <code>speed = 0 * rpm</code> not a stop?</strong> Assigning a property saves a
 configuration; only <code>stop()</code> disables the device. See
-<a href="../tutorial/agitator/">tutorial 4</a>.</p>
+<a href="../tutorial/inputs-and-units/">lesson 2</a>.</p>
 <p><strong>Can I read the shaker's current speed?</strong> No. Device properties are write-only
 in this release; keep the value you configured in a <code>Var</code>. See
 <a href="../reference/devices-and-targets/">devices and targets</a>.</p>

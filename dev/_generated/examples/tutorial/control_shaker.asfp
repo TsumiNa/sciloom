@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='utf-8'?>
+<functions>
+  <function typeid="Chemspeed.SATaskFunctionDefinition.1">
+    <description />
+    <name>StirRack</name>
+    <edittime>0</edittime>
+    <expanded>1</expanded>
+    <functiondata>
+      <inputs>
+        <count>2</count>
+        <item0>
+          <id>{09205616-050F-574B-8F08-6C5E40F7ED76}</id>
+          <name>speed</name>
+          <variablename>speed</variablename>
+          <variabletype>angularspeed</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item0>
+        <item1>
+          <id>{BFF01C72-B427-5FC9-A9AC-9B958FE83CD2}</id>
+          <name>enabled</name>
+          <variablename>enabled</variablename>
+          <variabletype>bool</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item1>
+        <sortType>0</sortType>
+      </inputs>
+      <outputs>
+        <count>0</count>
+        <sortType>0</sortType>
+      </outputs>
+    </functiondata>
+    <id>{5C096E61-8650-5F00-BE47-D2BCA6C9868F}</id>
+    <components>
+      <component typeid="Chemspeed.SAMacroTask.1">
+        <description />
+        <name>Macro Task</name>
+        <edittime>0</edittime>
+        <expanded>1</expanded>
+        <conditionloop>1</conditionloop>
+        <conditionif />
+        <conditionwhile />
+        <conditiontype>0</conditiontype>
+        <loopvariable>loop</loopvariable>
+        <fragmentvariable>fragment</fragmentvariable>
+        <executionmode>0</executionmode>
+        <sequentialzones>
+          <count>0</count>
+        </sequentialzones>
+        <multicondition>0</multicondition>
+        <multiloop>0</multiloop>
+        <variables sortingType="1">
+          <variable>
+            <name>sciloom_tmp_1</name>
+            <value>
+              <type>5</type>
+              <value>0</value>
+            </value>
+            <siunit>1/s</siunit>
+            <unit>rpm</unit>
+            <array>0</array>
+            <creationtime>0</creationtime>
+            <constant>0</constant>
+          </variable>
+        </variables>
+        <id>{1FC4E309-C7CA-5DDC-9914-EB86123BE566}</id>
+        <tasks>
+          <task typeid="Chemspeed.SAMacroTask.1">
+            <description />
+            <name>If-Else</name>
+            <edittime>0</edittime>
+            <expanded>1</expanded>
+            <conditionloop>1</conditionloop>
+            <conditionif />
+            <conditionwhile />
+            <conditiontype>0</conditiontype>
+            <loopvariable>loop</loopvariable>
+            <fragmentvariable>fragment</fragmentvariable>
+            <executionmode>0</executionmode>
+            <sequentialzones>
+              <count>0</count>
+            </sequentialzones>
+            <multicondition>1</multicondition>
+            <multiloop>0</multiloop>
+            <variables sortingType="1" />
+            <id>{6DAF453F-36B9-54AF-BC94-680111ECDCB8}</id>
+            <tasks>
+              <task typeid="Chemspeed.SATaskCondition.1">
+                <description />
+                <name>If</name>
+                <edittime>0</edittime>
+                <expanded>1</expanded>
+                <conditiontype>0</conditiontype>
+                <condition>enabled</condition>
+                <id>{B51D129A-02CC-5D50-B236-45411041BFE6}</id>
+                <components>
+                  <component typeid="Chemspeed.SATaskSetVariable.1">
+                    <description />
+                    <name>Set Variable</name>
+                    <edittime>0</edittime>
+                    <variablename>sciloom_tmp_1</variablename>
+                    <expressiontext>speed</expressiontext>
+                    <elementselectmode>0</elementselectmode>
+                    <elementnumber />
+                    <numberofelements />
+                    <startindex>0</startindex>
+                    <clearvariable>0</clearvariable>
+                    <sortwells>0</sortwells>
+                    <enumerationtype>0</enumerationtype>
+                    <wellsenumeration>0</wellsenumeration>
+                    <elementsenumeration>0</elementsenumeration>
+                    <id>{7F602DCC-20A4-5CED-BB60-209A2B9BAB5C}</id>
+                  </component>
+                  <component typeid="Chemspeed.SATaskSetAgitation.1">
+                    <zone>Heater Shaker 23</zone>
+                    <description />
+                    <name>Stir</name>
+                    <edittime>0</edittime>
+                    <taskdatas>
+                      <count>1</count>
+                      <taskdata0>
+                        <progid>Chemspeed.SADeviceIndividualShaker.1</progid>
+                        <deviceid>23</deviceid>
+                        <wellid>-1</wellid>
+                        <speed>sciloom_tmp_1</speed>
+                      </taskdata0>
+                    </taskdatas>
+                    <switchon>1</switchon>
+                    <speedunit>rpm</speedunit>
+                    <autofillspeed>1</autofillspeed>
+                    <stirrertype>0</stirrertype>
+                    <id>{FF12AC7E-98AC-504E-A781-E1D7D0B29805}</id>
+                  </component>
+                </components>
+              </task>
+              <task typeid="Chemspeed.SATaskCondition.1">
+                <description />
+                <name>Else</name>
+                <edittime>0</edittime>
+                <expanded>1</expanded>
+                <conditiontype>2</conditiontype>
+                <condition />
+                <id>{B20C3708-BC91-53F1-81C7-0709ADB1DAAA}</id>
+                <components>
+                  <component typeid="Chemspeed.SATaskSetAgitation.1">
+                    <zone>Heater Shaker 23</zone>
+                    <description />
+                    <name>Stir</name>
+                    <edittime>0</edittime>
+                    <taskdatas>
+                      <count>1</count>
+                      <taskdata0>
+                        <progid>Chemspeed.SADeviceIndividualShaker.1</progid>
+                        <deviceid>23</deviceid>
+                        <wellid>-1</wellid>
+                        <speed>1.66666666667</speed>
+                      </taskdata0>
+                    </taskdatas>
+                    <switchon>0</switchon>
+                    <speedunit>rpm</speedunit>
+                    <autofillspeed>1</autofillspeed>
+                    <stirrertype>0</stirrertype>
+                    <id>{9C95D058-B4A4-5672-BC30-29589B685DDD}</id>
+                  </component>
+                </components>
+              </task>
+            </tasks>
+          </task>
+        </tasks>
+      </component>
+    </components>
+  </function>
+</functions>

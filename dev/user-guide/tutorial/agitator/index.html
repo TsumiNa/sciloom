@@ -13,10 +13,10 @@
         <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/user-guide/tutorial/agitator/">
       
       
-        <link rel="prev" href="../lists-and-loops/">
+        <link rel="prev" href="../inputs-and-units/">
       
       
-        <link rel="next" href="../compile/">
+        <link rel="next" href="../lists-and-loops/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>4. Stirring with an Agitator - SciLoom</title>
+        <title>3. Reuse a calculation - SciLoom</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#4-stirring-with-an-agitator" class="md-skip">
+        <a href="#3-reuse-a-calculation" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              4. Stirring with an Agitator
+              3. Reuse a calculation
             
           </span>
         </div>
@@ -642,7 +642,7 @@
   <span class="md-ellipsis">
     
   
-  Stir a rack of samples
+  Write a stirring procedure
 
     
   </span>
@@ -669,7 +669,7 @@
   <span class="md-ellipsis">
     
   
-  1. Your first Function
+  1. Start a shaker
 
     
   </span>
@@ -696,34 +696,7 @@
   <span class="md-ellipsis">
     
   
-  2. Inputs, outputs and speeds
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../lists-and-loops/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  3. Lists and loops
+  2. Supply a speed and switch
 
     
   </span>
@@ -752,6 +725,23 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3. Reuse a calculation
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="././" class="md-nav__link md-nav__link--active">
         
   
@@ -759,7 +749,7 @@
   <span class="md-ellipsis">
     
   
-  4. Stirring with an Agitator
+  3. Reuse a calculation
 
     
   </span>
@@ -768,6 +758,75 @@
 
       </a>
       
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#use-the-calculation-in-stirrack" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Use the calculation in StirRack
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Complete file
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lists-and-loops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4. Work with a list of samples
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -787,7 +846,7 @@
   <span class="md-ellipsis">
     
   
-  5. Bind and compile
+  5. Keep a count across calls
 
     
   </span>
@@ -2977,6 +3036,11 @@
                       
                     
                     
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
                   
                   <div class="md-sidebar__inner">
                     
@@ -2988,6 +3052,36 @@
   
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#use-the-calculation-in-stirrack" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Use the calculation in StirRack
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Complete file
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -3004,80 +3098,159 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="5d69676a13d69d7e65f0364f13d6a14039f71921">5d69676a</code>
+    · <code title="fc0ed4f1055c2b0282b93e099e0e864699fa2dd9">fc0ed4f1</code>
   </p>
 </aside>
 
                   
 
-<h1 id="4-stirring-with-an-agitator">4. Stirring with an Agitator</h1>
-<p>Now the experiment itself. <code>StirRack</code> uses the three Functions written so far
-and adds the shaker.</p>
-<!-- tutorial: step -->
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agitator</span>
+<h1 id="3-reuse-a-calculation">3. Reuse a calculation</h1>
+<p>Suppose the procedure should choose a speed from the sample volume. Put the
+choice in its own Function so other procedures can use it too.</p>
+<p><code>ChooseSpeed</code> takes <code>volume: Input[float]</code> and writes
+<code>speed: Output[RotationalSpeed]</code>. Its runtime method is:</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">&lt;</span> <span class="mf">2.0</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">300</span> <span class="o">*</span> <span class="n">rpm</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">600</span> <span class="o">*</span> <span class="n">rpm</span>
+</code></pre></div>
+<p>An <code>Output</code> is a result passed back to the calling Function. Assign it on
+each path through the method; the <code>else</code> above supplies the result for volumes
+of 2.0 or more. SciLoom Functions use output fields instead of <code>return</code>.</p>
+<p>The volume is supplied data, in millilitres by this example's convention.
+<code>float</code> itself carries no volume unit. The threshold and speeds demonstrate
+a branch; they are not an experimentally established relationship.</p>
+<h2 id="use-the-calculation-in-stirrack">Use the calculation in StirRack</h2>
+<p>Replace the speed input with a volume input and a working value:</p>
+<div class="highlight"><pre><span></span><code><span class="n">volume</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+<span class="n">enabled</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+<span class="n">shaker</span><span class="p">:</span> <span class="n">Agitator</span>
+<span class="n">speed</span><span class="p">:</span> <span class="n">Var</span><span class="p">[</span><span class="n">RotationalSpeed</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">rpm</span>
+</code></pre></div>
+<p><code>Var</code> gives the runtime method somewhere to store a value. Unlike an input,
+it is not supplied by the caller. It needs an initial value; here the calculation
+will overwrite that value before it is used.</p>
+<p>Create the child Function in a constructor:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">choose</span> <span class="o">=</span> <span class="n">ChooseSpeed</span><span class="p">()</span>
+</code></pre></div>
+<p>Python calls <code>__init__</code> when you write <code>StirRack()</code>. It runs on your computer
+and creates the child instance once. Inside <code>run</code>, call it before the existing
+start/stop branch:</p>
+<div class="highlight"><pre><span></span><code><span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">choose</span><span class="p">(</span><span class="n">volume</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="p">)</span>
+</code></pre></div>
+<p>The argument supplies the child's input. The assignment receives its output.
+Keep the <code>if self.enabled:</code> branch from lesson 2; it now uses the calculated speed.</p>
+<table>
+<thead>
+<tr>
+<th>Inputs when the generated function is called</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>volume=1.5</code>, <code>enabled=True</code></td>
+<td>Start at 300 rpm</td>
+</tr>
+<tr>
+<td><code>volume=2.0</code>, <code>enabled=True</code></td>
+<td>Start at 600 rpm</td>
+</tr>
+<tr>
+<td><code>volume=1.5</code>, <code>enabled=False</code></td>
+<td>Stop; do not apply the calculated speed</td>
+</tr>
+</tbody>
+</table>
+<p>Supply both inputs even when stopping. This procedure calculates a speed before
+it checks <code>enabled</code>.</p>
+<h2 id="complete-file">Complete file</h2>
+<details class="example">
+<summary>Show choose_stirring_speed.py</summary>
+<div class="highlight"><pre><span></span><code><span class="sd">"""For experiment authors: reuse a Function that chooses a speed.</span>
+
+<span class="sd">Run from the repository root:</span>
+<span class="sd">    uv run python examples/tutorial/choose_stirring_speed.py</span>
+
+<span class="sd">Expected terminal output:</span>
+<span class="sd">    choose_stirring_speed.asfp</span>
+
+<span class="sd">Compilation writes the function package; it does not run equipment.</span>
+<span class="sd">Speeds and volume thresholds illustrate programming, not experimental guidance.</span>
+<span class="sd">Full generated output: choose_stirring_speed.asfp, beside this source file.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agitator</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">RotationalSpeed</span><span class="p">,</span> <span class="n">Var</span><span class="p">,</span> <span class="n">rpm</span><span class="p">,</span> <span class="n">runtime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteIndividualShaker</span><span class="p">,</span> <span class="n">AutoSuiteTarget</span>
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">StirRack</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Stir a rack at a speed chosen from its largest sample, or stop.</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ChooseSpeed</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Choose a stirring speed from an input volume.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        volumes: Volume of every vial in the rack.</span>
-<span class="sd">        enabled: Whether the rack should be stirring after this call.</span>
-<span class="sd">        shaker: Logical agitator; the target binds the hardware.</span>
-<span class="sd">        largest: Largest volume measured on this call.</span>
-<span class="sd">        speed: Speed chosen for that volume.</span>
+<span class="sd">        volume: Sample volume in millilitres.</span>
+<span class="sd">        speed: Speed selected for that volume.</span>
 <span class="sd">    """</span>
 
-    <span class="n">volumes</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span>
-    <span class="n">enabled</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
-    <span class="n">shaker</span><span class="p">:</span> <span class="n">Agitator</span>
-    <span class="n">largest</span><span class="p">:</span> <span class="n">Var</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="n">speed</span><span class="p">:</span> <span class="n">Var</span><span class="p">[</span><span class="n">RotationalSpeed</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">rpm</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">measure</span> <span class="o">=</span> <span class="n">LargestVolume</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">choose</span> <span class="o">=</span> <span class="n">ChooseSpeed</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="n">CountStirs</span><span class="p">()</span>
+    <span class="n">volume</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">speed</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="n">RotationalSpeed</span><span class="p">]</span>
 
     <span class="nd">@runtime</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">largest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">volumes</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">volumes</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">choose</span><span class="p">(</span><span class="n">volume</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">largest</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">&lt;</span> <span class="mf">2.0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">300</span> <span class="o">*</span> <span class="n">rpm</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">600</span> <span class="o">*</span> <span class="n">rpm</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">StirRack</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Choose a speed from the supplied volume, then start or stop.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        volume: Sample volume in millilitres.</span>
+<span class="sd">        enabled: Whether to start or stop.</span>
+<span class="sd">        shaker: Shaker used for the samples.</span>
+<span class="sd">        speed: Working value returned by ChooseSpeed.</span>
+<span class="sd">    """</span>
+
+    <span class="n">volume</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+    <span class="n">enabled</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span>
+    <span class="n">shaker</span><span class="p">:</span> <span class="n">Agitator</span>
+    <span class="n">speed</span><span class="p">:</span> <span class="n">Var</span><span class="p">[</span><span class="n">RotationalSpeed</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">rpm</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">choose</span> <span class="o">=</span> <span class="n">ChooseSpeed</span><span class="p">()</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">choose</span><span class="p">(</span><span class="n">volume</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speed</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">AutoSuiteTarget</span><span class="p">(</span>
+        <span class="n">devices</span><span class="o">=</span><span class="p">{</span><span class="s2">"shaker"</span><span class="p">:</span> <span class="n">AutoSuiteIndividualShaker</span><span class="p">(</span><span class="n">zone</span><span class="o">=</span><span class="s2">"Heater Shaker 23"</span><span class="p">,</span> <span class="n">device_id</span><span class="o">=</span><span class="s2">"23"</span><span class="p">)},</span>
+    <span class="p">)</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">StirRack</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".asfp"</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </code></pre></div>
-<p><code>shaker: Agitator</code> declares a <strong>logical device</strong>: the program needs an agitator,
-any agitator. It is not a piece of hardware and not a value; you never construct
-one or assign one. Which shaker it becomes is decided when you compile, on the
-next page.</p>
-<p><code>__init__</code> is ordinary Python. It runs on your computer when you write
-<code>StirRack()</code>, and here it creates the three child Functions. In the runtime
-method a child is called like a function and its outputs are bound by
-assignment: <code>self.largest = self.measure(volumes=self.volumes)</code> passes the rack
-in and copies the result out. A child with no outputs, <code>self.counter()</code>, is
-called as a statement. Each child keeps its own state, so the counter keeps
-counting across calls.</p>
-<p>Configuring the shaker takes two steps on purpose. <code>self.shaker.speed = self.speed</code>
-<strong>saves</strong> a configuration and changes nothing on the device. <code>self.shaker.start()</code>
-<strong>applies</strong> everything saved and enables agitation. <code>self.shaker.stop()</code> disables
-it and keeps the saved values. Assigning a speed of <code>0 * rpm</code> is a configuration,
-not a stop. Before a <code>start()</code>, the speed must have been assigned on every path
-that reaches it; the compiler checks this for you.</p>
-<p>Compiling now fails, and the message says why: the program declares a device
-that the target has not been told about.</p>
-<!-- tutorial: checkpoint -->
-<p><div class="highlight"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
-    <span class="n">StirRack</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">())</span>
-<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+</details>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/tutorial/choose_stirring_speed.py
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>$.resources[0]: No compatible binding for device 'shaker'. [missing_resource_binding]
-</code></pre></div></p>
-<p>Next: <a href="../compile/">5. Bind and compile</a>.</p>
+<div class="highlight"><pre><span></span><code>choose_stirring_speed.asfp
+</code></pre></div>
+<p>The package has <code>volume</code> and <code>enabled</code> inputs. Its child Function is included
+in the same package.</p>
+<p><a href="../../../_generated/examples/tutorial/choose_stirring_speed.py">Python source</a> ·
+<a href="../../../_generated/examples/tutorial/choose_stirring_speed.asfp">Generated package</a></p>
+<p>Next: <a href="../lists-and-loops/">4. Work with a list of samples</a>.</p>
 
 
 
@@ -3110,7 +3283,7 @@ that the target has not been told about.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../lists-and-loops/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 3. Lists and loops">
+          <a href="../inputs-and-units/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 2. Supply a speed and switch">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -3120,20 +3293,20 @@ that the target has not been told about.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                3. Lists and loops
+                2. Supply a speed and switch
               </div>
             </div>
           </a>
         
         
           
-          <a href="../compile/" class="md-footer__link md-footer__link--next" aria-label="Next: 5. Bind and compile">
+          <a href="../lists-and-loops/" class="md-footer__link md-footer__link--next" aria-label="Next: 4. Work with a list of samples">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                5. Bind and compile
+                4. Work with a list of samples
               </div>
             </div>
             <div class="md-footer__button md-icon">

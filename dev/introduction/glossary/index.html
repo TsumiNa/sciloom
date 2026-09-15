@@ -706,7 +706,7 @@
   <span class="md-ellipsis">
     
   
-  Stir a rack of samples
+  Write a stirring procedure
 
     
   </span>
@@ -733,7 +733,7 @@
   <span class="md-ellipsis">
     
   
-  1. Your first Function
+  1. Start a shaker
 
     
   </span>
@@ -760,34 +760,7 @@
   <span class="md-ellipsis">
     
   
-  2. Inputs, outputs and speeds
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../user-guide/tutorial/lists-and-loops/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  3. Lists and loops
+  2. Supply a speed and switch
 
     
   </span>
@@ -814,7 +787,34 @@
   <span class="md-ellipsis">
     
   
-  4. Stirring with an Agitator
+  3. Reuse a calculation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/tutorial/lists-and-loops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4. Work with a list of samples
 
     
   </span>
@@ -841,7 +841,7 @@
   <span class="md-ellipsis">
     
   
-  5. Bind and compile
+  5. Keep a count across calls
 
     
   </span>
@@ -3087,7 +3087,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="5d69676a13d69d7e65f0364f13d6a14039f71921">5d69676a</code>
+    · <code title="fc0ed4f1055c2b0282b93e099e0e864699fa2dd9">fc0ed4f1</code>
   </p>
 </aside>
 
@@ -3108,31 +3108,31 @@ instances, storing configuration, compiling. Runtime is when the compiled
 program executes on equipment. <a href="../../user-guide/advanced/specialization/">Host-time specialization</a>.</p>
 <p><strong>Input, Output, Var.</strong> The three field roles: a value supplied at each call, a
 value written back at each call, and persistent state of the instance.
-<a href="../../user-guide/tutorial/inputs-and-units/">Tutorial 2</a>.</p>
+<a href="../../user-guide/reference/declarations/">Field declarations</a>.</p>
 <p><strong>Host configuration.</strong> An attribute stored in <code>__init__</code> or an unwrapped class
 annotation; a scalar one becomes a literal in the program. <a href="../../user-guide/advanced/specialization/">Host-time specialization</a>.</p>
 <p><strong>Child Function.</strong> A Function instance stored on a parent in <code>__init__</code> and
 called from the parent's runtime method. <a href="../../user-guide/advanced/composition/">Composition</a>.</p>
 <p><strong>Logical device, device slot.</strong> A field declared with a device family type,
 <code>shaker: Agitator</code>: the program's need for an instrument, not the instrument.
-<a href="../../user-guide/tutorial/agitator/">Tutorial 4</a>.</p>
+<a href="../../user-guide/tutorial/first-function/">Lesson 1</a>.</p>
 <p><strong>Profile.</strong> Deployment data for one concrete instrument, such as
 <code>AutoSuiteIndividualShaker(zone=..., device_id=...)</code>, that a target binds to a
-slot. <a href="../../user-guide/tutorial/compile/">Tutorial 5</a>.</p>
+slot. <a href="../../user-guide/tutorial/first-function/">Lesson 1</a>.</p>
 <p><strong>Binding.</strong> The mapping from a slot's name, a field name or a component path
 such as <code>stage.shaker</code>, to a profile. <a href="../../user-guide/reference/devices-and-targets/">Devices and targets</a>.</p>
 <p><strong>Target.</strong> The equipment platform a program is compiled for, chosen
 explicitly: <code>AutoSuiteTarget</code>. <a href="../../user-guide/advanced/autosuite/">AutoSuite rules</a>.</p>
 <p><strong>Artifact.</strong> What a target produces: for AutoSuite, an <code>.asfp</code> package.
-<a href="../../user-guide/tutorial/compile/">Tutorial 5</a>.</p>
+<a href="../../user-guide/tutorial/first-function/">Lesson 1</a>.</p>
 <p><strong>Compile-time query.</strong> <code>comptime.is_device</code>, <code>can_write</code> or <code>supports</code>, asked
 as the whole condition of an <code>if</code>; the compiler keeps the branch that applies to
 the bound device. <a href="../../user-guide/advanced/device-branches/">Device-dependent branches</a>.</p>
 <p><strong>Specialization.</strong> Fixing a program to one deployment: host values become
 literals, and device-dependent branches are selected. <a href="../../user-guide/advanced/specialization/">Host-time specialization</a>.</p>
 <p><strong>Definite configuration.</strong> The proof, made by the compiler, that every
-property a <code>start()</code> requires was assigned on every path that reaches it.
-<a href="../../user-guide/tutorial/agitator/">Tutorial 4</a>.</p>
+property an agitation <code>start()</code> requires was assigned on every path that reaches it.
+<a href="../../user-guide/reference/devices-and-targets/#agitator">Device operations</a>.</p>
 <p><strong>Diagnostic.</strong> A structured error: code, message, path into the program and,
 when known, the source line. <a href="../../user-guide/troubleshooting/">Troubleshooting</a>.</p>
 <p><strong>Rotational speed, rpm, rps.</strong> The one physical quantity in this release,
@@ -3166,7 +3166,7 @@ resource, built by <code>bind_device</code>. <a href="../../developer/reference/
 branch, versus the program after specialization for one deployment. <a href="../../developer/reference/pipeline/#steps">Compilation pipeline</a>.</p>
 <p><strong>Specialization.</strong> The pure function that answers device-dependent branches
 from bindings and retypes resources to their profiles. <a href="../../developer/advanced/specialization/">Specialization internals</a>.</p>
-<p><strong>Definite configuration.</strong> The compiler's proof that every property a lifecycle
+<p><strong>Definite configuration.</strong> The compiler's proof that every property an agitation
 start requires was written on every reachable path. <a href="../../developer/reference/device-contracts/#required-configuration">Required configuration</a>.</p>
 <p><strong>Semantic id.</strong> The namespaced, versioned identifier of a device type, property
 or command, carried into JSON. <a href="../../developer/reference/device-contracts/#identity">Device contracts</a>.</p>

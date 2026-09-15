@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/user-guide/tutorial/compile/">
       
       
-        <link rel="prev" href="../agitator/">
+        <link rel="prev" href="../lists-and-loops/">
       
       
         <link rel="next" href="../../advanced/composition/">
@@ -27,7 +27,7 @@
     
     
       
-        <title>5. Bind and compile - SciLoom</title>
+        <title>5. Keep a count across calls - SciLoom</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#5-bind-and-compile" class="md-skip">
+        <a href="#5-keep-a-count-across-calls" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              5. Bind and compile
+              5. Keep a count across calls
             
           </span>
         </div>
@@ -642,7 +642,7 @@
   <span class="md-ellipsis">
     
   
-  Stir a rack of samples
+  Write a stirring procedure
 
     
   </span>
@@ -669,7 +669,7 @@
   <span class="md-ellipsis">
     
   
-  1. Your first Function
+  1. Start a shaker
 
     
   </span>
@@ -696,34 +696,7 @@
   <span class="md-ellipsis">
     
   
-  2. Inputs, outputs and speeds
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../lists-and-loops/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  3. Lists and loops
+  2. Supply a speed and switch
 
     
   </span>
@@ -750,7 +723,34 @@
   <span class="md-ellipsis">
     
   
-  4. Stirring with an Agitator
+  3. Reuse a calculation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lists-and-loops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4. Work with a list of samples
 
     
   </span>
@@ -786,7 +786,7 @@
   <span class="md-ellipsis">
     
   
-  5. Bind and compile
+  5. Keep a count across calls
 
     
   </span>
@@ -803,7 +803,7 @@
   <span class="md-ellipsis">
     
   
-  5. Bind and compile
+  5. Keep a count across calls
 
     
   </span>
@@ -829,10 +829,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-complete-program" class="md-nav__link">
+  <a href="#decide-which-values-to-keep" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        The complete program
+        Decide which values to keep
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-complete-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The complete procedure
       </span>
     </span>
   </a>
@@ -3049,10 +3060,21 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#the-complete-program" class="md-nav__link">
+  <a href="#decide-which-values-to-keep" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        The complete program
+        Decide which values to keep
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-complete-procedure" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        The complete procedure
       </span>
     </span>
   </a>
@@ -3076,49 +3098,70 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="5d69676a13d69d7e65f0364f13d6a14039f71921">5d69676a</code>
+    · <code title="fc0ed4f1055c2b0282b93e099e0e864699fa2dd9">fc0ed4f1</code>
   </p>
 </aside>
 
                   
 
-<h1 id="5-bind-and-compile">5. Bind and compile</h1>
-<p>The program names a logical <code>shaker</code>. The target maps that name to one real
-instrument, then compiles.</p>
-<!-- tutorial: step -->
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<h1 id="5-keep-a-count-across-calls">5. Keep a count across calls</h1>
+<p>Add a counter to record how many times the procedure requests a start.
+Unlike the loop index, this value should keep increasing between calls.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">CountStirs</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Count start requests.</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteIndividualShaker</span><span class="p">,</span> <span class="n">AutoSuiteTarget</span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        stirs: Number of starts requested in this session.</span>
+<span class="sd">    """</span>
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
-    <span class="n">target</span> <span class="o">=</span> <span class="n">AutoSuiteTarget</span><span class="p">(</span>
-        <span class="n">devices</span><span class="o">=</span><span class="p">{</span><span class="s2">"shaker"</span><span class="p">:</span> <span class="n">AutoSuiteIndividualShaker</span><span class="p">(</span><span class="n">zone</span><span class="o">=</span><span class="s2">"Heater Shaker 23"</span><span class="p">,</span> <span class="n">device_id</span><span class="o">=</span><span class="s2">"23"</span><span class="p">)},</span>
-    <span class="p">)</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">StirRack</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".asfp"</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">stirs</span><span class="p">:</span> <span class="n">Var</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stirs</span> <span class="o">+=</span> <span class="mi">1</span>
 </code></pre></div>
-<p><code>AutoSuiteIndividualShaker</code> is a <strong>profile</strong>: deployment data for one individual
-shaker, its AutoSuite zone name and its device id. A profile describes where the
-program will run; it opens no connection. The <code>devices</code> mapping is keyed by the
-field name the program used, <code>shaker</code>; every declared device needs an entry, even
-one the method never touches.</p>
-<p><code>compile</code> checks the program once more against the bound instrument, then hands
-the artifact back; <code>write</code> puts it on disk and returns the path. The <code>.asfp</code>
-file is the whole package: a callable procedure whose inputs, <code>volumes</code> and
-<code>enabled</code>, are supplied when AutoSuite runs it.</p>
-<!-- tutorial: checkpoint -->
-<div class="highlight"><pre><span></span><code>stir_rack.asfp
-</code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Compilation is not hardware acceptance</p>
-<p>Compilation and reference execution check a program's structure and its
-mapped semantics. They do not operate equipment, and they do not replace
-AutoSuite Executor validation on the deployment host.</p>
-</div>
-<h2 id="the-complete-program">The complete program</h2>
-<p>The five steps, in order, are this file. It is the
-<a href="../../../examples/stir-rack/">stir-rack example</a>, which the repository runs on
-every change so the package stays reproducible.</p>
+<p>There is no reset in <code>run</code>. The initial zero is used when runtime state is
+first created; later calls continue from the saved value.</p>
+<p>Create <code>self.counter = CountStirs()</code> in <code>StirRack.__init__</code>, then call
+<code>self.counter()</code> immediately after <code>self.shaker.start()</code>. This child has no
+inputs or outputs, so the call needs no arguments or assignment.</p>
+<h2 id="decide-which-values-to-keep">Decide which values to keep</h2>
+<p>The generated procedure retains the counter while the same runtime state is
+in use. A new reference-execution session starts fresh; retention after an
+AutoSuite application restart or fault recovery is not established.</p>
+<table>
+<thead>
+<tr>
+<th>Successive calls using the same state</th>
+<th>Counter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Start with <code>enabled=True</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td>Start again with <code>enabled=True</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td>Stop with <code>enabled=False</code></td>
+<td>Still 2</td>
+</tr>
+</tbody>
+</table>
+<p>This counts completed start requests in the procedure, not measured motion.
+Two separately created <code>CountStirs()</code> instances have independent counters.
+The same child instance called twice uses the same counter.</p>
+<p>The loop index from lesson 4 is also a <code>Var</code>, but it is explicitly reset at
+the start of each call. Choose where to reset a value based on what your
+procedure needs to remember.</p>
+<h2 id="the-complete-procedure">The complete procedure</h2>
+<p>This file combines the volume calculation, speed choice, start/stop branch
+and counter. The caller still supplies only <code>volumes</code> and <code>enabled</code>.</p>
+<details class="example">
+<summary>Show stir_rack.py</summary>
 <div class="highlight"><pre><span></span><code><span class="sd">"""For experiment authors: the User Guide tutorial's stirring program, compiled to ASFP.</span>
 
 <span class="sd">Run from the repository root:</span>
@@ -3127,9 +3170,9 @@ every change so the package stays reproducible.</p>
 <span class="sd">Expected terminal output:</span>
 <span class="sd">    stir_rack.asfp</span>
 
-<span class="sd">StirRack measures the largest sample volume in a rack, chooses a stirring speed</span>
+<span class="sd">StirRack calculates the largest supplied sample volume in a rack, chooses a stirring speed</span>
 <span class="sd">for it, and either configures and starts the bound shaker or stops it. Each</span>
-<span class="sd">class is introduced by one page of the User Guide tutorial; this file is the</span>
+<span class="sd">step is introduced in the User Guide tutorial; this file is the</span>
 <span class="sd">complete program those pages build. Compiling writes the package beside this</span>
 <span class="sd">file; it does not operate the shaker.</span>
 
@@ -3205,7 +3248,7 @@ every change so the package stays reproducible.</p>
 <span class="sd">        volumes: Volume of every vial in the rack.</span>
 <span class="sd">        enabled: Whether the rack should be stirring after this call.</span>
 <span class="sd">        shaker: Logical agitator; the target binds the hardware.</span>
-<span class="sd">        largest: Largest volume measured on this call.</span>
+<span class="sd">        largest: Largest volume calculated from the input list.</span>
 <span class="sd">        speed: Speed chosen for that volume.</span>
 <span class="sd">    """</span>
 
@@ -3239,12 +3282,20 @@ every change so the package stays reproducible.</p>
     <span class="n">path</span> <span class="o">=</span> <span class="n">StirRack</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".asfp"</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="../../../_generated/examples/stir_rack.py">Download Python source</a> and the
-generated <a href="../../../_generated/examples/stir_rack.asfp">stir_rack.asfp</a>.</p>
-<p>Where next: the <a href="../../">Advanced pages</a> each open with a program that
-goes one step beyond this one, the <a href="../../reference/declarations/">Reference</a>
-states the rules the tutorial applied, and the
-<a href="../../../examples/agitation/">agitation example</a> is the smallest device program.</p>
+</details>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/stir_rack.py
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>stir_rack.asfp
+</code></pre></div>
+<p>The package is written beside the source. The Python command compiles it;
+AutoSuite calls the generated function with the input values. Before using it
+on equipment, check the binding against the installed configuration and
+validate the package with AutoSuite Executor on the deployment computer.</p>
+<p><a href="../../../_generated/examples/stir_rack.py">Python source</a> ·
+<a href="../../../_generated/examples/stir_rack.asfp">Generated package</a></p>
+<p>To reuse device operations across procedures, continue with
+<a href="../../advanced/composition/">composition and shared devices</a>. For the complete
+language rules, see <a href="../../reference/runtime-language/">runtime syntax</a>.</p>
 
 
 
@@ -3277,7 +3328,7 @@ states the rules the tutorial applied, and the
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../agitator/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 4. Stirring with an Agitator">
+          <a href="../lists-and-loops/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 4. Work with a list of samples">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -3287,7 +3338,7 @@ states the rules the tutorial applied, and the
                 Previous
               </span>
               <div class="md-ellipsis">
-                4. Stirring with an Agitator
+                4. Work with a list of samples
               </div>
             </div>
           </a>

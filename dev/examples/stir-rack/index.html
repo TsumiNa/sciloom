@@ -632,7 +632,7 @@
   <span class="md-ellipsis">
     
   
-  Stir a rack of samples
+  Write a stirring procedure
 
     
   </span>
@@ -659,7 +659,7 @@
   <span class="md-ellipsis">
     
   
-  1. Your first Function
+  1. Start a shaker
 
     
   </span>
@@ -686,34 +686,7 @@
   <span class="md-ellipsis">
     
   
-  2. Inputs, outputs and speeds
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../user-guide/tutorial/lists-and-loops/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  3. Lists and loops
+  2. Supply a speed and switch
 
     
   </span>
@@ -740,7 +713,34 @@
   <span class="md-ellipsis">
     
   
-  4. Stirring with an Agitator
+  3. Reuse a calculation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/tutorial/lists-and-loops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4. Work with a list of samples
 
     
   </span>
@@ -767,7 +767,7 @@
   <span class="md-ellipsis">
     
   
-  5. Bind and compile
+  5. Keep a count across calls
 
     
   </span>
@@ -3087,17 +3087,17 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="5d69676a13d69d7e65f0364f13d6a14039f71921">5d69676a</code>
+    · <code title="fc0ed4f1055c2b0282b93e099e0e864699fa2dd9">fc0ed4f1</code>
   </p>
 </aside>
 
                   
 
 <h1 id="stir-a-rack-of-samples">Stir a rack of samples</h1>
-<p>StirRack is the program the User Guide tutorial builds one class per page:
-measure the largest volume in a rack, choose a speed for it, then configure and
-start the bound shaker or stop it. This page is the runnable, downloadable form;
-the <a href="../../user-guide/tutorial/">tutorial</a> explains each step.</p>
+<p>StirRack is the completed program from the User Guide's five lessons. It finds
+the largest supplied sample volume, chooses a speed, then starts or stops the
+bound shaker. The <a href="../../user-guide/tutorial/compile/">last lesson</a> adds a counter;
+the <a href="../../user-guide/tutorial/">tutorial overview</a> links all earlier versions.</p>
 <h2 id="run-and-inspect">Run and inspect</h2>
 <div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/stir_rack.py
 </code></pre></div>
@@ -3125,9 +3125,9 @@ AutoSuite Executor validation on the deployment host.</p>
 <span class="sd">Expected terminal output:</span>
 <span class="sd">    stir_rack.asfp</span>
 
-<span class="sd">StirRack measures the largest sample volume in a rack, chooses a stirring speed</span>
+<span class="sd">StirRack calculates the largest supplied sample volume in a rack, chooses a stirring speed</span>
 <span class="sd">for it, and either configures and starts the bound shaker or stops it. Each</span>
-<span class="sd">class is introduced by one page of the User Guide tutorial; this file is the</span>
+<span class="sd">step is introduced in the User Guide tutorial; this file is the</span>
 <span class="sd">complete program those pages build. Compiling writes the package beside this</span>
 <span class="sd">file; it does not operate the shaker.</span>
 
@@ -3203,7 +3203,7 @@ AutoSuite Executor validation on the deployment host.</p>
 <span class="sd">        volumes: Volume of every vial in the rack.</span>
 <span class="sd">        enabled: Whether the rack should be stirring after this call.</span>
 <span class="sd">        shaker: Logical agitator; the target binds the hardware.</span>
-<span class="sd">        largest: Largest volume measured on this call.</span>
+<span class="sd">        largest: Largest volume calculated from the input list.</span>
 <span class="sd">        speed: Speed chosen for that volume.</span>
 <span class="sd">    """</span>
 

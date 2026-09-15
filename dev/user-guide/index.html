@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#user-guide-overview" class="md-skip">
+        <a href="#user-guide" class="md-skip">
           Skip to content
         </a>
       
@@ -650,7 +650,7 @@
   <span class="md-ellipsis">
     
   
-  Stir a rack of samples
+  Write a stirring procedure
 
     
   </span>
@@ -677,7 +677,7 @@
   <span class="md-ellipsis">
     
   
-  1. Your first Function
+  1. Start a shaker
 
     
   </span>
@@ -704,34 +704,7 @@
   <span class="md-ellipsis">
     
   
-  2. Inputs, outputs and speeds
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="./tutorial/lists-and-loops/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  3. Lists and loops
+  2. Supply a speed and switch
 
     
   </span>
@@ -758,7 +731,34 @@
   <span class="md-ellipsis">
     
   
-  4. Stirring with an Agitator
+  3. Reuse a calculation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./tutorial/lists-and-loops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4. Work with a list of samples
 
     
   </span>
@@ -785,7 +785,7 @@
   <span class="md-ellipsis">
     
   
-  5. Bind and compile
+  5. Keep a count across calls
 
     
   </span>
@@ -3002,33 +3002,32 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="5d69676a13d69d7e65f0364f13d6a14039f71921">5d69676a</code>
+    · <code title="fc0ed4f1055c2b0282b93e099e0e864699fa2dd9">fc0ed4f1</code>
   </p>
 </aside>
 
                   
 
-<h1 id="user-guide-overview">User Guide overview</h1>
-<p>This guide is for experiment authors: people who write a procedure in Python and
-compile it for equipment. It does not require knowledge of SciLoom's internals.</p>
-<p><strong><a href="tutorial/">Tutorial</a>.</strong> Five pages build one stirring experiment from
-a three-line counter to a compiled AutoSuite package. Start here; every rule
-the rest of the guide states is first met there in a program you can run.</p>
-<p><strong>Advanced.</strong> One page per technique, each opening with a complete program that
-the documentation tests execute: <a href="advanced/composition/">composition and shared devices</a>,
-<a href="advanced/specialization/">host-time specialization</a>,
-<a href="advanced/device-branches/">device-dependent branches</a> and the
-<a href="advanced/autosuite/">AutoSuite rules</a>.</p>
-<p><strong><a href="faq/">FAQ</a> and <a href="troubleshooting/">Troubleshooting</a>.</strong> Short answers to
-the questions authors ask, and every diagnostic code with its cause and fix.</p>
-<p><strong>Reference.</strong> The rules as tables, each row linking to the page that explains
-it: <a href="reference/declarations/">declarations</a>, the
-<a href="reference/runtime-language/">runtime language</a> and
-<a href="reference/devices-and-targets/">devices and targets</a>.</p>
-<p>The <a href="../introduction/glossary/">glossary</a> defines the terms used across the site. The
-<a href="../examples/">example walkthroughs</a> show complete source files with
-their generated packages, and the <a href="../api/">API reference</a> documents the
-author API extracted from the source.</p>
+<h1 id="user-guide">User Guide</h1>
+<p>Learn to write a stirring procedure in Python and compile it for AutoSuite.
+You should be comfortable with variables, functions and <code>if</code> / <code>while</code>.
+The tutorial explains classes as they become useful.</p>
+<p>Start with <a href="tutorial/first-function/">your first stirring program</a>. The five
+lessons take it from a fixed speed to a procedure that chooses a speed from
+sample data and remembers how many starts were requested.</p>
+<p>Once you have a program working, use the advanced guides to
+<a href="advanced/composition/">share a shaker between steps</a>,
+<a href="advanced/specialization/">choose settings before compilation</a>, or
+<a href="advanced/device-branches/">adapt a procedure to different devices</a>.
+<a href="advanced/autosuite/">AutoSuite compilation</a> explains the equipment bindings
+and the target's current restrictions.</p>
+<p>For a quick answer, try the <a href="faq/">FAQ</a>. For an error, use
+<a href="troubleshooting/">Troubleshooting</a>. The reference pages list
+<a href="reference/declarations/">field declarations</a>,
+<a href="reference/runtime-language/">supported Python syntax</a> and
+<a href="reference/devices-and-targets/">device operations</a>.</p>
+<p>You can also browse <a href="../examples/">complete examples</a> or look up an
+object in the <a href="../api/">API reference</a>.</p>
 
 
 
@@ -3078,13 +3077,13 @@ author API extracted from the source.</p>
         
         
           
-          <a href="./tutorial/" class="md-footer__link md-footer__link--next" aria-label="Next: Stir a rack of samples">
+          <a href="./tutorial/" class="md-footer__link md-footer__link--next" aria-label="Next: Write a stirring procedure">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Stir a rack of samples
+                Write a stirring procedure
               </div>
             </div>
             <div class="md-footer__button md-icon">
