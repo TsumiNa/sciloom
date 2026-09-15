@@ -176,7 +176,7 @@ index assignment would change existing semantics.
 
 ### Direct evidence
 
-[F24](<../corpus/extracted/latest_app/functions/24_Sample and Run GPC.asfp>)
+F24 (`24_Sample and Run GPC.asfp`, in the locally shared corpus)
 declares `reactor_zone` and `sampling_vial_zone` as scalar `zone` inputs, alongside
 `shaker_speed` of type `angularspeed`. Its Stir tasks contain the following
 selected fields (not a complete task):
@@ -230,7 +230,7 @@ The caller currently supplies a matching configuration. A zone's rack/block
 device ID can differ from its parent shaker ID; treating them as interchangeable
 would be incorrect.
 
-Even [F21](<../corpus/extracted/latest_app/functions/21_Validate Polymerization Zone.asfp>)
+Even F21 (`21_Validate Polymerization Zone.asfp`)
 only tests `ZoneSize(...) < 1` for the four supplied zones. It is an emptiness
 check, not a hardware-type validator.
 
