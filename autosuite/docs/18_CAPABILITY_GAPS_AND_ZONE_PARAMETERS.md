@@ -5,6 +5,10 @@ Audit date: 2026-09-16. Implementation baseline:
 This is an evidence inventory and development recommendation, not an accepted
 API design or a claim of Executor acceptance. The original corpus was read only.
 
+The subsequent accepted [runtime-capability implementation plan](../../docs/refactor/runtime-capabilities/00-overview.md)
+defines the new interfaces and sequence. This audit retains its baseline findings;
+follow the plan's stage status for implementation progress.
+
 ## Findings
 
 The corpus supports considerably more than the current compiler. This audit

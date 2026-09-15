@@ -281,3 +281,20 @@ Backend context variables/parameters must not enter the public semantic Program.
 [device plan](docs/refactor/device-abstraction/00-overview.md).
 Consult `autosuite/docs/16_AGITATION_MAPPING.md` before changing this adapter.
 Do not infer generic physical limits or hardware equivalence from one device profile.
+
+## 11. Runtime capability implementation sequence
+
+Follow the accepted [durable IR and runtime capability plan](docs/refactor/runtime-capabilities/00-overview.md)
+and its [single interface contract](docs/refactor/runtime-capabilities/01-contract.md)
+when adding the twelve audited capabilities. New APIs in that contract are planned
+until their stage lands; do not mistake examples for current implementation.
+Preserve existing JSON v4 kinds, fields and meanings. Stable wire identifiers
+belong to the typed records; new vocabulary does not automatically require a
+format bump. No implicit migration, dynamic imports from IDs or second handwritten
+JSON model. Every new node must be handled or explicitly rejected by validation,
+specialization, reference execution and the target. Keep effect order and typed
+results; do not lower high-level intent into target tasks in the authoring layer.
+The user's version decision for this sequence is lockstep 0.3.x, starting at
+0.3.0 for the first shipped-code change, with no 1.0.0 bump or release publication.
+Collect platform questions in the plan's Q&A; distinguish reference/static checks
+from Executor acceptance and honor the documented runtime-failure evidence gate.
