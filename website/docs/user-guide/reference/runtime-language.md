@@ -45,7 +45,7 @@ this target rejects them. Use [nested conditions](../troubleshooting.md#autosuit
 | Supported | Outside the source language |
 | --- | --- |
 | Assignments to declared runtime fields; `+= -= *= /=` | Assignments to local names or undeclared fields |
-| Assignments and augmented assignments to existing list elements | Writes that grow a list |
+| Assignments and augmented assignments to list elements | Slicing assignments, such as `self.items[1:] = ...` |
 | `if` / `elif` / `else`, `while` | `for`, `break`, `continue`, `while ... else` |
 | Calls to child Functions stored on `self` | Arbitrary helper calls, calls nested in expressions |
 | Device property assignment and declared commands | Property reads or augmented property assignments |

@@ -31,7 +31,7 @@ multiply a runtime number by `rpm`; unit literals use host numbers.
 
 | Code | Cause | Fix |
 | --- | --- | --- |
-| `quantity_literal` | `self.value * rpm` | take a speed input, or a host number times a unit |
+| `quantity_literal` | `self.value * rpm` when `value` is a runtime field | take a speed input, or use a host number times a unit |
 | `type_mismatch` | `integer` to `rotational_speed`, `real` to `integer` | use the declared type ([tutorial 2](tutorial/inputs-and-units.md)) |
 
 ## A counter does not reset, or cannot be read in Python
@@ -108,7 +108,7 @@ while self.index < len(self.values):
 | `python_subset` | parameters on the runtime method | declare `Input` fields ([tutorial 2](tutorial/inputs-and-units.md)) |
 | `python_subset` | calling a helper or a function that is not an attribute | create the child in `__init__` ([composition](advanced/composition.md)) |
 | `python_subset` | the attribute is not a Function instance | assign a Function instance in `__init__` |
-| `python_subset` | `self.items[1:]` | copy the list or access existing elements in a loop; slicing and list growth are unsupported |
+| `python_subset` | `self.items[1:]` | copy the whole list or access existing elements in a loop; slicing is unsupported |
 | `python_subset` | `len()` of a scalar or with keywords | `len(self.items)` |
 | `python_subset` | a module-level name `len` | remove the shadowing name |
 | `runtime_field` | a local variable or an undeclared field | declare a `Var` |

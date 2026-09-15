@@ -198,7 +198,9 @@ def test_troubleshooting_corrections(name, fields, code, checks, tmp_path):
 def test_troubleshooting_retains_diagnostic_catalogue():
     """Reorganizing help must not drop codes from the previous author catalogue."""
     markdown = (ROOT / "website/docs/user-guide/troubleshooting.md").read_text()
-    codes = set(re.findall(r"^\| `([a-z_]+)` \|", markdown, re.MULTILINE))
+    entries = re.findall(r"^\| `([a-z_]+)` \|", markdown, re.MULTILINE)
+    assert len(entries) == 66
+    codes = set(entries)
     assert codes >= {
         "call_binding",
         "class_schema",

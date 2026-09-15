@@ -1,9 +1,9 @@
 # Troubleshooting
 
-Contributor-facing errors, grouped by exception type. The author-facing codes,
-those a runtime method or a class body can provoke, are on the User Guide's
-[troubleshooting](../user-guide/troubleshooting.md) page and are not repeated
-here. A diagnostic's fields are described on
+Contributor-facing errors, grouped by exception type, with complete examples of
+diagnostic inspection and author-facing failures. For corrections to a runtime
+method or class body, start with the User Guide's symptom-based
+[troubleshooting](../user-guide/troubleshooting.md). A diagnostic's fields are described on
 [reject a program](tutorial/reject-a-program.md#reading-a-diagnostic).
 
 ## Read diagnostic fields
