@@ -3,7 +3,8 @@
 `Function.compile(target=...)` converts the instance to IR and hands it to the
 shared compiler; `compile_ir(program, target=...)` accepts directly constructed
 or JSON-loaded IR. The pipeline is fixed and target-independent until its last
-two steps.
+two steps. The [home page](../../index.md#how-it-fits-together) walks through the
+same diagram block by block.
 
 ```mermaid
 flowchart TD
