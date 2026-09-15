@@ -58,7 +58,10 @@ Keep the `if self.enabled:` branch from lesson 2; it now uses the calculated spe
 | --- | --- |
 | `volume=1.5`, `enabled=True` | Start at 300 rpm |
 | `volume=2.0`, `enabled=True` | Start at 600 rpm |
-| `enabled=False` | Stop; do not apply the calculated speed |
+| `volume=1.5`, `enabled=False` | Stop; do not apply the calculated speed |
+
+Supply both inputs even when stopping. This procedure calculates a speed before
+it checks `enabled`.
 
 ## Complete file
 

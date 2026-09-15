@@ -7,7 +7,7 @@ Expected terminal output:
     control_shaker.asfp
 
 Compilation writes the function package; it does not run equipment.
-Speeds and volume thresholds illustrate programming, not experimental guidance.
+The speed input illustrates programming, not experimental guidance.
 Full generated output: control_shaker.asfp, beside this source file.
 """
 

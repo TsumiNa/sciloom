@@ -51,8 +51,8 @@ Do not make the teaching order depend on appending code to an earlier page.
 
 ## Writing for experiment authors
 
-Assume readers know variables, functions and if/while. Explain class, self and
-__init__ briefly when the experiment first needs them. Begin with a concrete
+Assume readers know variables, functions and if/while. Explain `class`, `self` and
+`__init__` briefly when the experiment first needs them. Begin with a concrete
 task, show what to change, and explain the result. Put deliberate failure cases
 in troubleshooting and keep their execution tests.
 

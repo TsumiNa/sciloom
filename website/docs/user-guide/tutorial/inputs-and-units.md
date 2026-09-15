@@ -35,7 +35,10 @@ The table describes what the generated function does when called:
 | --- | --- |
 | `enabled=True`, `speed=300*rpm` | Save 300 rpm, then start |
 | `enabled=True`, `speed=600*rpm` | Save 600 rpm, then start |
-| `enabled=False` | Stop and retain the previously saved configuration |
+| `enabled=False`, `speed=300*rpm` | Stop and retain the previously saved configuration |
+
+Both inputs are required on every call, including a stop request. In that branch
+the supplied speed is not applied.
 
 In Python source, write a speed with its unit, for example `300 * rpm`.
 `RotationalSpeed` keeps a speed distinct from a plain number. You can also

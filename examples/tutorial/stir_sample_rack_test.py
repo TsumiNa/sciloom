@@ -24,9 +24,9 @@ def test_new_input_list_resets_loop_and_empty_list_selects_low_speed():
     first = runtime.run(inputs={"volumes": volumes, "enabled": True})
     assert first.resources["resource:shaker"].applied_configuration == {"speed": 600 * rpm}
     assert volumes == [1.0, 2.5, 0.5]
-    for values in ([1.5], []):
+    for values, speed in (([1.5], 300), ([3.5], 600), ([], 300)):
         later = runtime.run(inputs={"volumes": values, "enabled": True})
-        assert later.resources["resource:shaker"].applied_configuration == {"speed": 300 * rpm}
+        assert later.resources["resource:shaker"].applied_configuration == {"speed": speed * rpm}
     stopped = runtime.run(inputs={"volumes": [], "enabled": False})
     assert not stopped.resources["resource:shaker"].enabled
     assert first.resources["resource:shaker"].applied_configuration == {"speed": 600 * rpm}

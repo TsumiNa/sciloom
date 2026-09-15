@@ -47,7 +47,10 @@ When AutoSuite calls this version:
 | `volumes=[1.0, 2.5, 0.5]`, `enabled=True` | Largest is 2.5; start at 600 rpm |
 | `volumes=[1.0, 1.5]`, `enabled=True` | Largest is 1.5; start at 300 rpm |
 | `volumes=[]`, `enabled=True` | Largest is 0.0; start at 300 rpm |
-| `enabled=False` | Stop |
+| `volumes=[1.0, 1.5]`, `enabled=False` | Stop |
+
+Both inputs remain required when stopping: the volume calculation precedes the
+enable/disable branch.
 
 The empty-list behaviour is a choice in this example, not a rule that an empty
 rack should be stirred. Adapt the branch to your procedure.
