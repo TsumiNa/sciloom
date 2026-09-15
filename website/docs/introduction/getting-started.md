@@ -1,41 +1,68 @@
 # Getting started
 
-SciLoom currently targets Python 3.12–3.14; development is pinned to Python 3.14.
-The distribution is named `SciLoom`, and the import is `sciloom`. The AutoSuite
-target ships as the workspace member `sciloom-autosuite`, imported as
-`sciloom_autosuite`; `uv sync --locked` installs both.
+Start by generating an AutoSuite function that sets a shaker to 300 rpm and
+starts it. You can compile this example without a connected instrument.
 
-The documentation is public before the source repository. The following setup
-requires repository access. A public PyPI installation is not offered by this
-documentation release.
+## Install the checkout
+
+You need Python 3.12–3.14, [uv](https://docs.astral.sh/uv/getting-started/installation/)
+and access to the SciLoom source repository, which is currently private. There
+is no public PyPI installation for this release.
 
 ```bash
 git clone git@github.com:TsumiNa/sciloom.git
 cd sciloom
 uv sync --locked
-uv run python examples/stir_rack.py
 ```
 
-The command prints `stir_rack.asfp` and writes the package beside its Python
-source. It compiles the experiment; it does not run it on equipment.
+This installs SciLoom and its AutoSuite target. In Python, their import names
+are `sciloom` and `sciloom_autosuite`.
 
-## Your first Function
+## Compile your first procedure
 
-The [tutorial](../user-guide/tutorial/index.md) builds that program one class at
-a time, from a three-line counter to the compiled package. Its declarations use
-familiar Python types:
+Run the supplied example from the repository root:
+
+```bash
+uv run python examples/tutorial/start_shaker.py
+```
+
+The command prints:
+
+```text
+start_shaker.asfp
+```
+
+The generated file is `examples/tutorial/start_shaker.asfp`, beside the source.
+Here is the complete program:
 
 ```python
-from sciloom import Function, Input, Output, Var, runtime
-from sciloom_autosuite import AutoSuiteTarget
+--8<-- "examples/tutorial/start_shaker.py"
 ```
 
-Define a Function class in a normal `.py` file. Inputs and outputs describe values
-exchanged at execution time. `Var` declares persistent internal state. Put the
-experiment's assignments and control flow in one `@runtime` method, then compile
-an instance with an explicit target. Host Python constructs and specializes the
-instance before compilation.
+`StirRack` describes the procedure. The two lines in `run` save a speed and then
+start the shaker. `@runtime` tells SciLoom to compile those steps; it does not
+run them when you execute this Python file. The code below the class constructs
+the program, selects an AutoSuite target and writes the function package.
 
-Continue with [1. Your first Function](../user-guide/tutorial/first-function.md).
-The rest of the [User Guide](../user-guide/index.md) states the rules the
-tutorial applies.
+## Adapt it to your setup
+
+Change `300 * rpm` to change the fixed speed in the generated procedure. This
+value is for learning the syntax; choose experimental settings for your samples
+and instrument.
+
+`"shaker"` matches the Python field `shaker: Agitator`. The zone name
+`"Heater Shaker 23"` and device ID `"23"` are example AutoSuite configuration
+values. For your instrument, use the zone name and individual shaker ID from
+its existing AutoSuite configuration. The ID identifies the shaker, not a vial
+or rack. SciLoom does not discover those values or connect to the device.
+
+The `.asfp` is a callable AutoSuite function package. This first function has
+no inputs; its speed is fixed in the source. Generating it does not run an
+experiment. Before using generated packages on equipment, validate them with
+AutoSuite Executor on the deployment computer. See
+[current validation limits](status.md#what-compilation-establishes).
+
+[Download the Python file](../_generated/examples/tutorial/start_shaker.py)
+or its [generated package](../_generated/examples/tutorial/start_shaker.asfp).
+Continue with the [User Guide tutorial](../user-guide/tutorial/index.md) for
+Function declarations, inputs and reusable steps.

@@ -1,5 +1,10 @@
 # Example-led handbooks
 
+The [User Guide readability plan](../user-guide-readability/00-overview.md)
+supersedes this record's user tutorial order, append-only user series and strict
+one-page-per-fact writing rule. The developer tutorial and its cumulative tests
+remain current. This document preserves the earlier design.
+
 ## Why
 
 The public site has five sections decided by the

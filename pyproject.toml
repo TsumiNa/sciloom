@@ -78,6 +78,7 @@ files = [
     "examples/scale_values.py",
     "examples/non_zero_array_min.py",
     "examples/stir_rack.py",
+    "examples/tutorial",
     "examples/developer",
 ]
 exclude = ["(_test|conftest)\\.py$"]
@@ -96,6 +97,7 @@ disallow_incomplete_defs = true
 # filename suffixes, so keep this list in sync when adding *_test.py modules.
 [[tool.mypy.overrides]]
 module = [
+    "examples.tutorial.start_shaker_test",
     "sciloom.units_test",
     "sciloom.devices.agitation_test",
     "sciloom.devices.declarations_test",
