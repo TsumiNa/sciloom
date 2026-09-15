@@ -4,7 +4,7 @@
 
 `Agitator` is the one device family in this release. Declare a slot with
 `shaker: Agitator`; never construct a device or put a profile in the Function.
-Explained in [tutorial 4](../tutorial/agitator.md).
+Explained in [lesson 1](../tutorial/first-function.md).
 
 | Operation | Effect |
 |---|---|

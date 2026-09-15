@@ -15,16 +15,6 @@ ROOT = Path(__file__).resolve().parents[2]
 
 # Cumulative tutorial series; see website/docs/developer/documentation.md.
 SERIES: dict[str, tutorials.Series] = {
-    "user-guide/tutorial": tutorials.Series(
-        pages=(
-            "user-guide/tutorial/first-function",
-            "user-guide/tutorial/inputs-and-units",
-            "user-guide/tutorial/lists-and-loops",
-            "user-guide/tutorial/agitator",
-            "user-guide/tutorial/compile",
-        ),
-        complete="examples/stir_rack.py",
-    ),
     "developer/tutorial": tutorials.Series(
         pages=(
             "developer/tutorial/declare-a-family",
@@ -38,6 +28,25 @@ SERIES: dict[str, tutorials.Series] = {
         ),
     ),
 }
+
+USER_LESSONS = (
+    ("first-function", "tutorial/start_shaker"),
+    ("inputs-and-units", "tutorial/control_shaker"),
+    ("agitator", "tutorial/choose_stirring_speed"),
+    ("lists-and-loops", "tutorial/stir_sample_rack"),
+    ("compile", "stir_rack"),
+)
+
+
+@pytest.mark.parametrize("page, source", USER_LESSONS)
+def test_user_lesson_runs_independently(page, source, tmp_path):
+    name = Path(source).name
+    stdout = run_series_script(tmp_path / f"{name}.py", (ROOT / f"examples/{source}.py").read_text(), tmp_path)
+    assert stdout == f"{name}.asfp\n"
+    assert (tmp_path / f"{name}.asfp").read_bytes() == (ROOT / f"examples/{source}.asfp").read_bytes()
+    markdown = (ROOT / f"website/docs/user-guide/tutorial/{page}.md").read_text()
+    assert f"uv run python examples/{source}.py" in markdown
+    assert f"```text\n{name}.asfp\n```" in markdown
 
 
 def run_series_script(script, source, tmp_path):
@@ -71,6 +80,13 @@ def test_complete_handbook_snippet(page, tmp_path):
     stdout = run_series_script(tmp_path / "handbook_example.py", program.group(1), tmp_path)
     if program.group(2) is not None:
         assert stdout.rstrip("\n") == program.group(2)
+
+
+def test_troubleshooting_failure_examples(tmp_path):
+    markdown = (ROOT / "website/docs/user-guide/troubleshooting.md").read_text()
+    program = re.search(r"<!-- example: failures -->\n```python\n(.*?)\n```\n```text\n(.*?)\n```", markdown, re.DOTALL)
+    assert program is not None
+    assert run_series_script(tmp_path / "failures.py", program.group(1), tmp_path).rstrip("\n") == program.group(2)
 
 
 @pytest.mark.parametrize(
@@ -118,7 +134,7 @@ class Text(HTMLParser):
         ("examples/scale-values", "scale_values"),
         ("examples/non-zero-array-min", "non_zero_array_min"),
         ("examples/stir-rack", "stir_rack"),
-        ("user-guide/tutorial/compile", "stir_rack"),
+        *((f"user-guide/tutorial/{page}", source) for page, source in USER_LESSONS),
         ("examples/agitation-ir", "developer/agitation_ir"),
         ("examples/list-ir", "developer/list_ir"),
         ("examples/demo-device", "developer/demo_device"),

@@ -44,7 +44,7 @@ module docstring; long results belong in same-basename companion files.
 
 ## Tutorial series
 
-The Developer Guide uses a cumulative series. The User Guide is moving to
+The Developer Guide uses a cumulative series. The User Guide uses
 independently runnable lesson snapshots: include the actual example source,
 provide its companion download, and verify its behaviour and generated package.
 Do not make the teaching order depend on appending code to an earlier page.

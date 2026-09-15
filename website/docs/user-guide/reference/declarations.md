@@ -8,10 +8,10 @@ it.
 | Declaration | Meaning | Default | Explained on |
 |---|---|---|---|
 | `volume: Input[float]` | value supplied by the caller at each call | not allowed | [tutorial 2](../tutorial/inputs-and-units.md) |
-| `speed: Output[RotationalSpeed]` | value written back when the call returns; assigned on every path | not allowed | [tutorial 2](../tutorial/inputs-and-units.md) |
-| `index: Var[int] = 0` | persistent state of the instance; the literal is the initial state, not a per-call reset | required literal | [tutorial 1](../tutorial/first-function.md) |
+| `speed: Output[RotationalSpeed]` | value written back when the call returns; assigned on every path | not allowed | [lesson 3](../tutorial/agitator.md) |
+| `index: Var[int] = 0` | persistent state of the instance; the literal is the initial state, not a per-call reset | required literal | [lesson 5](../tutorial/compile.md) |
 | `batch_size: int = 8` | host-time configuration, embedded as a literal when read in the runtime method | ordinary Python | [host-time specialization](../advanced/specialization.md) |
-| `shaker: Agitator` | logical device slot; the target binds the hardware | none; no class-level value | [tutorial 4](../tutorial/agitator.md) |
+| `shaker: Agitator` | logical device slot; the target binds the hardware | none; no class-level value | [lesson 1](../tutorial/first-function.md) |
 
 Import `Function`, `Input`, `Output`, `Var`, `runtime`, `Agitator`,
 `RotationalSpeed`, `rpm`, `rps` and `comptime` from `sciloom`. A field has

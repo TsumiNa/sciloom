@@ -1,54 +1,77 @@
-# 5. Bind and compile
+# 5. Keep a count across calls
 
-The program names a logical `shaker`. The target maps that name to one real
-instrument, then compiles.
+Add a counter to record how many times the procedure requests a start.
+Unlike the loop index, this value should keep increasing between calls.
 
-<!-- tutorial: step -->
 ```python
-from pathlib import Path
+class CountStirs(Function):
+    """Count start requests.
 
-from sciloom_autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
+    Attributes:
+        stirs: Number of starts requested in this session.
+    """
 
-if __name__ == "__main__":
-    target = AutoSuiteTarget(
-        devices={"shaker": AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="23")},
-    )
-    path = StirRack().compile(target=target).write(Path(__file__).with_suffix(".asfp"))
-    print(path.name)
+    stirs: Var[int] = 0
+
+    @runtime
+    def run(self) -> None:
+        self.stirs += 1
 ```
 
-`AutoSuiteIndividualShaker` is a **profile**: deployment data for one individual
-shaker, its AutoSuite zone name and its device id. A profile describes where the
-program will run; it opens no connection. The `devices` mapping is keyed by the
-field name the program used, `shaker`; every declared device needs an entry, even
-one the method never touches.
+There is no reset in `run`. The initial zero is used when runtime state is
+first created; later calls continue from the saved value.
 
-`compile` checks the program once more against the bound instrument, then hands
-the artifact back; `write` puts it on disk and returns the path. The `.asfp`
-file is the whole package: a callable procedure whose inputs, `volumes` and
-`enabled`, are supplied when AutoSuite runs it.
+Create `self.counter = CountStirs()` in `StirRack.__init__`, then call
+`self.counter()` immediately after `self.shaker.start()`. This child has no
+inputs or outputs, so the call needs no arguments or assignment.
 
-<!-- tutorial: checkpoint -->
+## Decide which values to keep
+
+The generated procedure retains the counter while the same runtime state is
+in use. A new reference-execution session starts fresh; retention after an
+AutoSuite application restart or fault recovery is not established.
+
+| Successive calls using the same state | Counter |
+| --- | --- |
+| Start with `enabled=True` | 1 |
+| Start again with `enabled=True` | 2 |
+| Stop with `enabled=False` | Still 2 |
+
+This counts completed start requests in the procedure, not measured motion.
+Two separately created `CountStirs()` instances have independent counters.
+The same child instance called twice uses the same counter.
+
+The loop index from lesson 4 is also a `Var`, but it is explicitly reset at
+the start of each call. Choose where to reset a value based on what your
+procedure needs to remember.
+
+## The complete procedure
+
+This file combines the volume calculation, speed choice, start/stop branch
+and counter. The caller still supplies only `volumes` and `enabled`.
+
+??? example "Show stir_rack.py"
+
+    ```python
+    --8<-- "examples/stir_rack.py"
+    ```
+
+```bash
+uv run python examples/stir_rack.py
+```
+
 ```text
 stir_rack.asfp
 ```
 
---8<-- "website/snippets/hardware-boundary.md"
+The package is written beside the source. The Python command compiles it;
+AutoSuite calls the generated function with the input values. Before using it
+on equipment, check the binding against the installed configuration and
+validate the package with AutoSuite Executor on the deployment computer.
 
-## The complete program
+[Python source](../../_generated/examples/stir_rack.py) ·
+[Generated package](../../_generated/examples/stir_rack.asfp)
 
-The five steps, in order, are this file. It is the
-[stir-rack example](../../examples/stir-rack.md), which the repository runs on
-every change so the package stays reproducible.
-
-```python
---8<-- "examples/stir_rack.py"
-```
-
-[Download Python source](../../_generated/examples/stir_rack.py) and the
-generated [stir_rack.asfp](../../_generated/examples/stir_rack.asfp).
-
-Where next: the [Advanced pages](../index.md) each open with a program that
-goes one step beyond this one, the [Reference](../reference/declarations.md)
-states the rules the tutorial applied, and the
-[agitation example](../../examples/agitation.md) is the smallest device program.
+To reuse device operations across procedures, continue with
+[composition and shared devices](../advanced/composition.md). For the complete
+language rules, see [runtime syntax](../reference/runtime-language.md).

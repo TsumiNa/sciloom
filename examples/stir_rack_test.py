@@ -4,8 +4,8 @@ from pathlib import Path
 
 import pytest
 
-from examples.stir_rack import StirRack
-from sciloom import rpm
+from examples.stir_rack import CountStirs, StirRack
+from sciloom import Function, rpm, runtime
 from sciloom.core.interpreter import Interpreter
 from sciloom_autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget
 
@@ -55,3 +55,33 @@ def test_committed_package_carries_both_agitation_branches(compiled):
     assert Path(__file__).with_name("stir_rack.asfp").read_bytes() == compiled.artifact.content
     assert package.count("<switchon>1</switchon>") == 1
     assert package.count("<switchon>0</switchon>") == 1
+
+
+def test_counter_state_belongs_to_each_session_and_function_instance(compiled):
+    first = Interpreter(compiled.specialized_ir)
+    second = Interpreter(compiled.specialized_ir)
+    inputs = {"volumes": [1.0], "enabled": True}
+    once = first.run(inputs=inputs)
+    twice = first.run(inputs=inputs)
+    other = second.run(inputs=inputs)
+    assert counter(once, compiled.specialized_ir) == 1
+    assert counter(twice, compiled.specialized_ir) == 2
+    assert counter(other, compiled.specialized_ir) == 1
+
+
+class TwoCounters(Function):
+    def __init__(self) -> None:
+        self.left = CountStirs()
+        self.right = CountStirs()
+
+    @runtime
+    def run(self) -> None:
+        self.left()
+        self.left()
+        self.right()
+
+
+def test_two_child_instances_keep_independent_state():
+    snapshot = Interpreter(TwoCounters().to_ir()).run(inputs={})
+    values = [value for state in snapshot.state.values() for value in state.values()]
+    assert sorted(values) == [1, 2]

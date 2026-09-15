@@ -1,80 +1,69 @@
-# 1. Your first Function
+# 1. Start a shaker
 
-A SciLoom program is a Python class. Its class body declares what the program
-remembers and exchanges, and one method holds what it does. Nothing in the class
-runs on your computer: SciLoom reads the method's source and compiles it.
+The first procedure has two steps: save a speed of 300 rpm, then start the
+shaker. Inside the program they look like this:
 
-Start the file with the smallest useful Function, a counter that remembers how
-many times stirring has been requested.
-
-<!-- tutorial: step -->
 ```python
-from sciloom import Function, Var, runtime
-from sciloom_autosuite import AutoSuiteTarget
-
-
-class CountStirs(Function):
-    """Count how many times stirring has been requested in this session.
-
-    Attributes:
-        stirs: Number of requests so far; persists across calls.
-    """
-
-    stirs: Var[int] = 0
-
-    @runtime
-    def run(self) -> None:
-        self.stirs += 1
+self.shaker.speed = 300 * rpm
+self.shaker.start()
 ```
 
-Three things happen here.
+Saving a speed does not start the device. `start()` applies the saved setting
+and enables agitation.
 
-`stirs: Var[int] = 0` declares **persistent state**. A `Var` needs a literal
-initial value on the class, and that value is the state when the session starts,
-not an assignment on every call: the second call sees the count the first call
-left behind. If a value should start at zero on every call, reset it inside the
-runtime method, as page 3 does. State belongs to an instance; two `CountStirs()`
-instances count separately.
+## Put the steps in a Function
 
-`@runtime` marks the **one method SciLoom compiles**. It takes only `self`. It
-must live in an ordinary `.py` file, because SciLoom reads its source text;
-notebook cells, `exec()` and `async def` are refused.
+A Python class groups a procedure's declarations and methods. Our class is
+called `StirRack`; `(Function)` gives it SciLoom's compilation methods.
+The field `shaker: Agitator` says the procedure needs a shaker.
 
-The **class docstring** describes the procedure, and its `Attributes:` section
-names the declared fields. Docstrings help readers and tools; they never change
-what compiles.
+`self` refers to the current procedure instance, so `self.shaker` means its
+shaker. `@runtime` marks the method whose steps SciLoom will compile. The
+method accepts only `self`; later lessons use fields for its inputs.
 
-Compile the counter. `AutoSuiteTarget` is the equipment target every page of
-this tutorial compiles for; it needs no device mapping for a program that
-declares no device:
+Here is the complete file:
 
-<!-- tutorial: checkpoint -->
 ```python
-print(CountStirs().compile(target=AutoSuiteTarget()).write("count_stirs.asfp").name)
+--8<-- "examples/tutorial/start_shaker.py"
 ```
+
+`StirRack()` creates an instance of the class. Calling its `.compile()`
+generates the AutoSuite function package. The `run` method is not executed
+during this process; ordinary Python, such as the code below the class, is.
+Keep the source in a normal `.py` file so SciLoom can read the method.
+
+## Match the shaker to your configuration
+
+The dictionary key `"shaker"` matches the declared field name. The values
+`zone="Heater Shaker 23"` and `device_id="23"` identify equipment in an
+example AutoSuite configuration. For your setup, use the zone name and
+individual shaker ID in your own configuration. A shaker ID is not a vial number.
+
+`300 * rpm` expresses a rotational speed. You can change the number here and
+compile again. These settings are programming examples, not a recommendation
+for your samples.
+
+## Generate the package
+
+From the repository root:
+
+```bash
+uv run python examples/tutorial/start_shaker.py
+```
+
 ```text
-count_stirs.asfp
+start_shaker.asfp
 ```
 
-The package is written to the directory you ran the command from, because the
-name is relative; page 5 writes it beside the script instead. Nothing was executed: the target was
-chosen explicitly, the program was checked, and the file was produced.
+The file is written beside the Python source. The `Path(__file__)` expression
+selects that location, even when you run the command from another directory.
 
-Host Python never touches runtime state. Reading a `Var` from outside the
-runtime method is refused, and the message tells you where the rule lives:
+The package has no runtime inputs. When AutoSuite calls its function, it uses
+the fixed speed in this source. Compilation does not connect to equipment;
+validate the package with AutoSuite Executor on the deployment computer before
+equipment use. See [validation limits](../../introduction/status.md#what-compilation-establishes).
 
-<!-- tutorial: checkpoint -->
-```python
-try:
-    CountStirs().stirs
-except Exception as error:
-    print(error)
-```
-```text
-$.schema.stirs: Runtime fields cannot be read by host Python. [runtime_field_read]
-```
+[Python source](../../_generated/examples/tutorial/start_shaker.py) ·
+[Generated package](../../_generated/examples/tutorial/start_shaker.asfp)
 
-Every SciLoom error reads this way: a path into the program, a message, and a
-code in brackets. [Troubleshooting](../troubleshooting.md) lists the codes.
-
-Next: [2. Inputs, outputs and speeds](inputs-and-units.md).
+Next: [2. Supply a speed and switch](inputs-and-units.md).

@@ -58,6 +58,9 @@ jobs:
       - run: uv run python examples/non_zero_array_min.py
       - run: uv run python examples/stir_rack.py
       - run: uv run python examples/tutorial/start_shaker.py
+      - run: uv run python examples/tutorial/control_shaker.py
+      - run: uv run python examples/tutorial/choose_stirring_speed.py
+      - run: uv run python examples/tutorial/stir_sample_rack.py
       - run: uv run python -m examples.developer.agitation_ir
       - run: uv run python -m examples.developer.list_ir
       - run: uv run python -m examples.developer.demo_device

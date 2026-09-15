@@ -98,6 +98,10 @@ disallow_incomplete_defs = true
 [[tool.mypy.overrides]]
 module = [
     "examples.tutorial.start_shaker_test",
+    "examples.tutorial.control_shaker_test",
+    "examples.tutorial.choose_stirring_speed_test",
+    "examples.tutorial.stir_sample_rack_test",
+    "examples.stir_rack_test",
     "sciloom.units_test",
     "sciloom.devices.agitation_test",
     "sciloom.devices.declarations_test",

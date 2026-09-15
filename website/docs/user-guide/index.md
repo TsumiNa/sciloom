@@ -1,27 +1,25 @@
-# User Guide overview
+# User Guide
 
-This guide is for experiment authors: people who write a procedure in Python and
-compile it for equipment. It does not require knowledge of SciLoom's internals.
+Learn to write a stirring procedure in Python and compile it for AutoSuite.
+You should be comfortable with variables, functions and `if` / `while`.
+The tutorial explains classes as they become useful.
 
-**[Tutorial](tutorial/index.md).** Five pages build one stirring experiment from
-a three-line counter to a compiled AutoSuite package. Start here; every rule
-the rest of the guide states is first met there in a program you can run.
+Start with [your first stirring program](tutorial/first-function.md). The five
+lessons take it from a fixed speed to a procedure that chooses a speed from
+sample data and remembers how many starts were requested.
 
-**Advanced.** One page per technique, each opening with a complete program that
-the documentation tests execute: [composition and shared devices](advanced/composition.md),
-[host-time specialization](advanced/specialization.md),
-[device-dependent branches](advanced/device-branches.md) and the
-[AutoSuite rules](advanced/autosuite.md).
+Once you have a program working, use the advanced guides to
+[share a shaker between steps](advanced/composition.md),
+[choose settings before compilation](advanced/specialization.md), or
+[adapt a procedure to different devices](advanced/device-branches.md).
+[AutoSuite compilation](advanced/autosuite.md) explains the equipment bindings
+and the target's current restrictions.
 
-**[FAQ](faq.md) and [Troubleshooting](troubleshooting.md).** Short answers to
-the questions authors ask, and every diagnostic code with its cause and fix.
+For a quick answer, try the [FAQ](faq.md). For an error, use
+[Troubleshooting](troubleshooting.md). The reference pages list
+[field declarations](reference/declarations.md),
+[supported Python syntax](reference/runtime-language.md) and
+[device operations](reference/devices-and-targets.md).
 
-**Reference.** The rules as tables, each row linking to the page that explains
-it: [declarations](reference/declarations.md), the
-[runtime language](reference/runtime-language.md) and
-[devices and targets](reference/devices-and-targets.md).
-
-The [glossary](../introduction/glossary.md) defines the terms used across the site. The
-[example walkthroughs](../examples/index.md) show complete source files with
-their generated packages, and the [API reference](../api/index.md) documents the
-author API extracted from the source.
+You can also browse [complete examples](../examples/index.md) or look up an
+object in the [API reference](../api/index.md).

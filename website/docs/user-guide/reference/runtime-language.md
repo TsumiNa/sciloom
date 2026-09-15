@@ -43,7 +43,7 @@ number or a list. Lists have no arithmetic, comparison or truthiness of their ow
 Lists are values: assignment copies, and a call copies inputs in and outputs
 out. Indices are non-negative integers; negative or out-of-range access is an
 execution error, and a write never grows a list. An empty literal needs a
-declared element type. Explained in [tutorial 3](../tutorial/lists-and-loops.md).
+declared element type. Explained in [lesson 4](../tutorial/lists-and-loops.md).
 
 ## Calls
 

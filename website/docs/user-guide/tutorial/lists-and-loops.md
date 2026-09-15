@@ -1,78 +1,84 @@
-# 3. Lists and loops
+# 4. Work with a list of samples
 
-A rack holds many vials. To choose one speed for the whole rack, the program
-needs the largest volume in a list.
+For a rack of samples, supply all volumes and use the largest to choose the
+speed. The new `LargestVolume` Function receives `Input[list[float]]` and
+writes its answer to `largest: Output[float]`.
 
-<!-- tutorial: step -->
+Its runtime method scans the supplied list:
+
 ```python
-class LargestVolume(Function):
-    """Find the largest volume in a rack.
-
-    Attributes:
-        volumes: Volume of every vial in the rack.
-        largest: The largest volume, or 0.0 for an empty rack.
-        index: Loop position, reset on every call.
-    """
-
-    volumes: Input[list[float]]
-    largest: Output[float]
-    index: Var[int] = 0
-
-    @runtime
-    def run(self) -> None:
-        self.largest = 0.0
-        self.index = 0
-        while self.index < len(self.volumes):
-            if self.volumes[self.index] > self.largest:
-                self.largest = self.volumes[self.index]
-            self.index += 1
+self.largest = 0.0
+self.index = 0
+while self.index < len(self.volumes):
+    if self.volumes[self.index] > self.largest:
+        self.largest = self.volumes[self.index]
+    self.index += 1
 ```
 
-A list field is `list[T]` of one scalar type: `float` here, or `int`, `bool` or
-`RotationalSpeed`. Lists are one-dimensional and homogeneous. `len` and indexing
-work as in Python; indices are non-negative integers, and a write never extends
-a list.
+Declare `index: Var[int] = 0` on the class. Each iteration reads one element
+and advances the index. SciLoom currently supports `while` loops; it does not
+yet support `for`.
 
-The loop is a `while` with an explicit index, because the runtime language has
-no `for`. The index is a `Var`, so it is declared on the class, and it is reset
-to zero at the top of the method: without that line the second call would start
-where the first one stopped. Every name the method assigns is a declared field;
-there are no local variables.
+Reset the index at the start of `run`, even though its declaration also says
+`= 0`. A `Var` keeps its value between calls. Without this reset, the next
+call would start at the end of the previous list. Reset `largest` too, so a
+smaller list on the next call gets its own answer.
 
-Lists are values. Assigning one list field to another copies it, and a call
-passes a copy in and copies results back, so no two fields ever share elements.
+The initial largest value of 0.0 makes this calculation suitable for non-negative
+volume data. It returns 0.0 for an empty list.
 
-<!-- tutorial: checkpoint -->
+## Pass the largest value to ChooseSpeed
+
+`StirRack` now declares `volumes: Input[list[float]]` instead of `volume`.
+It creates both children in `__init__` and calls them in order:
+
 ```python
-print(LargestVolume().compile(target=AutoSuiteTarget()).write("largest_volume.asfp").name)
+self.largest = self.measure(volumes=self.volumes)
+self.speed = self.choose(volume=self.largest)
 ```
+
+`self.measure` is a `LargestVolume` instance. Declare `largest: Var[float] = 0.0`
+alongside the existing `speed` working value.
+
+When AutoSuite calls this version:
+
+| Inputs | Selected behaviour |
+| --- | --- |
+| `volumes=[1.0, 2.5, 0.5]`, `enabled=True` | Largest is 2.5; start at 600 rpm |
+| `volumes=[1.0, 1.5]`, `enabled=True` | Largest is 1.5; start at 300 rpm |
+| `volumes=[]`, `enabled=True` | Largest is 0.0; start at 300 rpm |
+| `enabled=False` | Stop |
+
+The empty-list behaviour is a choice in this example, not a rule that an empty
+rack should be stirred. Adapt the branch to your procedure.
+
+## List behaviour
+
+A list has one element type, such as `list[float]`. Indexing begins at zero;
+negative and out-of-range indices are errors, and assigning an element does not
+extend the list.
+
+Assigning one list field to another copies the list. A child also receives a
+copy, so changing its input does not change the parent's list. The
+[list scaling example](../../examples/scale-values.md) shows this with an update.
+
+## Complete file
+
+??? example "Show stir_sample_rack.py"
+
+    ```python
+    --8<-- "examples/tutorial/stir_sample_rack.py"
+    ```
+
+```bash
+uv run python examples/tutorial/stir_sample_rack.py
+```
+
 ```text
-largest_volume.asfp
+stir_sample_rack.asfp
 ```
 
-Writing the loop the Python way shows how the subset is enforced: the source is
-read, and the first statement outside the subset is named.
+[Python source](../../_generated/examples/tutorial/stir_sample_rack.py) ·
+[Generated package](../../_generated/examples/tutorial/stir_sample_rack.asfp)
 
-<!-- tutorial: checkpoint -->
-```python
-class Iterate(Function):
-    volumes: Input[list[float]]
-    total: Output[float]
-
-    @runtime
-    def run(self) -> None:
-        self.total = 0.0
-        for volume in self.volumes:
-            self.total += volume
-
-
-try:
-    Iterate().compile(target=AutoSuiteTarget())
-except Exception as error:
-    print(error)
-```
-```text
-$.python.fn:0: Unsupported runtime statement: For. [python_subset]
-```
-
-Next: [4. Stirring with an Agitator](agitator.md).
+Next: [5. Keep a count across calls](compile.md).

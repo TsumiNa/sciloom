@@ -88,6 +88,9 @@ inputs. Ordinary Python and constructors execute on the author's computer.
 
 ## Sequence and verification
 
+Stage 1 landed in PR #80. Stage 2 implements the complete snapshot-based User
+Guide; the final two stages retain the plan below.
+
 | PR | Plan | Outcome |
 | --- | --- | --- |
 | 1 | [First program](01-first-program.md) | This contract, writing guidance, first example and Getting started |

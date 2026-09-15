@@ -1,79 +1,85 @@
-# 4. Stirring with an Agitator
+# 3. Reuse a calculation
 
-Now the experiment itself. `StirRack` uses the three Functions written so far
-and adds the shaker.
+Suppose the procedure should choose a speed from the sample volume. Put the
+choice in its own Function so other procedures can use it too.
 
-<!-- tutorial: step -->
+`ChooseSpeed` takes `volume: Input[float]` and writes
+`speed: Output[RotationalSpeed]`. Its runtime method is:
+
 ```python
-from sciloom import Agitator
-
-
-class StirRack(Function):
-    """Stir a rack at a speed chosen from its largest sample, or stop.
-
-    Attributes:
-        volumes: Volume of every vial in the rack.
-        enabled: Whether the rack should be stirring after this call.
-        shaker: Logical agitator; the target binds the hardware.
-        largest: Largest volume measured on this call.
-        speed: Speed chosen for that volume.
-    """
-
-    volumes: Input[list[float]]
-    enabled: Input[bool]
-    shaker: Agitator
-    largest: Var[float] = 0.0
-    speed: Var[RotationalSpeed] = 0 * rpm
-
-    def __init__(self) -> None:
-        self.measure = LargestVolume()
-        self.choose = ChooseSpeed()
-        self.counter = CountStirs()
-
-    @runtime
-    def run(self) -> None:
-        self.largest = self.measure(volumes=self.volumes)
-        self.speed = self.choose(volume=self.largest)
-        if self.enabled:
-            self.shaker.speed = self.speed
-            self.shaker.start()
-            self.counter()
-        else:
-            self.shaker.stop()
+if self.volume < 2.0:
+    self.speed = 300 * rpm
+else:
+    self.speed = 600 * rpm
 ```
 
-`shaker: Agitator` declares a **logical device**: the program needs an agitator,
-any agitator. It is not a piece of hardware and not a value; you never construct
-one or assign one. Which shaker it becomes is decided when you compile, on the
-next page.
+An `Output` is a result passed back to the calling Function. Assign it on
+each path through the method; the `else` above supplies the result for volumes
+of 2.0 or more. SciLoom Functions use output fields instead of `return`.
 
-`__init__` is ordinary Python. It runs on your computer when you write
-`StirRack()`, and here it creates the three child Functions. In the runtime
-method a child is called like a function and its outputs are bound by
-assignment: `self.largest = self.measure(volumes=self.volumes)` passes the rack
-in and copies the result out. A child with no outputs, `self.counter()`, is
-called as a statement. Each child keeps its own state, so the counter keeps
-counting across calls.
+The volume is supplied data, in millilitres by this example's convention.
+`float` itself carries no volume unit. The threshold and speeds demonstrate
+a branch; they are not an experimentally established relationship.
 
-Configuring the shaker takes two steps on purpose. `self.shaker.speed = self.speed`
-**saves** a configuration and changes nothing on the device. `self.shaker.start()`
-**applies** everything saved and enables agitation. `self.shaker.stop()` disables
-it and keeps the saved values. Assigning a speed of `0 * rpm` is a configuration,
-not a stop. Before a `start()`, the speed must have been assigned on every path
-that reaches it; the compiler checks this for you.
+## Use the calculation in StirRack
 
-Compiling now fails, and the message says why: the program declares a device
-that the target has not been told about.
+Replace the speed input with a volume input and a working value:
 
-<!-- tutorial: checkpoint -->
 ```python
-try:
-    StirRack().compile(target=AutoSuiteTarget())
-except Exception as error:
-    print(error)
+volume: Input[float]
+enabled: Input[bool]
+shaker: Agitator
+speed: Var[RotationalSpeed] = 0 * rpm
 ```
+
+`Var` gives the runtime method somewhere to store a value. Unlike an input,
+it is not supplied by the caller. It needs an initial value; here the calculation
+will overwrite that value before it is used.
+
+Create the child Function in a constructor:
+
+```python
+def __init__(self) -> None:
+    self.choose = ChooseSpeed()
+```
+
+Python calls `__init__` when you write `StirRack()`. It runs on your computer
+and creates the child instance once. Inside `run`, call it before the existing
+start/stop branch:
+
+```python
+self.speed = self.choose(volume=self.volume)
+```
+
+The argument supplies the child's input. The assignment receives its output.
+Keep the `if self.enabled:` branch from lesson 2; it now uses the calculated speed.
+
+| Inputs when the generated function is called | Behaviour |
+| --- | --- |
+| `volume=1.5`, `enabled=True` | Start at 300 rpm |
+| `volume=2.0`, `enabled=True` | Start at 600 rpm |
+| `enabled=False` | Stop; do not apply the calculated speed |
+
+## Complete file
+
+??? example "Show choose_stirring_speed.py"
+
+    ```python
+    --8<-- "examples/tutorial/choose_stirring_speed.py"
+    ```
+
+```bash
+uv run python examples/tutorial/choose_stirring_speed.py
+```
+
 ```text
-$.resources[0]: No compatible binding for device 'shaker'. [missing_resource_binding]
+choose_stirring_speed.asfp
 ```
 
-Next: [5. Bind and compile](compile.md).
+The package has `volume` and `enabled` inputs. Its child Function is included
+in the same package.
+
+[Python source](../../_generated/examples/tutorial/choose_stirring_speed.py) ·
+[Generated package](../../_generated/examples/tutorial/choose_stirring_speed.asfp)
+
+Next: [4. Work with a list of samples](lists-and-loops.md).

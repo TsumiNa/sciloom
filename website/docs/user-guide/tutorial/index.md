@@ -1,24 +1,23 @@
-# Stir a rack of samples
+# Write a stirring procedure
 
-This tutorial builds one experiment from nothing to a compiled AutoSuite
-package. A rack of vials sits on an individual shaker. The program measures the
-largest sample volume in the rack, chooses a stirring speed for it, and either
-configures the shaker and starts it or stops it. Each page adds one class to the
-program; the last page shows the complete file, which is also the runnable
-[stir-rack example](../../examples/stir-rack.md).
+Begin with a shaker running at a fixed speed. Then let the caller choose the
+speed, extract a reusable calculation, handle a rack of samples and count start
+requests.
 
-| Page | You add | You learn |
-|---|---|---|
-| [1. Your first Function](first-function.md) | `CountStirs` | a Function class, persistent state, the one runtime method |
-| [2. Inputs, outputs and speeds](inputs-and-units.md) | `ChooseSpeed` | values exchanged per call, rotational speed, `if`/`else` |
-| [3. Lists and loops](lists-and-loops.md) | `LargestVolume` | list inputs, `while` with an index, `len` |
-| [4. Stirring with an Agitator](agitator.md) | `StirRack` | a logical device, child Functions, configure then start, stop |
-| [5. Bind and compile](compile.md) | the `__main__` block | binding a real shaker and writing the `.asfp` |
+| Lesson | What you will change |
+| --- | --- |
+| [1. Start a shaker](first-function.md) | Write and compile two experimental steps |
+| [2. Supply a speed and switch](inputs-and-units.md) | Replace a fixed value with inputs and add a stop branch |
+| [3. Reuse a calculation](agitator.md) | Choose a speed from sample volume in a separate Function |
+| [4. Work with a list of samples](lists-and-loops.md) | Find the largest supplied volume |
+| [5. Keep a count across calls](compile.md) | Add a persistent counter and complete the procedure |
 
-Before you start, follow [getting started](../../introduction/getting-started.md)
-so that `uv run python` finds `sciloom` and `sciloom_autosuite`. Keep one file,
-for example `stir_rack.py`, and paste each page's step into it in order; the
-checkpoints on each page are short extra lines you can run and then delete.
-Every checkpoint output shown here was produced by running that code.
+Follow [Getting started](../../introduction/getting-started.md) to install the
+checkout. Each lesson supplies a complete Python file and its generated package.
+Use that lesson's file as your working copy; you do not need to paste all five
+files into one script.
 
---8<-- "website/snippets/hardware-boundary.md"
+The examples use supplied volume data. They do not measure samples. The speeds
+and thresholds illustrate the language, rather than a validated experimental
+method. Running the Python files compiles them; equipment execution requires
+AutoSuite and validation on the deployment computer.
