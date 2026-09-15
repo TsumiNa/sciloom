@@ -1,71 +1,121 @@
 # FAQ
 
-**Why can't I write a `for` loop?** The runtime language has `while` only.
-Declare an index as a `Var`, reset it at the top of the method, and loop while
-it is below `len(...)`. See [lesson 4](tutorial/lists-and-loops.md).
+## How do I change the stirring speed?
 
-**Why is there no `return`?** A Function hands results back through `Output`
-fields, which must be assigned on every path through the method. See
-[lesson 3](tutorial/agitator.md).
+For a fixed speed, change `300 * rpm` in the source and compile again
+([lesson 1](tutorial/first-function.md)). To choose a speed each time the
+generated function is called, declare `speed: Input[RotationalSpeed]` and use
+`self.shaker.speed = self.speed` ([lesson 2](tutorial/inputs-and-units.md)).
+The caller supplies that input when the function runs.
 
-**Can I use a local variable inside `@runtime`?** No. Every name the method
-assigns is a declared field; use a `Var`. See the
-[runtime language](reference/runtime-language.md).
+## How do two steps use the same shaker?
 
-**Does a `Var` reset on every call?** No. Its literal is the state when the
-session starts, and later calls continue from where the last one stopped. Reset
-it inside the method when a call should start fresh. See
-[lesson 5](tutorial/compile.md).
+Create the child in `__init__`, then share the logical reference with
+`self.stage.shaker = self.shaker`. Bind the parent's `"shaker"` once in
+the target. See the complete [shared shaker example](advanced/composition.md).
+A concrete `AutoSuiteIndividualShaker` belongs in the target's `devices`
+dictionary, not in either Function's fields.
 
-**Can an `Input` have a default value?** No; `Input` and `Output` have no
-defaults. Pass the value from the caller, or store it in the constructor as host
-configuration. See [host-time specialization](advanced/specialization.md).
+## Why does my counter keep increasing?
 
-**Why is `speed = 0 * rpm` not a stop?** Assigning a property saves a
-configuration; only `stop()` disables the device. See
-[lesson 2](tutorial/inputs-and-units.md).
+A `Var` keeps its value between calls using the same runtime state. Its
+class-level initial value is used when that state is created. To start each
+call at zero, assign `self.count = 0` at the beginning of `run`.
+[Lesson 5](tutorial/compile.md) compares a persistent counter with a loop index
+that resets on every call.
 
-**Can I read the shaker's current speed?** No. Device properties are write-only
-in this release; keep the value you configured in a `Var`. See
-[devices and targets](reference/devices-and-targets.md).
+## Why did assigning a new speed not change the running shaker?
 
-**Why does AutoSuite refuse `and` / `or`?** Equivalent short-circuit behaviour on
-the platform has not been established, so the target rejects them. Nest two
-`if` statements instead. See [AutoSuite rules](advanced/autosuite.md).
+Assignment saves the next configuration. Call `start()` to apply it, even
+if the shaker is already running. Use `stop()` to stop; assigning
+`0 * rpm` alone does not stop it.
+See [device operations](reference/devices-and-targets.md#agitator).
 
-**I declared a device slot I no longer use; why must I still bind it?** A slot
-is a declared resource of the program, whether or not the method touches it.
-Remove the declaration or bind it. See [AutoSuite rules](advanced/autosuite.md).
+## Can I read the shaker's current speed?
 
-**Why must a list output be assigned as a whole before my loop?** AutoSuite
-needs the output to exist on every path, including the path on which the loop
-runs zero times. Start with `self.result = self.values` or `self.result = []`.
-See [AutoSuite rules](advanced/autosuite.md).
+Measured speed is not available through this API. Device properties currently
+allow writes only. If the procedure needs to reuse the speed it requested,
+keep that value in a `Var[RotationalSpeed]`. That value is a requested
+setting, not a measurement.
 
-**Can I run my experiment without hardware?** Not from the author API.
-Compilation checks and produces a package; it does not execute it. The
-reference interpreter is a developer tool that defines SciLoom semantics, and
-it proves nothing about equipment. See
-[what compilation establishes](../introduction/status.md#what-compilation-establishes).
+## Can an input have a default? Must I supply it when stopping?
 
-**Which AutoSuite versions are supported?** `AutoSuiteVersion.V2_47_1_1` only,
-which is the default. See [AutoSuite rules](advanced/autosuite.md).
+Inputs have no defaults, and the caller must supply every input on every call,
+including inputs a particular branch does not use. The start/stop example needs
+both `enabled` and `speed` when stopping.
+If a setting should be fixed in the generated program, use
+[a constructor parameter](advanced/specialization.md) instead of an input.
 
-**Can I define a Function in a notebook or the REPL?** No. SciLoom reads the
-method's source from an ordinary `.py` file. See
-[declarations](reference/declarations.md).
+## How do I return a calculation's result?
 
-**How do two Functions share one shaker?** Assign the parent's slot to the
-child's slot in the constructor: `self.stage.shaker = self.shaker`. See
-[composition](advanced/composition.md).
+Declare an `Output[T]` and assign it on each path through `run`. A parent
+receives it with `self.result = self.child(...)`; do not write `return`
+in the runtime method. [Lesson 3](tutorial/agitator.md) shows a speed calculation.
 
-**How do I write one program for two instruments?** Ask the compiler with a
-compile-time query, `comptime.is_device`, `can_write` or `supports`, and put the
-instrument-specific statements in that branch. See
-[device-dependent branches](advanced/device-branches.md).
+## Can I use a temporary variable or a for loop?
 
-**Do docstrings change what compiles?** No. They describe the procedure and its
-fields for readers and tools. See [declarations](reference/declarations.md).
+Declare working values as `Var` fields and refer to them through `self`.
+Use a `while` loop with an index for a list; `for` is not yet supported
+inside `@runtime`. Ordinary Python outside that method can still use local
+variables and `for`.
+See [lesson 4](tutorial/lists-and-loops.md) and the
+[runtime syntax reference](reference/runtime-language.md).
 
-**Where is a diagnostic code explained?** On [troubleshooting](troubleshooting.md),
-grouped by when the error fires, with the fix beside each code.
+## Will changing a child's input list change the parent's list?
+
+No. The child receives a copy. Whole-list assignment and output return also
+copy values. In the [scaling example](../examples/scale-values.md), changing
+`result[0]` leaves the supplied `values[0]` unchanged.
+
+## Why must I assign an output list before updating its elements?
+
+The elements must already exist. Use `self.result = self.values` to copy
+an input, then update that copy. `self.result = []` creates an empty
+result; it does not allocate space for indexed writes.
+AutoSuite also requires a whole-list assignment on every return path, including
+one where a loop runs zero times. See [AutoSuite restrictions](advanced/autosuite.md#current-autosuite-restrictions).
+
+## Why does AutoSuite reject and / or?
+
+Their Python short-circuit behaviour has not been established for this target.
+Use nested `if` statements. This is an AutoSuite restriction; see
+[the correction](troubleshooting.md#autosuite-rejects-boolean-combinations).
+
+## Can the same procedure work with another instrument?
+
+It can if a target supports the required device operations. Use
+[device-dependent branches](advanced/device-branches.md) for differences between
+profiles. These queries use the target's declared capabilities at compilation;
+they do not inspect connected hardware.
+
+## I no longer use a declared shaker. Do I still need to bind it?
+
+Yes. Remove its declaration, or provide a binding. A declared slot remains a
+device dependency even when no runtime statement uses it.
+
+## Can I run or validate a procedure without equipment?
+
+You can generate an ASFP without a connected instrument. SciLoom also has a
+[reference interpreter](../developer/reference/interpreter.md) for developers
+to check calculations and state changes. It does not simulate the instrument.
+Generated packages still need AutoSuite Executor validation before equipment
+use; see [validation limits](../introduction/status.md#what-compilation-establishes).
+
+## Which Python and AutoSuite versions can I use?
+
+Python 3.12–3.14 and AutoSuite serialization version
+`AutoSuiteVersion.V2_47_1_1`, the default. Follow
+[Getting started](../introduction/getting-started.md) to install the checkout.
+Keep Functions in ordinary `.py` files; notebook, REPL and `exec()` definitions
+are not supported.
+
+## Do docstrings affect the experiment?
+
+No. They explain the procedure and its fields to readers and tools. Declarations
+and runtime statements determine what compiles.
+See [declarations](reference/declarations.md#docstrings).
+
+## Where can I look up an error?
+
+[Troubleshooting](troubleshooting.md) groups errors by the problem you see,
+with diagnostic codes and corrections.

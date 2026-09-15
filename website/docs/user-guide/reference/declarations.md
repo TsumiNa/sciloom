@@ -1,45 +1,64 @@
 # Declarations
 
-Rules for the class body of a Function. Each row links to the page that explains
-it.
+Use these declarations in the class body. Import the authoring names from
+`sciloom`; import `AutoSuiteTarget` and its hardware profiles from
+`sciloom_autosuite`.
 
 ## Fields
 
-| Declaration | Meaning | Default | Explained on |
-|---|---|---|---|
-| `volume: Input[float]` | value supplied by the caller at each call | not allowed | [lesson 3](../tutorial/agitator.md) |
-| `speed: Output[RotationalSpeed]` | value written back when the call returns; assigned on every path | not allowed | [lesson 3](../tutorial/agitator.md) |
-| `index: Var[int] = 0` | persistent state of the instance; the literal is the initial state, not a per-call reset | required literal | [lesson 5](../tutorial/compile.md) |
-| `batch_size: int = 8` | host-time configuration, embedded as a literal when read in the runtime method | ordinary Python | [host-time specialization](../advanced/specialization.md) |
-| `shaker: Agitator` | logical device slot; the target binds the hardware | none; no class-level value | [lesson 1](../tutorial/first-function.md) |
+| Declaration | Meaning | Initial value |
+| --- | --- | --- |
+| `volume: Input[float]` | Caller supplies a value on every call | Not allowed |
+| `speed: Output[RotationalSpeed]` | Result returned to the caller; assign on every path | Not allowed |
+| `index: Var[int] = 0` | Working value or persistent state; reset explicitly when needed | Required |
+| `batch_size: int = 8` | Ordinary Python configuration; a supported scalar becomes a fixed value in the generated procedure | Ordinary Python rules |
+| `shaker: Agitator` | Logical device dependency, bound to hardware through the target | No class-level value |
 
-Import `Function`, `Input`, `Output`, `Var`, `runtime`, `Agitator`,
-`RotationalSpeed`, `rpm`, `rps` and `comptime` from `sciloom`. A field has
-exactly one role; a bare `Annotated` alias or a nested role is refused. A list
-`Var` needs a list literal, which is copied and frozen when the class is built.
-Inherited runtime fields and methods work; redeclaring an inherited field, or
-shadowing an inherited device slot, is refused. A field name must not collide
-with the Function API.
+[Lesson 2](../tutorial/inputs-and-units.md) introduces inputs;
+[lesson 3](../tutorial/agitator.md) introduces outputs and working values;
+[lesson 5](../tutorial/compile.md) explains persistent state.
+
+Each runtime field has exactly one role: `Input[T]`, `Output[T]` or
+`Var[T]`. Supply a supported [value type](runtime-language.md#values).
+Bare `Var`, nested roles and untyped lists are invalid.
+
+A `Var` initial value is evaluated when Python creates the class, then checked
+against the declared type. For example, `speed: Var[RotationalSpeed] = 300 * rpm`
+is valid. A list initial value must be a Python list; SciLoom copies it so later
+changes to the original cannot change the declaration. Each instance starts
+with independent state. Initial values do not reset fields on later calls.
+
+Inherited declarations remain available. Do not change an inherited field's
+role, type or initial value, or replace an inherited device slot with another
+attribute. Use public names that do not conflict with Function methods such as
+`compile`.
 
 ## The runtime method
 
 | Rule | Detail |
-|---|---|
-| exactly one `@runtime` method | a class with none or two is refused |
-| signature `def run(self) -> None` | no other parameters; inputs are fields |
-| source on disk | an ordinary `.py` file; notebook cells, `exec()` and `async def` are refused |
-| never executed by host Python | calling it, or an instance, raises `TypeError` |
-| runtime fields are sealed | host reads and writes are refused (`runtime_field_read`, `runtime_field_write`) |
+| --- | --- |
+| Exactly one method marked `@runtime` | It may be inherited |
+| Signature such as `def run(self) -> None` | Only `self`; declare inputs as fields |
+| Source in an ordinary `.py` file | No notebook, REPL, `exec()` or asynchronous runtime method |
+| Compiled from source | The method body is not executed during compilation |
+| Runtime values used inside the method | Host Python cannot read or assign `Input`, `Output` or `Var` values |
+
+Calling `instance.run()` or `instance()` in your Python script raises
+`TypeError`. Generate a program with `instance.compile(target=...)`.
+Child Function calls belong inside the runtime method.
 
 ## The constructor
 
-`__init__` is ordinary Python. It stores host configuration and child Function
-instances as attributes, and may share a device slot with a child
-(`self.stage.shaker = self.shaker`). It must not assign a runtime field. See
-[composition](../advanced/composition.md).
+Python calls `__init__` when an instance is created. Use it to store fixed
+settings, create child Functions and share existing logical device references:
+
+`self.stage.shaker = self.shaker` lets the child use the parent's shaker.
+Do not assign hardware profiles or runtime field values there.
+See [shared devices](../advanced/composition.md) and
+[constructor settings](../advanced/specialization.md).
 
 ## Docstrings
 
-Write an English class docstring describing the procedure, with an `Attributes:`
-section naming the declared fields and an `Args:` section for constructor
-parameters. Docstrings inform readers and tools; they never change what compiles.
+Describe the procedure in an English class docstring. Use `Attributes:` to
+explain its fields and `Args:` for constructor parameters. These descriptions
+help readers and tools; they do not determine execution.

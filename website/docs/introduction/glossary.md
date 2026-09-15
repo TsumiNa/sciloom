@@ -6,9 +6,9 @@ SciLoom with devices and targets.
 
 ## Authoring terms
 
-**Function.** A Python class whose body declares a procedure's fields and whose
-one `@runtime` method holds its steps; SciLoom compiles it rather than running
-it. [Tutorial 1](../user-guide/tutorial/first-function.md).
+**Function.** A procedure described by a Python class. Its declarations name
+inputs, outputs, working values and devices; its `@runtime` method holds the
+steps to compile. The constructor still runs as ordinary Python. [Tutorial 1](../user-guide/tutorial/first-function.md).
 
 **Runtime method.** The single method marked `@runtime`, taking only `self`,
 whose source SciLoom reads. [Declarations](../user-guide/reference/declarations.md).
@@ -62,8 +62,9 @@ when known, the source line. [Troubleshooting](../user-guide/troubleshooting.md)
 written as a number times a unit; revolutions per second is canonical.
 [Tutorial 2](../user-guide/tutorial/inputs-and-units.md).
 
-**Whole-list assignment.** Assigning a complete list to a list output before
-any element is read or written, which AutoSuite requires on every path.
+**Whole-list assignment.** Copying all values from a list into a field, such as
+`self.result = self.values`. AutoSuite requires output lists to be assigned
+this way before individual elements are read or updated.
 [AutoSuite rules](../user-guide/advanced/autosuite.md).
 
 **Zone, device id.** The two facts an AutoSuite shaker profile carries: the

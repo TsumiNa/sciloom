@@ -9,11 +9,11 @@ to the repository root.
 
 | Example | What it teaches |
 |---|---|
-| [Function calls](function-call.md) | Host specialization, composition and output binding |
-| [Agitation](agitation.md) | Logical device, target binding, saved configuration and explicit lifecycle |
-| [Scale values](scale-values.md) | Typed lists, copying, indexing and loop state |
-| [Non Zero Array Min](non-zero-array-min.md) | A real numerical algorithm adapted without volume units |
-| [Stir a rack of samples](stir-rack.md) | The User Guide tutorial's complete program: composition, a loop, a device and a binding |
+| [Function calls](function-call.md) | Pass a value to a child Function and receive its result |
+| [Agitation](agitation.md) | Save a speed, start or stop a shaker, and compile for AutoSuite |
+| [Scale values](scale-values.md) | Copy a list and multiply each element by a factor |
+| [Non Zero Array Min](non-zero-array-min.md) | Find the smallest value above a threshold in supplied numbers |
+| [Stir a rack of samples](stir-rack.md) | Choose a speed from supplied volumes and count start requests |
 
 ## For contributors
 

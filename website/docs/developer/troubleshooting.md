@@ -6,6 +6,52 @@ those a runtime method or a class body can provoke, are on the User Guide's
 here. A diagnostic's fields are described on
 [reject a program](tutorial/reject-a-program.md#reading-a-diagnostic).
 
+## Read diagnostic fields
+
+Source and compilation validation errors derive from `DiagnosticError`. A
+diagnostic carries a code, message, program path and optional source position.
+Ordinary Python construction errors may instead raise `TypeError` or
+`ValueError`; they do not have a `diagnostics` attribute.
+
+Save this complete example to a `.py` file. The reported line is relative to
+the code below; adding lines before the class changes it.
+
+```python
+from sciloom import Function, Output, RotationalSpeed, runtime
+from sciloom.core.diagnostics import DiagnosticError
+from sciloom_autosuite import AutoSuiteTarget
+
+
+class BareNumber(Function):
+    """Assign a number where a speed is declared.
+
+    Attributes:
+        speed: A rotational speed.
+    """
+
+    speed: Output[RotationalSpeed]
+
+    @runtime
+    def run(self) -> None:
+        self.speed = 600
+
+
+try:
+    BareNumber().compile(target=AutoSuiteTarget())
+except DiagnosticError as error:
+    for diagnostic in error.diagnostics:
+        print(diagnostic.code)
+        print(diagnostic.message)
+        print(diagnostic.path)
+        print(diagnostic.source.line if diagnostic.source else "no source position")
+```
+```text
+type_mismatch
+Cannot assign integer to rotational_speed.
+$.functions[0].body[0]
+17
+```
+
 ## TypeError at host time
 
 | Message | What it proves | Fix |
@@ -103,3 +149,116 @@ Raised by the reference interpreter during a run.
 | `invalid_speed` | Rotational speed must be nonnegative. | a negative speed at run time |
 | `device_configuration` | start() requires complete saved configuration. | `start` before every required property was saved |
 | `step_limit`, `call_depth`, `execution_depth` | Reference execution exhausted its step budget. / ... exceeded its call-depth budget. / Reference evaluation exceeded the host nesting limit. | a budget in `ExecutionConfig` was exhausted |
+
+
+## Reproduce author-facing failures
+
+This complete script keeps the examples from the author lessons and advanced
+guides executable in one place. It prints only each diagnostic code; the
+[User Guide](../user-guide/troubleshooting.md) shows corrections by symptom.
+
+<!-- example: failures -->
+```python
+from sciloom import Agitator, Function, Input, Output, RotationalSpeed, Var, runtime
+from sciloom.core.diagnostics import DiagnosticError
+from sciloom_autosuite import AutoSuiteTarget
+
+
+class Counter(Function):
+    """Count calls with a runtime field."""
+    count: Var[int] = 0
+
+    @runtime
+    def run(self) -> None:
+        self.count += 1
+
+
+class BareSpeed(Function):
+    """Demonstrate a missing speed unit."""
+    speed: Output[RotationalSpeed]
+
+    @runtime
+    def run(self) -> None:
+        self.speed = 600
+
+
+class ForLoop(Function):
+    """Demonstrate unsupported iteration syntax."""
+    values: Input[list[float]]
+    total: Output[float]
+
+    @runtime
+    def run(self) -> None:
+        self.total = 0.0
+        for value in self.values:
+            self.total += value
+
+
+class UnboundShaker(Function):
+    """Declare a shaker that still needs a target binding."""
+    shaker: Agitator
+
+    @runtime
+    def run(self) -> None:
+        self.shaker.stop()
+
+
+class Limits(Function):
+    """A host list cannot enter a runtime expression.
+
+    Attributes:
+        volume: Sample volume in millilitres.
+        small: Whether the volume is below the first limit.
+    """
+
+    volume: Input[float]
+    small: Output[bool]
+
+    def __init__(self) -> None:
+        self.limits = [1.0, 5.0]
+
+    @runtime
+    def run(self) -> None:
+        self.small = self.volume < self.limits
+
+
+class Both(Function):
+    """A condition AutoSuite refuses.
+
+    Attributes:
+        a: First flag.
+        b: Second flag.
+        both: Whether both flags are set.
+    """
+
+    a: Input[bool]
+    b: Input[bool]
+    both: Output[bool]
+
+    @runtime
+    def run(self) -> None:
+        self.both = self.a and self.b
+
+
+
+for action in (
+    lambda: Counter().count,
+    lambda: BareSpeed().compile(target=AutoSuiteTarget()),
+    lambda: ForLoop().compile(target=AutoSuiteTarget()),
+    lambda: UnboundShaker().compile(target=AutoSuiteTarget()),
+    lambda: Limits().compile(target=AutoSuiteTarget()),
+    lambda: Both().compile(target=AutoSuiteTarget()),
+):
+    try:
+        action()
+    except DiagnosticError as error:
+        print(error.diagnostics[0].code)
+```
+```text
+runtime_field_read
+type_mismatch
+python_subset
+missing_resource_binding
+host_value
+unsupported_short_circuit
+```

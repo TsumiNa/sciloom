@@ -24,6 +24,30 @@ examples. Inspect rendered navigation, links, search, downloads and code folds.
 Confirm builds introduce no extra tracked changes and API/version publication
 checks still pass. Complete the plan status before review, never after merge.
 
+## Implemented coverage
+
+FAQ starts with changing speed, sharing equipment and retained state.
+Troubleshooting preserves all 66 diagnostic catalogue entries (30 distinct codes)
+under symptom-based sections. Six wrong/fixed snippets cover units, loop syntax,
+Boolean conditions, AutoSuite short-circuit rejection, output-list initialization
+and configuration before start. Tests compile the failures and reference-execute
+the corrections, including empty lists and repeated calls. Structured diagnostic
+inspection and the collected failure script now live in developer troubleshooting,
+with their executable tests retained.
+
+Reference tables distinguish source-language restrictions from AutoSuite rules.
+Class initializers, inherited declarations, logical slot sharing and runtime
+state descriptions were checked against the implementation. Current capabilities
+and glossary wording distinguish ordinary Python execution from compiled steps.
+The documentation contributor guide records how correction snippets are tested.
+
+Local validation passed: 345 package/example tests, 79 website tests, ruff,
+mypy, smoke and recipe checks, all current examples and the strict build.
+Rendered FAQ navigation, correction anchors, code blocks and reference tables
+were reviewed in the browser. The complete lesson source/download tests and
+unchanged developer cumulative tutorial tests passed. Regenerating examples and
+building the site produced no additional tracked changes.
+
 ## Commands
 
 Run from the repository root:
