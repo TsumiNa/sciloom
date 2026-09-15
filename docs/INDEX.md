@@ -46,3 +46,6 @@ Workflow notes, distilled schema conclusions and reference tools are under
 `autosuite/`. The original files and the manual are shared inside the team and
 are not in this repository; see [the directory guide](../autosuite/README.md).
 Start with the [AutoSuite reference guide](../autosuite/docs/00_REFERENCE_GUIDE.md).
+The [capability audit](../autosuite/docs/18_CAPABILITY_GAPS_AND_ZONE_PARAMETERS.md)
+compares the current compiler with the received corpus and manual, including
+runtime Zone parameters, CSV support and the evidence needed for further work.
