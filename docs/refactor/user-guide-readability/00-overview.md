@@ -88,8 +88,8 @@ inputs. Ordinary Python and constructors execute on the author's computer.
 
 ## Sequence and verification
 
-Stage 1 landed in PR #80. Stage 2 implements the complete snapshot-based User
-Guide; the final two stages retain the plan below.
+Stages 1 and 2 landed in PR #80 and PR #81. Stage 3 rewrites the advanced
+guides and author walkthroughs; the reference/help stage remains as planned.
 
 | PR | Plan | Outcome |
 | --- | --- | --- |

@@ -9,9 +9,33 @@ from pathlib import Path
 
 import pytest
 
+from examples.non_zero_array_min import NonZeroArrayMin
+from examples.scale_values import ScaleValues
+from sciloom.core.interpreter import Interpreter
 from website.tools import tutorials
 
 ROOT = Path(__file__).resolve().parents[2]
+
+
+@pytest.mark.parametrize(
+    "values,factor,expected",
+    [([1.0, 2.0, 3.0], 2.5, (2.5, 5.0, 7.5)), ([], 2.5, ()), ([1.0, 2.0], 0.0, (0.0, 0.0))],
+)
+def test_scale_walkthrough_results(values, factor, expected):
+    original = list(values)
+    snapshot = Interpreter(ScaleValues().to_ir()).run(inputs={"values": values, "factor": factor})
+    assert snapshot.outputs["result"] == expected
+    assert values == original
+
+
+@pytest.mark.parametrize(
+    "values,expected",
+    [([0.0, 4.0, 2.0, 0.0], 2.0), ([], 999999.0), ([0.0, 0.0], 999999.0), ([1e-8, 3.0], 3.0), ([1000000.0], 999999.0)],
+)
+def test_minimum_walkthrough_results(values, expected):
+    snapshot = Interpreter(NonZeroArrayMin().to_ir()).run(inputs={"values": values})
+    assert snapshot.outputs["minimum"] == expected
+
 
 # Cumulative tutorial series; see website/docs/developer/documentation.md.
 SERIES: dict[str, tutorials.Series] = {

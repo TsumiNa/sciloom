@@ -1,26 +1,43 @@
-# Configure and switch an agitator
+# Start or stop an agitator
 
-ConfigureAgitation declares a logical agitator and two runtime inputs. The target binds that resource to Heater Shaker 23.
+Use this procedure when the caller supplies both a requested speed and an
+enable/disable choice. The logical device is named `agitator`; the target maps
+it to the example AutoSuite shaker.
 
-## Run and inspect
+When the generated function is called:
+
+| Inputs | Behaviour |
+| --- | --- |
+| `shaker_speed=600*rpm`, `enabled=True` | Save the supplied speed, then start |
+| `shaker_speed=300*rpm`, `enabled=False` | Stop; leave the saved speed unchanged |
+
+Both inputs are required on either branch. The speed supplied on a stop call
+is not applied. Assigning a property saves its value; only `start()` applies
+it, and only `stop()` disables agitation.
+
+## Compile for your shaker
 
 ```bash
 uv run python examples/agitation.py
 ```
 
-When enabled is true, the procedure captures shaker_speed and explicitly starts agitation. Otherwise it stops. Assignment alone never starts the device, and zero speed is not a stop. The source's XML excerpts are abbreviated; the companion is the complete generated package. This is a focused operation from an original workflow, not a reproduction of the full experiment.
+```text
+agitation.asfp
+```
 
-The module docstring below records expected terminal output.
+Change the `zone` and `device_id` in the target to match your AutoSuite
+configuration. They identify a zone and an individual shaker, not a sample.
+The runtime inputs remain parameters of the generated function.
 
---8<-- "website/snippets/hardware-boundary.md"
+The package is written beside the source. Before equipment use, validate it
+with AutoSuite Executor on the deployment computer. Compilation does not
+operate the shaker. See [binding and validation](../user-guide/advanced/autosuite.md).
 
-## Source and generated files
+## Source and generated package
 
-[Download Python source](../_generated/examples/agitation.py)
-
-- [agitation.asfp](../_generated/examples/agitation.asfp)
+[Download Python source](../_generated/examples/agitation.py) ·
+[Download ASFP](../_generated/examples/agitation.asfp)
 
 ```python
 --8<-- "examples/agitation.py"
 ```
-
