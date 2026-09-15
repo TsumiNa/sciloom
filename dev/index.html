@@ -395,6 +395,23 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Welcome
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="" class="md-nav__link md-nav__link--active">
         
   
@@ -410,6 +427,48 @@
   
 
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-fits-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        How it fits together
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Where to go
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -2964,6 +3023,11 @@
                       
                     
                     
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
                   
                   <div class="md-sidebar__inner">
                     
@@ -2975,6 +3039,36 @@
   
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-fits-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        How it fits together
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Where to go
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -2991,7 +3085,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="61ead3cbc1051c491075c3e9e6b2036c3bff836a">61ead3cb</code>
+    · <code title="271edb24e0d3f7bb12ca053c4915351d803acb7b">271edb24</code>
   </p>
 </aside>
 
@@ -3008,20 +3102,75 @@
 semantic model and compiles it for an explicitly selected equipment target.
 Experiment authors use Python classes, assignments and control flow; contributors
 provide device contracts and target implementations.</p>
-<pre class="mermaid"><code>flowchart LR
-    Python["Python experiment"] --&gt; IR["Semantic model"]
-    IR --&gt; Target["Selected equipment target"]
-    Target --&gt; Artifact["Compiled program"]</code></pre>
+<h2 id="how-it-fits-together">How it fits together</h2>
+<pre class="mermaid"><code>flowchart TD
+    Python["Python Function instance: flow and devices"] --&gt; DSL["DSL source analysis"]
+    DSL --&gt; IR["Semantic IR"]
+    JSON["JSON v4"] &lt;--&gt; IR
+    IR --&gt; Validate["Structure and types"]
+    Validate --&gt; Resolve["Target.resolve_devices"]
+    Resolve --&gt; Specialize["Device specialization"]
+    Specialize --&gt; Config["Capabilities and definite configuration"]
+    Config --&gt; Target["Target.validate and emit"]
+    Target --&gt; Artifact["Platform artifact"]
+    Specialize --&gt; Interpreter["Reference interpreter"]
+    Future["Future Studio / xyflow editor"] &lt;-.-&gt; IR</code></pre>
+<p><strong>The author writes a Function.</strong> A Function is a Python class: its body declares
+inputs, outputs, persistent state and <em>logical</em> devices such as <code>shaker: Agitator</code>,
+and one <code>@runtime</code> method holds the procedure. The class body and <code>__init__</code>
+run as ordinary Python, configuring and composing instances; the runtime method
+is the one part that is never executed on the author's computer, only read. The <a href="user-guide/tutorial/">tutorial</a>
+builds one from scratch.</p>
+<p><strong>Source analysis produces the semantic IR.</strong> SciLoom reads the runtime method's
+source and accepts a deliberate <a href="user-guide/reference/runtime-language/">subset of Python</a>: assignments, <code>if</code>, <code>while</code>,
+calls to child Functions, device property writes and lifecycle commands, and
+compile-time queries about the bound device. Everything else is refused with a
+diagnostic that names the statement. The result is a typed, target-independent
+program that names device <em>families</em>, never a specific instrument;
+<a href="developer/advanced/extending-the-analysis/">extending the analysis</a> describes
+how the recognizers are organised.</p>
+<p><strong><a href="developer/advanced/json-interchange/">JSON v4</a> is the interchange form.</strong>
+The IR round-trips to JSON without loss, so
+a program can be stored, inspected by tools, or handed to a different target
+later. Nothing in the JSON refers to Python code; identifiers are semantic ids,
+and no implementation is ever imported from one.</p>
+<p><strong>The <a href="developer/reference/pipeline/">compiler</a> is fixed until the last two
+steps.</strong> It validates structure and types, asks the target which concrete device stands behind each logical slot
+(<code>resolve_devices</code>), specializes the program to that deployment by selecting
+device-dependent branches, then proves that every bound device supports what the
+program does with it and that every agitation start has its configuration on
+every path. Only then does the target validate and emit.</p>
+<p><strong>The <a href="developer/reference/target-contract/">target</a> owns the platform.</strong> A
+target is four members, not a plugin:
+<code>target_id</code>, <code>resolve_devices</code>, <code>validate</code> and <code>emit</code>. <code>validate</code> rejects what
+the platform cannot do and can prove; <code>emit</code> returns bytes, a media type and a
+suffix. AutoSuite is the first maintained target, shipped as the separate
+<code>sciloom-autosuite</code> package, and an independent package implements the same
+contract. The <a href="developer/">developer guide</a> shows how.</p>
+<p><strong>The <a href="developer/reference/interpreter/">reference interpreter</a> defines
+meaning, not hardware.</strong> It runs a
+specialized program to state what SciLoom semantics are: state, copying, device
+configuration and lifecycle. It does not simulate an instrument, it refuses
+native commands it cannot give meaning to, and it proves nothing about the
+platform. Compilation does not operate equipment either;
+<a href="introduction/status/#what-compilation-establishes">what compilation establishes</a>
+draws the line.</p>
+<p><strong>Devices come in two kinds, on purpose.</strong> On the author side, <code>BaseDevice</code>, a
+generic family such as <code>Agitator</code>, and an author's own subclass that adds the
+properties and commands their instrument needs. On the target side, a <em>profile</em>
+carrying deployment data, bound to a slot at compile time. Neither the IR nor
+the compiler special-cases either; the
+<a href="developer/reference/architecture/">architecture reference</a> states the rule.</p>
+<h2 id="where-to-go">Where to go</h2>
 <p>The current implementation supports Function programs, scalar and list state,
-physical rotational-speed values, device configuration and explicit start/stop.
-AutoSuite is the first maintained target, shipped as the <code>sciloom-autosuite</code>
-package. Compilation does not operate equipment.</p>
+physical rotational-speed values, device configuration and explicit start/stop.</p>
 <ul>
 <li><a href="introduction/getting-started/">Get started</a></li>
 <li><a href="user-guide/">User guide</a></li>
 <li><a href="developer/">Developer guide</a></li>
 <li><a href="examples/">Example walkthroughs</a></li>
 <li><a href="api/author/">Author API reference</a></li>
+<li><a href="introduction/glossary/">Glossary</a></li>
 </ul>
 <p>This is a development project. The handbook describes implemented behavior;
 <a href="introduction/status/">future capabilities</a> are identified separately. The

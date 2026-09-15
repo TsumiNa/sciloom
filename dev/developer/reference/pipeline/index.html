@@ -3101,7 +3101,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.2.0
-    · <code title="61ead3cbc1051c491075c3e9e6b2036c3bff836a">61ead3cb</code>
+    · <code title="271edb24e0d3f7bb12ca053c4915351d803acb7b">271edb24</code>
   </p>
 </aside>
 
@@ -3111,7 +3111,8 @@
 <p><code>Function.compile(target=...)</code> converts the instance to IR and hands it to the
 shared compiler; <code>compile_ir(program, target=...)</code> accepts directly constructed
 or JSON-loaded IR. The pipeline is fixed and target-independent until its last
-two steps.</p>
+two steps. The <a href="../../../#how-it-fits-together">home page</a> walks through the
+same diagram block by block.</p>
 <pre class="mermaid"><code>flowchart TD
     Python["Python Function instance: flow and devices"] --&gt; DSL["DSL source analysis"]
     DSL --&gt; IR["Semantic IR"]
