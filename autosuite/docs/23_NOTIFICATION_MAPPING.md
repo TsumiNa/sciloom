@@ -1,5 +1,10 @@
 # OK acknowledgement messages
 
+**Platform gate: unverified.** ASFP generation is available for inspection and
+host simulation. Physical use of the generated notification is not accepted
+until the deployment host passes the checks below. This document records no
+Executor result.
+
 ## Source evidence
 
 The primary `corpus/app/config20260909_polymerization.app` contains 12
@@ -55,3 +60,39 @@ it cannot prove that AutoSuite's UI blocks. The reference interpreter never open
 a real dialog and never supplies a response implicitly. Verify with a visible
 log marker after the dialog in Executor before relying on this task operationally.
 See [RC-QA-007](../../docs/refactor/runtime-capabilities/21-qa.md).
+
+## Host acceptance procedure
+
+Use the generated `examples/confirm_samples.asfp` in a disposable, known-good
+AutoSuite application with configured logging. Keep instruments in simulation.
+The application must call the function with a fixed sample label, so the
+subsequent `recipe/confirmed` log can be distinguished from unrelated records.
+SciLoom currently generates the function package, not this test application.
+
+Run the prepared APP with the documented simulation options from
+[the Executor reference](15_EXECUTOR_SIMULATION.md). For an interactive dialog
+probe, omit `/s` (silent mode reduces dialogs):
+
+```bat
+AutoSuiteExecutor.exe notification-probe.app /r /sim 100 /c
+```
+
+This is a host procedure to perform, not a command executed in this checkout.
+Acceptance requires all of the following, independently of reference tests:
+
+1. Before OK, the correct message remains displayed and no matching
+   `recipe/confirmed` record or later caller marker appears. Record the observed
+   wait interval; the zero-timeout field must also survive Editor re-export.
+2. One OK produces exactly one matching record and one subsequent caller marker.
+   Neither is duplicated after the dialog closes.
+3. A child Function call obeys the same ordering. A two-iteration caller shows
+   one dialog per iteration and requires two acknowledgements; the first OK
+   must not acknowledge the second dialog.
+4. Re-export preserves the OK-only/no-timeout/no-post-dialog-pause settings.
+   Record rendering checks separately for any non-ASCII or escaped text used.
+
+Keep source commit, package/target and AutoSuite versions, ASFP/APP hashes,
+re-exported task, command, observed event counts and Executor logs with the
+result. Do not infer blocking from a successful exit code, simulated wire
+evaluator, or the absence of errors alone. Production adoption remains gated
+until this evidence is recorded; failure leaves the capability unverified.

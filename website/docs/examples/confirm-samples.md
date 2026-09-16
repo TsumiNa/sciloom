@@ -25,5 +25,9 @@ there is no timeout or automatic response.
 [Download ASFP](../_generated/examples/confirm_samples.asfp)
 
 The OK task matches the original application and documented dialog settings.
-Generated-dialog blocking and later-step execution still need Executor validation
-on the AutoSuite host. See [notification rules](../user-guide/reference/runtime-language.md#request-confirmation).
+Its platform execution is **unverified**: this ASFP is available for inspection
+and simulation, and must pass host acceptance before equipment use. In Executor,
+check that no following log appears before OK, that one OK produces exactly one
+record, and that a second invocation requires a new acknowledgement. Keep the
+dialog visible during this interactive check; silent mode reduces dialogs.
+See [notification rules](../user-guide/reference/runtime-language.md#request-confirmation).

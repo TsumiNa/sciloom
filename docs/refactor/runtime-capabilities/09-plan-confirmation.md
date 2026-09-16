@@ -54,6 +54,15 @@ Ruff checks, strict website build, smoke and recipe validation, 22 CI example/
 syntax commands and `git diff --check`. Corpus audit remains read-only and passed
 for 271 files, 127 archive entries, 52 function matches and 67 templates.
 
+Review called out that a wire evaluator cannot establish real blocking or
+exactly-once continuation. The mapping now provides an explicit host acceptance
+procedure, including visible-dialog simulation, downstream markers, nested calls,
+two acknowledgements for two iterations, re-export checks and evidence recording.
+The public example labels platform execution unverified and gates equipment use
+on that acceptance. No local test is presented as an Executor result. Compilation
+remains available to generate the artifact needed for inspection and simulation,
+as the agreed plan separates these from physical-platform acceptance.
+
 ## Version
 
 Version: PATCH 0.3.5 → 0.3.6, adding explicit runtime acknowledgement under the
