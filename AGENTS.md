@@ -200,6 +200,7 @@ Run `uv run python -m examples.developer.list_ir` for direct list IR and JSON v4
 Run `uv run python -m examples.developer.reference_environment` for explicit event-history sharing.
 Run `uv run python examples/record_values.py` and `uv run python -m examples.developer.logging_ir` for typed logging and its JSON/reference events.
 Run `uv run python examples/confirm_samples.py` and `uv run python -m examples.developer.confirmation_ir` for explicit OK acknowledgement. Reference execution requires supplied responses; no response is inferred.
+Run `uv run python examples/timestamp_path.py` and `uv run python -m examples.developer.wall_time_ir` for ordered wall-clock reads. Reference execution requires an explicit aware clock; never sample host time implicitly.
 Run each independent user lesson with `uv run python examples/tutorial/start_shaker.py`,
 `uv run python examples/tutorial/control_shaker.py`,
 `uv run python examples/tutorial/choose_stirring_speed.py` and

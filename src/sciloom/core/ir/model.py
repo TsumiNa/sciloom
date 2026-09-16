@@ -226,6 +226,20 @@ class Notify(Node):
 
 
 @dataclass(frozen=True, kw_only=True)
+class ReadWallTime(Node):
+    """Read wall time once and assign its formatted text to a declared field.
+
+    The constant format is portable and locale-independent. This ordered
+    operation cannot be embedded in a value expression or duplicated by codegen.
+    """
+
+    __ir_kind__: ClassVar[str] = "ReadWallTime"
+
+    target: Reference
+    format: str
+
+
+@dataclass(frozen=True, kw_only=True)
 class ListSet(Node):
     """Update one existing element; an augmented op evaluates the index/read once."""
 
@@ -398,6 +412,7 @@ Statement = (
     Assignment
     | LogValue
     | Notify
+    | ReadWallTime
     | ListSet
     | Call
     | If

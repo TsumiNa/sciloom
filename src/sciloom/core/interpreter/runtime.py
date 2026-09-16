@@ -19,6 +19,7 @@ from sciloom.core.ir import (
     LogValue,
     Notify,
     Program,
+    ReadWallTime,
     Reference,
     ScalarType,
     StartAgitation,
@@ -33,8 +34,16 @@ from sciloom.core.ir import (
 from sciloom.core.ir.expressions import ExpressionChecker
 from sciloom.core.ir.model import Node
 from sciloom.core.ir.traversal import iter_nodes
+from .clocks import format_wall_time
 from .device_state import DeviceSession, DeviceState
-from .environment import AcknowledgementEvent, ExecutionEvent, LogEvent, ReferenceEnvironment, _require_service
+from .environment import (
+    AcknowledgementEvent,
+    ExecutionEvent,
+    LogEvent,
+    ReferenceEnvironment,
+    WallTimeEvent,
+    _require_service,
+)
 from .expressions import apply_binary, evaluate
 from .values import (
     InputValue,
@@ -167,7 +176,7 @@ class Interpreter:
             inputs: Exactly the entry's named inputs; omit for a parameterless entry.
 
         Returns:
-            An independent snapshot of outputs, internal state and device events.
+            An independent snapshot of outputs, internal state and ordered execution events.
 
         Raises:
             ExecutionError: Inputs, operations or indices are invalid, state is
@@ -258,6 +267,21 @@ class Interpreter:
                     fail("acknowledgement_required", "An explicit OK response is required to continue.", statement)
                 self._record_event(
                     AcknowledgementEvent(node_id=statement.node_id, source=statement.source, message=message)
+                )
+            elif isinstance(statement, ReadWallTime):
+                clock = _require_service(self.environment.wall_clock, "wall_clock", statement)
+                try:
+                    wall_text = format_wall_time(clock.now(), statement.format)
+                except Exception as error:
+                    fail("wall_clock_error", f"Wall-time read failed: {error}", statement)
+                self._write(statement.target, wall_text, frame)
+                self._record_event(
+                    WallTimeEvent(
+                        node_id=statement.node_id,
+                        source=statement.source,
+                        format=statement.format,
+                        value=wall_text,
+                    )
                 )
             elif isinstance(statement, ListSet):
                 # Plain assignment evaluates the RHS first. Augmented assignment

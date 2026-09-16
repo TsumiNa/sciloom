@@ -19,6 +19,7 @@ to the repository root.
 | [Numeric operations](numeric-operations.md) | Calculate whole portions and an absolute volume difference |
 | [Record values](record-values.md) | Log supplied sample labels and typed volumes |
 | [Confirm samples](confirm-samples.md) | Require OK before recording a ready sample |
+| [Timestamp a filename](timestamp-path.md) | Capture local wall time once and build a filename |
 
 ## For contributors
 
@@ -29,5 +30,6 @@ to the repository root.
 | [Reference environment](reference-environment.md) | Shared event history and independent session state |
 | [Typed log IR](logging-ir.md) | Capture a quantity in an immutable event after JSON restoration |
 | [Confirmation IR](confirmation-ir.md) | Consume an explicit response after JSON restoration |
+| [Wall-time IR](wall-time-ir.md) | Supply an aware clock and inspect an immutable read event |
 | [Independent device](demo-device.md) | A new property, command and target outside core |
 | [Portable agitation](portable-agitation.md) | Device specialization and rebinding the same authored JSON |

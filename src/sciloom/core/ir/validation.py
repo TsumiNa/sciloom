@@ -25,6 +25,7 @@ from .model import (
     Node,
     Notify,
     Program,
+    ReadWallTime,
     StartAgitation,
     Statement,
     StopAgitation,
@@ -33,6 +34,7 @@ from .model import (
     While,
 )
 from .schema import _convert
+from .time_format import validate_wall_time_format
 from .traversal import iter_nodes
 from .types import ListType, ScalarType, ValueType, is_assignable
 
@@ -120,6 +122,14 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                 message_type = expression(stmt.message, function, f"{p}.message")
                 if message_type is not None and message_type != ScalarType.TEXT:
                     report("notification_type", "Notification messages must be text.", f"{p}.message", stmt)
+            elif isinstance(stmt, ReadWallTime):
+                target_type = expression(stmt.target, function, f"{p}.target")
+                if target_type is not None and target_type != ScalarType.TEXT:
+                    report("wall_time_type", "Wall-time results require a text destination.", f"{p}.target", stmt)
+                try:
+                    validate_wall_time_format(stmt.format)
+                except ValueError as error:
+                    report("wall_time_format", str(error), f"{p}.format", stmt)
             elif isinstance(stmt, ListSet):
                 target = expression(stmt.target, function, f"{p}.target")
                 index = expression(stmt.index, function, f"{p}.index")

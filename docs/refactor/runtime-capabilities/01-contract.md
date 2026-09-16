@@ -11,8 +11,12 @@ section 4's quantity interfaces and section 5's numeric operations. Later sectio
 contracts until their owning stage lands.
 Stage 5 adds section 2's environment injection and event history. Its concrete
 service setup examples remain target interfaces until the listed consuming stage.
-Stage 6 implements section 6's log call, LogValue and LogEvent; notify remains
-pending stage 7. The runnable logging examples and tests verify the log contract.
+Stage 6 implements section 6's log call, LogValue and LogEvent. Stage 7 implements
+section 7's notify call, Notify and explicit acknowledgement service. Stage 8
+supplies failure probes while retaining the unverified Executor gate. Stage 9
+implements section 8's now_text call, ReadWallTime and explicit wall clock.
+Their runnable examples and tests verify reference semantics and static mappings;
+none establishes Executor acceptance. Stages 10–17 remain target contracts.
 
 Experiment authors import from `sciloom`; targets from `sciloom_autosuite` or an
 independent package. `flow` declares author vocabulary; `dsl` alone analyzes
@@ -737,6 +741,66 @@ uses platform-local time; the reference environment explicitly supplies time and
 zone. At 2026-09-16 14:05:06 the shown format returns `2026-09-16_140506`.
 No datetime value type, locale formats, uniqueness guarantee or file-collision
 handling. Wall time is separate from monotonic elapsed time.
+
+Stage 9's author marker lives in `sciloom.flow.timing` and is lazily re-exported
+from `sciloom`. It accepts one positional format or `format=`. The format may be
+a literal, module/closure string constant or ordinary host-time `self` attribute;
+runtime fields and arbitrary Python evaluation are not accepted. The call must
+occupy the entire RHS of an assignment to one declared text field. A nested call,
+discarded result, tuple/index destination or augmented assignment is rejected.
+
+The stable IR kind is `ReadWallTime`, with `target: Reference` and `format: str`.
+This is a statement, not a value expression: it cannot be duplicated or moved
+while planning surrounding expressions. Shared validation checks destination
+ownership/type and the format subset; dangling percent signs and other directives
+are errors. Empty/literal-only formats still perform one clock read.
+
+```python
+from sciloom.core.ir import ReadWallTime, Reference
+
+read = ReadWallTime(
+    node_id="read-time",
+    target=Reference(node_id="stamp-target", symbol_id="stamp"),
+    format="%Y-%m-%d_%H%M%S",
+)
+```
+
+The destination must be declared as TEXT in the containing FunctionIR.
+ReferenceEnvironment gains `wall_clock: WallClock | None = None`, with
+WallClock and VirtualWallClock exported from `sciloom.core.interpreter`.
+
+```python
+from datetime import datetime, timezone
+from sciloom.core.interpreter import Interpreter, ReferenceEnvironment, VirtualWallClock
+
+clock = VirtualWallClock(datetime(2026, 9, 16, 14, 5, 6, tzinfo=timezone.utc))
+environment = ReferenceEnvironment(wall_clock=clock)
+result = Interpreter(program, environment=environment).run()
+# For an output field named stamp and the ReadWallTime format above:
+assert result.outputs["stamp"] == "2026-09-16_140506"
+```
+
+A missing service raises `missing_environment_service`. A failed clock read or
+invalid/naive returned datetime raises `wall_clock_error` at the operation,
+without writing its target or emitting a success event. No retry or second read
+is attempted. Successful reads append a frozen `WallTimeEvent(node_id, source,
+format, value)` after assignment; fields are keyword-only, source is optional
+SourceSpan and the other fields are strings. Keeping the formatted text in the
+event avoids retaining caller-owned timezone objects. Earlier completed effects
+survive later failures.
+
+The reference formatter uses explicit numeric fields rather than locale or
+platform strftime behavior: month/day/hour/minute/second have two digits, year
+has at least four. It uses the supplied instant's timezone without converting
+to the host's timezone. VirtualWallClock accepts only aware datetimes and a bad
+set leaves the prior instant unchanged. Stage 10 adds the separate monotonic
+service; stage 9 introduces no placeholder timer implementation.
+
+AutoSuite emits one Set Variable assignment whose RHS is DateTime with the
+encoded constant format. Later expressions read the destination; loops/calls
+execute the read where authored. Text literal/XML escaping remain separate.
+Static task shape and single-evaluation scheduling do not establish Executor
+formatting, local-time/DST behavior or platform calendar limits.
 
 ## 9. Wait and timer (A08, stage 10)
 

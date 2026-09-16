@@ -27,6 +27,7 @@ from sciloom.core.ir import (
     ValueType,
 )
 from sciloom.flow import text
+from sciloom.flow.timing import now_text
 from sciloom.units import Duration, RotationalSpeed, Volume
 from .context import LoweringContext
 
@@ -83,6 +84,8 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
         return ListLength(**metadata, value=length_value)
     if isinstance(node, ast.Call):
         marker = context.static_object(node.func)
+        if marker is now_text:
+            context.fail("external_operation", "Assign now_text(...) to one text field before using its result.", node)
         for numeric_intrinsic, operation in NUMERIC_OPERATIONS:
             if marker is numeric_intrinsic:
                 if len(node.args) != 1 or node.keywords or isinstance(node.args[0], ast.Starred):
