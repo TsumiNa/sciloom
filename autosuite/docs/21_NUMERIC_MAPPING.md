@@ -40,3 +40,19 @@ limits. The new stage refuses floating round at every input range; no claim of
 round equivalence is derived from the spelling alone. Existing numeric v4
 programs and serialized baselines are unchanged. Track remaining numerical
 questions in [RC-QA-004](../../docs/refactor/runtime-capabilities/21-qa.md).
+
+## Combined volume calculation
+
+The project-authored `examples/aspiration_chunk.py` adapts F31 `Get Aspirate
+Chunk` and F30's aligned group boundary. F31 computes usable volume as
+`syringe_vol - airgap_vol - extra_vol - safe_vol`, packs whole or partial
+requests, and adds extra only for nonempty packed work. The retained tolerance
+is 1e-12 m³. F30 supplies the `floor` boundary shown above.
+
+The adaptation prevalidates all volume entries, returns an explicit `valid`
+Boolean instead of the vendor global error latch, and defines zero outputs for
+empty/no-work input. It does not port the liquid-transfer tasks or the original
+error handler. Source/JSON reference tests cover partial fills, resume, exact and
+tolerance boundaries, aligned groups, invalid input and repeated calls. A
+read-only corpus test checks both formulas. Native volume-list access remains
+rejected by the runtime-guard gate; no ASFP or hardware-equivalence claim is made.

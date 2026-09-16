@@ -1,0 +1,218 @@
+{
+  "device_types": [],
+  "entry_function_id": "recipe",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "columns": [
+            {
+              "default": null,
+              "index": {
+                "kind": "Binary",
+                "left": {
+                  "kind": "Reference",
+                  "node_id": "header-choice",
+                  "source": null,
+                  "symbol_id": "reagent_index"
+                },
+                "node_id": "header-column",
+                "op": "+",
+                "right": {
+                  "kind": "Literal",
+                  "node_id": "header-offset",
+                  "source": null,
+                  "type": "integer",
+                  "value": 1
+                },
+                "source": null
+              },
+              "kind": "CsvColumn",
+              "type": "text",
+              "unit": null
+            }
+          ],
+          "error_policy": "raise",
+          "header": false,
+          "kind": "ReadCsv",
+          "mode": "row",
+          "node_id": "heading",
+          "path": {
+            "kind": "Reference",
+            "node_id": "header-path",
+            "source": null,
+            "symbol_id": "path"
+          },
+          "row": {
+            "kind": "Literal",
+            "node_id": "header-row",
+            "source": null,
+            "type": "integer",
+            "value": 0
+          },
+          "source": null,
+          "targets": [
+            {
+              "kind": "Reference",
+              "node_id": "heading-result",
+              "source": null,
+              "symbol_id": "reagent_name"
+            }
+          ]
+        },
+        {
+          "columns": [
+            {
+              "default": {
+                "kind": "Literal",
+                "node_id": "id-default",
+                "source": null,
+                "type": "text",
+                "value": ""
+              },
+              "index": {
+                "kind": "Literal",
+                "node_id": "id-column",
+                "source": null,
+                "type": "integer",
+                "value": 0
+              },
+              "kind": "CsvColumn",
+              "type": "text",
+              "unit": null
+            },
+            {
+              "default": {
+                "kind": "Literal",
+                "node_id": "zero-volume",
+                "source": null,
+                "type": "volume",
+                "value": 0
+              },
+              "index": {
+                "kind": "Binary",
+                "left": {
+                  "kind": "Reference",
+                  "node_id": "data-choice",
+                  "source": null,
+                  "symbol_id": "reagent_index"
+                },
+                "node_id": "data-column",
+                "op": "+",
+                "right": {
+                  "kind": "Literal",
+                  "node_id": "data-offset",
+                  "source": null,
+                  "type": "integer",
+                  "value": 1
+                },
+                "source": null
+              },
+              "kind": "CsvColumn",
+              "type": "volume",
+              "unit": {
+                "kind": "Literal",
+                "node_id": "mL",
+                "source": null,
+                "type": "volume",
+                "value": 1e-06
+              }
+            }
+          ],
+          "error_policy": "raise",
+          "header": true,
+          "kind": "ReadCsv",
+          "mode": "columns",
+          "node_id": "table",
+          "path": {
+            "kind": "Reference",
+            "node_id": "data-path",
+            "source": null,
+            "symbol_id": "path"
+          },
+          "row": null,
+          "source": null,
+          "targets": [
+            {
+              "kind": "Reference",
+              "node_id": "ids-result",
+              "source": null,
+              "symbol_id": "ids"
+            },
+            {
+              "kind": "Reference",
+              "node_id": "volumes-result",
+              "source": null,
+              "symbol_id": "volumes"
+            }
+          ]
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "ReadReagentTable",
+      "node_id": "recipe",
+      "source": null,
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "path",
+          "node_id": "path",
+          "owner_id": "recipe",
+          "role": "input",
+          "source": null,
+          "type": "text"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "reagent_index",
+          "node_id": "reagent_index",
+          "owner_id": "recipe",
+          "role": "input",
+          "source": null,
+          "type": "integer"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "reagent_name",
+          "node_id": "reagent_name",
+          "owner_id": "recipe",
+          "role": "output",
+          "source": null,
+          "type": "text"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "ids",
+          "node_id": "ids",
+          "owner_id": "recipe",
+          "role": "output",
+          "source": null,
+          "type": {
+            "element_type": "text",
+            "kind": "ListType"
+          }
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "volumes",
+          "node_id": "volumes",
+          "owner_id": "recipe",
+          "role": "output",
+          "source": null,
+          "type": {
+            "element_type": "volume",
+            "kind": "ListType"
+          }
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": []
+}

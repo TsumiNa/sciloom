@@ -1,7 +1,8 @@
 # Example walkthroughs
 
-Every walkthrough includes the actual runnable source, its expected result and
-same-name generated companions. Use a source checkout to run the listed commands.
+Every walkthrough includes the actual runnable source and its expected result.
+Generated companions are included where the target can produce them; gated
+examples show the current diagnostic instead. Use a source checkout to run the listed commands.
 Downloads are learning references; generated JSON records source paths relative
 to the repository root.
 
@@ -26,6 +27,9 @@ to the repository root.
 | [Resolve sample locations](resolve-locations.md) | Combine named Zones and count distinct wells |
 | [Visit sample locations](visit-locations.md) | Visit one well at a time using a declared Zone loop variable |
 | [Label selected wells](label-wells.md) | Write a sample identifier to selected wells and read it back |
+| [Run a selected shaker](stir-selected-location.md) | Configure, select, start, wait and stop; native emission remains gated |
+| [Label wells and append a log](label-sample-log.md) | Combine confirmation, time, ordered metadata changes and file writes |
+| [Calculate a volume chunk](aspiration-chunk.md) | Calculate capacity, partial fills and a caller-supplied resume point |
 
 ## For contributors
 
@@ -46,3 +50,5 @@ to the repository root.
 | [Well property IR](well-properties-ir.md) | Supply an explicit metadata store and inspect immutable read/write events |
 | [Independent device](demo-device.md) | A new property, command and target outside core |
 | [Portable agitation](portable-agitation.md) | Device specialization and rebinding the same authored JSON |
+| [Complete workflows from IR](runtime-workflows-ir.md) | Three independent builders, JSON restoration and explicit reference services |
+| [Volume chunk after JSON](aspiration-chunk-ir.md) | Source-derived quantity arithmetic and repeated calls after restoration |

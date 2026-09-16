@@ -19,6 +19,12 @@ ancestry. For example, the local `Heater Shaker 23` Zone selects well 27 on
 ISynth-2 (device 1.1), whose ancestor is IndividualShaker 23. Zone index, well
 identity, local device address and controller identity are different facts.
 
+Stage 17's real-APP check also found that the Zone named `Heater Shaker 24`
+belongs to controller 21, while `Heater Shaker 21` belongs to controller 24 in
+this supplied APP. No rename or correction is inferred: the names are not
+binding evidence. The new author example uses the verified 23 and 22 profiles
+and still validates their ancestry from the caller's APP.
+
 ## Implemented deployment checks
 
 `AutoSuiteAgitatorSelection` contains nonempty, same-profile individual shaker

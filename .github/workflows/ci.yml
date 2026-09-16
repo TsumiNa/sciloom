@@ -64,6 +64,11 @@ jobs:
       - run: uv run python examples/timestamp_path.py
       - run: uv run python examples/timed_agitation.py
       - run: uv run python examples/read_reagent_table.py
+      - run: uv run python examples/stir_selected_location.py
+      - run: uv run python examples/label_sample_log.py
+      - run: uv run python examples/aspiration_chunk.py
+      - run: uv run python -m examples.developer.runtime_workflows_ir
+      - run: uv run python -m examples.developer.aspiration_chunk_ir
       - run: uv run python -m examples.developer.csv_read_ir
       - run: uv run python examples/append_sample_log.py
       - run: uv run python -m examples.developer.csv_append_ir

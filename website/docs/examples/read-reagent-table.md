@@ -28,6 +28,8 @@ AutoSuite CSV compilation awaits parser and failure validation.
 ```
 
 This example verifies the compilation diagnostic and produces no ASFP. Its flow
-is covered by reference tests. Developers can run the [CSV IR example](csv-read-ir.md)
-to inspect data using an explicit in-memory file service.
+is covered by reference tests. Developers can run the complete
+[workflow IR example](runtime-workflows-ir.md) to obtain the heading and both
+lists with an explicit in-memory file service. The smaller
+[CSV IR example](csv-read-ir.md) focuses on status and fallback handling.
 See the [CSV reference](../user-guide/reference/csv.md) for read and error rules.

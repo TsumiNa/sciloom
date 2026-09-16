@@ -65,11 +65,10 @@ handwritten JSON model was rejected because it duplicates the typed definitions.
 
 ## Stage status and sequence
 
-Stages 0–12 merged as PRs #85–97. Stage 13 is implementing Zone values and a
-read-only location directory; stages 14–17 remain pending. The stage 8 Executor
-gate remains unverified.
-Update this table in the stage that implements an
-outcome and record its PR and verification.
+Stages 0–16 merged as PRs #85–101. Stage 17 completes the combined workflows,
+reference/JSON checks and handbook status matrix in this closing PR. Its merge
+still follows the review gate below. The stage 8 Executor gate remains unverified;
+reference completeness does not remove any native rejection.
 
 | Stage | Plan | Outcome | Status |
 | --- | --- | --- | --- |
@@ -89,8 +88,8 @@ outcome and record its PR and verification.
 | 13 | [Zone values](15-plan-zone-values.md) | A03 values and read-only deployment directory | Merged, PR #98 |
 | 14 | [Zone traversal](16-plan-zone-traversal.md) | A04 indexing and sequential fragments | Merged, PR #99 |
 | 15 | [Well properties](17-plan-well-properties.md) | A07 stored text properties | Merged, PR #100 |
-| 16 | [Dynamic locations](18-plan-dynamic-locations.md) | A03 candidate binding and physical state | In progress |
-| 17 | [Integrated examples](19-plan-integration.md) | Three complete workflows and handbook coverage | Pending |
+| 16 | [Dynamic locations](18-plan-dynamic-locations.md) | A03 candidate binding and physical state | Merged, PR #101; native emission gated |
+| 17 | [Integrated examples](19-plan-integration.md) | Three complete workflows, aspiration arithmetic and handbook coverage | Implemented in this closing PR; review/merge gate applies |
 
 For each stage: review, address feedback, run latest-head checks, squash merge,
 confirm remote MERGED state, then branch from updated main. Do not begin a later

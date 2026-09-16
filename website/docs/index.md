@@ -22,7 +22,7 @@ flowchart TD
     IR --> Validate["Structure and types"]
     Validate --> Resolve["Target.resolve_devices"]
     Resolve --> Specialize["Device specialization"]
-    Specialize --> Config["Capabilities, device configuration and timer starts"]
+    Specialize --> Config["Capabilities, configuration, timer starts and location scopes"]
     Config --> Target["Target.validate and emit"]
     Target --> Artifact["Platform artifact"]
     Specialize --> Interpreter["Reference interpreter"]

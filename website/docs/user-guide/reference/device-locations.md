@@ -56,7 +56,7 @@ target = AutoSuiteTarget(
     devices={
         "shaker": AutoSuiteAgitatorSelection(candidates=(
             AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="23"),
-            AutoSuiteIndividualShaker(zone="Heater Shaker 24", device_id="24"),
+            AutoSuiteIndividualShaker(zone="Heater Shaker 22", device_id="22"),
         )),
     },
 )
@@ -72,4 +72,7 @@ A single candidate is allowed. An ordinary fixed binding remains useful for
 programs without `at()`. Supplying `layout` for that binding adds the same
 ancestry check; it does not alter the emitted fixed-device program.
 
-For an executable reference example, see [physical device snapshots](../../examples/device-locations-ir.md).
+The [complete author example](../../examples/stir-selected-location.md) adds a
+five-second wait and an APP validation command. For reference execution, see
+[the complete workflows](../../examples/runtime-workflows-ir.md) or
+[physical device snapshots](../../examples/device-locations-ir.md).

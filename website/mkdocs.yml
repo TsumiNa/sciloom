@@ -124,6 +124,11 @@ nav:
       - Label selected wells: examples/label-wells.md
       - Well property IR: examples/well-properties-ir.md
       - Physical device snapshots: examples/device-locations-ir.md
+      - Run a selected shaker: examples/stir-selected-location.md
+      - Label wells and append a log: examples/label-sample-log.md
+      - Calculate a volume chunk: examples/aspiration-chunk.md
+      - Complete workflows from IR: examples/runtime-workflows-ir.md
+      - Volume chunk after JSON: examples/aspiration-chunk-ir.md
       - Independent device: examples/demo-device.md
       - Portable agitation: examples/portable-agitation.md
   - API Reference:
