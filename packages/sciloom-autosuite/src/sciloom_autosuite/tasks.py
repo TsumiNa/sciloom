@@ -20,6 +20,7 @@ from sciloom.core.ir import (
     Notify,
     ReadCsv,
     ReadWallTime,
+    ReadWellProperty,
     ScalarType,
     StartAgitation,
     StartTimer,
@@ -28,6 +29,7 @@ from sciloom.core.ir import (
     Wait,
     WaitUntil,
     While,
+    WriteWellProperty,
 )
 from .agitation import agitation_task
 from .context import CodegenContext
@@ -36,6 +38,7 @@ from .expressions import checked_read, materialize, plan_expression
 from .parameters import functiondata
 from .primitives import SequentialZone, macro, set_variable
 from .timing import timing_task
+from .well_properties import property_tasks
 from .xml import XmlNode, xml_node as _xml
 
 
@@ -57,6 +60,8 @@ def statements(
                     array=isinstance(value.type, ListType),
                 )
             )
+        elif isinstance(statement, (ReadWellProperty, WriteWellProperty)):
+            result.extend(property_tasks(context, function, statement, tag))
         elif isinstance(statement, LogValue):
             captured = []
             for operand in (statement.value, statement.category, statement.stream):

@@ -68,6 +68,16 @@ Both are additive v4 kinds. The [direct traversal example](../../examples/zone-t
 shows JSON round trips, grouping and reference execution. AutoSuite only accepts
 size-one traversal until its index/divisibility failure checks are verified.
 
+## Stored well metadata
+
+`WellPropertySpec(name, type)` describes a text user property. `ReadWellProperty`
+binds a single text destination and optional default; `WriteWellProperty` applies
+one captured value to a Zone. These are ordered statements, not expressions,
+measurement getters or device configuration operations. Their additive JSON v4
+records contain no Python declarations. The
+[direct property example](../../examples/well-properties-ir.md) uses explicit
+location and property services after JSON restoration.
+
 ## Typed CSV statements
 
 `ReadCsv` is an ordered, result-producing statement. `CsvReadMode` selects one

@@ -17,7 +17,9 @@ supplies failure probes while retaining the unverified Executor gate. Stage 9
 implements section 8's now_text call, ReadWallTime and explicit wall clock.
 Stage 10 implements section 9's Function-owned timers, waits and virtual clock.
 Their runnable examples and tests verify reference semantics and static mappings;
-none establishes Executor acceptance. Stages 11–17 remain target contracts.
+none establishes Executor acceptance. Stages 11–15 implement CSV reads/appends,
+Zone values, traversal and stored well properties. Their target-specific gates
+are recorded in each section; stages 16–17 remain pending.
 
 Experiment authors import from `sciloom`; targets from `sciloom_autosuite` or an
 independent package. `flow` declares author vocabulary; `dsl` alone analyzes
@@ -318,7 +320,7 @@ depend on author classes. The earlier proposal for WellLocation, tuple-valued
 selections and describe() is superseded. Controller ancestry belongs to the
 target's AutoSuiteLayout, separately from the generic location directory.
 
-The following WellProperties interface remains a stage-15 target, in
+The following WellProperties interface is implemented in stage 15, in
 `sciloom.core.interpreter.properties`. Identifiers are data, never import paths.
 
 ```python
@@ -346,7 +348,7 @@ assigns the same captured text to every selected identity. The IR handler checks
 membership in the location directory before calling the store. Its snapshots
 are detached/read-only; independent instances do not share property values.
 
-Example runnable after stage 15:
+Service setup available in stage 15 (supply a complete label_program):
 
 ```python
 from sciloom.core.interpreter import (
@@ -1450,6 +1452,65 @@ unless a default is explicitly supplied. Writes capture one value and assign it
 to all selected wells. An empty write affects no wells. Property stores key by
 well identity. This is metadata, not a configured device getter or measurement.
 No per-well array write, native read-only measured properties or arbitrary getter.
+
+### Stage-15 concrete property contract
+
+The interfaces below are implemented in stage 15. A declaration is immutable,
+has a nonempty static name, and accepts exactly `str` as its value type. Host calls
+to `get` or indexed assignment raise TypeError. Reads occupy an entire assignment
+RHS; indexed reads and augmented writes are not part of this interface.
+
+```python
+from sciloom.core.ir import (
+    ReadWellProperty, WriteWellProperty, WellPropertySpec, ScalarType,
+)
+
+spec = WellPropertySpec(name="sample_ID", type=ScalarType.TEXT)
+# Each expression/reference below belongs to the containing FunctionIR.
+write = WriteWellProperty(
+    node_id="label", property=spec, zone=selected_zone, value=label_expression,
+)
+read = ReadWellProperty(
+    node_id="read-label", property=spec, zone=single_well,
+    target=result_reference, default=fallback_expression,
+)
+# Omitting default (None in IR) makes the read strict.
+```
+
+All three frozen records have stable wire identifiers equal to these initial
+class names. They add to JSON v4 without changing existing records. Property
+metadata is data, not a device contract or an executable Python object.
+
+Indexed assignment captures the text RHS first and the Zone second, following
+Python assignment order. Reads capture the Zone, then any supplied default, once
+and eagerly. A default handles only an absent property or a non-text stored value;
+it never masks a bad selection, unknown well, missing service or argument error.
+The read validates exactly one known well before consulting the property store.
+A write validates every selected identity before any update, then writes the same
+captured text to all wells. Empty writes skip the adapter and are successful no-ops, but still require
+the explicitly supplied location and property services.
+
+`ReferenceEnvironment(properties=WellProperties(...), locations=...)` is the
+execution boundary. The service interface in section 2 remains authoritative.
+The built-in store accepts only text values and validates a whole write before
+mutation; a custom subclass can report incompatible external data with TypeError.
+Unknown well identities are rejected by the interpreter. Sharing an environment
+shares its property store; independently created stores and sessions do not share
+state implicitly. `snapshot()` returns a detached read-only mapping. Each completed
+read/write adds an immutable `WellPropertyReadEvent`/`WellPropertyWriteEvent` with
+node/source, captured Zone, name, type and text value; read events also record
+`used_default`. Failed operations add no success event, and earlier effects remain.
+
+The AutoSuite writer uses the primary APP's SetProperty single-value mode (`0`),
+with captured text and Zone variables, user-property mode and text result type.
+An outer nonempty-Zone branch makes empty writes no-ops. Defaulted reads use the
+observed GetProperty fallback mode (`1`). They compile only where conservative
+local data flow proves a single well: for example the unmodified target of a
+size-one Zone loop. Assignments, call outputs and loop mutations invalidate facts;
+branch facts intersect and zero-iteration loops cannot create guarantees. No
+interprocedural cardinality promise is inferred. Strict reads and unproven
+cardinality remain target diagnostics pending verified failure propagation.
+This is static mapping plus documented vendor semantics, not Executor acceptance.
 
 ## 15. Dynamic device location (A03, stage 16)
 

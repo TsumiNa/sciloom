@@ -1,5 +1,12 @@
 # FAQ
 
+## How do I keep a sample label with a well?
+
+Declare `self.sample_label = WellProperty("sample_ID", str)` in `__init__`, then
+write `self.sample_label[self.rack] = self.label` in `@runtime`. Every selected
+well receives the same text. A later change to `label` does not change stored
+metadata. See [stored well labels](reference/well-properties.md) for reads and defaults.
+
 ## How do I change the stirring speed?
 
 For a fixed speed, change `300 * rpm` in the source and compile again

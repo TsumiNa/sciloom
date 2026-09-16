@@ -19,6 +19,7 @@ from sciloom.core.ir import (
     Program,
     ReadCsv,
     ReadWallTime,
+    ReadWellProperty,
     StartAgitation,
     StartTimer,
     Statement,
@@ -26,6 +27,7 @@ from sciloom.core.ir import (
     Wait,
     WaitUntil,
     While,
+    WriteWellProperty,
 )
 from .context import CodegenContext
 from .encoding import literal_value
@@ -69,6 +71,8 @@ def validate_timer_scopes(program: Program) -> tuple[Diagnostic, ...]:
                     LogValue,
                     Notify,
                     ReadWallTime,
+                    ReadWellProperty,
+                    WriteWellProperty,
                     AppendCsv,
                     ReadCsv,
                     StartAgitation,

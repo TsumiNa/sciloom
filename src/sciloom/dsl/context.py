@@ -18,6 +18,7 @@ from sciloom.devices.base import BaseDevice
 from sciloom.devices.declarations import device_contract
 from sciloom.flow.device_slots import DeviceReference
 from sciloom.flow.function import Function
+from sciloom.flow.properties import WellProperty
 from sciloom.units import DurationUnit, SpeedUnit, VolumeUnit
 
 _MISSING = object()
@@ -101,6 +102,19 @@ class LoweringContext:
             return self.source.static_names.get(node.id)
         if isinstance(node, ast.Attribute):
             return inspect.getattr_static(self.static_object(node.value), node.attr, None)
+        return None
+
+    def well_property(self, node: ast.AST) -> WellProperty | None:
+        """Recognize a fixed self.<declaration> without executing descriptors."""
+        if (
+            isinstance(node, ast.Attribute)
+            and isinstance(node.value, ast.Name)
+            and node.value.id == "self"
+            and node.attr not in self.instance.model_fields
+        ):
+            declaration = self.host_attribute(node.attr)
+            if type(declaration) is WellProperty:
+                return declaration
         return None
 
     def device_member(self, node: ast.AST) -> tuple[DeviceReference, str] | None:

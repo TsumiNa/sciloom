@@ -36,6 +36,7 @@ from .model import (
     Program,
     ReadCsv,
     ReadWallTime,
+    ReadWellProperty,
     Reference,
     Resource,
     StartAgitation,
@@ -54,7 +55,9 @@ from .model import (
     Wait,
     WaitUntil,
     WellName,
+    WellPropertySpec,
     While,
+    WriteWellProperty,
     ZoneCombine,
     ZoneFind,
     ZoneGet,
@@ -65,6 +68,9 @@ from .types import ListType, ScalarType, ValueType, ZoneType
 from .validation import validate
 
 __all__ = [
+    "WellPropertySpec",
+    "ReadWellProperty",
+    "WriteWellProperty",
     "ForEachZone",
     "ZoneGet",
     "ZoneType",

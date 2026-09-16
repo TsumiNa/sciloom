@@ -15,6 +15,7 @@ from .agitation import AutoSuiteIndividualShaker
 from .codegen import lower_asfp
 from .timing import validate_timer_scopes
 from .validation import validate_array_outputs, validate_runtime_guards
+from .well_properties import validate_well_properties
 from .xml import AutoSuiteVersion
 
 
@@ -100,6 +101,7 @@ class AutoSuiteTarget:
         errors.extend(validate_array_outputs(program))
         errors.extend(validate_runtime_guards(program))
         errors.extend(validate_timer_scopes(program))
+        errors.extend(validate_well_properties(program))
         completed: set[str] = set()
         for root in calls:
             if root in completed:

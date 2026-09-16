@@ -31,6 +31,7 @@ from .model import (
     Program,
     ReadCsv,
     ReadWallTime,
+    ReadWellProperty,
     StartAgitation,
     StartTimer,
     Statement,
@@ -41,6 +42,7 @@ from .model import (
     Wait,
     WaitUntil,
     While,
+    WriteWellProperty,
 )
 from .schema import _convert
 from .time_format import validate_wall_time_format
@@ -161,6 +163,32 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                 validate_csv(stmt, function, p, checker)
             elif isinstance(stmt, AppendCsv):
                 validate_append(stmt, function, p, checker)
+            elif isinstance(stmt, (ReadWellProperty, WriteWellProperty)):
+                if not stmt.property.name:
+                    report("well_property_name", "Well-property names must be nonempty.", f"{p}.property.name", stmt)
+                if stmt.property.type != ScalarType.TEXT:
+                    report("well_property_type", "Only text user properties are supported.", f"{p}.property.type", stmt)
+                zone_type = expression(stmt.zone, function, f"{p}.zone")
+                if zone_type is not None and not isinstance(zone_type, ZoneType):
+                    report("zone_type", "Well properties require a Zone selection.", f"{p}.zone", stmt)
+                values = (
+                    (("value", stmt.value),)
+                    if isinstance(stmt, WriteWellProperty)
+                    else (
+                        (("target", stmt.target),)
+                        if stmt.default is None
+                        else (("target", stmt.target), ("default", stmt.default))
+                    )
+                )
+                for label, value in values:
+                    actual = expression(value, function, f"{p}.{label}")
+                    if actual is not None and actual != ScalarType.TEXT:
+                        report(
+                            "well_property_type",
+                            "Well-property values and destinations require text.",
+                            f"{p}.{label}",
+                            stmt,
+                        )
             elif isinstance(stmt, ReadWallTime):
                 target_type = expression(stmt.target, function, f"{p}.target")
                 if target_type is not None and target_type != ScalarType.TEXT:

@@ -15,6 +15,11 @@ No measured/configuration getter, readonly native telemetry, per-well arrays or 
 
 ## Acceptance
 
+The [concrete property contract](01-contract.md#stage-15-concrete-property-contract)
+fixes the IR records, capture order, default boundary, reference store/events and
+conservative AutoSuite cardinality gate before implementation. Native single-value
+write mode comes from the primary APP; defaulted single-well reads come from F45/F46.
+
 Test single-well strict read, missing/wrong-type default behavior, empty/multiwell writes, captured values and well/session isolation. Check error guarding and native property names/default fields against evidence. Run shared checks.
 
 Apply the [shared acceptance and review gate](00-overview.md#acceptance-shared-by-code-stages).
@@ -22,10 +27,26 @@ Update stage status and relevant handbook/examples when implemented. Complete
 review, fixes, latest checks and squash merge before starting the next stage.
 Consult [evidence](20-evidence.md) and collect new uncertainties in [Q&A](21-qa.md).
 
+## Implementation and verification
+
+Implemented: immutable host WellProperty declarations, additive v4 property specs
+and ordered read/write nodes, explicit reference store/directory and immutable
+events, typed DSL lowering, consumer coverage and AutoSuite user-property tasks.
+Local fixed-point analysis proves single-well reads across branches/loops without
+assuming prior calls; strict or unproven reads remain target diagnostics. The
+author/direct-IR examples include generated ASFP/JSON companions. Public manuals,
+API pages, download allowlist and CI examples are updated. The
+[mapping note](../../../autosuite/docs/31_WELL_PROPERTY_MAPPING.md) and RC-QA-015
+retain the pending Executor boundary.
+
+Local acceptance: 898 code/example/tool tests, 92 documentation tests, mypy
+(119 source files), Ruff, strict site build, smoke/recipe checks, 36 CI example
+commands and corpus audit passed. The final empty-selection adapter-skip fix
+also passed focused regression checks. Old v4 fixtures and pre-existing example
+companions are unchanged. Remote review/CI are pending.
+
 ## Version
 
-Version: PATCH within lockstep 0.3.x for shipped changes, by the user's explicit
-series-level version decision. Choose the next patch after final review;
-documentation/example/tooling-only changes use none. JSON remains v4. No release
-tag or PyPI publication.
-
+Version: PATCH 0.3.13 → 0.3.14 in both workspace packages, adding stored well text
+properties under the user's explicit lockstep 0.3.x decision. JSON remains v4;
+no release tag, migration or PyPI publication.

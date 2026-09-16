@@ -49,3 +49,9 @@ Construct ordered immutable statements rather than target-specific tasks. IDs id
 ::: sciloom.core.ir.ForEachZone
 
 ::: sciloom.core.ir.Statement
+
+::: sciloom.core.ir.WellPropertySpec
+
+::: sciloom.core.ir.ReadWellProperty
+
+::: sciloom.core.ir.WriteWellProperty

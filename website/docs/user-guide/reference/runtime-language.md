@@ -137,6 +137,7 @@ The [label example](../../examples/prepare-labels.md) shows a complete program.
 | `if` / `elif` / `else`, `while`, Zone `for` with a `Var[Zone]` target | List/general Python iteration, `break`, `continue`, loop `else` |
 | Calls to child Functions stored on `self` | Arbitrary helper calls, calls nested in expressions |
 | Device property assignment and declared commands | Property reads or augmented property assignments |
+| `self.label[zone] = text`, `self.text = self.label.get(zone, default="")` for a declared `WellProperty` | Indexed metadata reads, augmented writes, non-text properties or reads inside larger expressions |
 | `log(value, category=..., stream=...)` | Logging lists, automatic object formatting or using log as a result |
 | `notify(message)` | Timeout, automatic confirmation, cancellation branches or a returned value |
 | `self.stamp = now_text(format)` | Clock reads inside larger expressions, runtime format strings |

@@ -20,6 +20,7 @@ VOCABULARY = frozenset(
         "flow.zones",
         "flow.logging",
         "flow.messages",
+        "flow.properties",
         "flow.timing",
         "flow.timing_schema",
     }
@@ -38,6 +39,7 @@ ANALYSIS = frozenset(
         "dsl.statements",
         "dsl.timing",
         "dsl.zone_iteration",
+        "dsl.well_properties",
     }
 )
 

@@ -67,6 +67,7 @@ The 31 reference documents are in one directory, numbered 00–30. This guide is
 - [28 · CSV append and native export measurements](28_CSV_APPEND_MAPPING.md)
 - [29 · Zone values and read-only APP layout](29_ZONE_VALUES_AND_LAYOUT.md)
 - [30 · Zone indexing and sequential traversal](30_ZONE_TRAVERSAL_MAPPING.md)
+- [31 · Stored well text properties](31_WELL_PROPERTY_MAPPING.md)
 
 ### Current application and workflow
 

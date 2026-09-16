@@ -1,0 +1,157 @@
+{
+  "device_types": [],
+  "entry_function_id": "label-wells",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "WriteWellProperty",
+          "node_id": "write-labels",
+          "property": {
+            "kind": "WellPropertySpec",
+            "name": "sample_ID",
+            "type": "text"
+          },
+          "source": null,
+          "value": {
+            "kind": "Reference",
+            "node_id": "input-label",
+            "source": null,
+            "symbol_id": "label"
+          },
+          "zone": {
+            "kind": "Reference",
+            "node_id": "write-rack",
+            "source": null,
+            "symbol_id": "rack"
+          }
+        },
+        {
+          "kind": "Assignment",
+          "node_id": "empty-result",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "reset-target",
+            "source": null,
+            "symbol_id": "last"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "empty-text",
+            "source": null,
+            "type": "text",
+            "value": ""
+          }
+        },
+        {
+          "body": [
+            {
+              "default": {
+                "kind": "Literal",
+                "node_id": "fallback",
+                "source": null,
+                "type": "text",
+                "value": ""
+              },
+              "kind": "ReadWellProperty",
+              "node_id": "read-one",
+              "property": {
+                "kind": "WellPropertySpec",
+                "name": "sample_ID",
+                "type": "text"
+              },
+              "source": null,
+              "target": {
+                "kind": "Reference",
+                "node_id": "result",
+                "source": null,
+                "symbol_id": "last"
+              },
+              "zone": {
+                "kind": "Reference",
+                "node_id": "current",
+                "source": null,
+                "symbol_id": "well"
+              }
+            }
+          ],
+          "fragment_size": 1,
+          "kind": "ForEachZone",
+          "node_id": "read-labels",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "iterator",
+            "source": null,
+            "symbol_id": "well"
+          },
+          "value": {
+            "kind": "Reference",
+            "node_id": "read-rack",
+            "source": null,
+            "symbol_id": "rack"
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "LabelWells",
+      "node_id": "label-wells",
+      "source": null,
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "rack",
+          "node_id": "rack",
+          "owner_id": "label-wells",
+          "role": "input",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "label",
+          "node_id": "label",
+          "owner_id": "label-wells",
+          "role": "input",
+          "source": null,
+          "type": "text"
+        },
+        {
+          "initial": {
+            "kind": "ZoneLiteral",
+            "node_id": "empty-well",
+            "source": null,
+            "well_ids": []
+          },
+          "kind": "Variable",
+          "name": "well",
+          "node_id": "well",
+          "owner_id": "label-wells",
+          "role": "internal",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "last_label",
+          "node_id": "last",
+          "owner_id": "label-wells",
+          "role": "output",
+          "source": null,
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": []
+}

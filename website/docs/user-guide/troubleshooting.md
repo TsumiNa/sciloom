@@ -383,6 +383,18 @@ See [append rules](reference/csv.md#append-one-row).
 
 ## Selecting or visiting wells fails
 
+For stored labels, `well_property_selection` means a read received zero or
+multiple wells. Select one well per read. `unknown_well` means a selection is
+absent from the reference directory. A missing/incompatible value produces
+`well_property_missing`/`well_property_type`; supply a text default if that is an
+expected case. Defaults do not recover bad selections or missing services.
+
+AutoSuite's `unsupported_well_property_read` requires a default and proof of one
+well, for example the unchanged target of a size-one Zone loop. Strict reads
+remain gated pending platform failure verification. See
+[stored labels](reference/well-properties.md). `property_service_error` identifies
+a broken reference adapter; a failed write may have left earlier effects intact.
+
 An index selects a position within a Zone, not the displayed well number. Use
 zero for its first well. Loop targets must already be declared as `Var[Zone]`.
 

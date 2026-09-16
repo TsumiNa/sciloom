@@ -39,6 +39,7 @@ from .device_conditions import device_condition
 from .device_operations import configure, device_command
 from .expressions import BINARY_OPERATORS, expression, is_expression_call
 from .timing import timing_statement
+from .well_properties import property_statement
 from .zone_iteration import zone_loop
 
 
@@ -89,6 +90,10 @@ def call(context: LoweringContext, node: ast.Call, targets: Sequence[ast.expr]) 
 def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statement, ...]:
     result: list[Statement] = []
     for node in body:
+        property_operation = property_statement(context, node)
+        if property_operation is not None:
+            result.append(property_operation)
+            continue
         appended = csv_append(context, node)
         if appended is not None:
             result.append(appended)

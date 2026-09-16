@@ -234,6 +234,26 @@ Uninitialized reads and missing outputs are execution errors. Earlier state writ
 remain after a failed run: execution is not transactional. A session is sequential
 and is not intended for concurrent run calls.
 
+## Stored well metadata
+
+Supply `ReferenceEnvironment(locations=directory, properties=WellProperties(...))`.
+The store copies its initial `(well identity, property name) -> str` mapping and
+returns detached, read-only snapshots. It is shared across sessions only when
+the caller explicitly shares the store/environment. No host service is assumed.
+
+Writes capture RHS text before Zone, validate every identity, then write to all
+wells. Empty selections are no-ops but still require both services. Reads capture
+Zone then default eagerly, validate exactly one known well, and commit the text
+result only after success. Defaults handle missing/incompatible data, not bad
+selections or adapter failures. Custom WellProperties subclasses can raise
+KeyError for absence and TypeError for incompatible data; other exceptions become
+`property_service_error`. Writes are not transactions against an external adapter.
+
+Completed operations append immutable `WellPropertyReadEvent` and
+`WellPropertyWriteEvent` records; reads include `used_default`. Failed operations
+append no success record and do not roll back previous effects. See
+[the executable example](../../examples/well-properties-ir.md).
+
 ## Numerical and execution limits
 
 Integers use mathematical-integer semantics; floats are finite binary64. Booleans

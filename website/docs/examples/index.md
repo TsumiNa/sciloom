@@ -25,6 +25,7 @@ to the repository root.
 | [Append a sample log](append-sample-log.md) | Append one text record; AutoSuite mode and encoding still need verification |
 | [Resolve sample locations](resolve-locations.md) | Combine named Zones and count distinct wells |
 | [Visit sample locations](visit-locations.md) | Visit one well at a time using a declared Zone loop variable |
+| [Label selected wells](label-wells.md) | Write a sample identifier to selected wells and read it back |
 
 ## For contributors
 
@@ -41,5 +42,6 @@ to the repository root.
 | [CSV append IR](csv-append-ir.md) | Append twice in memory and inspect captured records |
 | [Zone IR](zone-ir.md) | Query an explicit immutable location directory after JSON restoration |
 | [Zone traversal IR](zone-traversal-ir.md) | Index an ordered selection and visit complete groups after JSON restoration |
+| [Well property IR](well-properties-ir.md) | Supply an explicit metadata store and inspect immutable read/write events |
 | [Independent device](demo-device.md) | A new property, command and target outside core |
 | [Portable agitation](portable-agitation.md) | Device specialization and rebinding the same authored JSON |
