@@ -65,8 +65,8 @@ handwritten JSON model was rejected because it duplicates the typed definitions.
 
 ## Stage status and sequence
 
-Stages 0–5 merged as PRs #85–90. Stage 6 implements typed runtime logging;
-stages 7–17 remain pending. Update this table in the stage that implements an
+Stages 0–6 merged as PRs #85–91. Stage 7 implements explicit acknowledgement;
+stages 8–17 remain pending. Update this table in the stage that implements an
 outcome and record its PR and verification.
 
 | Stage | Plan | Outcome | Status |
@@ -77,8 +77,8 @@ outcome and record its PR and verification.
 | 3 | [Quantities](05-plan-quantities.md) | A02 volume and time | Merged, PR #88 |
 | 4 | [Numeric operations](06-plan-numeric.md) | A11 abs, floor and round | Merged, PR #89 |
 | 5 | [Reference environment](07-plan-environment.md) | Explicit environment and ordered external events | Merged, PR #90 |
-| 6 | [Logging](08-plan-logging.md) | A09 typed log events | Implemented; acceptance/review pending |
-| 7 | [Confirmation](09-plan-confirmation.md) | A10 acknowledged messages | Pending |
+| 6 | [Logging](08-plan-logging.md) | A09 typed log events | Merged, PR #91 |
+| 7 | [Confirmation](09-plan-confirmation.md) | A10 acknowledged messages | Implemented; acceptance/review pending |
 | 8 | [Failure propagation](10-plan-failure.md) | Verified AutoSuite runtime-failure boundary | Pending |
 | 9 | [Wall clock](11-plan-wall-clock.md) | A12 formatted wall-clock reads | Pending |
 | 10 | [Wait and timer](12-plan-timing.md) | A08 durations and elapsed-time waits | Pending |
@@ -135,7 +135,7 @@ Do not extend an author/device contract merely to imitate vendor XML.
 
 ## Version
 
-Version: PATCH 0.3.4 → 0.3.5 for stage 6, following the user's lockstep 0.3.x decision.
+Version: PATCH 0.3.5 → 0.3.6 for stage 7, following the user's lockstep 0.3.x decision.
 By explicit user decision, the first shipped-code
 stage moves both packages from 0.2.0 to 0.3.0; later shipped-code stages remain
 lockstep in 0.3.x. This is an exception to the usual per-capability minor-bump

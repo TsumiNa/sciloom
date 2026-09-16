@@ -36,7 +36,7 @@ because they capture distinct configurations and task/version combinations.
 
 ## Reading order
 
-The 23 reference documents are in one directory, numbered 00–22. This guide is
+The 24 reference documents are in one directory, numbered 00–23. This guide is
 00; read the following documents in order or jump to the relevant group.
 
 ### Sources and runtime semantics
@@ -59,6 +59,7 @@ The 23 reference documents are in one directory, numbered 00–22. This guide is
 - [20 · Volume and duration mapping](20_QUANTITY_MAPPING.md)
 - [21 · Numeric expressions and rounding](21_NUMERIC_MAPPING.md)
 - [22 · Typed runtime logging](22_LOGGING_MAPPING.md)
+- [23 · OK acknowledgement messages](23_NOTIFICATION_MAPPING.md)
 
 ### Current application and workflow
 

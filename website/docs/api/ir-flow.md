@@ -10,6 +10,8 @@ Construct ordered immutable statements rather than target-specific tasks. IDs id
 
 ::: sciloom.core.ir.LogValue
 
+::: sciloom.core.ir.Notify
+
 ::: sciloom.core.ir.ListSet
 
 ::: sciloom.core.ir.InputBinding

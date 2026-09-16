@@ -18,6 +18,7 @@ to the repository root.
 | [Quantity conversion](quantity-conversion.md) | Calculate volumes and time differences with explicit units |
 | [Numeric operations](numeric-operations.md) | Calculate whole portions and an absolute volume difference |
 | [Record values](record-values.md) | Log supplied sample labels and typed volumes |
+| [Confirm samples](confirm-samples.md) | Require OK before recording a ready sample |
 
 ## For contributors
 
@@ -27,5 +28,6 @@ to the repository root.
 | [List IR](list-ir.md) | Direct construction and value semantics |
 | [Reference environment](reference-environment.md) | Shared event history and independent session state |
 | [Typed log IR](logging-ir.md) | Capture a quantity in an immutable event after JSON restoration |
+| [Confirmation IR](confirmation-ir.md) | Consume an explicit response after JSON restoration |
 | [Independent device](demo-device.md) | A new property, command and target outside core |
 | [Portable agitation](portable-agitation.md) | Device specialization and rebinding the same authored JSON |

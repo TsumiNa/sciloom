@@ -6,6 +6,7 @@ from typing import TypeAlias, TypeVar
 from sciloom.core.diagnostics import SourceSpan
 from sciloom.core.ir.model import Node
 from sciloom.core.ir.types import ScalarType
+from .acknowledgements import QueuedAcknowledgements
 from .device_state import DeviceEvent
 from .values import InputScalar, fail
 
@@ -31,7 +32,22 @@ class LogEvent:
     stream: str
 
 
-ExecutionEvent: TypeAlias = DeviceEvent | LogEvent
+@dataclass(frozen=True, kw_only=True)
+class AcknowledgementEvent:
+    """A message for which an explicit OK response has been consumed.
+
+    Attributes:
+        node_id: Semantic notification occurrence ID.
+        source: Optional source location of the operation.
+        message: Captured text, independent of subsequent variable changes.
+    """
+
+    node_id: str
+    source: SourceSpan | None
+    message: str
+
+
+ExecutionEvent: TypeAlias = DeviceEvent | LogEvent | AcknowledgementEvent
 """Closed reference-event vocabulary; each effect adds its own immutable record."""
 
 Service = TypeVar("Service")
@@ -50,6 +66,9 @@ class ReferenceEnvironment:
     default. Runs are sequential; no concurrent or transactional behavior is
     implied. Completed events remain visible after later execution failures.
     """
+
+    acknowledgements: QueuedAcknowledgements | None = None
+    """Explicit OK responses; absent by default and shared only when supplied."""
 
     _events: list[ExecutionEvent] = field(default_factory=list, init=False, repr=False)
 

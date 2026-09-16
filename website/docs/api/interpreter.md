@@ -16,4 +16,8 @@
 
 ::: sciloom.core.interpreter.LogEvent
 
+::: sciloom.core.interpreter.AcknowledgementEvent
+
+::: sciloom.core.interpreter.QueuedAcknowledgements
+
 ::: sciloom.core.interpreter.ReferenceEnvironment

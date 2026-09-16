@@ -26,6 +26,7 @@ from .model import (
     ListSet,
     Literal,
     LogValue,
+    Notify,
     OutputBinding,
     Program,
     Reference,
@@ -47,6 +48,7 @@ from .validation import validate
 
 __all__ = [
     "LogValue",
+    "Notify",
     "TextLength",
     "TextTrim",
     "TextSplitPart",

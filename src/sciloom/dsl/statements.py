@@ -15,6 +15,7 @@ from sciloom.core.ir import (
     ListSet,
     ListType,
     LogValue,
+    Notify,
     OutputBinding,
     Reference,
     ScalarType,
@@ -27,6 +28,7 @@ from sciloom.core.ir import (
 # import behind TYPE_CHECKING: composed calls test the callee with isinstance.
 from sciloom.flow.function import Function
 from sciloom.flow.logging import log
+from sciloom.flow.messages import notify
 from .context import LoweringContext
 from .device_conditions import device_condition
 from .device_operations import configure, device_command
@@ -176,6 +178,20 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
                 )
             )
         elif isinstance(node, ast.Expr) and isinstance(node.value, ast.Call):
+            if context.static_object(node.value.func) is notify:
+                invocation = node.value
+                if len(invocation.args) == 1 and not invocation.keywords:
+                    message = invocation.args[0]
+                elif not invocation.args and len(invocation.keywords) == 1 and invocation.keywords[0].arg == "message":
+                    message = invocation.keywords[0].value
+                else:
+                    context.fail("call_binding", "notify requires exactly one message argument.", invocation)
+                if isinstance(message, ast.Starred):
+                    context.fail("call_binding", "notify does not support unpacked arguments.", invocation)
+                result.append(
+                    Notify(**context.metadata(invocation), message=expression(context, message, ScalarType.TEXT))
+                )
+                continue
             if context.static_object(node.value.func) is log:
                 invocation = node.value
                 names = [keyword.arg for keyword in invocation.keywords]

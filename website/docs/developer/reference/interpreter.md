@@ -37,7 +37,7 @@ assert environment.events == ()  # This calculation has no external events.
 
 `environment.events` returns an immutable history snapshot across all runs using
 that environment. `result.events` remains limited to one successful run.
-`ExecutionEvent` is the union of DeviceEvent and LogEvent. Narrow with
+`ExecutionEvent` is the union of DeviceEvent, LogEvent and AcknowledgementEvent. Narrow with
 `isinstance(event, LogEvent)` before accessing log-specific fields; device events
 carry state snapshots. A failed run leaves earlier completed events in
 environment history and does not roll back their state changes.
@@ -62,6 +62,38 @@ read a device or require a file service.
 The [direct logging IR example](../../examples/logging-ir.md) constructs a volume
 log, restores JSON v4 and inspects the typed event. Prior records retain their
 values when fields change or the session runs again.
+
+## Explicit confirmation
+
+Give a program containing Notify a finite set of OK responses:
+
+```python
+from examples.confirm_samples import ConfirmSamples
+from sciloom.core.interpreter import Interpreter, QueuedAcknowledgements, ReferenceEnvironment
+
+responses = QueuedAcknowledgements([True])
+environment = ReferenceEnvironment(acknowledgements=responses)
+session = Interpreter(ConfirmSamples().to_ir(), environment=environment)
+result = session.run(inputs={"sample": "A"})
+assert responses.remaining == 0
+assert len(result.events) == 2  # Acknowledgement, then log.
+```
+
+Notify evaluates its message once, then consumes one response. Only a successful
+acknowledgement appends an AcknowledgementEvent, with the captured text and source.
+An absent service raises `missing_environment_service`; an exhausted queue raises
+`acknowledgement_required`. No prompt opens, no default is supplied, and later
+statements do not run. A bad message expression fails before consuming a response.
+
+Only literal `True` responses are accepted. The constructor copies the iterable.
+Sharing a service or environment explicitly shares its remaining responses;
+omitting the service never confirms a message. A later failure preserves already
+consumed responses and completed events. Calling `run()` again starts at the
+entry, rather than resuming the failed statement.
+
+The [direct IR example](../../examples/confirmation-ir.md) shows JSON restoration
+and a typed acknowledgement event. This reference behavior does not establish
+that a generated AutoSuite dialog blocks correctly on the target host.
 
 ## Session and snapshots
 
