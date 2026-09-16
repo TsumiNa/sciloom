@@ -213,6 +213,19 @@ class LogValue(Node):
 
 
 @dataclass(frozen=True, kw_only=True)
+class Notify(Node):
+    """Capture one text message and require OK before the next statement.
+
+    No value is returned. Missing acknowledgement prevents subsequent effects;
+    neither a timeout nor an automatic confirmation is implied.
+    """
+
+    __ir_kind__: ClassVar[str] = "Notify"
+
+    message: Expression
+
+
+@dataclass(frozen=True, kw_only=True)
 class ListSet(Node):
     """Update one existing element; an augmented op evaluates the index/read once."""
 
@@ -384,6 +397,7 @@ class DeviceIf(Node):
 Statement = (
     Assignment
     | LogValue
+    | Notify
     | ListSet
     | Call
     | If

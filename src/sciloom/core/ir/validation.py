@@ -23,6 +23,7 @@ from .model import (
     Literal,
     LogValue,
     Node,
+    Notify,
     Program,
     StartAgitation,
     Statement,
@@ -115,6 +116,10 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                     label_type = expression(getattr(stmt, name), function, f"{p}.{name}")
                     if label_type is not None and label_type != ScalarType.TEXT:
                         report("log_type", f"Log {name} must be text.", f"{p}.{name}", stmt)
+            elif isinstance(stmt, Notify):
+                message_type = expression(stmt.message, function, f"{p}.message")
+                if message_type is not None and message_type != ScalarType.TEXT:
+                    report("notification_type", "Notification messages must be text.", f"{p}.message", stmt)
             elif isinstance(stmt, ListSet):
                 target = expression(stmt.target, function, f"{p}.target")
                 index = expression(stmt.index, function, f"{p}.index")

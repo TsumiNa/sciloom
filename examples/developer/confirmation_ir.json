@@ -1,0 +1,30 @@
+{
+  "device_types": [],
+  "entry_function_id": "f",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "Notify",
+          "message": {
+            "kind": "Literal",
+            "node_id": "message",
+            "source": null,
+            "type": "text",
+            "value": "Samples are ready. Confirm to continue."
+          },
+          "node_id": "confirm",
+          "source": null
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "Confirm",
+      "node_id": "f",
+      "source": null,
+      "variables": []
+    }
+  ],
+  "kind": "Program",
+  "resources": []
+}

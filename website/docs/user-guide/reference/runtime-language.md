@@ -137,6 +137,7 @@ The [label example](../../examples/prepare-labels.md) shows a complete program.
 | Calls to child Functions stored on `self` | Arbitrary helper calls, calls nested in expressions |
 | Device property assignment and declared commands | Property reads or augmented property assignments |
 | `log(value, category=..., stream=...)` | Logging lists, automatic object formatting or using log as a result |
+| `notify(message)` | Timeout, automatic confirmation, cancellation branches or a returned value |
 | Whole `if/elif` conditions using `comptime` queries | Combining these queries with `and` / `or` or runtime arguments |
 | `pass`, docstrings | `return`, `try`, `with`, `assert`, `del`, nested definitions |
 
@@ -161,6 +162,23 @@ Logging records the value you supply. It does not measure an instrument, return
 a value or select a CSV file. Use the [complete logging example](../../examples/record-values.md)
 to generate an AutoSuite function. Application log storage and the resulting
 records still need verification in the deployed AutoSuite environment.
+
+## Request confirmation
+
+Import `notify` from `sciloom` and place it before the steps that need confirmation:
+
+```python
+notify("Samples are ready. Confirm to continue.")
+```
+
+The message can include runtime text, for example `"Confirm sample " + self.label`.
+Its value is captured when the step begins. The next step waits for OK; this call
+has no return value, timeout or automatic response. It belongs inside `@runtime`,
+not in the constructor or compilation script.
+
+The [confirmation example](../../examples/confirm-samples.md) generates an AutoSuite
+function with a message followed by a log. The generated OK dialog still needs
+Executor validation of blocking and continuation on the deployed host.
 
 ## Lists and indices
 

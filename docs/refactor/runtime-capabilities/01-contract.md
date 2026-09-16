@@ -633,6 +633,50 @@ wait for acknowledgement. Reference execution needs an explicitly configured
 response; missing responses fail instead of silently confirming. No input box,
 return value, cancel recovery, timeout answer or hardware I/O.
 
+Stage 7 represents the operation as `sciloom.core.ir.Notify`, with stable kind
+`Notify`, inherited ID/source and `message: Expression`. The message must be
+TEXT. The author marker is `sciloom.flow.messages.notify`, lazily re-exported at
+the root. One positional message or `message=...` is accepted; no argument
+unpacking, extra arguments or result binding. Calling the marker on the host
+raises TypeError.
+
+```python
+from sciloom.core.ir import Literal, Notify, ScalarType
+from sciloom.core.interpreter import QueuedAcknowledgements, ReferenceEnvironment
+
+statement = Notify(
+    node_id="confirm",
+    message=Literal(node_id="message", type=ScalarType.TEXT, value="Samples ready?"),
+)
+environment = ReferenceEnvironment(acknowledgements=QueuedAcknowledgements([True]))
+```
+
+Reference execution first evaluates the message once, then obtains the explicit
+acknowledgement service. No service produces `missing_environment_service`;
+an exhausted queue produces `acknowledgement_required`, with the requesting
+node/source in both cases. It appends frozen `AcknowledgementEvent(node_id,
+source, message)` only after a response was consumed. All fields are keyword-only;
+source is `SourceSpan | None`, and the other fields are strings. The event joins
+ExecutionEvent alongside device/log events. A later failure neither replenishes
+the response nor removes earlier events. A failed run cannot resume at the
+notification: another `run()` starts at the entry again, with persistent session
+state. Sharing the environment or its service explicitly shares remaining
+responses; omitted environments have no acknowledgement service.
+
+QueuedAcknowledgements snapshots the iterable at construction, rejects every
+entry that is not exactly True with ValueError, and tracks the remaining count.
+Its acknowledge method requires text (TypeError otherwise), consumes exactly one
+response on success, and raises LookupError without changing state on exhaustion.
+There is no live user prompt, cancellation result, timeout or automatic approval.
+
+AutoSuite first captures the message in one private text variable, then emits
+the primary APP's `showmessage`/`ok` profile with expression mode enabled,
+max wait 0, no result binding and no post-dialog pause. Zero timeout means an
+unbounded wait according to manual 3.6.17. The representative UserDialog template
+and F47 use okstop, and F21 uses stop: they establish the envelope, not the chosen
+button policy. Only the seven observed OK tasks in the latest APP justify this
+profile. Executor confirmation that later actions wait remains a separate gate.
+
 ## 7. Failure propagation (stage 8)
 
 Ordinary external-operation failure is fatal. Explicit CSV try-operations are a

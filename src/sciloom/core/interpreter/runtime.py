@@ -17,6 +17,7 @@ from sciloom.core.ir import (
     If,
     ListSet,
     LogValue,
+    Notify,
     Program,
     Reference,
     ScalarType,
@@ -33,7 +34,7 @@ from sciloom.core.ir.expressions import ExpressionChecker
 from sciloom.core.ir.model import Node
 from sciloom.core.ir.traversal import iter_nodes
 from .device_state import DeviceSession, DeviceState
-from .environment import ExecutionEvent, LogEvent, ReferenceEnvironment
+from .environment import AcknowledgementEvent, ExecutionEvent, LogEvent, ReferenceEnvironment, _require_service
 from .expressions import apply_binary, evaluate
 from .values import (
     InputValue,
@@ -246,6 +247,17 @@ class Interpreter:
                         category=category,
                         stream=stream,
                     )
+                )
+            elif isinstance(statement, Notify):
+                message = evaluate(self, statement.message, frame)
+                assert isinstance(message, str)
+                responses = _require_service(self.environment.acknowledgements, "acknowledgements", statement)
+                try:
+                    responses.acknowledge(message)
+                except LookupError:
+                    fail("acknowledgement_required", "An explicit OK response is required to continue.", statement)
+                self._record_event(
+                    AcknowledgementEvent(node_id=statement.node_id, source=statement.source, message=message)
                 )
             elif isinstance(statement, ListSet):
                 # Plain assignment evaluates the RHS first. Augmented assignment

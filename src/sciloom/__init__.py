@@ -10,12 +10,17 @@ if TYPE_CHECKING:
     from .flow.fields import Input, Output, Var
     from .flow.function import Function, runtime
     from .flow.logging import log
+    from .flow.messages import notify
 
 _DSL_EXPORTS = {"Function", "Input", "Output", "Var", "runtime"}
 
 
 def __getattr__(name: str) -> Any:
     # Importing sciloom.core.ir or the interpreter must not load source analysis.
+    if name == "notify":
+        from .flow.messages import notify
+
+        return notify
     if name == "log":
         from .flow.logging import log
 
@@ -44,6 +49,7 @@ def __getattr__(name: str) -> Any:
 
 
 __all__ = [
+    "notify",
     "log",
     "text",
     "comptime",

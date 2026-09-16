@@ -10,6 +10,7 @@ AutoSuite function package (`.asfp`). The current author API lets you:
 - Save shaker settings and explicitly start or stop agitation.
 - Share a logical device between steps and bind it to an AutoSuite shaker.
 - Choose device-specific branches when compiling for a target.
+- Record supplied values and request an explicit OK acknowledgement before continuing.
 
 The runtime method accepts a [restricted Python subset](../user-guide/reference/runtime-language.md).
 Constructors and the surrounding script remain ordinary Python.
@@ -31,3 +32,9 @@ Generated packages still need AutoSuite Executor validation and equipment
 acceptance. Array bounds checks, device mappings and fault/recovery behaviour
 require platform verification; SciLoom's reference execution cannot establish
 the instrument's numerical or physical behaviour.
+
+The generated OK dialog is available for inspection and simulation; platform
+execution remains unverified. Before equipment use, check on the AutoSuite host
+that it blocks later steps until OK and resumes exactly once. The
+[confirmation example](../examples/confirm-samples.md) describes that acceptance
+gate. Supplying a response to the reference interpreter does not pass it.

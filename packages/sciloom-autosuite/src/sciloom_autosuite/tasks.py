@@ -14,6 +14,7 @@ from sciloom.core.ir import (
     ListSet,
     ListType,
     LogValue,
+    Notify,
     ScalarType,
     StartAgitation,
     Statement,
@@ -66,6 +67,55 @@ def statements(
                     *context.metadata("Log Data"),
                     _xml("id", context.identifier("statement", statement.node_id)),
                     typeid="Chemspeed.SATaskLogData.1",
+                )
+            )
+        elif isinstance(statement, Notify):
+            message = materialize(context, function, plan_expression(context, function, statement.message, tag), tag)
+            result.extend(message.prerequisites)
+            result.append(
+                _xml(
+                    tag,
+                    "",
+                    _xml("highlightzone"),
+                    _xml("destzone"),
+                    *context.metadata("Show Dialog"),
+                    _xml("resultvariablename"),
+                    _xml("targetamountvariable"),
+                    _xml("sourcematerial"),
+                    _xml("maxwaittimeexpression", "0"),
+                    _xml("dialogtype", "showmessage"),
+                    _xml("resultunit"),
+                    _xml("interpretmessageasexpressionflag", "1"),
+                    _xml("message", message.text),
+                    _xml("initialvalue"),
+                    _xml("buttonoption", "ok"),
+                    _xml("timeoutanswerexpression"),
+                    _xml("yesokresultexpression"),
+                    _xml("noresultexpression"),
+                    _xml("maxwaittimeunit", "s"),
+                    _xml("picturepathexpression"),
+                    _xml("validateinput", "0"),
+                    _xml("minvalidationvalueexpression"),
+                    _xml("maxvalidationvalueexpression"),
+                    _xml("fontsize", "11"),
+                    _xml("usemonospacedfont", "0"),
+                    _xml("defaultpauseafterdialog", "0"),
+                    _xml("softstopping", "1"),
+                    _xml("autodialogheight", "0"),
+                    _xml("dialogwidth", "480"),
+                    _xml("dialogheight", "240"),
+                    _xml("hlrootelementname"),
+                    _xml("hlzonecolor", "0"),
+                    _xml("hldescriptioncount", "0"),
+                    _xml("logtoserver", "0"),
+                    _xml("messagetype", "0"),
+                    _xml("severity", "1"),
+                    _xml("runid"),
+                    _xml("experimentid"),
+                    _xml("trialnumber"),
+                    _xml("productid"),
+                    _xml("id", context.identifier("statement", statement.node_id)),
+                    typeid="Chemspeed.SATaskUserDialog.1",
                 )
             )
         elif isinstance(statement, ListSet):

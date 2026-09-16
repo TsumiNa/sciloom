@@ -1,6 +1,6 @@
 [project]
 name = "SciLoom"
-version = "0.3.5"
+version = "0.3.6"
 description = "SciLoom — programmable scientific automation from one semantic model."
 readme = "README.md"
 requires-python = ">=3.12,<3.15"
@@ -83,6 +83,7 @@ files = [
     "examples/quantity_conversion.py",
     "examples/numeric_operations.py",
     "examples/record_values.py",
+    "examples/confirm_samples.py",
     "examples/tutorial",
     "examples/developer",
 ]
@@ -111,6 +112,7 @@ module = [
     "examples.quantity_conversion_test",
     "examples.numeric_operations_test",
     "examples.record_values_test",
+    "examples.confirm_samples_test",
     "sciloom.units_test",
     "sciloom.units_quantities_test",
     "sciloom.devices.agitation_test",
@@ -136,6 +138,11 @@ module = [
     "sciloom.flow.fields_test",
     "sciloom.flow.fields_typing_test",
     "sciloom.flow.logging_test",
+    "sciloom.flow.messages_test",
+    "sciloom.core.interpreter.acknowledgements_test",
+    "sciloom.core.ir.codec_notification_test",
+    "sciloom.dsl.driver_notification_test",
+    "sciloom_autosuite.codegen_notification_test",
     "sciloom.dsl.statements_test",
     "sciloom.core.compiler_test",
     "sciloom.core.compiler_typing_test",

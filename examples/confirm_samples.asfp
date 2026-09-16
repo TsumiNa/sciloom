@@ -1,0 +1,222 @@
+<?xml version='1.0' encoding='utf-8'?>
+<functions>
+  <function typeid="Chemspeed.SATaskFunctionDefinition.1">
+    <description />
+    <name>ConfirmSamples</name>
+    <edittime>0</edittime>
+    <expanded>1</expanded>
+    <functiondata>
+      <inputs>
+        <count>1</count>
+        <item0>
+          <id>{7FC90E95-4C0F-5AD2-8B8D-28554D88DBBD}</id>
+          <name>sample</name>
+          <variablename>sample</variablename>
+          <variabletype>text</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item0>
+        <sortType>0</sortType>
+      </inputs>
+      <outputs>
+        <count>0</count>
+        <sortType>0</sortType>
+      </outputs>
+    </functiondata>
+    <id>{6B3871A3-E75A-572F-9EC6-40892C2B1688}</id>
+    <components>
+      <component typeid="Chemspeed.SAMacroTask.1">
+        <description />
+        <name>Macro Task</name>
+        <edittime>0</edittime>
+        <expanded>1</expanded>
+        <conditionloop>1</conditionloop>
+        <conditionif />
+        <conditionwhile />
+        <conditiontype>0</conditiontype>
+        <loopvariable>loop</loopvariable>
+        <fragmentvariable>fragment</fragmentvariable>
+        <executionmode>0</executionmode>
+        <sequentialzones>
+          <count>0</count>
+        </sequentialzones>
+        <multicondition>0</multicondition>
+        <multiloop>0</multiloop>
+        <variables sortingType="1">
+          <variable>
+            <name>sciloom_tmp_1</name>
+            <value>
+              <type>8</type>
+              <value>''</value>
+            </value>
+            <siunit>text</siunit>
+            <unit>K/s</unit>
+            <array>0</array>
+            <creationtime>0</creationtime>
+            <constant>0</constant>
+          </variable>
+          <variable>
+            <name>sciloom_tmp_3</name>
+            <value>
+              <type>8</type>
+              <value>''</value>
+            </value>
+            <siunit>text</siunit>
+            <unit>K/s</unit>
+            <array>0</array>
+            <creationtime>0</creationtime>
+            <constant>0</constant>
+          </variable>
+          <variable>
+            <name>sciloom_tmp_5</name>
+            <value>
+              <type>8</type>
+              <value>''</value>
+            </value>
+            <siunit>text</siunit>
+            <unit>K/s</unit>
+            <array>0</array>
+            <creationtime>0</creationtime>
+            <constant>0</constant>
+          </variable>
+          <variable>
+            <name>sciloom_tmp_7</name>
+            <value>
+              <type>8</type>
+              <value>''</value>
+            </value>
+            <siunit>text</siunit>
+            <unit>K/s</unit>
+            <array>0</array>
+            <creationtime>0</creationtime>
+            <constant>0</constant>
+          </variable>
+        </variables>
+        <id>{D46348DA-55D7-5449-A8BE-F1D3130C3A4C}</id>
+        <tasks>
+          <task typeid="Chemspeed.SATaskSetVariable.1">
+            <description />
+            <name>Set Variable</name>
+            <edittime>0</edittime>
+            <variablename>sciloom_tmp_1</variablename>
+            <expressiontext>('Sample ' + sample) + ' is ready. Confirm to continue.'</expressiontext>
+            <elementselectmode>0</elementselectmode>
+            <elementnumber />
+            <numberofelements />
+            <startindex>0</startindex>
+            <clearvariable>0</clearvariable>
+            <sortwells>0</sortwells>
+            <enumerationtype>0</enumerationtype>
+            <wellsenumeration>0</wellsenumeration>
+            <elementsenumeration>0</elementsenumeration>
+            <id>{671930A7-B1B8-5E3F-9E13-DA60004BE3D4}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskUserDialog.1">
+            <highlightzone />
+            <destzone />
+            <description />
+            <name>Show Dialog</name>
+            <edittime>0</edittime>
+            <resultvariablename />
+            <targetamountvariable />
+            <sourcematerial />
+            <maxwaittimeexpression>0</maxwaittimeexpression>
+            <dialogtype>showmessage</dialogtype>
+            <resultunit />
+            <interpretmessageasexpressionflag>1</interpretmessageasexpressionflag>
+            <message>sciloom_tmp_1</message>
+            <initialvalue />
+            <buttonoption>ok</buttonoption>
+            <timeoutanswerexpression />
+            <yesokresultexpression />
+            <noresultexpression />
+            <maxwaittimeunit>s</maxwaittimeunit>
+            <picturepathexpression />
+            <validateinput>0</validateinput>
+            <minvalidationvalueexpression />
+            <maxvalidationvalueexpression />
+            <fontsize>11</fontsize>
+            <usemonospacedfont>0</usemonospacedfont>
+            <defaultpauseafterdialog>0</defaultpauseafterdialog>
+            <softstopping>1</softstopping>
+            <autodialogheight>0</autodialogheight>
+            <dialogwidth>480</dialogwidth>
+            <dialogheight>240</dialogheight>
+            <hlrootelementname />
+            <hlzonecolor>0</hlzonecolor>
+            <hldescriptioncount>0</hldescriptioncount>
+            <logtoserver>0</logtoserver>
+            <messagetype>0</messagetype>
+            <severity>1</severity>
+            <runid />
+            <experimentid />
+            <trialnumber />
+            <productid />
+            <id>{55705F9C-82F3-5E9E-BF98-E93E44220F7D}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskSetVariable.1">
+            <description />
+            <name>Set Variable</name>
+            <edittime>0</edittime>
+            <variablename>sciloom_tmp_3</variablename>
+            <expressiontext>sample</expressiontext>
+            <elementselectmode>0</elementselectmode>
+            <elementnumber />
+            <numberofelements />
+            <startindex>0</startindex>
+            <clearvariable>0</clearvariable>
+            <sortwells>0</sortwells>
+            <enumerationtype>0</enumerationtype>
+            <wellsenumeration>0</wellsenumeration>
+            <elementsenumeration>0</elementsenumeration>
+            <id>{FFA1BDAD-9438-5554-96FE-305BB3F2CBAF}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskSetVariable.1">
+            <description />
+            <name>Set Variable</name>
+            <edittime>0</edittime>
+            <variablename>sciloom_tmp_5</variablename>
+            <expressiontext>'recipe'</expressiontext>
+            <elementselectmode>0</elementselectmode>
+            <elementnumber />
+            <numberofelements />
+            <startindex>0</startindex>
+            <clearvariable>0</clearvariable>
+            <sortwells>0</sortwells>
+            <enumerationtype>0</enumerationtype>
+            <wellsenumeration>0</wellsenumeration>
+            <elementsenumeration>0</elementsenumeration>
+            <id>{0E0CCD6E-9365-58B2-92D3-1CB3E96FD322}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskSetVariable.1">
+            <description />
+            <name>Set Variable</name>
+            <edittime>0</edittime>
+            <variablename>sciloom_tmp_7</variablename>
+            <expressiontext>'confirmed'</expressiontext>
+            <elementselectmode>0</elementselectmode>
+            <elementnumber />
+            <numberofelements />
+            <startindex>0</startindex>
+            <clearvariable>0</clearvariable>
+            <sortwells>0</sortwells>
+            <enumerationtype>0</enumerationtype>
+            <wellsenumeration>0</wellsenumeration>
+            <elementsenumeration>0</elementsenumeration>
+            <id>{21977490-DDC1-5090-AD0D-80F031FB8917}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskLogData.1">
+            <categorynameexpression>sciloom_tmp_5</categorynameexpression>
+            <streamnameexpression>sciloom_tmp_7</streamnameexpression>
+            <expressiontext>sciloom_tmp_3</expressiontext>
+            <resulttype>text</resulttype>
+            <description />
+            <name>Log Data</name>
+            <edittime>0</edittime>
+            <id>{54EC86A1-1E76-5DB8-8825-B8BA737776BF}</id>
+          </task>
+        </tasks>
+      </component>
+    </components>
+  </function>
+</functions>

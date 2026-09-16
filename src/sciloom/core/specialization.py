@@ -16,6 +16,7 @@ from .ir import (
     IsDevice,
     ListSet,
     LogValue,
+    Notify,
     Program,
     StartAgitation,
     Statement,
@@ -113,7 +114,17 @@ def specialize(program: Program, *, bindings: DeviceBindings) -> Program:
                 selected.append(replace(statement, body=block(statement.body)))
             elif isinstance(
                 statement,
-                (Assignment, ListSet, LogValue, Call, ConfigureProperty, StartAgitation, StopAgitation, DeviceCommand),
+                (
+                    Assignment,
+                    ListSet,
+                    LogValue,
+                    Notify,
+                    Call,
+                    ConfigureProperty,
+                    StartAgitation,
+                    StopAgitation,
+                    DeviceCommand,
+                ),
             ):
                 selected.append(statement)
             else:
