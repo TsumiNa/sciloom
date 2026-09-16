@@ -3,6 +3,7 @@
 from dataclasses import dataclass, field
 from typing import TypeAlias, TypeVar
 
+from sciloom.core.bindings import DeviceBindings
 from sciloom.core.diagnostics import SourceSpan
 from sciloom.core.ir.model import CsvReadMode, Node
 from sciloom.core.ir.types import ScalarType
@@ -215,6 +216,9 @@ class ReferenceEnvironment:
 
     properties: WellProperties | None = None
     """Explicit stored well metadata, shared only when the caller supplies it."""
+
+    device_bindings: DeviceBindings | None = None
+    """Trusted fixed/candidate deployment facts; physical state remains session-owned."""
 
     _events: list[ExecutionEvent] = field(default_factory=list, init=False, repr=False)
 

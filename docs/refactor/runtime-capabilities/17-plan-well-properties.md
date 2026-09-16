@@ -29,6 +29,10 @@ Consult [evidence](20-evidence.md) and collect new uncertainties in [Q&A](21-qa.
 
 ## Implementation and verification
 
+Merged as PR #100, squash commit `e8ee675c5864da5c3dd09949c00383eddb43ea13`.
+Review feedback was handled and latest-head Python 3.12–3.14/documentation CI
+passed before the merge. Later status notes below record the pre-merge process.
+
 Implemented: immutable host WellProperty declarations, additive v4 property specs
 and ordered read/write nodes, explicit reference store/directory and immutable
 events, typed DSL lowering, consumer coverage and AutoSuite user-property tasks.

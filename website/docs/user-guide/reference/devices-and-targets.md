@@ -53,8 +53,11 @@ See [the complete sharing example](../advanced/composition.md).
 | Generated file | UTF-8 XML function package, with an `.asfp` extension |
 | `result.write(path)` | Write bytes, create parent directories and return the path; no extension added |
 
-Zone names must be nonempty single-line strings. SciLoom does not discover
-zones or check which physical instrument is connected.
+Zone names must be nonempty single-line strings. An optional
+`layout=AutoSuiteLayout.from_app(path)` validates fixed profiles against APP
+well/controller ancestry. It does not contact the instrument. See
+[runtime device locations](device-locations.md) for bounded candidate bindings
+and the current dynamic-compilation gate.
 See [AutoSuite compilation](../advanced/autosuite.md) for package handoff and
 target-specific language restrictions.
 

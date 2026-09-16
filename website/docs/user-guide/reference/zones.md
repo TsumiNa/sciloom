@@ -81,8 +81,9 @@ is verified. These operations already work in reference execution.
 It also rejects nonempty host literals containing
 opaque well IDs and `well_name`, whose single-well runtime check still needs
 platform validation. Supply Zone parameters from AutoSuite or resolve names at
-runtime. Dynamic device selection with `at()` is not implemented yet; fixed
-hardware bindings keep their existing behavior.
+runtime. [Dynamic device selection with `at()`](device-locations.md) works in
+reference execution; AutoSuite emission remains gated on verified runtime
+failure propagation. Fixed hardware bindings keep their existing behavior.
 
 The [location example](../../examples/resolve-locations.md) compiles a complete
 function. The [developer example](../../examples/zone-ir.md) executes it against

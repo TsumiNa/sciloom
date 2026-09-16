@@ -7,7 +7,14 @@ Complete A03 through explicit selection scopes and trusted candidates.
 ## Scope
 
 Use [the authoritative contract](01-contract.md), not a separate API definition.
-Implement at, immutable common-contract candidate profiles, data-only selection bindings and APP-based allowed-well/controller checks. Extend scope/configuration analysis, specialized traversal, inherited shared-device context and backend private parameters. Track saved logical config separately from applied/enabled physical state; add physical result snapshots.
+Implement at, immutable common-contract candidate profiles, data-only selection bindings and APP-based allowed-well/controller checks. Extend scope/configuration analysis, specialized traversal and inherited shared-device context. Track saved logical config separately from applied/enabled physical state; add physical result snapshots. Native backend context transport remains gated as described below.
+
+The [concrete selection contract](01-contract.md#stage-16-concrete-selection-contract)
+records exact binding/IR/environment/snapshot interfaces before implementation.
+The stage-8 evidence gate currently prevents safe AutoSuite dynamic emission:
+candidate/layout validation is implemented, while DeviceAt/candidate compilation
+must fail explicitly. Private native selection transport cannot be activated until
+failure propagation is verified; do not add an unchecked bypass or unused emitter.
 
 ## Non-goals
 
@@ -22,10 +29,26 @@ Update stage status and relevant handbook/examples when implemented. Complete
 review, fixes, latest checks and squash merge before starting the next stage.
 Consult [evidence](20-evidence.md) and collect new uncertainties in [Q&A](21-qa.md).
 
+## Implementation and validation
+
+Implementation is ready for review: Python/direct IR/JSON, captured scopes,
+transitive call checks, physical snapshots and APP ancestry validation are
+covered. The developer example prints A running at 300 rpm and B stopped with
+600 rpm last applied; its complete v4 companion is committed. The AutoSuite
+failure gate is explicit and has no bypass. Review and latest CI remain required
+before merge and stage 17.
+
+Validation: 932 core/target/example/tool tests (931 full-suite cases plus the
+new direct-IR companion/rebinding case), mypy (124 files), Ruff, strict website
+build, all 92 website tests (the download-path failure was fixed and the two
+rendering tests rerun), 37 CI example commands, smoke, recipe, proposed-source
+syntax and corpus audit pass. Existing companions and v4 baselines are unchanged.
+Corpus audit reports 271 files, 127 archive entries, 52 function matches and
+67 templates for this local checkout. Executor is unavailable.
+
 ## Version
 
-Version: PATCH within lockstep 0.3.x for shipped changes, by the user's explicit
-series-level version decision. Choose the next patch after final review;
-documentation/example/tooling-only changes use none. JSON remains v4. No release
-tag or PyPI publication.
-
+Version: PATCH 0.3.14 → 0.3.15 in both workspace packages, implementing bounded
+runtime device locations under the user's explicit lockstep 0.3.x decision.
+JSON remains v4; old canonical documents and fixed-device output are unchanged.
+No release tag or PyPI publication.

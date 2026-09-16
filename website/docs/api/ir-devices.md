@@ -12,6 +12,8 @@ Contracts contain data, never executable Python. Conditions retain both branches
 
 ::: sciloom.core.ir.DeviceResource
 
+::: sciloom.core.ir.DeviceAt
+
 ::: sciloom.core.ir.ConfigureProperty
 
 ::: sciloom.core.ir.StartAgitation

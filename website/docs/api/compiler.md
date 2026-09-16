@@ -14,6 +14,12 @@
 
 ::: sciloom.core.bindings.DeviceBinding
 
+::: sciloom.core.bindings.DeviceCandidate
+
+::: sciloom.core.bindings.DeviceSelectionBinding
+
+::: sciloom.core.device_locations.validate_device_locations
+
 ::: sciloom.core.bindings.DeviceBindings
 
 ::: sciloom.core.bindings.validate_bindings

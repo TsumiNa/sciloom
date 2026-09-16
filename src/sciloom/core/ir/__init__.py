@@ -15,6 +15,7 @@ from .model import (
     CsvColumn,
     CsvErrorPolicy,
     CsvReadMode,
+    DeviceAt,
     DeviceCommand,
     DeviceIf,
     DevicePredicate,
@@ -68,6 +69,7 @@ from .types import ListType, ScalarType, ValueType, ZoneType
 from .validation import validate
 
 __all__ = [
+    "DeviceAt",
     "WellPropertySpec",
     "ReadWellProperty",
     "WriteWellProperty",

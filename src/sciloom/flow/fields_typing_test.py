@@ -14,7 +14,7 @@ def test_native_declaration_type_contract(tmp_path, valid):
 from collections.abc import Callable
 from math import floor
 from typing import assert_type
-from sciloom import Agitator, Duration, Function, Input, Output, RotationalSpeed, Timer, Var, Volume, WellProperty, Zone, log, mL, minute, notify, now_text, rpm, runtime, s, text, wait, zones
+from sciloom import Agitator, Duration, Function, Input, Output, RotationalSpeed, Timer, Var, Volume, WellProperty, Zone, at, log, mL, minute, notify, now_text, rpm, runtime, s, text, wait, zones
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import Program
 
@@ -38,6 +38,8 @@ class Scale(Function):
     @runtime
     def run(self) -> None:
         assert_type(self.factor, float)
+        with at(self.agitator, self.location):
+            self.agitator.start()
         self.label[self.location] = "A"
         assert_type(self.label.get(self.location), str)
         assert_type(self.label.get(self.location, default=""), str)
@@ -109,6 +111,10 @@ class Bad(Function):
     agitator: Agitator
     @runtime
     def run(self) -> None:
+        with at(self.agitator, "rack"):
+            pass
+        with at(self.factor, self.location):
+            pass
         self.label[self.location] = 3
         self.label.get(self.location, default=3)
         self.label.get("rack")
@@ -161,6 +167,6 @@ class Bad(Function):
         assert result.returncode == 0, result.stdout + result.stderr
     else:
         assert result.returncode == 1, result.stdout + result.stderr
-        assert result.stdout.count(" error: ") == 35, result.stdout
+        assert result.stdout.count(" error: ") == 37, result.stdout
         for code in ("[assignment]", "[list-item]"):
             assert code in result.stdout

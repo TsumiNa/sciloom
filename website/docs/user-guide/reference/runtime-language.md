@@ -143,6 +143,7 @@ The [label example](../../examples/prepare-labels.md) shows a complete program.
 | `self.stamp = now_text(format)` | Clock reads inside larger expressions, runtime format strings |
 | `wait(duration)`, declared Timer `start()` and `wait_until(duration)` | Contact/setpoint waits, automatic stop, shared Timer objects |
 | Whole `if/elif` conditions using `comptime` queries | Combining these queries with `and` / `or` or runtime arguments |
+| `with at(self.shaker, self.location):` | General context managers, `as` targets, multiple contexts or nested selection of the same device; AutoSuite emission is currently gated |
 | `pass`, docstrings | `return`, `try`, `with`, `assert`, `del`, nested definitions |
 
 See the [device reference](devices-and-targets.md) for property, command and

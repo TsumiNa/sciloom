@@ -9,6 +9,7 @@ from .ir import (
     Assignment,
     Call,
     ConfigureProperty,
+    DeviceAt,
     DeviceCommand,
     DeviceIf,
     DeviceResource,
@@ -108,6 +109,9 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
                     right, right_needs = analyze(statement.else_body, configured)
                     configured = left & right
                     required |= left_needs | right_needs
+            elif isinstance(statement, DeviceAt):
+                configured, needs = analyze(statement.body, configured)
+                required |= needs
             elif isinstance(statement, While):
                 if not (isinstance(statement.condition, Literal) and statement.condition.value is False):
                     _, needs = analyze(statement.body, configured)

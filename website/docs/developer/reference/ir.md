@@ -68,6 +68,16 @@ Both are additive v4 kinds. The [direct traversal example](../../examples/zone-t
 shows JSON round trips, grouping and reference execution. AutoSuite only accepts
 size-one traversal until its index/divisibility failure checks are verified.
 
+## Runtime device locations
+
+`DeviceAt(resource_id, location, body)` keeps runtime device selection as a
+structured scope. Its Zone is evaluated once and validated against an external
+candidate binding before the body. Child calls inherit context; exit releases
+context without emitting a stop. ConfigureProperty continues to update logical
+state, while start/stop affect the selected physical controller. Selection facts
+are not serialized into the semantic program. Existing DeviceResource records
+retain their meaning; JSON remains v4.
+
 ## Stored well metadata
 
 `WellPropertySpec(name, type)` describes a text user property. `ReadWellProperty`

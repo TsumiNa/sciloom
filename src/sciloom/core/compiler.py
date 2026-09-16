@@ -6,6 +6,7 @@ from typing import Protocol, runtime_checkable
 
 from .bindings import DeviceBindings
 from .configuration import validate_device_usage
+from .device_locations import validate_device_locations
 from .diagnostics import CompilationError, Diagnostic, IRValidationError
 from .ir import Program, validate
 from .specialization import specialize
@@ -111,7 +112,11 @@ def compile_ir(program: Program, *, target: Target) -> CompileResult:
         raise IRValidationError(diagnostics)
     bindings = target.resolve_devices(program)
     specialized = specialize(program, bindings=bindings)
-    diagnostics = validate_device_usage(specialized, bindings) + validate_timer_usage(specialized)
+    diagnostics = (
+        validate_device_usage(specialized, bindings)
+        + validate_timer_usage(specialized)
+        + validate_device_locations(specialized, bindings)
+    )
     if diagnostics:
         raise CompilationError(diagnostics)
     diagnostics = target.validate(specialized)

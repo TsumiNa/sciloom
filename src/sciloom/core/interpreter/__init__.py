@@ -2,7 +2,7 @@
 
 from .acknowledgements import QueuedAcknowledgements
 from .clocks import VirtualClock, VirtualWallClock, WallClock
-from .device_state import DeviceEvent, DeviceState
+from .device_state import DeviceEvent, DeviceState, PhysicalDeviceState
 from .environment import (
     AcknowledgementEvent,
     CsvAppendEvent,
@@ -21,6 +21,7 @@ from .properties import WellProperties
 from .runtime import ExecutionConfig, ExecutionResult, Interpreter
 
 __all__ = [
+    "PhysicalDeviceState",
     "WellProperties",
     "WellPropertyReadEvent",
     "WellPropertyWriteEvent",

@@ -88,8 +88,8 @@ outcome and record its PR and verification.
 | 12 | [CSV append](14-plan-csv-append.md) | A06 bounded row append | Merged, PR #97 |
 | 13 | [Zone values](15-plan-zone-values.md) | A03 values and read-only deployment directory | Merged, PR #98 |
 | 14 | [Zone traversal](16-plan-zone-traversal.md) | A04 indexing and sequential fragments | Merged, PR #99 |
-| 15 | [Well properties](17-plan-well-properties.md) | A07 stored text properties | Implemented; review/CI pending |
-| 16 | [Dynamic locations](18-plan-dynamic-locations.md) | A03 candidate binding and physical state | Pending |
+| 15 | [Well properties](17-plan-well-properties.md) | A07 stored text properties | Merged, PR #100 |
+| 16 | [Dynamic locations](18-plan-dynamic-locations.md) | A03 candidate binding and physical state | In progress |
 | 17 | [Integrated examples](19-plan-integration.md) | Three complete workflows and handbook coverage | Pending |
 
 For each stage: review, address feedback, run latest-head checks, squash merge,

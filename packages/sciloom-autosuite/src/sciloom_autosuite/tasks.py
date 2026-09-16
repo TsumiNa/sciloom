@@ -8,6 +8,7 @@ from sciloom.core.ir import (
     Assignment,
     Call,
     ConfigureProperty,
+    DeviceAt,
     DeviceCommand,
     DeviceIf,
     ForEachZone,
@@ -330,7 +331,7 @@ def statements(
                 result.append(
                     macro(context, tag, statement.node_id, function, tuple(branches), name="If-Else", branches=True)
                 )
-        elif isinstance(statement, (DeviceCommand, DeviceIf, ReadCsv, AppendCsv)):
+        elif isinstance(statement, (DeviceCommand, DeviceIf, DeviceAt, ReadCsv, AppendCsv)):
             raise CompilationError(
                 (
                     Diagnostic(

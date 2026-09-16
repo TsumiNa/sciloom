@@ -1,0 +1,166 @@
+{
+  "device_types": [
+    {
+      "base_type_ids": [],
+      "kind": "DeviceTypeContract",
+      "operations": [],
+      "properties": [],
+      "required_configuration": [],
+      "type_id": "sciloom.device/v1"
+    },
+    {
+      "base_type_ids": [
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "kind": "CommandContract",
+          "name": "start",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.start/v1"
+        },
+        {
+          "kind": "CommandContract",
+          "name": "stop",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.stop/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "speed",
+          "semantic_id": "sciloom.agitator.speed/v1",
+          "type": "rotational_speed"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.agitator.speed/v1"
+      ],
+      "type_id": "sciloom.agitator/v1"
+    }
+  ],
+  "entry_function_id": "select",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "save-first",
+          "property_id": "sciloom.agitator.speed/v1",
+          "resource_id": "mixer",
+          "source": null,
+          "value": {
+            "kind": "Literal",
+            "node_id": "speed-first",
+            "source": null,
+            "type": "rotational_speed",
+            "value": 5.0
+          }
+        },
+        {
+          "body": [
+            {
+              "kind": "StartAgitation",
+              "node_id": "start-first",
+              "resource_id": "mixer",
+              "source": null
+            }
+          ],
+          "kind": "DeviceAt",
+          "location": {
+            "kind": "Reference",
+            "node_id": "first-location",
+            "source": null,
+            "symbol_id": "first"
+          },
+          "node_id": "at-first",
+          "resource_id": "mixer",
+          "source": null
+        },
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "save-second",
+          "property_id": "sciloom.agitator.speed/v1",
+          "resource_id": "mixer",
+          "source": null,
+          "value": {
+            "kind": "Literal",
+            "node_id": "speed-second",
+            "source": null,
+            "type": "rotational_speed",
+            "value": 10.0
+          }
+        },
+        {
+          "body": [
+            {
+              "kind": "StartAgitation",
+              "node_id": "start-second",
+              "resource_id": "mixer",
+              "source": null
+            },
+            {
+              "kind": "StopAgitation",
+              "node_id": "stop-second",
+              "resource_id": "mixer",
+              "source": null
+            }
+          ],
+          "kind": "DeviceAt",
+          "location": {
+            "kind": "Reference",
+            "node_id": "second-location",
+            "source": null,
+            "symbol_id": "second"
+          },
+          "node_id": "at-second",
+          "resource_id": "mixer",
+          "source": null
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "SelectShakers",
+      "node_id": "select",
+      "source": null,
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "first",
+          "node_id": "first",
+          "owner_id": "select",
+          "role": "input",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "second",
+          "node_id": "second",
+          "owner_id": "select",
+          "role": "input",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": [
+    {
+      "device_type_id": "sciloom.agitator/v1",
+      "kind": "DeviceResource",
+      "logical_id": "mixer",
+      "node_id": "mixer",
+      "source": null
+    }
+  ]
+}

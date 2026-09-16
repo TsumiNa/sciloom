@@ -10,6 +10,7 @@ from sciloom.core.ir import (
     BinaryOp,
     Call,
     ConfigureProperty,
+    DeviceAt,
     DeviceCommand,
     DeviceIf,
     Expression,
@@ -80,6 +81,9 @@ def validate_runtime_guards(program: Program) -> tuple[Diagnostic, ...]:
             elif isinstance(node, ForEachZone) and node.fragment_size != 1:
                 code = "unsupported_zone_grouping"
                 message = "Grouped Zone traversal requires verified divisibility failure propagation; single-well traversal and reference execution are available."
+            elif isinstance(node, DeviceAt):
+                code = "unsupported_device_location"
+                message = "Dynamic device locations require verified fail-before-action checks; reference execution is available."
             elif isinstance(node, ReadCsv):
                 code = "unsupported_csv_semantics"
                 message = "AutoSuite CSV expression evaluation, conversion and per-column result aggregation are not verified against typed literal CSV semantics; reference execution is available."
@@ -244,6 +248,9 @@ def validate_array_outputs(program: Program) -> tuple[Diagnostic, ...]:
                 elif isinstance(statement, While):
                     read(statement.condition, assigned)
                     block(statement.body, assigned)
+                elif isinstance(statement, DeviceAt):
+                    read(statement.location, assigned)
+                    assigned = block(statement.body, assigned)
                 elif isinstance(statement, ForEachZone):
                     read(statement.value, assigned)
                     block(statement.body, assigned)

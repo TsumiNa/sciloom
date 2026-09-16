@@ -1,10 +1,12 @@
 """Execute typed IR directly; no source evaluation, code generation or vendor imports."""
 
 from collections.abc import Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from types import MappingProxyType
 from typing import assert_never
 
+from sciloom.core.bindings import validate_bindings
+from sciloom.core.device_locations import validate_device_locations
 from sciloom.core.diagnostics import IRValidationError
 from sciloom.core.ir import (
     AppendCsv,
@@ -12,6 +14,7 @@ from sciloom.core.ir import (
     Binary,
     Call,
     ConfigureProperty,
+    DeviceAt,
     DeviceCommand,
     DeviceIf,
     ForEachZone,
@@ -47,7 +50,7 @@ from sciloom.units import Duration
 from .clocks import format_wall_time
 from .csv_append import execute_append
 from .csv_read import execute_read
-from .device_state import DeviceSession, DeviceState
+from .device_state import DeviceSession, DeviceState, PhysicalDeviceState
 from .environment import (
     AcknowledgementEvent,
     ExecutionEvent,
@@ -103,6 +106,8 @@ class ExecutionResult:
         state: Function and variable IDs to canonical internal values.
         steps: Steps consumed by this run.
         resources: Resource IDs to saved/applied device state.
+        physical_devices: Bound controller identities to independent applied/running
+            snapshots. Empty for reference programs without deployment bindings.
         events: Ordered completed events from this run.
 
     Snapshots returned by the interpreter do not change after later runs."""
@@ -112,6 +117,7 @@ class ExecutionResult:
     steps: int
     resources: Mapping[str, DeviceState]
     events: tuple[ExecutionEvent, ...]
+    physical_devices: Mapping[str, PhysicalDeviceState] = field(default_factory=lambda: MappingProxyType({}))
 
 
 class Interpreter:
@@ -148,6 +154,12 @@ class Interpreter:
         self.program = program
         self.config = config if config is not None else ExecutionConfig()
         self.environment = environment if environment is not None else ReferenceEnvironment()
+        if self.environment.device_bindings is not None:
+            diagnostics = validate_bindings(program, self.environment.device_bindings)
+            if not diagnostics:
+                diagnostics = validate_device_locations(program, self.environment.device_bindings)
+            if diagnostics:
+                raise IRValidationError(diagnostics)
         self._functions = {f.node_id: f for f in program.functions}
         self._variables = {v.node_id: v for f in program.functions for v in f.variables}
         # Enforce refined value constraints at intermediate operations too:
@@ -171,7 +183,7 @@ class Interpreter:
                         self._expression_types[value.node_id] = value_type
         self._state: dict[str, dict[str, RuntimeValue]] = {f.node_id: {} for f in program.functions}
         self._steps = 0
-        self._devices = DeviceSession(program)
+        self._devices = DeviceSession(program, self.environment.device_bindings)
         self._events: list[ExecutionEvent] = []
         self._timers: dict[str, float] = {}
         for variable in self._variables.values():
@@ -230,6 +242,7 @@ class Interpreter:
             steps=self._steps,
             resources=MappingProxyType(dict(self._devices.states)),
             events=tuple(self._events),
+            physical_devices=MappingProxyType(dict(self._devices.physical)),
         )
 
     def _read(self, reference: Reference, frame: dict[str, RuntimeValue]) -> RuntimeValue:
@@ -379,6 +392,15 @@ class Interpreter:
                     fragment = Zone(well_ids=selection.well_ids[offset : offset + statement.fragment_size])
                     self._write(statement.target, fragment, frame)
                     self._statements(statement.body, frame, depth)
+            elif isinstance(statement, DeviceAt):
+                location = evaluate(self, statement.location, frame)
+                assert isinstance(location, Zone)
+                directory = _require_service(self.environment.locations, "locations", statement)
+                self._devices.select(statement, location, directory)
+                try:
+                    self._statements(statement.body, frame, depth)
+                finally:
+                    del self._devices.active[statement.resource_id]
             elif isinstance(statement, Call):
                 callee = self._functions[statement.function_id]
                 arguments = {

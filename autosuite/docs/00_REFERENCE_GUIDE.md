@@ -36,7 +36,7 @@ because they capture distinct configurations and task/version combinations.
 
 ## Reading order
 
-The 32 reference documents are in one directory, numbered 00–31. This guide is
+The 33 reference documents are in one directory, numbered 00–32. This guide is
 00; read the following documents in order or jump to the relevant group.
 
 ### Sources and runtime semantics
@@ -68,6 +68,7 @@ The 32 reference documents are in one directory, numbered 00–31. This guide is
 - [29 · Zone values and read-only APP layout](29_ZONE_VALUES_AND_LAYOUT.md)
 - [30 · Zone indexing and sequential traversal](30_ZONE_TRAVERSAL_MAPPING.md)
 - [31 · Stored well text properties](31_WELL_PROPERTY_MAPPING.md)
+- [32 · Dynamic device locations](32_DYNAMIC_DEVICE_LOCATIONS.md)
 
 ### Current application and workflow
 

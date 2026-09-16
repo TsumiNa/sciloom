@@ -36,6 +36,7 @@ from .context import LoweringContext
 from .csv_append import csv_append
 from .csv_read import csv_read
 from .device_conditions import device_condition
+from .device_locations import location_scope
 from .device_operations import configure, device_command
 from .expressions import BINARY_OPERATORS, expression, is_expression_call
 from .timing import timing_statement
@@ -221,6 +222,9 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
                     else_body=statements(context, node.orelse),
                 )
             )
+        elif isinstance(node, ast.With):
+            scope = location_scope(context, node)
+            result.append(replace(scope, body=statements(context, node.body)))
         elif isinstance(node, ast.For):
             loop = zone_loop(context, node)
             result.append(replace(loop, body=statements(context, node.body)))

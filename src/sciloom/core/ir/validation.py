@@ -15,6 +15,7 @@ from .model import (
     Call,
     CanWrite,
     ConfigureProperty,
+    DeviceAt,
     DeviceCommand,
     DeviceIf,
     DeviceResource,
@@ -138,7 +139,11 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
             report("type_mismatch", f"Cannot assign {source.value} to {target.value}.", path, node)
 
     def statements(
-        body: tuple[Statement, ...], function: FunctionIR, path: str, narrowed: dict[str, str] | None = None
+        body: tuple[Statement, ...],
+        function: FunctionIR,
+        path: str,
+        narrowed: dict[str, str] | None = None,
+        active: frozenset[str] = frozenset(),
     ) -> None:
         narrowed = {} if narrowed is None else narrowed
         for i, stmt in enumerate(body):
@@ -225,6 +230,15 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                     if stmt.op is not None:
                         source = checker.binary(stmt.op, target.element_type, source, p, stmt)
                     check_assignment(source, target.element_type, p, stmt)
+            elif isinstance(stmt, DeviceAt):
+                if not isinstance(resources.get(stmt.resource_id), DeviceResource):
+                    report("unknown_resource", "A location scope requires a declared device resource.", p, stmt)
+                actual = expression(stmt.location, function, f"{p}.location")
+                if actual is not None and not isinstance(actual, ZoneType):
+                    report("zone_type", "Device locations must be Zone values.", f"{p}.location", stmt)
+                if stmt.resource_id in active:
+                    report("device_selection_nesting", "The same device cannot have nested location scopes.", p, stmt)
+                statements(stmt.body, function, f"{p}.body", narrowed, active | {stmt.resource_id})
             elif isinstance(stmt, ForEachZone):
                 target_type = expression(stmt.target, function, f"{p}.target")
                 value_type = expression(stmt.value, function, f"{p}.value")
@@ -243,16 +257,16 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                         f"{p}.fragment_size",
                         stmt,
                     )
-                statements(stmt.body, function, f"{p}.body", narrowed)
+                statements(stmt.body, function, f"{p}.body", narrowed, active)
             elif isinstance(stmt, (If, While)):
                 condition = expression(stmt.condition, function, f"{p}.condition")
                 if condition is not None and condition != ScalarType.BOOLEAN:
                     report("condition_type", "Control-flow conditions must be boolean.", f"{p}.condition", stmt)
                 if isinstance(stmt, If):
-                    statements(stmt.then_body, function, f"{p}.then_body", narrowed)
-                    statements(stmt.else_body, function, f"{p}.else_body", narrowed)
+                    statements(stmt.then_body, function, f"{p}.then_body", narrowed, active)
+                    statements(stmt.else_body, function, f"{p}.else_body", narrowed, active)
                 else:
-                    statements(stmt.body, function, f"{p}.body", narrowed)
+                    statements(stmt.body, function, f"{p}.body", narrowed, active)
             elif isinstance(stmt, (ConfigureProperty, StartAgitation, StopAgitation, DeviceCommand)):
                 candidate = resources.get(stmt.resource_id)
                 resource = candidate if isinstance(candidate, DeviceResource) else None
@@ -341,8 +355,8 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                         *current_type.base_type_ids,
                     ):
                         true_types[predicate.resource_id] = predicate.device_type_id
-                statements(stmt.then_body, function, f"{p}.then_body", true_types)
-                statements(stmt.else_body, function, f"{p}.else_body", narrowed)
+                statements(stmt.then_body, function, f"{p}.then_body", true_types, active)
+                statements(stmt.else_body, function, f"{p}.else_body", narrowed, active)
             elif isinstance(stmt, Call):
                 callee = functions.get(stmt.function_id)
                 if callee is None:

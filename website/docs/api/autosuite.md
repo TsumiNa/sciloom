@@ -6,6 +6,8 @@ Import these interfaces from `sciloom_autosuite`, the workspace member distribut
 
 ::: sciloom_autosuite.AutoSuiteIndividualShaker
 
+::: sciloom_autosuite.AutoSuiteAgitatorSelection
+
 ::: sciloom_autosuite.AutoSuiteVersion
 
 ## Read-only deployment directory
