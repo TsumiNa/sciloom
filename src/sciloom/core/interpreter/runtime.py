@@ -30,7 +30,8 @@ from sciloom.core.ir import (
 from sciloom.core.ir.expressions import ExpressionChecker
 from sciloom.core.ir.model import Node
 from sciloom.core.ir.traversal import iter_nodes
-from .device_state import DeviceEvent, DeviceSession, DeviceState
+from .device_state import DeviceSession, DeviceState
+from .environment import ExecutionEvent, ReferenceEnvironment
 from .expressions import apply_binary, evaluate
 from .values import (
     InputValue,
@@ -75,7 +76,7 @@ class ExecutionResult:
         state: Function and variable IDs to canonical internal values.
         steps: Steps consumed by this run.
         resources: Resource IDs to saved/applied device state.
-        events: Ordered device events from this run.
+        events: Ordered completed events from this run.
 
     Snapshots returned by the interpreter do not change after later runs."""
 
@@ -83,7 +84,7 @@ class ExecutionResult:
     state: Mapping[str, Mapping[str, RuntimeValue]]
     steps: int
     resources: Mapping[str, DeviceState]
-    events: tuple[DeviceEvent, ...]
+    events: tuple[ExecutionEvent, ...]
 
 
 class Interpreter:
@@ -93,12 +94,20 @@ class Interpreter:
     sequential execution, not a transactional rollback or physical simulator.
     """
 
-    def __init__(self, program: Program, *, config: ExecutionConfig | None = None) -> None:
+    def __init__(
+        self,
+        program: Program,
+        *,
+        config: ExecutionConfig | None = None,
+        environment: ReferenceEnvironment | None = None,
+    ) -> None:
         """Create an independent reference session and initialize internal defaults.
 
         Args:
             program: Valid semantic program with device conditions already specialized.
             config: Optional execution budgets.
+            environment: Explicit external context; omitted means a fresh one.
+                Reusing it shares external services/history, not Function or device state.
 
         Raises:
             IRValidationError: The semantic model is invalid.
@@ -111,6 +120,7 @@ class Interpreter:
                 fail("unspecialized_device_condition", "Specialize device conditions before reference execution.", node)
         self.program = program
         self.config = config if config is not None else ExecutionConfig()
+        self.environment = environment if environment is not None else ReferenceEnvironment()
         self._functions = {f.node_id: f for f in program.functions}
         self._variables = {v.node_id: v for f in program.functions for v in f.variables}
         # Enforce refined value constraints at intermediate operations too:
@@ -126,7 +136,7 @@ class Interpreter:
         self._state: dict[str, dict[str, RuntimeValue]] = {f.node_id: {} for f in program.functions}
         self._steps = 0
         self._devices = DeviceSession(program)
-        self._events: list[DeviceEvent] = []
+        self._events: list[ExecutionEvent] = []
         for variable in self._variables.values():
             if variable.role == VariableRole.INTERNAL:
                 assert variable.initial is not None
@@ -138,6 +148,10 @@ class Interpreter:
         self._steps += 1
         if self._steps > self.config.max_steps:
             fail("step_limit", "Reference execution exhausted its step budget.", node)
+
+    def _record_event(self, event: ExecutionEvent) -> None:
+        self._events.append(event)
+        self.environment._events.append(event)
 
     def run(self, *, inputs: Mapping[str, InputValue] | None = None) -> ExecutionResult:
         """Execute the selected entry with fresh call frames and persistent session state.
@@ -243,7 +257,7 @@ class Interpreter:
                     self._write(binding.target, outputs[binding.parameter_id], frame)
             elif isinstance(statement, (ConfigureProperty, StartAgitation, StopAgitation)):
                 value = evaluate(self, statement.value, frame) if isinstance(statement, ConfigureProperty) else None
-                self._events.append(self._devices.apply(statement, value))
+                self._record_event(self._devices.apply(statement, value))
             elif isinstance(statement, (DeviceCommand, DeviceIf)):
                 fail("unsupported_operation", f"Cannot execute {type(statement).__name__}.", statement)
             else:

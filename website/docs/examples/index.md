@@ -24,5 +24,6 @@ to the repository root.
 |---|---|
 | [Agitation IR](agitation-ir.md) | JSON persistence and configured/applied state snapshots |
 | [List IR](list-ir.md) | Direct construction and value semantics |
+| [Reference environment](reference-environment.md) | Shared event history and independent session state |
 | [Independent device](demo-device.md) | A new property, command and target outside core |
 | [Portable agitation](portable-agitation.md) | Device specialization and rebinding the same authored JSON |

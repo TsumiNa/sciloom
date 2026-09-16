@@ -9,6 +9,8 @@ device property/command contracts and the Target protocol are current.
 Stages 1–4 implement section 1's explicit wire identities, section 3's text,
 section 4's quantity interfaces and section 5's numeric operations. Later sections remain target
 contracts until their owning stage lands.
+Stage 5 adds section 2's environment injection and event history. Its concrete
+service setup examples remain target interfaces until the listed consuming stage.
 
 Experiment authors import from `sciloom`; targets from `sciloom_autosuite` or an
 independent package. `flow` declares author vocabulary; `dsl` alone analyzes
@@ -118,13 +120,258 @@ Retain ExecutionResult outputs/state/resources and existing DeviceEvent data for
 old programs. Extend the ordered event union for external events; retain immutable
 snapshots after later calls. Stage 16 adds physical-device snapshots rather than
 pretending one logical resource can represent several physical running states.
-Concrete file, clock, directory, property-store and acknowledgement service
-signatures are **not specified yet**. Stage 5 must first extend this contract with
-their constructor/method signatures, ownership, missing-service diagnostics and
-usage examples, before editing production code for the environment. Its review
-must check those signatures against the later consuming stages. Concrete services
-still land only with their owning features; absent services are not published as
-placeholder implementations. The injection signature above is already fixed.
+
+### Environment ownership and service contracts
+
+Stage 5 implements only `ReferenceEnvironment()`, its event history, the
+Interpreter keyword above, and the internal missing-service diagnostic boundary.
+There are no file/clock/location/acknowledgement placeholder implementations in
+that stage. The following service signatures are **target contracts**; constructor
+keywords become available in the listed stage.
+
+| Stage | Environment keyword | Service |
+| --- | --- | --- |
+| 7 | `acknowledgements` | `QueuedAcknowledgements` |
+| 9 | `wall_clock` | `WallClock`, normally `VirtualWallClock` |
+| 10 | `clock` | `VirtualClock` |
+| 11 | `files` | `FileService`, `MemoryFiles` or explicit `LocalFiles` |
+| 13 | `locations` | `LocationDirectory` |
+| 15 | `properties` | `WellProperties` |
+
+Services are owned by the caller when injected; the interpreter never clones
+them. Reuse one environment, or the same service object in two environments,
+to share external state explicitly. Omitted environments are fresh per
+Interpreter; all service fields default to None as they are added. Child
+Function calls use the entry session's environment. Device and Function state
+remain session-owned even when an environment is shared.
+
+`ReferenceEnvironment.events: tuple[ExecutionEvent, ...]` is a detached,
+chronological history of completed events across every run using that environment.
+`ExecutionResult.events` remains the per-run tuple. `ExecutionEvent` is a closed
+union, initially DeviceEvent; each feature adds its own immutable event record.
+No string-to-handler registration or arbitrary payload dictionary is introduced.
+Earlier successful events remain in environment history after a later failure.
+A failed operation does not invent a success event. These APIs are sequential,
+not a thread-safe or transactional execution service.
+
+Access to an absent required service raises `ExecutionError` with code
+`missing_environment_service`, the service name, and the requesting IR node/source.
+The internal `_require_service(service, name, node)` helper establishes this
+boundary; no public generic service registry is added. Concrete adapters raise
+ordinary I/O or lookup errors, which their IR operation handler translates to
+its specified fatal diagnostic or explicit try-result. Missing service configuration
+is never disguised as a CSV IO_ERROR or a user acknowledgement.
+
+#### Files (stage 11, consumed by stages 11–12)
+
+Signatures live in `sciloom.core.interpreter.files` and are re-exported from
+`sciloom.core.interpreter` when implemented:
+
+```python
+from collections.abc import Mapping
+from pathlib import Path
+from typing import Protocol
+
+class FileService(Protocol):
+    def read_bytes(self, path: str) -> bytes: ...
+    def append_bytes(self, path: str, data: bytes) -> None: ...
+
+class MemoryFiles:
+    def __init__(self, initial: Mapping[str, bytes] | None = None) -> None: ...
+    def read_bytes(self, path: str) -> bytes: ...
+    def append_bytes(self, path: str, data: bytes) -> None: ...
+    def snapshot(self) -> Mapping[str, bytes]: ...
+
+class LocalFiles:
+    def __init__(self, root: str | Path) -> None: ...
+    def read_bytes(self, path: str) -> bytes: ...
+    def append_bytes(self, path: str, data: bytes) -> None: ...
+```
+
+MemoryFiles copies its initial mapping; keys are opaque path strings, and values
+are immutable bytes. Reading a missing key raises FileNotFoundError. Appending
+creates a missing file key and adds the bytes; snapshots are detached/read-only.
+Empty or NUL-containing paths are invalid. CSV decoding, logical records, units
+and default policies belong to the CSV operation, not the byte adapter.
+
+LocalFiles is opt-in and never selected implicitly. Its root must be an existing
+directory. Operation paths are relative to that root; absolute paths and escapes
+through traversal or symlinks are rejected. It does not create parent directories.
+OS file errors propagate; appends can have partial external effects on failure
+and provide no rollback or concurrency guarantee. Paths on the actual AutoSuite
+host remain deployment-specific, not remapped by the reference adapter.
+
+Example runnable after stage 11:
+
+```python
+from sciloom.core.interpreter import Interpreter, MemoryFiles, ReferenceEnvironment
+
+files = MemoryFiles({"recipe.csv": b"id,volume\nA,1.5\n"})
+environment = ReferenceEnvironment(files=files)
+session = Interpreter(recipe_program, environment=environment)
+result = session.run(inputs={"path": "recipe.csv"})
+# A matching two-column recipe program returns ("A",) and (1.5 * mL,).
+# Reusing files shares bytes; creating MemoryFiles again starts independently.
+```
+
+#### Wall and monotonic clocks (stages 9 and 10)
+
+Signatures live in `sciloom.core.interpreter.clocks`:
+
+```python
+from datetime import datetime
+from typing import Protocol
+
+class WallClock(Protocol):
+    def now(self) -> datetime: ...
+
+class VirtualWallClock:
+    def __init__(self, instant: datetime) -> None: ...
+    def now(self) -> datetime: ...
+    def set(self, instant: datetime) -> None: ...
+
+class VirtualClock:
+    def __init__(self, *, start: float = 0.0) -> None: ...
+    def monotonic(self) -> float: ...
+    def wait(self, seconds: float) -> None: ...
+```
+
+Wall times must be timezone-aware; a naive datetime is rejected. VirtualWallClock
+returns its supplied instant until explicitly set. Each now_text operation calls
+now exactly once, then formats that captured value. VirtualClock owns finite,
+nonnegative seconds; wait advances it without real sleeping, rejects negative,
+Boolean or nonfinite durations, and validates the new value before changing state.
+Timer origins belong to the Function session, not to the shared clock service.
+Wall and monotonic clocks are independent; waiting does not implicitly change a
+VirtualWallClock. A custom WallClock can explicitly derive its time from a shared
+VirtualClock if a test needs that relationship.
+
+Example runnable after stage 10:
+
+```python
+from datetime import datetime, timezone
+from sciloom.core.interpreter import (
+    Interpreter, ReferenceEnvironment, VirtualClock, VirtualWallClock,
+)
+
+clock = VirtualClock()
+environment = ReferenceEnvironment(
+    clock=clock,
+    wall_clock=VirtualWallClock(datetime(2026, 9, 16, 12, 0, tzinfo=timezone.utc)),
+)
+result = Interpreter(timed_program, environment=environment).run()
+# For timer.start(); wait(2*s); timer.wait_until(5*s):
+assert clock.monotonic() == 5.0
+```
+
+#### Acknowledgement (stage 7)
+
+Signatures live in `sciloom.core.interpreter.acknowledgements`:
+
+```python
+from collections.abc import Iterable
+
+class QueuedAcknowledgements:
+    def __init__(self, responses: Iterable[bool] = ()) -> None: ...
+    @property
+    def remaining(self) -> int: ...
+    def acknowledge(self, message: str) -> None: ...
+```
+
+The constructor copies the response sequence and accepts only True entries:
+the current operation has OK confirmation, no cancellation/recovery result.
+acknowledge consumes exactly one response; exhaustion raises LookupError,
+translated by notify to `acknowledgement_required`. No service or empty queue
+ever auto-confirms. Successful acknowledgement records a typed event with the
+captured message before any following operation executes.
+
+Example runnable after stage 7:
+
+```python
+from sciloom.core.interpreter import (
+    Interpreter, QueuedAcknowledgements, ReferenceEnvironment,
+)
+
+responses = QueuedAcknowledgements([True])
+session = Interpreter(
+    one_notification_program,
+    environment=ReferenceEnvironment(acknowledgements=responses),
+)
+session.run()
+assert responses.remaining == 0
+# A second run fails with acknowledgement_required before its next operation.
+```
+
+#### Fixed locations (stage 13) and stored properties (stage 15)
+
+Signatures live in `sciloom.core.interpreter.locations` and
+`sciloom.core.interpreter.properties`. Identifiers are data, never import paths.
+Zone runtime values use ordered well identities; these directory interfaces do
+not depend on the author's Python Zone class.
+
+```python
+from collections.abc import Mapping
+from dataclasses import dataclass
+
+@dataclass(frozen=True, kw_only=True)
+class WellLocation:
+    well_id: str
+    label: str
+    controller_id: str | None = None
+    device_type_id: str | None = None
+
+class LocationDirectory:
+    def __init__(
+        self, *, wells: tuple[WellLocation, ...],
+        zones: Mapping[str, tuple[str, ...]],
+    ) -> None: ...
+    def find(self, name: str) -> tuple[str, ...]: ...
+    def describe(self, well_id: str) -> WellLocation: ...
+
+class WellProperties:
+    def __init__(
+        self, initial: Mapping[tuple[str, str], str] | None = None,
+    ) -> None: ...
+    def get(self, well_id: str, name: str) -> str: ...
+    def set(self, well_ids: tuple[str, ...], name: str, value: str) -> None: ...
+    def snapshot(self) -> Mapping[tuple[str, str], str]: ...
+```
+
+LocationDirectory copies and freezes inputs. Well identities are unique; zone
+members must exist, be ordered and not repeat. find returns an empty tuple for
+an unknown name; describe raises KeyError for an unknown identity. Labels are
+display text, not identities or positional indexes. Controller facts are optional
+for storage-only wells; at/device selection requires complete trusted deployment
+facts and compatible candidates. AutoSuiteLayout derives those facts from the
+read-only APP and explicit target profiles in stages 13/16, not guessed names.
+
+WellProperties copies the initial text mapping, keyed by (well identity, property
+name). Missing values raise KeyError. set validates its complete input and then
+assigns the same captured text to every selected identity. The IR handler checks
+membership in the location directory before calling the store. Its snapshots
+are detached/read-only; independent instances do not share property values.
+
+Example runnable after stage 15:
+
+```python
+from sciloom.core.interpreter import (
+    Interpreter, LocationDirectory, ReferenceEnvironment, WellLocation, WellProperties,
+)
+
+locations = LocationDirectory(
+    wells=(WellLocation(well_id="rack/1", label="1"),),
+    zones={"rack": ("rack/1",)},
+)
+properties = WellProperties({("rack/1", "sample_ID"): "A"})
+environment = ReferenceEnvironment(locations=locations, properties=properties)
+result = Interpreter(label_program, environment=environment).run()
+# If label_program writes "B" to sample_ID on rack/1:
+assert properties.snapshot()[("rack/1", "sample_ID")] == "B"
+```
+
+These are service setup examples, not complete experiment programs. Their named
+Program inputs arrive with the consuming feature tests/examples; no unimplemented
+snippet is claimed to have executed at stage 5.
 
 ## 3. Text (A01, stage 2)
 
