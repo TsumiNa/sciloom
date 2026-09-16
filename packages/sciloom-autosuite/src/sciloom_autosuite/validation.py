@@ -13,6 +13,7 @@ from sciloom.core.ir import (
     DeviceCommand,
     DeviceIf,
     Expression,
+    ForEachZone,
     If,
     ListGet,
     ListLiteral,
@@ -39,6 +40,7 @@ from sciloom.core.ir import (
     WaitUntil,
     WellName,
     While,
+    ZoneGet,
     ZoneLiteral,
 )
 from sciloom.core.ir.expressions import ExpressionChecker
@@ -70,6 +72,12 @@ def validate_runtime_guards(program: Program) -> tuple[Diagnostic, ...]:
             elif isinstance(node, WellName):
                 code = "unsupported_zone_cardinality"
                 message = "well_name requires a verified single-well check before AutoSuite WellFullName can be emitted; reference execution is available."
+            elif isinstance(node, ZoneGet):
+                code = "unsupported_zone_index"
+                message = "Zone indexing requires verified bounds failure propagation before AutoSuite tasks can be emitted; reference execution is available."
+            elif isinstance(node, ForEachZone) and node.fragment_size != 1:
+                code = "unsupported_zone_grouping"
+                message = "Grouped Zone traversal requires verified divisibility failure propagation; single-well traversal and reference execution are available."
             elif isinstance(node, ReadCsv):
                 code = "unsupported_csv_semantics"
                 message = "AutoSuite CSV expression evaluation, conversion and per-column result aggregation are not verified against typed literal CSV semantics; reference execution is available."
@@ -225,6 +233,9 @@ def validate_array_outputs(program: Program) -> tuple[Diagnostic, ...]:
                     assigned = block(statement.then_body, assigned) & block(statement.else_body, assigned)
                 elif isinstance(statement, While):
                     read(statement.condition, assigned)
+                    block(statement.body, assigned)
+                elif isinstance(statement, ForEachZone):
+                    read(statement.value, assigned)
                     block(statement.body, assigned)
                 elif isinstance(statement, ConfigureProperty):
                     read(statement.value, assigned)

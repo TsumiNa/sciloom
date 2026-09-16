@@ -6,7 +6,7 @@ the Python DSL. Experiment authors normally use Function instead.
 
 Program selects an entry FunctionIR and contains referenced functions, resources
 and a declarative device-type directory. Frozen semantic nodes retain structured
-If/While, calls, list operations, property configuration and lifecycle intent.
+If/While/ForEachZone, calls, list operations, property configuration and lifecycle intent.
 They do not contain AutoSuite UUIDs, task encodings or hidden context parameters.
 
 ## Types, ownership and identity
@@ -48,6 +48,25 @@ statements, not expressions. See the [direct timing example](../../examples/timi
 Device bindings apply only to DeviceResource. Specialization removes timers
 whose owning functions become unreachable; existing device wire fields do not
 change. Definite timer starts are checked after device specialization.
+
+## Zone values and traversal
+
+`ZoneType` is separate from scalars and lists. `ZoneLiteral`, `ZoneFind`,
+`ZoneCombine`, `ZoneLength` and `WellName` retain location intent. `ZoneGet(value,
+index)` evaluates the selection and index once in that order and returns a
+one-well Zone. The index must be a nonnegative INTEGER within the selection.
+
+`ForEachZone(target, value, body=(), fragment_size=1)` captures `value` once,
+checks divisibility, then assigns each fragment to a Function-owned internal Zone
+variable before running `body`. Empty input preserves the target. Body writes
+cannot change the captured selection; the final target value persists without
+an implicit restore. Nested loops capture independently, even when reusing a
+target. Body writes do not establish definite configuration or timer starts after
+a potentially empty loop. Specialization recursively selects branches inside it.
+
+Both are additive v4 kinds. The [direct traversal example](../../examples/zone-traversal-ir.md)
+shows JSON round trips, grouping and reference execution. AutoSuite only accepts
+size-one traversal until its index/divisibility failure checks are verified.
 
 ## Typed CSV statements
 

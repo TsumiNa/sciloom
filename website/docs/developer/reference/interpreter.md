@@ -200,6 +200,13 @@ events. An unknown name returns an empty Zone; an unknown well identity fails.
 WellName requires exactly one well. ZoneLength and ZoneCombine need no directory.
 See the [direct Zone example](../../examples/zone-ir.md).
 
+ZoneGet also needs no directory: it reads a nonnegative integer position and
+returns a one-well Zone, or raises index_bounds before assignment. ForEachZone
+captures its selection once and checks divisibility before target writes or body
+effects. Empty input preserves the target; each iteration consumes a step even
+when the body is empty. The target's last value remains in Function state. See
+[grouped traversal](../../examples/zone-traversal-ir.md) for a direct IR example.
+
 Zone values remain immutable in inputs, state and results. Whole-value assignment
 or a child parameter does not create a writable alias. The directory does not
 authorize device use: deployment checks belong to the target and later dynamic

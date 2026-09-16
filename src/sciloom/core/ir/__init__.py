@@ -20,6 +20,7 @@ from .model import (
     DevicePredicate,
     DeviceResource,
     Expression,
+    ForEachZone,
     FunctionIR,
     If,
     InputBinding,
@@ -56,6 +57,7 @@ from .model import (
     While,
     ZoneCombine,
     ZoneFind,
+    ZoneGet,
     ZoneLength,
     ZoneLiteral,
 )
@@ -63,6 +65,8 @@ from .types import ListType, ScalarType, ValueType, ZoneType
 from .validation import validate
 
 __all__ = [
+    "ForEachZone",
+    "ZoneGet",
     "ZoneType",
     "ZoneLiteral",
     "ZoneFind",

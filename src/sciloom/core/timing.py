@@ -10,6 +10,7 @@ from .ir import (
     ConfigureProperty,
     DeviceCommand,
     DeviceIf,
+    ForEachZone,
     If,
     ListSet,
     Literal,
@@ -25,6 +26,7 @@ from .ir import (
     Wait,
     WaitUntil,
     While,
+    ZoneLiteral,
 )
 from .ir.traversal import iter_nodes
 
@@ -74,6 +76,10 @@ def validate_timer_usage(program: Program) -> tuple[Diagnostic, ...]:
                     required |= left_needs | right_needs
             elif isinstance(statement, While):
                 if not (isinstance(statement.condition, Literal) and statement.condition.value is False):
+                    _, needs = analyze(statement.body, started)
+                    required |= needs
+            elif isinstance(statement, ForEachZone):
+                if not (isinstance(statement.value, ZoneLiteral) and not statement.value.well_ids):
                     _, needs = analyze(statement.body, started)
                     required |= needs
             elif isinstance(statement, DeviceIf):

@@ -42,6 +42,11 @@ class Scale(Function):
         assert_type(zones.combine(self.location, Zone.empty()), Zone)
         assert_type(zones.well_name(self.location), str)
         assert_type(len(self.location), int)
+        assert_type(self.location[0], Zone)
+        for self.location in zones.fragments(self.location, size=2):
+            assert_type(self.location, Zone)
+        for self.location in self.location:
+            assert_type(self.location, Zone)
         assert_type(self.index, int)
         assert_type(self.values, list[float])
         assert_type(self.name, str)
@@ -101,6 +106,8 @@ class Bad(Function):
         self.amount = self.elapsed
         self.location = "rack"
         zones.combine(self.location, 0)
+        self.location["0"]
+        zones.fragments(self.location, size="2")
         self.amount = self.amount + self.elapsed
         floor(self.amount)
         round(self.elapsed)
@@ -145,6 +152,6 @@ class Bad(Function):
         assert result.returncode == 0, result.stdout + result.stderr
     else:
         assert result.returncode == 1, result.stdout + result.stderr
-        assert result.stdout.count(" error: ") == 29, result.stdout
+        assert result.stdout.count(" error: ") == 31, result.stdout
         for code in ("[assignment]", "[list-item]"):
             assert code in result.stdout

@@ -134,7 +134,7 @@ The [label example](../../examples/prepare-labels.md) shows a complete program.
 | --- | --- |
 | Assignments to declared runtime fields; `+= -= *= /=` | Assignments to local names or undeclared fields |
 | Assignments and augmented assignments to list elements | Slicing assignments, such as `self.items[1:] = ...` |
-| `if` / `elif` / `else`, `while` | `for`, `break`, `continue`, `while ... else` |
+| `if` / `elif` / `else`, `while`, Zone `for` with a `Var[Zone]` target | List/general Python iteration, `break`, `continue`, loop `else` |
 | Calls to child Functions stored on `self` | Arbitrary helper calls, calls nested in expressions |
 | Device property assignment and declared commands | Property reads or augmented property assignments |
 | `log(value, category=..., stream=...)` | Logging lists, automatic object formatting or using log as a result |

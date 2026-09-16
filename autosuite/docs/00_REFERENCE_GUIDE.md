@@ -36,7 +36,7 @@ because they capture distinct configurations and task/version combinations.
 
 ## Reading order
 
-The 30 reference documents are in one directory, numbered 00–29. This guide is
+The 31 reference documents are in one directory, numbered 00–30. This guide is
 00; read the following documents in order or jump to the relevant group.
 
 ### Sources and runtime semantics
@@ -66,6 +66,7 @@ The 30 reference documents are in one directory, numbered 00–29. This guide is
 - [27 · CSV reads and parsing gate](27_CSV_READ_MAPPING.md)
 - [28 · CSV append and native export measurements](28_CSV_APPEND_MAPPING.md)
 - [29 · Zone values and read-only APP layout](29_ZONE_VALUES_AND_LAYOUT.md)
+- [30 · Zone indexing and sequential traversal](30_ZONE_TRAVERSAL_MAPPING.md)
 
 ### Current application and workflow
 

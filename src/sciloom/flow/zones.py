@@ -1,5 +1,7 @@
 """Runtime queries over a fixed location directory and ordered Zone values."""
 
+from collections.abc import Iterable
+
 from sciloom.core.locations import Zone
 
 
@@ -50,3 +52,24 @@ def well_name(value: Zone) -> str:
     missing location directory. Target support depends on its cardinality checks.
     """
     raise TypeError("zones.well_name is only available inside @runtime methods.")
+
+
+def fragments(value: Zone, *, size: int) -> Iterable[Zone]:
+    """Visit fixed-size groups in a runtime for loop over a captured Zone.
+
+    Args:
+        value: Selection captured once before iteration.
+        size: Positive host-time integer; the well count must be divisible by it.
+
+    Returns:
+        A runtime-only iterable for a declared Var[Zone] loop target. Empty
+        selections skip the body and preserve the target's previous value.
+
+    Raises:
+        TypeError: Called by host Python instead of as a runtime for iterable.
+
+    Reference execution rejects incomplete final groups before assigning the
+    target or executing the body. Equipment targets may restrict grouping until
+    their runtime failure propagation has been verified.
+    """
+    raise TypeError("zones.fragments is only available as a @runtime for iterable.")

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import ast
 from collections.abc import Sequence
+from dataclasses import replace
 
 from sciloom.core.ir import (
     Assignment,
@@ -38,6 +39,7 @@ from .device_conditions import device_condition
 from .device_operations import configure, device_command
 from .expressions import BINARY_OPERATORS, expression, is_expression_call
 from .timing import timing_statement
+from .zone_iteration import zone_loop
 
 
 def call(context: LoweringContext, node: ast.Call, targets: Sequence[ast.expr]) -> Call:
@@ -214,6 +216,9 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
                     else_body=statements(context, node.orelse),
                 )
             )
+        elif isinstance(node, ast.For):
+            loop = zone_loop(context, node)
+            result.append(replace(loop, body=statements(context, node.body)))
         elif isinstance(node, ast.While) and not node.orelse:
             result.append(
                 While(

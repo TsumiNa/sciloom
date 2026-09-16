@@ -46,4 +46,6 @@ Construct ordered immutable statements rather than target-specific tasks. IDs id
 
 ::: sciloom.core.ir.While
 
+::: sciloom.core.ir.ForEachZone
+
 ::: sciloom.core.ir.Statement

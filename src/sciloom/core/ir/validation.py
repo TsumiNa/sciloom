@@ -18,6 +18,7 @@ from .model import (
     DeviceCommand,
     DeviceIf,
     DeviceResource,
+    ForEachZone,
     FunctionIR,
     If,
     IsDevice,
@@ -44,7 +45,7 @@ from .model import (
 from .schema import _convert
 from .time_format import validate_wall_time_format
 from .traversal import iter_nodes
-from .types import ListType, ScalarType, ValueType, is_assignable
+from .types import ListType, ScalarType, ValueType, ZoneType, is_assignable
 
 
 def validate(package: Program) -> tuple[Diagnostic, ...]:
@@ -196,6 +197,25 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                     if stmt.op is not None:
                         source = checker.binary(stmt.op, target.element_type, source, p, stmt)
                     check_assignment(source, target.element_type, p, stmt)
+            elif isinstance(stmt, ForEachZone):
+                target_type = expression(stmt.target, function, f"{p}.target")
+                value_type = expression(stmt.value, function, f"{p}.value")
+                variable = checker.symbols.get(stmt.target.symbol_id)
+                if variable is not None and variable.role != VariableRole.INTERNAL:
+                    report(
+                        "zone_loop_target", "Zone loop targets must be declared Var[Zone] fields.", f"{p}.target", stmt
+                    )
+                for name, actual in (("target", target_type), ("value", value_type)):
+                    if actual is not None and not isinstance(actual, ZoneType):
+                        report("zone_type", "Zone traversal requires Zone values.", f"{p}.{name}", stmt)
+                if stmt.fragment_size <= 0:
+                    report(
+                        "zone_fragment_size",
+                        "Zone fragment size must be a positive integer.",
+                        f"{p}.fragment_size",
+                        stmt,
+                    )
+                statements(stmt.body, function, f"{p}.body", narrowed)
             elif isinstance(stmt, (If, While)):
                 condition = expression(stmt.condition, function, f"{p}.condition")
                 if condition is not None and condition != ScalarType.BOOLEAN:

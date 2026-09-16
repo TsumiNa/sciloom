@@ -26,6 +26,7 @@ from .model import (
     WellName,
     ZoneCombine,
     ZoneFind,
+    ZoneGet,
     ZoneLength,
     ZoneLiteral,
 )
@@ -49,7 +50,7 @@ class ExpressionChecker:
             if name_type is not None and name_type != ScalarType.TEXT:
                 self.report("text_type", "Zone names must be text.", path, expr)
             return ZoneType()
-        if isinstance(expr, (ZoneCombine, ZoneLength, WellName)):
+        if isinstance(expr, (ZoneCombine, ZoneLength, ZoneGet, WellName)):
             operands = (
                 (("left", expr.left), ("right", expr.right))
                 if isinstance(expr, ZoneCombine)
@@ -59,6 +60,12 @@ class ExpressionChecker:
                 value_type = self.check(value, function, f"{path}.{name}")
                 if value_type is not None and not isinstance(value_type, ZoneType):
                     self.report("zone_type", "Operation requires a Zone value.", f"{path}.{name}", value)
+            if isinstance(expr, ZoneGet):
+                index = self.check(expr.index, function, f"{path}.index")
+                if index is not None and index != ScalarType.INTEGER:
+                    self.report(
+                        "index_type", "Zone indices must be integers, excluding bool.", f"{path}.index", expr.index
+                    )
             if isinstance(expr, WellName):
                 if isinstance(expr.value, ZoneLiteral) and len(expr.value.well_ids) != 1:
                     self.report("zone_cardinality", "well_name requires exactly one well.", path, expr)

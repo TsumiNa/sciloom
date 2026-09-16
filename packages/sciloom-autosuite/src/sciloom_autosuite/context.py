@@ -112,6 +112,23 @@ class CodegenContext:
     def identifier(self, role: str, semantic_id: str) -> str:
         return "{" + str(uuid5(self.namespace, json.dumps((role, semantic_id)))).upper() + "}"
 
+    def sequential_zone(self, function: FunctionIR) -> Variable:
+        """Allocate a macro-local iterator, separate from writable semantic state."""
+        identity = self.fresh_id()
+        name = f"sciloom_zone_{self.sequence}"
+        occupied = {*self.names.values(), *self.parameter_names.values()}
+        while name in occupied:
+            name += "_"
+        self.names[identity] = name
+        return Variable(
+            node_id=identity,
+            owner_id=function.node_id,
+            name=name,
+            role=VariableRole.INTERNAL,
+            type=ZoneType(),
+            initial=ZoneLiteral(node_id=identity + ":initial"),
+        )
+
     def metadata(self, name: str, *, expanded: bool = False) -> list[XmlNode]:
         # Fixed epoch metadata makes recompilation reproducible; it is not execution state.
         result = [_xml("description"), _xml("name", name), _xml("edittime", "0")]

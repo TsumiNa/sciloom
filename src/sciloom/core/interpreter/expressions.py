@@ -23,6 +23,7 @@ from sciloom.core.ir import (
     WellName,
     ZoneCombine,
     ZoneFind,
+    ZoneGet,
     ZoneLength,
     ZoneLiteral,
 )
@@ -49,11 +50,18 @@ def evaluate(session: Interpreter, expression: Expression, frame: dict[str, Runt
         right_zone = evaluate(session, expression.right, frame)
         assert isinstance(left_zone, Zone) and isinstance(right_zone, Zone)
         return Zone(well_ids=tuple(dict.fromkeys((*left_zone.well_ids, *right_zone.well_ids))))
-    if isinstance(expression, (ZoneLength, WellName)):
+    if isinstance(expression, (ZoneLength, ZoneGet, WellName)):
         zone = evaluate(session, expression.value, frame)
         assert isinstance(zone, Zone)
         if isinstance(expression, ZoneLength):
             return len(zone)
+        if isinstance(expression, ZoneGet):
+            index = evaluate(session, expression.index, frame)
+            if type(index) is not int:
+                fail("index_type", "Zone indices must be integers, excluding bool.", expression)
+            if index < 0 or index >= len(zone):
+                fail("index_bounds", "Zone index is outside the selection.", expression)
+            return zone[index]
         if len(zone) != 1:
             fail("zone_cardinality", "well_name requires exactly one well.", expression)
         directory = _require_service(session.environment.locations, "locations", expression)

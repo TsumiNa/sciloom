@@ -14,6 +14,7 @@ from .ir import (
     DeviceCommand,
     DeviceIf,
     DeviceResource,
+    ForEachZone,
     If,
     IsDevice,
     ListSet,
@@ -119,7 +120,7 @@ def specialize(program: Program, *, bindings: DeviceBindings) -> Program:
                 selected.append(
                     replace(statement, then_body=block(statement.then_body), else_body=block(statement.else_body))
                 )
-            elif isinstance(statement, While):
+            elif isinstance(statement, (While, ForEachZone)):
                 selected.append(replace(statement, body=block(statement.body)))
             elif isinstance(
                 statement,

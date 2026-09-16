@@ -13,7 +13,7 @@ from pathlib import Path
 import pytest
 
 
-@pytest.mark.parametrize("mutation_kind", ["missing_node", "new_unary_operation"])
+@pytest.mark.parametrize("mutation_kind", ["missing_node", "missing_zone_node", "new_unary_operation"])
 def test_missing_consumer_handlers_fail_exhaustiveness(tmp_path, mutation_kind):
     root = Path(__file__).resolve().parents[4]
     for package, source in (
@@ -39,6 +39,8 @@ def test_missing_consumer_handlers_fail_exhaustiveness(tmp_path, mutation_kind):
         "sciloom_autosuite/tasks.py": "ListSet",
         "sciloom_autosuite/validation.py": "ListSet",
     }
+    if mutation_kind == "missing_zone_node":
+        omissions = {name: "ZoneGet" if name.endswith("/expressions.py") else "ForEachZone" for name in omissions}
     if mutation_kind == "new_unary_operation":
         model = tmp_path / "sciloom/core/ir/model.py"
         model.write_text(model.read_text().replace('    NOT = "not"', '    NOT = "not"\n    UNHANDLED = "unhandled"'))
@@ -63,6 +65,18 @@ def test_missing_consumer_handlers_fail_exhaustiveness(tmp_path, mutation_kind):
                 and isinstance(test.func, ast.Name)
                 and test.func.id == "isinstance"
                 and len(test.args) == 2
+                and isinstance(test.args[1], ast.Tuple)
+            ):
+                kinds = test.args[1].elts
+                retained = [item for item in kinds if not (isinstance(item, ast.Name) and item.id == self.kind)]
+                if len(retained) != len(kinds):
+                    self.removed += 1
+                    test.args[1].elts = retained
+            if (
+                isinstance(test, ast.Call)
+                and isinstance(test.func, ast.Name)
+                and test.func.id == "isinstance"
+                and len(test.args) == 2
                 and isinstance(test.args[1], ast.Name)
                 and test.args[1].id == self.kind
             ):
@@ -73,10 +87,10 @@ def test_missing_consumer_handlers_fail_exhaustiveness(tmp_path, mutation_kind):
     paths = []
     for name, kind in omissions.items():
         path = tmp_path / name
-        if mutation_kind == "missing_node":
+        if mutation_kind in ("missing_node", "missing_zone_node"):
             mutation = RemoveHandler(kind)
             changed = mutation.visit(ast.parse(path.read_text()))
-            assert mutation.removed == 1, name
+            assert mutation.removed >= 1, name
             path.write_text(ast.unparse(changed))
         paths.append(str(path))
 

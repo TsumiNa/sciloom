@@ -28,6 +28,7 @@ from sciloom.core.ir import (
     WellName,
     ZoneCombine,
     ZoneFind,
+    ZoneGet,
     ZoneLength,
     ZoneLiteral,
     ZoneType,
@@ -73,10 +74,13 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
         return _list_literal(context, node, elements, expected)
     if isinstance(node, ast.Subscript):
         if isinstance(node.slice, ast.Slice):
-            context.fail("python_subset", "List slicing is unsupported.", node)
-        return ListGet(
-            **context.metadata(node), value=expression(context, node.value), index=expression(context, node.slice)
-        )
+            context.fail("python_subset", "Slicing is unsupported.", node)
+        metadata = context.metadata(node)
+        container = expression(context, node.value)
+        index = expression(context, node.slice)
+        if isinstance(context.type_of(container), ZoneType):
+            return ZoneGet(**metadata, value=container, index=index)
+        return ListGet(**metadata, value=container, index=index)
     if is_length_call(node):
         if not context.source.allows_len:
             context.fail(

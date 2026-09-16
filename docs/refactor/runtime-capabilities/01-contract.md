@@ -1346,6 +1346,89 @@ break, continue and for/else. Preserve a ForEachZone-style high-level node and
 map it to the observed sequential macro, whose fragment position is distinct
 from the ordinary loop counter. Apply normal zero-iteration analysis.
 
+### Stage-14 concrete traversal contract
+
+These interfaces were recorded before stage-14 implementation and are now
+exercised by the traversal author/developer examples and Python/IR/JSON tests.
+Stage 13 did not accept indexing or for statements. The two frozen keyword-only
+IR nodes retain JSON v4 and declare explicit stable kinds:
+
+```python
+from dataclasses import dataclass
+from typing import ClassVar
+from sciloom.core.ir.model import Expression, Node, Reference, Statement
+
+@dataclass(frozen=True, kw_only=True)
+class ZoneGet(Node):
+    __ir_kind__: ClassVar[str] = "ZoneGet"
+    value: Expression
+    index: Expression
+
+@dataclass(frozen=True, kw_only=True)
+class ForEachZone(Node):
+    __ir_kind__: ClassVar[str] = "ForEachZone"
+    target: Reference
+    value: Expression
+    body: tuple[Statement, ...] = ()
+    fragment_size: int = 1
+```
+
+ZoneGet evaluates value then index once and returns a single-well Zone. Its
+integer index excludes bool; negative/out-of-bounds access fails without writing
+the assignment destination. Add matching host `Zone.__getitem__(index: int) -> Zone`
+and `Zone.__iter__() -> Iterator[Zone]` so Python typing sees one-well values.
+Host indexing performs the same explicit bounds checks, with TypeError for a
+noninteger selector and IndexError for invalid bounds. Slice assignment, general
+mutation and list[Zone] remain unsupported.
+
+`zones.fragments(value: Zone, *, size: int) -> Iterable[Zone]` is a guarded runtime
+marker. It is accepted only as a for iterable. Size must be a positive non-bool
+host integer literal or specialized self attribute; no expanded arguments or
+runtime fields. Ordinary for over Zone uses fragment_size=1. The target is an
+existing Var[Zone] owned by the current Function, never an Input/Output, device
+slot, host field or undeclared local. All bodies are type-checked even if empty.
+
+ForEachZone captures its entire immutable value before checking divisibility
+and before the first target write or body effect. An empty selection leaves the
+target's prior value unchanged. Each iteration assigns one complete consecutive
+fragment, then executes its body. The final target value persists after return;
+ordinary body assignments to that field remain visible until the next iteration.
+Changing the original iterable field does not change the captured traversal.
+Nested loops may use the same target under these ordinary assignment rules;
+each loop retains its own captured selection. No loop implicitly restores a
+previous target value. Loop targets do not become Python local bindings.
+
+Validation, specialization, configuration and timer analyses, reference execution
+and target consumers handle this structured node explicitly. Loop-local writes
+do not establish post-loop guarantees because a loop may execute zero times.
+Reads/effects within a body remain ordered. Reference iteration ticks each
+iteration, including an empty body, so configured step budgets still apply.
+
+The AutoSuite profile uses the observed executionmode=1/sequentialzones structure
+from F43/F46 with separate fragmentvariable and loopvariable. Capture the input
+into private Zone storage before entering the macro; use a private macro-local
+sequential Zone, copied to the semantic target at the start of each iteration.
+This prevents writes or child calls from changing the native iterator selection.
+Wrap the sequential macro in a separate nonempty condition so an empty input
+skips the whole macro and preserves the target state.
+
+Fragment size 1 cannot fail divisibility and may compile using that observed
+profile. Larger groups whose divisibility cannot be established are rejected
+until reliable fatal runtime checks are verified. ZoneGet likewise requires a
+proved bound; F43's custom error-function call is not evidence of fatal propagation.
+The reference implementation accepts dynamic indices/groups with explicit errors;
+target diagnostics must state the missing platform guarantee. Do not silently
+emit a shorter final fragment, return an empty Zone for an invalid index, or call
+an error/log/dialog and continue. Native probes may measure the remaining cases
+without exposing them as supported portable compilation.
+
+The first target implementation accepts size one and explicitly rejects all
+ZoneGet nodes and larger groups; it does not add a general range/cardinality
+proof engine. `examples/visit_locations.py` produces the native ASFP;
+`examples/developer/zone_traversal_ir.py` demonstrates reference indexing/groups
+and JSON round trips. The full CountRack example above is executable in reference
+execution at this stage, while its index/group operations remain target gates.
+
 ## 14. Well properties (A07, stage 15)
 
 ```python

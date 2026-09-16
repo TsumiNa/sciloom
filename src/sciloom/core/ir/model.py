@@ -199,6 +199,16 @@ class ZoneLength(Node):
 
 
 @dataclass(frozen=True, kw_only=True)
+class ZoneGet(Node):
+    """Select a single well by nonnegative integer position; bool is invalid."""
+
+    __ir_kind__: ClassVar[str] = "ZoneGet"
+
+    value: "Expression"
+    index: "Expression"
+
+
+@dataclass(frozen=True, kw_only=True)
 class WellName(Node):
     """Read the display name of exactly one known well from the fixed directory."""
 
@@ -222,6 +232,7 @@ Expression = (
     | ZoneFind
     | ZoneCombine
     | ZoneLength
+    | ZoneGet
     | WellName
 )
 """Closed set of typed runtime expressions."""
@@ -466,6 +477,23 @@ class While(Node):
 
 
 @dataclass(frozen=True, kw_only=True)
+class ForEachZone(Node):
+    """Capture a Zone once and visit complete fragments in selection order.
+
+    The target is a Function-owned internal Zone variable. Empty selections
+    preserve it; otherwise each fragment is assigned before executing the body.
+    Divisibility is checked before any target write or body effect.
+    """
+
+    __ir_kind__: ClassVar[str] = "ForEachZone"
+
+    target: Reference
+    value: Expression
+    body: tuple["Statement", ...] = ()
+    fragment_size: int = 1
+
+
+@dataclass(frozen=True, kw_only=True)
 class DeviceResource(Node):
     """A typed logical device, independent of deployment addresses."""
 
@@ -603,6 +631,7 @@ Statement = (
     | Call
     | If
     | While
+    | ForEachZone
     | ConfigureProperty
     | StartAgitation
     | StopAgitation

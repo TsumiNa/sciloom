@@ -148,19 +148,19 @@ def test_zone_language_restrictions():
         def run(self) -> None:
             self.result = self.selected == self.selected
 
-    class Index(Function):
+    class Slice(Function):
         selected: Input[Zone]
         result: Output[Zone]
 
         @runtime
         def run(self) -> None:
-            self.result = self.selected[0]
+            self.result = self.selected[:]
 
     for cls, code in (
         (Truth, "condition_type"),
         (Add, "operator_type"),
         (Equal, "operator_type"),
-        (Index, "list_type"),
+        (Slice, "python_subset"),
     ):
         with pytest.raises(IRValidationError, match=code):
             cls().to_ir()

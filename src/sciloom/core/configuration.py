@@ -12,6 +12,7 @@ from .ir import (
     DeviceCommand,
     DeviceIf,
     DeviceResource,
+    ForEachZone,
     If,
     ListSet,
     Literal,
@@ -27,6 +28,7 @@ from .ir import (
     Wait,
     WaitUntil,
     While,
+    ZoneLiteral,
 )
 from .ir.device_contracts import START_AGITATION_ID, STOP_AGITATION_ID
 from .ir.traversal import iter_nodes
@@ -106,6 +108,10 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
                     required |= left_needs | right_needs
             elif isinstance(statement, While):
                 if not (isinstance(statement.condition, Literal) and statement.condition.value is False):
+                    _, needs = analyze(statement.body, configured)
+                    required |= needs
+            elif isinstance(statement, ForEachZone):
+                if not (isinstance(statement.value, ZoneLiteral) and not statement.value.well_ids):
                     _, needs = analyze(statement.body, configured)
                     required |= needs
             elif isinstance(
