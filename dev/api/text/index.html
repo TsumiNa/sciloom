@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/api/comptime/">
+        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/api/text/">
       
       
-        <link rel="prev" href="../units/">
+        <link rel="prev" href="../comptime/">
       
       
-        <link rel="next" href="../text/">
+        <link rel="next" href="../autosuite/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Compile-time queries - SciLoom</title>
+        <title>Runtime text - SciLoom</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#compile-time-device-queries" class="md-skip">
+        <a href="#runtime-text" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Compile-time queries
+              Runtime text
             
           </span>
         </div>
@@ -2693,6 +2693,33 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../comptime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Compile-time queries
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -2712,7 +2739,7 @@
   <span class="md-ellipsis">
     
   
-  Compile-time queries
+  Runtime text
 
     
   </span>
@@ -2729,7 +2756,7 @@
   <span class="md-ellipsis">
     
   
-  Compile-time queries
+  Runtime text
 
     
   </span>
@@ -2755,10 +2782,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#sciloom.comptime.can_write" class="md-nav__link">
+  <a href="#sciloom.text" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        can_write
+        text
       </span>
     </span>
   </a>
@@ -2766,10 +2793,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sciloom.comptime.supports" class="md-nav__link">
+  <a href="#sciloom.text.trim" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        supports
+        trim
       </span>
     </span>
   </a>
@@ -2777,10 +2804,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sciloom.comptime.is_device" class="md-nav__link">
+  <a href="#sciloom.text.split_part" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        is_device
+        split_part
       </span>
     </span>
   </a>
@@ -2791,33 +2818,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../text/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Runtime text
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -3114,10 +3114,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#sciloom.comptime.can_write" class="md-nav__link">
+  <a href="#sciloom.text" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        can_write
+        text
       </span>
     </span>
   </a>
@@ -3125,10 +3125,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sciloom.comptime.supports" class="md-nav__link">
+  <a href="#sciloom.text.trim" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        supports
+        trim
       </span>
     </span>
   </a>
@@ -3136,10 +3136,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sciloom.comptime.is_device" class="md-nav__link">
+  <a href="#sciloom.text.split_part" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        is_device
+        split_part
       </span>
     </span>
   </a>
@@ -3169,24 +3169,67 @@
 
                   
 
-<h1 id="compile-time-device-queries">Compile-time device queries</h1>
-<p>Import <code>comptime</code> from <code>sciloom</code>. These predicates belong only in compiled <code>if</code>/<code>elif</code> conditions; host calls raise TypeError.</p>
+<h1 id="runtime-text">Runtime text</h1>
+<p>Import <code>text</code> from <code>sciloom</code>. Write these operations inside <code>@runtime</code> methods;
+use ordinary Python string methods for host-time data.</p>
 
+
+<div class="doc doc-object doc-module">
+
+
+
+<h2 id="sciloom.text" class="doc doc-heading">
+            <span class="doc doc-object-name doc-module-name">sciloom.text</span>
+
+
+</h2>
+
+    <div class="doc doc-contents first">
+
+        <p>Typed text operations for use inside compiled runtime methods.</p>
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
 
 <div class="doc doc-object doc-function">
 
 
-<h2 id="sciloom.comptime.can_write" class="doc doc-heading">
-            <span class="doc doc-object-name doc-function-name">sciloom.comptime.can_write</span>
+<h2 id="sciloom.text.trim" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">sciloom.text.trim</span>
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">can_write</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="n">BaseDevice</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">trim</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
 
-        <p>Query the bound device's explicit writable capability.</p>
+        <p>Remove space, tab, carriage return and line feed from both ends.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -3202,30 +3245,14 @@
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>device</code>
-            </td>
-            <td>
-                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.devices.BaseDevice&lt;/span&gt;" href="../devices/#sciloom.devices.BaseDevice">BaseDevice</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Logical device slot inside a runtime method.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>name</code>
+                <code>value</code>
             </td>
             <td>
                   <code><span title="str">str</span></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>String literal naming a declared property.</p>
+                <p>Runtime text to trim; other Unicode whitespace is retained.</p>
               </div>
             </td>
             <td>
@@ -3247,11 +3274,11 @@
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><span title="bool">bool</span></code>
+                  <code><span title="str">str</span></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>A compile-time Boolean used only in an if/elif condition.</p>
+                <p>Trimmed runtime text, without changing the input.</p>
               </div>
             </td>
           </tr>
@@ -3274,13 +3301,12 @@
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Called directly by host Python.</p>
+                <p>Called by host Python instead of written in a runtime method.</p>
               </div>
             </td>
           </tr>
       </tbody>
     </table>
-        <p>This query does not narrow the Python device type.</p>
 
 
     </div>
@@ -3290,19 +3316,17 @@
 <div class="doc doc-object doc-function">
 
 
-<h2 id="sciloom.comptime.supports" class="doc doc-heading">
-            <span class="doc doc-object-name doc-function-name">sciloom.comptime.supports</span>
+<h2 id="sciloom.text.split_part" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">sciloom.text.split_part</span>
 
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">supports</span><span class="p">(</span>
-    <span class="n">device</span><span class="p">:</span> <span class="n">BaseDevice</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">split_part</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
 
-        <p>Query a registered command independently of Python inheritance.</p>
+        <p>Select one zero-based part, retaining empty parts between delimiters.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -3318,14 +3342,14 @@
       <tbody>
           <tr class="doc-section-item">
             <td>
-                <code>device</code>
+                <code>value</code>
             </td>
             <td>
-                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.devices.BaseDevice&lt;/span&gt;" href="../devices/#sciloom.devices.BaseDevice">BaseDevice</a></code>
+                  <code><span title="str">str</span></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Logical device slot inside a runtime method.</p>
+                <p>Runtime text to split.</p>
               </div>
             </td>
             <td>
@@ -3334,14 +3358,30 @@
           </tr>
           <tr class="doc-section-item">
             <td>
-                <code>command</code>
+                <code>delimiter</code>
             </td>
             <td>
-                  <code><span title="typing.Callable">Callable</span>[..., None]</code>
+                  <code><span title="str">str</span></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Registered command method, for example <code>Agitator.start</code>.</p>
+                <p>Nonempty text separating parts; treated literally.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>index</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Nonnegative integer part index, excluding bool.</p>
               </div>
             </td>
             <td>
@@ -3363,11 +3403,11 @@
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><span title="bool">bool</span></code>
+                  <code><span title="str">str</span></code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>A compile-time Boolean used only in an if/elif condition.</p>
+                <p>The selected text, or empty text if the part does not exist.</p>
               </div>
             </td>
           </tr>
@@ -3390,128 +3430,23 @@
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Called directly by host Python.</p>
+                <p>Called by host Python instead of written in a runtime method.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.core.diagnostics.ExecutionError&lt;/span&gt;" href="../diagnostics/#sciloom.core.diagnostics.ExecutionError">ExecutionError</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Reference execution encounters
+an empty delimiter or negative index.</p>
               </div>
             </td>
           </tr>
       </tbody>
     </table>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="sciloom.comptime.is_device" class="doc doc-heading">
-            <span class="doc doc-object-name doc-function-name">sciloom.comptime.is_device</span>
-
-
-</h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">is_device</span><span class="p">(</span>
-    <span class="n">device</span><span class="p">:</span> <span class="n">BaseDevice</span><span class="p">,</span> <span class="n">device_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">]</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TypeGuard</span><span class="p">[</span><span class="n">T</span><span class="p">]</span>
-</code></pre></div>
-
-    <div class="doc doc-contents first">
-
-        <p>Narrow a logical interface to a bound device type or subtype.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>device</code>
-            </td>
-            <td>
-                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.devices.BaseDevice&lt;/span&gt;" href="../devices/#sciloom.devices.BaseDevice">BaseDevice</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Logical device slot inside a runtime method.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>device_type</code>
-            </td>
-            <td>
-                  <code><span title="type">type</span>[<span title="sciloom.flow.comptime.T">T</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Declared device class with a versioned semantic identity.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="typing.TypeGuard">TypeGuard</span>[<span title="sciloom.flow.comptime.T">T</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A type guard recognized by type checkers and compiled if/elif conditions.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-<p><span class="doc-section-title">Raises:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="TypeError">TypeError</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Called directly by host Python.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-        <p>The IR retains both branches until specialization with trusted bindings.</p>
 
 
     </div>
@@ -3549,7 +3484,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../units/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Units">
+          <a href="../comptime/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Compile-time queries">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -3559,20 +3494,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Units
+                Compile-time queries
               </div>
             </div>
           </a>
         
         
           
-          <a href="../text/" class="md-footer__link md-footer__link--next" aria-label="Next: Runtime text">
+          <a href="../autosuite/" class="md-footer__link md-footer__link--next" aria-label="Next: AutoSuite">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Runtime text
+                AutoSuite
               </div>
             </div>
             <div class="md-footer__button md-icon">

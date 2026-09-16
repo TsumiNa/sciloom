@@ -2369,6 +2369,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../prepare-labels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Prepare labels
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../non-zero-array-min/" class="md-nav__link">
         
   
@@ -2776,6 +2803,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../api/text/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime text
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../api/autosuite/" class="md-nav__link">
         
   
@@ -3108,8 +3162,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.0
-    · <code title="5bc3042f1aa491dd7d6944f5c1e813d47a810b70">5bc3042f</code>
+    · SciLoom 0.3.1
+    · <code title="6b8965d3572b9c50d08b98a2918a20ba01a24039">6b8965d3</code>
   </p>
 </aside>
 
@@ -3262,7 +3316,12 @@ imports are contributor contracts, and it performs no hardware I/O.</p>
         <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">iter_nodes</span><span class="p">(</span><span class="n">program</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">ConfigureProperty</span><span class="p">)</span> <span class="ow">and</span> <span class="n">node</span><span class="o">.</span><span class="n">property_id</span> <span class="o">==</span> <span class="s2">"example.demo-agitator.gain/v1"</span><span class="p">:</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Literal</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">value</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span>
+                    <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Literal</span><span class="p">)</span>
+                    <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+                    <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">bool</span>
+                    <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">value</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;=</span> <span class="mi">1</span>
+                <span class="p">):</span>
                     <span class="n">diagnostics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                         <span class="n">Diagnostic</span><span class="p">(</span>
                             <span class="n">code</span><span class="o">=</span><span class="s2">"demo_gain_range"</span><span class="p">,</span>

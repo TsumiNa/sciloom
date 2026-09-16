@@ -2452,6 +2452,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/prepare-labels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Prepare labels
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2760,6 +2787,33 @@
     
   
   Compile-time queries
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/text/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime text
 
     
   </span>
@@ -3100,8 +3154,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.0
-    · <code title="5bc3042f1aa491dd7d6944f5c1e813d47a810b70">5bc3042f</code>
+    · SciLoom 0.3.1
+    · <code title="6b8965d3572b9c50d08b98a2918a20ba01a24039">6b8965d3</code>
   </p>
 </aside>
 
@@ -3117,8 +3171,8 @@ If/While, calls, list operations, property configuration and lifecycle intent.
 They do not contain AutoSuite UUIDs, task encodings or hidden context parameters.</p>
 <h2 id="types-ownership-and-identity">Types, ownership and identity</h2>
 <p>Variables have an owner function, role and value type. Scalars are INTEGER, REAL,
-BOOLEAN and ROTATIONAL_SPEED internally; a ListType contains one scalar element
-type. Public Python authors use native int/float/bool rather than these IR enums.
+BOOLEAN, TEXT and ROTATIONAL_SPEED internally; a ListType contains one scalar element
+type. Public Python authors use native int/float/bool/str rather than these IR enums.
 Internal variables require literal initializers. Input/output defaults are not
 supported. Conditions are Boolean and list element types are invariant.</p>
 <p>IDs identify node occurrences in a program-wide namespace. Two reads of one

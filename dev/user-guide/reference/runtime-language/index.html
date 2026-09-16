@@ -1189,6 +1189,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#text" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Text
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#statements" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2482,6 +2493,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/prepare-labels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Prepare labels
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2809,6 +2847,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../api/text/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime text
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../api/autosuite/" class="md-nav__link">
         
   
@@ -3115,6 +3180,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#text" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Text
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#statements" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3163,8 +3239,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.0
-    · <code title="5bc3042f1aa491dd7d6944f5c1e813d47a810b70">5bc3042f</code>
+    · SciLoom 0.3.1
+    · <code title="6b8965d3572b9c50d08b98a2918a20ba01a24039">6b8965d3</code>
   </p>
 </aside>
 
@@ -3191,12 +3267,16 @@ of the Python script use ordinary Python.</p>
 <td>Separate from integers; only Boolean expressions are valid conditions</td>
 </tr>
 <tr>
+<td><code>str</code></td>
+<td>Text without implicit numeric conversion or truthiness</td>
+</tr>
+<tr>
 <td><code>RotationalSpeed</code></td>
 <td><code>600 * rpm</code> or <code>10 * rps</code>; the only physical quantity currently supported</td>
 </tr>
 <tr>
 <td><code>list[T]</code></td>
-<td>One-dimensional list of <code>int</code>, <code>float</code>, <code>bool</code> or <code>RotationalSpeed</code></td>
+<td>One-dimensional list of <code>int</code>, <code>float</code>, <code>bool</code>, <code>str</code> or <code>RotationalSpeed</code></td>
 </tr>
 </tbody>
 </table>
@@ -3237,6 +3317,10 @@ List-to-list assignment requires the same element type; a literal assigned to
 <td>Slicing, comprehensions, list methods such as <code>append</code></td>
 </tr>
 <tr>
+<td>Text concatenation, equality, <code>len</code>, <code>text.trim</code>, <code>text.split_part</code></td>
+<td>String slicing, implicit conversion, arbitrary string methods</td>
+</tr>
+<tr>
 <td><code>300 * rpm</code> from a host number</td>
 <td>Attaching a unit to a runtime number</td>
 </tr>
@@ -3244,10 +3328,53 @@ List-to-list assignment requires the same element type; a literal assigned to
 </table>
 <p>Arithmetic and ordering comparisons require numeric operands. Division produces
 a float. Speeds support equality and inequality, but no runtime arithmetic. A condition
-must be Boolean: use <code>self.count &gt; 0</code>, not <code>self.count</code>.
+must be Boolean: use <code>self.count &gt; 0</code>, not <code>self.count</code>. Text also supports <code>+</code>
+for concatenation and <code>==</code>/<code>!=</code> for exact comparisons.
 Lists have no implicit truth value, whole-list comparisons or arithmetic.</p>
 <p><strong>AutoSuite restriction:</strong> although SciLoom accepts <code>and</code> and <code>or</code>,
 this target rejects them. Use <a href="../../troubleshooting/#autosuite-rejects-boolean-combinations">nested conditions</a>.</p>
+<h2 id="text">Text</h2>
+<p>Declare text with <code>Input[str]</code>, <code>Output[str]</code> or an initialized <code>Var[str] = ""</code>.
+Import <code>text</code> from <code>sciloom</code> for the two runtime helpers:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>self.name + "_processed"</code></td>
+<td>A new text value</td>
+</tr>
+<tr>
+<td><code>len(self.name)</code></td>
+<td>Number of Unicode code points, without normalization</td>
+</tr>
+<tr>
+<td><code>text.trim(self.name)</code></td>
+<td>Removes space, tab, CR and LF at both ends; retains other Unicode whitespace</td>
+</tr>
+<tr>
+<td><code>text.split_part(self.name, ",", 1)</code></td>
+<td>Second comma-separated part; empty parts are retained, missing parts return <code>""</code></td>
+</tr>
+</tbody>
+</table>
+<p>Split delimiters must be nonempty, and indices must be nonnegative integers,
+excluding bool. Use <code>self.name != ""</code> for a condition. Runtime helpers belong
+inside <code>@runtime</code>; ordinary host Python can use its own string methods.</p>
+<p><strong>AutoSuite restriction:</strong> split currently requires a literal nonempty delimiter
+and literal nonnegative index. Text-list values support construction, whole-list
+copies and function parameters; indexed reads/writes needing runtime bounds checks
+are refused until AutoSuite failure propagation has been verified. Reference
+execution supports these operations. Unicode length, whitespace and encoding
+equivalence on AutoSuite still require Executor validation.
+AutoSuite length currently accepts literal BMP text only: it rejects lengths of
+runtime text because that text can contain non-BMP characters whose native count
+has not been verified.</p>
+<p>The <a href="../../../examples/prepare-labels/">label example</a> shows a complete program.</p>
 <h2 id="statements">Statements</h2>
 <table>
 <thead>

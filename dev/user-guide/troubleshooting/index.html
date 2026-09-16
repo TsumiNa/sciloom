@@ -1124,6 +1124,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#autosuite-rejects-a-text-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        AutoSuite rejects a text operation
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#autosuite-rejects-an-output-list" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2546,6 +2557,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/prepare-labels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Prepare labels
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2854,6 +2892,33 @@
     
   
   Compile-time queries
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/text/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime text
 
     
   </span>
@@ -3223,6 +3288,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#autosuite-rejects-a-text-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        AutoSuite rejects a text operation
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#autosuite-rejects-an-output-list" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3293,8 +3369,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.0
-    · <code title="5bc3042f1aa491dd7d6944f5c1e813d47a810b70">5bc3042f</code>
+    · SciLoom 0.3.1
+    · <code title="6b8965d3572b9c50d08b98a2918a20ba01a24039">6b8965d3</code>
   </p>
 </aside>
 
@@ -3391,7 +3467,7 @@ A plain declaration such as <code>count: int = 0</code> is host configuration.</
 <tr>
 <td><code>class_schema</code></td>
 <td>an unsupported value type</td>
-<td>use one of the four types or a list of one (<a href="../reference/runtime-language/">runtime language</a>)</td>
+<td>use a supported scalar type or a list of one (<a href="../reference/runtime-language/">runtime language</a>)</td>
 </tr>
 <tr>
 <td><code>class_schema</code></td>
@@ -3491,7 +3567,7 @@ a <code>for</code> loop is not supported:</p>
 </tr>
 <tr>
 <td><code>python_subset</code></td>
-<td>a chained comparison, a string, a call, an attribute chain</td>
+<td>a chained comparison, an unsupported call or attribute chain</td>
 <td>split comparisons; use declared fields and the supported calls in <a href="../reference/runtime-language/">runtime syntax</a></td>
 </tr>
 <tr>
@@ -3516,8 +3592,8 @@ a <code>for</code> loop is not supported:</p>
 </tr>
 <tr>
 <td><code>python_subset</code></td>
-<td><code>len()</code> of a scalar or with keywords</td>
-<td><code>len(self.items)</code></td>
+<td><code>len()</code> of a number or with keywords</td>
+<td><code>len(self.items)</code> or <code>len(self.label)</code>; see the AutoSuite text limits below</td>
 </tr>
 <tr>
 <td><code>python_subset</code></td>
@@ -3531,8 +3607,8 @@ a <code>for</code> loop is not supported:</p>
 </tr>
 <tr>
 <td><code>host_value</code></td>
-<td>a host list, string or object read through <code>self</code></td>
-<td>embed scalars only (<a href="../advanced/specialization/">specialization</a>)</td>
+<td>a host list or arbitrary object read through <code>self</code></td>
+<td>embed scalars only, including text (<a href="../advanced/specialization/">specialization</a>)</td>
 </tr>
 </tbody>
 </table>
@@ -3637,6 +3713,38 @@ to the AutoSuite target.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="autosuite-rejects-a-text-operation">AutoSuite rejects a text operation</h2>
+<p>The reference interpreter supports the full <a href="../reference/runtime-language/#text">text vocabulary</a>.
+Some AutoSuite mappings still need platform verification. These diagnostics
+identify the restricted operation before generating a function package:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Cause</th>
+<th>Current option</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>unsupported_text_length</code></td>
+<td>runtime text or non-BMP text passed to <code>len()</code></td>
+<td>use reference execution; target length currently accepts BMP literals only</td>
+</tr>
+<tr>
+<td><code>unsupported_runtime_guard</code></td>
+<td>a dynamic split selector, empty delimiter, negative split index or guarded text-list indexing</td>
+<td>use a literal nonempty delimiter and nonnegative index; pass whole text lists</td>
+</tr>
+<tr>
+<td><code>unsupported_text_literal</code></td>
+<td>NUL, surrogate code points or U+FFFE/U+FFFF</td>
+<td>remove characters that cannot be represented in the XML expression</td>
+</tr>
+</tbody>
+</table>
+<p>Use <code>text.trim</code> and <code>text.split_part</code> inside <code>@runtime</code>. Calling these markers
+directly from ordinary Python raises <code>TypeError</code>.</p>
 <h2 id="autosuite-rejects-an-output-list">AutoSuite rejects an output list</h2>
 <p>With <code>values: Input[list[float]]</code>, <code>result: Output[list[float]]</code> and
 <code>index: Var[int] = 0</code>, the output below has no elements to update:</p>

@@ -157,6 +157,9 @@
         <loc>https://tsumina.github.io/sciloom/dev/examples/scale-values/</loc>
       </url>
       <url>
+        <loc>https://tsumina.github.io/sciloom/dev/examples/prepare-labels/</loc>
+      </url>
+      <url>
         <loc>https://tsumina.github.io/sciloom/dev/examples/non-zero-array-min/</loc>
       </url>
       <url>
@@ -185,6 +188,9 @@
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/api/comptime/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/api/text/</loc>
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/api/autosuite/</loc>
