@@ -1119,6 +1119,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../user-guide/reference/well-properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Stored well labels
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../user-guide/reference/csv/" class="md-nav__link">
         
   
@@ -2007,6 +2034,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         Zone values and traversal
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stored-well-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Stored well metadata
       </span>
     </span>
   </a>
@@ -3176,6 +3214,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/label-wells/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Label selected wells
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/well-properties-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Well property IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3782,6 +3874,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#stored-well-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Stored well metadata
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#typed-csv-statements" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3819,8 +3922,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.13
-    · <code title="d393e43bf3e74d62861af9272eb956fc9f3a90b4">d393e43b</code>
+    · SciLoom 0.3.14
+    · <code title="e8ee675c5864da5c3dd09949c00383eddb43ea13">e8ee675c</code>
   </p>
 </aside>
 
@@ -3882,6 +3985,14 @@ a potentially empty loop. Specialization recursively selects branches inside it.
 <p>Both are additive v4 kinds. The <a href="../../../examples/zone-traversal-ir/">direct traversal example</a>
 shows JSON round trips, grouping and reference execution. AutoSuite only accepts
 size-one traversal until its index/divisibility failure checks are verified.</p>
+<h2 id="stored-well-metadata">Stored well metadata</h2>
+<p><code>WellPropertySpec(name, type)</code> describes a text user property. <code>ReadWellProperty</code>
+binds a single text destination and optional default; <code>WriteWellProperty</code> applies
+one captured value to a Zone. These are ordered statements, not expressions,
+measurement getters or device configuration operations. Their additive JSON v4
+records contain no Python declarations. The
+<a href="../../../examples/well-properties-ir/">direct property example</a> uses explicit
+location and property services after JSON restoration.</p>
 <h2 id="typed-csv-statements">Typed CSV statements</h2>
 <p><code>ReadCsv</code> is an ordered, result-producing statement. <code>CsvReadMode</code> selects one
 row or whole columns; <code>CsvErrorPolicy</code> selects fatal failure or status results.

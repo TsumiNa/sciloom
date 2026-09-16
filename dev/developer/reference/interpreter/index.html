@@ -1119,6 +1119,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../user-guide/reference/well-properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Stored well labels
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../user-guide/reference/csv/" class="md-nav__link">
         
   
@@ -2188,6 +2215,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#stored-well-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Stored well metadata
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#numerical-and-execution-limits" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3231,6 +3269,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/label-wells/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Label selected wells
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/well-properties-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Well property IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3903,6 +3995,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#stored-well-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Stored well metadata
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#numerical-and-execution-limits" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3929,8 +4032,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.13
-    · <code title="d393e43bf3e74d62861af9272eb956fc9f3a90b4">d393e43b</code>
+    · SciLoom 0.3.14
+    · <code title="e8ee675c5864da5c3dd09949c00383eddb43ea13">e8ee675c</code>
   </p>
 </aside>
 
@@ -4121,6 +4224,22 @@ stop retains configuration. Events preserve snapshots at each operation.</p>
 <p>Uninitialized reads and missing outputs are execution errors. Earlier state writes
 remain after a failed run: execution is not transactional. A session is sequential
 and is not intended for concurrent run calls.</p>
+<h2 id="stored-well-metadata">Stored well metadata</h2>
+<p>Supply <code>ReferenceEnvironment(locations=directory, properties=WellProperties(...))</code>.
+The store copies its initial <code>(well identity, property name) -&gt; str</code> mapping and
+returns detached, read-only snapshots. It is shared across sessions only when
+the caller explicitly shares the store/environment. No host service is assumed.</p>
+<p>Writes capture RHS text before Zone, validate every identity, then write to all
+wells. Empty selections are no-ops but still require both services. Reads capture
+Zone then default eagerly, validate exactly one known well, and commit the text
+result only after success. Defaults handle missing/incompatible data, not bad
+selections or adapter failures. Custom WellProperties subclasses can raise
+KeyError for absence and TypeError for incompatible data; other exceptions become
+<code>property_service_error</code>. Writes are not transactions against an external adapter.</p>
+<p>Completed operations append immutable <code>WellPropertyReadEvent</code> and
+<code>WellPropertyWriteEvent</code> records; reads include <code>used_default</code>. Failed operations
+append no success record and do not roll back previous effects. See
+<a href="../../../examples/well-properties-ir/">the executable example</a>.</p>
 <h2 id="numerical-and-execution-limits">Numerical and execution limits</h2>
 <p>Integers use mathematical-integer semantics; floats are finite binary64. Booleans
 are distinct. Division by zero, nonfinite results and invalid float conversions

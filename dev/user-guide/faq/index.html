@@ -1031,6 +1031,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-do-i-keep-a-sample-label-with-a-well" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        How do I keep a sample label with a well?
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-do-i-change-the-stirring-speed" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -1348,6 +1359,33 @@
     
   
   Runtime language
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/well-properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Stored well labels
 
     
   </span>
@@ -3314,6 +3352,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/label-wells/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Label selected wells
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/well-properties-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Well property IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3898,6 +3990,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#how-do-i-keep-a-sample-label-with-a-well" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        How do I keep a sample label with a well?
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-do-i-change-the-stirring-speed" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -4100,14 +4203,19 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.13
-    · <code title="d393e43bf3e74d62861af9272eb956fc9f3a90b4">d393e43b</code>
+    · SciLoom 0.3.14
+    · <code title="e8ee675c5864da5c3dd09949c00383eddb43ea13">e8ee675c</code>
   </p>
 </aside>
 
                   
 
 <h1 id="faq">FAQ</h1>
+<h2 id="how-do-i-keep-a-sample-label-with-a-well">How do I keep a sample label with a well?</h2>
+<p>Declare <code>self.sample_label = WellProperty("sample_ID", str)</code> in <code>__init__</code>, then
+write <code>self.sample_label[self.rack] = self.label</code> in <code>@runtime</code>. Every selected
+well receives the same text. A later change to <code>label</code> does not change stored
+metadata. See <a href="../reference/well-properties/">stored well labels</a> for reads and defaults.</p>
 <h2 id="how-do-i-change-the-stirring-speed">How do I change the stirring speed?</h2>
 <p>For a fixed speed, change <code>300 * rpm</code> in the source and compile again
 (<a href="../tutorial/first-function/">lesson 1</a>). To choose a speed each time the

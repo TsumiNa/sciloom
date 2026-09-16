@@ -58,6 +58,9 @@
         <loc>https://tsumina.github.io/sciloom/dev/user-guide/reference/runtime-language/</loc>
       </url>
       <url>
+        <loc>https://tsumina.github.io/sciloom/dev/user-guide/reference/well-properties/</loc>
+      </url>
+      <url>
         <loc>https://tsumina.github.io/sciloom/dev/user-guide/reference/csv/</loc>
       </url>
       <url>
@@ -233,6 +236,12 @@
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/examples/zone-traversal-ir/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/examples/label-wells/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/examples/well-properties-ir/</loc>
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/examples/demo-device/</loc>

@@ -1356,6 +1356,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../reference/well-properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Stored well labels
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../reference/csv/" class="md-nav__link">
         
   
@@ -3303,6 +3330,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/label-wells/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Label selected wells
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/well-properties-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Well property IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/demo-device/" class="md-nav__link">
         
   
@@ -4078,8 +4159,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.13
-    · <code title="d393e43bf3e74d62861af9272eb956fc9f3a90b4">d393e43b</code>
+    · SciLoom 0.3.14
+    · <code title="e8ee675c5864da5c3dd09949c00383eddb43ea13">e8ee675c</code>
   </p>
 </aside>
 
@@ -4826,6 +4907,16 @@ deciding whether to retry. <code>csv_encoding</code> means the row could not be 
 replace invalid Unicode text or unrepresentable numeric text before writing.
 See <a href="../reference/csv/#append-one-row">append rules</a>.</p>
 <h2 id="selecting-or-visiting-wells-fails">Selecting or visiting wells fails</h2>
+<p>For stored labels, <code>well_property_selection</code> means a read received zero or
+multiple wells. Select one well per read. <code>unknown_well</code> means a selection is
+absent from the reference directory. A missing/incompatible value produces
+<code>well_property_missing</code>/<code>well_property_type</code>; supply a text default if that is an
+expected case. Defaults do not recover bad selections or missing services.</p>
+<p>AutoSuite's <code>unsupported_well_property_read</code> requires a default and proof of one
+well, for example the unchanged target of a size-one Zone loop. Strict reads
+remain gated pending platform failure verification. See
+<a href="../reference/well-properties/">stored labels</a>. <code>property_service_error</code> identifies
+a broken reference adapter; a failed write may have left earlier effects intact.</p>
 <p>An index selects a position within a Zone, not the displayed well number. Use
 zero for its first well. Loop targets must already be declared as <code>Var[Zone]</code>.</p>
 <table>

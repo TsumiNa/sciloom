@@ -16,7 +16,7 @@
         <link rel="prev" href="../declarations/">
       
       
-        <link rel="next" href="../csv/">
+        <link rel="next" href="../well-properties/">
       
       
         
@@ -1313,6 +1313,33 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../well-properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Stored well labels
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -3272,6 +3299,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/label-wells/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Label selected wells
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/well-properties-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Well property IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/demo-device/" class="md-nav__link">
         
   
@@ -4014,8 +4095,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.13
-    · <code title="d393e43bf3e74d62861af9272eb956fc9f3a90b4">d393e43b</code>
+    · SciLoom 0.3.14
+    · <code title="e8ee675c5864da5c3dd09949c00383eddb43ea13">e8ee675c</code>
   </p>
 </aside>
 
@@ -4268,6 +4349,10 @@ has not been verified.</p>
 <td>Property reads or augmented property assignments</td>
 </tr>
 <tr>
+<td><code>self.label[zone] = text</code>, <code>self.text = self.label.get(zone, default="")</code> for a declared <code>WellProperty</code></td>
+<td>Indexed metadata reads, augmented writes, non-text properties or reads inside larger expressions</td>
+</tr>
+<tr>
 <td><code>log(value, category=..., stream=...)</code></td>
 <td>Logging lists, automatic object formatting or using log as a result</td>
 </tr>
@@ -4485,13 +4570,13 @@ store it in a field first. See <a href="../../advanced/composition/">composition
         
         
           
-          <a href="../csv/" class="md-footer__link md-footer__link--next" aria-label="Next: CSV files">
+          <a href="../well-properties/" class="md-footer__link md-footer__link--next" aria-label="Next: Stored well labels">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                CSV files
+                Stored well labels
               </div>
             </div>
             <div class="md-footer__button md-icon">
