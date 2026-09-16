@@ -3,7 +3,7 @@
 import math
 
 from .expressions import ExpressionChecker
-from .model import CsvErrorPolicy, CsvReadMode, Expression, FunctionIR, Literal, ReadCsv
+from .model import AppendCsv, CsvErrorPolicy, CsvReadMode, Expression, FunctionIR, Literal, ReadCsv
 from .types import QUANTITIES, ListType, ScalarType, ValueType, is_assignable
 
 OK = 0
@@ -11,6 +11,29 @@ DEFAULT_USED = 1
 EOF = 2
 INVALID_DATA = 3
 IO_ERROR = 4
+
+
+def validate_append(node: AppendCsv, function: FunctionIR, path: str, checker: ExpressionChecker) -> None:
+    """Check path, scalar row and the single optional status binding."""
+    report = checker.report
+    if checker.check(node.path, function, f"{path}.path") not in (None, ScalarType.TEXT):
+        report("csv_path", "CSV paths must be text.", f"{path}.path", node.path)
+    if isinstance(node.path, Literal) and isinstance(node.path.value, str):
+        if not node.path.value or "\x00" in node.path.value:
+            report("csv_path", "CSV paths must be nonempty and contain no NUL.", f"{path}.path", node.path)
+    if not node.values:
+        report("csv_values", "CSV append requires at least one scalar value.", path, node)
+    for i, value in enumerate(node.values):
+        kind = checker.check(value, function, f"{path}.values[{i}]")
+        if kind is not None and not isinstance(kind, ScalarType):
+            report(
+                "csv_values", "CSV append values must be scalars or physical quantities.", f"{path}.values[{i}]", value
+            )
+    if (node.status is not None) != (node.error_policy == CsvErrorPolicy.STATUS):
+        report("csv_binding", "Only try-append requires one integer status destination.", path, node)
+    if node.status is not None:
+        if checker.check(node.status, function, f"{path}.status") not in (None, ScalarType.INTEGER):
+            report("csv_binding", "CSV append status requires an integer destination.", f"{path}.status", node.status)
 
 
 def validate_csv(node: ReadCsv, function: FunctionIR, path: str, checker: ExpressionChecker) -> None:

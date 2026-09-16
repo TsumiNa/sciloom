@@ -4,6 +4,7 @@ from typing import assert_never
 
 from sciloom.core.diagnostics import CompilationError, Diagnostic
 from sciloom.core.ir import (
+    AppendCsv,
     Assignment,
     Call,
     ConfigureProperty,
@@ -280,7 +281,7 @@ def statements(
                 result.append(
                     macro(context, tag, statement.node_id, function, tuple(branches), name="If-Else", branches=True)
                 )
-        elif isinstance(statement, (DeviceCommand, DeviceIf, ReadCsv)):
+        elif isinstance(statement, (DeviceCommand, DeviceIf, ReadCsv, AppendCsv)):
             raise CompilationError(
                 (
                     Diagnostic(

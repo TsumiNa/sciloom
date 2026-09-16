@@ -293,6 +293,27 @@ class ReadCsv(Node):
 
 
 @dataclass(frozen=True, kw_only=True)
+class AppendCsv(Node):
+    """Capture an ordered scalar row and append it with explicit failure policy.
+
+    Attributes:
+        path: Runtime text path captured before the row values.
+        values: Nonempty ordered scalar expressions; quantities use canonical SI.
+        error_policy: Stop on I/O failure or return a status after the attempt.
+        status: Integer destination required only for STATUS policy.
+
+    A failed write may have external partial effects; it is never rolled back.
+    """
+
+    __ir_kind__: ClassVar[str] = "AppendCsv"
+
+    path: Expression
+    values: tuple[Expression, ...]
+    error_policy: CsvErrorPolicy = CsvErrorPolicy.RAISE
+    status: Reference | None = None
+
+
+@dataclass(frozen=True, kw_only=True)
 class Wait(Node):
     """Capture a nonnegative Duration and wait without changing device state."""
 
@@ -514,6 +535,7 @@ Statement = (
     | Notify
     | ReadWallTime
     | ReadCsv
+    | AppendCsv
     | Wait
     | StartTimer
     | WaitUntil

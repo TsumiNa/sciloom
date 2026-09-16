@@ -65,8 +65,8 @@ handwritten JSON model was rejected because it duplicates the typed definitions.
 
 ## Stage status and sequence
 
-Stages 0–10 merged as PRs #85–95. Stage 11 is implementing typed CSV reads;
-stages 12–17 remain pending. The stage 8 Executor gate remains unverified.
+Stages 0–11 merged as PRs #85–96. Stage 12 implements typed CSV append and awaits its review/merge gate;
+stages 13–17 remain pending. The stage 8 Executor gate remains unverified.
 Update this table in the stage that implements an
 outcome and record its PR and verification.
 
@@ -83,8 +83,8 @@ outcome and record its PR and verification.
 | 8 | [Failure propagation](10-plan-failure.md) | Failure probes and an enforced platform gate | Merged, PR #93; Executor pending |
 | 9 | [Wall clock](11-plan-wall-clock.md) | A12 formatted wall-clock reads | Merged, PR #94 |
 | 10 | [Wait and timer](12-plan-timing.md) | A08 durations and elapsed-time waits | Merged, PR #95 |
-| 11 | [CSV reads](13-plan-csv-read.md) | A05 row/column reads and typed results | In progress |
-| 12 | [CSV append](14-plan-csv-append.md) | A06 bounded row append | Pending |
+| 11 | [CSV reads](13-plan-csv-read.md) | A05 row/column reads and typed results | Merged, PR #96 |
+| 12 | [CSV append](14-plan-csv-append.md) | A06 bounded row append | Implemented; review/merge pending |
 | 13 | [Zone values](15-plan-zone-values.md) | A03 values and read-only deployment directory | Pending |
 | 14 | [Zone traversal](16-plan-zone-traversal.md) | A04 indexing and sequential fragments | Pending |
 | 15 | [Well properties](17-plan-well-properties.md) | A07 stored text properties | Pending |

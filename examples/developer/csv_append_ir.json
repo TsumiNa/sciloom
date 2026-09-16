@@ -1,0 +1,60 @@
+{
+  "device_types": [],
+  "entry_function_id": "append",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "error_policy": "raise",
+          "kind": "AppendCsv",
+          "node_id": "write",
+          "path": {
+            "kind": "Reference",
+            "node_id": "path-read",
+            "source": null,
+            "symbol_id": "path"
+          },
+          "source": null,
+          "status": null,
+          "values": [
+            {
+              "kind": "Reference",
+              "node_id": "label-read",
+              "source": null,
+              "symbol_id": "label"
+            }
+          ]
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "AppendSampleLog",
+      "node_id": "append",
+      "source": null,
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "path",
+          "node_id": "path",
+          "owner_id": "append",
+          "role": "input",
+          "source": null,
+          "type": "text"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "label",
+          "node_id": "label",
+          "owner_id": "append",
+          "role": "input",
+          "source": null,
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": []
+}

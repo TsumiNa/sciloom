@@ -4,6 +4,7 @@ from typing import assert_never
 
 from sciloom.core.diagnostics import Diagnostic
 from sciloom.core.ir import (
+    AppendCsv,
     Assignment,
     Binary,
     BinaryOp,
@@ -64,6 +65,9 @@ def validate_runtime_guards(program: Program) -> tuple[Diagnostic, ...]:
             if isinstance(node, ReadCsv):
                 code = "unsupported_csv_semantics"
                 message = "AutoSuite CSV expression evaluation, conversion and per-column result aggregation are not verified against typed literal CSV semantics; reference execution is available."
+            elif isinstance(node, AppendCsv):
+                code = "unsupported_csv_append"
+                message = "The observed AutoSuite export mode has not been verified to append without overwrite; encoding and failure propagation also require platform validation."
             elif isinstance(node, (Wait, WaitUntil)):
                 duration = node.duration
                 if not isinstance(duration, Literal):
@@ -180,6 +184,12 @@ def validate_array_outputs(program: Program) -> tuple[Diagnostic, ...]:
                         read(expression, assigned)
                 elif isinstance(statement, Notify):
                     read(statement.message, assigned)
+                elif isinstance(statement, AppendCsv):
+                    read(statement.path, assigned)
+                    for value in statement.values:
+                        read(value, assigned)
+                    if statement.status is not None:
+                        assigned.add(statement.status.symbol_id)
                 elif isinstance(statement, ReadCsv):
                     read(statement.path, assigned)
                     if statement.row is not None:

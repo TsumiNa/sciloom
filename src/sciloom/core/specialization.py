@@ -6,6 +6,7 @@ from typing import assert_never
 from .bindings import DeviceBindings, validate_bindings
 from .diagnostics import CompilationError, Diagnostic, IRValidationError
 from .ir import (
+    AppendCsv,
     Assignment,
     Call,
     CanWrite,
@@ -128,6 +129,7 @@ def specialize(program: Program, *, bindings: DeviceBindings) -> Program:
                     LogValue,
                     Notify,
                     ReadWallTime,
+                    AppendCsv,
                     ReadCsv,
                     Wait,
                     StartTimer,
