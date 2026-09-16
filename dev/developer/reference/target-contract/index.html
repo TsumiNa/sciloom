@@ -3300,6 +3300,141 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/stir-selected-location/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Run a selected shaker
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/label-sample-log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Label wells and append a log
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/aspiration-chunk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Calculate a volume chunk
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/runtime-workflows-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Complete workflows from IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/aspiration-chunk-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Volume chunk after JSON
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3933,7 +4068,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.3.15
-    · <code title="aa75dce16e94384e2bfeaa167cd82dc2bb98ab43">aa75dce1</code>
+    · <code title="28a00c8c57a182f19bab3661a12fc06ee30f74c9">28a00c8c</code>
   </p>
 </aside>
 
@@ -4010,9 +4145,9 @@ target base class is required.</p>
 writes its bytes. A target rejects only what it can prove: an unprovable
 declared limit is a rejection, never a clamp.</p>
 <h2 id="bindings">Bindings</h2>
-<p><code>resolve_devices</code> returns <code>DeviceBindings</code>, an envelope of <code>DeviceBinding</code>
-records that <code>bind_device(logical_id=..., device=..., physical_id=...)</code> builds
-from a profile:</p>
+<p><code>resolve_devices</code> returns <code>DeviceBindings</code>. Each entry is a fixed <code>DeviceBinding</code>
+or a <code>DeviceSelectionBinding</code> with explicit candidates. For a fixed profile,
+<code>bind_device(logical_id=..., device=..., physical_id=...)</code> builds this record:</p>
 <table>
 <thead>
 <tr>
@@ -4047,6 +4182,16 @@ from a profile:</p>
 </tr>
 </tbody>
 </table>
+<p>A selection wraps each fixed binding in <code>DeviceCandidate(binding=..., wells=...)</code>
+and supplies the tuple to <code>DeviceSelectionBinding(logical_id=..., candidates=...)</code>.
+Candidates share one concrete contract, ancestor directory and capability sets.
+They have distinct physical identities and disjoint nonempty well sets. The
+selection exposes the common contract/capabilities but has no single <code>physical_id</code>.
+Physical candidates cannot overlap across logical resources.</p>
+<p><code>DeviceAt</code> captures a Zone for a selection-bound resource. Shared compilation
+checks its scope across function calls; a target must implement it or return an
+explicit unsupported diagnostic. The <a href="../../../examples/runtime-workflows-ir/">complete workflow example</a>
+shows both a selection binding and an independent reference-archive target.</p>
 <table>
 <thead>
 <tr>

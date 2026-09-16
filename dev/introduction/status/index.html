@@ -501,6 +501,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#runtime-additions-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Runtime additions at a glance
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-compilation-establishes" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3264,6 +3275,141 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/stir-selected-location/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Run a selected shaker
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/label-sample-log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Label wells and append a log
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/aspiration-chunk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Calculate a volume chunk
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/runtime-workflows-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Complete workflows from IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/aspiration-chunk-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Volume chunk after JSON
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3848,6 +3994,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#runtime-additions-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Runtime additions at a glance
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-compilation-establishes" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3875,7 +4032,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.3.15
-    · <code title="aa75dce16e94384e2bfeaa167cd82dc2bb98ab43">aa75dce1</code>
+    · <code title="28a00c8c57a182f19bab3661a12fc06ee30f74c9">28a00c8c</code>
   </p>
 </aside>
 
@@ -3902,6 +4059,73 @@ Constructors and the surrounding script remain ordinary Python.</p>
 JSON and reference execution. AutoSuite CSV compilation is explicitly unavailable
 until its parsing, conversion, append mode, encoding and failure behavior can
 meet the same contract.</p>
+<h2 id="runtime-additions-at-a-glance">Runtime additions at a glance</h2>
+<p>All twelve additions below have typed IR, JSON v4 and reference execution.
+The right column describes what the AutoSuite compiler currently accepts, not
+what has passed Executor simulation. Follow the linked examples for complete
+code, results and specific restrictions.</p>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>AutoSuite compilation today</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../examples/prepare-labels/">Text and text lists</a></td>
+<td>Declarations, copying, concatenation, comparison and trim; length only for literal BMP text, split with literal nonempty delimiter and nonnegative index; new text-list bounds guards remain gated</td>
+</tr>
+<tr>
+<td><a href="../../examples/quantity-conversion/">Volume and Duration</a></td>
+<td>SI declarations and unit-aware arithmetic; new guarded quantity-list access is rejected</td>
+</tr>
+<tr>
+<td><a href="../../user-guide/reference/device-locations/">Zone values and selection</a></td>
+<td>Named lookup, size and union; deployment ancestry checks work. Dynamic device scopes, well-name queries and nonempty Zone literals are rejected</td>
+</tr>
+<tr>
+<td><a href="../../examples/visit-locations/">Zone indexing and traversal</a></td>
+<td>One-well sequential traversal; indexing and larger fragments await reliable runtime checks</td>
+</tr>
+<tr>
+<td><a href="../../examples/read-reagent-table/">CSV reads</a></td>
+<td>Rejected pending literal conversion, defaults, result and failure equivalence</td>
+</tr>
+<tr>
+<td><a href="../../examples/append-sample-log/">CSV append</a></td>
+<td>Rejected pending append mode, encoding and failure evidence</td>
+</tr>
+<tr>
+<td><a href="../../examples/label-wells/">Well text properties</a></td>
+<td>Same-value writes; defaulted reads only with local proof of one well. Strict reads remain gated</td>
+</tr>
+<tr>
+<td><a href="../../examples/timed-agitation/">Waits and timers</a></td>
+<td>Bounded literal durations and supported lexical timer scopes; dynamic durations and broader scope patterns are rejected</td>
+</tr>
+<tr>
+<td><a href="../../examples/record-values/">Typed logs</a></td>
+<td>Captured scalar and quantity values</td>
+</tr>
+<tr>
+<td><a href="../../examples/confirm-samples/">OK confirmation</a></td>
+<td>Text dialog with explicit OK continuation</td>
+</tr>
+<tr>
+<td><a href="../../examples/numeric-operations/">Numeric operations</a></td>
+<td><code>abs</code>, <code>floor</code>, integer <code>round</code>; floating <code>round</code> is rejected pending tie/range evidence</td>
+</tr>
+<tr>
+<td><a href="../../examples/timestamp-path/">Wall-time text</a></td>
+<td>Selected constant formatting directives, evaluated once per call</td>
+</tr>
+</tbody>
+</table>
+<p>The <a href="../../examples/runtime-workflows-ir/">combined workflows</a> exercise table
+reading, a selected shaker and per-well logging with explicit reference services.
+They do not produce native ASFP while the relevant target gates remain open.
+Existing fixed-shaker and scalar tutorial programs continue to compile.</p>
 <p>Contributors can define devices and targets. The developer examples include a
 demonstration target, JSON v4 interchange and a reference interpreter for checking
 calculations and state changes. That interpreter does not simulate laboratory hardware.</p>

@@ -1,0 +1,432 @@
+{
+  "device_types": [],
+  "entry_function_id": "labels",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "Notify",
+          "message": {
+            "kind": "Literal",
+            "node_id": "message",
+            "source": null,
+            "type": "text",
+            "value": "Samples are ready. Confirm to label and record them."
+          },
+          "node_id": "confirm",
+          "source": null
+        },
+        {
+          "kind": "Assignment",
+          "node_id": "trim-label",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "cleaned-target",
+            "source": null,
+            "symbol_id": "cleaned"
+          },
+          "value": {
+            "kind": "TextTrim",
+            "node_id": "trim",
+            "source": null,
+            "value": {
+              "kind": "Reference",
+              "node_id": "label-input",
+              "source": null,
+              "symbol_id": "label"
+            }
+          }
+        },
+        {
+          "format": "%Y-%m-%d_%H%M%S",
+          "kind": "ReadWallTime",
+          "node_id": "clock",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "stamp-target",
+            "source": null,
+            "symbol_id": "stamp"
+          }
+        },
+        {
+          "kind": "Assignment",
+          "node_id": "make-path",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "path-target",
+            "source": null,
+            "symbol_id": "path"
+          },
+          "value": {
+            "kind": "Binary",
+            "left": {
+              "kind": "Binary",
+              "left": {
+                "kind": "Binary",
+                "left": {
+                  "kind": "Reference",
+                  "node_id": "input-directory",
+                  "source": null,
+                  "symbol_id": "directory"
+                },
+                "node_id": "directory-slash",
+                "op": "+",
+                "right": {
+                  "kind": "Literal",
+                  "node_id": "slash",
+                  "source": null,
+                  "type": "text",
+                  "value": "/"
+                },
+                "source": null
+              },
+              "node_id": "timestamp-path",
+              "op": "+",
+              "right": {
+                "kind": "Reference",
+                "node_id": "read-stamp",
+                "source": null,
+                "symbol_id": "stamp"
+              },
+              "source": null
+            },
+            "node_id": "extension",
+            "op": "+",
+            "right": {
+              "kind": "Literal",
+              "node_id": "csv-extension",
+              "source": null,
+              "type": "text",
+              "value": ".csv"
+            },
+            "source": null
+          }
+        },
+        {
+          "kind": "Assignment",
+          "node_id": "reset-count",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "reset-target",
+            "source": null,
+            "symbol_id": "count"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "zero",
+            "source": null,
+            "type": "integer",
+            "value": 0
+          }
+        },
+        {
+          "body": [
+            {
+              "kind": "WriteWellProperty",
+              "node_id": "label-well",
+              "property": {
+                "kind": "WellPropertySpec",
+                "name": "sample_ID",
+                "type": "text"
+              },
+              "source": null,
+              "value": {
+                "kind": "Reference",
+                "node_id": "write-label",
+                "source": null,
+                "symbol_id": "cleaned"
+              },
+              "zone": {
+                "kind": "Reference",
+                "node_id": "write-well",
+                "source": null,
+                "symbol_id": "well"
+              }
+            },
+            {
+              "default": {
+                "kind": "Literal",
+                "node_id": "fallback",
+                "source": null,
+                "type": "text",
+                "value": ""
+              },
+              "kind": "ReadWellProperty",
+              "node_id": "read-label",
+              "property": {
+                "kind": "WellPropertySpec",
+                "name": "sample_ID",
+                "type": "text"
+              },
+              "source": null,
+              "target": {
+                "kind": "Reference",
+                "node_id": "record-target",
+                "source": null,
+                "symbol_id": "record"
+              },
+              "zone": {
+                "kind": "Reference",
+                "node_id": "read-well",
+                "source": null,
+                "symbol_id": "well"
+              }
+            },
+            {
+              "error_policy": "raise",
+              "kind": "AppendCsv",
+              "node_id": "append",
+              "path": {
+                "kind": "Reference",
+                "node_id": "append-path",
+                "source": null,
+                "symbol_id": "path"
+              },
+              "source": null,
+              "status": null,
+              "values": [
+                {
+                  "kind": "Binary",
+                  "left": {
+                    "kind": "Binary",
+                    "left": {
+                      "kind": "WellName",
+                      "node_id": "name",
+                      "source": null,
+                      "value": {
+                        "kind": "Reference",
+                        "node_id": "name-well",
+                        "source": null,
+                        "symbol_id": "well"
+                      }
+                    },
+                    "node_id": "prefix",
+                    "op": "+",
+                    "right": {
+                      "kind": "Literal",
+                      "node_id": "separator",
+                      "source": null,
+                      "type": "text",
+                      "value": ":"
+                    },
+                    "source": null
+                  },
+                  "node_id": "row",
+                  "op": "+",
+                  "right": {
+                    "kind": "Reference",
+                    "node_id": "record-value",
+                    "source": null,
+                    "symbol_id": "record"
+                  },
+                  "source": null
+                }
+              ]
+            },
+            {
+              "kind": "Assignment",
+              "node_id": "increment",
+              "source": null,
+              "target": {
+                "kind": "Reference",
+                "node_id": "count-target",
+                "source": null,
+                "symbol_id": "count"
+              },
+              "value": {
+                "kind": "Binary",
+                "left": {
+                  "kind": "Reference",
+                  "node_id": "old-count",
+                  "source": null,
+                  "symbol_id": "count"
+                },
+                "node_id": "plus-one",
+                "op": "+",
+                "right": {
+                  "kind": "Literal",
+                  "node_id": "one",
+                  "source": null,
+                  "type": "integer",
+                  "value": 1
+                },
+                "source": null
+              }
+            }
+          ],
+          "fragment_size": 1,
+          "kind": "ForEachZone",
+          "node_id": "visit",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "loop-well",
+            "source": null,
+            "symbol_id": "well"
+          },
+          "value": {
+            "kind": "Reference",
+            "node_id": "input-rack",
+            "source": null,
+            "symbol_id": "rack"
+          }
+        },
+        {
+          "category": {
+            "kind": "Literal",
+            "node_id": "category",
+            "source": null,
+            "type": "text",
+            "value": "samples"
+          },
+          "kind": "LogValue",
+          "node_id": "log-count",
+          "source": null,
+          "stream": {
+            "kind": "Literal",
+            "node_id": "stream",
+            "source": null,
+            "type": "text",
+            "value": "records"
+          },
+          "value": {
+            "kind": "Reference",
+            "node_id": "final-count",
+            "source": null,
+            "symbol_id": "count"
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "LabelSampleLog",
+      "node_id": "labels",
+      "source": null,
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "rack",
+          "node_id": "rack",
+          "owner_id": "labels",
+          "role": "input",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "label",
+          "node_id": "label",
+          "owner_id": "labels",
+          "role": "input",
+          "source": null,
+          "type": "text"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "directory",
+          "node_id": "directory",
+          "owner_id": "labels",
+          "role": "input",
+          "source": null,
+          "type": "text"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "path",
+          "node_id": "path",
+          "owner_id": "labels",
+          "role": "output",
+          "source": null,
+          "type": "text"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "count",
+          "node_id": "count",
+          "owner_id": "labels",
+          "role": "output",
+          "source": null,
+          "type": "integer"
+        },
+        {
+          "initial": {
+            "kind": "ZoneLiteral",
+            "node_id": "empty-well",
+            "source": null,
+            "well_ids": []
+          },
+          "kind": "Variable",
+          "name": "well",
+          "node_id": "well",
+          "owner_id": "labels",
+          "role": "internal",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        },
+        {
+          "initial": {
+            "kind": "Literal",
+            "node_id": "cleaned-initial",
+            "source": null,
+            "type": "text",
+            "value": ""
+          },
+          "kind": "Variable",
+          "name": "cleaned",
+          "node_id": "cleaned",
+          "owner_id": "labels",
+          "role": "internal",
+          "source": null,
+          "type": "text"
+        },
+        {
+          "initial": {
+            "kind": "Literal",
+            "node_id": "stamp-initial",
+            "source": null,
+            "type": "text",
+            "value": ""
+          },
+          "kind": "Variable",
+          "name": "stamp",
+          "node_id": "stamp",
+          "owner_id": "labels",
+          "role": "internal",
+          "source": null,
+          "type": "text"
+        },
+        {
+          "initial": {
+            "kind": "Literal",
+            "node_id": "record-initial",
+            "source": null,
+            "type": "text",
+            "value": ""
+          },
+          "kind": "Variable",
+          "name": "record",
+          "node_id": "record",
+          "owner_id": "labels",
+          "role": "internal",
+          "source": null,
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": []
+}

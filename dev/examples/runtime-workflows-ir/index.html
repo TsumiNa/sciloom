@@ -1,0 +1,4554 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Programmable scientific automation from one semantic model.">
+      
+      
+      
+        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/examples/runtime-workflows-ir/">
+      
+      
+        <link rel="prev" href="../aspiration-chunk/">
+      
+      
+        <link rel="next" href="../aspiration-chunk-ir/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/brand/favicon.svg">
+      <meta name="generator" content="zensical-0.0.61">
+    
+    
+      
+        <title>Complete workflows from IR - SciLoom</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.ce62732f.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.812a03bb.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/brand.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-label="Navigation"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#execute-three-complete-workflows-from-ir" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SciLoom" class="md-header__button md-logo" aria-label="SciLoom" data-md-component="logo">
+      <img class="sciloom-brand-light" src="../../assets/brand/svg/sciloom-mark-light.svg" alt="SciLoom">
+<img class="sciloom-brand-dark" src="../../assets/brand/svg/sciloom-mark-dark.svg" alt="SciLoom">
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SciLoom
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Complete workflows from IR
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search" aria-label="Search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+      
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+  Introduction
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../user-guide/" class="md-tabs__link">
+          
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../developer/" class="md-tabs__link">
+          
+  
+  Developer Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+      
+    
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  Examples
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../api/" class="md-tabs__link">
+          
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SciLoom" class="md-nav__button md-logo" aria-label="SciLoom" data-md-component="logo">
+      <img class="sciloom-brand-light" src="../../assets/brand/svg/sciloom-mark-light.svg" alt="SciLoom">
+<img class="sciloom-brand-dark" src="../../assets/brand/svg/sciloom-mark-dark.svg" alt="SciLoom">
+    </a>
+    SciLoom
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Introduction
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Introduction
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Welcome
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Getting started
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/status/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Current capabilities
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Glossary
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  User Guide
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  User Guide
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Overview
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tutorial
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Tutorial
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Write a stirring procedure
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/tutorial/first-function/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1. Start a shaker
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/tutorial/inputs-and-units/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2. Supply a speed and switch
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/tutorial/agitator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3. Reuse a calculation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/tutorial/lists-and-loops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4. Work with a list of samples
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/tutorial/compile/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5. Keep a count across calls
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Advanced
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Advanced
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/advanced/composition/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Share a shaker between steps
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/advanced/specialization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Choose settings before compilation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/advanced/device-branches/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Adapt to different devices
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/advanced/autosuite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Compile for AutoSuite
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  FAQ
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Troubleshooting
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Reference
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Reference
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/reference/declarations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Declarations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/reference/runtime-language/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime language
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/reference/well-properties/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Stored well labels
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/reference/csv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  CSV files
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/reference/zones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Sample locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/reference/device-locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime device locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/reference/devices-and-targets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Devices and targets
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Developer Guide
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Developer Guide
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Overview
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tutorial
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Tutorial
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  The heater story
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/declare-a-family/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1. Declare a family
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/declare-profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2. Declare profiles
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/write-a-function/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3. Write a Function against the family
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/write-a-target/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4. Write a target
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/reject-a-program/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5. Reject a program
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/adapt-with-comptime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6. Adapt with comptime
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/execute-what-you-can/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7. Execute what you can
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/complete-program/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8. The complete program
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Advanced
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Advanced
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/advanced/json-interchange/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  JSON interchange and portability
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/advanced/specialization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Specialization internals
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/advanced/native-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Native commands
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/advanced/extending-the-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Extending the analysis
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/advanced/typing-without-inheritance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typing without inheritance
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  FAQ
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Troubleshooting
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Reference
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Reference
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Architecture and ownership
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Semantic IR and JSON v4
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Compilation pipeline
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/target-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Target contract
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/device-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Device contracts
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/interpreter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Reference execution
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/verification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Verification
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Project
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Project
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/typing-and-tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typing and tests
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/documentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Building documentation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Versioned publication
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/brand/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Brand assets
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Examples
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Examples
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Overview
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../function-call/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Function calls
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Agitation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scale-values/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Scale values
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prepare-labels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Prepare labels
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quantity-conversion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Quantity conversion
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../numeric-operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Numeric operations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../record-values/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Record values
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../confirm-samples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Confirm samples
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../timestamp-path/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Timestamp a filename
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../timed-agitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Timed agitation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../read-reagent-table/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Read a reagent table
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../non-zero-array-min/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Non Zero Array Min
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stir-rack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Stir a rack of samples
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agitation-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Agitation IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../list-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  List IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Reference environment
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logging-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typed log events
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../confirmation-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Explicit confirmation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wall-time-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Explicit wall clock
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../timing-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Elapsed-time IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv-read-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typed CSV IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../append-sample-log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Append a sample log
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv-append-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  CSV append IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resolve-locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Resolve sample locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zone-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Zone IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../visit-locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Visit sample locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zone-traversal-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Zone traversal IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../label-wells/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Label selected wells
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../well-properties-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Well property IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../device-locations-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Physical device snapshots
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stir-selected-location/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Run a selected shaker
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../label-sample-log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Label wells and append a log
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aspiration-chunk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Calculate a volume chunk
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Complete workflows from IR
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aspiration-chunk-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Volume chunk after JSON
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../demo-device/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Independent device
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../portable-agitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Portable agitation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  API Reference
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  API Reference
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Overview
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/author/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Author API
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/units/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Units
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/comptime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Compile-time queries
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/text/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime text
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/csv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime CSV
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/zones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Zone values
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/autosuite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  AutoSuite
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Device declarations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/ir-values/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  IR values
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/ir-flow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  IR programs and flow
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/ir-devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  IR devices and conditions
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/ir-json/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  IR validation and JSON
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/compiler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Compiler and specialization
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/interpreter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Interpreter
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/diagnostics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Diagnostics
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+<aside class="admonition note" aria-label="Documentation version">
+  <p>
+    <strong>dev</strong>
+    · SciLoom 0.3.15
+    · <code title="28a00c8c57a182f19bab3661a12fc06ee30f74c9">28a00c8c</code>
+  </p>
+</aside>
+
+                  
+
+<h1 id="execute-three-complete-workflows-from-ir">Execute three complete workflows from IR</h1>
+<p>These builders express the same procedures as the
+<a href="../read-reagent-table/">reagent table</a>, <a href="../stir-selected-location/">selected shaker</a>
+and <a href="../label-sample-log/">well label log</a> author examples. They construct typed
+nodes directly, without analyzing Python source. Each program passes through an
+independent Target, JSON serialization and restoration before reference execution.</p>
+<div class="highlight"><pre><span></span><code><span class="go">uv run python -m examples.developer.runtime_workflows_ir</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>Reagent: reagent_A; IDs: ('E01', 'E02'); volumes: (1.5, 0.0) mL
+Shaker: stopped after 5 s at 300 rpm
+Label log: logs/2026-09-17_130000.csv; rows: 2
+Contents: b'B:batch A\r\nA:batch A\r\n'
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Procedure</th>
+<th>Explicit environment</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reagent table</td>
+<td>Sample CSV bytes in <code>MemoryFiles</code></td>
+<td>Heading plus aligned IDs and Volume lists</td>
+</tr>
+<tr>
+<td>Selected shaker</td>
+<td>Two candidate bindings, well directory and virtual monotonic clock</td>
+<td>Only the selected controller runs; five seconds elapse before stop</td>
+</tr>
+<tr>
+<td>Well label log</td>
+<td>Well directory, property store, file store, aware wall clock and queued OK</td>
+<td>Ordered property writes and two captured text records</td>
+</tr>
+</tbody>
+</table>
+<p><code>ReferenceArchiveTarget</code> implements the existing <code>resolve_devices</code>, <code>validate</code>
+and <code>emit</code> protocol. Its artifact is a reference JSON program, not an equipment
+command file. It rejects <code>DeviceCommand</code>, whose contributor-defined native
+behavior has no reference execution semantics. Common compilation still checks
+types, bindings, specialization, configuration, timers and location scopes.</p>
+<p>Only the shaker program receives device bindings; unused bindings would be an
+error. Each workflow gets fresh mutable services. The CSV bytes are copied from
+the project-authored fixture explicitly; the interpreter never reads host files
+by default. The selected shaker is still running in its start event, and is
+stopped in the final physical snapshot. The virtual wait does not sleep.</p>
+<p>The tests compare outputs and ordered events across source, direct IR and JSON
+paths. They also check empty data, repeated calls, rejected locations, absent
+acknowledgements and partial file writes. A failed later write cannot undo a
+completed label change or earlier file bytes. These checks establish SciLoom
+reference behavior, not AutoSuite acceptance; the native gates remain active.</p>
+<details class="example">
+<summary>Complete builders, target and reference runner</summary>
+<div class="highlight"><pre><span></span><code><span class="sa">r</span><span class="sd">"""For developers: three complete workflows from typed IR, JSON and explicit services.</span>
+
+<span class="sd">Run: ``uv run python -m examples.developer.runtime_workflows_ir``</span>
+<span class="sd">Expected terminal output:</span>
+<span class="sd">    Reagent: reagent_A; IDs: ('E01', 'E02'); volumes: (1.5, 0.0) mL</span>
+<span class="sd">    Shaker: stopped after 5 s at 300 rpm</span>
+<span class="sd">    Label log: logs/2026-09-17_130000.csv; rows: 2</span>
+<span class="sd">    Contents: b'B:batch A\r\nA:batch A\r\n'</span>
+
+<span class="sd">Complete artifacts: runtime_workflows_ir.reagent.json, .shaker.json and .labels.json.</span>
+<span class="sd">The independent ReferenceArchiveTarget emits JSON for reference execution, not</span>
+<span class="sd">an equipment program. Every service is supplied explicitly. These examples</span>
+<span class="sd">perform no hardware I/O; AutoSuite CSV/dynamic-location compilation is gated.</span>
+<span class="sd">The paired authors are ../read_reagent_table.py, ../stir_selected_location.py</span>
+<span class="sd">and ../label_sample_log.py. All three direct builders avoid Python source analysis.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">replace</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.bindings</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeviceBinding</span><span class="p">,</span> <span class="n">DeviceBindings</span><span class="p">,</span> <span class="n">DeviceCandidate</span><span class="p">,</span> <span class="n">DeviceSelectionBinding</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.compiler</span><span class="w"> </span><span class="kn">import</span> <span class="n">Artifact</span><span class="p">,</span> <span class="n">compile_ir</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.diagnostics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Diagnostic</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.interpreter</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Interpreter</span><span class="p">,</span>
+    <span class="n">MemoryFiles</span><span class="p">,</span>
+    <span class="n">QueuedAcknowledgements</span><span class="p">,</span>
+    <span class="n">ReferenceEnvironment</span><span class="p">,</span>
+    <span class="n">VirtualClock</span><span class="p">,</span>
+    <span class="n">VirtualWallClock</span><span class="p">,</span>
+    <span class="n">WellProperties</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.ir</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AppendCsv</span><span class="p">,</span>
+    <span class="n">Assignment</span><span class="p">,</span>
+    <span class="n">Binary</span><span class="p">,</span>
+    <span class="n">BinaryOp</span><span class="p">,</span>
+    <span class="n">ConfigureProperty</span><span class="p">,</span>
+    <span class="n">CsvColumn</span><span class="p">,</span>
+    <span class="n">CsvErrorPolicy</span><span class="p">,</span>
+    <span class="n">CsvReadMode</span><span class="p">,</span>
+    <span class="n">DeviceAt</span><span class="p">,</span>
+    <span class="n">DeviceCommand</span><span class="p">,</span>
+    <span class="n">DeviceResource</span><span class="p">,</span>
+    <span class="n">ForEachZone</span><span class="p">,</span>
+    <span class="n">FunctionIR</span><span class="p">,</span>
+    <span class="n">ListType</span><span class="p">,</span>
+    <span class="n">Literal</span><span class="p">,</span>
+    <span class="n">LogValue</span><span class="p">,</span>
+    <span class="n">Notify</span><span class="p">,</span>
+    <span class="n">Program</span><span class="p">,</span>
+    <span class="n">ReadCsv</span><span class="p">,</span>
+    <span class="n">ReadWallTime</span><span class="p">,</span>
+    <span class="n">ReadWellProperty</span><span class="p">,</span>
+    <span class="n">Reference</span><span class="p">,</span>
+    <span class="n">ScalarType</span><span class="p">,</span>
+    <span class="n">StartAgitation</span><span class="p">,</span>
+    <span class="n">StopAgitation</span><span class="p">,</span>
+    <span class="n">TextTrim</span><span class="p">,</span>
+    <span class="n">Variable</span><span class="p">,</span>
+    <span class="n">VariableRole</span><span class="p">,</span>
+    <span class="n">Wait</span><span class="p">,</span>
+    <span class="n">WellName</span><span class="p">,</span>
+    <span class="n">WellPropertySpec</span><span class="p">,</span>
+    <span class="n">WriteWellProperty</span><span class="p">,</span>
+    <span class="n">ZoneLiteral</span><span class="p">,</span>
+    <span class="n">ZoneType</span><span class="p">,</span>
+    <span class="n">from_json</span><span class="p">,</span>
+    <span class="n">to_json</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.ir.device_contracts</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AGITATION_SPEED_ID</span><span class="p">,</span>
+    <span class="n">AGITATOR_CONTRACT</span><span class="p">,</span>
+    <span class="n">BASE_DEVICE_CONTRACT</span><span class="p">,</span>
+    <span class="n">START_AGITATION_ID</span><span class="p">,</span>
+    <span class="n">STOP_AGITATION_ID</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.ir.traversal</span><span class="w"> </span><span class="kn">import</span> <span class="n">iter_nodes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.locations</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocationDirectory</span><span class="p">,</span> <span class="n">Well</span><span class="p">,</span> <span class="n">Zone</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.units</span><span class="w"> </span><span class="kn">import</span> <span class="n">Volume</span><span class="p">,</span> <span class="n">mL</span><span class="p">,</span> <span class="n">rpm</span>
+
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ReferenceArchiveTarget</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Archive portable reference programs; native command execution is undefined."""</span>
+
+    <span class="n">bindings</span><span class="p">:</span> <span class="n">DeviceBindings</span> <span class="o">=</span> <span class="n">DeviceBindings</span><span class="p">()</span>
+    <span class="n">target_id</span> <span class="o">=</span> <span class="s2">"example.reference-archive/v1"</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">resolve_devices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DeviceBindings</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bindings</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Diagnostic</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span>
+            <span class="n">Diagnostic</span><span class="p">(</span>
+                <span class="n">code</span><span class="o">=</span><span class="s2">"unsupported_native_command"</span><span class="p">,</span>
+                <span class="n">message</span><span class="o">=</span><span class="s2">"This archive is for reference execution; native command semantics are undefined."</span><span class="p">,</span>
+                <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+                <span class="n">node_id</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">node_id</span><span class="p">,</span>
+                <span class="n">source</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">source</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">iter_nodes</span><span class="p">(</span><span class="n">program</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">DeviceCommand</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Artifact</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">Artifact</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">to_json</span><span class="p">(</span><span class="n">program</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">),</span> <span class="n">media_type</span><span class="o">=</span><span class="s2">"application/json"</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">".json"</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">reagent_program</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Read a selected heading and aligned IDs/volumes, preserving cell defaults."""</span>
+    <span class="n">variables</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">Variable</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"path"</span><span class="p">,</span> <span class="n">owner_id</span><span class="o">=</span><span class="s2">"recipe"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"path"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">INPUT</span><span class="p">),</span>
+        <span class="n">Variable</span><span class="p">(</span>
+            <span class="n">node_id</span><span class="o">=</span><span class="s2">"reagent_index"</span><span class="p">,</span>
+            <span class="n">owner_id</span><span class="o">=</span><span class="s2">"recipe"</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">"reagent_index"</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span>
+            <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">INPUT</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">Variable</span><span class="p">(</span>
+            <span class="n">node_id</span><span class="o">=</span><span class="s2">"reagent_name"</span><span class="p">,</span>
+            <span class="n">owner_id</span><span class="o">=</span><span class="s2">"recipe"</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">"reagent_name"</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span>
+            <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">OUTPUT</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">Variable</span><span class="p">(</span>
+            <span class="n">node_id</span><span class="o">=</span><span class="s2">"ids"</span><span class="p">,</span>
+            <span class="n">owner_id</span><span class="o">=</span><span class="s2">"recipe"</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">"ids"</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">ListType</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">),</span>
+            <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">OUTPUT</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">Variable</span><span class="p">(</span>
+            <span class="n">node_id</span><span class="o">=</span><span class="s2">"volumes"</span><span class="p">,</span>
+            <span class="n">owner_id</span><span class="o">=</span><span class="s2">"recipe"</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">"volumes"</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">ListType</span><span class="p">(</span><span class="n">element_type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">VOLUME</span><span class="p">),</span>
+            <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">OUTPUT</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">header_column</span> <span class="o">=</span> <span class="n">Binary</span><span class="p">(</span>
+        <span class="n">node_id</span><span class="o">=</span><span class="s2">"header-column"</span><span class="p">,</span>
+        <span class="n">op</span><span class="o">=</span><span class="n">BinaryOp</span><span class="o">.</span><span class="n">ADD</span><span class="p">,</span>
+        <span class="n">left</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"header-choice"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"reagent_index"</span><span class="p">),</span>
+        <span class="n">right</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"header-offset"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">data_column</span> <span class="o">=</span> <span class="n">Binary</span><span class="p">(</span>
+        <span class="n">node_id</span><span class="o">=</span><span class="s2">"data-column"</span><span class="p">,</span>
+        <span class="n">op</span><span class="o">=</span><span class="n">BinaryOp</span><span class="o">.</span><span class="n">ADD</span><span class="p">,</span>
+        <span class="n">left</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"data-choice"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"reagent_index"</span><span class="p">),</span>
+        <span class="n">right</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"data-offset"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">ReadCsv</span><span class="p">(</span>
+            <span class="n">node_id</span><span class="o">=</span><span class="s2">"heading"</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="n">CsvReadMode</span><span class="o">.</span><span class="n">ROW</span><span class="p">,</span>
+            <span class="n">error_policy</span><span class="o">=</span><span class="n">CsvErrorPolicy</span><span class="o">.</span><span class="n">RAISE</span><span class="p">,</span>
+            <span class="n">path</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"header-path"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"path"</span><span class="p">),</span>
+            <span class="n">row</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"header-row"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+            <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">columns</span><span class="o">=</span><span class="p">(</span><span class="n">CsvColumn</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">header_column</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">),),</span>
+            <span class="n">targets</span><span class="o">=</span><span class="p">(</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"heading-result"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"reagent_name"</span><span class="p">),),</span>
+        <span class="p">),</span>
+        <span class="n">ReadCsv</span><span class="p">(</span>
+            <span class="n">node_id</span><span class="o">=</span><span class="s2">"table"</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="n">CsvReadMode</span><span class="o">.</span><span class="n">COLUMNS</span><span class="p">,</span>
+            <span class="n">error_policy</span><span class="o">=</span><span class="n">CsvErrorPolicy</span><span class="o">.</span><span class="n">RAISE</span><span class="p">,</span>
+            <span class="n">path</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"data-path"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"path"</span><span class="p">),</span>
+            <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">columns</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">CsvColumn</span><span class="p">(</span>
+                    <span class="n">index</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"id-column"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span>
+                    <span class="n">default</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"id-default"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">""</span><span class="p">),</span>
+                <span class="p">),</span>
+                <span class="n">CsvColumn</span><span class="p">(</span>
+                    <span class="n">index</span><span class="o">=</span><span class="n">data_column</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">VOLUME</span><span class="p">,</span>
+                    <span class="n">unit</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"mL"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">VOLUME</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">),</span>
+                    <span class="n">default</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"zero-volume"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">VOLUME</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">targets</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"ids-result"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"ids"</span><span class="p">),</span>
+                <span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"volumes-result"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"volumes"</span><span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">Program</span><span class="p">(</span>
+        <span class="n">entry_function_id</span><span class="o">=</span><span class="s2">"recipe"</span><span class="p">,</span>
+        <span class="n">functions</span><span class="o">=</span><span class="p">(</span><span class="n">FunctionIR</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"recipe"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"ReadReagentTable"</span><span class="p">,</span> <span class="n">variables</span><span class="o">=</span><span class="n">variables</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">),),</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">selected_program</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Save speed, capture a location, start, wait and explicitly stop."""</span>
+    <span class="k">return</span> <span class="n">Program</span><span class="p">(</span>
+        <span class="n">entry_function_id</span><span class="o">=</span><span class="s2">"selected"</span><span class="p">,</span>
+        <span class="n">device_types</span><span class="o">=</span><span class="p">(</span><span class="n">BASE_DEVICE_CONTRACT</span><span class="p">,</span> <span class="n">AGITATOR_CONTRACT</span><span class="p">),</span>
+        <span class="n">resources</span><span class="o">=</span><span class="p">(</span><span class="n">DeviceResource</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"shaker"</span><span class="p">,</span> <span class="n">logical_id</span><span class="o">=</span><span class="s2">"shaker"</span><span class="p">,</span> <span class="n">device_type_id</span><span class="o">=</span><span class="n">AGITATOR_CONTRACT</span><span class="o">.</span><span class="n">type_id</span><span class="p">),),</span>
+        <span class="n">functions</span><span class="o">=</span><span class="p">(</span>
+            <span class="n">FunctionIR</span><span class="p">(</span>
+                <span class="n">node_id</span><span class="o">=</span><span class="s2">"selected"</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">"StirSelectedLocation"</span><span class="p">,</span>
+                <span class="n">variables</span><span class="o">=</span><span class="p">(</span>
+                    <span class="n">Variable</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"location"</span><span class="p">,</span>
+                        <span class="n">owner_id</span><span class="o">=</span><span class="s2">"selected"</span><span class="p">,</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">"location"</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="n">ZoneType</span><span class="p">(),</span>
+                        <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">INPUT</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="n">Variable</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"speed"</span><span class="p">,</span>
+                        <span class="n">owner_id</span><span class="o">=</span><span class="s2">"selected"</span><span class="p">,</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">"speed"</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">ROTATIONAL_SPEED</span><span class="p">,</span>
+                        <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">INPUT</span><span class="p">,</span>
+                    <span class="p">),</span>
+                <span class="p">),</span>
+                <span class="n">body</span><span class="o">=</span><span class="p">(</span>
+                    <span class="n">ConfigureProperty</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"configure"</span><span class="p">,</span>
+                        <span class="n">resource_id</span><span class="o">=</span><span class="s2">"shaker"</span><span class="p">,</span>
+                        <span class="n">property_id</span><span class="o">=</span><span class="n">AGITATION_SPEED_ID</span><span class="p">,</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"input-speed"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"speed"</span><span class="p">),</span>
+                    <span class="p">),</span>
+                    <span class="n">DeviceAt</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"select"</span><span class="p">,</span>
+                        <span class="n">resource_id</span><span class="o">=</span><span class="s2">"shaker"</span><span class="p">,</span>
+                        <span class="n">location</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"input-location"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"location"</span><span class="p">),</span>
+                        <span class="n">body</span><span class="o">=</span><span class="p">(</span>
+                            <span class="n">StartAgitation</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"start"</span><span class="p">,</span> <span class="n">resource_id</span><span class="o">=</span><span class="s2">"shaker"</span><span class="p">),</span>
+                            <span class="n">Wait</span><span class="p">(</span>
+                                <span class="n">node_id</span><span class="o">=</span><span class="s2">"wait"</span><span class="p">,</span>
+                                <span class="n">duration</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"five-seconds"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">DURATION</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">5.0</span><span class="p">),</span>
+                            <span class="p">),</span>
+                            <span class="n">StopAgitation</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"stop"</span><span class="p">,</span> <span class="n">resource_id</span><span class="o">=</span><span class="s2">"shaker"</span><span class="p">),</span>
+                        <span class="p">),</span>
+                    <span class="p">),</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">labels_program</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Capture one timestamp, then write/read/append each well in selection order."""</span>
+    <span class="n">prop</span> <span class="o">=</span> <span class="n">WellPropertySpec</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"sample_ID"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">)</span>
+    <span class="n">variables</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">Variable</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"rack"</span><span class="p">,</span> <span class="n">owner_id</span><span class="o">=</span><span class="s2">"labels"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"rack"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ZoneType</span><span class="p">(),</span> <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">INPUT</span><span class="p">),</span>
+        <span class="n">Variable</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"label"</span><span class="p">,</span> <span class="n">owner_id</span><span class="o">=</span><span class="s2">"labels"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"label"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">INPUT</span><span class="p">),</span>
+        <span class="n">Variable</span><span class="p">(</span>
+            <span class="n">node_id</span><span class="o">=</span><span class="s2">"directory"</span><span class="p">,</span> <span class="n">owner_id</span><span class="o">=</span><span class="s2">"labels"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"directory"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">INPUT</span>
+        <span class="p">),</span>
+        <span class="n">Variable</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"path"</span><span class="p">,</span> <span class="n">owner_id</span><span class="o">=</span><span class="s2">"labels"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"path"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">OUTPUT</span><span class="p">),</span>
+        <span class="n">Variable</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"count"</span><span class="p">,</span> <span class="n">owner_id</span><span class="o">=</span><span class="s2">"labels"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"count"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">OUTPUT</span><span class="p">),</span>
+        <span class="n">Variable</span><span class="p">(</span>
+            <span class="n">node_id</span><span class="o">=</span><span class="s2">"well"</span><span class="p">,</span>
+            <span class="n">owner_id</span><span class="o">=</span><span class="s2">"labels"</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">"well"</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="n">ZoneType</span><span class="p">(),</span>
+            <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">INTERNAL</span><span class="p">,</span>
+            <span class="n">initial</span><span class="o">=</span><span class="n">ZoneLiteral</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"empty-well"</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="o">*</span><span class="p">(</span>
+            <span class="n">Variable</span><span class="p">(</span>
+                <span class="n">node_id</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">owner_id</span><span class="o">=</span><span class="s2">"labels"</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span>
+                <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">INTERNAL</span><span class="p">,</span>
+                <span class="n">initial</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="n">name</span> <span class="o">+</span> <span class="s2">"-initial"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">""</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"cleaned"</span><span class="p">,</span> <span class="s2">"stamp"</span><span class="p">,</span> <span class="s2">"record"</span><span class="p">)</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">path_expression</span> <span class="o">=</span> <span class="n">Binary</span><span class="p">(</span>
+        <span class="n">node_id</span><span class="o">=</span><span class="s2">"extension"</span><span class="p">,</span>
+        <span class="n">op</span><span class="o">=</span><span class="n">BinaryOp</span><span class="o">.</span><span class="n">ADD</span><span class="p">,</span>
+        <span class="n">left</span><span class="o">=</span><span class="n">Binary</span><span class="p">(</span>
+            <span class="n">node_id</span><span class="o">=</span><span class="s2">"timestamp-path"</span><span class="p">,</span>
+            <span class="n">op</span><span class="o">=</span><span class="n">BinaryOp</span><span class="o">.</span><span class="n">ADD</span><span class="p">,</span>
+            <span class="n">left</span><span class="o">=</span><span class="n">Binary</span><span class="p">(</span>
+                <span class="n">node_id</span><span class="o">=</span><span class="s2">"directory-slash"</span><span class="p">,</span>
+                <span class="n">op</span><span class="o">=</span><span class="n">BinaryOp</span><span class="o">.</span><span class="n">ADD</span><span class="p">,</span>
+                <span class="n">left</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"input-directory"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"directory"</span><span class="p">),</span>
+                <span class="n">right</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"slash"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">"/"</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">right</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"read-stamp"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"stamp"</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">right</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"csv-extension"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">".csv"</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">Binary</span><span class="p">(</span>
+        <span class="n">node_id</span><span class="o">=</span><span class="s2">"row"</span><span class="p">,</span>
+        <span class="n">op</span><span class="o">=</span><span class="n">BinaryOp</span><span class="o">.</span><span class="n">ADD</span><span class="p">,</span>
+        <span class="n">left</span><span class="o">=</span><span class="n">Binary</span><span class="p">(</span>
+            <span class="n">node_id</span><span class="o">=</span><span class="s2">"prefix"</span><span class="p">,</span>
+            <span class="n">op</span><span class="o">=</span><span class="n">BinaryOp</span><span class="o">.</span><span class="n">ADD</span><span class="p">,</span>
+            <span class="n">left</span><span class="o">=</span><span class="n">WellName</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"name"</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"name-well"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"well"</span><span class="p">)),</span>
+            <span class="n">right</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"separator"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">":"</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">right</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"record-value"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"record"</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">Notify</span><span class="p">(</span>
+            <span class="n">node_id</span><span class="o">=</span><span class="s2">"confirm"</span><span class="p">,</span>
+            <span class="n">message</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span>
+                <span class="n">node_id</span><span class="o">=</span><span class="s2">"message"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">"Samples are ready. Confirm to label and record them."</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">Assignment</span><span class="p">(</span>
+            <span class="n">node_id</span><span class="o">=</span><span class="s2">"trim-label"</span><span class="p">,</span>
+            <span class="n">target</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"cleaned-target"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"cleaned"</span><span class="p">),</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">TextTrim</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"trim"</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"label-input"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"label"</span><span class="p">)),</span>
+        <span class="p">),</span>
+        <span class="n">ReadWallTime</span><span class="p">(</span>
+            <span class="n">node_id</span><span class="o">=</span><span class="s2">"clock"</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"stamp-target"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"stamp"</span><span class="p">),</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">_%H%M%S"</span>
+        <span class="p">),</span>
+        <span class="n">Assignment</span><span class="p">(</span>
+            <span class="n">node_id</span><span class="o">=</span><span class="s2">"make-path"</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"path-target"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"path"</span><span class="p">),</span> <span class="n">value</span><span class="o">=</span><span class="n">path_expression</span>
+        <span class="p">),</span>
+        <span class="n">Assignment</span><span class="p">(</span>
+            <span class="n">node_id</span><span class="o">=</span><span class="s2">"reset-count"</span><span class="p">,</span>
+            <span class="n">target</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"reset-target"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"count"</span><span class="p">),</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"zero"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">ForEachZone</span><span class="p">(</span>
+            <span class="n">node_id</span><span class="o">=</span><span class="s2">"visit"</span><span class="p">,</span>
+            <span class="n">target</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"loop-well"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"well"</span><span class="p">),</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"input-rack"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"rack"</span><span class="p">),</span>
+            <span class="n">body</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">WriteWellProperty</span><span class="p">(</span>
+                    <span class="n">node_id</span><span class="o">=</span><span class="s2">"label-well"</span><span class="p">,</span>
+                    <span class="nb">property</span><span class="o">=</span><span class="n">prop</span><span class="p">,</span>
+                    <span class="n">zone</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"write-well"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"well"</span><span class="p">),</span>
+                    <span class="n">value</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"write-label"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"cleaned"</span><span class="p">),</span>
+                <span class="p">),</span>
+                <span class="n">ReadWellProperty</span><span class="p">(</span>
+                    <span class="n">node_id</span><span class="o">=</span><span class="s2">"read-label"</span><span class="p">,</span>
+                    <span class="nb">property</span><span class="o">=</span><span class="n">prop</span><span class="p">,</span>
+                    <span class="n">zone</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"read-well"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"well"</span><span class="p">),</span>
+                    <span class="n">target</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"record-target"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"record"</span><span class="p">),</span>
+                    <span class="n">default</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"fallback"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">""</span><span class="p">),</span>
+                <span class="p">),</span>
+                <span class="n">AppendCsv</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"append"</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"append-path"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"path"</span><span class="p">),</span> <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="n">row</span><span class="p">,)),</span>
+                <span class="n">Assignment</span><span class="p">(</span>
+                    <span class="n">node_id</span><span class="o">=</span><span class="s2">"increment"</span><span class="p">,</span>
+                    <span class="n">target</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"count-target"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"count"</span><span class="p">),</span>
+                    <span class="n">value</span><span class="o">=</span><span class="n">Binary</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"plus-one"</span><span class="p">,</span>
+                        <span class="n">op</span><span class="o">=</span><span class="n">BinaryOp</span><span class="o">.</span><span class="n">ADD</span><span class="p">,</span>
+                        <span class="n">left</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"old-count"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"count"</span><span class="p">),</span>
+                        <span class="n">right</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"one"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                    <span class="p">),</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">LogValue</span><span class="p">(</span>
+            <span class="n">node_id</span><span class="o">=</span><span class="s2">"log-count"</span><span class="p">,</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"final-count"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"count"</span><span class="p">),</span>
+            <span class="n">category</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"category"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">"samples"</span><span class="p">),</span>
+            <span class="n">stream</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"stream"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">"records"</span><span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">Program</span><span class="p">(</span>
+        <span class="n">entry_function_id</span><span class="o">=</span><span class="s2">"labels"</span><span class="p">,</span>
+        <span class="n">functions</span><span class="o">=</span><span class="p">(</span><span class="n">FunctionIR</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"labels"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"LabelSampleLog"</span><span class="p">,</span> <span class="n">variables</span><span class="o">=</span><span class="n">variables</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">),),</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">reference_environment</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">acknowledgements</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ReferenceEnvironment</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Create independent files, clocks, metadata and synthetic candidate facts."""</span>
+    <span class="n">directory</span> <span class="o">=</span> <span class="n">LocationDirectory</span><span class="p">(</span><span class="n">wells</span><span class="o">=</span><span class="p">(</span><span class="n">Well</span><span class="p">(</span><span class="n">identity</span><span class="o">=</span><span class="s2">"well:A"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"A"</span><span class="p">),</span> <span class="n">Well</span><span class="p">(</span><span class="n">identity</span><span class="o">=</span><span class="s2">"well:B"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"B"</span><span class="p">)))</span>
+    <span class="n">candidates</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+        <span class="n">DeviceCandidate</span><span class="p">(</span>
+            <span class="n">binding</span><span class="o">=</span><span class="n">DeviceBinding</span><span class="p">(</span>
+                <span class="n">logical_id</span><span class="o">=</span><span class="s2">"shaker"</span><span class="p">,</span>
+                <span class="n">physical_id</span><span class="o">=</span><span class="sa">f</span><span class="s2">"shaker:</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                <span class="n">contract</span><span class="o">=</span><span class="n">AGITATOR_CONTRACT</span><span class="p">,</span>
+                <span class="n">base_contracts</span><span class="o">=</span><span class="p">(</span><span class="n">BASE_DEVICE_CONTRACT</span><span class="p">,),</span>
+                <span class="n">writable_properties</span><span class="o">=</span><span class="p">(</span><span class="n">AGITATION_SPEED_ID</span><span class="p">,),</span>
+                <span class="n">supported_operations</span><span class="o">=</span><span class="p">(</span><span class="n">START_AGITATION_ID</span><span class="p">,</span> <span class="n">STOP_AGITATION_ID</span><span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">wells</span><span class="o">=</span><span class="n">Zone</span><span class="p">(</span><span class="n">well_ids</span><span class="o">=</span><span class="p">(</span><span class="sa">f</span><span class="s2">"well:</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">,)),</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"A"</span><span class="p">,</span> <span class="s2">"B"</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">ReferenceEnvironment</span><span class="p">(</span>
+        <span class="n">locations</span><span class="o">=</span><span class="n">directory</span><span class="p">,</span>
+        <span class="n">device_bindings</span><span class="o">=</span><span class="n">DeviceBindings</span><span class="p">(</span><span class="n">devices</span><span class="o">=</span><span class="p">(</span><span class="n">DeviceSelectionBinding</span><span class="p">(</span><span class="n">logical_id</span><span class="o">=</span><span class="s2">"shaker"</span><span class="p">,</span> <span class="n">candidates</span><span class="o">=</span><span class="n">candidates</span><span class="p">),)),</span>
+        <span class="n">clock</span><span class="o">=</span><span class="n">VirtualClock</span><span class="p">(),</span>
+        <span class="n">wall_clock</span><span class="o">=</span><span class="n">VirtualWallClock</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)),</span>
+        <span class="n">acknowledgements</span><span class="o">=</span><span class="n">QueuedAcknowledgements</span><span class="p">([</span><span class="kc">True</span><span class="p">]</span> <span class="o">*</span> <span class="n">acknowledgements</span><span class="p">),</span>
+        <span class="n">properties</span><span class="o">=</span><span class="n">WellProperties</span><span class="p">(),</span>
+        <span class="n">files</span><span class="o">=</span><span class="n">MemoryFiles</span><span class="p">(),</span>
+    <span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="c1"># Deployment bindings are supplied only to the program that declares devices.</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">reference_environment</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">env</span><span class="o">.</span><span class="n">device_bindings</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">env</span><span class="o">.</span><span class="n">files</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">env</span><span class="o">.</span><span class="n">clock</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="n">targets</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"reagent"</span><span class="p">:</span> <span class="n">ReferenceArchiveTarget</span><span class="p">(),</span>
+        <span class="s2">"shaker"</span><span class="p">:</span> <span class="n">ReferenceArchiveTarget</span><span class="p">(</span><span class="n">bindings</span><span class="o">=</span><span class="n">env</span><span class="o">.</span><span class="n">device_bindings</span><span class="p">),</span>
+        <span class="s2">"labels"</span><span class="p">:</span> <span class="n">ReferenceArchiveTarget</span><span class="p">(),</span>
+    <span class="p">}</span>
+    <span class="n">programs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"reagent"</span><span class="p">:</span> <span class="n">reagent_program</span><span class="p">(),</span> <span class="s2">"shaker"</span><span class="p">:</span> <span class="n">selected_program</span><span class="p">(),</span> <span class="s2">"labels"</span><span class="p">:</span> <span class="n">labels_program</span><span class="p">()}</span>
+    <span class="n">restored</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">program</span> <span class="ow">in</span> <span class="n">programs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">compile_ir</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">targets</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="sa">f</span><span class="s2">".</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.json"</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">restored</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">from_json</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">))</span>
+    <span class="c1"># Host setup explicitly supplies this small, project-authored fixture.</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">"read_reagent_table.csv"</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
+    <span class="n">recipe</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">(</span>
+        <span class="n">restored</span><span class="p">[</span><span class="s2">"reagent"</span><span class="p">],</span> <span class="n">environment</span><span class="o">=</span><span class="n">ReferenceEnvironment</span><span class="p">(</span><span class="n">files</span><span class="o">=</span><span class="n">MemoryFiles</span><span class="p">({</span><span class="s2">"recipe.csv"</span><span class="p">:</span> <span class="n">data</span><span class="p">}))</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">"path"</span><span class="p">:</span> <span class="s2">"recipe.csv"</span><span class="p">,</span> <span class="s2">"reagent_index"</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+    <span class="n">volumes</span> <span class="o">=</span> <span class="n">recipe</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"volumes"</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">volumes</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">Volume</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">volumes</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">"Reagent: </span><span class="si">{</span><span class="n">recipe</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s1">'reagent_name'</span><span class="p">]</span><span class="si">}</span><span class="s2">; IDs: </span><span class="si">{</span><span class="n">recipe</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s1">'ids'</span><span class="p">]</span><span class="si">}</span><span class="s2">; volumes: </span><span class="si">{</span><span class="nb">tuple</span><span class="p">(</span><span class="n">v</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">mL</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">volumes</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="w"> </span><span class="n">Volume</span><span class="p">))</span><span class="si">}</span><span class="s2"> mL"</span>
+    <span class="p">)</span>
+    <span class="n">shaker</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">(</span><span class="n">restored</span><span class="p">[</span><span class="s2">"shaker"</span><span class="p">],</span> <span class="n">environment</span><span class="o">=</span><span class="n">env</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+        <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">"location"</span><span class="p">:</span> <span class="n">Zone</span><span class="p">(</span><span class="n">well_ids</span><span class="o">=</span><span class="p">(</span><span class="s2">"well:A"</span><span class="p">,)),</span> <span class="s2">"speed"</span><span class="p">:</span> <span class="mi">300</span> <span class="o">*</span> <span class="n">rpm</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">shaker</span><span class="o">.</span><span class="n">physical_devices</span><span class="p">[</span><span class="s2">"shaker:A"</span><span class="p">]</span><span class="o">.</span><span class="n">enabled</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Shaker: stopped after </span><span class="si">{</span><span class="n">env</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> s at 300 rpm"</span><span class="p">)</span>
+    <span class="n">label_env</span> <span class="o">=</span> <span class="n">replace</span><span class="p">(</span><span class="n">reference_environment</span><span class="p">(),</span> <span class="n">device_bindings</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">(</span><span class="n">restored</span><span class="p">[</span><span class="s2">"labels"</span><span class="p">],</span> <span class="n">environment</span><span class="o">=</span><span class="n">label_env</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+        <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">"rack"</span><span class="p">:</span> <span class="n">Zone</span><span class="p">(</span><span class="n">well_ids</span><span class="o">=</span><span class="p">(</span><span class="s2">"well:B"</span><span class="p">,</span> <span class="s2">"well:A"</span><span class="p">)),</span> <span class="s2">"label"</span><span class="p">:</span> <span class="s2">"  batch A</span><span class="se">\t</span><span class="s2">"</span><span class="p">,</span> <span class="s2">"directory"</span><span class="p">:</span> <span class="s2">"logs"</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Label log: </span><span class="si">{</span><span class="n">labels</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s1">'path'</span><span class="p">]</span><span class="si">}</span><span class="s2">; rows: </span><span class="si">{</span><span class="n">labels</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">path_value</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"path"</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path_value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">label_env</span><span class="o">.</span><span class="n">files</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Contents:"</span><span class="p">,</span> <span class="n">label_env</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">(</span><span class="n">path_value</span><span class="p">))</span>
+</code></pre></div>
+</details>
+<p><a href="../../_generated/examples/developer/runtime_workflows_ir.py">Download Python</a> ·
+<a href="../../_generated/examples/read_reagent_table.csv">Sample CSV</a> ·
+<a href="../../_generated/examples/developer/runtime_workflows_ir.reagent.json">Reagent JSON</a> ·
+<a href="../../_generated/examples/developer/runtime_workflows_ir.shaker.json">Shaker JSON</a> ·
+<a href="../../_generated/examples/developer/runtime_workflows_ir.labels.json">Label JSON</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../aspiration-chunk/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Calculate a volume chunk">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Calculate a volume chunk
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../aspiration-chunk-ir/" class="md-footer__link md-footer__link--next" aria-label="Next: Volume chunk after JSON">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Volume chunk after JSON
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["navigation.tabs","navigation.sections","navigation.footer","content.code.copy","search.highlight"],"redirect":null,"search":"../../assets/javascripts/workers/search.7d14d953.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"provider":"mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.df5d1f2b.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -3275,6 +3275,141 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/stir-selected-location/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Run a selected shaker
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/label-sample-log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Label wells and append a log
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/aspiration-chunk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Calculate a volume chunk
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/runtime-workflows-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Complete workflows from IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/aspiration-chunk-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Volume chunk after JSON
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3886,7 +4021,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.3.15
-    · <code title="aa75dce16e94384e2bfeaa167cd82dc2bb98ab43">aa75dce1</code>
+    · <code title="28a00c8c57a182f19bab3661a12fc06ee30f74c9">28a00c8c</code>
   </p>
 </aside>
 
@@ -3940,7 +4075,7 @@ Use one context per <code>with</code> statement, without an <code>as</code> name
     <span class="n">devices</span><span class="o">=</span><span class="p">{</span>
         <span class="s2">"shaker"</span><span class="p">:</span> <span class="n">AutoSuiteAgitatorSelection</span><span class="p">(</span><span class="n">candidates</span><span class="o">=</span><span class="p">(</span>
             <span class="n">AutoSuiteIndividualShaker</span><span class="p">(</span><span class="n">zone</span><span class="o">=</span><span class="s2">"Heater Shaker 23"</span><span class="p">,</span> <span class="n">device_id</span><span class="o">=</span><span class="s2">"23"</span><span class="p">),</span>
-            <span class="n">AutoSuiteIndividualShaker</span><span class="p">(</span><span class="n">zone</span><span class="o">=</span><span class="s2">"Heater Shaker 24"</span><span class="p">,</span> <span class="n">device_id</span><span class="o">=</span><span class="s2">"24"</span><span class="p">),</span>
+            <span class="n">AutoSuiteIndividualShaker</span><span class="p">(</span><span class="n">zone</span><span class="o">=</span><span class="s2">"Heater Shaker 22"</span><span class="p">,</span> <span class="n">device_id</span><span class="o">=</span><span class="s2">"22"</span><span class="p">),</span>
         <span class="p">)),</span>
     <span class="p">},</span>
 <span class="p">)</span>
@@ -3953,7 +4088,10 @@ physical candidate sets. Share a logical reference when steps use one device.</p
 <p>A single candidate is allowed. An ordinary fixed binding remains useful for
 programs without <code>at()</code>. Supplying <code>layout</code> for that binding adds the same
 ancestry check; it does not alter the emitted fixed-device program.</p>
-<p>For an executable reference example, see <a href="../../../examples/device-locations-ir/">physical device snapshots</a>.</p>
+<p>The <a href="../../../examples/stir-selected-location/">complete author example</a> adds a
+five-second wait and an APP validation command. For reference execution, see
+<a href="../../../examples/runtime-workflows-ir/">the complete workflows</a> or
+<a href="../../../examples/device-locations-ir/">physical device snapshots</a>.</p>
 
 
 

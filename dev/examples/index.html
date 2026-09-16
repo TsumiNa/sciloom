@@ -3275,6 +3275,141 @@
   
   
     <li class="md-nav__item">
+      <a href="./stir-selected-location/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Run a selected shaker
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./label-sample-log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Label wells and append a log
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./aspiration-chunk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Calculate a volume chunk
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./runtime-workflows-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Complete workflows from IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./aspiration-chunk-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Volume chunk after JSON
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="./demo-device/" class="md-nav__link">
         
   
@@ -3897,15 +4032,16 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.3.15
-    · <code title="aa75dce16e94384e2bfeaa167cd82dc2bb98ab43">aa75dce1</code>
+    · <code title="28a00c8c57a182f19bab3661a12fc06ee30f74c9">28a00c8c</code>
   </p>
 </aside>
 
                   
 
 <h1 id="example-walkthroughs">Example walkthroughs</h1>
-<p>Every walkthrough includes the actual runnable source, its expected result and
-same-name generated companions. Use a source checkout to run the listed commands.
+<p>Every walkthrough includes the actual runnable source and its expected result.
+Generated companions are included where the target can produce them; gated
+examples show the current diagnostic instead. Use a source checkout to run the listed commands.
 Downloads are learning references; generated JSON records source paths relative
 to the repository root.</p>
 <h2 id="for-experiment-authors">For experiment authors</h2>
@@ -3985,6 +4121,18 @@ to the repository root.</p>
 <td><a href="label-wells/">Label selected wells</a></td>
 <td>Write a sample identifier to selected wells and read it back</td>
 </tr>
+<tr>
+<td><a href="stir-selected-location/">Run a selected shaker</a></td>
+<td>Configure, select, start, wait and stop; native emission remains gated</td>
+</tr>
+<tr>
+<td><a href="label-sample-log/">Label wells and append a log</a></td>
+<td>Combine confirmation, time, ordered metadata changes and file writes</td>
+</tr>
+<tr>
+<td><a href="aspiration-chunk/">Calculate a volume chunk</a></td>
+<td>Calculate capacity, partial fills and a caller-supplied resume point</td>
+</tr>
 </tbody>
 </table>
 <h2 id="for-contributors">For contributors</h2>
@@ -4055,6 +4203,14 @@ to the repository root.</p>
 <tr>
 <td><a href="portable-agitation/">Portable agitation</a></td>
 <td>Device specialization and rebinding the same authored JSON</td>
+</tr>
+<tr>
+<td><a href="runtime-workflows-ir/">Complete workflows from IR</a></td>
+<td>Three independent builders, JSON restoration and explicit reference services</td>
+</tr>
+<tr>
+<td><a href="aspiration-chunk-ir/">Volume chunk after JSON</a></td>
+<td>Source-derived quantity arithmetic and repeated calls after restoration</td>
 </tr>
 </tbody>
 </table>

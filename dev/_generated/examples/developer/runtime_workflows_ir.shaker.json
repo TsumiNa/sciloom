@@ -1,0 +1,141 @@
+{
+  "device_types": [
+    {
+      "base_type_ids": [
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "kind": "CommandContract",
+          "name": "start",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.start/v1"
+        },
+        {
+          "kind": "CommandContract",
+          "name": "stop",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.stop/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "speed",
+          "semantic_id": "sciloom.agitator.speed/v1",
+          "type": "rotational_speed"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.agitator.speed/v1"
+      ],
+      "type_id": "sciloom.agitator/v1"
+    },
+    {
+      "base_type_ids": [],
+      "kind": "DeviceTypeContract",
+      "operations": [],
+      "properties": [],
+      "required_configuration": [],
+      "type_id": "sciloom.device/v1"
+    }
+  ],
+  "entry_function_id": "selected",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "configure",
+          "property_id": "sciloom.agitator.speed/v1",
+          "resource_id": "shaker",
+          "source": null,
+          "value": {
+            "kind": "Reference",
+            "node_id": "input-speed",
+            "source": null,
+            "symbol_id": "speed"
+          }
+        },
+        {
+          "body": [
+            {
+              "kind": "StartAgitation",
+              "node_id": "start",
+              "resource_id": "shaker",
+              "source": null
+            },
+            {
+              "duration": {
+                "kind": "Literal",
+                "node_id": "five-seconds",
+                "source": null,
+                "type": "duration",
+                "value": 5.0
+              },
+              "kind": "Wait",
+              "node_id": "wait",
+              "source": null
+            },
+            {
+              "kind": "StopAgitation",
+              "node_id": "stop",
+              "resource_id": "shaker",
+              "source": null
+            }
+          ],
+          "kind": "DeviceAt",
+          "location": {
+            "kind": "Reference",
+            "node_id": "input-location",
+            "source": null,
+            "symbol_id": "location"
+          },
+          "node_id": "select",
+          "resource_id": "shaker",
+          "source": null
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "StirSelectedLocation",
+      "node_id": "selected",
+      "source": null,
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "location",
+          "node_id": "location",
+          "owner_id": "selected",
+          "role": "input",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "speed",
+          "node_id": "speed",
+          "owner_id": "selected",
+          "role": "input",
+          "source": null,
+          "type": "rotational_speed"
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": [
+    {
+      "device_type_id": "sciloom.agitator/v1",
+      "kind": "DeviceResource",
+      "logical_id": "shaker",
+      "node_id": "shaker",
+      "source": null
+    }
+  ]
+}
