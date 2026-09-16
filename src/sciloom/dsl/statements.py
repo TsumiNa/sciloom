@@ -32,6 +32,7 @@ from sciloom.flow.logging import log
 from sciloom.flow.messages import notify
 from sciloom.flow.timing import now_text
 from .context import LoweringContext
+from .csv_read import csv_read
 from .device_conditions import device_condition
 from .device_operations import configure, device_command
 from .expressions import BINARY_OPERATORS, expression, is_expression_call
@@ -90,6 +91,10 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
         if isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant) and isinstance(node.value.value, str):
             continue
         if isinstance(node, ast.Assign) and len(node.targets) == 1:
+            read = csv_read(context, node)
+            if read is not None:
+                result.append(read)
+                continue
             if isinstance(node.value, ast.Call) and context.static_object(node.value.func) is now_text:
                 invocation = node.value
                 if len(invocation.args) == 1 and not invocation.keywords:

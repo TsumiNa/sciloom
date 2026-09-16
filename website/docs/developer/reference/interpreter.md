@@ -38,7 +38,7 @@ assert environment.events == ()  # This calculation has no external events.
 `environment.events` returns an immutable history snapshot across all runs using
 that environment. `result.events` remains limited to one successful run.
 `ExecutionEvent` is the union of DeviceEvent, LogEvent, AcknowledgementEvent,
-WallTimeEvent, TimerEvent and WaitEvent. Narrow with
+WallTimeEvent, TimerEvent, WaitEvent and CsvReadEvent. Narrow with
 `isinstance(event, LogEvent)` before accessing log-specific fields; device events
 carry state snapshots. A failed run leaves earlier completed events in
 environment history and does not roll back their state changes.
@@ -150,6 +150,37 @@ existing `result.resources` mapping continues to contain device states only.
 The [timer IR example](../../examples/timing-ir.md) advances five virtual seconds.
 This defines ordering and elapsed-time semantics; it is not a latency or scheduling
 simulation of AutoSuite or physical equipment.
+
+## Explicit files and CSV outcomes
+
+Provide `ReferenceEnvironment(files=MemoryFiles({"recipe.csv": data_bytes}))`
+for isolated reference reads. MemoryFiles copies its initial mapping; immutable
+byte snapshots stay unchanged after later appends. Each newly constructed service
+has independent state. Sharing a service explicitly shares its file contents.
+
+Use `LocalFiles(root=...)` only when host file access is intended. The root must
+already be a directory. Paths are relative to it; absolute paths, traversal and
+resolved symlinks outside it are rejected. This containment check is not a sandbox
+against concurrent filesystem changes. FileService exposes `read_bytes(path)` and
+`append_bytes(path, data)`; append creates a missing file but never parent directories.
+Runtime CSV append is not available yet.
+
+ReadCsv captures path, optional row, then each column's index/default once before
+reading. It parses and converts all results, normalizes them for destinations,
+then commits them together. Lists use the usual immutable internal representation.
+A failed ordinary read leaves every destination unchanged. The
+[CSV reference](../../user-guide/reference/csv.md) defines encoding, conversions,
+try-form fallbacks and named statuses; it does not promise a filesystem transaction.
+
+CsvReadEvent records a completed read attempt, including IO/parse/EOF failures,
+with captured path, selectors and status. It is appended before result assignment
+or a fatal diagnostic. Invalid arguments or a missing file service produce no
+read event. Even if destination normalization subsequently fails, the completed
+file-read event remains. Previously completed actions are not rolled back.
+
+The [CSV IR example](../../examples/csv-read-ir.md) demonstrates JSON restoration
+without reading a host file. Native AutoSuite task probes remain separate from
+portable compilation and cannot establish parser equivalence by static inspection.
 
 ## Session and snapshots
 

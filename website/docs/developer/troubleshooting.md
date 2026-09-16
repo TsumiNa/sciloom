@@ -129,6 +129,21 @@ and configuration pass, definite timer-start analysis, and `Target.validate`.
 | `wait_duration` | AutoSuite wait duration must be within 0–79,999 hours. | use a literal inside the documented range |
 | your own code | your own message | whatever your `validate` proves; keep the code stable and the message actionable |
 
+## CSV file services
+
+`missing_environment_service` for ReadCsv means no FileService was supplied.
+Use `ReferenceEnvironment(files=MemoryFiles({...}))` for deterministic byte input,
+or opt in to `LocalFiles(root=...)`. `file_service_error` reports an unexpected
+provider exception or a non-bytes result; it does not become a recoverable IO_ERROR.
+The built-in adapters reject invalid paths with `csv_path` before a read event.
+
+`csv_eof`, `csv_invalid_data` and `csv_io_error` are fatal ordinary-read outcomes;
+the corresponding try-forms return named statuses and complete fallbacks. Earlier
+events remain in environment history, including the failed CsvReadEvent. No
+destination of an unsuccessful ordinary read is changed. Check [CSV rules](../user-guide/reference/csv.md)
+for schema/source diagnostics and [file ownership](reference/interpreter.md#explicit-files-and-csv-outcomes).
+AutoSuite's `unsupported_csv_semantics` is a target gate, not a missing file service.
+
 ## ValueError from ExecutionConfig
 
 Raised when the interpreter's configuration is constructed, before any run.

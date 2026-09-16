@@ -12,6 +12,7 @@ PACKAGES = ("flow", "dsl")
 VOCABULARY = frozenset(
     {
         "flow.comptime",
+        "flow.csv",
         "flow.device_slots",
         "flow.fields",
         "flow.function",
@@ -26,6 +27,7 @@ VOCABULARY = frozenset(
 ANALYSIS = frozenset(
     {
         "dsl.context",
+        "dsl.csv_read",
         "dsl.device_conditions",
         "dsl.device_operations",
         "dsl.driver",

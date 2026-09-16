@@ -1016,6 +1016,92 @@ equate the vendor parser to Python's CSV dialect or numeric conversion rules.
 Mypy checks column/default types where expressible; SciLoom checks arbitrary-width
 result bindings. Do not add a plugin or one overload per tuple width.
 
+### Stage-11 concrete records and parsing profile
+
+These additions are implemented in the stage-11 branch for reference execution;
+AutoSuite compilation remains gated. The public declarations live in `sciloom.flow.csv`, lazily
+exported as `sciloom.csv`. `Column[T]` is a frozen keyword-only generic descriptor
+with `index: int`, `value_type: type[T]`, an optional physical unit and an optional
+typed default. Omission has its own sentinel; None is not a valid default. The
+four read markers return `tuple[Any, ...]` because their heterogeneous width is
+defined by Column metadata; SciLoom, not mypy, validates every result binding.
+Calls only occupy an entire tuple-unpacking assignment RHS, even for one result.
+Column calls are inline metadata in `columns=(...)`; source analysis does not
+execute their constructors, selectors or defaults.
+
+IR constructors are exported from `sciloom.core.ir`:
+
+```python
+from sciloom.core.ir import (
+    CsvColumn, CsvErrorPolicy, CsvReadMode, Literal, ReadCsv, Reference, ScalarType,
+)
+
+read = ReadCsv(
+    node_id="read", mode=CsvReadMode.ROW, error_policy=CsvErrorPolicy.RAISE,
+    path=Literal(node_id="path", type=ScalarType.TEXT, value="recipe.csv"),
+    header=False,
+    row=Literal(node_id="row", type=ScalarType.INTEGER, value=0),
+    columns=(CsvColumn(
+        index=Literal(node_id="column", type=ScalarType.INTEGER, value=0),
+        type=ScalarType.TEXT,
+    ),),
+    targets=(Reference(node_id="target", symbol_id="name"),),
+)
+```
+
+`CsvReadMode` uses `ROW="row"` and `COLUMNS="columns"`;
+`CsvErrorPolicy` uses `RAISE="raise"` and `STATUS="status"`. ReadCsv has one
+path expression, a host Boolean header flag, an optional row (required for ROW,
+absent for COLUMNS), nonempty typed columns and distinct ordered target references.
+STATUS prepends an INTEGER target. Each CsvColumn has an index expression, scalar
+type, optional `unit: Literal` and optional default expression. A unit is a finite
+positive quantity literal representing one input unit in canonical SI, matching
+the column type. Defaults are already typed canonical values, not rescaled.
+No Python unit object or vendor parameter is serialized.
+
+The reference CSV profile is UTF-8 (an initial UTF-8 BOM is accepted), comma
+delimited, double-quoted with doubled quote escapes, LF or CRLF records, and
+quoted embedded line breaks. Parsing uses Python's strict CSV reader explicitly
+as the reference profile, not as proof of AutoSuite equivalence. A blank physical
+record contains no cells; empty input contains no records. Header handling skips
+one parsed record. Row mode parses through its selected record; later records
+are outside that selection, but decoding validates UTF-8 across the whole file.
+Column mode validates the entire input. The reference parser retains Python's
+CSV field-size limit and reports parser-limit failures as INVALID_DATA.
+
+Text cells preserve parsed text. Numeric conversion trims only space/tab/CR/LF,
+accepts ASCII decimal integers or decimal/exponent real syntax, rejects empty
+cells, nonfinite values, expressions, underscores, hexadecimal and fractional
+integers. Boolean cells accept `true` or `false`, case-insensitively after that
+same trimming; no implicit numeric Boolean conversion. Quantities use finite
+decimal numbers times the declared unit; speed also requires nonnegative values.
+Missing or invalid cells use only their own explicit defaults. Invalid UTF-8 and
+malformed records produce INVALID_DATA for the operation, not per-cell defaults.
+
+ReferenceEnvironment adds `files: FileService | None = None`, with the byte
+adapters in section 2. One read captures path, row, then each column index/default
+in declaration order before calling read_bytes exactly once. File OSError gives
+IO_ERROR; invalid path/selector arguments are programming errors. No implicit
+local file adapter is selected. LocalFiles validates containment before access;
+it is not a security sandbox against concurrent filesystem changes.
+
+`CsvReadEvent` is a frozen keyword-only record exported by `core.interpreter`:
+`node_id`, `source`, `path`, `mode`, `header`, `row`, `columns: tuple[int, ...]`
+and `status: int`. A completed read attempt records its outcome, including a
+CSV failure, before either committing all outputs or raising. Missing services
+and invalid arguments do not create read events. Events do not duplicate file
+bytes or result arrays. Status-form errors commit complete fallback payloads;
+ordinary errors emit the outcome event but change no destination fields.
+
+AutoSuite's manual explicitly evaluates cell expressions and truncates real
+cells assigned to integers. Its aggregate result does not specify mixed-column
+precedence. Therefore native CSV tasks are not automatically equivalent to this
+reference profile. Ordinary reads also need the still-unverified fatal-error
+gate. Implement and test the supplied task envelope and bounded probes separately;
+Target must reject unsupported parsing/status/failure semantics rather than emit
+a file that claims full ReadCsv behavior. Record profile and Executor gaps in
+the evidence matrix and Q&A; a successful reference recipe is not vendor acceptance.
+
 ## 11. CSV append (A06, stage 12)
 
 ```python

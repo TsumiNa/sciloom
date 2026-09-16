@@ -114,6 +114,18 @@ def test_troubleshooting_failure_examples(tmp_path):
     assert run_series_script(tmp_path / "failures.py", program.group(1), tmp_path).rstrip("\n") == program.group(2)
 
 
+def test_csv_reference_program_matches_documented_values(tmp_path):
+    markdown = (ROOT / "website/docs/user-guide/reference/csv.md").read_text()
+    source = re.search(r"```python\n(.*?)\n```", markdown, re.DOTALL).group(1)
+    source += """
+from sciloom.core.interpreter import Interpreter, MemoryFiles, ReferenceEnvironment
+files = MemoryFiles({"recipe.csv": b"id,volume\\nA,1.5\\nB,\\n"})
+result = Interpreter(ReadVolumes().to_ir(), environment=ReferenceEnvironment(files=files)).run(inputs={"path": "recipe.csv"})
+assert result.outputs == {"ids": ("A", "B"), "volumes": (1.5 * mL, 0 * mL)}
+"""
+    assert run_series_script(tmp_path / "csv_example.py", source, tmp_path) == ""
+
+
 @pytest.mark.parametrize(
     "name,fields,code,checks",
     (
@@ -301,6 +313,8 @@ class Text(HTMLParser):
         ("examples/reference-environment", "developer/reference_environment"),
         ("examples/record-values", "record_values"),
         ("examples/logging-ir", "developer/logging_ir"),
+        ("examples/read-reagent-table", "read_reagent_table"),
+        ("examples/csv-read-ir", "developer/csv_read_ir"),
         ("examples/demo-device", "developer/demo_device"),
         ("examples/portable-agitation", "developer/portable_agitation"),
     ),

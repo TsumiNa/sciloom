@@ -21,6 +21,7 @@ from sciloom.core.ir import (
     LogValue,
     Notify,
     Program,
+    ReadCsv,
     ReadWallTime,
     Reference,
     ScalarType,
@@ -60,7 +61,10 @@ def validate_runtime_guards(program: Program) -> tuple[Diagnostic, ...]:
         for node, path in iter_nodes(function, f"$.functions[{function_index}]"):
             message = None
             code = "unsupported_runtime_guard"
-            if isinstance(node, (Wait, WaitUntil)):
+            if isinstance(node, ReadCsv):
+                code = "unsupported_csv_semantics"
+                message = "AutoSuite CSV expression evaluation, conversion and per-column result aggregation are not verified against typed literal CSV semantics; reference execution is available."
+            elif isinstance(node, (Wait, WaitUntil)):
                 duration = node.duration
                 if not isinstance(duration, Literal):
                     message = "AutoSuite waits require a literal duration until runtime range failure propagation is verified."
@@ -176,6 +180,15 @@ def validate_array_outputs(program: Program) -> tuple[Diagnostic, ...]:
                         read(expression, assigned)
                 elif isinstance(statement, Notify):
                     read(statement.message, assigned)
+                elif isinstance(statement, ReadCsv):
+                    read(statement.path, assigned)
+                    if statement.row is not None:
+                        read(statement.row, assigned)
+                    for column in statement.columns:
+                        read(column.index, assigned)
+                        if column.default is not None:
+                            read(column.default, assigned)
+                    assigned.update(target.symbol_id for target in statement.targets)
                 elif isinstance(statement, ReadWallTime):
                     assigned.add(statement.target.symbol_id)
                 elif isinstance(statement, (Wait, WaitUntil)):

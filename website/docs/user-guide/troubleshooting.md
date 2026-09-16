@@ -346,6 +346,27 @@ supplied; `clock_error` means advancing it would produce an invalid value, such
 as overflow. See the [developer execution diagnostics](../developer/troubleshooting.md#executionerror)
 and the [timing example](../examples/timing-ir.md) for explicit clock setup.
 
+## A CSV read fails or will not compile
+
+`unsupported_csv_semantics` means AutoSuite's parsing and failure behavior have
+not yet been verified against SciLoom's read contract. Changing the file path
+does not remove that target limitation. The same procedure can be checked with
+an explicit reference file service; see [CSV reads](reference/csv.md).
+
+| Code | Correction |
+|---|---|
+| `csv_binding` | Unpack every result into distinct, correctly typed fields; include the status for try-forms and a trailing comma for one result |
+| `csv_columns`, `csv_metadata` | Use a nonempty fixed tuple of inline Column declarations, scalar types and host Boolean header selection |
+| `csv_unit`, `csv_default` | Give quantities a matching unit and typed defaults; every try_read_row column needs a default |
+| `csv_index`, `csv_row` | Use nonnegative integer selectors; only row reads have a row argument |
+| `csv_path` | Supply nonempty text without NUL; local adapter paths must stay within its root |
+| `csv_eof` | Choose an existing data row, remembering that header=True skips the first record |
+| `csv_invalid_data` | Correct the file/cell format or declare a cell fallback where the experiment permits it |
+| `csv_io_error` | Supply a readable file; column defaults do not recover a file error |
+
+For reference execution, missing files services and invalid service implementations
+are described in the [developer diagnostics](../developer/troubleshooting.md#csv-file-services).
+
 ## Python raises TypeError or ValueError before compilation
 
 These exceptions report invalid host calls or configuration rather than a

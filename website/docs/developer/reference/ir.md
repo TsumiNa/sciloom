@@ -49,6 +49,16 @@ Device bindings apply only to DeviceResource. Specialization removes timers
 whose owning functions become unreachable; existing device wire fields do not
 change. Definite timer starts are checked after device specialization.
 
+## Typed CSV statements
+
+`ReadCsv` is an ordered, result-producing statement. `CsvReadMode` selects one
+row or whole columns; `CsvErrorPolicy` selects fatal failure or status results.
+Each `CsvColumn` stores a typed selector, optional unit literal and default.
+Distinct target references bind the whole result tuple. No CSV parser function,
+Python type object or vendor result code is stored in JSON. The
+[direct CSV example](../../examples/csv-read-ir.md) demonstrates these additive v4
+records; new readers still preserve old canonical documents unchanged.
+
 ## Validation and serialization
 
 `validate(program)` returns a tuple of Diagnostic records. `to_dict/from_dict`

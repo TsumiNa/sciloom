@@ -6,7 +6,7 @@ from .units import Duration, L, RotationalSpeed, Volume, hour, minute, mL, rpm, 
 
 if TYPE_CHECKING:
     from .devices.agitation import Agitator
-    from .flow import comptime, text
+    from .flow import comptime, csv, text
     from .flow.fields import Input, Output, Var
     from .flow.function import Function, runtime
     from .flow.logging import log
@@ -18,6 +18,10 @@ _DSL_EXPORTS = {"Function", "Input", "Output", "Var", "runtime"}
 
 def __getattr__(name: str) -> Any:
     # Importing sciloom.core.ir or the interpreter must not load source analysis.
+    if name == "csv":
+        from .flow import csv
+
+        return csv
     if name in {"Timer", "wait"}:
         from .flow import timing
 
@@ -58,6 +62,7 @@ def __getattr__(name: str) -> Any:
 
 
 __all__ = [
+    "csv",
     "Timer",
     "wait",
     "now_text",

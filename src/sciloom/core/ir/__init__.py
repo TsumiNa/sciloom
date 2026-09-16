@@ -11,6 +11,9 @@ from .model import (
     CanWrite,
     CommandArgument,
     ConfigureProperty,
+    CsvColumn,
+    CsvErrorPolicy,
+    CsvReadMode,
     DeviceCommand,
     DeviceIf,
     DevicePredicate,
@@ -29,6 +32,7 @@ from .model import (
     Notify,
     OutputBinding,
     Program,
+    ReadCsv,
     ReadWallTime,
     Reference,
     Resource,
@@ -53,6 +57,10 @@ from .types import ListType, ScalarType, ValueType
 from .validation import validate
 
 __all__ = [
+    "CsvColumn",
+    "CsvErrorPolicy",
+    "CsvReadMode",
+    "ReadCsv",
     "LogValue",
     "Notify",
     "ReadWallTime",

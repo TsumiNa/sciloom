@@ -14,6 +14,14 @@ Construct ordered immutable statements rather than target-specific tasks. IDs id
 
 ::: sciloom.core.ir.ReadWallTime
 
+::: sciloom.core.ir.ReadCsv
+
+::: sciloom.core.ir.CsvColumn
+
+::: sciloom.core.ir.CsvReadMode
+
+::: sciloom.core.ir.CsvErrorPolicy
+
 ::: sciloom.core.ir.Resource
 
 ::: sciloom.core.ir.TimerResource

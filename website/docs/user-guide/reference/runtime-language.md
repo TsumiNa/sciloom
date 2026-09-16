@@ -266,6 +266,11 @@ See [lesson 4](../tutorial/lists-and-loops.md).
 path, before reading or updating its elements. A loop can run zero times.
 An empty assignment is a valid empty result but supplies no elements to update.
 
+## CSV reads
+
+CSV reads return tuples and always require unpacking even for a single
+column. See [CSV reads](csv.md) for their distinct row/column and error rules.
+
 ## Child Function calls
 
 | Result | Call form |

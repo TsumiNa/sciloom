@@ -26,7 +26,7 @@ from sciloom.core.ir import (
     UnaryOp,
     ValueType,
 )
-from sciloom.flow import text
+from sciloom.flow import csv, text
 from sciloom.flow.timing import now_text
 from sciloom.units import Duration, RotationalSpeed, Volume
 from .context import LoweringContext
@@ -110,8 +110,15 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
                 delimiter=arguments["delimiter"],
                 index=arguments["index"],
             )
+    value: object
     if isinstance(node, ast.Constant):
         value = node.value
+    elif (
+        isinstance(node, ast.Attribute)
+        and context.static_object(node.value) is csv
+        and node.attr in ("OK", "DEFAULT_USED", "EOF", "INVALID_DATA", "IO_ERROR")
+    ):
+        value = context.static_object(node)
     elif isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name) and node.value.id == "self":
         if node.attr in context.instance.model_fields:
             return Reference(**context.metadata(node), symbol_id=context.symbol(node.attr))

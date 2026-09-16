@@ -63,6 +63,7 @@ The 27 reference documents are in one directory, numbered 00–26. This guide is
 - [24 · Runtime failure propagation gate](24_RUNTIME_FAILURE_GATE.md)
 - [25 · Wall-time text mapping](25_WALL_TIME_MAPPING.md)
 - [26 · Wait and timer mapping](26_TIMING_MAPPING.md)
+- [27 · CSV reads and parsing gate](27_CSV_READ_MAPPING.md)
 
 ### Current application and workflow
 

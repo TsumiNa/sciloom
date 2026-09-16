@@ -33,3 +33,11 @@
 ::: sciloom.core.interpreter.WaitEvent
 
 ::: sciloom.core.interpreter.ReferenceEnvironment
+
+::: sciloom.core.interpreter.CsvReadEvent
+
+::: sciloom.core.interpreter.FileService
+
+::: sciloom.core.interpreter.MemoryFiles
+
+::: sciloom.core.interpreter.LocalFiles
