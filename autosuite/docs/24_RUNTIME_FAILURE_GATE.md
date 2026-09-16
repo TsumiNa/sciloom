@@ -45,6 +45,10 @@ the actual reference result, expected ordered markers, node/source diagnostic,
 artifact hashes, source commit/dirty flag, package versions and target identity.
 Its `executor_status` is always `pending`, even when all reference tests pass.
 Do not use a dirty-tree manifest as evidence for a clean source commit.
+Versions are read from the source pyproject files, not installed distribution
+metadata. The generator refuses mismatched versions or loaded authoring/target
+implementations from another checkout before writing anything. Use
+`uv sync --locked` in this checkout if the environment points elsewhere.
 
 | Scope | Successful control markers | Expected prefix before candidate failure |
 | --- | --- | --- |

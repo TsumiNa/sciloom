@@ -54,6 +54,15 @@ strict website build, smoke/recipe checks, 22 example/syntax commands and
 nine pairs and a pending manifest were inspected. Read-only corpus audit passed
 for 271 files, 127 archive entries, 52 function matches and 67 templates.
 
+Review found that installed distribution metadata could mislabel a source
+checkout. The generator now reads both source pyproject versions, validates
+lockstep and checks the loaded authoring/target implementation paths before
+writing output. Tests cover stale-environment independence, version drift and
+foreign implementation rejection. Tool imports now name the owning modules
+instead of author-facing package facades. Six probe-tool tests and the focused
+type check pass after these fixes; the shipped change and 0.3.7 decision remain
+unchanged.
+
 ## Version
 
 Version: PATCH 0.3.6 → 0.3.7, correcting target diagnostic provenance while

@@ -707,6 +707,9 @@ of newly guarded capabilities or synthesize an application/deployment.
 versions, hashes, generated function names, expected ordered markers and reference
 diagnostics. Its Executor status is always `pending`: generation cannot promote
 it to verified. Source and node IDs identify the candidate failing expression.
+Package versions come from this checkout's two pyproject files, with lockstep
+validation. Loaded authoring/target implementations must also resolve inside
+this checkout; a foreign installation fails before output is written.
 Run each package in a separate disposable APP and add an outer caller marker in
 that APP. A failed child must suppress both its remaining markers and the outer
 caller marker. A successful control must first demonstrate the same observation

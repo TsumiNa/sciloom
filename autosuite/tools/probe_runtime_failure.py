@@ -16,16 +16,21 @@ import argparse
 import hashlib
 import json
 import subprocess
+import tomllib
 from dataclasses import asdict, dataclass
-from importlib.metadata import version
+from inspect import getfile
 from pathlib import Path
 
-from sciloom import Function, Var, log, runtime
 from sciloom.core.compiler import compile_ir
 from sciloom.core.diagnostics import Diagnostic, ExecutionError
-from sciloom.core.interpreter import Interpreter, LogEvent
-from sciloom.core.ir import Program, from_json, to_json
-from sciloom_autosuite import AutoSuiteTarget
+from sciloom.core.interpreter.environment import LogEvent
+from sciloom.core.interpreter.runtime import Interpreter
+from sciloom.core.ir.codec import from_json, to_json
+from sciloom.core.ir.model import Program
+from sciloom.flow.fields import Var
+from sciloom.flow.function import Function, runtime
+from sciloom.flow.logging import log
+from sciloom_autosuite.target import AutoSuiteTarget
 
 ROOT = Path(__file__).resolve().parents[2]
 CORPUS = ROOT / "autosuite/corpus"
@@ -147,6 +152,29 @@ def reference_result(case: ProbeCase) -> dict[str, object]:
     }
 
 
+def _source_versions() -> dict[str, str]:
+    """Tie declared versions and loaded implementations to this source checkout."""
+    versions = {}
+    for name, project, implementation, path in (
+        ("sciloom", ROOT, Function, "src/sciloom/flow/function.py"),
+        (
+            "sciloom-autosuite",
+            ROOT / "packages/sciloom-autosuite",
+            AutoSuiteTarget,
+            "packages/sciloom-autosuite/src/sciloom_autosuite/target.py",
+        ),
+    ):
+        if Path(getfile(implementation)).resolve() != (ROOT / path).resolve():
+            raise ValueError(f"Loaded {name} is outside this checkout; run uv sync --locked first.")
+        value = tomllib.loads((project / "pyproject.toml").read_text(encoding="utf-8"))["project"]["version"]
+        if not isinstance(value, str):
+            raise ValueError(f"Source version for {name} must be a string.")
+        versions[name] = value
+    if len(set(versions.values())) != 1:
+        raise ValueError("Source workspace package versions must remain in lockstep.")
+    return versions
+
+
 def generate(output_dir: Path) -> Path:
     """Write fresh candidate artifacts and a pending manifest outside the corpus.
 
@@ -157,7 +185,7 @@ def generate(output_dir: Path) -> Path:
         Path of the generated manifest. Executor status is always pending.
 
     Raises:
-        ValueError: The destination resolves inside the evidence corpus.
+        ValueError: The destination is in the corpus, or source provenance is inconsistent.
         FileExistsError: The destination already exists.
         RuntimeError: A reference expectation fails before files are written.
     """
@@ -166,6 +194,7 @@ def generate(output_dir: Path) -> Path:
         raise ValueError("Probe output must be outside the read-only corpus.")
     if destination.exists():
         raise FileExistsError(f"Use a new output directory: {destination}")
+    package_versions = _source_versions()
     target = AutoSuiteTarget()
     artifacts: dict[str, bytes] = {}
     records = []
@@ -191,7 +220,7 @@ def generate(output_dir: Path) -> Path:
         "executor_status": "pending",
         "source_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
         "source_dirty": bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True).strip()),
-        "package_versions": {name: version(name) for name in ("sciloom", "sciloom-autosuite")},
+        "package_versions": package_versions,
         "target": target.target_id,
         "cases": records,
     }
