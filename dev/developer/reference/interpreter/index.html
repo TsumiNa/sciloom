@@ -1126,7 +1126,7 @@
   <span class="md-ellipsis">
     
   
-  CSV reads
+  CSV files
 
     
   </span>
@@ -3031,6 +3031,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/append-sample-log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Append a sample log
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/csv-append-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  CSV append IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3691,8 +3745,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.10
-    · <code title="5b70d5c7bc5971c5f964a51f0833ccf1e03d7a13">5b70d5c7</code>
+    · SciLoom 0.3.11
+    · <code title="ec5616082add8918524724ff87e6c70cbd6ef050">ec561608</code>
   </p>
 </aside>
 
@@ -3826,7 +3880,15 @@ already be a directory. Paths are relative to it; absolute paths, traversal and
 resolved symlinks outside it are rejected. This containment check is not a sandbox
 against concurrent filesystem changes. FileService exposes <code>read_bytes(path)</code> and
 <code>append_bytes(path, data)</code>; append creates a missing file but never parent directories.
-Runtime CSV append is not available yet.</p>
+AppendCsv encodes a complete row before calling append_bytes once. It does not
+read or repair existing content, create parent directories or retry. Existing CSV
+bytes must end at a complete record boundary. CsvAppendEvent captures the typed
+logical row and status, including IO_ERROR attempts. Failed writes can leave a
+prefix; reference execution never erases those bytes. Ordinary append stops,
+whereas a status-form append writes its integer result and continues. Missing
+services, encoding errors and broken providers remain fatal in either form.</p>
+<p>The <a href="../../../examples/csv-append-ir/">append IR example</a> demonstrates two writes
+with independent immutable event snapshots.</p>
 <p>ReadCsv captures path, optional row, then each column's index/default once before
 reading. It parses and converts all results, normalizes them for destinations,
 then commits them together. Lists use the usual immutable internal representation.

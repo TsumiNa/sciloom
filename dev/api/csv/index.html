@@ -1126,7 +1126,7 @@
   <span class="md-ellipsis">
     
   
-  CSV reads
+  CSV files
 
     
   </span>
@@ -2877,6 +2877,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/append-sample-log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Append a sample log
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/csv-append-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  CSV append IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3302,6 +3356,28 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#sciloom.csv.append_row" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        append_row
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sciloom.csv.try_append_row" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        try_append_row
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3717,6 +3793,28 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#sciloom.csv.append_row" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        append_row
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sciloom.csv.try_append_row" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        try_append_row
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3733,15 +3831,15 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.10
-    · <code title="5b70d5c7bc5971c5f964a51f0833ccf1e03d7a13">5b70d5c7</code>
+    · SciLoom 0.3.11
+    · <code title="ec5616082add8918524724ff87e6c70cbd6ef050">ec561608</code>
   </p>
 </aside>
 
                   
 
 <h1 id="runtime-csv">Runtime CSV</h1>
-<p>Import <code>csv</code> from <code>sciloom</code>. See <a href="../../user-guide/reference/csv/">reading rules</a>.
+<p>Import <code>csv</code> from <code>sciloom</code>. See <a href="../../user-guide/reference/csv/">read and append rules</a>.
 SciLoom checks result element types; Python typing checks Column metadata and
 call arguments but cannot infer arbitrary result tuples here.</p>
 
@@ -3758,7 +3856,7 @@ call arguments but cannot infer arbitrary result tuples here.</p>
 
     <div class="doc doc-contents first">
 
-        <p>Typed runtime CSV reads with explicit columns and complete result tuples.</p>
+        <p>Typed runtime CSV reads and explicit row appends.</p>
 
 
 
@@ -4703,6 +4801,304 @@ reference file service; these are not recoverable CSV statuses.</p>
           </tr>
       </tbody>
     </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="sciloom.csv.append_row" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">sciloom.csv.append_row</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">append_row</span><span class="p">(</span>
+    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">values</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span>
+        <span class="nb">int</span>
+        <span class="o">|</span> <span class="nb">float</span>
+        <span class="o">|</span> <span class="nb">bool</span>
+        <span class="o">|</span> <span class="nb">str</span>
+        <span class="o">|</span> <span class="n">RotationalSpeed</span>
+        <span class="o">|</span> <span class="n">Volume</span>
+        <span class="o">|</span> <span class="n">Duration</span><span class="p">,</span>
+        <span class="o">...</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Append one ordered scalar row, stopping execution on a file error.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>path</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Runtime file path. Parent directories must already exist.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>values</code>
+            </td>
+            <td>
+                  <code><span title="tuple">tuple</span>[<span title="int">int</span> | <span title="float">float</span> | <span title="bool">bool</span> | <span title="str">str</span> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.RotationalSpeed&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../units/#sciloom.RotationalSpeed">RotationalSpeed</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.Volume&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../units/#sciloom.Volume">Volume</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.Duration&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../units/#sciloom.Duration">Duration</a>, ...]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Nonempty inline tuple of scalar or physical quantity expressions.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Called from host Python instead of a runtime method.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.core.diagnostics.ExecutionError&lt;/span&gt;" href="../diagnostics/#sciloom.core.diagnostics.ExecutionError">ExecutionError</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The write or encoding fails, or
+the reference file service is missing.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>Arguments are captured once. Reference execution writes UTF-8, comma-separated
+cells and a CRLF record terminator; quantities use canonical SI numbers.
+Existing content must end at a complete record boundary. Earlier or partial
+writes are not rolled back. AutoSuite compilation awaits native mode and
+encoding verification.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="sciloom.csv.try_append_row" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">sciloom.csv.try_append_row</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">try_append_row</span><span class="p">(</span>
+    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">values</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span>
+        <span class="nb">int</span>
+        <span class="o">|</span> <span class="nb">float</span>
+        <span class="o">|</span> <span class="nb">bool</span>
+        <span class="o">|</span> <span class="nb">str</span>
+        <span class="o">|</span> <span class="n">RotationalSpeed</span>
+        <span class="o">|</span> <span class="n">Volume</span>
+        <span class="o">|</span> <span class="n">Duration</span><span class="p">,</span>
+        <span class="o">...</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Append one row and assign OK or IO_ERROR to one integer runtime field.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>path</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Runtime file path; no parent directories are created.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>values</code>
+            </td>
+            <td>
+                  <code><span title="tuple">tuple</span>[<span title="int">int</span> | <span title="float">float</span> | <span title="bool">bool</span> | <span title="str">str</span> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.RotationalSpeed&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../units/#sciloom.RotationalSpeed">RotationalSpeed</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.Volume&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../units/#sciloom.Volume">Volume</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.Duration&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../units/#sciloom.Duration">Duration</a>, ...]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Nonempty inline tuple captured before the single write attempt.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>OK after a successful write, or IO_ERROR after a file error. Partial</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>writes are not rolled back and this operation never retries.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Called from host Python.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.core.diagnostics.ExecutionError&lt;/span&gt;" href="../diagnostics/#sciloom.core.diagnostics.ExecutionError">ExecutionError</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Invalid arguments, encoding
+failure, a missing file service or a broken service implementation.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>Assign the entire call result to one declared integer field. Encoding and
+existing-file requirements are the same as append_row.</p>
 
 
     </div>

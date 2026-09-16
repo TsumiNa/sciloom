@@ -1189,7 +1189,7 @@
   <span class="md-ellipsis">
     
   
-  CSV reads
+  CSV files
 
     
   </span>
@@ -2940,6 +2940,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/append-sample-log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Append a sample log
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/csv-append-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  CSV append IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3523,8 +3577,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.10
-    · <code title="5b70d5c7bc5971c5f964a51f0833ccf1e03d7a13">5b70d5c7</code>
+    · SciLoom 0.3.11
+    · <code title="ec5616082add8918524724ff87e6c70cbd6ef050">ec561608</code>
   </p>
 </aside>
 
@@ -3547,9 +3601,10 @@ AutoSuite function package (<code>.asfp</code>). The current author API lets you
 </ul>
 <p>The runtime method accepts a <a href="../../user-guide/reference/runtime-language/">restricted Python subset</a>.
 Constructors and the surrounding script remain ordinary Python.</p>
-<p>Typed <a href="../../user-guide/reference/csv/">CSV reads</a> are also available in source,
+<p>Typed <a href="../../user-guide/reference/csv/">CSV reads and row appends</a> are also available in source,
 JSON and reference execution. AutoSuite CSV compilation is explicitly unavailable
-until its parsing, conversion and failure behavior can meet the same contract.</p>
+until its parsing, conversion, append mode, encoding and failure behavior can
+meet the same contract.</p>
 <p>Contributors can define devices and targets. The developer examples include a
 demonstration target, JSON v4 interchange and a reference interpreter for checking
 calculations and state changes. That interpreter does not simulate laboratory hardware.</p>

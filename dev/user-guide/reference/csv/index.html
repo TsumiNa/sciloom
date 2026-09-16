@@ -27,7 +27,7 @@
     
     
       
-        <title>CSV reads - SciLoom</title>
+        <title>CSV files - SciLoom</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#read-a-csv-table" class="md-skip">
+        <a href="#read-and-append-csv-records" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              CSV reads
+              CSV files
             
           </span>
         </div>
@@ -1151,7 +1151,7 @@
   <span class="md-ellipsis">
     
   
-  CSV reads
+  CSV files
 
     
   </span>
@@ -1168,7 +1168,7 @@
   <span class="md-ellipsis">
     
   
-  CSV reads
+  CSV files
 
     
   </span>
@@ -1220,6 +1220,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         Current parsing profile
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#append-one-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Append one row
       </span>
     </span>
   </a>
@@ -2973,6 +2984,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/append-sample-log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Append a sample log
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/csv-append-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  CSV append IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3562,6 +3627,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#append-one-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Append one row
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3578,14 +3654,14 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.10
-    · <code title="5b70d5c7bc5971c5f964a51f0833ccf1e03d7a13">5b70d5c7</code>
+    · SciLoom 0.3.11
+    · <code title="ec5616082add8918524724ff87e6c70cbd6ef050">ec561608</code>
   </p>
 </aside>
 
                   
 
-<h1 id="read-a-csv-table">Read a CSV table</h1>
+<h1 id="read-and-append-csv-records">Read and append CSV records</h1>
 <p>Use explicit columns to read a reagent heading or a column of sample volumes.
 CSV reads are available in Python source, JSON and reference execution. AutoSuite
 compilation currently reports <code>unsupported_csv_semantics</code>: its cell conversion
@@ -3717,6 +3793,42 @@ whole dataset. No transaction is promised if another process changes a file.</p>
 <p>AutoSuite documents expression evaluation and integer truncation. Those are not
 equivalent to these rules. No native import task is emitted until a mapping can
 preserve conversion, defaults, complete result binding and failure propagation.</p>
+<h2 id="append-one-row">Append one row</h2>
+<p>Append a label with <code>csv.append_row(self.path, values=(self.label,))</code>. Keep the
+trailing comma for a one-cell tuple. Values can be runtime expressions; the
+number and order of cells are fixed in the source. Scalars and physical quantities
+are supported; lists and arbitrary objects are not.</p>
+<p>This complete example returns a status so the caller can handle a file error:</p>
+<!-- example: csv-append -->
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">csv</span><span class="p">,</span> <span class="n">runtime</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">WriteLabel</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">label</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">status</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">try_append_row</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">,))</span>
+</code></pre></div>
+<p>Calling it twice with label <code>sample,A</code> appends two records, each containing that
+one text cell. <code>try_append_row</code> returns <code>csv.OK</code> or <code>csv.IO_ERROR</code>; ordinary
+<code>append_row</code> stops on a file error. A failed write may already have written some
+bytes. Neither form retries or removes them. A bad path, encoding failure or
+missing reference file service remains an execution error even in the try-form.</p>
+<p>Reference execution writes UTF-8 without BOM, comma-separated cells, doubled
+quotes inside quoted fields, and a CRLF record terminator. Integers use decimal
+text, Booleans use <code>true</code>/<code>false</code>, and finite floats use Python's round-trip text.
+Quantities use canonical SI numbers: for example, <code>2 * mL</code> writes <code>2e-06</code>.
+There is no header generation or parent-directory creation.</p>
+<p>The destination is created if absent. Existing content must already end at a
+complete CSV record boundary: the operation appends bytes without reading,
+repairing or adding a separator to the old file. For example, appending <code>0</code> to
+an unterminated file containing <code>2</code> produces <code>20</code>, not two rows.</p>
+<p>AutoSuite currently reports <code>unsupported_csv_append</code> for both forms. Its observed
+export mode, encoding and error behavior need verification before these operations
+can compile. See the <a href="../../../examples/append-sample-log/">author example</a> or
+<a href="../../../examples/csv-append-ir/">reference execution example</a>.</p>
 
 
 

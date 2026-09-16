@@ -1288,10 +1288,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#csv-reads" class="md-nav__link">
+  <a href="#csv-files" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        CSV reads
+        CSV files
       </span>
     </span>
   </a>
@@ -1332,7 +1332,7 @@
   <span class="md-ellipsis">
     
   
-  CSV reads
+  CSV files
 
     
   </span>
@@ -3083,6 +3083,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/append-sample-log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Append a sample log
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/csv-append-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  CSV append IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3761,10 +3815,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#csv-reads" class="md-nav__link">
+  <a href="#csv-files" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        CSV reads
+        CSV files
       </span>
     </span>
   </a>
@@ -3798,8 +3852,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.10
-    · <code title="5b70d5c7bc5971c5f964a51f0833ccf1e03d7a13">5b70d5c7</code>
+    · SciLoom 0.3.11
+    · <code title="ec5616082add8918524724ff87e6c70cbd6ef050">ec561608</code>
   </p>
 </aside>
 
@@ -4183,9 +4237,12 @@ See <a href="../../tutorial/lists-and-loops/">lesson 4</a>.</p>
 <p><strong>AutoSuite restriction:</strong> assign each output list as a whole on every return
 path, before reading or updating its elements. A loop can run zero times.
 An empty assignment is a valid empty result but supplies no elements to update.</p>
-<h2 id="csv-reads">CSV reads</h2>
+<h2 id="csv-files">CSV files</h2>
 <p>CSV reads return tuples and always require unpacking even for a single
-column. See <a href="../csv/">CSV reads</a> for their distinct row/column and error rules.</p>
+column. <code>csv.append_row(path, values=(...))</code> is a standalone operation;
+<code>csv.try_append_row(...)</code> assigns one integer status to a field. See
+<a href="../csv/">CSV files</a> for their distinct read/append and error rules. Both have
+reference execution; AutoSuite compilation remains gated on platform evidence.</p>
 <h2 id="child-function-calls">Child Function calls</h2>
 <table>
 <thead>
@@ -4262,13 +4319,13 @@ store it in a field first. See <a href="../../advanced/composition/">composition
         
         
           
-          <a href="../csv/" class="md-footer__link md-footer__link--next" aria-label="Next: CSV reads">
+          <a href="../csv/" class="md-footer__link md-footer__link--next" aria-label="Next: CSV files">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                CSV reads
+                CSV files
               </div>
             </div>
             <div class="md-footer__button md-icon">

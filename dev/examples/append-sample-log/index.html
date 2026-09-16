@@ -10,36 +10,36 @@
       
       
       
-        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/developer/advanced/typing-without-inheritance/">
+        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/examples/append-sample-log/">
       
       
-        <link rel="prev" href="../extending-the-analysis/">
+        <link rel="prev" href="../csv-read-ir/">
       
       
-        <link rel="next" href="../../faq/">
+        <link rel="next" href="../csv-append-ir/">
       
       
         
       
       
-      <link rel="icon" href="../../../assets/brand/favicon.svg">
+      <link rel="icon" href="../../assets/brand/favicon.svg">
       <meta name="generator" content="zensical-0.0.61">
     
     
       
-        <title>Typing without inheritance - SciLoom</title>
+        <title>Append a sample log - SciLoom</title>
       
     
     
       
         
       
-      <link rel="stylesheet" href="../../../assets/stylesheets/modern/main.ce62732f.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.ce62732f.min.css">
       
         
           
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/modern/palette.812a03bb.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.812a03bb.min.css">
       
       
 
@@ -52,9 +52,9 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/brand.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/brand.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
     
       
 
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#typing-without-inheritance" class="md-skip">
+        <a href="#append-a-sample-label" class="md-skip">
           Skip to content
         </a>
       
@@ -97,9 +97,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="SciLoom" class="md-header__button md-logo" aria-label="SciLoom" data-md-component="logo">
-      <img class="sciloom-brand-light" src="../../../assets/brand/svg/sciloom-mark-light.svg" alt="SciLoom">
-<img class="sciloom-brand-dark" src="../../../assets/brand/svg/sciloom-mark-dark.svg" alt="SciLoom">
+    <a href="../.." title="SciLoom" class="md-header__button md-logo" aria-label="SciLoom" data-md-component="logo">
+      <img class="sciloom-brand-light" src="../../assets/brand/svg/sciloom-mark-light.svg" alt="SciLoom">
+<img class="sciloom-brand-dark" src="../../assets/brand/svg/sciloom-mark-dark.svg" alt="SciLoom">
     </a>
     <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Typing without inheritance
+              Append a sample log
             
           </span>
         </div>
@@ -194,7 +194,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../.." class="md-tabs__link">
+        <a href="../.." class="md-tabs__link">
           
   
   Introduction
@@ -216,10 +216,32 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../user-guide/" class="md-tabs__link">
+        <a href="../../user-guide/" class="md-tabs__link">
           
   
   User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../developer/" class="md-tabs__link">
+          
+  
+  Developer Guide
 
         </a>
       </li>
@@ -240,29 +262,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../" class="md-tabs__link">
-          
-  
-  Developer Guide
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-      
-    
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../../examples/" class="md-tabs__link">
+        <a href="../" class="md-tabs__link">
           
   
   Examples
@@ -284,7 +284,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../api/" class="md-tabs__link">
+        <a href="../../api/" class="md-tabs__link">
           
   
   API Reference
@@ -317,9 +317,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="SciLoom" class="md-nav__button md-logo" aria-label="SciLoom" data-md-component="logo">
-      <img class="sciloom-brand-light" src="../../../assets/brand/svg/sciloom-mark-light.svg" alt="SciLoom">
-<img class="sciloom-brand-dark" src="../../../assets/brand/svg/sciloom-mark-dark.svg" alt="SciLoom">
+    <a href="../.." title="SciLoom" class="md-nav__button md-logo" aria-label="SciLoom" data-md-component="logo">
+      <img class="sciloom-brand-light" src="../../assets/brand/svg/sciloom-mark-light.svg" alt="SciLoom">
+<img class="sciloom-brand-dark" src="../../assets/brand/svg/sciloom-mark-dark.svg" alt="SciLoom">
     </a>
     SciLoom
   </label>
@@ -383,7 +383,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -410,7 +410,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../introduction/getting-started/" class="md-nav__link">
+      <a href="../../introduction/getting-started/" class="md-nav__link">
         
   
   
@@ -437,7 +437,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../introduction/status/" class="md-nav__link">
+      <a href="../../introduction/status/" class="md-nav__link">
         
   
   
@@ -464,7 +464,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../introduction/glossary/" class="md-nav__link">
+      <a href="../../introduction/glossary/" class="md-nav__link">
         
   
   
@@ -548,7 +548,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/" class="md-nav__link">
+      <a href="../../user-guide/" class="md-nav__link">
         
   
   
@@ -625,7 +625,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/tutorial/" class="md-nav__link">
+      <a href="../../user-guide/tutorial/" class="md-nav__link">
         
   
   
@@ -652,7 +652,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/tutorial/first-function/" class="md-nav__link">
+      <a href="../../user-guide/tutorial/first-function/" class="md-nav__link">
         
   
   
@@ -679,7 +679,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/tutorial/inputs-and-units/" class="md-nav__link">
+      <a href="../../user-guide/tutorial/inputs-and-units/" class="md-nav__link">
         
   
   
@@ -706,7 +706,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/tutorial/agitator/" class="md-nav__link">
+      <a href="../../user-guide/tutorial/agitator/" class="md-nav__link">
         
   
   
@@ -733,7 +733,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/tutorial/lists-and-loops/" class="md-nav__link">
+      <a href="../../user-guide/tutorial/lists-and-loops/" class="md-nav__link">
         
   
   
@@ -760,7 +760,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/tutorial/compile/" class="md-nav__link">
+      <a href="../../user-guide/tutorial/compile/" class="md-nav__link">
         
   
   
@@ -845,7 +845,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/advanced/composition/" class="md-nav__link">
+      <a href="../../user-guide/advanced/composition/" class="md-nav__link">
         
   
   
@@ -872,7 +872,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/advanced/specialization/" class="md-nav__link">
+      <a href="../../user-guide/advanced/specialization/" class="md-nav__link">
         
   
   
@@ -899,7 +899,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/advanced/device-branches/" class="md-nav__link">
+      <a href="../../user-guide/advanced/device-branches/" class="md-nav__link">
         
   
   
@@ -926,7 +926,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/advanced/autosuite/" class="md-nav__link">
+      <a href="../../user-guide/advanced/autosuite/" class="md-nav__link">
         
   
   
@@ -961,7 +961,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/faq/" class="md-nav__link">
+      <a href="../../user-guide/faq/" class="md-nav__link">
         
   
   
@@ -988,7 +988,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/troubleshooting/" class="md-nav__link">
+      <a href="../../user-guide/troubleshooting/" class="md-nav__link">
         
   
   
@@ -1065,7 +1065,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/reference/declarations/" class="md-nav__link">
+      <a href="../../user-guide/reference/declarations/" class="md-nav__link">
         
   
   
@@ -1092,7 +1092,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/reference/runtime-language/" class="md-nav__link">
+      <a href="../../user-guide/reference/runtime-language/" class="md-nav__link">
         
   
   
@@ -1119,7 +1119,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/reference/csv/" class="md-nav__link">
+      <a href="../../user-guide/reference/csv/" class="md-nav__link">
         
   
   
@@ -1146,7 +1146,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/reference/devices-and-targets/" class="md-nav__link">
+      <a href="../../user-guide/reference/devices-and-targets/" class="md-nav__link">
         
   
   
@@ -1154,1139 +1154,6 @@
     
   
   Devices and targets
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-    
-  
-  
-  
-    
-    
-    
-    
-      
-        
-        
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Developer Guide
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-  Developer Guide
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Overview
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-          
-          
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Tutorial
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_2">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-  Tutorial
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorial/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  The heater story
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorial/declare-a-family/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  1. Declare a family
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorial/declare-profiles/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  2. Declare profiles
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorial/write-a-function/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  3. Write a Function against the family
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorial/write-a-target/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  4. Write a target
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorial/reject-a-program/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  5. Reject a program
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorial/adapt-with-comptime/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  6. Adapt with comptime
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorial/execute-what-you-can/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  7. Execute what you can
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorial/complete-program/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  8. The complete program
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-          
-          
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Advanced
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3_3">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-  Advanced
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../json-interchange/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  JSON interchange and portability
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../specialization/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Specialization internals
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../native-commands/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Native commands
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../extending-the-analysis/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Extending the analysis
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Typing without inheritance
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="././" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Typing without inheritance
-
-    
-  </span>
-  
-  
-
-      </a>
-      
-        
-
-
-<nav class="md-nav md-nav--secondary" aria-label="On this page">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#what-mypy-sees" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        What mypy sees
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-mypy-does-not-enforce" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        What mypy does not enforce
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../faq/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  FAQ
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Troubleshooting
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-          
-          
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Reference
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_6">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-  Reference
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Architecture and ownership
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/ir/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Semantic IR and JSON v4
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/pipeline/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Compilation pipeline
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/target-contract/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Target contract
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/device-contracts/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Device contracts
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/interpreter/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Reference execution
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/verification/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Verification
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-          
-          
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Project
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_7">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-  Project
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../typing-and-tests/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Typing and tests
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../documentation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Building documentation
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../publication/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Versioned publication
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../brand/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Brand assets
 
     
   </span>
@@ -2334,10 +1201,1060 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Developer Guide
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Developer Guide
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Overview
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tutorial
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Tutorial
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  The heater story
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/declare-a-family/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1. Declare a family
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/declare-profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2. Declare profiles
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/write-a-function/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3. Write a Function against the family
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/write-a-target/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4. Write a target
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/reject-a-program/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5. Reject a program
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/adapt-with-comptime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6. Adapt with comptime
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/execute-what-you-can/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7. Execute what you can
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/complete-program/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8. The complete program
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Advanced
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Advanced
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/advanced/json-interchange/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  JSON interchange and portability
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/advanced/specialization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Specialization internals
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/advanced/native-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Native commands
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/advanced/extending-the-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Extending the analysis
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/advanced/typing-without-inheritance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typing without inheritance
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  FAQ
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Troubleshooting
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Reference
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Reference
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Architecture and ownership
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Semantic IR and JSON v4
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Compilation pipeline
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/target-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Target contract
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/device-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Device contracts
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/interpreter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Reference execution
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/verification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Verification
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Project
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Project
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/typing-and-tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typing and tests
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/documentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Building documentation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Versioned publication
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/brand/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Brand assets
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
@@ -2354,7 +2271,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2371,7 +2288,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -2398,7 +2315,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/function-call/" class="md-nav__link">
+      <a href="../function-call/" class="md-nav__link">
         
   
   
@@ -2425,7 +2342,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/agitation/" class="md-nav__link">
+      <a href="../agitation/" class="md-nav__link">
         
   
   
@@ -2452,7 +2369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/scale-values/" class="md-nav__link">
+      <a href="../scale-values/" class="md-nav__link">
         
   
   
@@ -2479,7 +2396,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/prepare-labels/" class="md-nav__link">
+      <a href="../prepare-labels/" class="md-nav__link">
         
   
   
@@ -2506,7 +2423,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/quantity-conversion/" class="md-nav__link">
+      <a href="../quantity-conversion/" class="md-nav__link">
         
   
   
@@ -2533,7 +2450,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/numeric-operations/" class="md-nav__link">
+      <a href="../numeric-operations/" class="md-nav__link">
         
   
   
@@ -2560,7 +2477,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/record-values/" class="md-nav__link">
+      <a href="../record-values/" class="md-nav__link">
         
   
   
@@ -2587,7 +2504,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/confirm-samples/" class="md-nav__link">
+      <a href="../confirm-samples/" class="md-nav__link">
         
   
   
@@ -2614,7 +2531,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/timestamp-path/" class="md-nav__link">
+      <a href="../timestamp-path/" class="md-nav__link">
         
   
   
@@ -2641,7 +2558,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/timed-agitation/" class="md-nav__link">
+      <a href="../timed-agitation/" class="md-nav__link">
         
   
   
@@ -2668,7 +2585,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/read-reagent-table/" class="md-nav__link">
+      <a href="../read-reagent-table/" class="md-nav__link">
         
   
   
@@ -2695,7 +2612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
+      <a href="../non-zero-array-min/" class="md-nav__link">
         
   
   
@@ -2722,7 +2639,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/stir-rack/" class="md-nav__link">
+      <a href="../stir-rack/" class="md-nav__link">
         
   
   
@@ -2749,7 +2666,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/agitation-ir/" class="md-nav__link">
+      <a href="../agitation-ir/" class="md-nav__link">
         
   
   
@@ -2776,7 +2693,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/list-ir/" class="md-nav__link">
+      <a href="../list-ir/" class="md-nav__link">
         
   
   
@@ -2803,7 +2720,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/reference-environment/" class="md-nav__link">
+      <a href="../reference-environment/" class="md-nav__link">
         
   
   
@@ -2830,7 +2747,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/logging-ir/" class="md-nav__link">
+      <a href="../logging-ir/" class="md-nav__link">
         
   
   
@@ -2857,7 +2774,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/confirmation-ir/" class="md-nav__link">
+      <a href="../confirmation-ir/" class="md-nav__link">
         
   
   
@@ -2884,7 +2801,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/wall-time-ir/" class="md-nav__link">
+      <a href="../wall-time-ir/" class="md-nav__link">
         
   
   
@@ -2911,7 +2828,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/timing-ir/" class="md-nav__link">
+      <a href="../timing-ir/" class="md-nav__link">
         
   
   
@@ -2938,7 +2855,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/csv-read-ir/" class="md-nav__link">
+      <a href="../csv-read-ir/" class="md-nav__link">
         
   
   
@@ -2962,10 +2879,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../examples/append-sample-log/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2980,6 +2906,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -2992,7 +2919,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/csv-append-ir/" class="md-nav__link">
+      <a href="../csv-append-ir/" class="md-nav__link">
         
   
   
@@ -3019,7 +2946,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/demo-device/" class="md-nav__link">
+      <a href="../demo-device/" class="md-nav__link">
         
   
   
@@ -3046,7 +2973,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/portable-agitation/" class="md-nav__link">
+      <a href="../portable-agitation/" class="md-nav__link">
         
   
   
@@ -3130,7 +3057,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/" class="md-nav__link">
+      <a href="../../api/" class="md-nav__link">
         
   
   
@@ -3157,7 +3084,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/author/" class="md-nav__link">
+      <a href="../../api/author/" class="md-nav__link">
         
   
   
@@ -3184,7 +3111,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/units/" class="md-nav__link">
+      <a href="../../api/units/" class="md-nav__link">
         
   
   
@@ -3211,7 +3138,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/comptime/" class="md-nav__link">
+      <a href="../../api/comptime/" class="md-nav__link">
         
   
   
@@ -3238,7 +3165,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/text/" class="md-nav__link">
+      <a href="../../api/text/" class="md-nav__link">
         
   
   
@@ -3265,7 +3192,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/csv/" class="md-nav__link">
+      <a href="../../api/csv/" class="md-nav__link">
         
   
   
@@ -3292,7 +3219,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/autosuite/" class="md-nav__link">
+      <a href="../../api/autosuite/" class="md-nav__link">
         
   
   
@@ -3319,7 +3246,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/devices/" class="md-nav__link">
+      <a href="../../api/devices/" class="md-nav__link">
         
   
   
@@ -3346,7 +3273,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/ir-values/" class="md-nav__link">
+      <a href="../../api/ir-values/" class="md-nav__link">
         
   
   
@@ -3373,7 +3300,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/ir-flow/" class="md-nav__link">
+      <a href="../../api/ir-flow/" class="md-nav__link">
         
   
   
@@ -3400,7 +3327,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/ir-devices/" class="md-nav__link">
+      <a href="../../api/ir-devices/" class="md-nav__link">
         
   
   
@@ -3427,7 +3354,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/ir-json/" class="md-nav__link">
+      <a href="../../api/ir-json/" class="md-nav__link">
         
   
   
@@ -3454,7 +3381,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/compiler/" class="md-nav__link">
+      <a href="../../api/compiler/" class="md-nav__link">
         
   
   
@@ -3481,7 +3408,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/interpreter/" class="md-nav__link">
+      <a href="../../api/interpreter/" class="md-nav__link">
         
   
   
@@ -3508,7 +3435,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/diagnostics/" class="md-nav__link">
+      <a href="../../api/diagnostics/" class="md-nav__link">
         
   
   
@@ -3552,11 +3479,6 @@
                       
                     
                     
-                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-                      <div class="md-sidebar-button__wrapper">
-                        <label class="md-sidebar-button" for="__toc"></label>
-                      </div>
-                    
                   
                   <div class="md-sidebar__inner">
                     
@@ -3568,36 +3490,6 @@
   
     
   
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#what-mypy-sees" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        What mypy sees
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-mypy-does-not-enforce" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        What mypy does not enforce
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -3620,28 +3512,66 @@
 
                   
 
-<h1 id="typing-without-inheritance">Typing without inheritance</h1>
-<p><code>Target</code> is a structural protocol. You do not import it and you do not subclass
-it; your class matches it by having the four members, and <code>target_id</code> may be a
-plain class attribute or a property.</p>
-<p>The runtime check in <code>compile_ir</code> only verifies that the four members exist, so
-passing a string or a half-written object gives a readable <code>TypeError</code> instead
-of an obscure one. Argument and return types are a static contract: run
-<code>uv run mypy</code> over your package to check them, and annotate a variable as
-<code>Target</code> if you want the checker to compare your class against the protocol.</p>
-<h2 id="what-mypy-sees">What mypy sees</h2>
-<p><code>Input</code>, <code>Output</code> and <code>Var</code> are <code>Annotated</code> aliases. Mypy sees the Python value
-type, while SciLoom reads the role metadata. Wrong scalar and list assignments
-and invalid device property types are caught statically. The <code>runtime</code> and
-<code>operation</code> decorators preserve signatures, and <code>comptime.is_device</code> is a
-<code>TypeGuard</code>, so inside its branch the slot has the narrowed type and
-<code>self.heater.gain</code> type-checks.</p>
-<h2 id="what-mypy-does-not-enforce">What mypy does not enforce</h2>
-<p>Host-time field protection, role nesting, mandatory <code>Var</code> initializers, every
-Function call binding, the source subset and vendor constraints are all outside
-the type checker. Python's <code>bool</code>/<code>int</code> subtype relationship also differs from
-SciLoom's index rules. Schema, IR and target validation remain necessary, which
-is why the <a href="../../reference/pipeline/#who-can-say-no">rejection layers</a> exist.</p>
+<h1 id="append-a-sample-label">Append a sample label</h1>
+<p>Supply a file path and sample label when calling the generated function. The
+function appends the label as one CSV cell. Commas, quotes and newlines in a label
+remain part of that cell in reference execution.</p>
+<div class="highlight"><pre><span></span><code><span class="sd">"""For experiment authors: append one sample label as a CSV record.</span>
+
+<span class="sd">Run: ``uv run python examples/append_sample_log.py``</span>
+<span class="sd">Terminal output: ``AutoSuite CSV append awaits mode and encoding validation.``</span>
+
+<span class="sd">The runtime caller supplies a file path and label. append_row captures the label</span>
+<span class="sd">once, then appends one record; a file error stops subsequent steps. Parent</span>
+<span class="sd">directories must exist and an existing file must end at a complete CSV record.</span>
+<span class="sd">There is no automatic header, retry or rollback of partial writes.</span>
+
+<span class="sd">AutoSuite's observed numeric export mode is not yet confirmed as append rather</span>
+<span class="sd">than overwrite. This script checks the compilation diagnostic and writes no</span>
+<span class="sd">ASFP. See developer/csv_append_ir.py for reference execution and JSON.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">csv</span><span class="p">,</span> <span class="n">runtime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.diagnostics</span><span class="w"> </span><span class="kn">import</span> <span class="n">CompilationError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteTarget</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">AppendSampleLog</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Append the supplied label without changing existing records.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        path: Runtime destination with an existing parent directory.</span>
+<span class="sd">        label: Sample text, encoded as one CSV cell.</span>
+<span class="sd">    """</span>
+
+    <span class="n">path</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">label</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">csv</span><span class="o">.</span><span class="n">append_row</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">,))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">AppendSampleLog</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">())</span>
+    <span class="k">except</span> <span class="n">CompilationError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">error</span><span class="o">.</span><span class="n">diagnostics</span> <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">code</span> <span class="o">!=</span> <span class="s2">"unsupported_csv_append"</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">error</span><span class="o">.</span><span class="n">diagnostics</span><span class="p">):</span>
+            <span class="k">raise</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"AutoSuite CSV append awaits mode and encoding validation."</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">"Update this example when verified append compilation becomes available."</span><span class="p">)</span>
+</code></pre></div>
+<p><a href="../../_generated/examples/append_sample_log.py">Download Python</a></p>
+<div class="highlight"><pre><span></span><code><span class="go">uv run python examples/append_sample_log.py</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>AutoSuite CSV append awaits mode and encoding validation.
+</code></pre></div>
+<p>This checks the current compilation restriction and produces no ASFP. The
+observed AutoSuite export setting still needs confirmation that it appends rather
+than overwrites. For executable reference results, see the developer
+<a href="../csv-append-ir/">CSV append example</a>. The <a href="../../user-guide/reference/csv/#append-one-row">CSV reference</a>
+describes existing-file requirements and failures.</p>
 
 
 
@@ -3674,7 +3604,7 @@ is why the <a href="../../reference/pipeline/#who-can-say-no">rejection layers</
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../extending-the-analysis/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Extending the analysis">
+          <a href="../csv-read-ir/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Typed CSV IR">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -3684,20 +3614,20 @@ is why the <a href="../../reference/pipeline/#who-can-say-no">rejection layers</
                 Previous
               </span>
               <div class="md-ellipsis">
-                Extending the analysis
+                Typed CSV IR
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../faq/" class="md-footer__link md-footer__link--next" aria-label="Next: FAQ">
+          <a href="../csv-append-ir/" class="md-footer__link md-footer__link--next" aria-label="Next: CSV append IR">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                FAQ
+                CSV append IR
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -3738,10 +3668,10 @@ is why the <a href="../../reference/pipeline/#who-can-say-no">rejection layers</
       
         
         
-      <script id="__config" type="application/json">{"annotate":null,"base":"../../..","features":["navigation.tabs","navigation.sections","navigation.footer","content.code.copy","search.highlight"],"redirect":null,"search":"../../../assets/javascripts/workers/search.7d14d953.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"provider":"mike"}}</script>
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["navigation.tabs","navigation.sections","navigation.footer","content.code.copy","search.highlight"],"redirect":null,"search":"../../assets/javascripts/workers/search.7d14d953.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"provider":"mike"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.df5d1f2b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.df5d1f2b.min.js"></script>
       
     
   </body>

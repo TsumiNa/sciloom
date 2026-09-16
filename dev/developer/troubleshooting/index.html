@@ -1126,7 +1126,7 @@
   <span class="md-ellipsis">
     
   
-  CSV reads
+  CSV files
 
     
   </span>
@@ -3040,6 +3040,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/append-sample-log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Append a sample log
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/csv-append-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  CSV append IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3711,8 +3765,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.10
-    · <code title="5b70d5c7bc5971c5f964a51f0833ccf1e03d7a13">5b70d5c7</code>
+    · SciLoom 0.3.11
+    · <code title="ec5616082add8918524724ff87e6c70cbd6ef050">ec561608</code>
   </p>
 </aside>
 
@@ -4059,10 +4113,11 @@ and configuration pass, definite timer-start analysis, and <code>Target.validate
 </tbody>
 </table>
 <h2 id="csv-file-services">CSV file services</h2>
-<p><code>missing_environment_service</code> for ReadCsv means no FileService was supplied.
+<p><code>missing_environment_service</code> for ReadCsv or AppendCsv means no FileService was supplied.
 Use <code>ReferenceEnvironment(files=MemoryFiles({...}))</code> for deterministic byte input,
 or opt in to <code>LocalFiles(root=...)</code>. <code>file_service_error</code> reports an unexpected
-provider exception or a non-bytes result; it does not become a recoverable IO_ERROR.
+provider exception, a non-bytes read result or a non-None append result; it does
+not become a recoverable IO_ERROR.
 The built-in adapters reject invalid paths with <code>csv_path</code> before a read event.</p>
 <p><code>csv_eof</code>, <code>csv_invalid_data</code> and <code>csv_io_error</code> are fatal ordinary-read outcomes;
 the corresponding try-forms return named statuses and complete fallbacks. Earlier
@@ -4070,6 +4125,12 @@ events remain in environment history, including the failed CsvReadEvent. No
 destination of an unsuccessful ordinary read is changed. Check <a href="../../user-guide/reference/csv/">CSV rules</a>
 for schema/source diagnostics and <a href="../reference/interpreter/#explicit-files-and-csv-outcomes">file ownership</a>.
 AutoSuite's <code>unsupported_csv_semantics</code> is a target gate, not a missing file service.</p>
+<p>AppendCsv records a CsvAppendEvent for an attempted write, including an OSError
+failure. Ordinary append then stops with <code>csv_io_error</code>; try-append writes
+IO_ERROR. Both preserve partial bytes and prior effects. <code>csv_encoding</code> occurs
+before the file service is called and does not produce an event. AutoSuite's
+<code>unsupported_csv_append</code> gate also applies to the try-form until mode and encoding
+are verified.</p>
 <h2 id="valueerror-from-executionconfig">ValueError from ExecutionConfig</h2>
 <p>Raised when the interpreter's configuration is constructed, before any run.</p>
 <table>
