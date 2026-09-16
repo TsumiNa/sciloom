@@ -15,6 +15,7 @@ from .ir import (
     If,
     IsDevice,
     ListSet,
+    LogValue,
     Program,
     StartAgitation,
     Statement,
@@ -111,7 +112,8 @@ def specialize(program: Program, *, bindings: DeviceBindings) -> Program:
             elif isinstance(statement, While):
                 selected.append(replace(statement, body=block(statement.body)))
             elif isinstance(
-                statement, (Assignment, ListSet, Call, ConfigureProperty, StartAgitation, StopAgitation, DeviceCommand)
+                statement,
+                (Assignment, ListSet, LogValue, Call, ConfigureProperty, StartAgitation, StopAgitation, DeviceCommand),
             ):
                 selected.append(statement)
             else:

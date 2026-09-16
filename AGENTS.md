@@ -194,6 +194,7 @@ Run `uv run python examples/numeric_operations.py` for magnitude and floor.
 Run `uv run python -m examples.developer.agitation_ir` from the repository root.
 Run `uv run python -m examples.developer.list_ir` for direct list IR and JSON v4.
 Run `uv run python -m examples.developer.reference_environment` for explicit event-history sharing.
+Run `uv run python examples/record_values.py` and `uv run python -m examples.developer.logging_ir` for typed logging and its JSON/reference events.
 Run each independent user lesson with `uv run python examples/tutorial/start_shaker.py`,
 `uv run python examples/tutorial/control_shaker.py`,
 `uv run python examples/tutorial/choose_stirring_speed.py` and

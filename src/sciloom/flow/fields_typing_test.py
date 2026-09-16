@@ -14,7 +14,7 @@ def test_native_declaration_type_contract(tmp_path, valid):
 from collections.abc import Callable
 from math import floor
 from typing import assert_type
-from sciloom import Agitator, Duration, Function, Input, Output, RotationalSpeed, Var, Volume, mL, minute, rpm, runtime, s, text
+from sciloom import Agitator, Duration, Function, Input, Output, RotationalSpeed, Var, Volume, log, mL, minute, rpm, runtime, s, text
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import Program
 
@@ -59,6 +59,10 @@ class Scale(Function):
         self.agitator.start()
         self.agitator.stop()
 
+        log(self.amount, category=self.name, stream="volume")
+        log(self.elapsed, category="recipe", stream="time")
+        log(self.factor, category="recipe", stream="factor")
+
 callback: Callable[[], None] = Scale().run
 def check_inputs(program: Program, values: list[float], flags: list[bool], speeds: list[RotationalSpeed]) -> None:
     Interpreter(program).run(inputs={"values": values, "flags": flags, "speeds": speeds})
@@ -82,6 +86,8 @@ class Bad(Function):
         floor(self.amount)
         round(self.elapsed)
         abs(self.name)
+        log(self.values, category="recipe", stream="values")
+        log(self.factor, category=3, stream="factor")
         self.factor = "text"
         self.name = 3
         text.trim(3)
@@ -114,6 +120,6 @@ class Bad(Function):
         assert result.returncode == 0, result.stdout + result.stderr
     else:
         assert result.returncode == 1, result.stdout + result.stderr
-        assert result.stdout.count(" error: ") == 18, result.stdout
+        assert result.stdout.count(" error: ") == 20, result.stdout
         for code in ("[assignment]", "[list-item]"):
             assert code in result.stdout

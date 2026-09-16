@@ -1,0 +1,44 @@
+{
+  "device_types": [],
+  "entry_function_id": "f",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "category": {
+            "kind": "Literal",
+            "node_id": "category",
+            "source": null,
+            "type": "text",
+            "value": "recipe"
+          },
+          "kind": "LogValue",
+          "node_id": "record",
+          "source": null,
+          "stream": {
+            "kind": "Literal",
+            "node_id": "stream",
+            "source": null,
+            "type": "text",
+            "value": "volume"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "value",
+            "source": null,
+            "type": "volume",
+            "value": 1e-06
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "Record",
+      "node_id": "f",
+      "source": null,
+      "variables": []
+    }
+  ],
+  "kind": "Program",
+  "resources": []
+}

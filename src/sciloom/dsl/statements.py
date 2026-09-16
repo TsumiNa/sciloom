@@ -14,6 +14,7 @@ from sciloom.core.ir import (
     InputBinding,
     ListSet,
     ListType,
+    LogValue,
     OutputBinding,
     Reference,
     ScalarType,
@@ -25,6 +26,7 @@ from sciloom.core.ir import (
 # Function is read at runtime below, not only in annotations. Do not move this
 # import behind TYPE_CHECKING: composed calls test the callee with isinstance.
 from sciloom.flow.function import Function
+from sciloom.flow.logging import log
 from .context import LoweringContext
 from .device_conditions import device_condition
 from .device_operations import configure, device_command
@@ -174,6 +176,28 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
                 )
             )
         elif isinstance(node, ast.Expr) and isinstance(node.value, ast.Call):
+            if context.static_object(node.value.func) is log:
+                invocation = node.value
+                names = [keyword.arg for keyword in invocation.keywords]
+                if (
+                    len(invocation.args) != 1
+                    or isinstance(invocation.args[0], ast.Starred)
+                    or len(names) != 2
+                    or set(names) != {"category", "stream"}
+                ):
+                    context.fail(
+                        "call_binding", "log requires one positional value and category/stream keywords.", invocation
+                    )
+                keywords = {keyword.arg: keyword.value for keyword in invocation.keywords}
+                result.append(
+                    LogValue(
+                        **context.metadata(invocation),
+                        value=expression(context, invocation.args[0]),
+                        category=expression(context, keywords["category"], ScalarType.TEXT),
+                        stream=expression(context, keywords["stream"], ScalarType.TEXT),
+                    )
+                )
+                continue
             domain_operation = device_command(context, node.value)
             result.append(domain_operation if domain_operation is not None else call(context, node.value, []))
         else:

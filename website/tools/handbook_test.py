@@ -287,6 +287,8 @@ class Text(HTMLParser):
         ("examples/agitation-ir", "developer/agitation_ir"),
         ("examples/list-ir", "developer/list_ir"),
         ("examples/reference-environment", "developer/reference_environment"),
+        ("examples/record-values", "record_values"),
+        ("examples/logging-ir", "developer/logging_ir"),
         ("examples/demo-device", "developer/demo_device"),
         ("examples/portable-agitation", "developer/portable_agitation"),
     ),

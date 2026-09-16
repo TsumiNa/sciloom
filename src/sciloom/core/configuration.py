@@ -13,6 +13,7 @@ from .ir import (
     If,
     ListSet,
     Literal,
+    LogValue,
     Program,
     StartAgitation,
     Statement,
@@ -99,7 +100,7 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
                 if not (isinstance(statement.condition, Literal) and statement.condition.value is False):
                     _, needs = analyze(statement.body, configured)
                     required |= needs
-            elif isinstance(statement, (Assignment, ListSet, StopAgitation, DeviceCommand)):
+            elif isinstance(statement, (Assignment, ListSet, LogValue, StopAgitation, DeviceCommand)):
                 pass  # These operations neither save nor require device configuration.
             elif isinstance(statement, DeviceIf):
                 raise AssertionError("Unselected device branch passed the specialization check.")

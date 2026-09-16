@@ -136,11 +136,31 @@ The [label example](../../examples/prepare-labels.md) shows a complete program.
 | `if` / `elif` / `else`, `while` | `for`, `break`, `continue`, `while ... else` |
 | Calls to child Functions stored on `self` | Arbitrary helper calls, calls nested in expressions |
 | Device property assignment and declared commands | Property reads or augmented property assignments |
+| `log(value, category=..., stream=...)` | Logging lists, automatic object formatting or using log as a result |
 | Whole `if/elif` conditions using `comptime` queries | Combining these queries with `and` / `or` or runtime arguments |
 | `pass`, docstrings | `return`, `try`, `with`, `assert`, `del`, nested definitions |
 
 See the [device reference](devices-and-targets.md) for property, command and
 query forms.
+
+## Record values
+
+Import `log` from `sciloom` and call it inside `@runtime`:
+
+```python
+log(self.volume, category="recipe", stream="dispensed_volume")
+```
+
+The value can be `int`, `float`, `bool`, `str` or a supported physical quantity.
+Category and stream are text and can come from inputs or text expressions. The
+program captures value, category, then stream once in that order; a later
+assignment does not change an earlier log. This is also the evaluation order
+when the two keywords are written in a different order.
+
+Logging records the value you supply. It does not measure an instrument, return
+a value or select a CSV file. Use the [complete logging example](../../examples/record-values.md)
+to generate an AutoSuite function. Application log storage and the resulting
+records still need verification in the deployed AutoSuite environment.
 
 ## Lists and indices
 

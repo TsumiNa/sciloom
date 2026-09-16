@@ -25,6 +25,7 @@ from .model import (
     ListLiteral,
     ListSet,
     Literal,
+    LogValue,
     OutputBinding,
     Program,
     Reference,
@@ -45,6 +46,7 @@ from .types import ListType, ScalarType, ValueType
 from .validation import validate
 
 __all__ = [
+    "LogValue",
     "TextLength",
     "TextTrim",
     "TextSplitPart",

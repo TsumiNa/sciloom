@@ -14,4 +14,6 @@
 
 ::: sciloom.core.interpreter.ExecutionEvent
 
+::: sciloom.core.interpreter.LogEvent
+
 ::: sciloom.core.interpreter.ReferenceEnvironment

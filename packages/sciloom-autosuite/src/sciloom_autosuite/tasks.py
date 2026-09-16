@@ -13,6 +13,8 @@ from sciloom.core.ir import (
     If,
     ListSet,
     ListType,
+    LogValue,
+    ScalarType,
     StartAgitation,
     Statement,
     StopAgitation,
@@ -20,6 +22,7 @@ from sciloom.core.ir import (
 )
 from .agitation import agitation_task
 from .context import CodegenContext
+from .encoding import SCALARS
 from .expressions import checked_read, materialize, plan_expression
 from .parameters import functiondata
 from .primitives import macro, set_variable
@@ -42,6 +45,27 @@ def statements(
                     value.text,
                     identity=statement.node_id,
                     array=isinstance(value.type, ListType),
+                )
+            )
+        elif isinstance(statement, LogValue):
+            captured = []
+            for operand in (statement.value, statement.category, statement.stream):
+                plan = materialize(context, function, plan_expression(context, function, operand, tag), tag)
+                result.extend(plan.prerequisites)
+                captured.append(plan)
+            value, category, stream = captured
+            assert isinstance(value.type, ScalarType)
+            result.append(
+                _xml(
+                    tag,
+                    "",
+                    _xml("categorynameexpression", category.text),
+                    _xml("streamnameexpression", stream.text),
+                    _xml("expressiontext", value.text),
+                    _xml("resulttype", SCALARS[value.type].parameter_type),
+                    *context.metadata("Log Data"),
+                    _xml("id", context.identifier("statement", statement.node_id)),
+                    typeid="Chemspeed.SATaskLogData.1",
                 )
             )
         elif isinstance(statement, ListSet):

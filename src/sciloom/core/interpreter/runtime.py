@@ -16,8 +16,10 @@ from sciloom.core.ir import (
     FunctionIR,
     If,
     ListSet,
+    LogValue,
     Program,
     Reference,
+    ScalarType,
     StartAgitation,
     Statement,
     StopAgitation,
@@ -31,7 +33,7 @@ from sciloom.core.ir.expressions import ExpressionChecker
 from sciloom.core.ir.model import Node
 from sciloom.core.ir.traversal import iter_nodes
 from .device_state import DeviceSession, DeviceState
-from .environment import ExecutionEvent, ReferenceEnvironment
+from .environment import ExecutionEvent, LogEvent, ReferenceEnvironment
 from .expressions import apply_binary, evaluate
 from .values import (
     InputValue,
@@ -133,6 +135,10 @@ class Interpreter:
                     value_type = checker.check(expression, function, path)
                     assert value_type is not None  # Program validation already succeeded.
                     self._expression_types[expression.node_id] = value_type
+                elif isinstance(expression, LogValue):
+                    value_type = checker.check(expression.value, function, path)
+                    assert isinstance(value_type, ScalarType)
+                    self._expression_types[expression.value.node_id] = value_type
         self._state: dict[str, dict[str, RuntimeValue]] = {f.node_id: {} for f in program.functions}
         self._steps = 0
         self._devices = DeviceSession(program)
@@ -225,6 +231,22 @@ class Interpreter:
             self._tick(statement)
             if isinstance(statement, Assignment):
                 self._write(statement.target, evaluate(self, statement.value, frame), frame)
+            elif isinstance(statement, LogValue):
+                captured_value = evaluate(self, statement.value, frame)
+                category = evaluate(self, statement.category, frame)
+                stream = evaluate(self, statement.stream, frame)
+                value_type = self._expression_types[statement.value.node_id]
+                assert isinstance(value_type, ScalarType) and isinstance(category, str) and isinstance(stream, str)
+                self._record_event(
+                    LogEvent(
+                        node_id=statement.node_id,
+                        source=statement.source,
+                        type=value_type,
+                        value=output_value(captured_value, value_type),
+                        category=category,
+                        stream=stream,
+                    )
+                )
             elif isinstance(statement, ListSet):
                 # Plain assignment evaluates the RHS first. Augmented assignment
                 # checks and reads the selected element before evaluating its RHS.

@@ -3,11 +3,35 @@
 from dataclasses import dataclass, field
 from typing import TypeAlias, TypeVar
 
+from sciloom.core.diagnostics import SourceSpan
 from sciloom.core.ir.model import Node
+from sciloom.core.ir.types import ScalarType
 from .device_state import DeviceEvent
-from .values import fail
+from .values import InputScalar, fail
 
-ExecutionEvent: TypeAlias = DeviceEvent
+
+@dataclass(frozen=True, kw_only=True)
+class LogEvent:
+    """A completed typed log record, independent of subsequent variable changes.
+
+    Attributes:
+        node_id: Semantic logging occurrence ID.
+        source: Optional source location of the operation.
+        type: Semantic type of the captured value.
+        value: Native scalar or physical quantity in the public value convention.
+        category: Captured category text.
+        stream: Captured stream text.
+    """
+
+    node_id: str
+    source: SourceSpan | None
+    type: ScalarType
+    value: InputScalar
+    category: str
+    stream: str
+
+
+ExecutionEvent: TypeAlias = DeviceEvent | LogEvent
 """Closed reference-event vocabulary; each effect adds its own immutable record."""
 
 Service = TypeVar("Service")
