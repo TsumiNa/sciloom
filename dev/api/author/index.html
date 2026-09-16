@@ -2472,6 +2472,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/confirm-samples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Confirm samples
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2615,6 +2642,33 @@
     
   
   Typed log events
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/confirmation-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Explicit confirmation
 
     
   </span>
@@ -2890,6 +2944,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         log
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sciloom.notify" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        notify
       </span>
     </span>
   </a>
@@ -3432,6 +3497,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sciloom.notify" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        notify
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#field-declarations" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3541,8 +3617,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.5
-    · <code title="e935805e408a32940871d255ae202f9edd07a041">e935805e</code>
+    · SciLoom 0.3.6
+    · <code title="a6076f411bde483ca130bdecbecc7f7019e5c606">a6076f41</code>
   </p>
 </aside>
 
@@ -4001,6 +4077,82 @@ and future tooling; field declarations and IR define execution semantics.</p>
     </table>
         <p>Value, category and stream are evaluated once in that order. The operation
 does not measure hardware or configure application-level log storage.</p>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Called by host Python instead of written in a runtime method.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="sciloom.notify" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">sciloom.notify</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">notify</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Display a message and wait for an explicit OK acknowledgement.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>message</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Runtime text, captured once when this operation begins.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>Subsequent steps execute only after acknowledgement. This operation has no
+return value, timeout, cancellation branch or implicit confirmation.</p>
 
 
 <p><span class="doc-section-title">Raises:</span></p>

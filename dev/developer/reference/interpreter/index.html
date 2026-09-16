@@ -2068,6 +2068,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#explicit-confirmation" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Explicit confirmation
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-and-snapshots" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2582,6 +2593,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/confirm-samples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Confirm samples
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2725,6 +2763,33 @@
     
   
   Typed log events
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/confirmation-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Explicit confirmation
 
     
   </span>
@@ -3296,6 +3361,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#explicit-confirmation" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Explicit confirmation
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-and-snapshots" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3333,8 +3409,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.5
-    · <code title="e935805e408a32940871d255ae202f9edd07a041">e935805e</code>
+    · SciLoom 0.3.6
+    · <code title="a6076f411bde483ca130bdecbecc7f7019e5c606">a6076f41</code>
   </p>
 </aside>
 
@@ -3369,7 +3445,7 @@ automatically. Concrete services arrive with the operations that need them.</p>
 </code></pre></div>
 <p><code>environment.events</code> returns an immutable history snapshot across all runs using
 that environment. <code>result.events</code> remains limited to one successful run.
-<code>ExecutionEvent</code> is the union of DeviceEvent and LogEvent. Narrow with
+<code>ExecutionEvent</code> is the union of DeviceEvent, LogEvent and AcknowledgementEvent. Narrow with
 <code>isinstance(event, LogEvent)</code> before accessing log-specific fields; device events
 carry state snapshots. A failed run leaves earlier completed events in
 environment history and does not roll back their state changes.</p>
@@ -3389,6 +3465,31 @@ read a device or require a file service.</p>
 <p>The <a href="../../../examples/logging-ir/">direct logging IR example</a> constructs a volume
 log, restores JSON v4 and inspects the typed event. Prior records retain their
 values when fields change or the session runs again.</p>
+<h2 id="explicit-confirmation">Explicit confirmation</h2>
+<p>Give a program containing Notify a finite set of OK responses:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">examples.confirm_samples</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfirmSamples</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.interpreter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Interpreter</span><span class="p">,</span> <span class="n">QueuedAcknowledgements</span><span class="p">,</span> <span class="n">ReferenceEnvironment</span>
+
+<span class="n">responses</span> <span class="o">=</span> <span class="n">QueuedAcknowledgements</span><span class="p">([</span><span class="kc">True</span><span class="p">])</span>
+<span class="n">environment</span> <span class="o">=</span> <span class="n">ReferenceEnvironment</span><span class="p">(</span><span class="n">acknowledgements</span><span class="o">=</span><span class="n">responses</span><span class="p">)</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">(</span><span class="n">ConfirmSamples</span><span class="p">()</span><span class="o">.</span><span class="n">to_ir</span><span class="p">(),</span> <span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">"sample"</span><span class="p">:</span> <span class="s2">"A"</span><span class="p">})</span>
+<span class="k">assert</span> <span class="n">responses</span><span class="o">.</span><span class="n">remaining</span> <span class="o">==</span> <span class="mi">0</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">events</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>  <span class="c1"># Acknowledgement, then log.</span>
+</code></pre></div>
+<p>Notify evaluates its message once, then consumes one response. Only a successful
+acknowledgement appends an AcknowledgementEvent, with the captured text and source.
+An absent service raises <code>missing_environment_service</code>; an exhausted queue raises
+<code>acknowledgement_required</code>. No prompt opens, no default is supplied, and later
+statements do not run. A bad message expression fails before consuming a response.</p>
+<p>Only literal <code>True</code> responses are accepted. The constructor copies the iterable.
+Sharing a service or environment explicitly shares its remaining responses;
+omitting the service never confirms a message. A later failure preserves already
+consumed responses and completed events. Calling <code>run()</code> again starts at the
+entry, rather than resuming the failed statement.</p>
+<p>The <a href="../../../examples/confirmation-ir/">direct IR example</a> shows JSON restoration
+and a typed acknowledgement event. This reference behavior does not establish
+that a generated AutoSuite dialog blocks correctly on the target host.</p>
 <h2 id="session-and-snapshots">Session and snapshots</h2>
 <p>Internal variables initialize once per session and function identity. Repeated
 calls retain state; a new Interpreter starts a fresh session. Input/output call

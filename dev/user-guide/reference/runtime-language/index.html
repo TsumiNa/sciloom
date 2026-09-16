@@ -1244,6 +1244,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#request-confirmation" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Request confirmation
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#lists-and-indices" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2634,6 +2645,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/confirm-samples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Confirm samples
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2777,6 +2815,33 @@
     
   
   Typed log events
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/confirmation-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Explicit confirmation
 
     
   </span>
@@ -3403,6 +3468,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#request-confirmation" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Request confirmation
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#lists-and-indices" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3440,8 +3516,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.5
-    · <code title="e935805e408a32940871d255ae202f9edd07a041">e935805e</code>
+    · SciLoom 0.3.6
+    · <code title="a6076f411bde483ca130bdecbecc7f7019e5c606">a6076f41</code>
   </p>
 </aside>
 
@@ -3694,6 +3770,10 @@ has not been verified.</p>
 <td>Logging lists, automatic object formatting or using log as a result</td>
 </tr>
 <tr>
+<td><code>notify(message)</code></td>
+<td>Timeout, automatic confirmation, cancellation branches or a returned value</td>
+</tr>
+<tr>
 <td>Whole <code>if/elif</code> conditions using <code>comptime</code> queries</td>
 <td>Combining these queries with <code>and</code> / <code>or</code> or runtime arguments</td>
 </tr>
@@ -3718,6 +3798,17 @@ when the two keywords are written in a different order.</p>
 a value or select a CSV file. Use the <a href="../../../examples/record-values/">complete logging example</a>
 to generate an AutoSuite function. Application log storage and the resulting
 records still need verification in the deployed AutoSuite environment.</p>
+<h2 id="request-confirmation">Request confirmation</h2>
+<p>Import <code>notify</code> from <code>sciloom</code> and place it before the steps that need confirmation:</p>
+<div class="highlight"><pre><span></span><code><span class="n">notify</span><span class="p">(</span><span class="s2">"Samples are ready. Confirm to continue."</span><span class="p">)</span>
+</code></pre></div>
+<p>The message can include runtime text, for example <code>"Confirm sample " + self.label</code>.
+Its value is captured when the step begins. The next step waits for OK; this call
+has no return value, timeout or automatic response. It belongs inside <code>@runtime</code>,
+not in the constructor or compilation script.</p>
+<p>The <a href="../../../examples/confirm-samples/">confirmation example</a> generates an AutoSuite
+function with a message followed by a log. The generated OK dialog still needs
+Executor validation of blocking and continuation on the deployed host.</p>
 <h2 id="lists-and-indices">Lists and indices</h2>
 <p><code>self.result = self.values</code> copies the complete list. Changing
 <code>self.result[0]</code> afterwards does not change <code>self.values[0]</code>. A child

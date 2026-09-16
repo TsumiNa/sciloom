@@ -169,6 +169,9 @@
         <loc>https://tsumina.github.io/sciloom/dev/examples/record-values/</loc>
       </url>
       <url>
+        <loc>https://tsumina.github.io/sciloom/dev/examples/confirm-samples/</loc>
+      </url>
+      <url>
         <loc>https://tsumina.github.io/sciloom/dev/examples/non-zero-array-min/</loc>
       </url>
       <url>
@@ -185,6 +188,9 @@
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/examples/logging-ir/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/examples/confirmation-ir/</loc>
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/examples/demo-device/</loc>

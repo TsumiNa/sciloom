@@ -2535,6 +2535,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/confirm-samples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Confirm samples
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2678,6 +2705,33 @@
     
   
   Typed log events
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/confirmation-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Explicit confirmation
 
     
   </span>
@@ -3253,8 +3307,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.5
-    · <code title="e935805e408a32940871d255ae202f9edd07a041">e935805e</code>
+    · SciLoom 0.3.6
+    · <code title="a6076f411bde483ca130bdecbecc7f7019e5c606">a6076f41</code>
   </p>
 </aside>
 
@@ -3271,6 +3325,7 @@ AutoSuite function package (<code>.asfp</code>). The current author API lets you
 <li>Save shaker settings and explicitly start or stop agitation.</li>
 <li>Share a logical device between steps and bind it to an AutoSuite shaker.</li>
 <li>Choose device-specific branches when compiling for a target.</li>
+<li>Record supplied values and request an explicit OK acknowledgement before continuing.</li>
 </ul>
 <p>The runtime method accepts a <a href="../../user-guide/reference/runtime-language/">restricted Python subset</a>.
 Constructors and the surrounding script remain ordinary Python.</p>
@@ -3287,6 +3342,11 @@ prove that the procedure will run correctly on your deployment.</p>
 acceptance. Array bounds checks, device mappings and fault/recovery behaviour
 require platform verification; SciLoom's reference execution cannot establish
 the instrument's numerical or physical behaviour.</p>
+<p>The generated OK dialog is available for inspection and simulation; platform
+execution remains unverified. Before equipment use, check on the AutoSuite host
+that it blocks later steps until OK and resumes exactly once. The
+<a href="../../examples/confirm-samples/">confirmation example</a> describes that acceptance
+gate. Supplying a response to the reference interpreter does not pass it.</p>
 
 
 

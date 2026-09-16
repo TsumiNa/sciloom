@@ -10,36 +10,36 @@
       
       
       
-        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/user-guide/advanced/specialization/">
+        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/examples/confirmation-ir/">
       
       
-        <link rel="prev" href="../composition/">
+        <link rel="prev" href="../logging-ir/">
       
       
-        <link rel="next" href="../device-branches/">
+        <link rel="next" href="../demo-device/">
       
       
         
       
       
-      <link rel="icon" href="../../../assets/brand/favicon.svg">
+      <link rel="icon" href="../../assets/brand/favicon.svg">
       <meta name="generator" content="zensical-0.0.61">
     
     
       
-        <title>Choose settings before compilation - SciLoom</title>
+        <title>Explicit confirmation - SciLoom</title>
       
     
     
       
         
       
-      <link rel="stylesheet" href="../../../assets/stylesheets/modern/main.ce62732f.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.ce62732f.min.css">
       
         
           
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/modern/palette.812a03bb.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.812a03bb.min.css">
       
       
 
@@ -52,9 +52,9 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/brand.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/brand.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
     
       
 
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#choose-settings-before-compilation" class="md-skip">
+        <a href="#supply-a-reference-confirmation" class="md-skip">
           Skip to content
         </a>
       
@@ -97,9 +97,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="SciLoom" class="md-header__button md-logo" aria-label="SciLoom" data-md-component="logo">
-      <img class="sciloom-brand-light" src="../../../assets/brand/svg/sciloom-mark-light.svg" alt="SciLoom">
-<img class="sciloom-brand-dark" src="../../../assets/brand/svg/sciloom-mark-dark.svg" alt="SciLoom">
+    <a href="../.." title="SciLoom" class="md-header__button md-logo" aria-label="SciLoom" data-md-component="logo">
+      <img class="sciloom-brand-light" src="../../assets/brand/svg/sciloom-mark-light.svg" alt="SciLoom">
+<img class="sciloom-brand-dark" src="../../assets/brand/svg/sciloom-mark-dark.svg" alt="SciLoom">
     </a>
     <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Choose settings before compilation
+              Explicit confirmation
             
           </span>
         </div>
@@ -194,7 +194,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../.." class="md-tabs__link">
+        <a href="../.." class="md-tabs__link">
           
   
   Introduction
@@ -209,16 +209,14 @@
   
   
   
-    
-  
   
     
       
     
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../user-guide/" class="md-tabs__link">
           
   
   User Guide
@@ -240,7 +238,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../developer/" class="md-tabs__link">
+        <a href="../../developer/" class="md-tabs__link">
           
   
   Developer Guide
@@ -255,14 +253,16 @@
   
   
   
+    
+  
   
     
       
     
     
     
-      <li class="md-tabs__item">
-        <a href="../../../examples/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   Examples
@@ -284,7 +284,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../api/" class="md-tabs__link">
+        <a href="../../api/" class="md-tabs__link">
           
   
   API Reference
@@ -317,9 +317,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="SciLoom" class="md-nav__button md-logo" aria-label="SciLoom" data-md-component="logo">
-      <img class="sciloom-brand-light" src="../../../assets/brand/svg/sciloom-mark-light.svg" alt="SciLoom">
-<img class="sciloom-brand-dark" src="../../../assets/brand/svg/sciloom-mark-dark.svg" alt="SciLoom">
+    <a href="../.." title="SciLoom" class="md-nav__button md-logo" aria-label="SciLoom" data-md-component="logo">
+      <img class="sciloom-brand-light" src="../../assets/brand/svg/sciloom-mark-light.svg" alt="SciLoom">
+<img class="sciloom-brand-dark" src="../../assets/brand/svg/sciloom-mark-dark.svg" alt="SciLoom">
     </a>
     SciLoom
   </label>
@@ -383,7 +383,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -410,7 +410,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../introduction/getting-started/" class="md-nav__link">
+      <a href="../../introduction/getting-started/" class="md-nav__link">
         
   
   
@@ -437,7 +437,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../introduction/status/" class="md-nav__link">
+      <a href="../../introduction/status/" class="md-nav__link">
         
   
   
@@ -464,7 +464,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../introduction/glossary/" class="md-nav__link">
+      <a href="../../introduction/glossary/" class="md-nav__link">
         
   
   
@@ -495,31 +495,26 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
             
   
   
@@ -536,7 +531,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -553,7 +548,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
+      <a href="../../user-guide/" class="md-nav__link">
         
   
   
@@ -586,20 +581,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
         
           
-          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
             
   
   
@@ -633,7 +625,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tutorial/" class="md-nav__link">
+      <a href="../../user-guide/tutorial/" class="md-nav__link">
         
   
   
@@ -660,7 +652,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tutorial/first-function/" class="md-nav__link">
+      <a href="../../user-guide/tutorial/first-function/" class="md-nav__link">
         
   
   
@@ -687,7 +679,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tutorial/inputs-and-units/" class="md-nav__link">
+      <a href="../../user-guide/tutorial/inputs-and-units/" class="md-nav__link">
         
   
   
@@ -714,7 +706,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tutorial/agitator/" class="md-nav__link">
+      <a href="../../user-guide/tutorial/agitator/" class="md-nav__link">
         
   
   
@@ -741,7 +733,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tutorial/lists-and-loops/" class="md-nav__link">
+      <a href="../../user-guide/tutorial/lists-and-loops/" class="md-nav__link">
         
   
   
@@ -768,7 +760,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../tutorial/compile/" class="md-nav__link">
+      <a href="../../user-guide/tutorial/compile/" class="md-nav__link">
         
   
   
@@ -800,31 +792,26 @@
                 
   
   
-    
   
   
-  
     
     
     
     
       
       
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
         
           
-          
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="">
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
             
   
   
@@ -841,7 +828,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -858,7 +845,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../composition/" class="md-nav__link">
+      <a href="../../user-guide/advanced/composition/" class="md-nav__link">
         
   
   
@@ -882,36 +869,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Choose settings before compilation
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="././" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../user-guide/advanced/specialization/" class="md-nav__link">
         
   
   
@@ -926,49 +887,6 @@
   
 
       </a>
-      
-        
-
-
-<nav class="md-nav md-nav--secondary" aria-label="On this page">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#change-a-build-time-setting-or-a-runtime-input" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Change a build-time setting or a runtime input
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#which-settings-can-enter-the-procedure" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Which settings can enter the procedure?
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -981,7 +899,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../device-branches/" class="md-nav__link">
+      <a href="../../user-guide/advanced/device-branches/" class="md-nav__link">
         
   
   
@@ -1008,7 +926,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../autosuite/" class="md-nav__link">
+      <a href="../../user-guide/advanced/autosuite/" class="md-nav__link">
         
   
   
@@ -1043,7 +961,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../faq/" class="md-nav__link">
+      <a href="../../user-guide/faq/" class="md-nav__link">
         
   
   
@@ -1070,7 +988,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../troubleshooting/" class="md-nav__link">
+      <a href="../../user-guide/troubleshooting/" class="md-nav__link">
         
   
   
@@ -1103,20 +1021,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
         
           
-          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="">
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
             
   
   
@@ -1150,7 +1065,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/declarations/" class="md-nav__link">
+      <a href="../../user-guide/reference/declarations/" class="md-nav__link">
         
   
   
@@ -1177,7 +1092,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/runtime-language/" class="md-nav__link">
+      <a href="../../user-guide/reference/runtime-language/" class="md-nav__link">
         
   
   
@@ -1204,7 +1119,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/devices-and-targets/" class="md-nav__link">
+      <a href="../../user-guide/reference/devices-and-targets/" class="md-nav__link">
         
   
   
@@ -1296,7 +1211,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/" class="md-nav__link">
+      <a href="../../developer/" class="md-nav__link">
         
   
   
@@ -1373,7 +1288,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/tutorial/" class="md-nav__link">
+      <a href="../../developer/tutorial/" class="md-nav__link">
         
   
   
@@ -1400,7 +1315,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/tutorial/declare-a-family/" class="md-nav__link">
+      <a href="../../developer/tutorial/declare-a-family/" class="md-nav__link">
         
   
   
@@ -1427,7 +1342,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/tutorial/declare-profiles/" class="md-nav__link">
+      <a href="../../developer/tutorial/declare-profiles/" class="md-nav__link">
         
   
   
@@ -1454,7 +1369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/tutorial/write-a-function/" class="md-nav__link">
+      <a href="../../developer/tutorial/write-a-function/" class="md-nav__link">
         
   
   
@@ -1481,7 +1396,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/tutorial/write-a-target/" class="md-nav__link">
+      <a href="../../developer/tutorial/write-a-target/" class="md-nav__link">
         
   
   
@@ -1508,7 +1423,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/tutorial/reject-a-program/" class="md-nav__link">
+      <a href="../../developer/tutorial/reject-a-program/" class="md-nav__link">
         
   
   
@@ -1535,7 +1450,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/tutorial/adapt-with-comptime/" class="md-nav__link">
+      <a href="../../developer/tutorial/adapt-with-comptime/" class="md-nav__link">
         
   
   
@@ -1562,7 +1477,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/tutorial/execute-what-you-can/" class="md-nav__link">
+      <a href="../../developer/tutorial/execute-what-you-can/" class="md-nav__link">
         
   
   
@@ -1589,7 +1504,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/tutorial/complete-program/" class="md-nav__link">
+      <a href="../../developer/tutorial/complete-program/" class="md-nav__link">
         
   
   
@@ -1674,7 +1589,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/advanced/json-interchange/" class="md-nav__link">
+      <a href="../../developer/advanced/json-interchange/" class="md-nav__link">
         
   
   
@@ -1701,7 +1616,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/advanced/specialization/" class="md-nav__link">
+      <a href="../../developer/advanced/specialization/" class="md-nav__link">
         
   
   
@@ -1728,7 +1643,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/advanced/native-commands/" class="md-nav__link">
+      <a href="../../developer/advanced/native-commands/" class="md-nav__link">
         
   
   
@@ -1755,7 +1670,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/advanced/extending-the-analysis/" class="md-nav__link">
+      <a href="../../developer/advanced/extending-the-analysis/" class="md-nav__link">
         
   
   
@@ -1782,7 +1697,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/advanced/typing-without-inheritance/" class="md-nav__link">
+      <a href="../../developer/advanced/typing-without-inheritance/" class="md-nav__link">
         
   
   
@@ -1817,7 +1732,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/faq/" class="md-nav__link">
+      <a href="../../developer/faq/" class="md-nav__link">
         
   
   
@@ -1844,7 +1759,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/troubleshooting/" class="md-nav__link">
+      <a href="../../developer/troubleshooting/" class="md-nav__link">
         
   
   
@@ -1921,7 +1836,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/reference/architecture/" class="md-nav__link">
+      <a href="../../developer/reference/architecture/" class="md-nav__link">
         
   
   
@@ -1948,7 +1863,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/reference/ir/" class="md-nav__link">
+      <a href="../../developer/reference/ir/" class="md-nav__link">
         
   
   
@@ -1975,7 +1890,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/reference/pipeline/" class="md-nav__link">
+      <a href="../../developer/reference/pipeline/" class="md-nav__link">
         
   
   
@@ -2002,7 +1917,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/reference/target-contract/" class="md-nav__link">
+      <a href="../../developer/reference/target-contract/" class="md-nav__link">
         
   
   
@@ -2029,7 +1944,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/reference/device-contracts/" class="md-nav__link">
+      <a href="../../developer/reference/device-contracts/" class="md-nav__link">
         
   
   
@@ -2056,7 +1971,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/reference/interpreter/" class="md-nav__link">
+      <a href="../../developer/reference/interpreter/" class="md-nav__link">
         
   
   
@@ -2083,7 +1998,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/reference/verification/" class="md-nav__link">
+      <a href="../../developer/reference/verification/" class="md-nav__link">
         
   
   
@@ -2168,7 +2083,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/typing-and-tests/" class="md-nav__link">
+      <a href="../../developer/typing-and-tests/" class="md-nav__link">
         
   
   
@@ -2195,7 +2110,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/documentation/" class="md-nav__link">
+      <a href="../../developer/documentation/" class="md-nav__link">
         
   
   
@@ -2222,7 +2137,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/publication/" class="md-nav__link">
+      <a href="../../developer/publication/" class="md-nav__link">
         
   
   
@@ -2249,7 +2164,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../developer/brand/" class="md-nav__link">
+      <a href="../../developer/brand/" class="md-nav__link">
         
   
   
@@ -2288,26 +2203,31 @@
       
   
   
+    
   
   
+  
     
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
@@ -2324,7 +2244,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2341,7 +2261,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -2368,7 +2288,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/function-call/" class="md-nav__link">
+      <a href="../function-call/" class="md-nav__link">
         
   
   
@@ -2395,7 +2315,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/agitation/" class="md-nav__link">
+      <a href="../agitation/" class="md-nav__link">
         
   
   
@@ -2422,7 +2342,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/scale-values/" class="md-nav__link">
+      <a href="../scale-values/" class="md-nav__link">
         
   
   
@@ -2449,7 +2369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/prepare-labels/" class="md-nav__link">
+      <a href="../prepare-labels/" class="md-nav__link">
         
   
   
@@ -2476,7 +2396,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/quantity-conversion/" class="md-nav__link">
+      <a href="../quantity-conversion/" class="md-nav__link">
         
   
   
@@ -2503,7 +2423,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/numeric-operations/" class="md-nav__link">
+      <a href="../numeric-operations/" class="md-nav__link">
         
   
   
@@ -2530,7 +2450,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/record-values/" class="md-nav__link">
+      <a href="../record-values/" class="md-nav__link">
         
   
   
@@ -2557,7 +2477,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/confirm-samples/" class="md-nav__link">
+      <a href="../confirm-samples/" class="md-nav__link">
         
   
   
@@ -2584,7 +2504,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
+      <a href="../non-zero-array-min/" class="md-nav__link">
         
   
   
@@ -2611,7 +2531,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/stir-rack/" class="md-nav__link">
+      <a href="../stir-rack/" class="md-nav__link">
         
   
   
@@ -2638,7 +2558,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/agitation-ir/" class="md-nav__link">
+      <a href="../agitation-ir/" class="md-nav__link">
         
   
   
@@ -2665,7 +2585,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/list-ir/" class="md-nav__link">
+      <a href="../list-ir/" class="md-nav__link">
         
   
   
@@ -2692,7 +2612,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/reference-environment/" class="md-nav__link">
+      <a href="../reference-environment/" class="md-nav__link">
         
   
   
@@ -2719,7 +2639,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/logging-ir/" class="md-nav__link">
+      <a href="../logging-ir/" class="md-nav__link">
         
   
   
@@ -2743,10 +2663,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../examples/confirmation-ir/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2761,6 +2690,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -2773,7 +2703,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/demo-device/" class="md-nav__link">
+      <a href="../demo-device/" class="md-nav__link">
         
   
   
@@ -2800,7 +2730,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/portable-agitation/" class="md-nav__link">
+      <a href="../portable-agitation/" class="md-nav__link">
         
   
   
@@ -2884,7 +2814,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/" class="md-nav__link">
+      <a href="../../api/" class="md-nav__link">
         
   
   
@@ -2911,7 +2841,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/author/" class="md-nav__link">
+      <a href="../../api/author/" class="md-nav__link">
         
   
   
@@ -2938,7 +2868,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/units/" class="md-nav__link">
+      <a href="../../api/units/" class="md-nav__link">
         
   
   
@@ -2965,7 +2895,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/comptime/" class="md-nav__link">
+      <a href="../../api/comptime/" class="md-nav__link">
         
   
   
@@ -2992,7 +2922,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/text/" class="md-nav__link">
+      <a href="../../api/text/" class="md-nav__link">
         
   
   
@@ -3019,7 +2949,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/autosuite/" class="md-nav__link">
+      <a href="../../api/autosuite/" class="md-nav__link">
         
   
   
@@ -3046,7 +2976,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/devices/" class="md-nav__link">
+      <a href="../../api/devices/" class="md-nav__link">
         
   
   
@@ -3073,7 +3003,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/ir-values/" class="md-nav__link">
+      <a href="../../api/ir-values/" class="md-nav__link">
         
   
   
@@ -3100,7 +3030,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/ir-flow/" class="md-nav__link">
+      <a href="../../api/ir-flow/" class="md-nav__link">
         
   
   
@@ -3127,7 +3057,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/ir-devices/" class="md-nav__link">
+      <a href="../../api/ir-devices/" class="md-nav__link">
         
   
   
@@ -3154,7 +3084,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/ir-json/" class="md-nav__link">
+      <a href="../../api/ir-json/" class="md-nav__link">
         
   
   
@@ -3181,7 +3111,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/compiler/" class="md-nav__link">
+      <a href="../../api/compiler/" class="md-nav__link">
         
   
   
@@ -3208,7 +3138,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/interpreter/" class="md-nav__link">
+      <a href="../../api/interpreter/" class="md-nav__link">
         
   
   
@@ -3235,7 +3165,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/diagnostics/" class="md-nav__link">
+      <a href="../../api/diagnostics/" class="md-nav__link">
         
   
   
@@ -3279,11 +3209,6 @@
                       
                     
                     
-                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-                      <div class="md-sidebar-button__wrapper">
-                        <label class="md-sidebar-button" for="__toc"></label>
-                      </div>
-                    
                   
                   <div class="md-sidebar__inner">
                     
@@ -3295,36 +3220,6 @@
   
     
   
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#change-a-build-time-setting-or-a-runtime-input" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Change a build-time setting or a runtime input
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#which-settings-can-enter-the-procedure" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Which settings can enter the procedure?
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -3347,94 +3242,63 @@
 
                   
 
-<h1 id="choose-settings-before-compilation">Choose settings before compilation</h1>
-<p>Use constructor arguments for settings that should stay fixed in a generated
-program. For example, vials and flasks can use the same speed-selection logic
-with different thresholds.</p>
-<p>The program below produces two packages. Each still takes a <code>volume</code> input;
-its threshold and two speed choices are fixed when you compile it. The numbers
-are examples of configuration, not experimental recommendations.</p>
-<p><div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">RotationalSpeed</span><span class="p">,</span> <span class="n">rpm</span><span class="p">,</span> <span class="n">runtime</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteTarget</span>
-
-
-<span class="k">class</span><span class="w"> </span><span class="nc">ChooseSpeed</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Choose a speed with thresholds fixed when the instance is created.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        threshold: Volume below which the gentle speed applies.</span>
-<span class="sd">        gentle: Speed for small volumes.</span>
-<span class="sd">        fast: Speed otherwise.</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        volume: Sample volume in millilitres.</span>
-<span class="sd">        speed: Chosen speed.</span>
-<span class="sd">    """</span>
-
-    <span class="n">volume</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
-    <span class="n">speed</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="n">RotationalSpeed</span><span class="p">]</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">gentle</span><span class="p">:</span> <span class="n">RotationalSpeed</span><span class="p">,</span> <span class="n">fast</span><span class="p">:</span> <span class="n">RotationalSpeed</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">gentle</span> <span class="o">=</span> <span class="n">gentle</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">fast</span> <span class="o">=</span> <span class="n">fast</span>
-
-    <span class="nd">@runtime</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gentle</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fast</span>
-
-
-<span class="n">vials</span> <span class="o">=</span> <span class="n">ChooseSpeed</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">gentle</span><span class="o">=</span><span class="mi">200</span> <span class="o">*</span> <span class="n">rpm</span><span class="p">,</span> <span class="n">fast</span><span class="o">=</span><span class="mi">400</span> <span class="o">*</span> <span class="n">rpm</span><span class="p">)</span>
-<span class="n">flasks</span> <span class="o">=</span> <span class="n">ChooseSpeed</span><span class="p">(</span><span class="n">threshold</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">gentle</span><span class="o">=</span><span class="mi">300</span> <span class="o">*</span> <span class="n">rpm</span><span class="p">,</span> <span class="n">fast</span><span class="o">=</span><span class="mi">600</span> <span class="o">*</span> <span class="n">rpm</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">function</span> <span class="ow">in</span> <span class="p">((</span><span class="s2">"vials"</span><span class="p">,</span> <span class="n">vials</span><span class="p">),</span> <span class="p">(</span><span class="s2">"flasks"</span><span class="p">,</span> <span class="n">flasks</span><span class="p">)):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">function</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">())</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">"choose_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.asfp"</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<h1 id="supply-a-reference-confirmation">Supply a reference confirmation</h1>
+<p>Construct a notification, restore it from JSON, and give the interpreter one
+explicit OK response. This lets a test pass the confirmation step without
+opening a dialog or relying on a human response.</p>
+<div class="highlight"><pre><span></span><code><span class="go">uv run python -m examples.developer.confirmation_ir</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>vials choose_vials.asfp
-flasks choose_flasks.asfp
-</code></pre></div></p>
-<h2 id="change-a-build-time-setting-or-a-runtime-input">Change a build-time setting or a runtime input</h2>
-<p><code>ChooseSpeed(threshold=..., gentle=..., fast=...)</code> runs the Python constructor
-and stores three settings. SciLoom reads them during compilation. Change them
-and compile again to generate another program.</p>
-<p>The <code>volume: Input[float]</code> field works differently: its value is supplied
-each time the generated function is called. You do not need to compile again
-for each volume.</p>
-<table>
-<thead>
-<tr>
-<th>Value</th>
-<th>When you choose it</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>threshold</code>, <code>gentle</code>, <code>fast</code></td>
-<td>Before compilation, through the constructor</td>
-</tr>
-<tr>
-<td><code>volume</code></td>
-<td>At each call to the generated function</td>
-</tr>
-<tr>
-<td><code>speed</code></td>
-<td>Calculated by the runtime method and returned as an output</td>
-</tr>
-</tbody>
-</table>
-<p>The <code>for</code> loop below the class is ordinary Python. It runs on your computer
-to produce two files. The restrictions inside <code>@runtime</code>, such as using
-<code>while</code> instead of <code>for</code>, do not apply to this build code.</p>
-<h2 id="which-settings-can-enter-the-procedure">Which settings can enter the procedure?</h2>
-<p>An ordinary attribute read through <code>self</code> can supply a <code>bool</code>, <code>int</code>,
-<code>float</code> or <code>RotationalSpeed</code>. An unwrapped class declaration such as
-<code>batch_size: int = 8</code> works the same way. A host list, string or arbitrary
-object cannot be used as a runtime value.</p>
-<p>Use a different name for host settings and runtime fields: a constructor must
-not assign an <code>Input</code>, <code>Output</code> or <code>Var</code>. For an error involving a host
-value, see <a href="../../troubleshooting/">troubleshooting</a>.</p>
+<div class="highlight"><pre><span></span><code>confirmation_ir.json
+Acknowledged: Samples are ready. Confirm to continue.
+Responses remaining: 0
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="sd">"""For developers: supply an explicit acknowledgement to a JSON-restored program.</span>
+
+<span class="sd">Run: ``uv run python -m examples.developer.confirmation_ir``</span>
+<span class="sd">Expected terminal output:</span>
+<span class="sd">    confirmation_ir.json</span>
+<span class="sd">    Acknowledged: Samples are ready. Confirm to continue.</span>
+<span class="sd">    Responses remaining: 0</span>
+
+<span class="sd">The complete JSON v4 document is confirmation_ir.json beside this file. Reference</span>
+<span class="sd">execution consumes a supplied response; it never opens or auto-confirms a dialog.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.interpreter</span><span class="w"> </span><span class="kn">import</span> <span class="n">AcknowledgementEvent</span><span class="p">,</span> <span class="n">Interpreter</span><span class="p">,</span> <span class="n">QueuedAcknowledgements</span><span class="p">,</span> <span class="n">ReferenceEnvironment</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.ir</span><span class="w"> </span><span class="kn">import</span> <span class="n">FunctionIR</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Notify</span><span class="p">,</span> <span class="n">Program</span><span class="p">,</span> <span class="n">ScalarType</span><span class="p">,</span> <span class="n">from_json</span><span class="p">,</span> <span class="n">to_json</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">build_program</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Construct one acknowledgement operation directly in typed IR."""</span>
+    <span class="n">notification</span> <span class="o">=</span> <span class="n">Notify</span><span class="p">(</span>
+        <span class="n">node_id</span><span class="o">=</span><span class="s2">"confirm"</span><span class="p">,</span>
+        <span class="n">message</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"message"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">"Samples are ready. Confirm to continue."</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">Program</span><span class="p">(</span><span class="n">entry_function_id</span><span class="o">=</span><span class="s2">"f"</span><span class="p">,</span> <span class="n">functions</span><span class="o">=</span><span class="p">(</span><span class="n">FunctionIR</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"f"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"Confirm"</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="p">(</span><span class="n">notification</span><span class="p">,)),))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".json"</span><span class="p">)</span>
+    <span class="n">path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">to_json</span><span class="p">(</span><span class="n">build_program</span><span class="p">()),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span>
+    <span class="n">restored</span> <span class="o">=</span> <span class="n">from_json</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">restored</span> <span class="o">==</span> <span class="n">build_program</span><span class="p">()</span>
+    <span class="n">responses</span> <span class="o">=</span> <span class="n">QueuedAcknowledgements</span><span class="p">([</span><span class="kc">True</span><span class="p">])</span>
+    <span class="n">environment</span> <span class="o">=</span> <span class="n">ReferenceEnvironment</span><span class="p">(</span><span class="n">acknowledgements</span><span class="o">=</span><span class="n">responses</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">event</span><span class="p">,)</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">(</span><span class="n">restored</span><span class="p">,</span> <span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span><span class="o">.</span><span class="n">events</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">AcknowledgementEvent</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Acknowledged: </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Responses remaining: </span><span class="si">{</span><span class="n">responses</span><span class="o">.</span><span class="n">remaining</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<p><a href="../../_generated/examples/developer/confirmation_ir.py">Download Python</a> ·
+<a href="../../_generated/examples/developer/confirmation_ir.json">Download JSON</a></p>
+<p>Running the same session again raises <code>acknowledgement_required</code>: its one
+response has already been consumed. Omitting the acknowledgement service raises
+<code>missing_environment_service</code>. Neither failure proceeds to the next statement.
+See <a href="../../developer/reference/interpreter/#explicit-confirmation">reference execution</a>
+for history and service ownership.</p>
 
 
 
@@ -3467,7 +3331,7 @@ value, see <a href="../../troubleshooting/">troubleshooting</a>.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../composition/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Share a shaker between steps">
+          <a href="../logging-ir/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Typed log events">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -3477,20 +3341,20 @@ value, see <a href="../../troubleshooting/">troubleshooting</a>.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Share a shaker between steps
+                Typed log events
               </div>
             </div>
           </a>
         
         
           
-          <a href="../device-branches/" class="md-footer__link md-footer__link--next" aria-label="Next: Adapt to different devices">
+          <a href="../demo-device/" class="md-footer__link md-footer__link--next" aria-label="Next: Independent device">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Adapt to different devices
+                Independent device
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -3531,10 +3395,10 @@ value, see <a href="../../troubleshooting/">troubleshooting</a>.</p>
       
         
         
-      <script id="__config" type="application/json">{"annotate":null,"base":"../../..","features":["navigation.tabs","navigation.sections","navigation.footer","content.code.copy","search.highlight"],"redirect":null,"search":"../../../assets/javascripts/workers/search.7d14d953.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"provider":"mike"}}</script>
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["navigation.tabs","navigation.sections","navigation.footer","content.code.copy","search.highlight"],"redirect":null,"search":"../../assets/javascripts/workers/search.7d14d953.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"provider":"mike"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.df5d1f2b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.df5d1f2b.min.js"></script>
       
     
   </body>
