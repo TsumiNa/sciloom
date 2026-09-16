@@ -1,0 +1,153 @@
+{
+  "device_types": [],
+  "entry_function_id": "fn:0",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "function_id": "fn:1",
+          "inputs": [
+            {
+              "kind": "InputBinding",
+              "parameter_id": "fn:1:var:x",
+              "value": {
+                "kind": "Literal",
+                "node_id": "fn:0:node:2",
+                "source": {
+                  "column": 38,
+                  "kind": "SourceSpan",
+                  "line": 59,
+                  "path": "examples/function_call.py"
+                },
+                "type": "real",
+                "value": 2.5
+              }
+            }
+          ],
+          "kind": "Call",
+          "node_id": "fn:0:node:1",
+          "outputs": [
+            {
+              "kind": "OutputBinding",
+              "parameter_id": "fn:1:var:y",
+              "target": {
+                "kind": "Reference",
+                "node_id": "fn:0:node:3",
+                "source": {
+                  "column": 8,
+                  "kind": "SourceSpan",
+                  "line": 59,
+                  "path": "examples/function_call.py"
+                },
+                "symbol_id": "fn:0:var:result"
+              }
+            }
+          ],
+          "source": {
+            "column": 22,
+            "kind": "SourceSpan",
+            "line": 59,
+            "path": "examples/function_call.py"
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "Caller",
+      "node_id": "fn:0",
+      "source": {
+        "column": 4,
+        "kind": "SourceSpan",
+        "line": 58,
+        "path": "examples/function_call.py"
+      },
+      "variables": [
+        {
+          "initial": {
+            "kind": "Literal",
+            "node_id": "fn:0:var:result:initial",
+            "source": null,
+            "type": "real",
+            "value": 0.0
+          },
+          "kind": "Variable",
+          "name": "result",
+          "node_id": "fn:0:var:result",
+          "owner_id": "fn:0",
+          "role": "internal",
+          "source": null,
+          "type": "real"
+        }
+      ]
+    },
+    {
+      "body": [
+        {
+          "kind": "Assignment",
+          "node_id": "fn:1:node:1",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 36,
+            "path": "examples/function_call.py"
+          },
+          "target": {
+            "kind": "Reference",
+            "node_id": "fn:1:node:2",
+            "source": {
+              "column": 8,
+              "kind": "SourceSpan",
+              "line": 36,
+              "path": "examples/function_call.py"
+            },
+            "symbol_id": "fn:1:var:y"
+          },
+          "value": {
+            "kind": "Reference",
+            "node_id": "fn:1:node:3",
+            "source": {
+              "column": 17,
+              "kind": "SourceSpan",
+              "line": 36,
+              "path": "examples/function_call.py"
+            },
+            "symbol_id": "fn:1:var:x"
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "Identity",
+      "node_id": "fn:1",
+      "source": {
+        "column": 4,
+        "kind": "SourceSpan",
+        "line": 35,
+        "path": "examples/function_call.py"
+      },
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "x",
+          "node_id": "fn:1:var:x",
+          "owner_id": "fn:1",
+          "role": "input",
+          "source": null,
+          "type": "real"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "y",
+          "node_id": "fn:1:var:y",
+          "owner_id": "fn:1",
+          "role": "output",
+          "source": null,
+          "type": "real"
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": []
+}

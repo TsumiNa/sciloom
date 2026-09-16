@@ -1,0 +1,26 @@
+{
+  "source_commit": "bf7565ed2d56ca989c62647bd930eb711b457b34",
+  "capture": "Unmodified 0.2.0 codec and AutoSuite target; source paths are repository-relative.",
+  "programs": {
+    "agitation_ir": {
+      "json_sha256": "16d68b1ebaf3618dc4d44e29147c969558c56b363a6a364c0d6b98b9c142089b",
+      "asfp_sha256": "5f9c0e8bb678b5b911a0ed05d3a2e25f81fef65d1fd7d1e625f702b24b12691e"
+    },
+    "list_ir": {
+      "json_sha256": "5533dbe667b433d84815df5c7b20b8d65b377790f45cd78ec94be6cec2aa930d",
+      "asfp_sha256": "815f0f8f86373717aadf2a8ae1365724cd2f5d0416024eeccc309270484a6492"
+    },
+    "portable_agitation": {
+      "json_sha256": "f5087a0aff24b28d162ae52330a7a917e0164efcf08c06821444063526e2cf0f",
+      "asfp_sha256": "bc12034ce15a5bb3b054635a779b16e0c0307b16b00f94dbe8dd30934e57fb38"
+    },
+    "function_call": {
+      "json_sha256": "bdc107cbe967450d1fa164d9b9b1290cb94c1132efad07472f20ada2ca3e1c1b",
+      "asfp_sha256": "4a03f2d6fbfc29628fadb8106937724ea75b994ac4f9e89942dc792f795bb365"
+    },
+    "non_zero_array_min": {
+      "json_sha256": "c4d1e5c9fce13adb17606662282178ed2ade78e0db4b3a0d7224c0dabb685212",
+      "asfp_sha256": "17e46a682dea99732150c8a91f6d8c659a31ac7c14e1ddd99f903c25406fbad5"
+    }
+  }
+}

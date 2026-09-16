@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Mapping
+from typing import assert_never
 
 from .model import (
+    Binary,
     BinaryOp,
     Expression,
     FunctionIR,
@@ -87,6 +89,8 @@ class ExpressionChecker:
                 return operand
             self.report("operator_type", f"Operator {expr.op.value!r} cannot take {operand.value}.", path, expr)
             return None
+        if not isinstance(expr, Binary):
+            assert_never(expr)
         left = self.check(expr.left, function, f"{path}.left")
         right = self.check(expr.right, function, f"{path}.right")
         return self.binary(expr.op, left, right, path, expr)

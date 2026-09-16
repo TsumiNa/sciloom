@@ -1,0 +1,427 @@
+{
+  "device_types": [],
+  "entry_function_id": "fn:0",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "Assignment",
+          "node_id": "fn:0:node:1",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 39,
+            "path": "examples/non_zero_array_min.py"
+          },
+          "target": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:2",
+            "source": {
+              "column": 8,
+              "kind": "SourceSpan",
+              "line": 39,
+              "path": "examples/non_zero_array_min.py"
+            },
+            "symbol_id": "fn:0:var:minimum"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "fn:0:node:3",
+            "source": {
+              "column": 23,
+              "kind": "SourceSpan",
+              "line": 39,
+              "path": "examples/non_zero_array_min.py"
+            },
+            "type": "real",
+            "value": 999999.0
+          }
+        },
+        {
+          "kind": "Assignment",
+          "node_id": "fn:0:node:4",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 40,
+            "path": "examples/non_zero_array_min.py"
+          },
+          "target": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:5",
+            "source": {
+              "column": 8,
+              "kind": "SourceSpan",
+              "line": 40,
+              "path": "examples/non_zero_array_min.py"
+            },
+            "symbol_id": "fn:0:var:index"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "fn:0:node:6",
+            "source": {
+              "column": 21,
+              "kind": "SourceSpan",
+              "line": 40,
+              "path": "examples/non_zero_array_min.py"
+            },
+            "type": "integer",
+            "value": 0
+          }
+        },
+        {
+          "body": [
+            {
+              "condition": {
+                "kind": "Binary",
+                "left": {
+                  "index": {
+                    "kind": "Reference",
+                    "node_id": "fn:0:node:16",
+                    "source": {
+                      "column": 27,
+                      "kind": "SourceSpan",
+                      "line": 42,
+                      "path": "examples/non_zero_array_min.py"
+                    },
+                    "symbol_id": "fn:0:var:index"
+                  },
+                  "kind": "ListGet",
+                  "node_id": "fn:0:node:14",
+                  "source": {
+                    "column": 15,
+                    "kind": "SourceSpan",
+                    "line": 42,
+                    "path": "examples/non_zero_array_min.py"
+                  },
+                  "value": {
+                    "kind": "Reference",
+                    "node_id": "fn:0:node:15",
+                    "source": {
+                      "column": 15,
+                      "kind": "SourceSpan",
+                      "line": 42,
+                      "path": "examples/non_zero_array_min.py"
+                    },
+                    "symbol_id": "fn:0:var:values"
+                  }
+                },
+                "node_id": "fn:0:node:13",
+                "op": ">",
+                "right": {
+                  "kind": "Literal",
+                  "node_id": "fn:0:node:17",
+                  "source": {
+                    "column": 41,
+                    "kind": "SourceSpan",
+                    "line": 42,
+                    "path": "examples/non_zero_array_min.py"
+                  },
+                  "type": "real",
+                  "value": 1e-08
+                },
+                "source": {
+                  "column": 15,
+                  "kind": "SourceSpan",
+                  "line": 42,
+                  "path": "examples/non_zero_array_min.py"
+                }
+              },
+              "else_body": [],
+              "kind": "If",
+              "node_id": "fn:0:node:12",
+              "source": {
+                "column": 12,
+                "kind": "SourceSpan",
+                "line": 42,
+                "path": "examples/non_zero_array_min.py"
+              },
+              "then_body": [
+                {
+                  "condition": {
+                    "kind": "Binary",
+                    "left": {
+                      "index": {
+                        "kind": "Reference",
+                        "node_id": "fn:0:node:22",
+                        "source": {
+                          "column": 31,
+                          "kind": "SourceSpan",
+                          "line": 43,
+                          "path": "examples/non_zero_array_min.py"
+                        },
+                        "symbol_id": "fn:0:var:index"
+                      },
+                      "kind": "ListGet",
+                      "node_id": "fn:0:node:20",
+                      "source": {
+                        "column": 19,
+                        "kind": "SourceSpan",
+                        "line": 43,
+                        "path": "examples/non_zero_array_min.py"
+                      },
+                      "value": {
+                        "kind": "Reference",
+                        "node_id": "fn:0:node:21",
+                        "source": {
+                          "column": 19,
+                          "kind": "SourceSpan",
+                          "line": 43,
+                          "path": "examples/non_zero_array_min.py"
+                        },
+                        "symbol_id": "fn:0:var:values"
+                      }
+                    },
+                    "node_id": "fn:0:node:19",
+                    "op": "<",
+                    "right": {
+                      "kind": "Reference",
+                      "node_id": "fn:0:node:23",
+                      "source": {
+                        "column": 45,
+                        "kind": "SourceSpan",
+                        "line": 43,
+                        "path": "examples/non_zero_array_min.py"
+                      },
+                      "symbol_id": "fn:0:var:minimum"
+                    },
+                    "source": {
+                      "column": 19,
+                      "kind": "SourceSpan",
+                      "line": 43,
+                      "path": "examples/non_zero_array_min.py"
+                    }
+                  },
+                  "else_body": [],
+                  "kind": "If",
+                  "node_id": "fn:0:node:18",
+                  "source": {
+                    "column": 16,
+                    "kind": "SourceSpan",
+                    "line": 43,
+                    "path": "examples/non_zero_array_min.py"
+                  },
+                  "then_body": [
+                    {
+                      "kind": "Assignment",
+                      "node_id": "fn:0:node:24",
+                      "source": {
+                        "column": 20,
+                        "kind": "SourceSpan",
+                        "line": 44,
+                        "path": "examples/non_zero_array_min.py"
+                      },
+                      "target": {
+                        "kind": "Reference",
+                        "node_id": "fn:0:node:25",
+                        "source": {
+                          "column": 20,
+                          "kind": "SourceSpan",
+                          "line": 44,
+                          "path": "examples/non_zero_array_min.py"
+                        },
+                        "symbol_id": "fn:0:var:minimum"
+                      },
+                      "value": {
+                        "index": {
+                          "kind": "Reference",
+                          "node_id": "fn:0:node:28",
+                          "source": {
+                            "column": 47,
+                            "kind": "SourceSpan",
+                            "line": 44,
+                            "path": "examples/non_zero_array_min.py"
+                          },
+                          "symbol_id": "fn:0:var:index"
+                        },
+                        "kind": "ListGet",
+                        "node_id": "fn:0:node:26",
+                        "source": {
+                          "column": 35,
+                          "kind": "SourceSpan",
+                          "line": 44,
+                          "path": "examples/non_zero_array_min.py"
+                        },
+                        "value": {
+                          "kind": "Reference",
+                          "node_id": "fn:0:node:27",
+                          "source": {
+                            "column": 35,
+                            "kind": "SourceSpan",
+                            "line": 44,
+                            "path": "examples/non_zero_array_min.py"
+                          },
+                          "symbol_id": "fn:0:var:values"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "Assignment",
+              "node_id": "fn:0:node:29",
+              "source": {
+                "column": 12,
+                "kind": "SourceSpan",
+                "line": 45,
+                "path": "examples/non_zero_array_min.py"
+              },
+              "target": {
+                "kind": "Reference",
+                "node_id": "fn:0:node:30",
+                "source": {
+                  "column": 12,
+                  "kind": "SourceSpan",
+                  "line": 45,
+                  "path": "examples/non_zero_array_min.py"
+                },
+                "symbol_id": "fn:0:var:index"
+              },
+              "value": {
+                "kind": "Binary",
+                "left": {
+                  "kind": "Reference",
+                  "node_id": "fn:0:node:32",
+                  "source": {
+                    "column": 12,
+                    "kind": "SourceSpan",
+                    "line": 45,
+                    "path": "examples/non_zero_array_min.py"
+                  },
+                  "symbol_id": "fn:0:var:index"
+                },
+                "node_id": "fn:0:node:31",
+                "op": "+",
+                "right": {
+                  "kind": "Literal",
+                  "node_id": "fn:0:node:33",
+                  "source": {
+                    "column": 26,
+                    "kind": "SourceSpan",
+                    "line": 45,
+                    "path": "examples/non_zero_array_min.py"
+                  },
+                  "type": "integer",
+                  "value": 1
+                },
+                "source": {
+                  "column": 12,
+                  "kind": "SourceSpan",
+                  "line": 45,
+                  "path": "examples/non_zero_array_min.py"
+                }
+              }
+            }
+          ],
+          "condition": {
+            "kind": "Binary",
+            "left": {
+              "kind": "Reference",
+              "node_id": "fn:0:node:9",
+              "source": {
+                "column": 14,
+                "kind": "SourceSpan",
+                "line": 41,
+                "path": "examples/non_zero_array_min.py"
+              },
+              "symbol_id": "fn:0:var:index"
+            },
+            "node_id": "fn:0:node:8",
+            "op": "<",
+            "right": {
+              "kind": "ListLength",
+              "node_id": "fn:0:node:10",
+              "source": {
+                "column": 27,
+                "kind": "SourceSpan",
+                "line": 41,
+                "path": "examples/non_zero_array_min.py"
+              },
+              "value": {
+                "kind": "Reference",
+                "node_id": "fn:0:node:11",
+                "source": {
+                  "column": 31,
+                  "kind": "SourceSpan",
+                  "line": 41,
+                  "path": "examples/non_zero_array_min.py"
+                },
+                "symbol_id": "fn:0:var:values"
+              }
+            },
+            "source": {
+              "column": 14,
+              "kind": "SourceSpan",
+              "line": 41,
+              "path": "examples/non_zero_array_min.py"
+            }
+          },
+          "kind": "While",
+          "node_id": "fn:0:node:7",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 41,
+            "path": "examples/non_zero_array_min.py"
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "NonZeroArrayMin",
+      "node_id": "fn:0",
+      "source": {
+        "column": 4,
+        "kind": "SourceSpan",
+        "line": 38,
+        "path": "examples/non_zero_array_min.py"
+      },
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "values",
+          "node_id": "fn:0:var:values",
+          "owner_id": "fn:0",
+          "role": "input",
+          "source": null,
+          "type": {
+            "element_type": "real",
+            "kind": "ListType"
+          }
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "minimum",
+          "node_id": "fn:0:var:minimum",
+          "owner_id": "fn:0",
+          "role": "output",
+          "source": null,
+          "type": "real"
+        },
+        {
+          "initial": {
+            "kind": "Literal",
+            "node_id": "fn:0:var:index:initial",
+            "source": null,
+            "type": "integer",
+            "value": 0
+          },
+          "kind": "Variable",
+          "name": "index",
+          "node_id": "fn:0:var:index",
+          "owner_id": "fn:0",
+          "role": "internal",
+          "source": null,
+          "type": "integer"
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": []
+}

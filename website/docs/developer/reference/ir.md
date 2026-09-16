@@ -44,10 +44,20 @@ assert from_json(to_json(program)) == program
 | Rule | Detail |
 |---|---|
 | envelope | `kind="Program"` and `format_version=4`; earlier versions are not upgraded |
-| records | each carries its public dataclass `kind`; enums are strings, tuples become arrays |
+| records | each carries the stable `kind` declared by its dataclass's `__ir_kind__`; enums are strings, tuples become arrays |
 | rejected on import | unknown fields or kinds, duplicate keys, wrong scalar types, `NaN`, `Infinity`; node ids are required, never generated |
 | export | includes defaults, sorted keys, two-space indentation, a final newline; bodies and bindings keep their order; exported mappings are detached |
-| stability | semantic JSON changes can change deterministic UUID hashes in generated artifacts; compare structure rather than bytes across semantic-contract revisions |
+| stability | existing v4 kinds, field names, defaults and meanings are fixed; implementation refactors preserve canonical JSON and generated AutoSuite UUIDs |
+
+The codec derives structure from dataclass field annotations. Each reachable
+record declares its own unique `__ir_kind__: ClassVar[str]`, including nested
+contracts and SourceSpan. Renaming a Python class does not rename its wire kind.
+Missing, inherited-only or duplicate declarations produce `ir_schema` diagnostics.
+
+New vocabulary can extend v4 without rewriting old documents. Newer versions must
+still read existing valid v4 programs; older versions may explicitly reject kinds
+or types they do not support. A change to an existing meaning requires a separate
+format decision and explicit migration design, not an implicit import conversion.
 
 SourceSpan records one-based lines and zero-based UTF-8 byte columns. Source IDs
 and spans survive round trips. Lowering records the absolute path of the defining

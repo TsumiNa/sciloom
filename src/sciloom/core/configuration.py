@@ -1,13 +1,17 @@
 """Capability checks and interprocedural definite device configuration analysis."""
 
+from typing import assert_never
+
 from .bindings import DeviceBindings
 from .diagnostics import Diagnostic
 from .ir import (
+    Assignment,
     Call,
     ConfigureProperty,
     DeviceCommand,
     DeviceIf,
     If,
+    ListSet,
     Literal,
     Program,
     StartAgitation,
@@ -95,6 +99,12 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
                 if not (isinstance(statement.condition, Literal) and statement.condition.value is False):
                     _, needs = analyze(statement.body, configured)
                     required |= needs
+            elif isinstance(statement, (Assignment, ListSet, StopAgitation, DeviceCommand)):
+                pass  # These operations neither save nor require device configuration.
+            elif isinstance(statement, DeviceIf):
+                raise AssertionError("Unselected device branch passed the specialization check.")
+            else:
+                assert_never(statement)
         return configured, required
 
     # Guaranteed writes do not depend on preconditions, so solve these first.

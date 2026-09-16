@@ -6,6 +6,8 @@ This is the authority for the [implementation sequence](00-overview.md). All new
 signatures and snippets below are **target interfaces** until their stated stage
 lands. They have not been executed. Existing Program/JSON v4, Function.compile,
 device property/command contracts and the Target protocol are current.
+Stage 1 now implements section 1's explicit wire identities and consumer checks;
+later sections remain target contracts until their owning stage lands.
 
 Experiment authors import from `sciloom`; targets from `sciloom_autosuite` or an
 independent package. `flow` declares author vocabulary; `dsl` alone analyzes

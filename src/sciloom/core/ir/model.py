@@ -6,6 +6,7 @@ make a validated package safe to share between frontends without hidden mutation
 
 from dataclasses import dataclass
 from enum import StrEnum
+from typing import ClassVar
 
 from sciloom.core.diagnostics import SourceSpan
 from .device_contracts import DeviceTypeContract
@@ -49,6 +50,8 @@ class UnaryOp(StrEnum):
 class Node:
     """Semantic occurrence with a program-unique ID and optional source position."""
 
+    __ir_kind__: ClassVar[str] = "Node"
+
     node_id: str
     source: SourceSpan | None = None
 
@@ -56,6 +59,8 @@ class Node:
 @dataclass(frozen=True, kw_only=True)
 class Literal(Node):
     """Typed scalar constant; rotational speeds store canonical revolutions per second."""
+
+    __ir_kind__: ClassVar[str] = "Literal"
 
     type: ScalarType
     value: bool | int | float
@@ -65,12 +70,16 @@ class Literal(Node):
 class Reference(Node):
     """Read a variable by its semantic symbol ID, within the owning function."""
 
+    __ir_kind__: ClassVar[str] = "Reference"
+
     symbol_id: str
 
 
 @dataclass(frozen=True, kw_only=True)
 class Unary(Node):
     """Apply a typed unary operation to one expression."""
+
+    __ir_kind__: ClassVar[str] = "Unary"
 
     op: UnaryOp
     operand: "Expression"
@@ -79,6 +88,8 @@ class Unary(Node):
 @dataclass(frozen=True, kw_only=True)
 class Binary(Node):
     """Combine two expressions; AND and OR short-circuit in reference execution."""
+
+    __ir_kind__: ClassVar[str] = "Binary"
 
     op: BinaryOp
     left: "Expression"
@@ -89,6 +100,8 @@ class Binary(Node):
 class ListLiteral(Node):
     """Construct a typed list by evaluating elements in order; empty lists retain type."""
 
+    __ir_kind__: ClassVar[str] = "ListLiteral"
+
     type: ListType
     elements: tuple["Expression", ...] = ()
 
@@ -97,12 +110,16 @@ class ListLiteral(Node):
 class ListLength(Node):
     """Return the integer length of a list expression."""
 
+    __ir_kind__: ClassVar[str] = "ListLength"
+
     value: "Expression"
 
 
 @dataclass(frozen=True, kw_only=True)
 class ListGet(Node):
     """Read an existing element using a nonnegative integer index; bool is invalid."""
+
+    __ir_kind__: ClassVar[str] = "ListGet"
 
     value: "Expression"
     index: "Expression"
@@ -123,6 +140,8 @@ class Variable(Node):
         type: Scalar or homogeneous list type.
         initial: Required literal default for internal state; not reset on each call."""
 
+    __ir_kind__: ClassVar[str] = "Variable"
+
     owner_id: str
     name: str
     role: VariableRole
@@ -134,6 +153,8 @@ class Variable(Node):
 class Assignment(Node):
     """Capture an expression value into a variable, copying list values."""
 
+    __ir_kind__: ClassVar[str] = "Assignment"
+
     target: Reference
     value: Expression
 
@@ -141,6 +162,8 @@ class Assignment(Node):
 @dataclass(frozen=True, kw_only=True)
 class ListSet(Node):
     """Update one existing element; an augmented op evaluates the index/read once."""
+
+    __ir_kind__: ClassVar[str] = "ListSet"
 
     target: Reference
     index: Expression
@@ -152,6 +175,8 @@ class ListSet(Node):
 class InputBinding:
     """Bind a callee input parameter ID to a caller expression, by value."""
 
+    __ir_kind__: ClassVar[str] = "InputBinding"
+
     parameter_id: str
     value: Expression
 
@@ -160,6 +185,8 @@ class InputBinding:
 class OutputBinding:
     """Copy a callee output parameter back into a caller variable."""
 
+    __ir_kind__: ClassVar[str] = "OutputBinding"
+
     parameter_id: str
     target: Reference
 
@@ -167,6 +194,8 @@ class OutputBinding:
 @dataclass(frozen=True, kw_only=True)
 class Call(Node):
     """Invoke a function by occurrence ID with explicit input and output bindings."""
+
+    __ir_kind__: ClassVar[str] = "Call"
 
     function_id: str
     inputs: tuple[InputBinding, ...] = ()
@@ -177,6 +206,8 @@ class Call(Node):
 class If(Node):
     """Select a runtime branch using a Boolean expression; no implicit truthiness."""
 
+    __ir_kind__: ClassVar[str] = "If"
+
     condition: Expression
     then_body: tuple["Statement", ...] = ()
     else_body: tuple["Statement", ...] = ()
@@ -186,6 +217,8 @@ class If(Node):
 class While(Node):
     """Repeat a body while a Boolean expression remains true; zero iterations are possible."""
 
+    __ir_kind__: ClassVar[str] = "While"
+
     condition: Expression
     body: tuple["Statement", ...] = ()
 
@@ -194,6 +227,8 @@ class While(Node):
 class DeviceResource(Node):
     """A typed logical device, independent of deployment addresses."""
 
+    __ir_kind__: ClassVar[str] = "DeviceResource"
+
     logical_id: str
     device_type_id: str
 
@@ -201,6 +236,8 @@ class DeviceResource(Node):
 @dataclass(frozen=True, kw_only=True)
 class ConfigureProperty(Node):
     """Capture a value now; it is applied only by the device's explicit command."""
+
+    __ir_kind__: ClassVar[str] = "ConfigureProperty"
 
     resource_id: str
     property_id: str
@@ -211,12 +248,16 @@ class ConfigureProperty(Node):
 class StartAgitation(Node):
     """Apply the complete saved configuration and enable/reapply agitation."""
 
+    __ir_kind__: ClassVar[str] = "StartAgitation"
+
     resource_id: str
 
 
 @dataclass(frozen=True, kw_only=True)
 class StopAgitation(Node):
     """Disable the resource without promising any physical mixing outcome."""
+
+    __ir_kind__: ClassVar[str] = "StopAgitation"
 
     resource_id: str
 
@@ -225,6 +266,8 @@ class StopAgitation(Node):
 class CommandArgument:
     """Named expression argument for a declared device command."""
 
+    __ir_kind__: ClassVar[str] = "CommandArgument"
+
     name: str
     value: Expression
 
@@ -232,6 +275,8 @@ class CommandArgument:
 @dataclass(frozen=True, kw_only=True)
 class DeviceCommand(Node):
     """Invoke a declared extension command with no return value."""
+
+    __ir_kind__: ClassVar[str] = "DeviceCommand"
 
     resource_id: str
     operation_id: str
@@ -242,6 +287,8 @@ class DeviceCommand(Node):
 class CanWrite(Node):
     """Compile-time query for a bound resource's writable property semantic ID."""
 
+    __ir_kind__: ClassVar[str] = "CanWrite"
+
     resource_id: str
     property_id: str
 
@@ -250,6 +297,8 @@ class CanWrite(Node):
 class SupportsOperation(Node):
     """Compile-time query for a bound resource's supported command semantic ID."""
 
+    __ir_kind__: ClassVar[str] = "SupportsOperation"
+
     resource_id: str
     operation_id: str
 
@@ -257,6 +306,8 @@ class SupportsOperation(Node):
 @dataclass(frozen=True, kw_only=True)
 class IsDevice(Node):
     """Compile-time query for a bound resource's concrete type or ancestor identity."""
+
+    __ir_kind__: ClassVar[str] = "IsDevice"
 
     resource_id: str
     device_type_id: str
@@ -269,6 +320,8 @@ DevicePredicate = CanWrite | SupportsOperation | IsDevice
 @dataclass(frozen=True, kw_only=True)
 class DeviceIf(Node):
     """Preserve both device-dependent branches until trusted binding specialization."""
+
+    __ir_kind__: ClassVar[str] = "DeviceIf"
 
     condition: DevicePredicate
     then_body: tuple["Statement", ...] = ()
@@ -294,6 +347,8 @@ Statement = (
 class FunctionIR(Node):
     """One callable semantic function with owned variables and ordered statements."""
 
+    __ir_kind__: ClassVar[str] = "FunctionIR"
+
     name: str
     variables: tuple[Variable, ...] = ()
     body: tuple[Statement, ...] = ()
@@ -306,6 +361,8 @@ class Program:
     Internal variables belong to functions here. The XML backend determines the
     corresponding Macro containers. Application/global state is not supported yet.
     """
+
+    __ir_kind__: ClassVar[str] = "Program"
 
     entry_function_id: str
     functions: tuple[FunctionIR, ...] = ()

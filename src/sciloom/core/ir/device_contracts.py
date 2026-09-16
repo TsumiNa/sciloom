@@ -1,6 +1,7 @@
 """Serializable device interfaces; semantic identifiers never import Python code."""
 
 from dataclasses import dataclass
+from typing import ClassVar
 
 from .types import ScalarType, ValueType
 
@@ -15,6 +16,8 @@ STOP_AGITATION_ID = "sciloom.agitator.stop/v1"
 class PropertyContract:
     """Serializable configuration property identity, user-facing name and value type."""
 
+    __ir_kind__: ClassVar[str] = "PropertyContract"
+
     semantic_id: str
     name: str
     type: ValueType
@@ -24,6 +27,8 @@ class PropertyContract:
 class CommandParameter:
     """Named, typed argument of a no-return device command."""
 
+    __ir_kind__: ClassVar[str] = "CommandParameter"
+
     name: str
     type: ValueType
 
@@ -31,6 +36,8 @@ class CommandParameter:
 @dataclass(frozen=True, kw_only=True)
 class CommandContract:
     """Serializable command signature; no executable Python object is stored."""
+
+    __ir_kind__: ClassVar[str] = "CommandContract"
 
     semantic_id: str
     name: str
@@ -47,6 +54,8 @@ class DeviceTypeContract:
         properties: Declared configuration signatures, including inherited members.
         operations: Declared no-return command signatures.
         required_configuration: Property semantic IDs required before startup."""
+
+    __ir_kind__: ClassVar[str] = "DeviceTypeContract"
 
     type_id: str
     base_type_ids: tuple[str, ...] = ()

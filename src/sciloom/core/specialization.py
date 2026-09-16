@@ -1,10 +1,28 @@
 """Pure device-branch selection using trusted data contracts, never Python imports."""
 
 from dataclasses import replace
+from typing import assert_never
 
 from .bindings import DeviceBindings, validate_bindings
 from .diagnostics import CompilationError, Diagnostic, IRValidationError
-from .ir import Call, CanWrite, DeviceIf, If, IsDevice, Program, Statement, SupportsOperation, While, validate
+from .ir import (
+    Assignment,
+    Call,
+    CanWrite,
+    ConfigureProperty,
+    DeviceCommand,
+    DeviceIf,
+    If,
+    IsDevice,
+    ListSet,
+    Program,
+    StartAgitation,
+    Statement,
+    StopAgitation,
+    SupportsOperation,
+    While,
+    validate,
+)
 from .ir.traversal import iter_nodes
 
 
@@ -63,8 +81,7 @@ def specialize(program: Program, *, bindings: DeviceBindings) -> Program:
                                 ),
                             )
                         )
-                else:
-                    assert isinstance(condition, SupportsOperation)
+                elif isinstance(condition, SupportsOperation):
                     match = condition.operation_id in binding.supported_operations
                     expected_command = next(
                         c for t in program.device_types for c in t.operations if c.semantic_id == condition.operation_id
@@ -84,6 +101,8 @@ def specialize(program: Program, *, bindings: DeviceBindings) -> Program:
                                 ),
                             )
                         )
+                else:
+                    assert_never(condition)
                 selected.extend(block(statement.then_body if match else statement.else_body))
             elif isinstance(statement, If):
                 selected.append(
@@ -91,8 +110,12 @@ def specialize(program: Program, *, bindings: DeviceBindings) -> Program:
                 )
             elif isinstance(statement, While):
                 selected.append(replace(statement, body=block(statement.body)))
-            else:
+            elif isinstance(
+                statement, (Assignment, ListSet, Call, ConfigureProperty, StartAgitation, StopAgitation, DeviceCommand)
+            ):
                 selected.append(statement)
+            else:
+                assert_never(statement)
         return tuple(selected)
 
     functions = {f.node_id: replace(f, body=block(f.body)) for f in program.functions}
