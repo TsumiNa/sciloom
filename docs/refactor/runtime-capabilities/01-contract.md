@@ -6,8 +6,8 @@ This is the authority for the [implementation sequence](00-overview.md). All new
 signatures and snippets below are **target interfaces** until their stated stage
 lands. They have not been executed. Existing Program/JSON v4, Function.compile,
 device property/command contracts and the Target protocol are current.
-Stage 1 now implements section 1's explicit wire identities and consumer checks;
-later sections remain target contracts until their owning stage lands.
+Stages 1–2 implement section 1's explicit wire identities and section 3's text
+interfaces. Later sections remain target contracts until their owning stage lands.
 
 Experiment authors import from `sciloom`; targets from `sciloom_autosuite` or an
 independent package. `flow` declares author vocabulary; `dsl` alone analyzes
@@ -154,6 +154,60 @@ self.cleaned = self.cleaned + "_processed"
 Expected examples: trim `"  A\t"` gives `"A"`; split `"a,,b"` on `","` at 1
 gives `""`, at 2 gives `"b"`, and at 7 gives `""`. Probe non-BMP Unicode length,
 quotes, backslashes and embedded newlines before platform equivalence claims.
+
+### Stage-2 implementation interfaces
+
+The root `text` export is the declaration module `sciloom.flow.text`. Its typed
+`trim(value: str) -> str` and `split_part(value: str, delimiter: str, index: int) -> str`
+markers are valid in runtime source; calling them from host Python raises
+TypeError. DSL resolution checks object identity and does not execute descriptors
+or similarly named user functions. Both positional and named arguments follow
+these signatures; variadic argument expansion remains unsupported.
+
+IR adds `ScalarType.TEXT = "text"` and three expressions. Existing ListLength
+retains its list-only meaning. Python len selects the expression using the
+validated argument type. Text length counts Unicode code points, as Python len
+does; there is no normalization or implicit encoding conversion.
+
+```python
+from sciloom.core.ir import Literal, ScalarType, TextLength, TextSplitPart, TextTrim
+
+value = Literal(node_id="raw", type=ScalarType.TEXT, value=" a,,b ")
+cleaned = TextTrim(node_id="clean", value=value)
+part = TextSplitPart(
+    node_id="part", value=cleaned,
+    delimiter=Literal(node_id="delimiter", type=ScalarType.TEXT, value=","),
+    index=Literal(node_id="index", type=ScalarType.INTEGER, value=2),
+)
+length = TextLength(node_id="length", value=part)
+# Used as an assignment RHS in a valid Program: part is "b"; length is 1.
+```
+
+The constructors inherit Node's `node_id` and optional `source`; their stable
+kinds are their displayed names. TextTrim/TextLength each take `value: Expression`;
+TextSplitPart takes `value`, `delimiter`, and `index`, all Expressions, evaluated
+left to right. They are pure expressions; invalid split arguments fail reference
+execution with `text_delimiter` or `index_bounds`, while non-integer indices
+fail semantic typing with `index_type`.
+
+The AutoSuite profile uses text parameters/storage and the documented
+TextLength, TrimText and SplitTextAndGet operations. Single-quoted literal
+segments and documented Char codes represent apostrophes, backslashes and ASCII
+control characters; XML escaping remains separate. NUL/invalid XML characters
+receive a target diagnostic. These mappings are static/manual evidence, not an
+Executor claim for Unicode length, whitespace or encoding.
+
+AutoSuite length is limited to literal BMP text until its non-BMP counting rule
+is verified. A runtime `str` can contain non-BMP characters, so unconstrained
+runtime length receives `unsupported_text_length` rather than silently assuming
+the platform counts Python code points. This is a target limit, not an IR limit.
+
+Until the failure gate is verified, AutoSuite split requires a literal nonempty
+delimiter and a literal nonnegative integer index. Runtime split selectors and
+new text-list element reads/writes that require bounds guards are rejected with
+`unsupported_runtime_guard`; existing numeric-list support is unchanged. Text
+arrays can still be initialized, constructed, copied and passed as complete
+values. The interpreter implements the full stage-2 text/list contract.
 
 ## 4. Volume and duration (A02, stage 3)
 

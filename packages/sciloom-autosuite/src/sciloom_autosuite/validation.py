@@ -11,17 +11,77 @@ from sciloom.core.ir import (
     DeviceIf,
     Expression,
     If,
+    ListGet,
+    ListLiteral,
     ListSet,
     ListType,
+    Literal,
     Program,
     Reference,
+    ScalarType,
     StartAgitation,
     Statement,
     StopAgitation,
+    TextLength,
+    TextSplitPart,
     VariableRole,
     While,
 )
+from sciloom.core.ir.expressions import ExpressionChecker
 from sciloom.core.ir.traversal import iter_nodes
+
+
+def validate_text_guards(program: Program) -> tuple[Diagnostic, ...]:
+    """Reject new text operations needing unverified AutoSuite failure propagation."""
+    errors = []
+    symbols = {v.node_id: v for f in program.functions for v in f.variables}
+    checker = ExpressionChecker(symbols, lambda *args: None)
+    for function in program.functions:
+        for node, path in iter_nodes(function):
+            message = None
+            code = "unsupported_runtime_guard"
+            if isinstance(node, TextLength):
+                if not (
+                    isinstance(node.value, Literal)
+                    and isinstance(node.value.value, str)
+                    and all(ord(c) <= 0xFFFF for c in node.value.value)
+                ):
+                    message = "AutoSuite text length currently requires literal BMP text; Unicode code-point equivalence for runtime text is unverified."
+                    code = "unsupported_text_length"
+            elif isinstance(node, TextSplitPart):
+                if not (
+                    isinstance(node.delimiter, Literal)
+                    and node.delimiter.type == ScalarType.TEXT
+                    and isinstance(node.delimiter.value, str)
+                    and node.delimiter.value
+                    and isinstance(node.index, Literal)
+                    and type(node.index.value) is int
+                    and node.index.value >= 0
+                ):
+                    message = "AutoSuite split requires a literal nonempty delimiter and a literal nonnegative index until runtime failure propagation is verified."
+            elif isinstance(node, (ListGet, ListSet)):
+                value = node.value if isinstance(node, ListGet) else node.target
+                if checker.check(value, function, path) == ListType(element_type=ScalarType.TEXT):
+                    bounded = (
+                        isinstance(node, ListGet)
+                        and isinstance(node.value, ListLiteral)
+                        and isinstance(node.index, Literal)
+                        and type(node.index.value) is int
+                        and 0 <= node.index.value < len(node.value.elements)
+                    )
+                    if not bounded:
+                        message = "Text-list indexing needs verified runtime bounds failure; use whole-list values or reference execution for now."
+            if message:
+                errors.append(
+                    Diagnostic(
+                        code=code,
+                        message=message,
+                        path=path,
+                        node_id=node.node_id,
+                        source=node.source,
+                    )
+                )
+    return tuple(errors)
 
 
 def validate_array_outputs(program: Program) -> tuple[Diagnostic, ...]:

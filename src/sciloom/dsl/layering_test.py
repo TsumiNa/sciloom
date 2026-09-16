@@ -9,7 +9,7 @@ FRONTEND = Path(__file__).resolve().parent.parent
 PACKAGES = ("flow", "dsl")
 
 # What an author writes, evaluated while a class body runs.
-VOCABULARY = frozenset({"flow.comptime", "flow.device_slots", "flow.fields", "flow.function"})
+VOCABULARY = frozenset({"flow.comptime", "flow.device_slots", "flow.fields", "flow.function", "flow.text"})
 # What runs only inside Function.to_ir().
 ANALYSIS = frozenset(
     {
@@ -177,6 +177,7 @@ import sciloom
 assert sciloom.Function is not None
 assert sciloom.Input is not None
 assert sciloom.comptime is not None
+assert sciloom.text is not None
 loaded = {name for name in sys.modules if name.startswith("sciloom.dsl")}
 assert not loaded, loaded
 """

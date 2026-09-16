@@ -22,7 +22,28 @@ Update stage status and relevant handbook/examples when implemented. Complete
 review, fixes, latest checks and squash merge before starting the next stage.
 Consult [evidence](20-evidence.md) and collect new uncertainties in [Q&A](21-qa.md).
 
+## Implementation and verification
+
+The lazy author namespace `sciloom.text`, TEXT scalar/list types and three typed
+expression nodes now cover this stage. Python and direct-IR tests exercise JSON
+round trips, Unicode code-point length, the explicit trim set, split boundaries,
+argument validation, copy isolation and state retention. Existing v4 golden
+JSON and ASFP hashes remain unchanged.
+
+AutoSuite emits text storage, parameters, whole-list copies and documented text
+expressions. It refuses runtime split guards, guarded text-list indexing and
+unverified Unicode length cases. See the [mapping record](../../../autosuite/docs/19_TEXT_MAPPING.md)
+and RC-QA-004/008; no Executor validation is claimed.
+
+`examples/prepare_labels.py` and its ASFP companion are runnable and included in
+the explicit website download list. The public reference and API pages describe
+the new vocabulary and target limitations.
+
+Local acceptance: 408 code/example tests, 79 website tests, mypy (71 files), Ruff,
+strict website build, all 14 current example commands, proposed-example syntax,
+AutoSuite smoke, recipe validation and corpus audit. Existing example companions
+remain byte-identical. Remote review and latest-head CI are the merge gate.
+
 ## Version
 
-Version: PATCH within lockstep 0.3.x for shipped changes, by the user's explicit series-level version decision. Choose the next patch after final review; documentation-only follow-ups use none. JSON stays v4.
-
+Version: PATCH 0.3.0 → 0.3.1 for both workspace packages, by the user's explicit series-level version decision. JSON stays v4.

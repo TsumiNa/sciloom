@@ -12,8 +12,8 @@ They do not contain AutoSuite UUIDs, task encodings or hidden context parameters
 ## Types, ownership and identity
 
 Variables have an owner function, role and value type. Scalars are INTEGER, REAL,
-BOOLEAN and ROTATIONAL_SPEED internally; a ListType contains one scalar element
-type. Public Python authors use native int/float/bool rather than these IR enums.
+BOOLEAN, TEXT and ROTATIONAL_SPEED internally; a ListType contains one scalar element
+type. Public Python authors use native int/float/bool/str rather than these IR enums.
 Internal variables require literal initializers. Input/output defaults are not
 supported. Conditions are Boolean and list element types are invariant.
 

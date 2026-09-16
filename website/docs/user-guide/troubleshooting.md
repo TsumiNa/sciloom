@@ -59,7 +59,7 @@ A plain declaration such as `count: int = 0` is host configuration.
 | Code | Cause | Fix |
 | --- | --- | --- |
 | `class_schema` | a bare alias, or a nested role | declare exactly one role ([declarations](reference/declarations.md)) |
-| `class_schema` | an unsupported value type | use one of the four types or a list of one ([runtime language](reference/runtime-language.md)) |
+| `class_schema` | an unsupported value type | use a supported scalar type or a list of one ([runtime language](reference/runtime-language.md)) |
 | `class_schema` | `list`, `list[Any]`, `list[list[...]]` | a one-dimensional typed list |
 | `class_schema` | a Var without an initial value | add a value, such as `= 0` or `= 0 * rpm` |
 | `class_schema` | a list Var without a list initial value | supply a Python list, such as `= []` |
@@ -104,15 +104,15 @@ while self.index < len(self.values):
 | `runtime_method` | none or two `@runtime` methods | keep one |
 | `source_unavailable` | a notebook cell, `exec()`, `async def` | move the class to a `.py` file |
 | `python_subset` | `For`, `Return`, `Try`, `Break`, ... | see the [runtime language](reference/runtime-language.md); loops use `while` ([lesson 4](tutorial/lists-and-loops.md)) |
-| `python_subset` | a chained comparison, a string, a call, an attribute chain | split comparisons; use declared fields and the supported calls in [runtime syntax](reference/runtime-language.md) |
+| `python_subset` | a chained comparison, an unsupported call or attribute chain | split comparisons; use declared fields and the supported calls in [runtime syntax](reference/runtime-language.md) |
 | `python_subset` | parameters on the runtime method | declare `Input` fields ([tutorial 2](tutorial/inputs-and-units.md)) |
 | `python_subset` | calling a helper or a function that is not an attribute | create the child in `__init__` ([composition](advanced/composition.md)) |
 | `python_subset` | the attribute is not a Function instance | assign a Function instance in `__init__` |
 | `python_subset` | `self.items[1:]` | copy the whole list or access existing elements in a loop; slicing is unsupported |
-| `python_subset` | `len()` of a scalar or with keywords | `len(self.items)` |
+| `python_subset` | `len()` of a number or with keywords | `len(self.items)` or `len(self.label)`; see the AutoSuite text limits below |
 | `python_subset` | a module-level name `len` | remove the shadowing name |
 | `runtime_field` | a local variable or an undeclared field | declare a `Var` |
-| `host_value` | a host list, string or object read through `self` | embed scalars only ([specialization](advanced/specialization.md)) |
+| `host_value` | a host list or arbitrary object read through `self` | embed scalars only, including text ([specialization](advanced/specialization.md)) |
 
 ## A condition or list calculation is rejected
 
@@ -178,6 +178,21 @@ to the AutoSuite target.
 | Code | Cause | Fix |
 | --- | --- | --- |
 | `unsupported_short_circuit` | `and` / `or` | nested `if` ([AutoSuite rules](advanced/autosuite.md)) |
+
+## AutoSuite rejects a text operation
+
+The reference interpreter supports the full [text vocabulary](reference/runtime-language.md#text).
+Some AutoSuite mappings still need platform verification. These diagnostics
+identify the restricted operation before generating a function package:
+
+| Code | Cause | Current option |
+| --- | --- | --- |
+| `unsupported_text_length` | runtime text or non-BMP text passed to `len()` | use reference execution; target length currently accepts BMP literals only |
+| `unsupported_runtime_guard` | a dynamic split selector, empty delimiter, negative split index or guarded text-list indexing | use a literal nonempty delimiter and nonnegative index; pass whole text lists |
+| `unsupported_text_literal` | NUL, surrogate code points or U+FFFE/U+FFFF | remove characters that cannot be represented in the XML expression |
+
+Use `text.trim` and `text.split_part` inside `@runtime`. Calling these markers
+directly from ordinary Python raises `TypeError`.
 
 ## AutoSuite rejects an output list
 

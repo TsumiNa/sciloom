@@ -14,6 +14,7 @@ to the repository root.
 | [Scale values](scale-values.md) | Copy a list and multiply each element by a factor |
 | [Non Zero Array Min](non-zero-array-min.md) | Find the smallest value above a threshold in supplied numbers |
 | [Stir a rack of samples](stir-rack.md) | Choose a speed from supplied volumes and count start requests |
+| [Prepare labels](prepare-labels.md) | Trim supplied text, select a part and return independent labels |
 
 ## For contributors
 

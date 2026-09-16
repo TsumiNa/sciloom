@@ -1,6 +1,6 @@
 [project]
 name = "SciLoom"
-version = "0.3.0"
+version = "0.3.1"
 description = "SciLoom — programmable scientific automation from one semantic model."
 readme = "README.md"
 requires-python = ">=3.12,<3.15"
@@ -78,6 +78,7 @@ files = [
     "examples/scale_values.py",
     "examples/non_zero_array_min.py",
     "examples/stir_rack.py",
+    "examples/prepare_labels.py",
     "examples/tutorial",
     "examples/developer",
 ]
@@ -102,6 +103,7 @@ module = [
     "examples.tutorial.choose_stirring_speed_test",
     "examples.tutorial.stir_sample_rack_test",
     "examples.stir_rack_test",
+    "examples.prepare_labels_test",
     "sciloom.units_test",
     "sciloom.devices.agitation_test",
     "sciloom.devices.declarations_test",
@@ -115,6 +117,7 @@ module = [
     "sciloom.flow.device_slots_test",
     "sciloom.core.bindings_test",
     "sciloom.dsl.driver_list_test",
+    "sciloom.dsl.driver_text_test",
     "sciloom.dsl.layering_test",
     "sciloom.dsl.driver_test",
     "sciloom.flow.function_test",
@@ -132,11 +135,13 @@ module = [
     "sciloom.core.ir.model_typing_test",
     "sciloom.core.ir.codec_devices_test",
     "sciloom.core.ir.codec_list_test",
+    "sciloom.core.ir.codec_text_test",
     "sciloom.core.ir.validation_test",
     "sciloom_autosuite.agitation_test",
     "sciloom_autosuite.codegen_test",
     "sciloom_autosuite.codegen_compatibility_test",
     "sciloom_autosuite.codegen_arrays_test",
+    "sciloom_autosuite.codegen_text_test",
     "sciloom_autosuite.codegen_agitation_test",
     "sciloom_autosuite.target_test",
     "sciloom_autosuite.portability_test",

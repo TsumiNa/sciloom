@@ -9,8 +9,9 @@ of the Python script use ordinary Python.
 | --- | --- |
 | `int`, `float` | Integers can widen to floats; floats do not narrow to integers |
 | `bool` | Separate from integers; only Boolean expressions are valid conditions |
+| `str` | Text without implicit numeric conversion or truthiness |
 | `RotationalSpeed` | `600 * rpm` or `10 * rps`; the only physical quantity currently supported |
-| `list[T]` | One-dimensional list of `int`, `float`, `bool` or `RotationalSpeed` |
+| `list[T]` | One-dimensional list of `int`, `float`, `bool`, `str` or `RotationalSpeed` |
 
 A speed literal uses a number known when the program is compiled. For a speed
 supplied by the caller, use `Input[RotationalSpeed]`.
@@ -30,15 +31,45 @@ List-to-list assignment requires the same element type; a literal assigned to
 | A single comparison: `== != < <= > >=` | Chained comparisons, `in`, `is` |
 | `and`, `or` | Conditional expressions such as `a if flag else b` |
 | List literals, indexing, `len(self.items)` | Slicing, comprehensions, list methods such as `append` |
+| Text concatenation, equality, `len`, `text.trim`, `text.split_part` | String slicing, implicit conversion, arbitrary string methods |
 | `300 * rpm` from a host number | Attaching a unit to a runtime number |
 
 Arithmetic and ordering comparisons require numeric operands. Division produces
 a float. Speeds support equality and inequality, but no runtime arithmetic. A condition
-must be Boolean: use `self.count > 0`, not `self.count`.
+must be Boolean: use `self.count > 0`, not `self.count`. Text also supports `+`
+for concatenation and `==`/`!=` for exact comparisons.
 Lists have no implicit truth value, whole-list comparisons or arithmetic.
 
 **AutoSuite restriction:** although SciLoom accepts `and` and `or`,
 this target rejects them. Use [nested conditions](../troubleshooting.md#autosuite-rejects-boolean-combinations).
+
+## Text
+
+Declare text with `Input[str]`, `Output[str]` or an initialized `Var[str] = ""`.
+Import `text` from `sciloom` for the two runtime helpers:
+
+| Operation | Result |
+| --- | --- |
+| `self.name + "_processed"` | A new text value |
+| `len(self.name)` | Number of Unicode code points, without normalization |
+| `text.trim(self.name)` | Removes space, tab, CR and LF at both ends; retains other Unicode whitespace |
+| `text.split_part(self.name, ",", 1)` | Second comma-separated part; empty parts are retained, missing parts return `""` |
+
+Split delimiters must be nonempty, and indices must be nonnegative integers,
+excluding bool. Use `self.name != ""` for a condition. Runtime helpers belong
+inside `@runtime`; ordinary host Python can use its own string methods.
+
+**AutoSuite restriction:** split currently requires a literal nonempty delimiter
+and literal nonnegative index. Text-list values support construction, whole-list
+copies and function parameters; indexed reads/writes needing runtime bounds checks
+are refused until AutoSuite failure propagation has been verified. Reference
+execution supports these operations. Unicode length, whitespace and encoding
+equivalence on AutoSuite still require Executor validation.
+AutoSuite length currently accepts literal BMP text only: it rejects lengths of
+runtime text because that text can contain non-BMP characters whose native count
+has not been verified.
+
+The [label example](../../examples/prepare-labels.md) shows a complete program.
 
 ## Statements
 

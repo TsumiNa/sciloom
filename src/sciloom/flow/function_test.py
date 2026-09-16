@@ -178,7 +178,7 @@ def test_invalid_schema_fails_at_class_definition():
     with pytest.raises(IRValidationError, match="class_schema"):
 
         class Bad(Function):
-            x: Input[str]
+            x: Input[bytes]
 
     with pytest.raises(IRValidationError, match="class_schema"):
 

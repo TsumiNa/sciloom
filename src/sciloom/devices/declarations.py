@@ -54,6 +54,7 @@ def value_type(annotation: object) -> ValueType:
         int: ScalarType.INTEGER,
         float: ScalarType.REAL,
         bool: ScalarType.BOOLEAN,
+        str: ScalarType.TEXT,
         RotationalSpeed: ScalarType.ROTATIONAL_SPEED,
     }
     if isinstance(annotation, type) and annotation in scalars:

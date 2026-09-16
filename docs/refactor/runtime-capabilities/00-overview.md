@@ -65,15 +65,15 @@ handwritten JSON model was rejected because it duplicates the typed definitions.
 
 ## Stage status and sequence
 
-Stage 0 merged as PR #85. Stage 1 implements the wire foundation; stages 2–17
-remain pending. No new runtime operation is available yet. Update this table in
-the stage that implements an outcome and record its PR and verification.
+Stage 0 merged as PR #85 and stage 1 as PR #86. Stage 2 implements runtime text;
+stages 3–17 remain pending. Update this table in the stage that implements an
+outcome and record its PR and verification.
 
 | Stage | Plan | Outcome | Status |
 | --- | --- | --- | --- |
 | 0 | [Record contract](02-plan-contract.md) | Interfaces, sequence, evidence gates and Q&A | Merged, PR #85 |
-| 1 | [Wire contract](03-plan-wire-contract.md) | Stable kinds, v4 baselines, consumer completeness | Implemented; review pending |
-| 2 | [Text](04-plan-text.md) | A01 text and text lists | Pending |
+| 1 | [Wire contract](03-plan-wire-contract.md) | Stable kinds, v4 baselines, consumer completeness | Merged, PR #86 |
+| 2 | [Text](04-plan-text.md) | A01 text and text lists | Implemented; review pending |
 | 3 | [Quantities](05-plan-quantities.md) | A02 volume and time | Pending |
 | 4 | [Numeric operations](06-plan-numeric.md) | A11 abs, floor and round | Pending |
 | 5 | [Reference environment](07-plan-environment.md) | Explicit environment and ordered external events | Pending |
@@ -135,7 +135,7 @@ Do not extend an author/device contract merely to imitate vendor XML.
 
 ## Version
 
-Version: MINOR 0.2.0 → 0.3.0 for stage 1's durable wire contract; stage 0 was none.
+Version: PATCH 0.3.0 → 0.3.1 for stage 2, following the user's lockstep 0.3.x decision.
 By explicit user decision, the first shipped-code
 stage moves both packages from 0.2.0 to 0.3.0; later shipped-code stages remain
 lockstep in 0.3.x. This is an exception to the usual per-capability minor-bump

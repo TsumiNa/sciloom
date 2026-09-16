@@ -28,7 +28,7 @@ from sciloom.flow.function import Function
 from .context import LoweringContext
 from .device_conditions import device_condition
 from .device_operations import configure, device_command
-from .expressions import BINARY_OPERATORS, expression, is_length_call
+from .expressions import BINARY_OPERATORS, expression, is_expression_call
 
 
 def call(context: LoweringContext, node: ast.Call, targets: Sequence[ast.expr]) -> Call:
@@ -88,7 +88,7 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
                 result.append(configuration)
                 continue
             target = node.targets[0]
-            if isinstance(node.value, ast.Call) and not is_length_call(node.value):
+            if isinstance(node.value, ast.Call) and not is_expression_call(context, node.value):
                 if isinstance(target, ast.Subscript):
                     context.fail(
                         "call_binding", "Function outputs must bind to whole variables, not indexed elements.", target

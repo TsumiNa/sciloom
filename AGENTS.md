@@ -37,7 +37,7 @@ required repository rules, not optional reference material.
 
 1. **Typed SciLoom Semantic IR is the semantic source of truth.**
 2. The primary code frontend is a **restricted Python source language**. Python AST/CST analysis is intentional; arbitrary Python compatibility is not a goal. The implemented subset is documented in `docs/12_PYTHON_FRONTEND.md`.
-3. **Class-level declarations define the static SciLoom runtime schema.** Use `Input[T]`, `Output[T]` and `Var[T]` with native `float`, `int`, `bool` or physical quantity types. `Var` needs an explicit initial value. Unwrapped annotations are host-time data. There is no `Local[T]` wrapper; field scope follows the owning model. Application/global support remains deferred; future Function `GlobalRef[T]` fields explicitly reference Application state.
+3. **Class-level declarations define the static SciLoom runtime schema.** Use `Input[T]`, `Output[T]` and `Var[T]` with native `float`, `int`, `bool`, `str` or physical quantity types. `Var` needs an explicit initial value. Unwrapped annotations are host-time data. There is no `Local[T]` wrapper; field scope follows the owning model. Application/global support remains deferred; future Function `GlobalRef[T]` fields explicitly reference Application state.
 4. **The program/function instance is the compilation unit.** `__init__` and ordinary Python specialize/compose the instance before `instance.compile()`.
 5. Python is host/generation-time by default. There is no baseline `@comptime` decorator. Explicit decorators/registered roles mark AutoSuite runtime methods and event entry points (`runtime`, `main`, `on_start`, `on_error`, `on_stop`, etc.).
 6. `__init__` must not silently create new runtime fields in v1. Runtime field schema belongs at class level; instance attributes are compile-time values/components unless explicitly modeled otherwise.
@@ -187,7 +187,8 @@ blocks the commit only when errors remain. CI runs the same two ruff commands.
 
 Run the experiment-author examples with `uv run python examples/function_call.py`
 and `uv run python examples/agitation.py`. Run the list author examples with `uv run python examples/scale_values.py` and
-`uv run python examples/non_zero_array_min.py`. Also run the developer example
+`uv run python examples/non_zero_array_min.py`. Run
+`uv run python examples/prepare_labels.py` for runtime text. Run the developer example
 with `uv run python -m examples.developer.agitation_ir` from the repository root.
 Run `uv run python -m examples.developer.list_ir` for direct list IR and JSON v4.
 Run each independent user lesson with `uv run python examples/tutorial/start_shaker.py`,

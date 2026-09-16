@@ -55,6 +55,7 @@ jobs:
       - run: uv run python examples/function_call.py
       - run: uv run python examples/agitation.py
       - run: uv run python examples/scale_values.py
+      - run: uv run python examples/prepare_labels.py
       - run: uv run python examples/non_zero_array_min.py
       - run: uv run python examples/stir_rack.py
       - run: uv run python examples/tutorial/start_shaker.py

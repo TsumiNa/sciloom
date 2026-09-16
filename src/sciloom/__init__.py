@@ -6,7 +6,7 @@ from .units import RotationalSpeed, rpm, rps
 
 if TYPE_CHECKING:
     from .devices.agitation import Agitator
-    from .flow import comptime
+    from .flow import comptime, text
     from .flow.fields import Input, Output, Var
     from .flow.function import Function, runtime
 
@@ -19,6 +19,10 @@ def __getattr__(name: str) -> Any:
         from .flow import comptime
 
         return comptime
+    if name == "text":
+        from .flow import text
+
+        return text
     if name == "Agitator":
         from .devices.agitation import Agitator
 
@@ -35,6 +39,7 @@ def __getattr__(name: str) -> Any:
 
 
 __all__ = [
+    "text",
     "comptime",
     "Agitator",
     "RotationalSpeed",

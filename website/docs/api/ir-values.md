@@ -30,4 +30,10 @@ All objects below are available from `sciloom.core.ir`. Frozen records describe 
 
 ::: sciloom.core.ir.ListGet
 
+::: sciloom.core.ir.TextLength
+
+::: sciloom.core.ir.TextTrim
+
+::: sciloom.core.ir.TextSplitPart
+
 ::: sciloom.core.ir.Expression
