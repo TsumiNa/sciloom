@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 from typing import ClassVar
 
-from .types import ScalarType, ValueType
+from .types import ListType, ScalarType
 
 DEVICE_TYPE_ID = "sciloom.device/v1"
 AGITATOR_TYPE_ID = "sciloom.agitator/v1"
@@ -14,23 +14,23 @@ STOP_AGITATION_ID = "sciloom.agitator.stop/v1"
 
 @dataclass(frozen=True, kw_only=True)
 class PropertyContract:
-    """Serializable configuration property identity, user-facing name and value type."""
+    """Configuration identity and scalar/list value type; locations are not capabilities."""
 
     __ir_kind__: ClassVar[str] = "PropertyContract"
 
     semantic_id: str
     name: str
-    type: ValueType
+    type: ScalarType | ListType
 
 
 @dataclass(frozen=True, kw_only=True)
 class CommandParameter:
-    """Named, typed argument of a no-return device command."""
+    """Scalar/list argument of a no-return device command; excludes Zone values."""
 
     __ir_kind__: ClassVar[str] = "CommandParameter"
 
     name: str
-    type: ValueType
+    type: ScalarType | ListType
 
 
 @dataclass(frozen=True, kw_only=True)

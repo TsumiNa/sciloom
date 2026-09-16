@@ -10,7 +10,7 @@ from sciloom.core.bindings import DeviceBinding
 from sciloom.core.diagnostics import Diagnostic, IRValidationError
 from sciloom.core.ir.device_contracts import CommandContract, CommandParameter, DeviceTypeContract, PropertyContract
 from sciloom.core.ir.device_validation import semantic_id
-from sciloom.core.ir.types import ListType, ScalarType, ValueType
+from sciloom.core.ir.types import ListType, ScalarType
 from sciloom.units import Duration, RotationalSpeed, Volume
 from .base import BaseDevice
 
@@ -48,7 +48,7 @@ def operation(*, id: str) -> Callable[[Callable[P, None]], Callable[P, None]]:
     return decorate
 
 
-def value_type(annotation: object) -> ValueType:
+def value_type(annotation: object) -> ScalarType | ListType:
     """Device values use the same native scalar and homogeneous list vocabulary."""
     scalars = {
         int: ScalarType.INTEGER,

@@ -1275,6 +1275,9 @@ old fields/kinds and canonical JSON remain unchanged. Runtime values and result
 snapshots use immutable Zone values, not tuples that could be mistaken for lists.
 Schema/default, expression, codec, interpreter, specializer and target consumers
 all handle or explicitly reject these values. Log/CSV scalar rules exclude Zone.
+Device PropertyContract and CommandParameter retain scalar or scalar-list types;
+their schema does not widen with general ValueType. Source declarations, direct
+IR/JSON and trusted binding records all reject Zone-valued device capabilities.
 
 The target exports immutable `AutoSuiteElement(identity, name, type_id, device_id,
 parent_id)` and `AutoSuiteWell(identity, element_id, well_id)` records, and

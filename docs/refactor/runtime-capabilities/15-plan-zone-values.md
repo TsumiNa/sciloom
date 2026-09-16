@@ -43,11 +43,16 @@ the fixed reference directory. Tests compare Python/IR/JSON outcomes, strict
 record parsing, state/call isolation, type errors, target encodings and read-only
 layout extraction. Platform behavior remains pending in the evidence matrix.
 
-Acceptance: 817 code/example/tool tests, 92 documentation tests, 32 CI example
+Acceptance: 820 code/example/tool tests, 92 documentation tests, 32 CI example
 commands, mypy, Ruff check/format, strict website build, AutoSuite smoke, recipe
 validation, corpus audit and diff whitespace checks pass. Existing canonical v4
 fixtures and preexisting example artifacts are unchanged. Review and exact-head CI
 must still pass before merge.
+
+Review corrections keep Column metadata scalar-only, reconcile the earlier
+directory proposal with the implemented contract, and preserve scalar/list-only
+device contracts across source, direct IR, JSON and trusted bindings. They do not
+change the stage's scope or version decision.
 
 ## Version
 
