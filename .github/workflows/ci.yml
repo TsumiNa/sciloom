@@ -63,6 +63,8 @@ jobs:
       - run: uv run python examples/confirm_samples.py
       - run: uv run python examples/timestamp_path.py
       - run: uv run python examples/timed_agitation.py
+      - run: uv run python examples/read_reagent_table.py
+      - run: uv run python -m examples.developer.csv_read_ir
       - run: uv run python examples/non_zero_array_min.py
       - run: uv run python examples/stir_rack.py
       - run: uv run python examples/tutorial/start_shaker.py

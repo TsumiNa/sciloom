@@ -239,6 +239,59 @@ class ReadWallTime(Node):
     format: str
 
 
+class CsvReadMode(StrEnum):
+    """Read one zero-based data row or all rows of selected columns."""
+
+    ROW = "row"
+    COLUMNS = "columns"
+
+
+class CsvErrorPolicy(StrEnum):
+    """Stop on CSV failure or return a status with a complete fallback payload."""
+
+    RAISE = "raise"
+    STATUS = "status"
+
+
+@dataclass(frozen=True, kw_only=True)
+class CsvColumn:
+    """One typed CSV selection, independent of vendor parsing or variable names.
+
+    Attributes:
+        index: Zero-based nonnegative integer selector captured before reading.
+        type: Scalar result type; column mode returns a list of this type.
+        unit: Positive quantity literal for one input unit in canonical SI.
+        default: Optional typed fallback for missing or invalid cells, already in SI.
+    """
+
+    __ir_kind__: ClassVar[str] = "CsvColumn"
+
+    index: Expression
+    type: ScalarType
+    unit: Literal | None = None
+    default: Expression | None = None
+
+
+@dataclass(frozen=True, kw_only=True)
+class ReadCsv(Node):
+    """Capture selectors/defaults, read a file and commit all typed results together.
+
+    Targets are ordered column results, with an INTEGER status first for STATUS
+    policy. A single column still has one explicit result binding. A failed
+    RAISE read leaves every destination unchanged and stops later operations.
+    """
+
+    __ir_kind__: ClassVar[str] = "ReadCsv"
+
+    mode: CsvReadMode
+    error_policy: CsvErrorPolicy
+    path: Expression
+    header: bool
+    columns: tuple[CsvColumn, ...]
+    targets: tuple[Reference, ...]
+    row: Expression | None = None
+
+
 @dataclass(frozen=True, kw_only=True)
 class Wait(Node):
     """Capture a nonnegative Duration and wait without changing device state."""
@@ -460,6 +513,7 @@ Statement = (
     | LogValue
     | Notify
     | ReadWallTime
+    | ReadCsv
     | Wait
     | StartTimer
     | WaitUntil

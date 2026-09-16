@@ -17,6 +17,10 @@ AutoSuite function package (`.asfp`). The current author API lets you:
 The runtime method accepts a [restricted Python subset](../user-guide/reference/runtime-language.md).
 Constructors and the surrounding script remain ordinary Python.
 
+Typed [CSV reads](../user-guide/reference/csv.md) are also available in source,
+JSON and reference execution. AutoSuite CSV compilation is explicitly unavailable
+until its parsing, conversion and failure behavior can meet the same contract.
+
 Contributors can define devices and targets. The developer examples include a
 demonstration target, JSON v4 interchange and a reference interpreter for checking
 calculations and state changes. That interpreter does not simulate laboratory hardware.

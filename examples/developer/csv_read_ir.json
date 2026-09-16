@@ -1,0 +1,131 @@
+{
+  "device_types": [],
+  "entry_function_id": "read",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "columns": [
+            {
+              "default": null,
+              "index": {
+                "kind": "Literal",
+                "node_id": "id-index",
+                "source": null,
+                "type": "integer",
+                "value": 0
+              },
+              "kind": "CsvColumn",
+              "type": "text",
+              "unit": null
+            },
+            {
+              "default": {
+                "kind": "Literal",
+                "node_id": "default",
+                "source": null,
+                "type": "volume",
+                "value": 0
+              },
+              "index": {
+                "kind": "Literal",
+                "node_id": "volume-index",
+                "source": null,
+                "type": "integer",
+                "value": 1
+              },
+              "kind": "CsvColumn",
+              "type": "volume",
+              "unit": {
+                "kind": "Literal",
+                "node_id": "unit",
+                "source": null,
+                "type": "volume",
+                "value": 1e-06
+              }
+            }
+          ],
+          "error_policy": "status",
+          "header": true,
+          "kind": "ReadCsv",
+          "mode": "columns",
+          "node_id": "csv",
+          "path": {
+            "kind": "Literal",
+            "node_id": "path",
+            "source": null,
+            "type": "text",
+            "value": "recipe.csv"
+          },
+          "row": null,
+          "source": null,
+          "targets": [
+            {
+              "kind": "Reference",
+              "node_id": "out-status",
+              "source": null,
+              "symbol_id": "status"
+            },
+            {
+              "kind": "Reference",
+              "node_id": "out-ids",
+              "source": null,
+              "symbol_id": "ids"
+            },
+            {
+              "kind": "Reference",
+              "node_id": "out-volumes",
+              "source": null,
+              "symbol_id": "volumes"
+            }
+          ]
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "ReadVolumes",
+      "node_id": "read",
+      "source": null,
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "status",
+          "node_id": "status",
+          "owner_id": "read",
+          "role": "output",
+          "source": null,
+          "type": "integer"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "ids",
+          "node_id": "ids",
+          "owner_id": "read",
+          "role": "output",
+          "source": null,
+          "type": {
+            "element_type": "text",
+            "kind": "ListType"
+          }
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "volumes",
+          "node_id": "volumes",
+          "owner_id": "read",
+          "role": "output",
+          "source": null,
+          "type": {
+            "element_type": "volume",
+            "kind": "ListType"
+          }
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": []
+}

@@ -19,6 +19,7 @@ from sciloom.core.ir import (
     LogValue,
     Notify,
     Program,
+    ReadCsv,
     ReadWallTime,
     Reference,
     ScalarType,
@@ -39,6 +40,7 @@ from sciloom.core.ir.model import Node
 from sciloom.core.ir.traversal import iter_nodes
 from sciloom.units import Duration
 from .clocks import format_wall_time
+from .csv_read import execute_read
 from .device_state import DeviceSession, DeviceState
 from .environment import (
     AcknowledgementEvent,
@@ -276,6 +278,8 @@ class Interpreter:
                 self._record_event(
                     AcknowledgementEvent(node_id=statement.node_id, source=statement.source, message=message)
                 )
+            elif isinstance(statement, ReadCsv):
+                execute_read(self, statement, frame)
             elif isinstance(statement, ReadWallTime):
                 clock = _require_service(self.environment.wall_clock, "wall_clock", statement)
                 try:

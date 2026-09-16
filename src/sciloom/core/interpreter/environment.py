@@ -4,12 +4,13 @@ from dataclasses import dataclass, field
 from typing import TypeAlias, TypeVar
 
 from sciloom.core.diagnostics import SourceSpan
-from sciloom.core.ir.model import Node
+from sciloom.core.ir.model import CsvReadMode, Node
 from sciloom.core.ir.types import ScalarType
 from sciloom.units import Duration
 from .acknowledgements import QueuedAcknowledgements
 from .clocks import VirtualClock, WallClock
 from .device_state import DeviceEvent
+from .files import FileService
 from .values import InputScalar, fail
 
 
@@ -104,7 +105,27 @@ class WaitEvent:
     timer_id: str | None
 
 
-ExecutionEvent: TypeAlias = DeviceEvent | LogEvent | AcknowledgementEvent | WallTimeEvent | TimerEvent | WaitEvent
+@dataclass(frozen=True, kw_only=True)
+class CsvReadEvent:
+    """Outcome of one read attempt after argument capture, without copying file data.
+
+    A failed ordinary read records its outcome before raising, without committing
+    destination fields. Invalid arguments or missing services emit no read event.
+    """
+
+    node_id: str
+    source: SourceSpan | None
+    path: str
+    mode: CsvReadMode
+    header: bool
+    row: int | None
+    columns: tuple[int, ...]
+    status: int
+
+
+ExecutionEvent: TypeAlias = (
+    DeviceEvent | LogEvent | AcknowledgementEvent | WallTimeEvent | TimerEvent | WaitEvent | CsvReadEvent
+)
 """Closed reference-event vocabulary; each effect adds its own immutable record."""
 
 Service = TypeVar("Service")
@@ -132,6 +153,9 @@ class ReferenceEnvironment:
 
     clock: VirtualClock | None = None
     """Explicit monotonic virtual clock; waiting never sleeps on the host."""
+
+    files: FileService | None = None
+    """Explicit byte adapter; host files are inaccessible unless supplied."""
 
     _events: list[ExecutionEvent] = field(default_factory=list, init=False, repr=False)
 

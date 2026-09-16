@@ -54,6 +54,7 @@ nav:
       - Reference:
           - Declarations: user-guide/reference/declarations.md
           - Runtime language: user-guide/reference/runtime-language.md
+          - CSV reads: user-guide/reference/csv.md
           - Devices and targets: user-guide/reference/devices-and-targets.md
   - Developer Guide:
       - Overview: developer/index.md
@@ -100,6 +101,7 @@ nav:
       - Confirm samples: examples/confirm-samples.md
       - Timestamp a filename: examples/timestamp-path.md
       - Timed agitation: examples/timed-agitation.md
+      - Read a reagent table: examples/read-reagent-table.md
       - Non Zero Array Min: examples/non-zero-array-min.md
       - Stir a rack of samples: examples/stir-rack.md
       - Agitation IR: examples/agitation-ir.md
@@ -109,6 +111,7 @@ nav:
       - Explicit confirmation: examples/confirmation-ir.md
       - Explicit wall clock: examples/wall-time-ir.md
       - Elapsed-time IR: examples/timing-ir.md
+      - Typed CSV IR: examples/csv-read-ir.md
       - Independent device: examples/demo-device.md
       - Portable agitation: examples/portable-agitation.md
   - API Reference:
@@ -117,6 +120,7 @@ nav:
       - Units: api/units.md
       - Compile-time queries: api/comptime.md
       - Runtime text: api/text.md
+      - Runtime CSV: api/csv.md
       - AutoSuite: api/autosuite.md
       - Device declarations: api/devices.md
       - IR values: api/ir-values.md

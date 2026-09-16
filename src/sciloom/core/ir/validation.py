@@ -4,6 +4,7 @@ from dataclasses import replace
 from typing import assert_never
 
 from sciloom.core.diagnostics import Diagnostic, IRValidationError
+from .csv import validate_csv
 from .device_contracts import START_AGITATION_ID, STOP_AGITATION_ID
 from .device_validation import is_agitator, members_for, query_members_for, validate_directory
 from .expressions import ExpressionChecker
@@ -26,6 +27,7 @@ from .model import (
     Node,
     Notify,
     Program,
+    ReadCsv,
     ReadWallTime,
     StartAgitation,
     StartTimer,
@@ -153,6 +155,8 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                 message_type = expression(stmt.message, function, f"{p}.message")
                 if message_type is not None and message_type != ScalarType.TEXT:
                     report("notification_type", "Notification messages must be text.", f"{p}.message", stmt)
+            elif isinstance(stmt, ReadCsv):
+                validate_csv(stmt, function, p, checker)
             elif isinstance(stmt, ReadWallTime):
                 target_type = expression(stmt.target, function, f"{p}.target")
                 if target_type is not None and target_type != ScalarType.TEXT:

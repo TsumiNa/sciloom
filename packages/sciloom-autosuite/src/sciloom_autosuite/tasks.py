@@ -16,6 +16,7 @@ from sciloom.core.ir import (
     Literal,
     LogValue,
     Notify,
+    ReadCsv,
     ReadWallTime,
     ScalarType,
     StartAgitation,
@@ -279,7 +280,7 @@ def statements(
                 result.append(
                     macro(context, tag, statement.node_id, function, tuple(branches), name="If-Else", branches=True)
                 )
-        elif isinstance(statement, (DeviceCommand, DeviceIf)):
+        elif isinstance(statement, (DeviceCommand, DeviceIf, ReadCsv)):
             raise CompilationError(
                 (
                     Diagnostic(
