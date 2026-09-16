@@ -2445,6 +2445,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/record-values/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Record values
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2561,6 +2588,33 @@
     
   
   Reference environment
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/logging-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typed log events
 
     
   </span>
@@ -2825,6 +2879,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         runtime
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sciloom.log" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        log
       </span>
     </span>
   </a>
@@ -3356,6 +3421,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sciloom.log" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        log
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#field-declarations" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3465,8 +3541,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.4
-    · <code title="d842e2fa444d1f66c4c3cf0e981785dedfbb8db0">d842e2fa</code>
+    · SciLoom 0.3.5
+    · <code title="e935805e408a32940871d255ae202f9edd07a041">e935805e</code>
   </p>
 </aside>
 
@@ -3809,6 +3885,140 @@ and future tooling; field declarations and IR define execution semantics.</p>
             <td>
               <div class="doc-md-description">
                 <p>The decorated method is called by host Python.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="sciloom.log" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">sciloom.log</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">log</span><span class="p">(</span>
+    <span class="n">value</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="o">|</span> <span class="nb">int</span>
+    <span class="o">|</span> <span class="nb">float</span>
+    <span class="o">|</span> <span class="nb">str</span>
+    <span class="o">|</span> <span class="n">RotationalSpeed</span>
+    <span class="o">|</span> <span class="n">Volume</span>
+    <span class="o">|</span> <span class="n">Duration</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">stream</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Record a value in the generated program's log.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>value</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span> | <span title="int">int</span> | <span title="float">float</span> | <span title="str">str</span> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.RotationalSpeed&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../units/#sciloom.RotationalSpeed">RotationalSpeed</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.Volume&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../units/#sciloom.Volume">Volume</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.Duration&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../units/#sciloom.Duration">Duration</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Scalar or quantity to capture; no implicit list/object formatting.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>category</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Runtime text identifying the log category.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>stream</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Runtime text identifying the stream within that category.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>Value, category and stream are evaluated once in that order. The operation
+does not measure hardware or configure application-level log storage.</p>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Called by host Python instead of written in a runtime method.</p>
               </div>
             </td>
           </tr>

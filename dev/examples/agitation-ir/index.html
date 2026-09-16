@@ -2450,6 +2450,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../record-values/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Record values
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../non-zero-array-min/" class="md-nav__link">
         
   
@@ -2635,6 +2662,33 @@
     
   
   Reference environment
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logging-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typed log events
 
     
   </span>
@@ -3221,8 +3275,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.4
-    · <code title="d842e2fa444d1f66c4c3cf0e981785dedfbb8db0">d842e2fa</code>
+    · SciLoom 0.3.5
+    · <code title="e935805e408a32940871d255ae202f9edd07a041">e935805e</code>
   </p>
 </aside>
 
@@ -3276,7 +3330,7 @@ AutoSuite Executor validation on the deployment host.</p>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">examples.agitation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigureAgitation</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">rpm</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.interpreter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Interpreter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.interpreter</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeviceEvent</span><span class="p">,</span> <span class="n">Interpreter</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.ir</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_json</span><span class="p">,</span> <span class="n">to_json</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.source_paths</span><span class="w"> </span><span class="kn">import</span> <span class="n">repository_relative</span>
 
@@ -3292,7 +3346,9 @@ AutoSuite Executor validation on the deployment host.</p>
     <span class="n">session</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">(</span><span class="n">restored</span><span class="p">)</span>
     <span class="n">started</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">"shaker_speed"</span><span class="p">:</span> <span class="mi">600</span> <span class="o">*</span> <span class="n">rpm</span><span class="p">,</span> <span class="s2">"enabled"</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
     <span class="n">stopped</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">"shaker_speed"</span><span class="p">:</span> <span class="mi">600</span> <span class="o">*</span> <span class="n">rpm</span><span class="p">,</span> <span class="s2">"enabled"</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
-    <span class="n">configured</span> <span class="o">=</span> <span class="n">started</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">state</span>
+    <span class="n">first_event</span> <span class="o">=</span> <span class="n">started</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first_event</span><span class="p">,</span> <span class="n">DeviceEvent</span><span class="p">)</span>
+    <span class="n">configured</span> <span class="o">=</span> <span class="n">first_event</span><span class="o">.</span><span class="n">state</span>
     <span class="k">assert</span> <span class="n">configured</span><span class="o">.</span><span class="n">configuration</span> <span class="o">==</span> <span class="p">{</span><span class="s2">"speed"</span><span class="p">:</span> <span class="mi">600</span> <span class="o">*</span> <span class="n">rpm</span><span class="p">}</span>
     <span class="k">assert</span> <span class="ow">not</span> <span class="n">configured</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">configured</span><span class="o">.</span><span class="n">applied_configuration</span>
 

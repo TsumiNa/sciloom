@@ -1233,6 +1233,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#record-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Record values
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#lists-and-indices" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2596,6 +2607,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/record-values/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Record values
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2712,6 +2750,33 @@
     
   
   Reference environment
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/logging-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typed log events
 
     
   </span>
@@ -3327,6 +3392,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#record-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Record values
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#lists-and-indices" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3364,8 +3440,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.4
-    · <code title="d842e2fa444d1f66c4c3cf0e981785dedfbb8db0">d842e2fa</code>
+    · SciLoom 0.3.5
+    · <code title="e935805e408a32940871d255ae202f9edd07a041">e935805e</code>
   </p>
 </aside>
 
@@ -3614,6 +3690,10 @@ has not been verified.</p>
 <td>Property reads or augmented property assignments</td>
 </tr>
 <tr>
+<td><code>log(value, category=..., stream=...)</code></td>
+<td>Logging lists, automatic object formatting or using log as a result</td>
+</tr>
+<tr>
 <td>Whole <code>if/elif</code> conditions using <code>comptime</code> queries</td>
 <td>Combining these queries with <code>and</code> / <code>or</code> or runtime arguments</td>
 </tr>
@@ -3625,6 +3705,19 @@ has not been verified.</p>
 </table>
 <p>See the <a href="../devices-and-targets/">device reference</a> for property, command and
 query forms.</p>
+<h2 id="record-values">Record values</h2>
+<p>Import <code>log</code> from <code>sciloom</code> and call it inside <code>@runtime</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">"recipe"</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="s2">"dispensed_volume"</span><span class="p">)</span>
+</code></pre></div>
+<p>The value can be <code>int</code>, <code>float</code>, <code>bool</code>, <code>str</code> or a supported physical quantity.
+Category and stream are text and can come from inputs or text expressions. The
+program captures value, category, then stream once in that order; a later
+assignment does not change an earlier log. This is also the evaluation order
+when the two keywords are written in a different order.</p>
+<p>Logging records the value you supply. It does not measure an instrument, return
+a value or select a CSV file. Use the <a href="../../../examples/record-values/">complete logging example</a>
+to generate an AutoSuite function. Application log storage and the resulting
+records still need verification in the deployed AutoSuite environment.</p>
 <h2 id="lists-and-indices">Lists and indices</h2>
 <p><code>self.result = self.values</code> copies the complete list. Changing
 <code>self.result[0]</code> afterwards does not change <code>self.values[0]</code>. A child

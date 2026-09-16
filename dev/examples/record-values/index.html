@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/examples/non-zero-array-min/">
+        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/examples/record-values/">
       
       
-        <link rel="prev" href="../record-values/">
+        <link rel="prev" href="../numeric-operations/">
       
       
-        <link rel="next" href="../stir-rack/">
+        <link rel="next" href="../non-zero-array-min/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Non Zero Array Min - SciLoom</title>
+        <title>Record values - SciLoom</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#find-the-smallest-qualifying-value" class="md-skip">
+        <a href="#record-a-sample-and-its-volume" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Non Zero Array Min
+              Record values
             
           </span>
         </div>
@@ -2447,10 +2447,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../record-values/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2465,6 +2474,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -2474,36 +2484,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Non Zero Array Min
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="././" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../non-zero-array-min/" class="md-nav__link">
         
   
   
@@ -2518,60 +2502,6 @@
   
 
       </a>
-      
-        
-
-
-<nav class="md-nav md-nav--secondary" aria-label="On this page">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#read-the-loop" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Read the loop
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#compile-the-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Compile the example
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#source-and-generated-package" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Source and generated package
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3225,11 +3155,6 @@
                       
                     
                     
-                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-                      <div class="md-sidebar-button__wrapper">
-                        <label class="md-sidebar-button" for="__toc"></label>
-                      </div>
-                    
                   
                   <div class="md-sidebar__inner">
                     
@@ -3241,47 +3166,6 @@
   
     
   
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#read-the-loop" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Read the loop
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#compile-the-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Compile the example
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#source-and-generated-package" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Source and generated package
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -3304,111 +3188,63 @@
 
                   
 
-<h1 id="find-the-smallest-qualifying-value">Find the smallest qualifying value</h1>
-<p><code>NonZeroArrayMin</code> scans a numeric list and finds the smallest value greater
-than <code>1e-8</code>. Its initial result is <code>999999.0</code>; only a smaller qualifying
-value replaces it.</p>
-<p>Expected procedure results:</p>
-<table>
-<thead>
-<tr>
-<th>Input <code>values</code></th>
-<th>Output <code>minimum</code></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>[0.0, 4.0, 2.0, 0.0]</code></td>
-<td><code>2.0</code></td>
-</tr>
-<tr>
-<td><code>[]</code> or <code>[0.0, 0.0]</code></td>
-<td><code>999999.0</code></td>
-</tr>
-<tr>
-<td><code>[1e-8, 3.0]</code></td>
-<td><code>3.0</code></td>
-</tr>
-<tr>
-<td><code>[1000000.0]</code></td>
-<td><code>999999.0</code></td>
-</tr>
-</tbody>
-</table>
-<p>Values at or below the threshold, including negative numbers, are ignored.
-The result <code>999999.0</code> means no qualifying value smaller than that initial
-value was found. It is not a general minimum over all possible floats.</p>
-<h2 id="read-the-loop">Read the loop</h2>
-<p>The method resets both the result and index on each call. The outer <code>if</code>
-checks the threshold; the inner one checks whether the value improves the
-current result. Nested conditions work with the AutoSuite target, which
-currently refuses <code>and</code> and <code>or</code>.</p>
-<p>This example adapts an original AutoSuite procedure. It retains its numeric
-threshold and initial result, but removes the original volume unit. Its inputs
-are dimensionless numbers; it performs no physical volume conversion.</p>
-<h2 id="compile-the-example">Compile the example</h2>
-<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/non_zero_array_min.py
+<h1 id="record-a-sample-and-its-volume">Record a sample and its volume</h1>
+<p>Keep a sample label next to a supplied volume in the generated program's log.
+This function first records the label under <code>recipe/sample</code>, then uses that
+label as the category for the volume record.</p>
+<div class="highlight"><pre><span></span><code><span class="go">uv run python examples/record_values.py</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>non_zero_array_min.asfp
+<div class="highlight"><pre><span></span><code>record_values.asfp
 </code></pre></div>
-<p>The Python command writes the package beside the source. AutoSuite supplies
-<code>values</code> when calling the generated function. The results above describe the
-algorithm under reference execution, not an instrument run. Validate the
-package on the deployment computer before equipment use.</p>
-<h2 id="source-and-generated-package">Source and generated package</h2>
-<p><a href="../../_generated/examples/non_zero_array_min.py">Download Python source</a> ·
-<a href="../../_generated/examples/non_zero_array_min.asfp">Download ASFP</a></p>
-<div class="highlight"><pre><span></span><code><span class="sd">"""Experiment-author example: compile a numeric Non Zero Array Min function.</span>
+<p>The file appears beside the Python source. When AutoSuite calls the function
+with <code>sample="A"</code> and <code>amount=1 mL</code>, its two records are <code>recipe/sample="A"</code>
+and <code>A/volume=1 mL</code>. Change the inputs at the runtime call site, or change the
+category/stream text in the source to organize the records differently.</p>
+<p>These values come from the caller, not an instrument measurement. Compilation
+does not execute the logging steps. The generated task mapping still needs
+Executor verification of persisted values, units and text on the deployed host.</p>
+<div class="highlight"><pre><span></span><code><span class="sd">"""For experiment authors: record supplied sample names and volumes.</span>
 
-<span class="sd">Run: uv run python examples/non_zero_array_min.py</span>
-<span class="sd">Output:</span>
-<span class="sd">    non_zero_array_min.asfp</span>
+<span class="sd">Run: ``uv run python examples/record_values.py``</span>
+<span class="sd">Terminal output: ``record_values.asfp``</span>
 
-<span class="sd">The complete generated package is beside this file. For input [0, 4, 2, 0],</span>
-<span class="sd">the algorithm returns 2; empty/all-zero input returns the sentinel 999999.</span>
-<span class="sd">The developer tests verify these results with the reference interpreter.</span>
-
-<span class="sd">Source: autosuite/corpus/extracted/latest_app/functions/51_Non Zero Array Min.asfp,</span>
-<span class="sd">extracted from config20260909_polymerization.app. This numeric adaptation removes</span>
-<span class="sd">volume units, retains the numeric 1e-8 threshold and 999999 sentinel, and uses</span>
-<span class="sd">nested conditions to express short-circuit intent. It does not model physical</span>
-<span class="sd">volume conversions. Compilation is not AutoSuite Executor simulation.</span>
+<span class="sd">Calling the generated function with sample="A" and amount=1 mL records</span>
+<span class="sd">recipe/sample="A", followed by A/volume=1 mL. These are supplied values, not</span>
+<span class="sd">instrument measurements. Compilation writes the complete record_values.asfp</span>
+<span class="sd">companion beside this source; it does not execute the log operations.</span>
 <span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">Var</span><span class="p">,</span> <span class="n">runtime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Volume</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">runtime</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteTarget</span>
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">NonZeroArrayMin</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Find the smallest value above the threshold, capped at the sentinel.</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RecordValues</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Record a sample label and its supplied volume.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        values: Dimensionless numeric samples.</span>
-<span class="sd">        minimum: Smallest qualifying value, or 999999 if none is smaller.</span>
-<span class="sd">        index: Internal position, explicitly reset for every invocation.</span>
+<span class="sd">        sample: Label used as the volume log's category.</span>
+<span class="sd">        amount: Volume supplied by the runtime caller.</span>
 <span class="sd">    """</span>
 
-    <span class="n">values</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span>
-    <span class="n">minimum</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
-    <span class="n">index</span><span class="p">:</span> <span class="n">Var</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">sample</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+    <span class="n">amount</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="n">Volume</span><span class="p">]</span>
 
     <span class="nd">@runtime</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">minimum</span> <span class="o">=</span> <span class="mf">999999.0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">1e-8</span><span class="p">:</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimum</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">minimum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">"recipe"</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="s2">"sample"</span><span class="p">)</span>
+        <span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sample</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="s2">"volume"</span><span class="p">)</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">NonZeroArrayMin</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">())</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".asfp"</span><span class="p">))</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">RecordValues</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">())</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".asfp"</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </code></pre></div>
+<p><a href="../../_generated/examples/record_values.py">Download Python</a> ·
+<a href="../../_generated/examples/record_values.asfp">Download ASFP</a></p>
+<p>See <a href="../../user-guide/reference/runtime-language/#record-values">recording rules</a>
+for supported types and argument evaluation order.</p>
 
 
 
@@ -3441,7 +3277,7 @@ package on the deployment computer before equipment use.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../record-values/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Record values">
+          <a href="../numeric-operations/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Numeric operations">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -3451,20 +3287,20 @@ package on the deployment computer before equipment use.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Record values
+                Numeric operations
               </div>
             </div>
           </a>
         
         
           
-          <a href="../stir-rack/" class="md-footer__link md-footer__link--next" aria-label="Next: Stir a rack of samples">
+          <a href="../non-zero-array-min/" class="md-footer__link md-footer__link--next" aria-label="Next: Non Zero Array Min">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Stir a rack of samples
+                Non Zero Array Min
               </div>
             </div>
             <div class="md-footer__button md-icon">

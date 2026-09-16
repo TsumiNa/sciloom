@@ -2445,6 +2445,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/record-values/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Record values
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2561,6 +2588,33 @@
     
   
   Reference environment
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/logging-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typed log events
 
     
   </span>
@@ -3120,6 +3174,56 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         value
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sciloom.core.ir.LogValue" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        LogValue
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LogValue">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.ir.LogValue.value" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        value
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.ir.LogValue.category" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        category
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.ir.LogValue.stream" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        stream
       </span>
     </span>
   </a>
@@ -3773,6 +3877,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sciloom.core.ir.LogValue" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        LogValue
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LogValue">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.ir.LogValue.value" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        value
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.ir.LogValue.category" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        category
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.ir.LogValue.stream" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        stream
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#sciloom.core.ir.ListSet" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -4077,8 +4231,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.4
-    · <code title="d842e2fa444d1f66c4c3cf0e981785dedfbb8db0">d842e2fa</code>
+    · SciLoom 0.3.5
+    · <code title="e935805e408a32940871d255ae202f9edd07a041">e935805e</code>
   </p>
 </aside>
 
@@ -4474,6 +4628,134 @@ corresponding Macro containers. Application/global state is not supported yet.</
 
 </h3>
 <div class="doc-signature highlight"><pre><span></span><code><span class="n">value</span><span class="p">:</span> <span class="n">Expression</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="sciloom.core.ir.LogValue" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">sciloom.core.ir.LogValue</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">LogValue</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">node_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">source</span><span class="p">:</span> <span class="n">SourceSpan</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">:</span> <span class="n">Expression</span><span class="p">,</span>
+    <span class="n">category</span><span class="p">:</span> <span class="n">Expression</span><span class="p">,</span>
+    <span class="n">stream</span><span class="p">:</span> <span class="n">Expression</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="sciloom.core.ir.model.Node">Node</span></code></p>
+
+
+
+        <p>Capture a scalar/quantity, category and stream once, in that order.</p>
+<p>The value's type is derived from its expression. Category and stream must be
+text. Logging is ordered with other statements and never measures a device.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sciloom.core.ir.LogValue.value" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">value</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">value</span><span class="p">:</span> <span class="n">Expression</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sciloom.core.ir.LogValue.category" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">category</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">category</span><span class="p">:</span> <span class="n">Expression</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sciloom.core.ir.LogValue.stream" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">stream</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">stream</span><span class="p">:</span> <span class="n">Expression</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">

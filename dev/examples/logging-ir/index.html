@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/examples/non-zero-array-min/">
+        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/examples/logging-ir/">
       
       
-        <link rel="prev" href="../record-values/">
+        <link rel="prev" href="../reference-environment/">
       
       
-        <link rel="next" href="../stir-rack/">
+        <link rel="next" href="../demo-device/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Non Zero Array Min - SciLoom</title>
+        <title>Typed log events - SciLoom</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#find-the-smallest-qualifying-value" class="md-skip">
+        <a href="#inspect-a-typed-log-event" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Non Zero Array Min
+              Typed log events
             
           </span>
         </div>
@@ -2474,36 +2474,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Non Zero Array Min
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="././" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../non-zero-array-min/" class="md-nav__link">
         
   
   
@@ -2518,60 +2492,6 @@
   
 
       </a>
-      
-        
-
-
-<nav class="md-nav md-nav--secondary" aria-label="On this page">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#read-the-loop" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Read the loop
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#compile-the-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Compile the example
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#source-and-generated-package" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Source and generated package
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2689,10 +2609,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../logging-ir/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2707,6 +2636,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -3225,11 +3155,6 @@
                       
                     
                     
-                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-                      <div class="md-sidebar-button__wrapper">
-                        <label class="md-sidebar-button" for="__toc"></label>
-                      </div>
-                    
                   
                   <div class="md-sidebar__inner">
                     
@@ -3241,47 +3166,6 @@
   
     
   
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#read-the-loop" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Read the loop
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#compile-the-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Compile the example
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#source-and-generated-package" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Source and generated package
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -3304,111 +3188,62 @@
 
                   
 
-<h1 id="find-the-smallest-qualifying-value">Find the smallest qualifying value</h1>
-<p><code>NonZeroArrayMin</code> scans a numeric list and finds the smallest value greater
-than <code>1e-8</code>. Its initial result is <code>999999.0</code>; only a smaller qualifying
-value replaces it.</p>
-<p>Expected procedure results:</p>
-<table>
-<thead>
-<tr>
-<th>Input <code>values</code></th>
-<th>Output <code>minimum</code></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>[0.0, 4.0, 2.0, 0.0]</code></td>
-<td><code>2.0</code></td>
-</tr>
-<tr>
-<td><code>[]</code> or <code>[0.0, 0.0]</code></td>
-<td><code>999999.0</code></td>
-</tr>
-<tr>
-<td><code>[1e-8, 3.0]</code></td>
-<td><code>3.0</code></td>
-</tr>
-<tr>
-<td><code>[1000000.0]</code></td>
-<td><code>999999.0</code></td>
-</tr>
-</tbody>
-</table>
-<p>Values at or below the threshold, including negative numbers, are ignored.
-The result <code>999999.0</code> means no qualifying value smaller than that initial
-value was found. It is not a general minimum over all possible floats.</p>
-<h2 id="read-the-loop">Read the loop</h2>
-<p>The method resets both the result and index on each call. The outer <code>if</code>
-checks the threshold; the inner one checks whether the value improves the
-current result. Nested conditions work with the AutoSuite target, which
-currently refuses <code>and</code> and <code>or</code>.</p>
-<p>This example adapts an original AutoSuite procedure. It retains its numeric
-threshold and initial result, but removes the original volume unit. Its inputs
-are dimensionless numbers; it performs no physical volume conversion.</p>
-<h2 id="compile-the-example">Compile the example</h2>
-<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/non_zero_array_min.py
+<h1 id="inspect-a-typed-log-event">Inspect a typed log event</h1>
+<p>Construct one volume log directly in IR, save and restore JSON, then run the
+reference interpreter. The resulting event carries a Volume rather than a
+formatted string. This example does not access files during reference execution
+or send commands to equipment; the script itself writes the JSON companion.</p>
+<div class="highlight"><pre><span></span><code><span class="go">uv run python -m examples.developer.logging_ir</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>non_zero_array_min.asfp
+<div class="highlight"><pre><span></span><code>logging_ir.json
+recipe/volume: 1.0 mL
 </code></pre></div>
-<p>The Python command writes the package beside the source. AutoSuite supplies
-<code>values</code> when calling the generated function. The results above describe the
-algorithm under reference execution, not an instrument run. Validate the
-package on the deployment computer before equipment use.</p>
-<h2 id="source-and-generated-package">Source and generated package</h2>
-<p><a href="../../_generated/examples/non_zero_array_min.py">Download Python source</a> ·
-<a href="../../_generated/examples/non_zero_array_min.asfp">Download ASFP</a></p>
-<div class="highlight"><pre><span></span><code><span class="sd">"""Experiment-author example: compile a numeric Non Zero Array Min function.</span>
+<div class="highlight"><pre><span></span><code><span class="sd">"""For developers: construct a typed log, round-trip JSON and inspect its event.</span>
 
-<span class="sd">Run: uv run python examples/non_zero_array_min.py</span>
-<span class="sd">Output:</span>
-<span class="sd">    non_zero_array_min.asfp</span>
+<span class="sd">Run: ``uv run python -m examples.developer.logging_ir``</span>
+<span class="sd">Expected terminal output:</span>
+<span class="sd">    logging_ir.json</span>
+<span class="sd">    recipe/volume: 1.0 mL</span>
 
-<span class="sd">The complete generated package is beside this file. For input [0, 4, 2, 0],</span>
-<span class="sd">the algorithm returns 2; empty/all-zero input returns the sentinel 999999.</span>
-<span class="sd">The developer tests verify these results with the reference interpreter.</span>
-
-<span class="sd">Source: autosuite/corpus/extracted/latest_app/functions/51_Non Zero Array Min.asfp,</span>
-<span class="sd">extracted from config20260909_polymerization.app. This numeric adaptation removes</span>
-<span class="sd">volume units, retains the numeric 1e-8 threshold and 999999 sentinel, and uses</span>
-<span class="sd">nested conditions to express short-circuit intent. It does not model physical</span>
-<span class="sd">volume conversions. Compilation is not AutoSuite Executor simulation.</span>
+<span class="sd">The complete JSON v4 document is logging_ir.json beside this file. Reference</span>
+<span class="sd">execution captures one volume event without accessing a file or instrument.</span>
 <span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">Var</span><span class="p">,</span> <span class="n">runtime</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteTarget</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.interpreter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Interpreter</span><span class="p">,</span> <span class="n">LogEvent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.ir</span><span class="w"> </span><span class="kn">import</span> <span class="n">FunctionIR</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">LogValue</span><span class="p">,</span> <span class="n">Program</span><span class="p">,</span> <span class="n">ScalarType</span><span class="p">,</span> <span class="n">from_json</span><span class="p">,</span> <span class="n">to_json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.units</span><span class="w"> </span><span class="kn">import</span> <span class="n">Volume</span><span class="p">,</span> <span class="n">mL</span>
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">NonZeroArrayMin</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Find the smallest value above the threshold, capped at the sentinel.</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        values: Dimensionless numeric samples.</span>
-<span class="sd">        minimum: Smallest qualifying value, or 999999 if none is smaller.</span>
-<span class="sd">        index: Internal position, explicitly reset for every invocation.</span>
-<span class="sd">    """</span>
-
-    <span class="n">values</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span>
-    <span class="n">minimum</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
-    <span class="n">index</span><span class="p">:</span> <span class="n">Var</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="nd">@runtime</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">minimum</span> <span class="o">=</span> <span class="mf">999999.0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">1e-8</span><span class="p">:</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimum</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">minimum</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">build_program</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Build a single volume-log statement without the Python DSL."""</span>
+    <span class="n">record</span> <span class="o">=</span> <span class="n">LogValue</span><span class="p">(</span>
+        <span class="n">node_id</span><span class="o">=</span><span class="s2">"record"</span><span class="p">,</span>
+        <span class="n">value</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"value"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">VOLUME</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">),</span>
+        <span class="n">category</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"category"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">"recipe"</span><span class="p">),</span>
+        <span class="n">stream</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"stream"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">"volume"</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">Program</span><span class="p">(</span><span class="n">entry_function_id</span><span class="o">=</span><span class="s2">"f"</span><span class="p">,</span> <span class="n">functions</span><span class="o">=</span><span class="p">(</span><span class="n">FunctionIR</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"f"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"Record"</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="p">(</span><span class="n">record</span><span class="p">,)),))</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">NonZeroArrayMin</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">())</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".asfp"</span><span class="p">))</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".json"</span><span class="p">)</span>
+    <span class="n">path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">to_json</span><span class="p">(</span><span class="n">build_program</span><span class="p">()),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span>
+    <span class="n">restored</span> <span class="o">=</span> <span class="n">from_json</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">restored</span> <span class="o">==</span> <span class="n">build_program</span><span class="p">()</span>
+    <span class="p">(</span><span class="n">event</span><span class="p">,)</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">(</span><span class="n">restored</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span><span class="o">.</span><span class="n">events</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">LogEvent</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">Volume</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">event</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">ScalarType</span><span class="o">.</span><span class="n">VOLUME</span> <span class="ow">and</span> <span class="n">event</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">mL</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">category</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">stream</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">value</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">mL</span><span class="si">}</span><span class="s2"> mL"</span><span class="p">)</span>
 </code></pre></div>
+<p><a href="../../_generated/examples/developer/logging_ir.py">Download Python</a> ·
+<a href="../../_generated/examples/developer/logging_ir.json">Download JSON</a></p>
+<p>LogValue stores the expression and both text labels; expression typing supplies
+the result type. LogEvent records the captured public value. The
+<a href="../../developer/reference/interpreter/#typed-log-events">execution reference</a>
+describes ordering and failure behavior.</p>
 
 
 
@@ -3441,7 +3276,7 @@ package on the deployment computer before equipment use.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../record-values/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Record values">
+          <a href="../reference-environment/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Reference environment">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -3451,20 +3286,20 @@ package on the deployment computer before equipment use.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Record values
+                Reference environment
               </div>
             </div>
           </a>
         
         
           
-          <a href="../stir-rack/" class="md-footer__link md-footer__link--next" aria-label="Next: Stir a rack of samples">
+          <a href="../demo-device/" class="md-footer__link md-footer__link--next" aria-label="Next: Independent device">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Stir a rack of samples
+                Independent device
               </div>
             </div>
             <div class="md-footer__button md-icon">

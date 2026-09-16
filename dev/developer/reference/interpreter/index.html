@@ -2057,6 +2057,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#typed-log-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Typed log events
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-and-snapshots" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2544,6 +2555,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/record-values/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Record values
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2660,6 +2698,33 @@
     
   
   Reference environment
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/logging-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typed log events
 
     
   </span>
@@ -3220,6 +3285,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#typed-log-events" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Typed log events
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-and-snapshots" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3257,8 +3333,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.4
-    · <code title="d842e2fa444d1f66c4c3cf0e981785dedfbb8db0">d842e2fa</code>
+    · SciLoom 0.3.5
+    · <code title="e935805e408a32940871d255ae202f9edd07a041">e935805e</code>
   </p>
 </aside>
 
@@ -3293,8 +3369,9 @@ automatically. Concrete services arrive with the operations that need them.</p>
 </code></pre></div>
 <p><code>environment.events</code> returns an immutable history snapshot across all runs using
 that environment. <code>result.events</code> remains limited to one successful run.
-<code>ExecutionEvent</code> is the typed event vocabulary, currently DeviceEvent; new effects
-add their own immutable records. A failed run leaves earlier completed events in
+<code>ExecutionEvent</code> is the union of DeviceEvent and LogEvent. Narrow with
+<code>isinstance(event, LogEvent)</code> before accessing log-specific fields; device events
+carry state snapshots. A failed run leaves earlier completed events in
 environment history and does not roll back their state changes.</p>
 <p>Reuse the same environment to share history explicitly. This does not share
 Function variables or device configurations between Interpreters. Child Function
@@ -3302,6 +3379,16 @@ calls use their entry session's environment. Sessions and environments are
 sequential and are not intended for concurrent execution.</p>
 <p>The <a href="../../../examples/reference-environment/">environment example</a> runs two
 sessions and inspects their combined history and independent device snapshots.</p>
+<h2 id="typed-log-events">Typed log events</h2>
+<p><code>LogValue</code> evaluates its value, category and stream once in that order. It appends
+a LogEvent only after all three succeed, so a failed argument does not leave a
+partial log record. Logs from child calls, loops and device actions share the
+same ordered event tuple. The event stores the operation ID/source, ScalarType,
+native scalar or public quantity value, and both captured labels. It does not
+read a device or require a file service.</p>
+<p>The <a href="../../../examples/logging-ir/">direct logging IR example</a> constructs a volume
+log, restores JSON v4 and inspects the typed event. Prior records retain their
+values when fields change or the session runs again.</p>
 <h2 id="session-and-snapshots">Session and snapshots</h2>
 <p>Internal variables initialize once per session and function identity. Repeated
 calls retain state; a new Interpreter starts a fresh session. Input/output call
