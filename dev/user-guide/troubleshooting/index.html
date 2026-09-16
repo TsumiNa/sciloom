@@ -1179,6 +1179,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#a-wait-or-timer-is-rejected" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        A wait or timer is rejected
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#python-raises-typeerror-or-valueerror-before-compilation" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2719,6 +2730,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/timed-agitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Timed agitation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2916,6 +2954,33 @@
     
   
   Explicit wall clock
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/timing-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Elapsed-time IR
 
     
   </span>
@@ -3586,6 +3651,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#a-wait-or-timer-is-rejected" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        A wait or timer is rejected
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#python-raises-typeerror-or-valueerror-before-compilation" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3612,8 +3688,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.8
-    · <code title="912fb137fb23c45f11cb886cb78887d19b3e85b0">912fb137</code>
+    · SciLoom 0.3.9
+    · <code title="f37b21dc22c951c96427b2b194b39ec2cafd6403">f37b21dc</code>
   </p>
 </aside>
 
@@ -4236,6 +4312,69 @@ For differences between device profiles, use
 </tr>
 </tbody>
 </table>
+<h2 id="a-wait-or-timer-is-rejected">A wait or timer is rejected</h2>
+<p>Declare <code>timer: Timer</code> on the Function and import <code>Timer</code> and <code>s</code> from <code>sciloom</code>.
+For <code>enabled: Input[bool]</code>, this code waits even when the timer was never started:</p>
+<!-- correction: timer wrong -->
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">wait_until</span><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span>
+</code></pre></div>
+<p>If the wait should happen only when enabled, put it in the same branch:</p>
+<!-- correction: timer fixed -->
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enabled</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">wait_until</span><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span>
+</code></pre></div>
+<p>If both paths need the wait, start the timer before the condition instead.
+Choose the start location to match when elapsed time should begin; moving it
+earlier changes the procedure's timing. A start in a previous entry call does
+not satisfy the compilation check.</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>timer_not_started</code></td>
+<td>a path reaches <code>wait_until</code> without a start in this entry invocation</td>
+<td>start on every path that reaches the wait, or put the wait inside the started branch</td>
+</tr>
+<tr>
+<td><code>wait_type</code></td>
+<td>a wait receives a plain number or a different physical quantity</td>
+<td>supply a Duration, such as <code>5 * s</code></td>
+</tr>
+<tr>
+<td><code>wait_duration</code></td>
+<td>a negative reference wait, or an AutoSuite literal outside 0–79,999 hours</td>
+<td>use a nonnegative duration within the selected target's range</td>
+</tr>
+<tr>
+<td><code>unsupported_runtime_guard</code></td>
+<td>AutoSuite receives a runtime duration expression</td>
+<td>use a fixed duration for the current target, or reference-execute the dynamic procedure until target range checks are verified</td>
+</tr>
+<tr>
+<td><code>unsupported_timer_scope</code></td>
+<td>starts/resets occupy different native scopes, or a wait is outside its start scope</td>
+<td>keep starts/resets together, with waits in the same branch/loop scope or its descendants; preserve the intended start time</td>
+</tr>
+<tr>
+<td><code>timer_operation</code></td>
+<td>an unsupported Timer command, such as <code>stop()</code></td>
+<td>timers support <code>start()</code> and <code>wait_until()</code>; stop equipment through its own device slot</td>
+</tr>
+</tbody>
+</table>
+<p>For a reference run, <code>missing_environment_service</code> means no virtual clock was
+supplied; <code>clock_error</code> means advancing it would produce an invalid value, such
+as overflow. See the <a href="../../developer/troubleshooting/#executionerror">developer execution diagnostics</a>
+and the <a href="../../examples/timing-ir/">timing example</a> for explicit clock setup.</p>
 <h2 id="python-raises-typeerror-or-valueerror-before-compilation">Python raises TypeError or ValueError before compilation</h2>
 <p>These exceptions report invalid host calls or configuration rather than a
 runtime step failing. The message identifies what to change.</p>
@@ -4254,6 +4393,10 @@ runtime step failing. The message identifies what to change.</p>
 <tr>
 <td>Calling <code>program.shaker.start()</code> raises <code>TypeError</code></td>
 <td>Put the operation inside <code>@runtime</code></td>
+</tr>
+<tr>
+<td>Constructing <code>Timer()</code> or reading/assigning <code>program.timer</code> raises <code>TypeError</code></td>
+<td>Declare <code>timer: Timer</code> with no value in the class; use its commands only inside <code>@runtime</code></td>
 </tr>
 <tr>
 <td>Assigning a hardware profile to <code>program.shaker</code> raises <code>TypeError</code></td>

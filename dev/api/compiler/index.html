@@ -2526,6 +2526,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/timed-agitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Timed agitation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2723,6 +2750,33 @@
     
   
   Explicit wall clock
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/timing-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Elapsed-time IR
 
     
   </span>
@@ -3419,6 +3473,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sciloom.core.timing.validate_timer_usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        validate_timer_usage
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#sciloom.core.bindings.DeviceBinding" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3867,6 +3932,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sciloom.core.timing.validate_timer_usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        validate_timer_usage
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#sciloom.core.bindings.DeviceBinding" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -4015,8 +4091,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.8
-    · <code title="912fb137fb23c45f11cb886cb78887d19b3e85b0">912fb137</code>
+    · SciLoom 0.3.9
+    · <code title="f37b21dc22c951c96427b2b194b39ec2cafd6403">f37b21dc</code>
   </p>
 </aside>
 
@@ -4103,7 +4179,7 @@
 
     <div class="doc doc-contents ">
 
-        <p>Return trusted deployment facts for the authored program's resources.</p>
+        <p>Return trusted deployment facts for the authored program's device resources.</p>
 
 
     </div>
@@ -4861,6 +4937,94 @@ checked by a type checker rather than here.</p>
       </tbody>
     </table>
         <p>Neither XML assumptions nor backend-private state belong in this pipeline.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="sciloom.core.timing.validate_timer_usage" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">sciloom.core.timing.validate_timer_usage</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">validate_timer_usage</span><span class="p">(</span>
+    <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Diagnostic</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Check a valid, specialized program without assuming starts from earlier runs.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>program</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.core.ir.Program&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../ir-flow/#sciloom.core.ir.Program">Program</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Structurally valid IR with device conditions already selected.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="tuple">tuple</span>[<a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.core.diagnostics.Diagnostic&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../diagnostics/#sciloom.core.diagnostics.Diagnostic">Diagnostic</a>, ...]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Diagnostics for waits not definitely preceded by a start in this entry.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>Function summaries are monotone fixed points, including recursive call
+graphs. Loops can execute zero times; only branch intersections escape.</p>
 
 
     </div>

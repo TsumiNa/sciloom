@@ -2614,6 +2614,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/timed-agitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Timed agitation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2811,6 +2838,33 @@
     
   
   Explicit wall clock
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/timing-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Elapsed-time IR
 
     
   </span>
@@ -3397,8 +3451,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.8
-    · <code title="912fb137fb23c45f11cb886cb78887d19b3e85b0">912fb137</code>
+    · SciLoom 0.3.9
+    · <code title="f37b21dc22c951c96427b2b194b39ec2cafd6403">f37b21dc</code>
   </p>
 </aside>
 
@@ -3417,7 +3471,7 @@ same diagram block by block.</p>
     IR --&gt; Validate["Structure and types"]
     Validate --&gt; Resolve["Target.resolve_devices"]
     Resolve --&gt; Specialize["Device specialization"]
-    Specialize --&gt; Config["Capabilities and definite configuration"]
+    Specialize --&gt; Config["Capabilities, device configuration and timer starts"]
     Config --&gt; Target["Target.validate and emit"]
     Target --&gt; Artifact["Platform artifact"]
     Specialize --&gt; Interpreter["Reference interpreter"]
@@ -3448,14 +3502,14 @@ same diagram block by block.</p>
 <tr>
 <td>3</td>
 <td><code>specialize(program, bindings)</code></td>
-<td>authored in, selected out: bindings validated, branches selected, unreachable functions pruned, resources retyped to the bound profile, re-validated</td>
+<td>authored in, selected out: bindings validated, branches selected, unreachable functions and their timers pruned, devices retyped to the bound profile, re-validated</td>
 <td><code>CompilationError</code> (<code>missing_resource_binding</code>, <code>unknown_resource_binding</code>, <code>device_type</code>, <code>device_contract</code>)</td>
 </tr>
 <tr>
 <td>4</td>
-<td>capability and definite-configuration checks</td>
+<td>capability, definite-configuration and definite-timer-start checks</td>
 <td>selected</td>
-<td><code>CompilationError</code> (<code>device_capability</code>, <code>device_configuration</code>)</td>
+<td><code>CompilationError</code> (<code>device_capability</code>, <code>device_configuration</code>, <code>timer_not_started</code>)</td>
 </tr>
 <tr>
 <td>5</td>
@@ -3473,7 +3527,9 @@ same diagram block by block.</p>
 </table>
 <p>Target resolution sees the authored program once; validation and emission see
 the selected program. What step 4 proves about required configuration is stated
-on <a href="../device-contracts/#required-configuration">device contracts</a>.</p>
+on <a href="../device-contracts/#required-configuration">device contracts</a>.
+Timer analysis starts each entry invocation with no established timer origins;
+branch intersections and possibly empty loops cannot rely on earlier runs.</p>
 <p><code>CompileResult</code> retains <code>semantic_ir</code> (authored), <code>specialized_ir</code> (selected),
 <code>target_id</code>, <code>artifact</code> and <code>diagnostics</code>, which is empty for a returned result
 because every failure raises. <code>write(path)</code> writes the artifact's bytes and
@@ -3495,7 +3551,7 @@ no Python source.</p>
 <tbody>
 <tr>
 <td>the class body runs</td>
-<td>declarations are well formed: field roles, device slots, device contracts</td>
+<td>declarations are well formed: field roles, device slots, device contracts, timer slots</td>
 <td><code>IRValidationError</code></td>
 </tr>
 <tr>
@@ -3515,12 +3571,17 @@ no Python source.</p>
 </tr>
 <tr>
 <td>bindings are checked</td>
-<td>every declared resource has one compatible binding and no binding is stray</td>
+<td>every declared device resource has one compatible binding and no binding is stray; timers need no binding</td>
 <td><code>CompilationError</code></td>
 </tr>
 <tr>
 <td>capabilities and configuration are checked</td>
 <td>every bound profile implements what the selected program does with it, and every agitation start has its <a href="../device-contracts/#required-configuration">required configuration</a></td>
+<td><code>CompilationError</code></td>
+</tr>
+<tr>
+<td>timer starts are checked</td>
+<td>each elapsed wait has a preceding start on every relevant path in the current entry invocation</td>
 <td><code>CompilationError</code></td>
 </tr>
 <tr>

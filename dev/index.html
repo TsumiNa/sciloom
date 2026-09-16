@@ -2598,6 +2598,33 @@
   
   
     <li class="md-nav__item">
+      <a href="./examples/timed-agitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Timed agitation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="./examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2795,6 +2822,33 @@
     
   
   Explicit wall clock
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./examples/timing-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Elapsed-time IR
 
     
   </span>
@@ -3381,8 +3435,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.8
-    · <code title="912fb137fb23c45f11cb886cb78887d19b3e85b0">912fb137</code>
+    · SciLoom 0.3.9
+    · <code title="f37b21dc22c951c96427b2b194b39ec2cafd6403">f37b21dc</code>
   </p>
 </aside>
 
@@ -3407,7 +3461,7 @@ provide device contracts and target implementations.</p>
     IR --&gt; Validate["Structure and types"]
     Validate --&gt; Resolve["Target.resolve_devices"]
     Resolve --&gt; Specialize["Device specialization"]
-    Specialize --&gt; Config["Capabilities and definite configuration"]
+    Specialize --&gt; Config["Capabilities, device configuration and timer starts"]
     Config --&gt; Target["Target.validate and emit"]
     Target --&gt; Artifact["Platform artifact"]
     Specialize --&gt; Interpreter["Reference interpreter"]
@@ -3436,7 +3490,8 @@ steps.</strong> It validates structure and types, asks the target which concrete
 (<code>resolve_devices</code>), specializes the program to that deployment by selecting
 device-dependent branches, then proves that every bound device supports what the
 program does with it and that every agitation start has its configuration on
-every path. Only then does the target validate and emit.</p>
+every path. It also proves each elapsed wait has a timer start in the current
+entry invocation. Only then does the target validate and emit.</p>
 <p><strong>The <a href="developer/reference/target-contract/">target</a> owns the platform.</strong> A
 target is four members, not a plugin:
 <code>target_id</code>, <code>resolve_devices</code>, <code>validate</code> and <code>emit</code>. <code>validate</code> rejects what

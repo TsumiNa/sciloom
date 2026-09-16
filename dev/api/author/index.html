@@ -2526,6 +2526,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/timed-agitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Timed agitation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2723,6 +2750,33 @@
     
   
   Explicit wall clock
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/timing-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Elapsed-time IR
 
     
   </span>
@@ -3023,6 +3077,56 @@
       </span>
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sciloom.wait" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        wait
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sciloom.Timer" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Timer
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Timer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.Timer.start" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        start
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.Timer.wait_until" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        wait_until
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3584,6 +3688,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sciloom.wait" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        wait
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sciloom.Timer" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Timer
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Timer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.Timer.start" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        start
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.Timer.wait_until" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        wait_until
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#field-declarations" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3693,8 +3847,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.8
-    · <code title="912fb137fb23c45f11cb886cb78887d19b3e85b0">912fb137</code>
+    · SciLoom 0.3.9
+    · <code title="f37b21dc22c951c96427b2b194b39ec2cafd6403">f37b21dc</code>
   </p>
 </aside>
 
@@ -4362,6 +4516,260 @@ aware wall clock. This does not guarantee a unique filename.</p>
       </tbody>
     </table>
 
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="sciloom.wait" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">sciloom.wait</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">wait</span><span class="p">(</span><span class="n">duration</span><span class="p">:</span> <span class="n">Duration</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Pause runtime flow for a captured interval without changing devices.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>duration</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.Duration&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../units/#sciloom.Duration">Duration</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Nonnegative interval.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Called by host Python instead of compiled runtime source.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>Reference execution advances an explicitly provided virtual clock; it never
+sleeps. AutoSuite compilation does not start a wait on the host computer.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="sciloom.Timer" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">sciloom.Timer</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">Timer</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Declare a Function-owned elapsed-time resource with <code>timer: Timer</code>.</p>
+<p>A timer is not a runtime value or a device. It cannot be constructed or
+shared by host Python. Its start must precede every reachable wait in the
+current entry invocation; no previous run supplies an implicit start.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="sciloom.Timer.start" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">start</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">start</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Set or reset this timer's monotonic origin at this runtime step.</p>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Called by host Python instead of compiled runtime source.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="sciloom.Timer.wait_until" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">wait_until</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">wait_until</span><span class="p">(</span><span class="n">duration</span><span class="p">:</span> <span class="n">Duration</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Wait until duration has elapsed since the latest start.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>duration</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.Duration&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../units/#sciloom.Duration">Duration</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Nonnegative elapsed threshold; already elapsed means no wait.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Called by host Python instead of compiled runtime source.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>Waiting preserves device configuration and running state.</p>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
 
     </div>
 

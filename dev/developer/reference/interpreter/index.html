@@ -2090,6 +2090,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#elapsed-time-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Elapsed-time input
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-and-snapshots" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2658,6 +2669,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/timed-agitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Timed agitation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2855,6 +2893,33 @@
     
   
   Explicit wall clock
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/timing-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Elapsed-time IR
 
     
   </span>
@@ -3448,6 +3513,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#elapsed-time-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Elapsed-time input
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-and-snapshots" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3485,8 +3561,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.8
-    · <code title="912fb137fb23c45f11cb886cb78887d19b3e85b0">912fb137</code>
+    · SciLoom 0.3.9
+    · <code title="f37b21dc22c951c96427b2b194b39ec2cafd6403">f37b21dc</code>
   </p>
 </aside>
 
@@ -3521,8 +3597,8 @@ automatically. Concrete services arrive with the operations that need them.</p>
 </code></pre></div>
 <p><code>environment.events</code> returns an immutable history snapshot across all runs using
 that environment. <code>result.events</code> remains limited to one successful run.
-<code>ExecutionEvent</code> is the union of DeviceEvent, LogEvent, AcknowledgementEvent and
-WallTimeEvent. Narrow with
+<code>ExecutionEvent</code> is the union of DeviceEvent, LogEvent, AcknowledgementEvent,
+WallTimeEvent, TimerEvent and WaitEvent. Narrow with
 <code>isinstance(event, LogEvent)</code> before accessing log-specific fields; device events
 carry state snapshots. A failed run leaves earlier completed events in
 environment history and does not roll back their state changes.</p>
@@ -3590,6 +3666,26 @@ partially updated. Earlier completed effects remain. Separate environments do
 not share clocks unless explicitly given the same service. This wall clock is
 independent of elapsed-time waits; it does not advance automatically.</p>
 <p>The <a href="../../../examples/wall-time-ir/">direct IR example</a> also checks JSON v4 restoration.</p>
+<h2 id="elapsed-time-input">Elapsed-time input</h2>
+<p>Supply <code>ReferenceEnvironment(clock=VirtualClock())</code> for Wait, StartTimer and
+WaitUntil. VirtualClock stores finite nonnegative seconds and advances without
+sleeping. It is independent of VirtualWallClock: a wait does not change supplied
+calendar time. Omitted clocks cause <code>missing_environment_service</code>, even for a
+zero wait. <code>VirtualClock(start=...)</code> accepts an explicit nonnegative origin.</p>
+<p>StartTimer captures the current monotonic value. WaitUntil evaluates its Duration
+once, verifies a start in this entry run, then waits only for time still missing
+from the threshold. Negative requests fail with <code>wait_duration</code>; invalid clock
+advances or overflow fail with <code>clock_error</code> before changing the clock. Earlier
+completed events and state changes remain. Timer validity resets at each entry
+run; child calls share the entry's time axis and Function-owned timer identities.</p>
+<p>Successful starts append TimerEvent with the new origin. WaitEvent records the
+requested Duration, monotonic start/end of the wait, and a timer ID for elapsed
+waits (None for ordinary waits). Already elapsed waits have equal start/end times.
+These events are immutable and interleaved with device and log events. The
+existing <code>result.resources</code> mapping continues to contain device states only.</p>
+<p>The <a href="../../../examples/timing-ir/">timer IR example</a> advances five virtual seconds.
+This defines ordering and elapsed-time semantics; it is not a latency or scheduling
+simulation of AutoSuite or physical equipment.</p>
 <h2 id="session-and-snapshots">Session and snapshots</h2>
 <p>Internal variables initialize once per session and function identity. Repeated
 calls retain state; a new Interpreter starts a fresh session. Input/output call

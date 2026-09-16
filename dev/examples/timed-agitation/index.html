@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/api/autosuite/">
+        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/examples/timed-agitation/">
       
       
-        <link rel="prev" href="../text/">
+        <link rel="prev" href="../timestamp-path/">
       
       
-        <link rel="next" href="../devices/">
+        <link rel="next" href="../non-zero-array-min/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>AutoSuite - SciLoom</title>
+        <title>Timed agitation - SciLoom</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#autosuite-contribution" class="md-skip">
+        <a href="#keep-the-shaker-running-through-a-wait" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              AutoSuite
+              Timed agitation
             
           </span>
         </div>
@@ -253,14 +253,16 @@
   
   
   
+    
+  
   
     
       
     
     
     
-      <li class="md-tabs__item">
-        <a href="../../examples/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   Examples
@@ -275,16 +277,14 @@
   
   
   
-    
-  
   
     
       
     
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../api/" class="md-tabs__link">
           
   
   API Reference
@@ -2203,657 +2203,6 @@
       
   
   
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Examples
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-  Examples
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Overview
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/function-call/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Function calls
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/agitation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Agitation
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/scale-values/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Scale values
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/prepare-labels/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Prepare labels
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/quantity-conversion/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Quantity conversion
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/numeric-operations/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Numeric operations
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/record-values/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Record values
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/confirm-samples/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Confirm samples
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/timestamp-path/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Timestamp a filename
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/timed-agitation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Timed agitation
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/non-zero-array-min/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Non Zero Array Min
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/stir-rack/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Stir a rack of samples
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/agitation-ir/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Agitation IR
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/list-ir/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  List IR
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/reference-environment/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Reference environment
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/logging-ir/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Typed log events
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/confirmation-ir/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Explicit confirmation
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/wall-time-ir/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Explicit wall clock
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/timing-ir/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Elapsed-time IR
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/demo-device/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Independent device
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../examples/portable-agitation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Portable agitation
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
     
   
   
@@ -2875,17 +2224,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
   <span class="md-ellipsis">
     
   
-  API Reference
+  Examples
 
     
   </span>
@@ -2895,12 +2244,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
   
-  API Reference
+  Examples
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
@@ -2939,14 +2288,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../author/" class="md-nav__link">
+      <a href="../function-call/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Author API
+  Function calls
 
     
   </span>
@@ -2966,14 +2315,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../units/" class="md-nav__link">
+      <a href="../agitation/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Units
+  Agitation
 
     
   </span>
@@ -2993,14 +2342,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../comptime/" class="md-nav__link">
+      <a href="../scale-values/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Compile-time queries
+  Scale values
 
     
   </span>
@@ -3020,14 +2369,149 @@
   
   
     <li class="md-nav__item">
-      <a href="../text/" class="md-nav__link">
+      <a href="../prepare-labels/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Runtime text
+  Prepare labels
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quantity-conversion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Quantity conversion
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../numeric-operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Numeric operations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../record-values/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Record values
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../confirm-samples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Confirm samples
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../timestamp-path/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Timestamp a filename
 
     
   </span>
@@ -3056,24 +2540,524 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
   
   
   <span class="md-ellipsis">
     
   
-  AutoSuite
+  Timed agitation
 
     
   </span>
   
   
 
-          <span class="md-nav__icon md-icon"></span>
-        </label>
+      </a>
       
-      <a href="././" class="md-nav__link md-nav__link--active">
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../non-zero-array-min/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Non Zero Array Min
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stir-rack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Stir a rack of samples
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../agitation-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Agitation IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../list-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  List IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Reference environment
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logging-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typed log events
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../confirmation-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Explicit confirmation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wall-time-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Explicit wall clock
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../timing-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Elapsed-time IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../demo-device/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Independent device
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../portable-agitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Portable agitation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  API Reference
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  API Reference
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Overview
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/author/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Author API
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/units/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Units
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/comptime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Compile-time queries
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/text/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime text
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/autosuite/" class="md-nav__link">
         
   
   
@@ -3088,221 +3072,6 @@
   
 
       </a>
-      
-        
-
-
-<nav class="md-nav md-nav--secondary" aria-label="On this page">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteTarget" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        AutoSuiteTarget
-      </span>
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="AutoSuiteTarget">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteTarget.version" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        version
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteTarget.devices" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        devices
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteTarget.target_id" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        target_id
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteTarget.resolve_devices" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        resolve_devices
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteTarget.validate" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        validate
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteTarget.emit" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        emit
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteIndividualShaker" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        AutoSuiteIndividualShaker
-      </span>
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="AutoSuiteIndividualShaker">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteIndividualShaker.device_type_id" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        device_type_id
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteIndividualShaker.writable_properties" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        writable_properties
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteIndividualShaker.required_configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        required_configuration
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteIndividualShaker.supported_operations" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        supported_operations
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteIndividualShaker.zone" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        zone
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteIndividualShaker.device_id" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        device_id
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteVersion" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        AutoSuiteVersion
-      </span>
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="AutoSuiteVersion">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteVersion.V2_47_1_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        V2_47_1_1
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3315,7 +3084,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../devices/" class="md-nav__link">
+      <a href="../../api/devices/" class="md-nav__link">
         
   
   
@@ -3342,7 +3111,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ir-values/" class="md-nav__link">
+      <a href="../../api/ir-values/" class="md-nav__link">
         
   
   
@@ -3369,7 +3138,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ir-flow/" class="md-nav__link">
+      <a href="../../api/ir-flow/" class="md-nav__link">
         
   
   
@@ -3396,7 +3165,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ir-devices/" class="md-nav__link">
+      <a href="../../api/ir-devices/" class="md-nav__link">
         
   
   
@@ -3423,7 +3192,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ir-json/" class="md-nav__link">
+      <a href="../../api/ir-json/" class="md-nav__link">
         
   
   
@@ -3450,7 +3219,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../compiler/" class="md-nav__link">
+      <a href="../../api/compiler/" class="md-nav__link">
         
   
   
@@ -3477,7 +3246,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../interpreter/" class="md-nav__link">
+      <a href="../../api/interpreter/" class="md-nav__link">
         
   
   
@@ -3504,7 +3273,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../diagnostics/" class="md-nav__link">
+      <a href="../../api/diagnostics/" class="md-nav__link">
         
   
   
@@ -3548,11 +3317,6 @@
                       
                     
                     
-                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-                      <div class="md-sidebar-button__wrapper">
-                        <label class="md-sidebar-button" for="__toc"></label>
-                      </div>
-                    
                   
                   <div class="md-sidebar__inner">
                     
@@ -3564,208 +3328,6 @@
   
     
   
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteTarget" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        AutoSuiteTarget
-      </span>
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="AutoSuiteTarget">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteTarget.version" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        version
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteTarget.devices" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        devices
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteTarget.target_id" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        target_id
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteTarget.resolve_devices" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        resolve_devices
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteTarget.validate" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        validate
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteTarget.emit" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        emit
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteIndividualShaker" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        AutoSuiteIndividualShaker
-      </span>
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="AutoSuiteIndividualShaker">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteIndividualShaker.device_type_id" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        device_type_id
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteIndividualShaker.writable_properties" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        writable_properties
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteIndividualShaker.required_configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        required_configuration
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteIndividualShaker.supported_operations" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        supported_operations
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteIndividualShaker.zone" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        zone
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteIndividualShaker.device_id" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        device_id
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteVersion" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        AutoSuiteVersion
-      </span>
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="AutoSuiteVersion">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sciloom_autosuite.AutoSuiteVersion.V2_47_1_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        V2_47_1_1
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -3788,699 +3350,76 @@
 
                   
 
-<h1 id="autosuite-contribution">AutoSuite contribution</h1>
-<p>Import these interfaces from <code>sciloom_autosuite</code>, the workspace member distributed as <code>sciloom-autosuite</code>. The <a href="../../user-guide/advanced/autosuite/">AutoSuite rules</a> page explains deployment and validation boundaries.</p>
-
-
-<div class="doc doc-object doc-class">
-
-
-
-<h2 id="sciloom_autosuite.AutoSuiteTarget" class="doc doc-heading">
-            <span class="doc doc-object-name doc-class-name">sciloom_autosuite.AutoSuiteTarget</span>
-
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
-  </span>
-
-</h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">AutoSuiteTarget</span><span class="p">(</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n">version</span><span class="p">:</span> <span class="n">AutoSuiteVersion</span> <span class="o">=</span> <span class="n">AutoSuiteVersion</span><span class="o">.</span><span class="n">V2_47_1_1</span><span class="p">,</span>
-    <span class="n">devices</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span>
-        <span class="nb">str</span><span class="p">,</span> <span class="n">AutoSuiteIndividualShaker</span>
-    <span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(),</span>
-<span class="p">)</span>
+<h1 id="keep-the-shaker-running-through-a-wait">Keep the shaker running through a wait</h1>
+<p>Start a shaker, record a timer origin, and stop it after an elapsed-time wait.
+The first wait uses two seconds; the second waits only for the remaining time
+to the five-second threshold. Calling <code>stop()</code> is a separate step.</p>
+<div class="highlight"><pre><span></span><code><span class="go">uv run python examples/timed_agitation.py</span>
 </code></pre></div>
-
-    <div class="doc doc-contents first">
-
-
-
-        <p>Compile validated SciLoom programs to AutoSuite function-package XML.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>version</code>
-            </td>
-            <td>
-                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom_autosuite.AutoSuiteVersion&lt;/span&gt;" href="./#sciloom_autosuite.AutoSuiteVersion">AutoSuiteVersion</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Supported AutoSuite serialization profile.</p>
-              </div>
-            </td>
-            <td>
-                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-attribute-name&quot;&gt;V2_47_1_1&lt;/span&gt;
-
-
-  &lt;span class=&quot;doc doc-labels&quot;&gt;
-      &lt;small class=&quot;doc doc-label doc-label-class-attribute&quot;&gt;&lt;code&gt;class-attribute&lt;/code&gt;&lt;/small&gt;
-      &lt;small class=&quot;doc doc-label doc-label-instance-attribute&quot;&gt;&lt;code&gt;instance-attribute&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="./#sciloom_autosuite.AutoSuiteVersion.V2_47_1_1">V2_47_1_1</a></code>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>devices</code>
-            </td>
-            <td>
-                  <code><span title="typing.Mapping">Mapping</span>[<span title="str">str</span>, <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom_autosuite.AutoSuiteIndividualShaker&lt;/span&gt;
-
-
-  &lt;span class=&quot;doc doc-labels&quot;&gt;
-      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="./#sciloom_autosuite.AutoSuiteIndividualShaker">AutoSuiteIndividualShaker</a>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Logical field/component paths mapped to individual shaker profiles.</p>
-              </div>
-            </td>
-            <td>
-                  <code><span title="dict">dict</span>()</code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-<p><span class="doc-section-title">Raises:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="TypeError">TypeError</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A binding is not an AutoSuiteIndividualShaker.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="ValueError">ValueError</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>A profile/version/path is invalid or physical bindings are duplicated.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-        <p>Generated XML still requires AutoSuite Executor validation on the deployment host.</p>
-
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h3 id="sciloom_autosuite.AutoSuiteTarget.version" class="doc doc-heading">
-            <span class="doc doc-object-name doc-attribute-name">version</span>
-
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-</h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">version</span><span class="p">:</span> <span class="n">AutoSuiteVersion</span>
+<div class="highlight"><pre><span></span><code>timed_agitation.asfp
 </code></pre></div>
+<p>The generated file appears beside the source. Compilation does not wait or
+control hardware. The speed and durations demonstrate programming and are not
+recommended process settings.</p>
+<div class="highlight"><pre><span></span><code><span class="sd">"""For experiment authors: wait relative to a timer while a shaker stays running.</span>
 
-    <div class="doc doc-contents ">
+<span class="sd">Run: ``uv run python examples/timed_agitation.py``</span>
+<span class="sd">Terminal output: ``timed_agitation.asfp``</span>
 
-    </div>
+<span class="sd">The generated function saves 300 rpm, starts the shaker, then starts a timer.</span>
+<span class="sd">It waits two seconds, waits until five seconds from that timer start, and stops</span>
+<span class="sd">the shaker. Reference execution advances five seconds; actual platform timing</span>
+<span class="sd">needs Executor validation. The values illustrate programming, not a process recipe.</span>
 
-</div>
+<span class="sd">Compilation writes the complete timed_agitation.asfp beside this source. It</span>
+<span class="sd">does not operate equipment or wait on the computer running this script.</span>
+<span class="sd">"""</span>
 
-<div class="doc doc-object doc-attribute">
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agitator</span><span class="p">,</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Timer</span><span class="p">,</span> <span class="n">rpm</span><span class="p">,</span> <span class="n">runtime</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">wait</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteIndividualShaker</span><span class="p">,</span> <span class="n">AutoSuiteTarget</span>
 
 
+<span class="k">class</span><span class="w"> </span><span class="nc">TimedAgitation</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Keep agitation enabled until the elapsed-time step completes.</span>
 
-<h3 id="sciloom_autosuite.AutoSuiteTarget.devices" class="doc doc-heading">
-            <span class="doc doc-object-name doc-attribute-name">devices</span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        shaker: Logical shaker used for this procedure.</span>
+<span class="sd">        timer: Function-owned origin for elapsed waits.</span>
+<span class="sd">    """</span>
+
+    <span class="n">shaker</span><span class="p">:</span> <span class="n">Agitator</span>
+    <span class="n">timer</span><span class="p">:</span> <span class="n">Timer</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">300</span> <span class="o">*</span> <span class="n">rpm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">wait</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">wait_until</span><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shaker</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
 
 
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-</h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">devices</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">AutoSuiteIndividualShaker</span><span class="p">]</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">AutoSuiteTarget</span><span class="p">(</span>
+        <span class="n">devices</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">"shaker"</span><span class="p">:</span> <span class="n">AutoSuiteIndividualShaker</span><span class="p">(</span><span class="n">zone</span><span class="o">=</span><span class="s2">"Heater Shaker 23"</span><span class="p">,</span> <span class="n">device_id</span><span class="o">=</span><span class="s2">"23"</span><span class="p">),</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">TimedAgitation</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".asfp"</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 </code></pre></div>
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h3 id="sciloom_autosuite.AutoSuiteTarget.target_id" class="doc doc-heading">
-            <span class="doc doc-object-name doc-attribute-name">target_id</span>
-
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
-  </span>
-
-</h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">target_id</span><span class="p">:</span> <span class="nb">str</span>
-</code></pre></div>
-
-    <div class="doc doc-contents ">
-
-        <p>Return the selected AutoSuite format identity.</p>
-
-    </div>
-
-</div>
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="sciloom_autosuite.AutoSuiteTarget.resolve_devices" class="doc doc-heading">
-            <span class="doc doc-object-name doc-function-name">resolve_devices</span>
-
-
-</h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">resolve_devices</span><span class="p">(</span><span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DeviceBindings</span>
-</code></pre></div>
-
-    <div class="doc doc-contents ">
-
-        <p>Translate explicit deployment profiles into trusted, contributor-neutral facts.</p>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="sciloom_autosuite.AutoSuiteTarget.validate" class="doc doc-heading">
-            <span class="doc doc-object-name doc-function-name">validate</span>
-
-
-</h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">validate</span><span class="p">(</span><span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Diagnostic</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
-</code></pre></div>
-
-    <div class="doc doc-contents ">
-
-        <p>Return platform diagnostics for recursion, Boolean operations and array outputs.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>program</code>
-            </td>
-            <td>
-                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.core.ir.Program&lt;/span&gt;
-
-
-  &lt;span class=&quot;doc doc-labels&quot;&gt;
-      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="../ir-flow/#sciloom.core.ir.Program">Program</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Structurally valid, specialized semantic IR.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="tuple">tuple</span>[<a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.core.diagnostics.Diagnostic&lt;/span&gt;
-
-
-  &lt;span class=&quot;doc doc-labels&quot;&gt;
-      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="../diagnostics/#sciloom.core.diagnostics.Diagnostic">Diagnostic</a>, ...]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>An empty tuple when the currently implemented target checks pass.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="sciloom_autosuite.AutoSuiteTarget.emit" class="doc doc-heading">
-            <span class="doc doc-object-name doc-function-name">emit</span>
-
-
-</h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">emit</span><span class="p">(</span><span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Artifact</span>
-</code></pre></div>
-
-    <div class="doc doc-contents ">
-
-        <p>Generate an ASFP artifact from a validated, specialized program.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>program</code>
-            </td>
-            <td>
-                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.core.ir.Program&lt;/span&gt;
-
-
-  &lt;span class=&quot;doc doc-labels&quot;&gt;
-      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="../ir-flow/#sciloom.core.ir.Program">Program</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>IR already checked by the public compilation pipeline.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.core.compiler.Artifact&lt;/span&gt;
-
-
-  &lt;span class=&quot;doc doc-labels&quot;&gt;
-      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="../compiler/#sciloom.core.compiler.Artifact">Artifact</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>UTF-8 XML bytes with application/xml media type and .asfp suffix.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-<p><span class="doc-section-title">Raises:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.core.diagnostics.CompilationError&lt;/span&gt;" href="../diagnostics/#sciloom.core.diagnostics.CompilationError">CompilationError</a></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Generation cannot represent the program or produce valid XML.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-        <p>Use compile_ir or Function.compile to run all preceding validation stages.</p>
-
-
-    </div>
-
-</div>
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-class">
-
-
-
-<h2 id="sciloom_autosuite.AutoSuiteIndividualShaker" class="doc doc-heading">
-            <span class="doc doc-object-name doc-class-name">sciloom_autosuite.AutoSuiteIndividualShaker</span>
-
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
-  </span>
-
-</h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">AutoSuiteIndividualShaker</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">zone</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span>
-</code></pre></div>
-
-    <div class="doc doc-contents first">
-            <p class="doc doc-class-bases">
-              Bases: <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.Agitator&lt;/span&gt;" href="../author/#sciloom.Agitator">Agitator</a></code></p>
-
-
-
-        <p>Bind one logical controller to a fixed zone on one individual shaker.</p>
-<p>device_id identifies the shaker, not the vessel/rack listed in the zone.
-The caller supplies a matching existing application configuration. This
-record does not discover hardware or establish physical speed limits.</p>
-
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h3 id="sciloom_autosuite.AutoSuiteIndividualShaker.device_type_id" class="doc doc-heading">
-            <span class="doc doc-object-name doc-attribute-name">device_type_id</span>
-
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
-  </span>
-
-</h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">device_type_id</span><span class="p">:</span> <span class="nb">str</span>
-</code></pre></div>
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h3 id="sciloom_autosuite.AutoSuiteIndividualShaker.writable_properties" class="doc doc-heading">
-            <span class="doc doc-object-name doc-attribute-name">writable_properties</span>
-
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
-  </span>
-
-</h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">writable_properties</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
-</code></pre></div>
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h3 id="sciloom_autosuite.AutoSuiteIndividualShaker.required_configuration" class="doc doc-heading">
-            <span class="doc doc-object-name doc-attribute-name">required_configuration</span>
-
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
-  </span>
-
-</h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">required_configuration</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
-</code></pre></div>
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h3 id="sciloom_autosuite.AutoSuiteIndividualShaker.supported_operations" class="doc doc-heading">
-            <span class="doc doc-object-name doc-attribute-name">supported_operations</span>
-
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
-  </span>
-
-</h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">supported_operations</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span>
-</code></pre></div>
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h3 id="sciloom_autosuite.AutoSuiteIndividualShaker.zone" class="doc doc-heading">
-            <span class="doc doc-object-name doc-attribute-name">zone</span>
-
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-</h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">zone</span><span class="p">:</span> <span class="nb">str</span>
-</code></pre></div>
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h3 id="sciloom_autosuite.AutoSuiteIndividualShaker.device_id" class="doc doc-heading">
-            <span class="doc doc-object-name doc-attribute-name">device_id</span>
-
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-</h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span>
-</code></pre></div>
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-class">
-
-
-
-<h2 id="sciloom_autosuite.AutoSuiteVersion" class="doc doc-heading">
-            <span class="doc doc-object-name doc-class-name">sciloom_autosuite.AutoSuiteVersion</span>
-
-
-</h2>
-
-
-    <div class="doc doc-contents first">
-            <p class="doc doc-class-bases">
-              Bases: <code><span title="enum.StrEnum">StrEnum</span></code></p>
-
-
-
-        <p>AutoSuite serialization versions supported by the maintained contribution.</p>
-
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h3 id="sciloom_autosuite.AutoSuiteVersion.V2_47_1_1" class="doc doc-heading">
-            <span class="doc doc-object-name doc-attribute-name">V2_47_1_1</span>
-
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
-      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
-  </span>
-
-</h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">V2_47_1_1</span>
-</code></pre></div>
-
-    <div class="doc doc-contents ">
-
-    </div>
-
-</div>
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
+<p><a href="../../_generated/examples/timed_agitation.py">Download Python</a> ·
+<a href="../../_generated/examples/timed_agitation.asfp">Download ASFP</a></p>
+<p>Change the two Duration values to alter the waits. <code>wait_until(5 * s)</code> means
+five seconds from the latest timer start, not five more seconds. Steps between
+start and wait count toward elapsed time. If that time has already passed, the
+program continues immediately. A wait never stops the shaker by itself.</p>
+<p>The native Wait task disables its cancel-wait button. Timer reset, scope,
+elapsed behavior and this setting still need AutoSuite Executor validation.
+See <a href="../../user-guide/reference/runtime-language/#wait-and-timer">timing rules and target limits</a>.</p>
 
 
 
@@ -4513,7 +3452,7 @@ record does not discover hardware or establish physical speed limits.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../text/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Runtime text">
+          <a href="../timestamp-path/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Timestamp a filename">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -4523,20 +3462,20 @@ record does not discover hardware or establish physical speed limits.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Runtime text
+                Timestamp a filename
               </div>
             </div>
           </a>
         
         
           
-          <a href="../devices/" class="md-footer__link md-footer__link--next" aria-label="Next: Device declarations">
+          <a href="../non-zero-array-min/" class="md-footer__link md-footer__link--next" aria-label="Next: Non Zero Array Min">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Device declarations
+                Non Zero Array Min
               </div>
             </div>
             <div class="md-footer__button md-icon">

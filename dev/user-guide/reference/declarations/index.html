@@ -2633,6 +2633,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/timed-agitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Timed agitation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2830,6 +2857,33 @@
     
   
   Explicit wall clock
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/timing-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Elapsed-time IR
 
     
   </span>
@@ -3438,8 +3492,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.8
-    · <code title="912fb137fb23c45f11cb886cb78887d19b3e85b0">912fb137</code>
+    · SciLoom 0.3.9
+    · <code title="f37b21dc22c951c96427b2b194b39ec2cafd6403">f37b21dc</code>
   </p>
 </aside>
 
@@ -3484,6 +3538,11 @@
 <td>Logical device dependency, bound to hardware through the target</td>
 <td>No class-level value</td>
 </tr>
+<tr>
+<td><code>timer: Timer</code></td>
+<td>Elapsed-time reference owned by this Function</td>
+<td>No class-level value; call <code>start()</code> during execution</td>
+</tr>
 </tbody>
 </table>
 <p><a href="../../tutorial/inputs-and-units/">Lesson 2</a> introduces inputs;
@@ -3499,7 +3558,7 @@ changes to the original cannot change the declaration. Each instance starts
 with independent state. Initial values do not reset fields on later calls.</p>
 <p>Inherited declarations remain available. Do not change an inherited field's
 role, type or initial value, or replace an inherited device slot with another
-attribute. Use public names that do not conflict with Function methods such as
+attribute. Timer slots also retain their role on inheritance. Use public names that do not conflict with Function methods such as
 <code>compile</code>.</p>
 <h2 id="the-runtime-method">The runtime method</h2>
 <table>
@@ -3540,6 +3599,8 @@ Child Function calls belong inside the runtime method.</p>
 settings, create child Functions and share existing logical device references:</p>
 <p><code>self.stage.shaker = self.shaker</code> lets the child use the parent's shaker.
 Do not assign hardware profiles or runtime field values there.
+Timers cannot be assigned or shared between Functions; elapsed time is common
+to the procedure, but each timer belongs to its declaring Function.
 See <a href="../../advanced/composition/">shared devices</a> and
 <a href="../../advanced/specialization/">constructor settings</a>.</p>
 <h2 id="docstrings">Docstrings</h2>

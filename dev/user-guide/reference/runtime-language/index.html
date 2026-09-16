@@ -1266,6 +1266,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#wait-and-timer" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Wait and timer
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#lists-and-indices" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2710,6 +2721,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/timed-agitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Timed agitation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2907,6 +2945,33 @@
     
   
   Explicit wall clock
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/timing-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Elapsed-time IR
 
     
   </span>
@@ -3555,6 +3620,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#wait-and-timer" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Wait and timer
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#lists-and-indices" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3592,8 +3668,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.8
-    · <code title="912fb137fb23c45f11cb886cb78887d19b3e85b0">912fb137</code>
+    · SciLoom 0.3.9
+    · <code title="f37b21dc22c951c96427b2b194b39ec2cafd6403">f37b21dc</code>
   </p>
 </aside>
 
@@ -3854,6 +3930,10 @@ has not been verified.</p>
 <td>Clock reads inside larger expressions, runtime format strings</td>
 </tr>
 <tr>
+<td><code>wait(duration)</code>, declared Timer <code>start()</code> and <code>wait_until(duration)</code></td>
+<td>Contact/setpoint waits, automatic stop, shared Timer objects</td>
+</tr>
+<tr>
 <td>Whole <code>if/elif</code> conditions using <code>comptime</code> queries</td>
 <td>Combining these queries with <code>and</code> / <code>or</code> or runtime arguments</td>
 </tr>
@@ -3931,6 +4011,36 @@ AutoSuite uses local time; no timezone conversion or unique-name guarantee is
 provided. The <a href="../../../examples/timestamp-path/">filename example</a> is a complete
 program. Calendar boundaries, local daylight-saving changes and format encoding
 still need Executor validation.</p>
+<h2 id="wait-and-timer">Wait and timer</h2>
+<p>Import <code>Timer</code>, <code>s</code> and <code>wait</code> from <code>sciloom</code>. Declare <code>timer: Timer</code> on the
+Function, alongside its input and output declarations. Inside <code>@runtime</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">wait</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="o">.</span><span class="n">wait_until</span><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span>
+</code></pre></div>
+<p>This waits a total of five seconds from the timer start: two seconds first,
+then the remaining three. <code>wait()</code> pauses for an interval; <code>wait_until()</code> pauses
+until an elapsed threshold. Repeating <code>start()</code> resets the origin. If the
+threshold has passed, <code>wait_until()</code> continues immediately.</p>
+<p>Both calls take a nonnegative Duration. They preserve the current device
+configuration and running state. Use <code>self.shaker.stop()</code> when the procedure
+should stop agitation; waiting does not schedule an automatic stop.</p>
+<p>A Timer belongs to one Function instance. Do not construct one in <code>__init__</code> or
+assign another Function's timer to it. Child calls consume the same elapsed
+time axis, but own their own timers. Every reachable wait must have a prior
+start in the current entry invocation; a previous call is not an implicit start.
+Starting only inside a conditional or zero-iteration loop may leave a path
+without a start.</p>
+<p><strong>AutoSuite restrictions:</strong> waits currently require literal durations within
+0–79,999 hours (an ordinary host setting such as <code>self.delay = 5 * s</code> also lowers
+to a literal). Runtime inputs need range/failure checks and are refused until
+failure propagation is verified. All starts/resets of one timer must lie in
+one lexical Macro scope; waits may stay there or descend into its branches and
+loops. A start in a branch followed by a wait outside that branch is refused.
+The reference interpreter supports broader Function scope.</p>
+<p>The <a href="../../../examples/timed-agitation/">timed agitation example</a> is a complete
+program. Generated waits disable the cancel-wait button. Actual timing, resets,
+scope and cancellation settings remain subject to Executor verification.</p>
 <h2 id="lists-and-indices">Lists and indices</h2>
 <p><code>self.result = self.values</code> copies the complete list. Changing
 <code>self.result[0]</code> afterwards does not change <code>self.values[0]</code>. A child

@@ -2678,6 +2678,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/timed-agitation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Timed agitation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2875,6 +2902,33 @@
     
   
   Explicit wall clock
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/timing-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Elapsed-time IR
 
     
   </span>
@@ -3527,8 +3581,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.8
-    · <code title="912fb137fb23c45f11cb886cb78887d19b3e85b0">912fb137</code>
+    · SciLoom 0.3.9
+    · <code title="f37b21dc22c951c96427b2b194b39ec2cafd6403">f37b21dc</code>
   </p>
 </aside>
 
@@ -3764,6 +3818,16 @@ hand-built or edited programs and from device declarations.</p>
 <td>two resources with one logical id</td>
 </tr>
 <tr>
+<td><code>timer_resource</code></td>
+<td>Timers require an existing owner and a unique public declaration name. / Timer operations require a timer owned by this Function.</td>
+<td>fix the TimerResource owner/name or the operation's resource ID; timers are not device bindings and cannot cross ownership</td>
+</tr>
+<tr>
+<td><code>wait_type</code></td>
+<td>Waits require a Duration value.</td>
+<td>supply a DURATION expression rather than a scalar or another quantity</td>
+</tr>
+<tr>
 <td><code>entry_function</code>, <code>unknown_function</code></td>
 <td>Entry must reference a function in this package. / Unknown function ...</td>
 <td>a dangling function id</td>
@@ -3792,7 +3856,7 @@ hand-built or edited programs and from device declarations.</p>
 </table>
 <h2 id="compilationerror">CompilationError</h2>
 <p>Raised by <code>compile_ir</code> after validation: by the binding check, the capability
-and configuration pass, and <code>Target.validate</code>.</p>
+and configuration pass, definite timer-start analysis, and <code>Target.validate</code>.</p>
 <table>
 <thead>
 <tr>
@@ -3836,6 +3900,26 @@ and configuration pass, and <code>Target.validate</code>.</p>
 <td><code>device_configuration</code></td>
 <td>start() requires <code>&lt;property&gt;</code> to be configured on every reachable path in this invocation.</td>
 <td>a <code>StartAgitation</code> reachable without its required writes</td>
+</tr>
+<tr>
+<td><code>timer_not_started</code></td>
+<td>Timer must be started on every reachable path in this entry invocation.</td>
+<td>start on each relevant path; diagnostics identify each wait needing a start, including waits reached through child calls</td>
+</tr>
+<tr>
+<td><code>unsupported_timer_scope</code></td>
+<td>AutoSuite timer starts/resets must share one lexical Macro scope.</td>
+<td>keep starts/resets in one scope with waits there or below; moving a start changes timing</td>
+</tr>
+<tr>
+<td><code>unsupported_runtime_guard</code></td>
+<td>AutoSuite waits require a literal duration until runtime range failure propagation is verified.</td>
+<td>use a bounded literal or reference-execute the dynamic program while the platform gate remains open</td>
+</tr>
+<tr>
+<td><code>wait_duration</code></td>
+<td>AutoSuite wait duration must be within 0–79,999 hours.</td>
+<td>use a literal inside the documented range</td>
 </tr>
 <tr>
 <td>your own code</td>
@@ -3929,12 +4013,38 @@ and configuration pass, and <code>Target.validate</code>.</p>
 <td><code>start</code> before every required property was saved</td>
 </tr>
 <tr>
+<td><code>timer_not_started</code></td>
+<td>Timer was not started in this entry invocation.</td>
+<td>the actual path missed StartTimer; prior entry invocations do not establish a valid origin</td>
+</tr>
+<tr>
+<td><code>wait_duration</code></td>
+<td>Wait duration must be nonnegative.</td>
+<td>validate or correct the supplied duration; waits do not accept signed differences below zero</td>
+</tr>
+<tr>
+<td><code>missing_environment_service</code></td>
+<td>Reference execution requires the <code>&lt;service&gt;</code> environment service.</td>
+<td>explicitly supply the needed clock or acknowledgement service; no host service is selected automatically</td>
+</tr>
+<tr>
+<td><code>clock_error</code></td>
+<td>Virtual clock values must be finite and nonnegative.</td>
+<td>the elapsed-time advance overflowed; use finite representable start/interval values</td>
+</tr>
+<tr>
 <td><code>step_limit</code>, <code>call_depth</code>, <code>execution_depth</code></td>
 <td>Reference execution exhausted its step budget. / ... exceeded its call-depth budget. / Reference evaluation exceeded the host nesting limit.</td>
 <td>a budget in <code>ExecutionConfig</code> was exhausted</td>
 </tr>
 </tbody>
 </table>
+<p>For timing, construct <code>ReferenceEnvironment(clock=VirtualClock())</code> and pass it
+as <code>Interpreter(program, environment=environment)</code>. Both names are exported by
+<code>sciloom.core.interpreter</code>; see the <a href="../../examples/timing-ir/">complete timing example</a>.
+A rejected clock advance leaves its prior time intact and emits no wait event.
+Completed earlier events remain in <code>environment.events</code>, and later operations
+do not execute.</p>
 <h2 id="reproduce-author-facing-failures">Reproduce author-facing failures</h2>
 <p>This complete script keeps the examples from the author lessons and advanced
 guides executable in one place. It prints only each diagnostic code; the

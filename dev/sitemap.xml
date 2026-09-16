@@ -175,6 +175,9 @@
         <loc>https://tsumina.github.io/sciloom/dev/examples/timestamp-path/</loc>
       </url>
       <url>
+        <loc>https://tsumina.github.io/sciloom/dev/examples/timed-agitation/</loc>
+      </url>
+      <url>
         <loc>https://tsumina.github.io/sciloom/dev/examples/non-zero-array-min/</loc>
       </url>
       <url>
@@ -197,6 +200,9 @@
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/examples/wall-time-ir/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/examples/timing-ir/</loc>
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/examples/demo-device/</loc>
