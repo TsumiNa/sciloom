@@ -39,6 +39,7 @@ are indexes; design proposals and validation records retain their historical con
 - [Renaming the core binding records module](refactor/core-bindings/00-overview.md)
 - [Example-led handbooks](refactor/handbook-restructure/00-overview.md)
 - [User Guide readability and experimental learning path](refactor/user-guide-readability/00-overview.md)
+- [Durable IR and twelve runtime capabilities](refactor/runtime-capabilities/00-overview.md)
 
 ## AutoSuite reference
 
