@@ -1189,6 +1189,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#physical-quantities" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Physical quantities
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#text" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2520,6 +2531,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/quantity-conversion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Quantity conversion
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -3180,6 +3218,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#physical-quantities" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Physical quantities
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#text" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3239,8 +3288,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.1
-    · <code title="6b8965d3572b9c50d08b98a2918a20ba01a24039">6b8965d3</code>
+    · SciLoom 0.3.2
+    · <code title="4e5f5c5d421981ce8da1ee78d3ea95cd1d1cbe83">4e5f5c5d</code>
   </p>
 </aside>
 
@@ -3272,17 +3321,20 @@ of the Python script use ordinary Python.</p>
 </tr>
 <tr>
 <td><code>RotationalSpeed</code></td>
-<td><code>600 * rpm</code> or <code>10 * rps</code>; the only physical quantity currently supported</td>
+<td>Nonnegative speed, such as <code>600 * rpm</code> or <code>10 * rps</code></td>
+</tr>
+<tr>
+<td><code>Volume</code>, <code>Duration</code></td>
+<td>Signed, finite quantities, such as <code>2 * mL</code> or <code>1 * minute</code></td>
 </tr>
 <tr>
 <td><code>list[T]</code></td>
-<td>One-dimensional list of <code>int</code>, <code>float</code>, <code>bool</code>, <code>str</code> or <code>RotationalSpeed</code></td>
+<td>One-dimensional list of a supported scalar or quantity type</td>
 </tr>
 </tbody>
 </table>
-<p>A speed literal uses a number known when the program is compiled. For a speed
-supplied by the caller, use <code>Input[RotationalSpeed]</code>.
-The internal unit for speed is revolutions per second.</p>
+<p>For a speed supplied by the caller, use <code>Input[RotationalSpeed]</code>.
+The internal units are revolutions per second, cubic metres and seconds.</p>
 <p>Lists require an element type: no bare <code>list</code>, <code>list[Any]</code>, mixed types
 or nested lists. An empty <code>[]</code> gets its element type from its destination.
 List-to-list assignment requires the same element type; a literal assigned to
@@ -3321,18 +3373,77 @@ List-to-list assignment requires the same element type; a literal assigned to
 <td>String slicing, implicit conversion, arbitrary string methods</td>
 </tr>
 <tr>
-<td><code>300 * rpm</code> from a host number</td>
-<td>Attaching a unit to a runtime number</td>
+<td>Number times a known unit; quantity divided by a unit</td>
+<td>Arbitrary dimensional algebra or implicit unit conversion</td>
 </tr>
 </tbody>
 </table>
-<p>Arithmetic and ordering comparisons require numeric operands. Division produces
-a float. Speeds support equality and inequality, but no runtime arithmetic. A condition
+<p>Ordinary numeric division produces a float. Volume and duration support
+same-dimension arithmetic and ordering; quantity rules are below. A condition
 must be Boolean: use <code>self.count &gt; 0</code>, not <code>self.count</code>. Text also supports <code>+</code>
 for concatenation and <code>==</code>/<code>!=</code> for exact comparisons.
 Lists have no implicit truth value, whole-list comparisons or arithmetic.</p>
 <p><strong>AutoSuite restriction:</strong> although SciLoom accepts <code>and</code> and <code>or</code>,
 this target rejects them. Use <a href="../../troubleshooting/#autosuite-rejects-boolean-combinations">nested conditions</a>.</p>
+<h2 id="physical-quantities">Physical quantities</h2>
+<p>Import <code>Volume</code>, <code>Duration</code>, <code>uL</code>, <code>mL</code>, <code>L</code>, <code>s</code>, <code>minute</code> and <code>hour</code> from
+<code>sciloom</code>. Declare them as inputs, outputs or initialized state just like speed.
+Multiplying a runtime number by a unit constructs the corresponding quantity.</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Example</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Add/subtract the same dimension</td>
+<td><code>self.volume - 1 * mL</code></td>
+<td>Volume, possibly negative</td>
+</tr>
+<tr>
+<td>Multiply/divide by a number</td>
+<td><code>self.interval / 2</code></td>
+<td>Duration</td>
+</tr>
+<tr>
+<td>Compare the same dimension</td>
+<td><code>self.interval &lt; 1 * minute</code></td>
+<td>bool</td>
+</tr>
+<tr>
+<td>Divide like quantities</td>
+<td><code>self.volume / self.reference_volume</code></td>
+<td>float</td>
+</tr>
+<tr>
+<td>Express a quantity in a unit</td>
+<td><code>self.volume / mL</code></td>
+<td>float</td>
+</tr>
+<tr>
+<td>Construct from a number</td>
+<td><code>self.number * mL</code></td>
+<td>Volume</td>
+</tr>
+</tbody>
+</table>
+<p>Volume and duration also support unary <code>+</code> and <code>-</code>. Speed supports scaling and
+like-quantity ratios, while retaining its nonnegative constraint; speed addition,
+negation and ordering remain unsupported. Booleans are never numeric quantities.
+Results use floating arithmetic, so unit conversions can have ordinary rounding.</p>
+<p><strong>AutoSuite restriction:</strong> quantity division currently requires a literal nonzero
+divisor. Speed scaling requires a literal nonnegative factor, positive for
+division. Runtime number-to-speed construction needs a sign check and is refused
+until runtime failure propagation is verified. Volume/duration lists support
+whole-list construction, copying and calls; guarded indexing awaits the same
+verification. The reference interpreter supports these operations and reports
+invalid values when they occur.</p>
+<p>The <a href="../../../examples/quantity-conversion/">quantity example</a> shows conversion in
+a complete function. A Duration value stores an interval; waiting and timers are
+separate operations.</p>
 <h2 id="text">Text</h2>
 <p>Declare text with <code>Input[str]</code>, <code>Output[str]</code> or an initialized <code>Var[str] = ""</code>.
 Import <code>text</code> from <code>sciloom</code> for the two runtime helpers:</p>

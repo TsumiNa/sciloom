@@ -2584,6 +2584,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/quantity-conversion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Quantity conversion
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -3369,8 +3396,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.1
-    · <code title="6b8965d3572b9c50d08b98a2918a20ba01a24039">6b8965d3</code>
+    · SciLoom 0.3.2
+    · <code title="4e5f5c5d421981ce8da1ee78d3ea95cd1d1cbe83">4e5f5c5d</code>
   </p>
 </aside>
 
@@ -3394,8 +3421,9 @@ explains how to inspect their structured fields when available.</p>
 <!-- correction: speed fixed -->
 <div class="highlight"><pre><span></span><code><span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="mi">600</span> <span class="o">*</span> <span class="n">rpm</span>
 </code></pre></div>
-<p>For a speed chosen by the caller, declare <code>Input[RotationalSpeed]</code>. Do not
-multiply a runtime number by <code>rpm</code>; unit literals use host numbers.</p>
+<p>For a speed chosen by the caller, declare <code>Input[RotationalSpeed]</code>. Runtime
+number-times-unit construction is supported by the language; AutoSuite currently
+refuses speed construction that needs an unverified runtime sign check.</p>
 <table>
 <thead>
 <tr>
@@ -3407,8 +3435,13 @@ multiply a runtime number by <code>rpm</code>; unit literals use host numbers.</
 <tbody>
 <tr>
 <td><code>quantity_literal</code></td>
-<td><code>self.value * rpm</code> when <code>value</code> is a runtime field</td>
-<td>take a speed input, or use a host number times a unit</td>
+<td>a constant unit value is nonfinite or invalid for its quantity</td>
+<td>use a finite value; speed must be nonnegative</td>
+</tr>
+<tr>
+<td><code>unsupported_runtime_guard</code></td>
+<td>runtime speed construction or a variable quantity divisor</td>
+<td>supply a typed speed input or a literal nonzero divisor; see <a href="../reference/runtime-language/#physical-quantities">quantity rules</a></td>
 </tr>
 <tr>
 <td><code>type_mismatch</code></td>

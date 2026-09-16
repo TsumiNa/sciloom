@@ -2479,6 +2479,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/quantity-conversion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Quantity conversion
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -3154,8 +3181,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.1
-    · <code title="6b8965d3572b9c50d08b98a2918a20ba01a24039">6b8965d3</code>
+    · SciLoom 0.3.2
+    · <code title="4e5f5c5d421981ce8da1ee78d3ea95cd1d1cbe83">4e5f5c5d</code>
   </p>
 </aside>
 
@@ -3171,10 +3198,15 @@ If/While, calls, list operations, property configuration and lifecycle intent.
 They do not contain AutoSuite UUIDs, task encodings or hidden context parameters.</p>
 <h2 id="types-ownership-and-identity">Types, ownership and identity</h2>
 <p>Variables have an owner function, role and value type. Scalars are INTEGER, REAL,
-BOOLEAN, TEXT and ROTATIONAL_SPEED internally; a ListType contains one scalar element
+BOOLEAN, TEXT, ROTATIONAL_SPEED, VOLUME and DURATION internally; a ListType contains one scalar element
 type. Public Python authors use native int/float/bool/str rather than these IR enums.
 Internal variables require literal initializers. Input/output defaults are not
 supported. Conditions are Boolean and list element types are invariant.</p>
+<p>Volume and duration literals hold finite SI numbers (m³ and seconds). Unit
+construction and conversion reuse typed Binary/Literal operations: multiplying
+REAL by a VOLUME literal yields VOLUME; dividing two VOLUME values yields REAL.
+No Python unit object enters JSON. Quantity constraints apply to intermediate
+values too, so a negative speed cannot be hidden inside a later comparison.</p>
 <p>IDs identify node occurrences in a program-wide namespace. Two reads of one
 variable use different node IDs but the same symbol_id. References cannot cross
 function ownership. Calls use callee variable IDs for their complete I/O bindings.

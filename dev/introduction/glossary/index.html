@@ -2465,6 +2465,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/quantity-conversion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Quantity conversion
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -3140,8 +3167,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.1
-    · <code title="6b8965d3572b9c50d08b98a2918a20ba01a24039">6b8965d3</code>
+    · SciLoom 0.3.2
+    · <code title="4e5f5c5d421981ce8da1ee78d3ea95cd1d1cbe83">4e5f5c5d</code>
   </p>
 </aside>
 
@@ -3189,9 +3216,10 @@ property an agitation <code>start()</code> requires was assigned on every path t
 <a href="../../user-guide/reference/devices-and-targets/#agitator">Device operations</a>.</p>
 <p><strong>Diagnostic.</strong> A structured error: code, message, path into the program and,
 when known, the source line. <a href="../../user-guide/troubleshooting/">Troubleshooting</a>.</p>
-<p><strong>Rotational speed, rpm, rps.</strong> The one physical quantity in this release,
-written as a number times a unit; revolutions per second is canonical.
-<a href="../../user-guide/tutorial/inputs-and-units/">Tutorial 2</a>.</p>
+<p><strong>Physical quantity.</strong> A value with a dimension: <code>RotationalSpeed</code>, <code>Volume</code> or
+<code>Duration</code>. Write a number times a unit, such as <code>300 * rpm</code>, <code>2 * mL</code> or <code>5 * s</code>.
+Canonical values use revolutions per second, cubic metres and seconds respectively.
+<a href="../../user-guide/reference/runtime-language/#physical-quantities">Quantity rules</a>.</p>
 <p><strong>Whole-list assignment.</strong> Copying all values from a list into a field, such as
 <code>self.result = self.values</code>. AutoSuite requires output lists to be assigned
 this way before individual elements are read or updated.
