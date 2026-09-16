@@ -65,8 +65,8 @@ handwritten JSON model was rejected because it duplicates the typed definitions.
 
 ## Stage status and sequence
 
-Stages 0–3 merged as PRs #85–88. Stage 4 implements numeric operations;
-stages 5–17 remain pending. Update this table in the stage that implements an
+Stages 0–4 merged as PRs #85–89. Stage 5 implements reference-environment ownership;
+stages 6–17 remain pending. Update this table in the stage that implements an
 outcome and record its PR and verification.
 
 | Stage | Plan | Outcome | Status |
@@ -75,8 +75,8 @@ outcome and record its PR and verification.
 | 1 | [Wire contract](03-plan-wire-contract.md) | Stable kinds, v4 baselines, consumer completeness | Merged, PR #86 |
 | 2 | [Text](04-plan-text.md) | A01 text and text lists | Merged, PR #87 |
 | 3 | [Quantities](05-plan-quantities.md) | A02 volume and time | Merged, PR #88 |
-| 4 | [Numeric operations](06-plan-numeric.md) | A11 abs, floor and round | Implemented; acceptance/review pending |
-| 5 | [Reference environment](07-plan-environment.md) | Explicit environment and ordered external events | Pending |
+| 4 | [Numeric operations](06-plan-numeric.md) | A11 abs, floor and round | Merged, PR #89 |
+| 5 | [Reference environment](07-plan-environment.md) | Explicit environment and ordered external events | Implemented; acceptance/review pending |
 | 6 | [Logging](08-plan-logging.md) | A09 typed log events | Pending |
 | 7 | [Confirmation](09-plan-confirmation.md) | A10 acknowledged messages | Pending |
 | 8 | [Failure propagation](10-plan-failure.md) | Verified AutoSuite runtime-failure boundary | Pending |
@@ -135,7 +135,7 @@ Do not extend an author/device contract merely to imitate vendor XML.
 
 ## Version
 
-Version: PATCH 0.3.2 → 0.3.3 for stage 4, following the user's lockstep 0.3.x decision.
+Version: PATCH 0.3.3 → 0.3.4 for stage 5, following the user's lockstep 0.3.x decision.
 By explicit user decision, the first shipped-code
 stage moves both packages from 0.2.0 to 0.3.0; later shipped-code stages remain
 lockstep in 0.3.x. This is an exception to the usual per-capability minor-bump

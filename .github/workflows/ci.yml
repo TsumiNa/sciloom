@@ -66,6 +66,7 @@ jobs:
       - run: uv run python examples/tutorial/stir_sample_rack.py
       - run: uv run python -m examples.developer.agitation_ir
       - run: uv run python -m examples.developer.list_ir
+      - run: uv run python -m examples.developer.reference_environment
       - run: uv run python -m examples.developer.demo_device
       - run: uv run python -m examples.developer.portable_agitation
       - run: git diff --exit-code

@@ -43,6 +43,7 @@ EXAMPLES = (
     "developer/agitation_ir.json",
     "developer/list_ir.py",
     "developer/list_ir.json",
+    "developer/reference_environment.py",
     "developer/demo_device.py",
     "developer/demo_device.json",
     "developer/demo_contribution/__init__.py",

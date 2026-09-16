@@ -1,6 +1,15 @@
 """Independent, bounded reference execution of SciLoom semantic IR."""
 
 from .device_state import DeviceEvent, DeviceState
+from .environment import ExecutionEvent, ReferenceEnvironment
 from .runtime import ExecutionConfig, ExecutionResult, Interpreter
 
-__all__ = ["ExecutionConfig", "ExecutionResult", "Interpreter", "DeviceState", "DeviceEvent"]
+__all__ = [
+    "ExecutionConfig",
+    "ExecutionResult",
+    "Interpreter",
+    "DeviceState",
+    "DeviceEvent",
+    "ExecutionEvent",
+    "ReferenceEnvironment",
+]

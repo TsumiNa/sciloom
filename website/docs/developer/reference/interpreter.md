@@ -5,7 +5,7 @@ defines SciLoom semantics, not vendor simulation or hardware behavior.
 
 ```python
 from examples.scale_values import ScaleValues
-from sciloom.core.interpreter import ExecutionConfig, Interpreter
+from sciloom.core.interpreter import ExecutionConfig, Interpreter, ReferenceEnvironment
 
 session = Interpreter(ScaleValues().to_ir(), config=ExecutionConfig(max_steps=10_000))
 result = session.run(inputs={"values": [1.0, 2.0, 3.0], "factor": 2.5})
@@ -16,6 +16,38 @@ JSON persistence is optional. The [agitation IR example](../../examples/agitatio
 deliberately exercises it to verify the boundary. DeviceIf requires specialization
 before interpreter construction; after compilation use result.specialized_ir.
 Native commands without reference semantics fail explicitly.
+
+## Explicit environment
+
+Pass `environment=ReferenceEnvironment()` to make external-context ownership
+explicit. Omitting it creates a fresh environment for that Interpreter. Pure
+calculation and existing device programs keep their previous calling convention.
+The environment does not read host files, sample a real clock or confirm messages
+automatically. Concrete services arrive with the operations that need them.
+
+Using the imports above:
+
+```python
+environment = ReferenceEnvironment()
+session = Interpreter(ScaleValues().to_ir(), environment=environment)
+result = session.run(inputs={"values": [1.0, 2.0, 3.0], "factor": 2.5})
+assert result.outputs["result"] == (2.5, 5.0, 7.5)
+assert environment.events == ()  # This calculation has no external events.
+```
+
+`environment.events` returns an immutable history snapshot across all runs using
+that environment. `result.events` remains limited to one successful run.
+`ExecutionEvent` is the typed event vocabulary, currently DeviceEvent; new effects
+add their own immutable records. A failed run leaves earlier completed events in
+environment history and does not roll back their state changes.
+
+Reuse the same environment to share history explicitly. This does not share
+Function variables or device configurations between Interpreters. Child Function
+calls use their entry session's environment. Sessions and environments are
+sequential and are not intended for concurrent execution.
+
+The [environment example](../../examples/reference-environment.md) runs two
+sessions and inspects their combined history and independent device snapshots.
 
 ## Session and snapshots
 

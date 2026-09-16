@@ -100,6 +100,7 @@ nav:
       - Stir a rack of samples: examples/stir-rack.md
       - Agitation IR: examples/agitation-ir.md
       - List IR: examples/list-ir.md
+      - Reference environment: examples/reference-environment.md
       - Independent device: examples/demo-device.md
       - Portable agitation: examples/portable-agitation.md
   - API Reference:

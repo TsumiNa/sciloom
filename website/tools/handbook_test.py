@@ -286,6 +286,7 @@ class Text(HTMLParser):
         *((f"user-guide/tutorial/{page}", source) for page, source in USER_LESSONS),
         ("examples/agitation-ir", "developer/agitation_ir"),
         ("examples/list-ir", "developer/list_ir"),
+        ("examples/reference-environment", "developer/reference_environment"),
         ("examples/demo-device", "developer/demo_device"),
         ("examples/portable-agitation", "developer/portable_agitation"),
     ),
