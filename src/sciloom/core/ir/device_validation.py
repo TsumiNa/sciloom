@@ -86,6 +86,8 @@ def validate_directory(program: Program, report: Report) -> None:
         if builtin.type_id in types and types[builtin.type_id] != builtin:
             report("device_contract", "Built-in semantic contracts cannot be redefined.", "$.device_types", None)
     for resource in program.resources:
+        if not isinstance(resource, DeviceResource):
+            continue
         if resource.device_type_id not in types:
             report(
                 "device_contract", "Device resources must reference a declared type contract.", "$.resources", resource

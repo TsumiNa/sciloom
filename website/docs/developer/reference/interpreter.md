@@ -37,8 +37,8 @@ assert environment.events == ()  # This calculation has no external events.
 
 `environment.events` returns an immutable history snapshot across all runs using
 that environment. `result.events` remains limited to one successful run.
-`ExecutionEvent` is the union of DeviceEvent, LogEvent, AcknowledgementEvent and
-WallTimeEvent. Narrow with
+`ExecutionEvent` is the union of DeviceEvent, LogEvent, AcknowledgementEvent,
+WallTimeEvent, TimerEvent and WaitEvent. Narrow with
 `isinstance(event, LogEvent)` before accessing log-specific fields; device events
 carry state snapshots. A failed run leaves earlier completed events in
 environment history and does not roll back their state changes.
@@ -125,6 +125,31 @@ not share clocks unless explicitly given the same service. This wall clock is
 independent of elapsed-time waits; it does not advance automatically.
 
 The [direct IR example](../../examples/wall-time-ir.md) also checks JSON v4 restoration.
+
+## Elapsed-time input
+
+Supply `ReferenceEnvironment(clock=VirtualClock())` for Wait, StartTimer and
+WaitUntil. VirtualClock stores finite nonnegative seconds and advances without
+sleeping. It is independent of VirtualWallClock: a wait does not change supplied
+calendar time. Omitted clocks cause `missing_environment_service`, even for a
+zero wait. `VirtualClock(start=...)` accepts an explicit nonnegative origin.
+
+StartTimer captures the current monotonic value. WaitUntil evaluates its Duration
+once, verifies a start in this entry run, then waits only for time still missing
+from the threshold. Negative requests fail with `wait_duration`; invalid clock
+advances or overflow fail with `clock_error` before changing the clock. Earlier
+completed events and state changes remain. Timer validity resets at each entry
+run; child calls share the entry's time axis and Function-owned timer identities.
+
+Successful starts append TimerEvent with the new origin. WaitEvent records the
+requested Duration, monotonic start/end of the wait, and a timer ID for elapsed
+waits (None for ordinary waits). Already elapsed waits have equal start/end times.
+These events are immutable and interleaved with device and log events. The
+existing `result.resources` mapping continues to contain device states only.
+
+The [timer IR example](../../examples/timing-ir.md) advances five virtual seconds.
+This defines ordering and elapsed-time semantics; it is not a latency or scheduling
+simulation of AutoSuite or physical equipment.
 
 ## Session and snapshots
 

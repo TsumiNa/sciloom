@@ -12,6 +12,7 @@ from sciloom.core.ir import (
     ListType,
     Literal,
     Program,
+    TimerResource,
     Variable,
     VariableRole,
     validate,
@@ -57,6 +58,9 @@ def lower(root: Function) -> Program:
             reference = context.host_attribute(name)
             assert isinstance(reference, DeviceReference)
             context.device_resource(reference)
+        for name in instance.timer_fields:
+            identity = f"{context.function_id}:timer:{name}"
+            scope.resources[identity] = TimerResource(node_id=identity, owner_id=context.function_id, name=name)
         function = _build_function(context)
         functions.append(function)
         index += 1

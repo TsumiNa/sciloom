@@ -10,7 +10,7 @@ from .bindings import DeviceBindings
 from .bindings_test import binding as reference_binding
 from .compiler import Artifact, compile_ir
 from .diagnostics import CompilationError
-from .ir import Call, CanWrite, DeviceIf, FunctionIR, IsDevice, ScalarType, from_json, to_json
+from .ir import Call, CanWrite, DeviceIf, FunctionIR, IsDevice, ScalarType, TimerResource, from_json, to_json
 from .ir.codec_devices_test import extension_program
 from .ir.device_contracts import AGITATOR_CONTRACT, BASE_DEVICE_CONTRACT
 from .specialization import specialize
@@ -76,7 +76,8 @@ def test_unreachable_functions_are_pruned_before_target_validation():
         program.functions[0],
         body=(DeviceIf(node_id="if", condition=condition, then_body=(Call(node_id="call", function_id="helper"),)),),
     )
-    program = replace(program, functions=(entry, helper))
+    timer = TimerResource(node_id="helper-timer", owner_id="helper", name="timer")
+    program = replace(program, functions=(entry, helper), resources=(*program.resources, timer))
 
     class Target:
         target_id = "record"
@@ -89,6 +90,7 @@ def test_unreachable_functions_are_pruned_before_target_validation():
         def validate(self, program):
             assert len(program.functions) == 1
             assert not program.functions[0].body
+            assert timer not in program.resources
             return ()
 
         def emit(self, program):
@@ -98,6 +100,7 @@ def test_unreachable_functions_are_pruned_before_target_validation():
     result = compile_ir(program, target=target)
     assert target.resolutions == 1
     assert len(result.semantic_ir.functions) == 2
+    assert timer in result.semantic_ir.resources
     assert from_json(result.artifact.content.decode()) == result.specialized_ir
 
 

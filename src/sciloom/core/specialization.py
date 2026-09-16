@@ -12,6 +12,7 @@ from .ir import (
     ConfigureProperty,
     DeviceCommand,
     DeviceIf,
+    DeviceResource,
     If,
     IsDevice,
     ListSet,
@@ -19,10 +20,15 @@ from .ir import (
     Notify,
     Program,
     ReadWallTime,
+    Resource,
     StartAgitation,
+    StartTimer,
     Statement,
     StopAgitation,
     SupportsOperation,
+    TimerResource,
+    Wait,
+    WaitUntil,
     While,
     validate,
 )
@@ -54,7 +60,7 @@ def specialize(program: Program, *, bindings: DeviceBindings) -> Program:
     if diagnostics:
         raise CompilationError(diagnostics)
     deployed = {b.logical_id: b for b in bindings.devices}
-    resources = {r.node_id: deployed[r.logical_id] for r in program.resources}
+    resources = {r.node_id: deployed[r.logical_id] for r in program.resources if isinstance(r, DeviceResource)}
 
     def block(body: tuple[Statement, ...]) -> tuple[Statement, ...]:
         selected: list[Statement] = []
@@ -121,6 +127,9 @@ def specialize(program: Program, *, bindings: DeviceBindings) -> Program:
                     LogValue,
                     Notify,
                     ReadWallTime,
+                    Wait,
+                    StartTimer,
+                    WaitUntil,
                     Call,
                     ConfigureProperty,
                     StartAgitation,
@@ -148,10 +157,19 @@ def specialize(program: Program, *, bindings: DeviceBindings) -> Program:
     for binding in bindings.devices:
         for contract in (*binding.base_contracts, binding.contract):
             directory[contract.type_id] = contract
+    selected_resources: list[Resource] = []
+    for resource in program.resources:
+        if isinstance(resource, DeviceResource):
+            selected_resources.append(replace(resource, device_type_id=resources[resource.node_id].contract.type_id))
+        elif isinstance(resource, TimerResource):
+            if resource.owner_id in reachable:
+                selected_resources.append(resource)
+        else:
+            assert_never(resource)
     result = replace(
         program,
         functions=tuple(functions[f.node_id] for f in program.functions if f.node_id in reachable),
-        resources=tuple(replace(r, device_type_id=resources[r.node_id].contract.type_id) for r in program.resources),
+        resources=tuple(selected_resources),
         device_types=tuple(directory[key] for key in sorted(directory)),
     )
     diagnostics = validate(result)

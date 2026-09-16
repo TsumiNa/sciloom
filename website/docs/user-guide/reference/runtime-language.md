@@ -139,6 +139,7 @@ The [label example](../../examples/prepare-labels.md) shows a complete program.
 | `log(value, category=..., stream=...)` | Logging lists, automatic object formatting or using log as a result |
 | `notify(message)` | Timeout, automatic confirmation, cancellation branches or a returned value |
 | `self.stamp = now_text(format)` | Clock reads inside larger expressions, runtime format strings |
+| `wait(duration)`, declared Timer `start()` and `wait_until(duration)` | Contact/setpoint waits, automatic stop, shared Timer objects |
 | Whole `if/elif` conditions using `comptime` queries | Combining these queries with `and` / `or` or runtime arguments |
 | `pass`, docstrings | `return`, `try`, `with`, `assert`, `del`, nested definitions |
 
@@ -209,6 +210,45 @@ AutoSuite uses local time; no timezone conversion or unique-name guarantee is
 provided. The [filename example](../../examples/timestamp-path.md) is a complete
 program. Calendar boundaries, local daylight-saving changes and format encoding
 still need Executor validation.
+
+## Wait and timer
+
+Import `Timer`, `s` and `wait` from `sciloom`. Declare `timer: Timer` on the
+Function, alongside its input and output declarations. Inside `@runtime`:
+
+```python
+self.timer.start()
+wait(2 * s)
+self.timer.wait_until(5 * s)
+```
+
+This waits a total of five seconds from the timer start: two seconds first,
+then the remaining three. `wait()` pauses for an interval; `wait_until()` pauses
+until an elapsed threshold. Repeating `start()` resets the origin. If the
+threshold has passed, `wait_until()` continues immediately.
+
+Both calls take a nonnegative Duration. They preserve the current device
+configuration and running state. Use `self.shaker.stop()` when the procedure
+should stop agitation; waiting does not schedule an automatic stop.
+
+A Timer belongs to one Function instance. Do not construct one in `__init__` or
+assign another Function's timer to it. Child calls consume the same elapsed
+time axis, but own their own timers. Every reachable wait must have a prior
+start in the current entry invocation; a previous call is not an implicit start.
+Starting only inside a conditional or zero-iteration loop may leave a path
+without a start.
+
+**AutoSuite restrictions:** waits currently require literal durations within
+0–79,999 hours (an ordinary host setting such as `self.delay = 5 * s` also lowers
+to a literal). Runtime inputs need range/failure checks and are refused until
+failure propagation is verified. All starts/resets of one timer must lie in
+one lexical Macro scope; waits may stay there or descend into its branches and
+loops. A start in a branch followed by a wait outside that branch is refused.
+The reference interpreter supports broader Function scope.
+
+The [timed agitation example](../../examples/timed-agitation.md) is a complete
+program. Generated waits disable the cancel-wait button. Actual timing, resets,
+scope and cancellation settings remain subject to Executor verification.
 
 ## Lists and indices
 

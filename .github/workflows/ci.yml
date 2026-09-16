@@ -62,6 +62,7 @@ jobs:
       - run: uv run python examples/record_values.py
       - run: uv run python examples/confirm_samples.py
       - run: uv run python examples/timestamp_path.py
+      - run: uv run python examples/timed_agitation.py
       - run: uv run python examples/non_zero_array_min.py
       - run: uv run python examples/stir_rack.py
       - run: uv run python examples/tutorial/start_shaker.py
@@ -74,6 +75,7 @@ jobs:
       - run: uv run python -m examples.developer.logging_ir
       - run: uv run python -m examples.developer.confirmation_ir
       - run: uv run python -m examples.developer.wall_time_ir
+      - run: uv run python -m examples.developer.timing_ir
       - run: uv run python -m examples.developer.demo_device
       - run: uv run python -m examples.developer.portable_agitation
       - run: git diff --exit-code

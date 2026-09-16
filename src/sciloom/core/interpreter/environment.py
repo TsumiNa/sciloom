@@ -6,8 +6,9 @@ from typing import TypeAlias, TypeVar
 from sciloom.core.diagnostics import SourceSpan
 from sciloom.core.ir.model import Node
 from sciloom.core.ir.types import ScalarType
+from sciloom.units import Duration
 from .acknowledgements import QueuedAcknowledgements
-from .clocks import WallClock
+from .clocks import VirtualClock, WallClock
 from .device_state import DeviceEvent
 from .values import InputScalar, fail
 
@@ -65,7 +66,45 @@ class WallTimeEvent:
     value: str
 
 
-ExecutionEvent: TypeAlias = DeviceEvent | LogEvent | AcknowledgementEvent | WallTimeEvent
+@dataclass(frozen=True, kw_only=True)
+class TimerEvent:
+    """A timer's new monotonic origin, captured at each successful start/reset.
+
+    Attributes:
+        node_id: Semantic start occurrence.
+        source: Optional source location.
+        resource_id: Function-owned timer identity.
+        started_at: Captured monotonic seconds at this start/reset.
+    """
+
+    node_id: str
+    source: SourceSpan | None
+    resource_id: str
+    started_at: float
+
+
+@dataclass(frozen=True, kw_only=True)
+class WaitEvent:
+    """A completed wait, including its captured request and elapsed clock interval.
+
+    Attributes:
+        node_id: Semantic wait occurrence.
+        source: Optional source location.
+        duration: Interval for ordinary wait; elapsed threshold for a timer wait.
+        started_at: Monotonic seconds at the beginning of this wait operation.
+        finished_at: Monotonic seconds after waiting, possibly unchanged.
+        timer_id: Timer resource ID for wait_until, otherwise None.
+    """
+
+    node_id: str
+    source: SourceSpan | None
+    duration: Duration
+    started_at: float
+    finished_at: float
+    timer_id: str | None
+
+
+ExecutionEvent: TypeAlias = DeviceEvent | LogEvent | AcknowledgementEvent | WallTimeEvent | TimerEvent | WaitEvent
 """Closed reference-event vocabulary; each effect adds its own immutable record."""
 
 Service = TypeVar("Service")
@@ -90,6 +129,9 @@ class ReferenceEnvironment:
 
     wall_clock: WallClock | None = None
     """Explicit aware wall-time provider; never defaults to the host clock."""
+
+    clock: VirtualClock | None = None
+    """Explicit monotonic virtual clock; waiting never sleeps on the host."""
 
     _events: list[ExecutionEvent] = field(default_factory=list, init=False, repr=False)
 

@@ -39,6 +39,16 @@ Use ListLiteral, ListLength, ListGet and ListSet for list intent. DeviceResource
 ConfigureProperty, StartAgitation, StopAgitation and DeviceCommand retain equipment
 intent. DeviceIf and its typed predicates retain branches until specialization.
 
+`Program.resources` holds the `Resource` union: `DeviceResource` or
+`TimerResource`. A timer has an `owner_id` pointing to a FunctionIR and a public
+declaration `name`; only that function may start or wait on it. `StartTimer`
+captures or resets the origin, `Wait` pauses for a Duration, and `WaitUntil`
+waits until a Duration has elapsed since that origin. These are ordered
+statements, not expressions. See the [direct timing example](../../examples/timing-ir.md).
+Device bindings apply only to DeviceResource. Specialization removes timers
+whose owning functions become unreachable; existing device wire fields do not
+change. Definite timer starts are checked after device specialization.
+
 ## Validation and serialization
 
 `validate(program)` returns a tuple of Diagnostic records. `to_dict/from_dict`

@@ -35,6 +35,7 @@ from .context import LoweringContext
 from .device_conditions import device_condition
 from .device_operations import configure, device_command
 from .expressions import BINARY_OPERATORS, expression, is_expression_call
+from .timing import timing_statement
 
 
 def call(context: LoweringContext, node: ast.Call, targets: Sequence[ast.expr]) -> Call:
@@ -212,6 +213,10 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
                 )
             )
         elif isinstance(node, ast.Expr) and isinstance(node.value, ast.Call):
+            timed = timing_statement(context, node.value)
+            if timed is not None:
+                result.append(timed)
+                continue
             if context.static_object(node.value.func) is now_text:
                 context.fail("external_operation", "Assign now_text(...) to one declared text field.", node.value)
             if context.static_object(node.value.func) is notify:

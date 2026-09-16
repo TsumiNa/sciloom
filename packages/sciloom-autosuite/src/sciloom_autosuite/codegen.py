@@ -17,7 +17,7 @@ from dataclasses import asdict
 from typing import Any, Mapping
 from uuid import NAMESPACE_URL, uuid5
 
-from sciloom.core.ir import Program, to_dict
+from sciloom.core.ir import DeviceResource, Program, to_dict
 from .agitation import AutoSuiteIndividualShaker
 from .context import CodegenContext
 from .device_state import prepare_device_state
@@ -47,7 +47,11 @@ def lower_asfp(
     digest = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
     namespace = uuid5(NAMESPACE_URL, f"https://sciloom.invalid/{target.value}/{digest}")
     bindings = devices
-    resources = {resource.node_id: bindings[resource.logical_id] for resource in program.resources}
+    resources = {
+        resource.node_id: bindings[resource.logical_id]
+        for resource in program.resources
+        if isinstance(resource, DeviceResource)
+    }
     context = CodegenContext(program, namespace, resources)
     prepare_device_state(context)
     return build_functions(context, target)

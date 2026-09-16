@@ -1,0 +1,57 @@
+{
+  "device_types": [],
+  "entry_function_id": "timed",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "StartTimer",
+          "node_id": "start",
+          "resource_id": "timer",
+          "source": null
+        },
+        {
+          "duration": {
+            "kind": "Literal",
+            "node_id": "two",
+            "source": null,
+            "type": "duration",
+            "value": 2.0
+          },
+          "kind": "Wait",
+          "node_id": "pause",
+          "source": null
+        },
+        {
+          "duration": {
+            "kind": "Literal",
+            "node_id": "five",
+            "source": null,
+            "type": "duration",
+            "value": 5.0
+          },
+          "kind": "WaitUntil",
+          "node_id": "finish",
+          "resource_id": "timer",
+          "source": null
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "Timed",
+      "node_id": "timed",
+      "source": null,
+      "variables": []
+    }
+  ],
+  "kind": "Program",
+  "resources": [
+    {
+      "kind": "TimerResource",
+      "name": "timer",
+      "node_id": "timer",
+      "owner_id": "timed",
+      "source": null
+    }
+  ]
+}

@@ -240,6 +240,34 @@ class ReadWallTime(Node):
 
 
 @dataclass(frozen=True, kw_only=True)
+class Wait(Node):
+    """Capture a nonnegative Duration and wait without changing device state."""
+
+    __ir_kind__: ClassVar[str] = "Wait"
+
+    duration: Expression
+
+
+@dataclass(frozen=True, kw_only=True)
+class StartTimer(Node):
+    """Set or reset a Function-owned timer's monotonic origin."""
+
+    __ir_kind__: ClassVar[str] = "StartTimer"
+
+    resource_id: str
+
+
+@dataclass(frozen=True, kw_only=True)
+class WaitUntil(Node):
+    """Wait until a captured Duration has elapsed from the timer's latest start."""
+
+    __ir_kind__: ClassVar[str] = "WaitUntil"
+
+    resource_id: str
+    duration: Expression
+
+
+@dataclass(frozen=True, kw_only=True)
 class ListSet(Node):
     """Update one existing element; an augmented op evaluates the index/read once."""
 
@@ -311,6 +339,25 @@ class DeviceResource(Node):
 
     logical_id: str
     device_type_id: str
+
+
+@dataclass(frozen=True, kw_only=True)
+class TimerResource(Node):
+    """A Function-owned elapsed-time reference, never a hardware binding.
+
+    Attributes:
+        owner_id: The only FunctionIR allowed to start or wait on this timer.
+        name: Public declaration name, unique within the owning Function.
+    """
+
+    __ir_kind__: ClassVar[str] = "TimerResource"
+
+    owner_id: str
+    name: str
+
+
+Resource = DeviceResource | TimerResource
+"""Closed set of logical resources; only devices require Target deployment."""
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -413,6 +460,9 @@ Statement = (
     | LogValue
     | Notify
     | ReadWallTime
+    | Wait
+    | StartTimer
+    | WaitUntil
     | ListSet
     | Call
     | If
@@ -449,6 +499,6 @@ class Program:
 
     entry_function_id: str
     functions: tuple[FunctionIR, ...] = ()
-    resources: tuple[DeviceResource, ...] = ()
+    resources: tuple[Resource, ...] = ()
     device_types: tuple[DeviceTypeContract, ...] = ()
     format_version: int = 4

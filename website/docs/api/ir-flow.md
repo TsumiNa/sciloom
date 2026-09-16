@@ -14,6 +14,16 @@ Construct ordered immutable statements rather than target-specific tasks. IDs id
 
 ::: sciloom.core.ir.ReadWallTime
 
+::: sciloom.core.ir.Resource
+
+::: sciloom.core.ir.TimerResource
+
+::: sciloom.core.ir.StartTimer
+
+::: sciloom.core.ir.Wait
+
+::: sciloom.core.ir.WaitUntil
+
 ::: sciloom.core.ir.ListSet
 
 ::: sciloom.core.ir.InputBinding

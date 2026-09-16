@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='utf-8'?>
+<functions>
+  <function typeid="Chemspeed.SATaskFunctionDefinition.1">
+    <description />
+    <name>TimedAgitation</name>
+    <edittime>0</edittime>
+    <expanded>1</expanded>
+    <functiondata>
+      <inputs>
+        <count>0</count>
+        <sortType>0</sortType>
+      </inputs>
+      <outputs>
+        <count>0</count>
+        <sortType>0</sortType>
+      </outputs>
+    </functiondata>
+    <id>{05220CC6-A9EA-5A61-BA2A-22B391D7DC97}</id>
+    <components>
+      <component typeid="Chemspeed.SAMacroTask.1">
+        <description />
+        <name>Macro Task</name>
+        <edittime>0</edittime>
+        <expanded>1</expanded>
+        <conditionloop>1</conditionloop>
+        <conditionif />
+        <conditionwhile />
+        <conditiontype>0</conditiontype>
+        <loopvariable>loop</loopvariable>
+        <fragmentvariable>fragment</fragmentvariable>
+        <executionmode>0</executionmode>
+        <sequentialzones>
+          <count>0</count>
+        </sequentialzones>
+        <multicondition>0</multicondition>
+        <multiloop>0</multiloop>
+        <variables sortingType="1">
+          <variable>
+            <name>sciloom_tmp_1</name>
+            <value>
+              <type>5</type>
+              <value>0</value>
+            </value>
+            <siunit>1/s</siunit>
+            <unit>rpm</unit>
+            <array>0</array>
+            <creationtime>0</creationtime>
+            <constant>0</constant>
+          </variable>
+        </variables>
+        <id>{D93B5271-0C87-50AE-87E8-45DB9DDE31D5}</id>
+        <tasks>
+          <task typeid="Chemspeed.SATaskSetVariable.1">
+            <description />
+            <name>Set Variable</name>
+            <edittime>0</edittime>
+            <variablename>sciloom_tmp_1</variablename>
+            <expressiontext>5</expressiontext>
+            <elementselectmode>0</elementselectmode>
+            <elementnumber />
+            <numberofelements />
+            <startindex>0</startindex>
+            <clearvariable>0</clearvariable>
+            <sortwells>0</sortwells>
+            <enumerationtype>0</enumerationtype>
+            <wellsenumeration>0</wellsenumeration>
+            <elementsenumeration>0</elementsenumeration>
+            <id>{E0E156A1-E371-56D3-8FDD-BEA35184B15D}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskSetAgitation.1">
+            <zone>Heater Shaker 23</zone>
+            <description />
+            <name>Stir</name>
+            <edittime>0</edittime>
+            <taskdatas>
+              <count>1</count>
+              <taskdata0>
+                <progid>Chemspeed.SADeviceIndividualShaker.1</progid>
+                <deviceid>23</deviceid>
+                <wellid>-1</wellid>
+                <speed>sciloom_tmp_1</speed>
+              </taskdata0>
+            </taskdatas>
+            <switchon>1</switchon>
+            <speedunit>rpm</speedunit>
+            <autofillspeed>1</autofillspeed>
+            <stirrertype>0</stirrertype>
+            <id>{99A7E99B-21F6-5BFC-B8CD-3EA98E7FDB8A}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskSetTimer.1">
+            <description />
+            <name>Set Timer</name>
+            <edittime>0</edittime>
+            <timername>sciloom_timer_1028ab6a1a7f59ffb706e357dd8efef7</timername>
+            <id>{24F641DA-68E1-55C2-BB60-E38C07D785CC}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskWait.1">
+            <description />
+            <name>Wait</name>
+            <edittime>0</edittime>
+            <time>2</time>
+            <timeunit>s</timeunit>
+            <msgtodisplay />
+            <waitmode>0</waitmode>
+            <contacts />
+            <timername />
+            <cancelwait>0</cancelwait>
+            <id>{19445533-0E70-54D8-A635-0BBDAA32ABC4}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskWait.1">
+            <description />
+            <name>Wait</name>
+            <edittime>0</edittime>
+            <time>5</time>
+            <timeunit>s</timeunit>
+            <msgtodisplay />
+            <waitmode>2</waitmode>
+            <contacts />
+            <timername>sciloom_timer_1028ab6a1a7f59ffb706e357dd8efef7</timername>
+            <cancelwait>0</cancelwait>
+            <id>{7F07E562-5B94-5D22-A121-96F645AB784F}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskSetAgitation.1">
+            <zone>Heater Shaker 23</zone>
+            <description />
+            <name>Stir</name>
+            <edittime>0</edittime>
+            <taskdatas>
+              <count>1</count>
+              <taskdata0>
+                <progid>Chemspeed.SADeviceIndividualShaker.1</progid>
+                <deviceid>23</deviceid>
+                <wellid>-1</wellid>
+                <speed>1.66666666667</speed>
+              </taskdata0>
+            </taskdatas>
+            <switchon>0</switchon>
+            <speedunit>rpm</speedunit>
+            <autofillspeed>1</autofillspeed>
+            <stirrertype>0</stirrertype>
+            <id>{D81859EF-5264-552F-AC19-312ECB99F4E8}</id>
+          </task>
+        </tasks>
+      </component>
+    </components>
+  </function>
+</functions>

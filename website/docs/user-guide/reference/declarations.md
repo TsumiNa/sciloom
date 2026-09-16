@@ -13,6 +13,7 @@ Use these declarations in the class body. Import the authoring names from
 | `index: Var[int] = 0` | Working value or persistent state; reset explicitly when needed | Required |
 | `batch_size: int = 8` | Ordinary Python configuration; a supported scalar becomes a fixed value in the generated procedure | Ordinary Python rules |
 | `shaker: Agitator` | Logical device dependency, bound to hardware through the target | No class-level value |
+| `timer: Timer` | Elapsed-time reference owned by this Function | No class-level value; call `start()` during execution |
 
 [Lesson 2](../tutorial/inputs-and-units.md) introduces inputs;
 [lesson 3](../tutorial/agitator.md) introduces outputs and working values;
@@ -30,7 +31,7 @@ with independent state. Initial values do not reset fields on later calls.
 
 Inherited declarations remain available. Do not change an inherited field's
 role, type or initial value, or replace an inherited device slot with another
-attribute. Use public names that do not conflict with Function methods such as
+attribute. Timer slots also retain their role on inheritance. Use public names that do not conflict with Function methods such as
 `compile`.
 
 ## The runtime method
@@ -54,6 +55,8 @@ settings, create child Functions and share existing logical device references:
 
 `self.stage.shaker = self.shaker` lets the child use the parent's shaker.
 Do not assign hardware profiles or runtime field values there.
+Timers cannot be assigned or shared between Functions; elapsed time is common
+to the procedure, but each timer belongs to its declaring Function.
 See [shared devices](../advanced/composition.md) and
 [constructor settings](../advanced/specialization.md).
 

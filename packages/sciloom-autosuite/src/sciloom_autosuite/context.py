@@ -14,6 +14,7 @@ from sciloom.core.ir import (
     Literal,
     Program,
     ScalarType,
+    TimerResource,
     ValueType,
     Variable,
     VariableRole,
@@ -47,6 +48,15 @@ class CodegenContext:
                 used.add(candidate)
                 self.names[variable.node_id] = candidate
         self.parameter_names = self.names.copy()
+        self.timers: dict[str, str] = {}
+        occupied = set(self.names.values())
+        for resource in package.resources:
+            if isinstance(resource, TimerResource):
+                name = "sciloom_timer_" + uuid5(namespace, resource.node_id).hex
+                while name in occupied:
+                    name += "_"
+                occupied.add(name)
+                self.timers[resource.node_id] = name
         self.temporaries: dict[str, list[Variable]] = {f.node_id: [] for f in package.functions}
         self.sequence = 0
         self.occupied_ids = {node.node_id for node, _ in iter_nodes(package)}

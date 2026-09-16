@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import replace
 
-from sciloom.core.ir import ListType, VariableRole
+from sciloom.core.ir import ListType, TimerResource, VariableRole
 from .context import CodegenContext
 from .device_state import initialize_device_outputs
 from .parameters import functiondata
@@ -39,6 +39,7 @@ def build_functions(context: CodegenContext, target: AutoSuiteVersion) -> Serial
         body = (
             (macro(context, "component", function.node_id, function, tasks, variables=declarations, role="locals"),)
             if declarations
+            or any(isinstance(r, TimerResource) and r.owner_id == function.node_id for r in context.package.resources)
             else tuple(replace(task, tag="component") for task in tasks)
         )
         functions.append(

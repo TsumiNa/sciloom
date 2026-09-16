@@ -25,6 +25,7 @@ from sciloom.core.ir import (
     Reference,
     ScalarType,
     StartAgitation,
+    StartTimer,
     Statement,
     StopAgitation,
     TextLength,
@@ -32,6 +33,8 @@ from sciloom.core.ir import (
     Unary,
     UnaryOp,
     VariableRole,
+    Wait,
+    WaitUntil,
     While,
 )
 from sciloom.core.ir.expressions import ExpressionChecker
@@ -57,7 +60,14 @@ def validate_runtime_guards(program: Program) -> tuple[Diagnostic, ...]:
         for node, path in iter_nodes(function, f"$.functions[{function_index}]"):
             message = None
             code = "unsupported_runtime_guard"
-            if isinstance(node, Unary) and node.op == UnaryOp.ROUND:
+            if isinstance(node, (Wait, WaitUntil)):
+                duration = node.duration
+                if not isinstance(duration, Literal):
+                    message = "AutoSuite waits require a literal duration until runtime range failure propagation is verified."
+                elif not (isinstance(duration.value, (int, float)) and 0 <= duration.value <= 79_999 * 3600):
+                    code = "wait_duration"
+                    message = "AutoSuite wait duration must be within 0–79,999 hours."
+            elif isinstance(node, Unary) and node.op == UnaryOp.ROUND:
                 if checker.check(node.operand, function, path) != ScalarType.INTEGER:
                     message = "AutoSuite round for real values has no verified Python ties-to-even mapping or expansion range; round of an integer remains an identity."
                     code = "unsupported_rounding"
@@ -168,6 +178,10 @@ def validate_array_outputs(program: Program) -> tuple[Diagnostic, ...]:
                     read(statement.message, assigned)
                 elif isinstance(statement, ReadWallTime):
                     assigned.add(statement.target.symbol_id)
+                elif isinstance(statement, (Wait, WaitUntil)):
+                    read(statement.duration, assigned)
+                elif isinstance(statement, StartTimer):
+                    pass
                 elif isinstance(statement, ListSet):
                     for expression in (statement.target, statement.index, statement.value):
                         read(expression, assigned)

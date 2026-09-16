@@ -99,6 +99,7 @@ nav:
       - Record values: examples/record-values.md
       - Confirm samples: examples/confirm-samples.md
       - Timestamp a filename: examples/timestamp-path.md
+      - Timed agitation: examples/timed-agitation.md
       - Non Zero Array Min: examples/non-zero-array-min.md
       - Stir a rack of samples: examples/stir-rack.md
       - Agitation IR: examples/agitation-ir.md
@@ -107,6 +108,7 @@ nav:
       - Typed log events: examples/logging-ir.md
       - Explicit confirmation: examples/confirmation-ir.md
       - Explicit wall clock: examples/wall-time-ir.md
+      - Elapsed-time IR: examples/timing-ir.md
       - Independent device: examples/demo-device.md
       - Portable agitation: examples/portable-agitation.md
   - API Reference:

@@ -1,6 +1,6 @@
 [project]
 name = "SciLoom"
-version = "0.3.8"
+version = "0.3.9"
 description = "SciLoom — programmable scientific automation from one semantic model."
 readme = "README.md"
 requires-python = ">=3.12,<3.15"
@@ -85,6 +85,7 @@ files = [
     "examples/record_values.py",
     "examples/confirm_samples.py",
     "examples/timestamp_path.py",
+    "examples/timed_agitation.py",
     "examples/tutorial",
     "examples/developer",
 ]
@@ -115,6 +116,7 @@ module = [
     "examples.record_values_test",
     "examples.confirm_samples_test",
     "examples.timestamp_path_test",
+    "examples.timed_agitation_test",
     "sciloom.units_test",
     "sciloom.units_quantities_test",
     "sciloom.devices.agitation_test",
@@ -142,6 +144,10 @@ module = [
     "sciloom.flow.logging_test",
     "sciloom.flow.messages_test",
     "sciloom.flow.timing_test",
+    "sciloom.flow.timing_schema_test",
+    "sciloom.dsl.driver_timing_test",
+    "sciloom.core.timing_test",
+    "sciloom_autosuite.timing_test",
     "sciloom.core.interpreter.clocks_test",
     "sciloom.core.ir.time_format_test",
     "sciloom.core.ir.codec_wall_time_test",

@@ -5,7 +5,7 @@ from dataclasses import dataclass, field, replace
 from types import MappingProxyType
 from typing import assert_never
 
-from sciloom.core.ir import ConfigureProperty, Program, StartAgitation, StopAgitation
+from sciloom.core.ir import ConfigureProperty, DeviceResource, Program, StartAgitation, StopAgitation
 from sciloom.core.ir.device_contracts import START_AGITATION_ID, STOP_AGITATION_ID
 from .values import OutputValue, RuntimeValue, coerce, fail, output_value
 
@@ -42,9 +42,10 @@ class DeviceEvent:
 
 class DeviceSession:
     def __init__(self, program: Program) -> None:
-        self.states = {r.node_id: DeviceState() for r in program.resources}
+        devices = tuple(r for r in program.resources if isinstance(r, DeviceResource))
+        self.states = {r.node_id: DeviceState() for r in devices}
         self.contracts = {
-            r.node_id: next(c for c in program.device_types if c.type_id == r.device_type_id) for r in program.resources
+            r.node_id: next(c for c in program.device_types if c.type_id == r.device_type_id) for r in devices
         }
         self.properties = {p.semantic_id: p for c in program.device_types for p in c.properties}
 

@@ -22,7 +22,7 @@ flowchart TD
     IR --> Validate["Structure and types"]
     Validate --> Resolve["Target.resolve_devices"]
     Resolve --> Specialize["Device specialization"]
-    Specialize --> Config["Capabilities and definite configuration"]
+    Specialize --> Config["Capabilities, device configuration and timer starts"]
     Config --> Target["Target.validate and emit"]
     Target --> Artifact["Platform artifact"]
     Specialize --> Interpreter["Reference interpreter"]
@@ -56,7 +56,8 @@ steps.** It validates structure and types, asks the target which concrete device
 (`resolve_devices`), specializes the program to that deployment by selecting
 device-dependent branches, then proves that every bound device supports what the
 program does with it and that every agitation start has its configuration on
-every path. Only then does the target validate and emit.
+every path. It also proves each elapsed wait has a timer start in the current
+entry invocation. Only then does the target validate and emit.
 
 **The [target](developer/reference/target-contract.md) owns the platform.** A
 target is four members, not a plugin:

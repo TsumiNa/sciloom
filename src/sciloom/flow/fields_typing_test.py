@@ -14,7 +14,7 @@ def test_native_declaration_type_contract(tmp_path, valid):
 from collections.abc import Callable
 from math import floor
 from typing import assert_type
-from sciloom import Agitator, Duration, Function, Input, Output, RotationalSpeed, Var, Volume, log, mL, minute, notify, now_text, rpm, runtime, s, text
+from sciloom import Agitator, Duration, Function, Input, Output, RotationalSpeed, Timer, Var, Volume, log, mL, minute, notify, now_text, rpm, runtime, s, text, wait
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import Program
 
@@ -31,6 +31,7 @@ class Scale(Function):
     amount: Input[Volume]
     elapsed: Var[Duration] = 1 * minute
     amounts: Var[list[Volume]] = [1 * mL]
+    timer: Timer
 
     @runtime
     def run(self) -> None:
@@ -63,6 +64,10 @@ class Scale(Function):
         notify(message="Ready?")
         self.name = now_text("%Y-%m-%d")
         assert_type(now_text(format="%H%M%S"), str)
+        assert_type(self.timer, Timer)
+        self.timer.start()
+        wait(self.elapsed)
+        self.timer.wait_until(duration=5 * s)
         log(self.amount, category=self.name, stream="volume")
         log(self.elapsed, category="recipe", stream="time")
         log(self.factor, category="recipe", stream="factor")
@@ -75,6 +80,7 @@ def check_inputs(program: Program, values: list[float], flags: list[bool], speed
         source += """
 wrong_callback: Callable[[int], str] = Scale().run
 class Bad(Function):
+    timer: Timer
     amount: Var[Volume] = 1.0
     elapsed: Var[Duration] = 1 * mL
     factor: Input[float]
@@ -92,6 +98,9 @@ class Bad(Function):
         abs(self.name)
         notify(3)
         now_text(3)
+        wait(2)
+        self.timer.wait_until(2)
+        self.timer.start(1)
         self.factor = now_text("%Y")
         log(self.values, category="recipe", stream="values")
         log(self.factor, category=3, stream="factor")
@@ -127,6 +136,6 @@ class Bad(Function):
         assert result.returncode == 0, result.stdout + result.stderr
     else:
         assert result.returncode == 1, result.stdout + result.stderr
-        assert result.stdout.count(" error: ") == 23, result.stdout
+        assert result.stdout.count(" error: ") == 26, result.stdout
         for code in ("[assignment]", "[list-item]"):
             assert code in result.stdout

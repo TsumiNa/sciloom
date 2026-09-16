@@ -10,6 +10,8 @@
 
 ::: sciloom.core.compiler.compile_ir
 
+::: sciloom.core.timing.validate_timer_usage
+
 ::: sciloom.core.bindings.DeviceBinding
 
 ::: sciloom.core.bindings.DeviceBindings

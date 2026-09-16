@@ -19,8 +19,11 @@ from sciloom.core.ir import (
     ReadWallTime,
     ScalarType,
     StartAgitation,
+    StartTimer,
     Statement,
     StopAgitation,
+    Wait,
+    WaitUntil,
     While,
 )
 from .agitation import agitation_task
@@ -29,6 +32,7 @@ from .encoding import SCALARS, literal_value
 from .expressions import checked_read, materialize, plan_expression
 from .parameters import functiondata
 from .primitives import macro, set_variable
+from .timing import timing_task
 from .xml import XmlNode, xml_node as _xml
 
 
@@ -138,6 +142,8 @@ def statements(
                     identity=statement.node_id,
                 )
             )
+        elif isinstance(statement, (StartTimer, Wait, WaitUntil)):
+            result.append(timing_task(context, statement, tag))
         elif isinstance(statement, ListSet):
             array = context.names[statement.target.symbol_id]
             value_type = context.variables[statement.target.symbol_id].type

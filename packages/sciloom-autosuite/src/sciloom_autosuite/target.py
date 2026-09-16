@@ -13,6 +13,7 @@ from sciloom.core.ir.traversal import iter_nodes
 from sciloom.devices.declarations import bind_device
 from .agitation import AutoSuiteIndividualShaker
 from .codegen import lower_asfp
+from .timing import validate_timer_scopes
 from .validation import validate_array_outputs, validate_runtime_guards
 from .xml import AutoSuiteVersion
 
@@ -98,6 +99,7 @@ class AutoSuiteTarget:
         ]
         errors.extend(validate_array_outputs(program))
         errors.extend(validate_runtime_guards(program))
+        errors.extend(validate_timer_scopes(program))
         completed: set[str] = set()
         for root in calls:
             if root in completed:

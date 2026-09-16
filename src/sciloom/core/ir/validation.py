@@ -15,6 +15,7 @@ from .model import (
     ConfigureProperty,
     DeviceCommand,
     DeviceIf,
+    DeviceResource,
     FunctionIR,
     If,
     IsDevice,
@@ -27,10 +28,14 @@ from .model import (
     Program,
     ReadWallTime,
     StartAgitation,
+    StartTimer,
     Statement,
     StopAgitation,
     SupportsOperation,
+    TimerResource,
     VariableRole,
+    Wait,
+    WaitUntil,
     While,
 )
 from .schema import _convert
@@ -81,14 +86,40 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
             report("source_span", "Source needs a path, line >= 1 and column >= 0.", f"{path}.source", node)
 
     resources = {r.node_id: r for r in package.resources}
-    logical_ids: set[str] = set()
-    for i, resource in enumerate(package.resources):
-        if not resource.logical_id.strip() or resource.logical_id in logical_ids:
-            report(
-                "resource_identity", "Logical resource IDs must be nonempty and unique.", f"$.resources[{i}]", resource
-            )
-        logical_ids.add(resource.logical_id)
     functions = {function.node_id: function for function in package.functions}
+    logical_ids: set[str] = set()
+    timer_names: set[tuple[str, str]] = set()
+    for i, resource in enumerate(package.resources):
+        if isinstance(resource, DeviceResource):
+            if not resource.logical_id.strip() or resource.logical_id in logical_ids:
+                report(
+                    "resource_identity",
+                    "Logical resource IDs must be nonempty and unique.",
+                    f"$.resources[{i}]",
+                    resource,
+                )
+            logical_ids.add(resource.logical_id)
+        elif isinstance(resource, TimerResource):
+            identity = (resource.owner_id, resource.name)
+            if (
+                resource.owner_id not in functions
+                or not resource.name.isidentifier()
+                or resource.name.startswith("_")
+                or identity in timer_names
+            ):
+                report(
+                    "timer_resource",
+                    "Timers require an existing owner and a unique public declaration name.",
+                    f"$.resources[{i}]",
+                    resource,
+                )
+            elif any(v.name == resource.name for v in functions[resource.owner_id].variables):
+                report(
+                    "timer_resource", "Timer names cannot conflict with runtime fields.", f"$.resources[{i}]", resource
+                )
+            timer_names.add(identity)
+        else:
+            assert_never(resource)
     symbols = {variable.node_id: variable for function in package.functions for variable in function.variables}
     if package.entry_function_id not in functions:
         report("entry_function", "Entry must reference a function in this package.", "$.entry_function_id")
@@ -130,6 +161,15 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                     validate_wall_time_format(stmt.format)
                 except ValueError as error:
                     report("wall_time_format", str(error), f"{p}.format", stmt)
+            elif isinstance(stmt, (StartTimer, Wait, WaitUntil)):
+                if isinstance(stmt, (StartTimer, WaitUntil)):
+                    timer = resources.get(stmt.resource_id)
+                    if not isinstance(timer, TimerResource) or timer.owner_id != function.node_id:
+                        report("timer_resource", "Timer operations require a timer owned by this Function.", p, stmt)
+                if isinstance(stmt, (Wait, WaitUntil)):
+                    duration_type = expression(stmt.duration, function, f"{p}.duration")
+                    if duration_type is not None and duration_type != ScalarType.DURATION:
+                        report("wait_type", "Waits require a Duration value.", f"{p}.duration", stmt)
             elif isinstance(stmt, ListSet):
                 target = expression(stmt.target, function, f"{p}.target")
                 index = expression(stmt.index, function, f"{p}.index")
@@ -159,7 +199,8 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                 else:
                     statements(stmt.body, function, f"{p}.body", narrowed)
             elif isinstance(stmt, (ConfigureProperty, StartAgitation, StopAgitation, DeviceCommand)):
-                resource = resources.get(stmt.resource_id)
+                candidate = resources.get(stmt.resource_id)
+                resource = candidate if isinstance(candidate, DeviceResource) else None
                 if resource is not None and resource.node_id in narrowed:
                     resource = replace(resource, device_type_id=narrowed[resource.node_id])
                 properties, commands = members_for(package, resource) if resource else ((), ())
@@ -198,7 +239,8 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                     report("device_type", "Agitation lifecycle requires an Agitator resource.", p, stmt)
             elif isinstance(stmt, DeviceIf):
                 predicate = stmt.condition
-                resource = resources.get(predicate.resource_id)
+                candidate = resources.get(predicate.resource_id)
+                resource = candidate if isinstance(candidate, DeviceResource) else None
                 if resource is not None and resource.node_id in narrowed:
                     resource = replace(resource, device_type_id=narrowed[resource.node_id])
                 properties, commands = query_members_for(package, resource) if resource else ((), ())

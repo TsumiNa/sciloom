@@ -65,8 +65,8 @@ handwritten JSON model was rejected because it duplicates the typed definitions.
 
 ## Stage status and sequence
 
-Stages 0–8 merged as PRs #85–93. Stage 9 implements ordered wall-time reads;
-stages 10–17 remain pending. The stage 8 Executor gate remains unverified.
+Stages 0–9 merged as PRs #85–94. Stage 10 implements waits and Function-owned
+timers; stages 11–17 remain pending. The stage 8 Executor gate remains unverified.
 Update this table in the stage that implements an
 outcome and record its PR and verification.
 
@@ -81,8 +81,8 @@ outcome and record its PR and verification.
 | 6 | [Logging](08-plan-logging.md) | A09 typed log events | Merged, PR #91 |
 | 7 | [Confirmation](09-plan-confirmation.md) | A10 acknowledged messages | Merged, PR #92 |
 | 8 | [Failure propagation](10-plan-failure.md) | Failure probes and an enforced platform gate | Merged, PR #93; Executor pending |
-| 9 | [Wall clock](11-plan-wall-clock.md) | A12 formatted wall-clock reads | Local acceptance passed; review/CI pending |
-| 10 | [Wait and timer](12-plan-timing.md) | A08 durations and elapsed-time waits | Pending |
+| 9 | [Wall clock](11-plan-wall-clock.md) | A12 formatted wall-clock reads | Merged, PR #94 |
+| 10 | [Wait and timer](12-plan-timing.md) | A08 durations and elapsed-time waits | Local acceptance passed; review/CI pending |
 | 11 | [CSV reads](13-plan-csv-read.md) | A05 row/column reads and typed results | Pending |
 | 12 | [CSV append](14-plan-csv-append.md) | A06 bounded row append | Pending |
 | 13 | [Zone values](15-plan-zone-values.md) | A03 values and read-only deployment directory | Pending |
@@ -137,7 +137,7 @@ Do not extend an author/device contract merely to imitate vendor XML.
 
 ## Version
 
-Version: PATCH 0.3.7 → 0.3.8 for stage 9, following the user's lockstep 0.3.x decision.
+Version: PATCH 0.3.8 → 0.3.9 for stage 10, following the user's lockstep 0.3.x decision.
 By explicit user decision, the first shipped-code
 stage moves both packages from 0.2.0 to 0.3.0; later shipped-code stages remain
 lockstep in 0.3.x. This is an exception to the usual per-capability minor-bump

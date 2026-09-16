@@ -37,7 +37,7 @@ required repository rules, not optional reference material.
 
 1. **Typed SciLoom Semantic IR is the semantic source of truth.**
 2. The primary code frontend is a **restricted Python source language**. Python AST/CST analysis is intentional; arbitrary Python compatibility is not a goal. The implemented subset is documented in `docs/12_PYTHON_FRONTEND.md`.
-3. **Class-level declarations define the static SciLoom runtime schema.** Use `Input[T]`, `Output[T]` and `Var[T]` with native `float`, `int`, `bool`, `str` or physical quantity types. `Var` needs an explicit initial value. Unwrapped annotations are host-time data. There is no `Local[T]` wrapper; field scope follows the owning model. Application/global support remains deferred; future Function `GlobalRef[T]` fields explicitly reference Application state.
+3. **Class-level declarations define the static SciLoom runtime schema.** Use `Input[T]`, `Output[T]` and `Var[T]` with native `float`, `int`, `bool`, `str` or physical quantity types. `Var` needs an explicit initial value. Unwrapped value annotations are host-time data; device classes and bare `Timer` annotations declare separate resources. There is no `Local[T]` wrapper; field scope follows the owning model. Application/global support remains deferred; future Function `GlobalRef[T]` fields explicitly reference Application state.
 4. **The program/function instance is the compilation unit.** `__init__` and ordinary Python specialize/compose the instance before `instance.compile()`.
 5. Python is host/generation-time by default. There is no baseline `@comptime` decorator. Explicit decorators/registered roles mark AutoSuite runtime methods and event entry points (`runtime`, `main`, `on_start`, `on_error`, `on_stop`, etc.).
 6. `__init__` must not silently create new runtime fields in v1. Runtime field schema belongs at class level; instance attributes are compile-time values/components unless explicitly modeled otherwise.
@@ -201,6 +201,7 @@ Run `uv run python -m examples.developer.reference_environment` for explicit eve
 Run `uv run python examples/record_values.py` and `uv run python -m examples.developer.logging_ir` for typed logging and its JSON/reference events.
 Run `uv run python examples/confirm_samples.py` and `uv run python -m examples.developer.confirmation_ir` for explicit OK acknowledgement. Reference execution requires supplied responses; no response is inferred.
 Run `uv run python examples/timestamp_path.py` and `uv run python -m examples.developer.wall_time_ir` for ordered wall-clock reads. Reference execution requires an explicit aware clock; never sample host time implicitly.
+Run `uv run python examples/timed_agitation.py` and `uv run python -m examples.developer.timing_ir` for Function-owned timers and explicit virtual waiting. Timers are not device bindings. Preserve the target's native scope/range checks and do not move timer starts to manufacture visibility.
 Run each independent user lesson with `uv run python examples/tutorial/start_shaker.py`,
 `uv run python examples/tutorial/control_shaker.py`,
 `uv run python examples/tutorial/choose_stirring_speed.py` and
