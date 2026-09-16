@@ -4,7 +4,7 @@ from dataclasses import FrozenInstanceError
 
 import pytest
 
-from sciloom import Agitator, rpm
+from sciloom import Agitator, Zone, rpm
 from sciloom.conftest import StubShaker
 from sciloom.core.diagnostics import IRValidationError
 from sciloom.core.ir.device_contracts import AGITATOR_CONTRACT
@@ -72,3 +72,28 @@ def test_unregistered_host_members_are_inspected_without_getattr_execution():
         metadata = HostValue()
 
     assert device_contract(Contract).properties == AGITATOR_CONTRACT.properties
+
+
+def test_zone_values_do_not_expand_device_property_or_command_types():
+    class LocatedProperty(Agitator):
+        device_type_id = "test.located-property/v1"
+
+        @property
+        def location(self) -> Zone:
+            pytest.fail("getter must not execute")
+
+        @location.setter
+        @operation(id="test.location/v1")
+        def location(self, value: Zone) -> None:
+            pytest.fail("setter must not execute")
+
+    class LocatedCommand(Agitator):
+        device_type_id = "test.located-command/v1"
+
+        @operation(id="test.located-command.perform/v1")
+        def perform(self, location: Zone) -> None:
+            pytest.fail("command must not execute")
+
+    for cls in (LocatedProperty, LocatedCommand):
+        with pytest.raises(IRValidationError, match="device_contract"):
+            device_contract(cls)

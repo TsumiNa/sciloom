@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING
 from sciloom.core.ir.csv import IO_ERROR, OK
 from sciloom.core.ir.model import AppendCsv, CsvErrorPolicy
 from sciloom.core.ir.types import ScalarType
+from sciloom.core.locations import Zone
 from .environment import CsvAppendEvent, _require_service
 from .expressions import evaluate
 from .files import _InvalidFilePath
@@ -29,7 +30,7 @@ def execute_append(session: Interpreter, node: AppendCsv, frame: dict[str, Runti
     for expression in node.values:
         value = evaluate(session, expression, frame)
         kind = session._expression_types[expression.node_id]
-        assert isinstance(kind, ScalarType) and not isinstance(value, tuple)
+        assert isinstance(kind, ScalarType) and not isinstance(value, (tuple, Zone))
         types.append(kind)
         values.append(value)
     # Quantity values are already canonical SI scalars; only Boolean spelling

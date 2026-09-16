@@ -4,6 +4,7 @@ from dataclasses import replace
 
 import pytest
 
+from sciloom.core.bindings import DeviceBinding
 from sciloom.core.diagnostics import ExecutionError, IRValidationError
 from sciloom.core.interpreter import Interpreter
 from . import (
@@ -22,6 +23,7 @@ from . import (
     PropertyContract,
     ScalarType,
     SupportsOperation,
+    ZoneType,
     from_dict,
     from_json,
     to_dict,
@@ -37,6 +39,7 @@ def extension_program():
         name="calibrate",
         parameters=(CommandParameter(name="level", type=ScalarType.REAL),),
     )
+
     prop = PropertyContract(semantic_id="test.gain/v1", name="gain", type=ScalarType.REAL)
     contract = replace(
         AGITATOR_CONTRACT,
@@ -68,6 +71,38 @@ def extension_program():
             ),
         ),
     )
+
+
+@pytest.mark.parametrize("member_kind", ["property", "command"])
+def test_device_contracts_reject_zone_types_in_ir_json_and_bindings(member_kind):
+    program = extension_program()
+    contract = program.device_types[-1]
+    document = to_dict(program)
+    if member_kind == "property":
+        bad_contract = replace(
+            contract, properties=(*contract.properties[:-1], replace(contract.properties[-1], type=ZoneType()))
+        )
+        document["device_types"][-1]["properties"][-1]["type"] = {"kind": "ZoneType"}
+    else:
+        command = contract.operations[-1]
+        bad_command = replace(command, parameters=(replace(command.parameters[0], type=ZoneType()),))
+        bad_contract = replace(contract, operations=(*contract.operations[:-1], bad_command))
+        document["device_types"][-1]["operations"][-1]["parameters"][0]["type"] = {"kind": "ZoneType"}
+    bad_program = replace(program, device_types=(*program.device_types[:-1], bad_contract))
+    assert any(d.code == "ir_shape" for d in validate(bad_program))
+    with pytest.raises(IRValidationError, match="ir_shape"):
+        to_json(bad_program)
+    with pytest.raises(IRValidationError, match="json_shape"):
+        from_dict(document)
+    with pytest.raises(IRValidationError, match="ir_shape"):
+        DeviceBinding(
+            logical_id="agitator",
+            physical_id="physical",
+            contract=bad_contract,
+            base_contracts=program.device_types[:-1],
+            writable_properties=(),
+            supported_operations=(),
+        )
 
 
 @pytest.mark.parametrize(

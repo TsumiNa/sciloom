@@ -7,3 +7,11 @@ Import these interfaces from `sciloom_autosuite`, the workspace member distribut
 ::: sciloom_autosuite.AutoSuiteIndividualShaker
 
 ::: sciloom_autosuite.AutoSuiteVersion
+
+## Read-only deployment directory
+
+::: sciloom_autosuite.AutoSuiteLayout
+
+::: sciloom_autosuite.AutoSuiteElement
+
+::: sciloom_autosuite.AutoSuiteWell

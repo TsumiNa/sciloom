@@ -55,6 +55,7 @@ nav:
           - Declarations: user-guide/reference/declarations.md
           - Runtime language: user-guide/reference/runtime-language.md
           - CSV files: user-guide/reference/csv.md
+          - Sample locations: user-guide/reference/zones.md
           - Devices and targets: user-guide/reference/devices-and-targets.md
   - Developer Guide:
       - Overview: developer/index.md
@@ -114,6 +115,8 @@ nav:
       - Typed CSV IR: examples/csv-read-ir.md
       - Append a sample log: examples/append-sample-log.md
       - CSV append IR: examples/csv-append-ir.md
+      - Resolve sample locations: examples/resolve-locations.md
+      - Zone IR: examples/zone-ir.md
       - Independent device: examples/demo-device.md
       - Portable agitation: examples/portable-agitation.md
   - API Reference:
@@ -123,6 +126,7 @@ nav:
       - Compile-time queries: api/comptime.md
       - Runtime text: api/text.md
       - Runtime CSV: api/csv.md
+      - Zone values: api/zones.md
       - AutoSuite: api/autosuite.md
       - Device declarations: api/devices.md
       - IR values: api/ir-values.md

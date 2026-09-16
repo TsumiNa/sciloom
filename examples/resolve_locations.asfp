@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='utf-8'?>
+<functions>
+  <function typeid="Chemspeed.SATaskFunctionDefinition.1">
+    <description />
+    <name>ResolveLocations</name>
+    <edittime>0</edittime>
+    <expanded>1</expanded>
+    <functiondata>
+      <inputs>
+        <count>2</count>
+        <item0>
+          <id>{6B453E92-CD7E-535F-BAC6-5A6C8616EED4}</id>
+          <name>first_name</name>
+          <variablename>first_name</variablename>
+          <variabletype>text</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item0>
+        <item1>
+          <id>{F489A0D8-959D-5AF6-9799-D73FEB10C94A}</id>
+          <name>second_name</name>
+          <variablename>second_name</variablename>
+          <variabletype>text</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item1>
+        <sortType>0</sortType>
+      </inputs>
+      <outputs>
+        <count>2</count>
+        <item0>
+          <id>{5E4E24ED-9677-5A28-BAD4-DC8FB27F885E}</id>
+          <name>selected</name>
+          <variablename>selected</variablename>
+          <variabletype>zone</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item0>
+        <item1>
+          <id>{B52F7387-EC3C-5137-B719-FAE91F12A284}</id>
+          <name>count</name>
+          <variablename>count</variablename>
+          <variabletype>integer</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item1>
+        <sortType>0</sortType>
+      </outputs>
+    </functiondata>
+    <id>{3036CBB7-8B3F-5B08-A897-6B5D21640F46}</id>
+    <components>
+      <component typeid="Chemspeed.SAMacroTask.1">
+        <description />
+        <name>Macro Task</name>
+        <edittime>0</edittime>
+        <expanded>1</expanded>
+        <conditionloop>1</conditionloop>
+        <conditionif />
+        <conditionwhile />
+        <conditiontype>0</conditiontype>
+        <loopvariable>loop</loopvariable>
+        <fragmentvariable>fragment</fragmentvariable>
+        <executionmode>0</executionmode>
+        <sequentialzones>
+          <count>0</count>
+        </sequentialzones>
+        <multicondition>0</multicondition>
+        <multiloop>0</multiloop>
+        <variables sortingType="1">
+          <variable>
+            <name>first</name>
+            <value>
+              <type>8</type>
+              <value />
+            </value>
+            <siunit>zone</siunit>
+            <unit>zone</unit>
+            <array>0</array>
+            <creationtime>0</creationtime>
+            <constant>0</constant>
+          </variable>
+        </variables>
+        <id>{4466F199-1012-5179-91FA-3AE91D3EF9FA}</id>
+        <tasks>
+          <task typeid="Chemspeed.SATaskSetVariable.1">
+            <description />
+            <name>Set Variable</name>
+            <edittime>0</edittime>
+            <variablename>first</variablename>
+            <expressiontext>FindZone(first_name)</expressiontext>
+            <elementselectmode>0</elementselectmode>
+            <elementnumber />
+            <numberofelements />
+            <startindex>0</startindex>
+            <clearvariable>0</clearvariable>
+            <sortwells>0</sortwells>
+            <enumerationtype>0</enumerationtype>
+            <wellsenumeration>0</wellsenumeration>
+            <elementsenumeration>0</elementsenumeration>
+            <id>{F284245A-09CE-5AD4-B3E8-A6DBE17FA60D}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskSetVariable.1">
+            <description />
+            <name>Set Variable</name>
+            <edittime>0</edittime>
+            <variablename>selected</variablename>
+            <expressiontext>(first + FindZone(second_name))</expressiontext>
+            <elementselectmode>0</elementselectmode>
+            <elementnumber />
+            <numberofelements />
+            <startindex>0</startindex>
+            <clearvariable>0</clearvariable>
+            <sortwells>0</sortwells>
+            <enumerationtype>0</enumerationtype>
+            <wellsenumeration>0</wellsenumeration>
+            <elementsenumeration>0</elementsenumeration>
+            <id>{413F0A9B-1C73-55F4-90E5-5EA4BD547184}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskSetVariable.1">
+            <description />
+            <name>Set Variable</name>
+            <edittime>0</edittime>
+            <variablename>count</variablename>
+            <expressiontext>ZoneSize(selected)</expressiontext>
+            <elementselectmode>0</elementselectmode>
+            <elementnumber />
+            <numberofelements />
+            <startindex>0</startindex>
+            <clearvariable>0</clearvariable>
+            <sortwells>0</sortwells>
+            <enumerationtype>0</enumerationtype>
+            <wellsenumeration>0</wellsenumeration>
+            <elementsenumeration>0</elementsenumeration>
+            <id>{9CA58845-2AE7-5AAA-9CAF-97EE4EB61962}</id>
+          </task>
+        </tasks>
+      </component>
+    </components>
+  </function>
+</functions>

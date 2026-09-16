@@ -11,7 +11,7 @@ from sciloom.core.ir.csv import (
     IO_ERROR as IO_ERROR,
     OK as OK,
 )
-from sciloom.core.ir.types import ListType
+from sciloom.core.ir.types import ScalarType
 from sciloom.units import Duration, DurationUnit, RotationalSpeed, SpeedUnit, Volume, VolumeUnit
 from .fields import _default, _value_type
 
@@ -52,7 +52,7 @@ class Column(Generic[T]):
         if self.index < 0:
             raise ValueError("CSV column indices must be nonnegative.")
         value_type = _value_type("csv.Column", self.value_type)
-        if isinstance(value_type, ListType):
+        if not isinstance(value_type, ScalarType):
             raise TypeError("CSV columns require scalar element types.")
         quantity = self.value_type in (RotationalSpeed, Volume, Duration)
         if self.unit is None:

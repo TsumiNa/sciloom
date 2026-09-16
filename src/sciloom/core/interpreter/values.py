@@ -6,17 +6,19 @@ import math
 from typing import NoReturn, assert_never, overload
 
 from sciloom.core.diagnostics import Diagnostic, ExecutionError
-from sciloom.core.ir.model import ListLiteral, Literal, Node
-from sciloom.core.ir.types import QUANTITIES, ListType, ScalarType, ValueType
+from sciloom.core.ir.model import ListLiteral, Literal, Node, ZoneLiteral
+from sciloom.core.ir.types import QUANTITIES, ListType, ScalarType, ValueType, ZoneType
+from sciloom.core.locations import Zone
 from sciloom.units import Duration, RotationalSpeed, Volume
 
 ScalarValue = bool | int | float | str
-RuntimeValue = ScalarValue | tuple[ScalarValue, ...]
+RuntimeValue = ScalarValue | tuple[ScalarValue, ...] | Zone
 InputScalar = ScalarValue | RotationalSpeed | Volume | Duration
 # Lists are invariant: spell out homogeneous alternatives so list[float] etc.
 # remain accepted without widening the public API to arbitrary sequences.
 InputValue = (
     InputScalar
+    | Zone
     | list[bool]
     | list[int]
     | list[float]
@@ -27,7 +29,7 @@ InputValue = (
     | list[InputScalar]
     | tuple[InputScalar, ...]
 )
-OutputValue = InputScalar | tuple[InputScalar, ...]
+OutputValue = InputScalar | tuple[InputScalar, ...] | Zone
 
 
 def fail(code: str, message: str, node: Node | None = None) -> NoReturn:
@@ -52,7 +54,15 @@ def coerce(value: RuntimeValue, scalar: ScalarType, node: Node) -> ScalarValue: 
 def coerce(value: RuntimeValue, scalar: ListType, node: Node) -> tuple[ScalarValue, ...]: ...
 
 
+@overload
+def coerce(value: RuntimeValue, scalar: ZoneType, node: Node) -> Zone: ...
+
+
 def coerce(value: RuntimeValue, scalar: ValueType, node: Node) -> RuntimeValue:
+    if isinstance(scalar, ZoneType):
+        if type(value) is not Zone:
+            fail("runtime_type", "Expected a Zone value.", node)
+        return value
     if isinstance(scalar, ListType):
         if type(value) is not tuple:
             fail("runtime_type", f"Expected {scalar.value}.", node)
@@ -68,7 +78,7 @@ def coerce(value: RuntimeValue, scalar: ValueType, node: Node) -> RuntimeValue:
     }[scalar]
     if type(value) not in allowed:
         fail("runtime_type", f"Expected {scalar.value}, received {type(value).__name__}.", node)
-    assert not isinstance(value, tuple)
+    assert not isinstance(value, (tuple, Zone))
     if scalar == ScalarType.TEXT:
         assert isinstance(value, str)
         return value
@@ -84,7 +94,9 @@ def coerce(value: RuntimeValue, scalar: ValueType, node: Node) -> RuntimeValue:
     return result
 
 
-def initial_value(literal: Literal | ListLiteral) -> RuntimeValue:
+def initial_value(literal: Literal | ListLiteral | ZoneLiteral) -> RuntimeValue:
+    if isinstance(literal, ZoneLiteral):
+        return Zone(well_ids=literal.well_ids)
     if isinstance(literal, ListLiteral):
         values = []
         for element in literal.elements:
@@ -104,7 +116,15 @@ def input_value(value: InputValue, value_type: ScalarType, node: Node) -> Scalar
 def input_value(value: InputValue, value_type: ListType, node: Node) -> tuple[ScalarValue, ...]: ...
 
 
+@overload
+def input_value(value: InputValue, value_type: ZoneType, node: Node) -> Zone: ...
+
+
 def input_value(value: InputValue, value_type: ValueType, node: Node) -> RuntimeValue:
+    if isinstance(value_type, ZoneType):
+        if type(value) is not Zone:
+            fail("runtime_type", "Expected a Zone input.", node)
+        return value
     if isinstance(value_type, ListType):
         if type(value) not in (list, tuple):
             fail("runtime_type", f"Expected {value_type.value} input.", node)
@@ -124,7 +144,7 @@ def input_value(value: InputValue, value_type: ValueType, node: Node) -> Runtime
         value = value.rps
     elif isinstance(value, (RotationalSpeed, Volume, Duration)):
         fail("runtime_type", "A quantity cannot be passed to a scalar input.", node)
-    if isinstance(value, (list, tuple)):
+    if isinstance(value, (list, tuple, Zone)):
         fail("runtime_type", f"Expected {value_type.value}, received {type(value).__name__}.", node)
     return coerce(value, value_type, node)
 
@@ -137,11 +157,18 @@ def output_value(value: RuntimeValue, value_type: ScalarType) -> InputScalar: ..
 def output_value(value: RuntimeValue, value_type: ListType) -> tuple[InputScalar, ...]: ...
 
 
+@overload
+def output_value(value: RuntimeValue, value_type: ZoneType) -> Zone: ...
+
+
 def output_value(value: RuntimeValue, value_type: ValueType) -> OutputValue:
+    if isinstance(value_type, ZoneType):
+        assert isinstance(value, Zone)
+        return value
     if isinstance(value_type, ListType):
         assert isinstance(value, tuple)
         return tuple(output_value(item, value_type.element_type) for item in value)
-    assert not isinstance(value, tuple)
+    assert not isinstance(value, (tuple, Zone))
     if value_type == ScalarType.VOLUME:
         assert not isinstance(value, str)
         return Volume(m3=value)

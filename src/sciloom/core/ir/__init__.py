@@ -52,12 +52,23 @@ from .model import (
     VariableRole,
     Wait,
     WaitUntil,
+    WellName,
     While,
+    ZoneCombine,
+    ZoneFind,
+    ZoneLength,
+    ZoneLiteral,
 )
-from .types import ListType, ScalarType, ValueType
+from .types import ListType, ScalarType, ValueType, ZoneType
 from .validation import validate
 
 __all__ = [
+    "ZoneType",
+    "ZoneLiteral",
+    "ZoneFind",
+    "ZoneCombine",
+    "ZoneLength",
+    "WellName",
     "AppendCsv",
     "CsvColumn",
     "CsvErrorPolicy",

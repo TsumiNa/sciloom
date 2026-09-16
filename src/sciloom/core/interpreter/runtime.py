@@ -39,6 +39,7 @@ from sciloom.core.ir import (
 from sciloom.core.ir.expressions import ExpressionChecker
 from sciloom.core.ir.model import Node
 from sciloom.core.ir.traversal import iter_nodes
+from sciloom.core.locations import Zone
 from sciloom.units import Duration
 from .clocks import format_wall_time
 from .csv_append import execute_append
@@ -352,9 +353,9 @@ class Interpreter:
                 index = checked_index(values, evaluate(self, statement.index, frame), statement)
                 if statement.op is not None:
                     operand = evaluate(self, statement.value, frame)
-                    assert not isinstance(operand, tuple)
+                    assert not isinstance(operand, (tuple, Zone))
                     value = apply_binary(statement.op, values[index], operand, statement)
-                assert value is not None and not isinstance(value, tuple)
+                assert value is not None and not isinstance(value, (tuple, Zone))
                 self._write(statement.target, values[:index] + (value,) + values[index + 1 :], frame)
             elif isinstance(statement, If):
                 branch = statement.then_body if evaluate(self, statement.condition, frame) else statement.else_body

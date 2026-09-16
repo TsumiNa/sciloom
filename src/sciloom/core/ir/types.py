@@ -40,8 +40,20 @@ class ListType:
         return f"list[{self.element_type.value}]"
 
 
-ValueType = ScalarType | ListType
-"""Scalar or one-dimensional homogeneous list value type."""
+@dataclass(frozen=True, kw_only=True)
+class ZoneType:
+    """An ordered set of opaque well references, distinct from scalar and list types."""
+
+    __ir_kind__: ClassVar[str] = "ZoneType"
+
+    @property
+    def value(self) -> str:
+        """Return the diagnostic spelling of the location value type."""
+        return "zone"
+
+
+ValueType = ScalarType | ListType | ZoneType
+"""Scalar, homogeneous scalar list or ordered Zone value type."""
 
 
 def is_assignable(source: ValueType, target: ValueType) -> bool:

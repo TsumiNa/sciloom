@@ -23,8 +23,13 @@ from .model import (
     Unary,
     UnaryOp,
     Variable,
+    WellName,
+    ZoneCombine,
+    ZoneFind,
+    ZoneLength,
+    ZoneLiteral,
 )
-from .types import QUANTITIES, SIGNED_QUANTITIES, ListType, ScalarType, ValueType, is_assignable
+from .types import QUANTITIES, SIGNED_QUANTITIES, ListType, ScalarType, ValueType, ZoneType, is_assignable
 
 Report = Callable[[str, str, str, Node | None], None]
 
@@ -35,6 +40,30 @@ class ExpressionChecker:
         self.report = report
 
     def check(self, expr: Expression, function: FunctionIR, path: str) -> ValueType | None:
+        if isinstance(expr, ZoneLiteral):
+            if any(not identity.strip() for identity in expr.well_ids) or len(set(expr.well_ids)) != len(expr.well_ids):
+                self.report("zone_literal", "Zone well identities must be nonempty and unique.", path, expr)
+            return ZoneType()
+        if isinstance(expr, ZoneFind):
+            name_type = self.check(expr.name, function, f"{path}.name")
+            if name_type is not None and name_type != ScalarType.TEXT:
+                self.report("text_type", "Zone names must be text.", path, expr)
+            return ZoneType()
+        if isinstance(expr, (ZoneCombine, ZoneLength, WellName)):
+            operands = (
+                (("left", expr.left), ("right", expr.right))
+                if isinstance(expr, ZoneCombine)
+                else (("value", expr.value),)
+            )
+            for name, value in operands:
+                value_type = self.check(value, function, f"{path}.{name}")
+                if value_type is not None and not isinstance(value_type, ZoneType):
+                    self.report("zone_type", "Operation requires a Zone value.", f"{path}.{name}", value)
+            if isinstance(expr, WellName):
+                if isinstance(expr.value, ZoneLiteral) and len(expr.value.well_ids) != 1:
+                    self.report("zone_cardinality", "well_name requires exactly one well.", path, expr)
+                return ScalarType.TEXT
+            return ScalarType.INTEGER if isinstance(expr, ZoneLength) else ZoneType()
         if isinstance(expr, (TextLength, TextTrim, TextSplitPart)):
             value_type = self.check(expr.value, function, f"{path}.value")
             if value_type is not None and value_type != ScalarType.TEXT:
@@ -136,9 +165,12 @@ class ExpressionChecker:
     ) -> ScalarType | None:
         if left is None or right is None:
             return None
-        if isinstance(left, ListType) or isinstance(right, ListType):
+        if isinstance(left, (ListType, ZoneType)) or isinstance(right, (ListType, ZoneType)):
             self.report(
-                "operator_type", "Lists do not support implicit arithmetic, comparisons or truthiness.", path, node
+                "operator_type",
+                "Lists and Zones do not support implicit arithmetic, comparisons or truthiness.",
+                path,
+                node,
             )
             return None
         numeric = left in (ScalarType.INTEGER, ScalarType.REAL) and right in (ScalarType.INTEGER, ScalarType.REAL)

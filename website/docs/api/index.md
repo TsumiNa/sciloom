@@ -15,3 +15,6 @@ The [user guide](../user-guide/index.md) explains how to write experiments.
 The [developer guide](../developer/index.md) explains how these interfaces
 fit together. Private helpers, tests and internal XML generation are not part of
 this catalogue.
+
+[Zone values and queries](zones.md) covers author location operations and the
+immutable reference directory.

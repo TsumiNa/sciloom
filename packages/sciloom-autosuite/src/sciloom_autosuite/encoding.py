@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from sciloom.core.diagnostics import CompilationError, Diagnostic
-from sciloom.core.ir import ListLiteral, ListType, Literal, ScalarType, Variable
+from sciloom.core.ir import ListLiteral, ListType, Literal, ScalarType, ValueType, Variable, ZoneLiteral, ZoneType
 from .xml import XmlNode, xml_node as _xml
 
 
@@ -26,6 +26,17 @@ SCALARS = {
     ScalarType.VOLUME: ScalarEncoding("volume", "5", "m^3", "ml"),
     ScalarType.DURATION: ScalarEncoding("time", "5", "s", "s"),
 }
+
+ZONE = ScalarEncoding("zone", "8", "zone", "zone")
+
+
+def value_encoding(value_type: ValueType) -> ScalarEncoding:
+    """Select an observed vendor encoding without treating Zones as list elements."""
+    if isinstance(value_type, ZoneType):
+        return ZONE
+    if isinstance(value_type, ListType):
+        return SCALARS[value_type.element_type]
+    return SCALARS[value_type]
 
 
 def number(value: bool | int | float) -> str:
@@ -99,15 +110,32 @@ def variable_declaration(variable: Variable, name: str) -> XmlNode:
             _xml("creationtime", "0"),
             _xml("constant", "0"),
         )
-    assert isinstance(variable.initial, Literal)
-    value = literal_value(variable.initial, storage=True)
+    encoding = value_encoding(variable.type)
+    if isinstance(variable.type, ZoneType):
+        assert isinstance(variable.initial, ZoneLiteral)
+        if variable.initial.well_ids:
+            raise CompilationError(
+                (
+                    Diagnostic(
+                        code="unsupported_zone_literal",
+                        message="AutoSuite supports only empty Zone initializers; resolve named Zones at runtime.",
+                        path="$",
+                        node_id=variable.node_id,
+                        source=variable.source,
+                    ),
+                )
+            )
+        value = ""
+    else:
+        assert isinstance(variable.initial, Literal)
+        value = literal_value(variable.initial, storage=True)
     return _xml(
         "variable",
         "",
         _xml("name", name),
-        _xml("value", "", _xml("type", SCALARS[variable.type].storage_type), _xml("value", value)),
-        _xml("siunit", SCALARS[variable.type].si_unit),
-        _xml("unit", SCALARS[variable.type].display_unit),
+        _xml("value", "", _xml("type", encoding.storage_type), _xml("value", value)),
+        _xml("siunit", encoding.si_unit),
+        _xml("unit", encoding.display_unit),
         _xml("array", "0"),
         _xml("creationtime", "0"),
         _xml("constant", "0"),
