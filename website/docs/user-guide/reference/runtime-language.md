@@ -138,6 +138,7 @@ The [label example](../../examples/prepare-labels.md) shows a complete program.
 | Device property assignment and declared commands | Property reads or augmented property assignments |
 | `log(value, category=..., stream=...)` | Logging lists, automatic object formatting or using log as a result |
 | `notify(message)` | Timeout, automatic confirmation, cancellation branches or a returned value |
+| `self.stamp = now_text(format)` | Clock reads inside larger expressions, runtime format strings |
 | Whole `if/elif` conditions using `comptime` queries | Combining these queries with `and` / `or` or runtime arguments |
 | `pass`, docstrings | `return`, `try`, `with`, `assert`, `del`, nested definitions |
 
@@ -179,6 +180,35 @@ not in the constructor or compilation script.
 The [confirmation example](../../examples/confirm-samples.md) generates an AutoSuite
 function with a message followed by a log. The generated OK dialog still needs
 Executor validation of blocking and continuation on the deployed host.
+
+## Read wall time
+
+Import `now_text` from `sciloom`. Assign its result to one declared text field
+before using it in another expression:
+
+```python
+self.stamp = now_text("%Y-%m-%d_%H%M%S")
+self.path = self.directory + "/" + self.stamp + ".csv"
+```
+
+Each call reads the clock once when the generated function runs. Reusing
+`self.stamp` reuses that captured value. Compilation does not read the clock.
+The format must be host-time text: a literal, a module/closure text constant,
+or an ordinary `self` setting. It cannot come from a runtime input.
+
+| Directive | Field |
+| --- | --- |
+| `%Y` | Year, at least four digits |
+| `%m`, `%d` | Two-digit month and day |
+| `%H`, `%M`, `%S` | Two-digit 24-hour hour, minute and second |
+| `%%` | Literal percent sign |
+
+Other characters appear as written. Unsupported directives and an unmatched
+`%` are rejected. Empty or literal-only formats still perform a clock read.
+AutoSuite uses local time; no timezone conversion or unique-name guarantee is
+provided. The [filename example](../../examples/timestamp-path.md) is a complete
+program. Calendar boundaries, local daylight-saving changes and format encoding
+still need Executor validation.
 
 ## Lists and indices
 

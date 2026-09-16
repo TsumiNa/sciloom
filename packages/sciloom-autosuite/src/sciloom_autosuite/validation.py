@@ -21,6 +21,7 @@ from sciloom.core.ir import (
     LogValue,
     Notify,
     Program,
+    ReadWallTime,
     Reference,
     ScalarType,
     StartAgitation,
@@ -165,6 +166,8 @@ def validate_array_outputs(program: Program) -> tuple[Diagnostic, ...]:
                         read(expression, assigned)
                 elif isinstance(statement, Notify):
                     read(statement.message, assigned)
+                elif isinstance(statement, ReadWallTime):
+                    assigned.add(statement.target.symbol_id)
                 elif isinstance(statement, ListSet):
                     for expression in (statement.target, statement.index, statement.value):
                         read(expression, assigned)

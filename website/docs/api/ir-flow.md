@@ -12,6 +12,8 @@ Construct ordered immutable statements rather than target-specific tasks. IDs id
 
 ::: sciloom.core.ir.Notify
 
+::: sciloom.core.ir.ReadWallTime
+
 ::: sciloom.core.ir.ListSet
 
 ::: sciloom.core.ir.InputBinding

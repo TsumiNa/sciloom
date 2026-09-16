@@ -7,6 +7,7 @@ from sciloom.core.diagnostics import SourceSpan
 from sciloom.core.ir.model import Node
 from sciloom.core.ir.types import ScalarType
 from .acknowledgements import QueuedAcknowledgements
+from .clocks import WallClock
 from .device_state import DeviceEvent
 from .values import InputScalar, fail
 
@@ -47,7 +48,24 @@ class AcknowledgementEvent:
     message: str
 
 
-ExecutionEvent: TypeAlias = DeviceEvent | LogEvent | AcknowledgementEvent
+@dataclass(frozen=True, kw_only=True)
+class WallTimeEvent:
+    """A completed wall-time read, retaining only immutable formatted text.
+
+    Attributes:
+        node_id: Semantic clock-read occurrence ID.
+        source: Optional source location.
+        format: Constant portable format used by the operation.
+        value: Captured formatted text, independent of subsequent clock changes.
+    """
+
+    node_id: str
+    source: SourceSpan | None
+    format: str
+    value: str
+
+
+ExecutionEvent: TypeAlias = DeviceEvent | LogEvent | AcknowledgementEvent | WallTimeEvent
 """Closed reference-event vocabulary; each effect adds its own immutable record."""
 
 Service = TypeVar("Service")
@@ -69,6 +87,9 @@ class ReferenceEnvironment:
 
     acknowledgements: QueuedAcknowledgements | None = None
     """Explicit OK responses; absent by default and shared only when supplied."""
+
+    wall_clock: WallClock | None = None
+    """Explicit aware wall-time provider; never defaults to the host clock."""
 
     _events: list[ExecutionEvent] = field(default_factory=list, init=False, repr=False)
 

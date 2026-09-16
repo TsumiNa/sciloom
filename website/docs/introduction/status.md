@@ -11,6 +11,7 @@ AutoSuite function package (`.asfp`). The current author API lets you:
 - Share a logical device between steps and bind it to an AutoSuite shaker.
 - Choose device-specific branches when compiling for a target.
 - Record supplied values and request an explicit OK acknowledgement before continuing.
+- Capture wall time as text for filenames or records, using an explicit clock in reference execution.
 
 The runtime method accepts a [restricted Python subset](../user-guide/reference/runtime-language.md).
 Constructors and the surrounding script remain ordinary Python.

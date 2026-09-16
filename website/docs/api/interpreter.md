@@ -20,4 +20,10 @@
 
 ::: sciloom.core.interpreter.QueuedAcknowledgements
 
+::: sciloom.core.interpreter.WallTimeEvent
+
+::: sciloom.core.interpreter.WallClock
+
+::: sciloom.core.interpreter.VirtualWallClock
+
 ::: sciloom.core.interpreter.ReferenceEnvironment

@@ -17,6 +17,7 @@ from sciloom.core.ir import (
     LogValue,
     Notify,
     OutputBinding,
+    ReadWallTime,
     Reference,
     ScalarType,
     Statement,
@@ -29,6 +30,7 @@ from sciloom.core.ir import (
 from sciloom.flow.function import Function
 from sciloom.flow.logging import log
 from sciloom.flow.messages import notify
+from sciloom.flow.timing import now_text
 from .context import LoweringContext
 from .device_conditions import device_condition
 from .device_operations import configure, device_command
@@ -87,6 +89,38 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
         if isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant) and isinstance(node.value.value, str):
             continue
         if isinstance(node, ast.Assign) and len(node.targets) == 1:
+            if isinstance(node.value, ast.Call) and context.static_object(node.value.func) is now_text:
+                invocation = node.value
+                if len(invocation.args) == 1 and not invocation.keywords:
+                    format_node = invocation.args[0]
+                elif not invocation.args and len(invocation.keywords) == 1 and invocation.keywords[0].arg == "format":
+                    format_node = invocation.keywords[0].value
+                else:
+                    context.fail("call_binding", "now_text requires exactly one constant format argument.", invocation)
+                format_value: object
+                if isinstance(format_node, ast.Constant):
+                    format_value = format_node.value
+                elif (
+                    isinstance(format_node, ast.Attribute)
+                    and isinstance(format_node.value, ast.Name)
+                    and format_node.value.id == "self"
+                    and format_node.attr not in context.instance.model_fields
+                ):
+                    format_value = context.host_attribute(format_node.attr)
+                else:
+                    format_value = context.static_object(format_node)
+                if not isinstance(format_value, str):
+                    context.fail(
+                        "wall_time_format", "now_text format must be host-time text, not a runtime value.", format_node
+                    )
+                result.append(
+                    ReadWallTime(
+                        **context.metadata(invocation),
+                        target=context.target(node.targets[0]),
+                        format=format_value,
+                    )
+                )
+                continue
             configuration = configure(context, node)
             if configuration is not None:
                 result.append(configuration)
@@ -178,6 +212,8 @@ def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statemen
                 )
             )
         elif isinstance(node, ast.Expr) and isinstance(node.value, ast.Call):
+            if context.static_object(node.value.func) is now_text:
+                context.fail("external_operation", "Assign now_text(...) to one declared text field.", node.value)
             if context.static_object(node.value.func) is notify:
                 invocation = node.value
                 if len(invocation.args) == 1 and not invocation.keywords:

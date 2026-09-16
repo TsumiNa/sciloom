@@ -13,8 +13,10 @@ from sciloom.core.ir import (
     If,
     ListSet,
     ListType,
+    Literal,
     LogValue,
     Notify,
+    ReadWallTime,
     ScalarType,
     StartAgitation,
     Statement,
@@ -23,7 +25,7 @@ from sciloom.core.ir import (
 )
 from .agitation import agitation_task
 from .context import CodegenContext
-from .encoding import SCALARS
+from .encoding import SCALARS, literal_value
 from .expressions import checked_read, materialize, plan_expression
 from .parameters import functiondata
 from .primitives import macro, set_variable
@@ -116,6 +118,24 @@ def statements(
                     _xml("productid"),
                     _xml("id", context.identifier("statement", statement.node_id)),
                     typeid="Chemspeed.SATaskUserDialog.1",
+                )
+            )
+        elif isinstance(statement, ReadWallTime):
+            format_text = literal_value(
+                Literal(
+                    node_id=statement.node_id,
+                    source=statement.source,
+                    type=ScalarType.TEXT,
+                    value=statement.format,
+                )
+            )
+            result.append(
+                set_variable(
+                    context,
+                    tag,
+                    context.names[statement.target.symbol_id],
+                    f"DateTime({format_text})",
+                    identity=statement.node_id,
                 )
             )
         elif isinstance(statement, ListSet):

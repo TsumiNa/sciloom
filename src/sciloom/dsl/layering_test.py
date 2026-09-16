@@ -10,7 +10,16 @@ PACKAGES = ("flow", "dsl")
 
 # What an author writes, evaluated while a class body runs.
 VOCABULARY = frozenset(
-    {"flow.comptime", "flow.device_slots", "flow.fields", "flow.function", "flow.text", "flow.logging", "flow.messages"}
+    {
+        "flow.comptime",
+        "flow.device_slots",
+        "flow.fields",
+        "flow.function",
+        "flow.text",
+        "flow.logging",
+        "flow.messages",
+        "flow.timing",
+    }
 )
 # What runs only inside Function.to_ir().
 ANALYSIS = frozenset(

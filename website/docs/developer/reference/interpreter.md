@@ -37,7 +37,8 @@ assert environment.events == ()  # This calculation has no external events.
 
 `environment.events` returns an immutable history snapshot across all runs using
 that environment. `result.events` remains limited to one successful run.
-`ExecutionEvent` is the union of DeviceEvent, LogEvent and AcknowledgementEvent. Narrow with
+`ExecutionEvent` is the union of DeviceEvent, LogEvent, AcknowledgementEvent and
+WallTimeEvent. Narrow with
 `isinstance(event, LogEvent)` before accessing log-specific fields; device events
 carry state snapshots. A failed run leaves earlier completed events in
 environment history and does not roll back their state changes.
@@ -94,6 +95,36 @@ entry, rather than resuming the failed statement.
 The [direct IR example](../../examples/confirmation-ir.md) shows JSON restoration
 and a typed acknowledgement event. This reference behavior does not establish
 that a generated AutoSuite dialog blocks correctly on the target host.
+
+## Wall-clock input
+
+Provide a WallClock service for ReadWallTime. VirtualWallClock returns the aware
+instant supplied by the caller until `set()` changes it:
+
+```python
+from datetime import datetime, timedelta, timezone
+from examples.timestamp_path import TimestampPath
+from sciloom.core.interpreter import Interpreter, ReferenceEnvironment, VirtualWallClock
+
+clock = VirtualWallClock(datetime(2026, 9, 16, 14, 5, 6, tzinfo=timezone(timedelta(hours=9))))
+environment = ReferenceEnvironment(wall_clock=clock)
+result = Interpreter(TimestampPath().to_ir(), environment=environment).run(inputs={"directory": "results"})
+assert result.outputs["path"] == "results/2026-09-16_140506.csv"
+assert len(result.events) == 1
+```
+
+A custom service implements `now() -> datetime`. Each ReadWallTime calls it
+once, validates an aware datetime, formats it without host locale/timezone
+conversion, then writes the field and records a WallTimeEvent. The event holds
+the source, format and text, not the provider or a mutable timezone object.
+
+No service means `missing_environment_service`. A provider exception or invalid
+datetime becomes `wall_clock_error`; the destination and event history are not
+partially updated. Earlier completed effects remain. Separate environments do
+not share clocks unless explicitly given the same service. This wall clock is
+independent of elapsed-time waits; it does not advance automatically.
+
+The [direct IR example](../../examples/wall-time-ir.md) also checks JSON v4 restoration.
 
 ## Session and snapshots
 

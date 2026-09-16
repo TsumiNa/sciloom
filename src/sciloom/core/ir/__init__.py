@@ -29,6 +29,7 @@ from .model import (
     Notify,
     OutputBinding,
     Program,
+    ReadWallTime,
     Reference,
     StartAgitation,
     Statement,
@@ -49,6 +50,7 @@ from .validation import validate
 __all__ = [
     "LogValue",
     "Notify",
+    "ReadWallTime",
     "TextLength",
     "TextTrim",
     "TextSplitPart",
