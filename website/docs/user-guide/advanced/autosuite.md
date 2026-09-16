@@ -81,6 +81,7 @@ or prove that a zone matches your instrument. See
 | Two Boolean conditions | Nested `if` statements; this target refuses `and` and `or` |
 | Repeated work | A `while` loop; recursive Function calls are unsupported |
 | An output list updated element by element | A whole-list assignment first, such as `self.result = self.values` |
+| A new operation reporting `unsupported_runtime_guard` | Reference execution until AutoSuite failure propagation is verified; no override bypasses this check |
 
 Assigning `self.result = []` is suitable when an empty list is the intended
 output. It does not allocate elements for later indexed writes. To update

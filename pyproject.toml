@@ -1,6 +1,6 @@
 [project]
 name = "SciLoom"
-version = "0.3.6"
+version = "0.3.7"
 description = "SciLoom — programmable scientific automation from one semantic model."
 readme = "README.md"
 requires-python = ">=3.12,<3.15"
@@ -143,6 +143,8 @@ module = [
     "sciloom.core.ir.codec_notification_test",
     "sciloom.dsl.driver_notification_test",
     "sciloom_autosuite.codegen_notification_test",
+    "sciloom_autosuite.validation_guards_test",
+    "autosuite.tools.probe_runtime_failure_test",
     "sciloom.dsl.statements_test",
     "sciloom.core.compiler_test",
     "sciloom.core.compiler_typing_test",

@@ -49,9 +49,11 @@ an error when reading beyond the upper bound. Indexed writes can grow arrays;
 SciLoom's indexed updates must not use that behavior.
 
 The backend captures an index once. If negative, it replaces it with the array's
-length, then executes a scalar read of that element. The read therefore fails at
-a documented upper-bound error before a write can grow the array. Nonnegative
-out-of-range indices fail at the same read. No negative wrapping is assumed.
+length, then executes a scalar read of that element. This is intended to trigger
+the documented upper-bound error before a write can grow the array. Nonnegative
+out-of-range indices use the same read. Actual fatal propagation remains
+unverified; [the failure gate](24_RUNTIME_FAILURE_GATE.md) supplies control and
+failure probes. No negative wrapping or successful termination check is assumed.
 
 Expressions return ordered prerequisite tasks plus their value expression. Plain
 indexed assignment evaluates the right side before checking the destination;
