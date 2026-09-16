@@ -37,8 +37,9 @@ AutoSuite workflow awaits CSV and location validation.
 ```
 
 The author script checks the current compilation diagnostics and writes no ASFP.
-AutoSuite append behavior and a proof that each property read selects one well
-are still required for this combination. The
+AutoSuite append behavior and the `zones.well_name()` mapping are still gated.
+The unchanged one-well loop target already supplies the proof needed by the
+defaulted property read. The
 [reference workflow](runtime-workflows-ir.md) supplies files, time, responses and
 well properties explicitly and executes the full sequence in memory.
 
