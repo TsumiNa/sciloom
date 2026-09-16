@@ -36,12 +36,16 @@ column = csv.Column(index=0, value_type=str, default="fallback")
 assert_type(column, csv.Column[str])
 csv.Column(index=1, value_type=Volume, unit=mL, default=1 * mL)
 csv.read_columns("file.csv", header=True, columns=(column,))
+csv.append_row("file.csv", values=("log", 1, 2.5, True, 1 * mL))
+assert_type(csv.try_append_row("file.csv", values=("log",)), int)
 """)
     invalid = tmp_path / "invalid.py"
     invalid.write_text("""from sciloom import csv
 csv.Column(index=0, value_type=str, default=1)
 csv.read_columns(3, header=True, columns=())
 csv.read_row("file.csv", row="first", header=False, columns=())
+csv.append_row("file.csv", values=([1, 2],))
+csv.try_append_row(2, values=("log",))
 """)
     for path, expected in ((valid, 0), (invalid, 1)):
         result = subprocess.run(
@@ -51,4 +55,12 @@ csv.read_row("file.csv", row="first", header=False, columns=())
         )
         assert result.returncode == expected, result.stdout + result.stderr
         if expected:
-            assert result.stdout.count(" error: ") == 3, result.stdout
+            assert result.stdout.count(" error: ") == 5, result.stdout
+
+
+def test_append_markers_reject_host_calls(tmp_path):
+    path = tmp_path / "untouched.csv"
+    for marker in (csv.append_row, csv.try_append_row):
+        with pytest.raises(TypeError, match="@runtime"):
+            marker(str(path), values=("log",))
+    assert not path.exists()

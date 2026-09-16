@@ -4,6 +4,7 @@ from typing import assert_never
 
 from .diagnostics import Diagnostic
 from .ir import (
+    AppendCsv,
     Assignment,
     Call,
     ConfigureProperty,
@@ -85,6 +86,7 @@ def validate_timer_usage(program: Program) -> tuple[Diagnostic, ...]:
                     LogValue,
                     Notify,
                     ReadWallTime,
+                    AppendCsv,
                     ReadCsv,
                     Wait,
                     ConfigureProperty,

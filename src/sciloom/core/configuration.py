@@ -5,6 +5,7 @@ from typing import assert_never
 from .bindings import DeviceBindings
 from .diagnostics import Diagnostic
 from .ir import (
+    AppendCsv,
     Assignment,
     Call,
     ConfigureProperty,
@@ -115,6 +116,7 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
                     LogValue,
                     Notify,
                     ReadWallTime,
+                    AppendCsv,
                     ReadCsv,
                     Wait,
                     StartTimer,

@@ -131,10 +131,11 @@ and configuration pass, definite timer-start analysis, and `Target.validate`.
 
 ## CSV file services
 
-`missing_environment_service` for ReadCsv means no FileService was supplied.
+`missing_environment_service` for ReadCsv or AppendCsv means no FileService was supplied.
 Use `ReferenceEnvironment(files=MemoryFiles({...}))` for deterministic byte input,
 or opt in to `LocalFiles(root=...)`. `file_service_error` reports an unexpected
-provider exception or a non-bytes result; it does not become a recoverable IO_ERROR.
+provider exception, a non-bytes read result or a non-None append result; it does
+not become a recoverable IO_ERROR.
 The built-in adapters reject invalid paths with `csv_path` before a read event.
 
 `csv_eof`, `csv_invalid_data` and `csv_io_error` are fatal ordinary-read outcomes;
@@ -143,6 +144,13 @@ events remain in environment history, including the failed CsvReadEvent. No
 destination of an unsuccessful ordinary read is changed. Check [CSV rules](../user-guide/reference/csv.md)
 for schema/source diagnostics and [file ownership](reference/interpreter.md#explicit-files-and-csv-outcomes).
 AutoSuite's `unsupported_csv_semantics` is a target gate, not a missing file service.
+
+AppendCsv records a CsvAppendEvent for an attempted write, including an OSError
+failure. Ordinary append then stops with `csv_io_error`; try-append writes
+IO_ERROR. Both preserve partial bytes and prior effects. `csv_encoding` occurs
+before the file service is called and does not produce an event. AutoSuite's
+`unsupported_csv_append` gate also applies to the try-form until mode and encoding
+are verified.
 
 ## ValueError from ExecutionConfig
 

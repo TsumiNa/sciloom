@@ -27,6 +27,7 @@ VOCABULARY = frozenset(
 ANALYSIS = frozenset(
     {
         "dsl.context",
+        "dsl.csv_append",
         "dsl.csv_read",
         "dsl.device_conditions",
         "dsl.device_operations",

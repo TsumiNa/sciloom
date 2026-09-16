@@ -36,6 +36,8 @@
 
 ::: sciloom.core.interpreter.CsvReadEvent
 
+::: sciloom.core.interpreter.CsvAppendEvent
+
 ::: sciloom.core.interpreter.FileService
 
 ::: sciloom.core.interpreter.MemoryFiles

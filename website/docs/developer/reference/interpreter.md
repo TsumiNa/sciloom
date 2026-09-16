@@ -163,7 +163,16 @@ already be a directory. Paths are relative to it; absolute paths, traversal and
 resolved symlinks outside it are rejected. This containment check is not a sandbox
 against concurrent filesystem changes. FileService exposes `read_bytes(path)` and
 `append_bytes(path, data)`; append creates a missing file but never parent directories.
-Runtime CSV append is not available yet.
+AppendCsv encodes a complete row before calling append_bytes once. It does not
+read or repair existing content, create parent directories or retry. Existing CSV
+bytes must end at a complete record boundary. CsvAppendEvent captures the typed
+logical row and status, including IO_ERROR attempts. Failed writes can leave a
+prefix; reference execution never erases those bytes. Ordinary append stops,
+whereas a status-form append writes its integer result and continues. Missing
+services, encoding errors and broken providers remain fatal in either form.
+
+The [append IR example](../../examples/csv-append-ir.md) demonstrates two writes
+with independent immutable event snapshots.
 
 ReadCsv captures path, optional row, then each column's index/default once before
 reading. It parses and converts all results, normalizes them for destinations,

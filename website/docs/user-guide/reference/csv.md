@@ -1,4 +1,4 @@
-# Read a CSV table
+# Read and append CSV records
 
 Use explicit columns to read a reagent heading or a column of sample volumes.
 CSV reads are available in Python source, JSON and reference execution. AutoSuite
@@ -109,3 +109,48 @@ whole dataset. No transaction is promised if another process changes a file.
 AutoSuite documents expression evaluation and integer truncation. Those are not
 equivalent to these rules. No native import task is emitted until a mapping can
 preserve conversion, defaults, complete result binding and failure propagation.
+
+## Append one row
+
+Append a label with `csv.append_row(self.path, values=(self.label,))`. Keep the
+trailing comma for a one-cell tuple. Values can be runtime expressions; the
+number and order of cells are fixed in the source. Scalars and physical quantities
+are supported; lists and arbitrary objects are not.
+
+This complete example returns a status so the caller can handle a file error:
+
+<!-- example: csv-append -->
+```python
+from sciloom import Function, Input, Output, csv, runtime
+
+class WriteLabel(Function):
+    path: Input[str]
+    label: Input[str]
+    status: Output[int]
+
+    @runtime
+    def run(self) -> None:
+        self.status = csv.try_append_row(self.path, values=(self.label,))
+```
+
+Calling it twice with label `sample,A` appends two records, each containing that
+one text cell. `try_append_row` returns `csv.OK` or `csv.IO_ERROR`; ordinary
+`append_row` stops on a file error. A failed write may already have written some
+bytes. Neither form retries or removes them. A bad path, encoding failure or
+missing reference file service remains an execution error even in the try-form.
+
+Reference execution writes UTF-8 without BOM, comma-separated cells, doubled
+quotes inside quoted fields, and a CRLF record terminator. Integers use decimal
+text, Booleans use `true`/`false`, and finite floats use Python's round-trip text.
+Quantities use canonical SI numbers: for example, `2 * mL` writes `2e-06`.
+There is no header generation or parent-directory creation.
+
+The destination is created if absent. Existing content must already end at a
+complete CSV record boundary: the operation appends bytes without reading,
+repairing or adding a separator to the old file. For example, appending `0` to
+an unterminated file containing `2` produces `20`, not two rows.
+
+AutoSuite currently reports `unsupported_csv_append` for both forms. Its observed
+export mode, encoding and error behavior need verification before these operations
+can compile. See the [author example](../../examples/append-sample-log.md) or
+[reference execution example](../../examples/csv-append-ir.md).

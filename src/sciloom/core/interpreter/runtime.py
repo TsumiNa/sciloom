@@ -7,6 +7,7 @@ from typing import assert_never
 
 from sciloom.core.diagnostics import IRValidationError
 from sciloom.core.ir import (
+    AppendCsv,
     Assignment,
     Binary,
     Call,
@@ -40,6 +41,7 @@ from sciloom.core.ir.model import Node
 from sciloom.core.ir.traversal import iter_nodes
 from sciloom.units import Duration
 from .clocks import format_wall_time
+from .csv_append import execute_append
 from .csv_read import execute_read
 from .device_state import DeviceSession, DeviceState
 from .environment import (
@@ -157,6 +159,11 @@ class Interpreter:
                     value_type = checker.check(expression.value, function, path)
                     assert isinstance(value_type, ScalarType)
                     self._expression_types[expression.value.node_id] = value_type
+                elif isinstance(expression, AppendCsv):
+                    for value in expression.values:
+                        value_type = checker.check(value, function, path)
+                        assert isinstance(value_type, ScalarType)
+                        self._expression_types[value.node_id] = value_type
         self._state: dict[str, dict[str, RuntimeValue]] = {f.node_id: {} for f in program.functions}
         self._steps = 0
         self._devices = DeviceSession(program)
@@ -280,6 +287,8 @@ class Interpreter:
                 )
             elif isinstance(statement, ReadCsv):
                 execute_read(self, statement, frame)
+            elif isinstance(statement, AppendCsv):
+                execute_append(self, statement, frame)
             elif isinstance(statement, ReadWallTime):
                 clock = _require_service(self.environment.wall_clock, "wall_clock", statement)
                 try:

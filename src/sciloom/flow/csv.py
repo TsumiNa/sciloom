@@ -1,4 +1,4 @@
-"""Typed runtime CSV reads with explicit columns and complete result tuples."""
+"""Typed runtime CSV reads and explicit row appends."""
 
 from dataclasses import dataclass
 from enum import Enum
@@ -144,3 +144,50 @@ def try_read_columns(path: str, *, header: bool, columns: tuple[Column[Any], ...
             reference file service; these are not recoverable CSV statuses.
     """
     raise TypeError("CSV reads belong in compiled @runtime methods.")
+
+
+def append_row(
+    path: str, *, values: tuple[int | float | bool | str | RotationalSpeed | Volume | Duration, ...]
+) -> None:
+    """Append one ordered scalar row, stopping execution on a file error.
+
+    Args:
+        path: Runtime file path. Parent directories must already exist.
+        values: Nonempty inline tuple of scalar or physical quantity expressions.
+
+    Raises:
+        TypeError: Called from host Python instead of a runtime method.
+        sciloom.core.diagnostics.ExecutionError: The write or encoding fails, or
+            the reference file service is missing.
+
+    Arguments are captured once. Reference execution writes UTF-8, comma-separated
+    cells and a CRLF record terminator; quantities use canonical SI numbers.
+    Existing content must end at a complete record boundary. Earlier or partial
+    writes are not rolled back. AutoSuite compilation awaits native mode and
+    encoding verification.
+    """
+    raise TypeError("CSV appends belong in compiled @runtime methods.")
+
+
+def try_append_row(
+    path: str, *, values: tuple[int | float | bool | str | RotationalSpeed | Volume | Duration, ...]
+) -> int:
+    """Append one row and assign OK or IO_ERROR to one integer runtime field.
+
+    Args:
+        path: Runtime file path; no parent directories are created.
+        values: Nonempty inline tuple captured before the single write attempt.
+
+    Returns:
+        OK after a successful write, or IO_ERROR after a file error. Partial
+        writes are not rolled back and this operation never retries.
+
+    Raises:
+        TypeError: Called from host Python.
+        sciloom.core.diagnostics.ExecutionError: Invalid arguments, encoding
+            failure, a missing file service or a broken service implementation.
+
+    Assign the entire call result to one declared integer field. Encoding and
+    existing-file requirements are the same as append_row.
+    """
+    raise TypeError("CSV appends belong in compiled @runtime methods.")

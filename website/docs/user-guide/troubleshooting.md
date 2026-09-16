@@ -367,6 +367,20 @@ an explicit reference file service; see [CSV reads](reference/csv.md).
 For reference execution, missing files services and invalid service implementations
 are described in the [developer diagnostics](../developer/troubleshooting.md#csv-file-services).
 
+## A CSV append fails or will not compile
+
+`unsupported_csv_append` means the observed AutoSuite export setting still needs
+verification of append versus overwrite, encoding and failure handling. Changing
+to the try-form does not bypass this platform restriction.
+
+Use a nonempty inline tuple for `values` (`csv_values`), and assign only
+`try_append_row` to an integer field (`csv_binding`). `append_row` has no result.
+`csv_io_error` means an ordinary write failed: check the parent directory and file
+permissions. Partial writes are not rolled back; inspect the destination before
+deciding whether to retry. `csv_encoding` means the row could not be encoded;
+replace invalid Unicode text or unrepresentable numeric text before writing.
+See [append rules](reference/csv.md#append-one-row).
+
 ## Python raises TypeError or ValueError before compilation
 
 These exceptions report invalid host calls or configuration rather than a

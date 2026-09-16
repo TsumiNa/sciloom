@@ -1123,6 +1123,79 @@ overwrite, change-cell or multiple-array-row export. Verify repeated writes,
 new-file behavior, quoting and embedded line breaks. Logical records/units are
 portable contracts; encoding and physical newline behavior are platform profiles.
 
+### Stage-12 concrete append contract
+
+The following is the implementation contract recorded before stage-12 code.
+It becomes executable in stage 12; native AutoSuite acceptance remains subject
+to the evidence gate below.
+
+```python
+from sciloom import csv
+from sciloom.core.ir import AppendCsv, CsvErrorPolicy, Literal, Reference, ScalarType
+
+# Inside @runtime, after declaring path, line and status fields:
+# csv.append_row(self.path, values=(self.line,))
+# self.status = csv.try_append_row(self.path, values=(self.line,))
+
+append = AppendCsv(
+    node_id="append",
+    path=Literal(node_id="path", type=ScalarType.TEXT, value="log.csv"),
+    values=(Literal(node_id="line", type=ScalarType.TEXT, value="sample A"),),
+    error_policy=CsvErrorPolicy.STATUS,
+    status=Reference(node_id="result", symbol_id="status"),
+)
+```
+
+AppendCsv is a frozen Node with stable `__ir_kind__="AppendCsv"`, path Expression,
+nonempty ordered `values: tuple[Expression, ...]`, CsvErrorPolicy and optional
+`status: Reference`. RAISE forbids a status destination; STATUS requires INTEGER.
+Column types come from their expressions and symbol declarations, without a
+second manual type directory. All current scalars and quantities are reference
+values; lists, Zone and arbitrary objects are not. The author markers accept
+`tuple[int | float | bool | str | RotationalSpeed | Volume | Duration, ...]`;
+normal append returns None and must stand alone, try-append returns int and must
+occupy a whole single-field assignment RHS.
+
+Capture path and each value left-to-right exactly once, then serialize one record
+before accessing the file service. The reference output profile is UTF-8 without
+BOM, comma-delimited, doubled double quotes with minimal quoting, CRLF record
+termination. Text is literal, booleans use lowercase true/false, integers decimal,
+finite real values Python round-trippable decimal text. Quantities use canonical
+SI numbers (m³, seconds, rotations per second), not display-unit strings. Reading
+those quantity cells requires the corresponding unit explicitly. There is no
+automatic number-to-text conversion elsewhere in the language.
+
+The operation appends the encoded record verbatim. It does not inspect, repair
+or insert a missing terminator into existing bytes; a caller-owned existing CSV
+must already end at a complete record boundary. No existing-content validation,
+new header, overwrite, parent-directory creation, retry or rollback is implied.
+
+Reference execution requires the same explicit FileService as reads. OSError
+produces IO_ERROR; ordinary append then raises csv_io_error, while try-append
+writes the status and continues. A successful write returns OK. Invalid arguments,
+unencodable text, missing services and unexpected provider errors stay fatal,
+not IO_ERROR. The built-in dedicated path-validation exception maps to csv_path;
+other provider exceptions or non-None append return values map to file_service_error.
+An adapter may have written a prefix before failing; do not erase or invent a
+rollback of those bytes.
+
+`CsvAppendEvent` is a frozen keyword-only record exported by core.interpreter,
+with node_id/source/path, `types: tuple[ScalarType, ...]`,
+`values: tuple[InputScalar, ...]` and integer status. It records completed write
+attempts, including IO_ERROR, before raising or returning status. Values are the
+captured requested logical row, not a claim that all bytes reached the file.
+Invalid arguments/encoding, absent services and faulty providers create no event.
+
+The audit established only one native Export CSV profile: delimiter/endline/
+exportbehaviour/multiplelines all 0, one text column. Manual §3.7.9 specifies native
+0 success and 1 IO error but does not tie numeric export-mode enums to labels.
+F46's repeated logging suggests append; it does not prove that mode 0 cannot
+overwrite. Therefore isolate observed native task generation in measurement
+probes until repeated-write/new-file results establish append semantics. Ordinary
+append also needs the fatal-error gate; quote/encoding/line endings need their
+own measurements. Target must reject unsupported native append semantics instead
+of assuming a potentially destructive export mode. No silent bypass is added.
+
 ## 12. Zone values and directory (A03, stage 13)
 
 ```python

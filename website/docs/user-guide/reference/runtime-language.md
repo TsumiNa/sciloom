@@ -266,10 +266,13 @@ See [lesson 4](../tutorial/lists-and-loops.md).
 path, before reading or updating its elements. A loop can run zero times.
 An empty assignment is a valid empty result but supplies no elements to update.
 
-## CSV reads
+## CSV files
 
 CSV reads return tuples and always require unpacking even for a single
-column. See [CSV reads](csv.md) for their distinct row/column and error rules.
+column. `csv.append_row(path, values=(...))` is a standalone operation;
+`csv.try_append_row(...)` assigns one integer status to a field. See
+[CSV files](csv.md) for their distinct read/append and error rules. Both have
+reference execution; AutoSuite compilation remains gated on platform evidence.
 
 ## Child Function calls
 

@@ -123,8 +123,32 @@ class CsvReadEvent:
     status: int
 
 
+@dataclass(frozen=True, kw_only=True)
+class CsvAppendEvent:
+    """Outcome of a file append attempt and its captured logical row.
+
+    Values describe the requested record, not guaranteed bytes after an I/O
+    failure. Earlier or partial writes are not rolled back. All snapshots are
+    immutable and physical quantities retain their public value types.
+    """
+
+    node_id: str
+    source: SourceSpan | None
+    path: str
+    types: tuple[ScalarType, ...]
+    values: tuple[InputScalar, ...]
+    status: int
+
+
 ExecutionEvent: TypeAlias = (
-    DeviceEvent | LogEvent | AcknowledgementEvent | WallTimeEvent | TimerEvent | WaitEvent | CsvReadEvent
+    DeviceEvent
+    | LogEvent
+    | AcknowledgementEvent
+    | WallTimeEvent
+    | TimerEvent
+    | WaitEvent
+    | CsvReadEvent
+    | CsvAppendEvent
 )
 """Closed reference-event vocabulary; each effect adds its own immutable record."""
 

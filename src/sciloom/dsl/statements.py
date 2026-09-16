@@ -32,6 +32,7 @@ from sciloom.flow.logging import log
 from sciloom.flow.messages import notify
 from sciloom.flow.timing import now_text
 from .context import LoweringContext
+from .csv_append import csv_append
 from .csv_read import csv_read
 from .device_conditions import device_condition
 from .device_operations import configure, device_command
@@ -86,6 +87,10 @@ def call(context: LoweringContext, node: ast.Call, targets: Sequence[ast.expr]) 
 def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statement, ...]:
     result: list[Statement] = []
     for node in body:
+        appended = csv_append(context, node)
+        if appended is not None:
+            result.append(appended)
+            continue
         if isinstance(node, ast.Pass):
             continue
         if isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant) and isinstance(node.value.value, str):

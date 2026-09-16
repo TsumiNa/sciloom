@@ -22,6 +22,7 @@ to the repository root.
 | [Timestamp a filename](timestamp-path.md) | Capture local wall time once and build a filename |
 | [Timed agitation](timed-agitation.md) | Wait relative to a timer before explicitly stopping agitation |
 | [Read a reagent table](read-reagent-table.md) | Select a heading and aligned typed columns; AutoSuite compilation remains gated |
+| [Append a sample log](append-sample-log.md) | Append one text record; AutoSuite mode and encoding still need verification |
 
 ## For contributors
 
@@ -35,5 +36,6 @@ to the repository root.
 | [Wall-time IR](wall-time-ir.md) | Supply an aware clock and inspect an immutable read event |
 | [Elapsed-time IR](timing-ir.md) | Advance a virtual clock without sleeping or changing wall time |
 | [Typed CSV IR](csv-read-ir.md) | Restore a read from JSON and execute with explicit file bytes |
+| [CSV append IR](csv-append-ir.md) | Append twice in memory and inspect captured records |
 | [Independent device](demo-device.md) | A new property, command and target outside core |
 | [Portable agitation](portable-agitation.md) | Device specialization and rebinding the same authored JSON |

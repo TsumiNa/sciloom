@@ -1,6 +1,6 @@
 [project]
 name = "SciLoom"
-version = "0.3.10"
+version = "0.3.11"
 description = "SciLoom — programmable scientific automation from one semantic model."
 readme = "README.md"
 requires-python = ">=3.12,<3.15"
@@ -87,6 +87,7 @@ files = [
     "examples/timestamp_path.py",
     "examples/timed_agitation.py",
     "examples/read_reagent_table.py",
+    "examples/append_sample_log.py",
     "examples/tutorial",
     "examples/developer",
 ]
@@ -119,6 +120,7 @@ module = [
     "examples.timestamp_path_test",
     "examples.timed_agitation_test",
     "examples.read_reagent_table_test",
+    "examples.append_sample_log_test",
     "sciloom.units_test",
     "sciloom.units_quantities_test",
     "sciloom.devices.agitation_test",
@@ -153,8 +155,10 @@ module = [
     "sciloom.core.interpreter.clocks_test",
     "sciloom.core.interpreter.files_test",
     "sciloom.core.interpreter.csv_read_test",
+    "sciloom.core.interpreter.csv_append_test",
     "sciloom.core.ir.csv_test",
     "sciloom.dsl.csv_read_test",
+    "sciloom.dsl.csv_append_test",
     "sciloom.flow.csv_test",
     "sciloom.core.ir.time_format_test",
     "sciloom.core.ir.codec_wall_time_test",
@@ -167,6 +171,7 @@ module = [
     "sciloom_autosuite.validation_guards_test",
     "autosuite.tools.probe_runtime_failure_test",
     "autosuite.tools.probe_csv_read_test",
+    "autosuite.tools.probe_csv_append_test",
     "sciloom.dsl.statements_test",
     "sciloom.core.compiler_test",
     "sciloom.core.compiler_typing_test",

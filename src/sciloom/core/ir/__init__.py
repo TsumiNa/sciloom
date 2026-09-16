@@ -4,6 +4,7 @@ from sciloom.core.diagnostics import Diagnostic, IRValidationError, SourceSpan
 from .codec import from_dict, from_json, to_dict, to_json
 from .device_contracts import CommandContract, CommandParameter, DeviceTypeContract, PropertyContract
 from .model import (
+    AppendCsv,
     Assignment,
     Binary,
     BinaryOp,
@@ -57,6 +58,7 @@ from .types import ListType, ScalarType, ValueType
 from .validation import validate
 
 __all__ = [
+    "AppendCsv",
     "CsvColumn",
     "CsvErrorPolicy",
     "CsvReadMode",

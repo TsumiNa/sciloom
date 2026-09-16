@@ -5,6 +5,7 @@ from .clocks import VirtualClock, VirtualWallClock, WallClock
 from .device_state import DeviceEvent, DeviceState
 from .environment import (
     AcknowledgementEvent,
+    CsvAppendEvent,
     CsvReadEvent,
     ExecutionEvent,
     LogEvent,
@@ -17,6 +18,7 @@ from .files import FileService, LocalFiles, MemoryFiles
 from .runtime import ExecutionConfig, ExecutionResult, Interpreter
 
 __all__ = [
+    "CsvAppendEvent",
     "FileService",
     "MemoryFiles",
     "LocalFiles",
