@@ -3100,8 +3100,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.2.0
-    · <code title="bf7565ed2d56ca989c62647bd930eb711b457b34">bf7565ed</code>
+    · SciLoom 0.3.0
+    · <code title="5bc3042f1aa491dd7d6944f5c1e813d47a810b70">5bc3042f</code>
   </p>
 </aside>
 
@@ -3141,6 +3141,17 @@ session state.</p>
 <p>A shape that needs a new IR node is a change to the semantic contract and starts
 in <code>docs/</code> as a design document with concrete examples before any recognizer is
 written.</p>
+<p>Give a new serializable record its own stable <code>__ir_kind__: ClassVar[str]</code> and
+keep its field names part of the <a href="../../reference/ir/">wire contract</a>. Structural
+conversion follows those typed fields; do not add a second JSON schema. Reuse
+device property and command contracts when they already express the behavior.</p>
+<p>For a new expression or statement, update type checking, scope and flow validation,
+specialization, configuration analysis, reference execution and target handling
+together. An unsupported target must report a diagnostic. Closed-union dispatchers
+end in <code>assert_never</code>, so mypy identifies missing handlers. A test also removes
+supported handlers in a temporary copy to verify that these checks detect omissions.
+Keep the frozen v4 compatibility fixtures unchanged; they establish that old
+documents still execute and produce the same bytes, independently of current examples.</p>
 
 
 

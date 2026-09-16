@@ -3100,8 +3100,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.2.0
-    · <code title="bf7565ed2d56ca989c62647bd930eb711b457b34">bf7565ed</code>
+    · SciLoom 0.3.0
+    · <code title="5bc3042f1aa491dd7d6944f5c1e813d47a810b70">5bc3042f</code>
   </p>
 </aside>
 
@@ -3153,7 +3153,7 @@ validate and raise IRValidationError on invalid data.</p>
 </tr>
 <tr>
 <td>records</td>
-<td>each carries its public dataclass <code>kind</code>; enums are strings, tuples become arrays</td>
+<td>each carries the stable <code>kind</code> declared by its dataclass's <code>__ir_kind__</code>; enums are strings, tuples become arrays</td>
 </tr>
 <tr>
 <td>rejected on import</td>
@@ -3165,10 +3165,18 @@ validate and raise IRValidationError on invalid data.</p>
 </tr>
 <tr>
 <td>stability</td>
-<td>semantic JSON changes can change deterministic UUID hashes in generated artifacts; compare structure rather than bytes across semantic-contract revisions</td>
+<td>existing v4 kinds, field names, defaults and meanings are fixed; implementation refactors preserve canonical JSON and generated AutoSuite UUIDs</td>
 </tr>
 </tbody>
 </table>
+<p>The codec derives structure from dataclass field annotations. Each reachable
+record declares its own unique <code>__ir_kind__: ClassVar[str]</code>, including nested
+contracts and SourceSpan. Renaming a Python class does not rename its wire kind.
+Missing, inherited-only or duplicate declarations produce <code>ir_schema</code> diagnostics.</p>
+<p>New vocabulary can extend v4 without rewriting old documents. Newer versions must
+still read existing valid v4 programs; older versions may explicitly reject kinds
+or types they do not support. A change to an existing meaning requires a separate
+format decision and explicit migration design, not an implicit import conversion.</p>
 <p>SourceSpan records one-based lines and zero-based UTF-8 byte columns. Source IDs
 and spans survive round trips. Lowering records the absolute path of the defining
 file, so paths identify the generating checkout; the developer examples rewrite
