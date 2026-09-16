@@ -14,7 +14,7 @@ flowchart TD
     IR --> Validate["Structure and types"]
     Validate --> Resolve["Target.resolve_devices"]
     Resolve --> Specialize["Device specialization"]
-    Specialize --> Config["Capabilities and definite configuration"]
+    Specialize --> Config["Capabilities, device configuration and timer starts"]
     Config --> Target["Target.validate and emit"]
     Target --> Artifact["Platform artifact"]
     Specialize --> Interpreter["Reference interpreter"]
@@ -27,14 +27,16 @@ flowchart TD
 |---|---|---|---|
 | 1 | `validate(program)` | authored | `IRValidationError` |
 | 2 | `target.resolve_devices(program)` | authored: the only step that sees device branches unselected | the target's own `TypeError` or `ValueError`; `TypeError` when the result is not `DeviceBindings` |
-| 3 | `specialize(program, bindings)` | authored in, selected out: bindings validated, branches selected, unreachable functions pruned, resources retyped to the bound profile, re-validated | `CompilationError` (`missing_resource_binding`, `unknown_resource_binding`, `device_type`, `device_contract`) |
-| 4 | capability and definite-configuration checks | selected | `CompilationError` (`device_capability`, `device_configuration`) |
+| 3 | `specialize(program, bindings)` | authored in, selected out: bindings validated, branches selected, unreachable functions and their timers pruned, devices retyped to the bound profile, re-validated | `CompilationError` (`missing_resource_binding`, `unknown_resource_binding`, `device_type`, `device_contract`) |
+| 4 | capability, definite-configuration and definite-timer-start checks | selected | `CompilationError` (`device_capability`, `device_configuration`, `timer_not_started`) |
 | 5 | `target.validate(program)` | selected | `CompilationError` with the target's own codes |
 | 6 | `target.emit(program)` | selected | returns an `Artifact` |
 
 Target resolution sees the authored program once; validation and emission see
 the selected program. What step 4 proves about required configuration is stated
 on [device contracts](device-contracts.md#required-configuration).
+Timer analysis starts each entry invocation with no established timer origins;
+branch intersections and possibly empty loops cannot rely on earlier runs.
 
 
 `CompileResult` retains `semantic_ir` (authored), `specialized_ir` (selected),
@@ -52,12 +54,13 @@ no Python source.
 
 | When | What it proves | Raises |
 |---|---|---|
-| the class body runs | declarations are well formed: field roles, device slots, device contracts | `IRValidationError` |
+| the class body runs | declarations are well formed: field roles, device slots, device contracts, timer slots | `IRValidationError` |
 | `to_ir()` | the runtime method is in the supported source subset and types agree | `IRValidationError` |
 | `compile_ir` starts | the IR is structurally valid, whatever produced it | `IRValidationError` |
 | `resolve_devices` | the deployment data is the kind the target supports; each profile declares its capability lists | the target's own `TypeError` or `ValueError`; `bind_device`'s `TypeError` |
-| bindings are checked | every declared resource has one compatible binding and no binding is stray | `CompilationError` |
+| bindings are checked | every declared device resource has one compatible binding and no binding is stray; timers need no binding | `CompilationError` |
 | capabilities and configuration are checked | every bound profile implements what the selected program does with it, and every agitation start has its [required configuration](device-contracts.md#required-configuration) | `CompilationError` |
+| timer starts are checked | each elapsed wait has a preceding start on every relevant path in the current entry invocation | `CompilationError` |
 | `Target.validate` | the program fits the platform | `CompilationError` |
 | reference execution | the program has defined semantics to simulate | `ExecutionError` |
 

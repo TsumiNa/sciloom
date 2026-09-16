@@ -15,6 +15,12 @@ Import experiment-author interfaces from `sciloom`. See also [units](units.md),
 
 ::: sciloom.now_text
 
+::: sciloom.wait
+
+::: sciloom.Timer
+    options:
+      members: [start, wait_until]
+
 ## Field declarations
 
 `Input[T]`, `Output[T]` and `Var[T]` mark runtime fields while keeping their Python

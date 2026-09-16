@@ -23,17 +23,21 @@ from sciloom.core.ir import (
     Reference,
     ScalarType,
     StartAgitation,
+    StartTimer,
     Statement,
     StopAgitation,
     Unary,
     ValueType,
     VariableRole,
+    Wait,
+    WaitUntil,
     While,
     validate,
 )
 from sciloom.core.ir.expressions import ExpressionChecker
 from sciloom.core.ir.model import Node
 from sciloom.core.ir.traversal import iter_nodes
+from sciloom.units import Duration
 from .clocks import format_wall_time
 from .device_state import DeviceSession, DeviceState
 from .environment import (
@@ -41,6 +45,8 @@ from .environment import (
     ExecutionEvent,
     LogEvent,
     ReferenceEnvironment,
+    TimerEvent,
+    WaitEvent,
     WallTimeEvent,
     _require_service,
 )
@@ -153,6 +159,7 @@ class Interpreter:
         self._steps = 0
         self._devices = DeviceSession(program)
         self._events: list[ExecutionEvent] = []
+        self._timers: dict[str, float] = {}
         for variable in self._variables.values():
             if variable.role == VariableRole.INTERNAL:
                 assert variable.initial is not None
@@ -194,6 +201,7 @@ class Interpreter:
         }
         self._steps = 0
         self._events = []
+        self._timers = {}
         try:
             outputs = self._call(entry, arguments, 1)
         except RecursionError:
@@ -281,6 +289,45 @@ class Interpreter:
                         source=statement.source,
                         format=statement.format,
                         value=wall_text,
+                    )
+                )
+            elif isinstance(statement, StartTimer):
+                elapsed_clock = _require_service(self.environment.clock, "clock", statement)
+                origin = elapsed_clock.monotonic()
+                self._timers[statement.resource_id] = origin
+                self._record_event(
+                    TimerEvent(
+                        node_id=statement.node_id,
+                        source=statement.source,
+                        resource_id=statement.resource_id,
+                        started_at=origin,
+                    )
+                )
+            elif isinstance(statement, (Wait, WaitUntil)):
+                interval = evaluate(self, statement.duration, frame)
+                assert isinstance(interval, (int, float)) and not isinstance(interval, bool)
+                if interval < 0:
+                    fail("wait_duration", "Wait duration must be nonnegative.", statement)
+                timer_id = statement.resource_id if isinstance(statement, WaitUntil) else None
+                if timer_id is not None and timer_id not in self._timers:
+                    fail("timer_not_started", "Timer was not started in this entry invocation.", statement)
+                elapsed_clock = _require_service(self.environment.clock, "clock", statement)
+                before_wait = elapsed_clock.monotonic()
+                remaining = (
+                    max(0.0, interval - (before_wait - self._timers[timer_id])) if timer_id is not None else interval
+                )
+                try:
+                    elapsed_clock.wait(remaining)
+                except (TypeError, ValueError) as error:
+                    fail("clock_error", str(error), statement)
+                self._record_event(
+                    WaitEvent(
+                        node_id=statement.node_id,
+                        source=statement.source,
+                        duration=Duration(seconds=interval),
+                        started_at=before_wait,
+                        finished_at=elapsed_clock.monotonic(),
+                        timer_id=timer_id,
                     )
                 )
             elif isinstance(statement, ListSet):

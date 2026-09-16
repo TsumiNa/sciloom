@@ -10,6 +10,7 @@ from sciloom.core.compiler import CompileResult, Target, compile_ir
 from sciloom.core.ir import Program
 from .device_slots import DeviceSlot, build_device_schema
 from .fields import RuntimeField, build_schema
+from .timing_schema import TimerSlot, build_timer_schema
 
 P = ParamSpec("P")
 R = TypeVar("R")
@@ -48,11 +49,13 @@ class Function:
 
     model_fields: ClassVar[Mapping[str, RuntimeField]] = MappingProxyType({})
     device_fields: ClassVar[Mapping[str, DeviceSlot]] = MappingProxyType({})
+    timer_fields: ClassVar[Mapping[str, TimerSlot]] = MappingProxyType({})
 
     def __init_subclass__(cls, **kwargs: Any) -> None:
         super().__init_subclass__(**kwargs)
         cls.model_fields = build_schema(cls, Function.__dict__)
         cls.device_fields = build_device_schema(cls, Function.__dict__)
+        cls.timer_fields = build_timer_schema(cls, Function.__dict__)
 
     def to_ir(self) -> Program:
         """Build target-independent IR from this specialized instance.

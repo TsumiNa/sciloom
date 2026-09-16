@@ -10,6 +10,7 @@ from .ir import (
     ConfigureProperty,
     DeviceCommand,
     DeviceIf,
+    DeviceResource,
     If,
     ListSet,
     Literal,
@@ -18,8 +19,11 @@ from .ir import (
     Program,
     ReadWallTime,
     StartAgitation,
+    StartTimer,
     Statement,
     StopAgitation,
+    Wait,
+    WaitUntil,
     While,
 )
 from .ir.device_contracts import START_AGITATION_ID, STOP_AGITATION_ID
@@ -36,7 +40,7 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
     the entry is checked with no historical configuration assumptions.
     """
     deployed = {b.logical_id: b for b in bindings.devices}
-    resources = {r.node_id: deployed[r.logical_id] for r in program.resources}
+    resources = {r.node_id: deployed[r.logical_id] for r in program.resources if isinstance(r, DeviceResource)}
     errors = []
     for node, path in iter_nodes(program):
         message = None
@@ -103,7 +107,19 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
                     _, needs = analyze(statement.body, configured)
                     required |= needs
             elif isinstance(
-                statement, (Assignment, ListSet, LogValue, Notify, ReadWallTime, StopAgitation, DeviceCommand)
+                statement,
+                (
+                    Assignment,
+                    ListSet,
+                    LogValue,
+                    Notify,
+                    ReadWallTime,
+                    Wait,
+                    StartTimer,
+                    WaitUntil,
+                    StopAgitation,
+                    DeviceCommand,
+                ),
             ):
                 pass  # These operations neither save nor require device configuration.
             elif isinstance(statement, DeviceIf):

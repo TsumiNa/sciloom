@@ -31,6 +31,8 @@ def test_missing_consumer_handlers_fail_exhaustiveness(tmp_path, mutation_kind):
         "sciloom/core/ir/validation.py": "ListSet",
         "sciloom/core/specialization.py": "While",
         "sciloom/core/configuration.py": "While",
+        "sciloom/core/timing.py": "While",
+        "sciloom_autosuite/timing.py": "While",
         "sciloom/core/interpreter/expressions.py": "ListLiteral",
         "sciloom/core/interpreter/runtime.py": "ListSet",
         "sciloom_autosuite/expressions.py": "ListLiteral",

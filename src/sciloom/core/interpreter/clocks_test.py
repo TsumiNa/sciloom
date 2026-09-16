@@ -4,7 +4,31 @@ from datetime import datetime, timedelta, timezone
 
 import pytest
 
-from .clocks import VirtualWallClock, format_wall_time
+from .clocks import VirtualClock, VirtualWallClock, format_wall_time
+
+
+@pytest.mark.parametrize("value", [True, None, "1", -1, float("nan"), float("inf"), 10**400])
+def test_virtual_elapsed_clock_rejects_invalid_start_and_wait_before_mutation(value):
+    with pytest.raises((TypeError, ValueError)):
+        VirtualClock(start=value)
+    clock = VirtualClock(start=2)
+    with pytest.raises((TypeError, ValueError)):
+        clock.wait(value)
+    assert clock.monotonic() == 2
+
+
+def test_virtual_wait_overflow_and_wall_clock_independence():
+    elapsed = VirtualClock(start=1e308)
+    with pytest.raises(ValueError):
+        elapsed.wait(1e308)
+    assert elapsed.monotonic() == 1e308
+    wall = VirtualWallClock(datetime(2026, 9, 16, tzinfo=timezone.utc))
+    before = wall.now()
+    elapsed = VirtualClock()
+    elapsed.wait(2)
+    elapsed.wait(0)
+    assert elapsed.monotonic() == 2
+    assert wall.now() == before
 
 
 def test_virtual_wall_clock_changes_only_when_set_and_validates_before_change():

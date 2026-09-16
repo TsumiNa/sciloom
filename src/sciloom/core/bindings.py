@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 
 from .diagnostics import Diagnostic
-from .ir import Program
+from .ir import DeviceResource, Program
 from .ir.device_contracts import DeviceTypeContract
 from .ir.device_validation import semantic_id, validate_directory
 from .ir.schema import _convert
@@ -98,9 +98,11 @@ def validate_bindings(program: Program, bindings: DeviceBindings) -> tuple[Diagn
     if not isinstance(bindings, DeviceBindings):
         raise TypeError("resolve_devices must return DeviceBindings.")
     provided = {binding.logical_id: binding for binding in bindings.devices}
-    required = {resource.logical_id for resource in program.resources}
+    required = {resource.logical_id for resource in program.resources if isinstance(resource, DeviceResource)}
     errors = []
     for i, resource in enumerate(program.resources):
+        if not isinstance(resource, DeviceResource):
+            continue
         binding = provided.get(resource.logical_id)
         code = "missing_resource_binding" if binding is None else "device_type"
         if binding is None or resource.device_type_id not in (

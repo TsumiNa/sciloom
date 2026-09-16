@@ -26,4 +26,10 @@
 
 ::: sciloom.core.interpreter.VirtualWallClock
 
+::: sciloom.core.interpreter.VirtualClock
+
+::: sciloom.core.interpreter.TimerEvent
+
+::: sciloom.core.interpreter.WaitEvent
+
 ::: sciloom.core.interpreter.ReferenceEnvironment

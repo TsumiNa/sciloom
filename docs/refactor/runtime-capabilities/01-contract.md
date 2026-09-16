@@ -15,8 +15,9 @@ Stage 6 implements section 6's log call, LogValue and LogEvent. Stage 7 implemen
 section 7's notify call, Notify and explicit acknowledgement service. Stage 8
 supplies failure probes while retaining the unverified Executor gate. Stage 9
 implements section 8's now_text call, ReadWallTime and explicit wall clock.
+Stage 10 implements section 9's Function-owned timers, waits and virtual clock.
 Their runnable examples and tests verify reference semantics and static mappings;
-none establishes Executor acceptance. Stages 10–17 remain target contracts.
+none establishes Executor acceptance. Stages 11–17 remain target contracts.
 
 Experiment authors import from `sciloom`; targets from `sciloom_autosuite` or an
 independent package. `flow` declares author vocabulary; `dsl` alone analyzes
@@ -826,6 +827,78 @@ paths in the current entry invocation, not a possible earlier invocation. No
 cross-Function Timer sharing initially; child execution still consumes shared
 clock time. Wait never resets configuration, starts or stops equipment. No
 contact/setpoint waits or timed automatic stop.
+
+### Stage-10 concrete interfaces
+
+The author vocabulary is `sciloom.flow.timing.Timer` and `wait`, lazily exported
+from `sciloom`. A bare `timer: Timer` annotation declares a guarded, Function-owned
+slot. No default, host construction, assignment, sharing, subclass or runtime
+value read is supported. Inheritance may retain the same declaration but cannot
+change its role. Timer calls are standalone runtime statements, accepting no
+arguments for start and one positional or `duration=` argument for wait_until.
+`wait` accepts the same duration argument form.
+
+```python
+from sciloom.core.ir import TimerResource, StartTimer, Wait, WaitUntil, Literal, ScalarType
+
+timer = TimerResource(node_id="timer", owner_id="f", name="timer")
+start = StartTimer(node_id="start", resource_id="timer")
+pause = Wait(node_id="pause", duration=Literal(node_id="two", type=ScalarType.DURATION, value=2.0))
+finish = WaitUntil(node_id="finish", resource_id="timer",
+                   duration=Literal(node_id="five", type=ScalarType.DURATION, value=5.0))
+# In FunctionIR f, with timer in Program.resources: elapsed reference time is 5 s.
+```
+
+Each record has the displayed stable kind. `Resource` is the closed union of
+DeviceResource and TimerResource; Program.resources retains its existing wire
+field. DeviceResource fields and old JSON bytes do not change. TimerResource
+requires a valid owner and a distinct public name within that Function; timer
+operations cannot reference another Function's timer or a device resource.
+Only device resources participate in Target device binding and specialization.
+Specialization removes timers whose owning Functions are pruned, while retaining
+the unchanged authored program for JSON interchange and later rebinding.
+
+`core.timing.validate_timer_usage(program) -> tuple[Diagnostic, ...]` checks a
+structurally valid, specialized program. It computes definite starts and incoming
+requirements across branches, zero-iteration loops and calls, then checks the
+entry with an empty started set. Compiler failure uses `timer_not_started`.
+Diagnostics identify each wait occurrence requiring a missing start, preserving
+its path/source through call summaries rather than choosing any wait on that timer.
+Reference execution checks the actual path and resets timer validity at each
+entry run, so a previous run never authorizes a wait. Child calls share the entry
+clock and timer state; timer IDs still belong to their own Function instances.
+
+ReferenceEnvironment adds `clock: VirtualClock | None = None`. No service means
+`missing_environment_service`, including for zero waits. VirtualClock starts at
+explicit finite nonnegative seconds (default 0), has `monotonic() -> float` and
+`wait(seconds: float) -> None`, rejects bool/nonfinite/negative inputs and checks
+overflow before changing state. It never sleeps or changes the separate wall
+clock. Runtime negative waits fail with `wait_duration`; clock failures become
+`clock_error`. Arguments are captured once before waiting. Completed earlier
+effects survive failure.
+
+Successful starts emit frozen `TimerEvent(node_id, source, resource_id, started_at)`.
+Successful waits emit frozen `WaitEvent(node_id, source, duration, started_at,
+finished_at, timer_id)`, all keyword-only. Duration is the public Duration value;
+it is an interval for Wait and the requested elapsed threshold for WaitUntil.
+The times are monotonic seconds and timer_id is None for ordinary Wait. Timer
+events report each reset. Events, rather than a new device-state mapping, expose
+timing observations; existing device snapshots are unaffected.
+
+AutoSuite uses SetTimer and Wait mode 0/2, SI seconds and generated unique timer
+names. Its cancel-wait button is disabled so normal waits cannot silently finish
+early. This option is manual-documented; its generated combination still needs
+Executor verification. The observed Wait range is 0–79,999 hours. Until runtime
+failure propagation is verified, durations require statically bounded literals;
+negative/out-of-range values or dynamic values receive explicit target errors.
+
+Native timers have lexical Macro scope. The first target mapping supports starts
+and resets within one lexical scope per timer, with waits in that scope or its
+descendants. It rejects timers whose start sites occupy different scopes or
+whose wait escapes their declaration scope, rather than silently hoisting a
+clock read. Core/JSON/reference semantics retain the broader Function-owned
+contract, including starts in both sides of a branch followed by an outer wait.
+Record this scope mapping boundary and reset/visibility checks in platform Q&A.
 
 ## 10. CSV read (A05, stage 11)
 

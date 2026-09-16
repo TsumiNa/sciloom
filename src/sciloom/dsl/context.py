@@ -11,7 +11,7 @@ from types import MappingProxyType
 from typing import Any, NoReturn, cast
 
 from sciloom.core.diagnostics import Diagnostic, IRValidationError, SourceSpan
-from sciloom.core.ir import DeviceResource, DeviceTypeContract, Expression, FunctionIR, Reference, ValueType
+from sciloom.core.ir import DeviceResource, DeviceTypeContract, Expression, FunctionIR, Reference, Resource, ValueType
 from sciloom.core.ir.expressions import ExpressionChecker
 from sciloom.core.ir.model import Node
 from sciloom.devices.base import BaseDevice
@@ -31,14 +31,14 @@ class ProgramScope:
         paths: Host composition path of each composed Function, by identity.
         instances: Worklist of Function instances discovered so far.
         ids: Function identifier of each discovered instance, by identity.
-        resources: Logical device resources interned across the program.
+        resources: Declared logical device and Function-owned timer resources.
         device_types: Device contracts recorded for the program, by type ID.
     """
 
     paths: dict[int, str]
     instances: list[Function] = field(default_factory=list)
     ids: dict[int, str] = field(default_factory=dict)
-    resources: dict[str, DeviceResource] = field(default_factory=dict)
+    resources: dict[str, Resource] = field(default_factory=dict)
     device_types: dict[str, DeviceTypeContract] = field(default_factory=dict)
 
 
@@ -120,7 +120,7 @@ class LoweringContext:
             self.fail("device_reference", "Shared device owner must belong to this Function composition.")
         logical_id = ".".join(filter(None, (self.scope.paths[id(reference.owner)], reference.name)))
         self.register_device_type(reference.device_type)
-        return self.scope.resources.setdefault(
+        resource = self.scope.resources.setdefault(
             logical_id,
             DeviceResource(
                 node_id=f"resource:{logical_id}",
@@ -128,6 +128,8 @@ class LoweringContext:
                 device_type_id=reference.device_type.device_type_id,
             ),
         )
+        assert isinstance(resource, DeviceResource)
+        return resource
 
     def register_device_type(self, device_type: type[BaseDevice]) -> None:
         for cls in reversed(device_type.__mro__):

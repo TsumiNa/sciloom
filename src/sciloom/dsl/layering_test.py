@@ -19,6 +19,7 @@ VOCABULARY = frozenset(
         "flow.logging",
         "flow.messages",
         "flow.timing",
+        "flow.timing_schema",
     }
 )
 # What runs only inside Function.to_ir().
@@ -31,6 +32,7 @@ ANALYSIS = frozenset(
         "dsl.expressions",
         "dsl.source",
         "dsl.statements",
+        "dsl.timing",
     }
 )
 

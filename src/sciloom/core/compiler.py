@@ -9,6 +9,7 @@ from .configuration import validate_device_usage
 from .diagnostics import CompilationError, Diagnostic, IRValidationError
 from .ir import Program, validate
 from .specialization import specialize
+from .timing import validate_timer_usage
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -35,7 +36,7 @@ class Target(Protocol):
         ...
 
     def resolve_devices(self, program: Program) -> DeviceBindings:
-        """Return trusted deployment facts for the authored program's resources."""
+        """Return trusted deployment facts for the authored program's device resources."""
         ...
 
     def validate(self, program: Program) -> tuple[Diagnostic, ...]:
@@ -110,7 +111,7 @@ def compile_ir(program: Program, *, target: Target) -> CompileResult:
         raise IRValidationError(diagnostics)
     bindings = target.resolve_devices(program)
     specialized = specialize(program, bindings=bindings)
-    diagnostics = validate_device_usage(specialized, bindings)
+    diagnostics = validate_device_usage(specialized, bindings) + validate_timer_usage(specialized)
     if diagnostics:
         raise CompilationError(diagnostics)
     diagnostics = target.validate(specialized)
