@@ -23,6 +23,8 @@ SCALARS = {
     ScalarType.BOOLEAN: ScalarEncoding("bool", "11", "1", "s"),
     ScalarType.TEXT: ScalarEncoding("text", "8", "text", "K/s"),
     ScalarType.ROTATIONAL_SPEED: ScalarEncoding("angularspeed", "5", "1/s", "rpm"),
+    ScalarType.VOLUME: ScalarEncoding("volume", "5", "m^3", "ml"),
+    ScalarType.DURATION: ScalarEncoding("time", "5", "s", "s"),
 }
 
 

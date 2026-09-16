@@ -93,7 +93,7 @@ def evaluate(session: Interpreter, expression: Expression, frame: dict[str, Runt
         fail("numeric_error", str(error), expression)
     if isinstance(result, float) and not math.isfinite(result):
         fail("numeric_error", "Arithmetic produced a nonfinite value.", expression)
-    return result
+    return coerce(result, session._expression_types[expression.node_id], expression)
 
 
 def apply_binary(op: BinaryOp, left: ScalarValue, right: ScalarValue, node: Node) -> ScalarValue:

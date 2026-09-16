@@ -25,7 +25,7 @@ from sciloom.core.ir import (
     ValueType,
 )
 from sciloom.flow import text
-from sciloom.units import RotationalSpeed
+from sciloom.units import Duration, RotationalSpeed, Volume
 from .context import LoweringContext
 
 BINARY_OPERATORS = {
@@ -103,22 +103,42 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
         value = context.host_attribute(node.attr)
     elif (
         isinstance(node, ast.BinOp)
-        and isinstance(node.op, ast.Mult)
+        and isinstance(node.op, (ast.Mult, ast.Div))
         and isinstance(node.right, ast.Name)
         and node.right.id in context.source.unit_names
     ):
-        number = expression(context, node.left)
-        if not isinstance(number, Literal) or number.type not in (ScalarType.INTEGER, ScalarType.REAL):
-            context.fail(
-                "quantity_literal",
-                "Unit literals require a host numeric value; use Input[RotationalSpeed] for runtime inputs.",
-                node,
+        operand = expression(context, node.left)
+        unit = context.source.unit_names[node.right.id]
+        constant = operand
+        if (
+            isinstance(operand, Unary)
+            and operand.op in (UnaryOp.POSITIVE, UnaryOp.NEGATIVE)
+            and isinstance(operand.operand, Literal)
+            and operand.operand.type in (ScalarType.INTEGER, ScalarType.REAL)
+        ):
+            signed = cast(int | float, operand.operand.value)
+            constant = Literal(
+                node_id=operand.node_id,
+                source=operand.source,
+                type=operand.operand.type,
+                value=-signed if operand.op == UnaryOp.NEGATIVE else signed,
             )
-        try:
-            speed = context.source.unit_names[node.right.id].__rmul__(cast(int | float, number.value))
-        except (ValueError, TypeError) as error:
-            context.fail("quantity_literal", str(error), node)
-        return Literal(**context.metadata(node), type=ScalarType.ROTATIONAL_SPEED, value=speed.rps)
+        if (
+            isinstance(node.op, ast.Mult)
+            and isinstance(constant, Literal)
+            and constant.type in (ScalarType.INTEGER, ScalarType.REAL)
+        ):
+            try:
+                quantity = unit.__rmul__(cast(int | float, constant.value))
+            except (ValueError, TypeError) as error:
+                context.fail("quantity_literal", str(error), node)
+            return literal(context, node, quantity)
+        return Binary(
+            **context.metadata(node),
+            op=BINARY_OPERATORS[type(node.op)],
+            left=operand,
+            right=literal(context, node.right, unit.__rmul__(1)),
+        )
     elif isinstance(node, ast.BinOp) and type(node.op) in BINARY_OPERATORS:
         return Binary(
             **context.metadata(node),
@@ -149,6 +169,15 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
         return result
     else:
         context.fail("python_subset", f"Unsupported runtime expression: {type(node).__name__}.", node)
+    return literal(context, node, value)
+
+
+def literal(context: LoweringContext, node: ast.AST, value: object) -> Literal:
+    """Lower a host scalar to its canonical semantic value."""
+    if isinstance(value, Volume):
+        return Literal(**context.metadata(node), type=ScalarType.VOLUME, value=value.m3)
+    if isinstance(value, Duration):
+        return Literal(**context.metadata(node), type=ScalarType.DURATION, value=value.seconds)
     if isinstance(value, RotationalSpeed):
         return Literal(**context.metadata(node), type=ScalarType.ROTATIONAL_SPEED, value=value.rps)
     scalar = {bool: ScalarType.BOOLEAN, int: ScalarType.INTEGER, float: ScalarType.REAL, str: ScalarType.TEXT}.get(

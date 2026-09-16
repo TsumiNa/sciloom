@@ -5,6 +5,8 @@ from typing import assert_never
 from sciloom.core.diagnostics import Diagnostic
 from sciloom.core.ir import (
     Assignment,
+    Binary,
+    BinaryOp,
     Call,
     ConfigureProperty,
     DeviceCommand,
@@ -29,10 +31,20 @@ from sciloom.core.ir import (
 )
 from sciloom.core.ir.expressions import ExpressionChecker
 from sciloom.core.ir.traversal import iter_nodes
+from sciloom.core.ir.types import QUANTITIES
 
 
-def validate_text_guards(program: Program) -> tuple[Diagnostic, ...]:
-    """Reject new text operations needing unverified AutoSuite failure propagation."""
+def _safe_speed_factor(value: Expression, op: BinaryOp) -> bool:
+    return (
+        isinstance(value, Literal)
+        and type(value.value) in (int, float)
+        and isinstance(value.value, (int, float))
+        and (value.value > 0 if op == BinaryOp.DIVIDE else value.value >= 0)
+    )
+
+
+def validate_runtime_guards(program: Program) -> tuple[Diagnostic, ...]:
+    """Reject new value operations needing unverified AutoSuite runtime checks."""
     errors = []
     symbols = {v.node_id: v for f in program.functions for v in f.variables}
     checker = ExpressionChecker(symbols, lambda *args: None)
@@ -61,7 +73,12 @@ def validate_text_guards(program: Program) -> tuple[Diagnostic, ...]:
                     message = "AutoSuite split requires a literal nonempty delimiter and a literal nonnegative index until runtime failure propagation is verified."
             elif isinstance(node, (ListGet, ListSet)):
                 value = node.value if isinstance(node, ListGet) else node.target
-                if checker.check(value, function, path) == ListType(element_type=ScalarType.TEXT):
+                value_type = checker.check(value, function, path)
+                if isinstance(value_type, ListType) and value_type.element_type in (
+                    ScalarType.TEXT,
+                    ScalarType.VOLUME,
+                    ScalarType.DURATION,
+                ):
                     bounded = (
                         isinstance(node, ListGet)
                         and isinstance(node.value, ListLiteral)
@@ -70,7 +87,27 @@ def validate_text_guards(program: Program) -> tuple[Diagnostic, ...]:
                         and 0 <= node.index.value < len(node.value.elements)
                     )
                     if not bounded:
-                        message = "Text-list indexing needs verified runtime bounds failure; use whole-list values or reference execution for now."
+                        message = "Text/volume/duration-list indexing needs verified runtime bounds failure; use whole-list values or reference execution for now."
+                elif (
+                    isinstance(node, ListSet)
+                    and value_type == ListType(element_type=ScalarType.ROTATIONAL_SPEED)
+                    and node.op in (BinaryOp.MULTIPLY, BinaryOp.DIVIDE)
+                ):
+                    if not _safe_speed_factor(node.value, node.op):
+                        message = "Speed scaling needs a literal nonnegative factor (positive for division) until runtime failure propagation is verified."
+            elif isinstance(node, Binary):
+                left = checker.check(node.left, function, path)
+                if node.op == BinaryOp.DIVIDE and left in QUANTITIES:
+                    divisor = node.right
+                    if not (
+                        isinstance(divisor, Literal) and type(divisor.value) in (int, float) and divisor.value != 0
+                    ):
+                        message = "Quantity division requires a literal nonzero divisor until runtime failure propagation is verified."
+                result = checker.check(node, function, path)
+                if result == ScalarType.ROTATIONAL_SPEED:
+                    factor = node.right if left == ScalarType.ROTATIONAL_SPEED else node.left
+                    if not _safe_speed_factor(factor, node.op):
+                        message = "Speed scaling needs a literal nonnegative factor (positive for division) until runtime failure propagation is verified."
             if message:
                 errors.append(
                     Diagnostic(

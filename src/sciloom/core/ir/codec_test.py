@@ -34,7 +34,7 @@ def test_round_trip_preserves_semantics_ids_and_source(package):
         (lambda d: d.update(unknown=True), "json_shape"),
         (lambda d: d.update(entry_function_id="missing"), "entry_function"),
         (lambda d: d["functions"][0].update(kind="ApplicationIR"), "json_shape"),
-        (lambda d: d["functions"][0]["variables"][0].update(type="volume"), "json_shape"),
+        (lambda d: d["functions"][0]["variables"][0].update(type="unknown_scalar"), "json_shape"),
         (lambda d: d["functions"][0].pop("node_id"), "json_shape"),
         (lambda d: d["functions"][0]["body"][0]["value"].update(symbol_id="missing"), "unknown_symbol"),
     ],

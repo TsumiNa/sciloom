@@ -2,7 +2,7 @@
 
 from typing import TYPE_CHECKING, Any
 
-from .units import RotationalSpeed, rpm, rps
+from .units import Duration, L, RotationalSpeed, Volume, hour, minute, mL, rpm, rps, s, uL
 
 if TYPE_CHECKING:
     from .devices.agitation import Agitator
@@ -43,6 +43,14 @@ __all__ = [
     "comptime",
     "Agitator",
     "RotationalSpeed",
+    "Volume",
+    "Duration",
+    "uL",
+    "mL",
+    "L",
+    "s",
+    "minute",
+    "hour",
     "rpm",
     "rps",
     "Function",

@@ -12,7 +12,7 @@ from typing import Annotated, Any, NoReturn, TypeAlias, TypeVar, get_args, get_o
 from sciloom.core.diagnostics import Diagnostic, IRValidationError
 from sciloom.core.ir import VariableRole
 from sciloom.core.ir.types import ListType, ScalarType, ValueType
-from sciloom.units import RotationalSpeed
+from sciloom.units import Duration, RotationalSpeed, Volume
 
 
 class _FieldRole(Enum):
@@ -38,6 +38,8 @@ _TYPES = {
     bool: ScalarType.BOOLEAN,
     str: ScalarType.TEXT,
     RotationalSpeed: ScalarType.ROTATIONAL_SPEED,
+    Volume: ScalarType.VOLUME,
+    Duration: ScalarType.DURATION,
 }
 
 
@@ -47,7 +49,15 @@ class RuntimeField:
     role: VariableRole
     type: ValueType
     default: (
-        bool | int | float | str | RotationalSpeed | tuple[bool | int | float | str | RotationalSpeed, ...] | None
+        bool
+        | int
+        | float
+        | str
+        | RotationalSpeed
+        | Volume
+        | Duration
+        | tuple[bool | int | float | str | RotationalSpeed | Volume | Duration, ...]
+        | None
     ) = None
 
 
@@ -129,7 +139,7 @@ def _value_type(name: str, annotation: Any) -> ValueType:
     if not isinstance(annotation, type) or annotation not in _TYPES:
         _schema_error(
             name,
-            "Input, Output and Var require int, float, bool, str, RotationalSpeed or a typed list of those values.",
+            "Input, Output and Var require a supported scalar, quantity or homogeneous list type.",
         )
     return _TYPES[annotation]
 
@@ -147,6 +157,8 @@ def _default(name: str, value: Any, value_type: ValueType) -> Any:
         ScalarType.BOOLEAN: (bool,),
         ScalarType.TEXT: (str,),
         ScalarType.ROTATIONAL_SPEED: (RotationalSpeed,),
+        ScalarType.VOLUME: (Volume,),
+        ScalarType.DURATION: (Duration,),
     }[value_type]
     if type(value) not in allowed or (type(value) is float and not math.isfinite(value)):
         _schema_error(name, f"Default must be a finite {value_type.value} value.")

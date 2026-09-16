@@ -6,8 +6,9 @@ This is the authority for the [implementation sequence](00-overview.md). All new
 signatures and snippets below are **target interfaces** until their stated stage
 lands. They have not been executed. Existing Program/JSON v4, Function.compile,
 device property/command contracts and the Target protocol are current.
-Stages 1–2 implement section 1's explicit wire identities and section 3's text
-interfaces. Later sections remain target contracts until their owning stage lands.
+Stages 1–3 implement section 1's explicit wire identities, section 3's text
+interfaces and section 4's quantity interfaces. Later sections remain target
+contracts until their owning stage lands.
 
 Experiment authors import from `sciloom`; targets from `sciloom_autosuite` or an
 independent package. `flow` declares author vocabulary; `dsl` alone analyzes
@@ -233,6 +234,53 @@ same-dimension arithmetic/comparison, scaling by numbers, ratios of like
 quantities, and dividing by an explicit unit to get a number. Avoid arbitrary
 dimensional algebra, offset temperatures and permissive numeric coercions.
 Extend the finite scalar vocabulary; do not add an open quantity registry.
+
+### Stage-3 representation and callable interface
+
+Host values have keyword-only canonical constructors `Volume(m3: float)` and
+`Duration(seconds: float)`. The existing `RotationalSpeed(rps: float)` remains
+unchanged. `VolumeUnit` (`UL`, `ML`, `L`) and `DurationUnit` (`SECOND`, `MINUTE`,
+`HOUR`) provide the root aliases above. Volume and duration support `+`, `-`,
+unary signs, comparisons, numeric multiplication/division and same-kind ratios.
+Division by their corresponding unit returns `float`. Wrong dimensions and
+Boolean numeric arguments are errors. Unit construction works in host Python
+and runtime expressions; speed construction retains its nonnegative constraint.
+
+The new IR scalar kinds are `volume` and `duration`. Reuse `Literal` and `Binary`
+instead of adding conversion nodes: `self.number * mL` becomes multiplication by
+a VOLUME literal with canonical value `1e-6`; `self.amount / mL` divides by that
+same typed literal and produces REAL. Constant unit literals still fold, preserving
+existing speed JSON and ASFP. Numeric scaling and like-quantity ratios also apply
+to speed without permitting negative speed values, speed addition or negation.
+
+```python
+from math import isclose
+from sciloom import Duration, Volume, mL, minute, s, uL
+from sciloom.core.ir import Binary, BinaryOp, Literal, Reference, ScalarType
+
+assert 1 * mL == Volume(m3=1e-6)
+assert isclose((1000 * uL) / mL, 1.0)
+assert 1 * minute - 30 * s == Duration(seconds=30)
+assert (2 * mL) / mL == 2.0
+
+amount = Binary(
+    node_id="amount", op=BinaryOp.MULTIPLY,
+    left=Reference(node_id="number-ref", symbol_id="number"),
+    right=Literal(node_id="one-ml", type=ScalarType.VOLUME, value=1e-6),
+)
+```
+
+These interfaces are executable in stage 3. AutoSuite expressions use SI
+numbers, as documented in manual 3.10.1 pp. 141–142. Floating arithmetic uses
+ordinary finite real values; no exact decimal or cross-platform rounding is
+promised. New quantity division requiring a
+runtime nonzero check, and speed scaling requiring a runtime sign check, are
+rejected until the failure-propagation gate is verified; reference execution
+supports them with explicit errors. Literal nonzero divisors and provably
+nonnegative speed scaling compile. This does not remove existing numeric
+division support or change earlier accepted program output. New volume/duration
+list indexing requiring bounds checks is likewise refused pending the failure
+gate; whole-list construction, copying and parameters are available.
 
 ## 5. Numeric operations (A11, stage 4)
 

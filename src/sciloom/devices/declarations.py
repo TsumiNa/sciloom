@@ -11,7 +11,7 @@ from sciloom.core.diagnostics import Diagnostic, IRValidationError
 from sciloom.core.ir.device_contracts import CommandContract, CommandParameter, DeviceTypeContract, PropertyContract
 from sciloom.core.ir.device_validation import semantic_id
 from sciloom.core.ir.types import ListType, ScalarType, ValueType
-from sciloom.units import RotationalSpeed
+from sciloom.units import Duration, RotationalSpeed, Volume
 from .base import BaseDevice
 
 P = ParamSpec("P")
@@ -56,6 +56,8 @@ def value_type(annotation: object) -> ValueType:
         bool: ScalarType.BOOLEAN,
         str: ScalarType.TEXT,
         RotationalSpeed: ScalarType.ROTATIONAL_SPEED,
+        Volume: ScalarType.VOLUME,
+        Duration: ScalarType.DURATION,
     }
     if isinstance(annotation, type) and annotation in scalars:
         return scalars[annotation]

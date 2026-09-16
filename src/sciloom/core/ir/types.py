@@ -15,6 +15,12 @@ class ScalarType(StrEnum):
     BOOLEAN = "boolean"
     TEXT = "text"
     ROTATIONAL_SPEED = "rotational_speed"
+    VOLUME = "volume"
+    DURATION = "duration"
+
+
+SIGNED_QUANTITIES = (ScalarType.VOLUME, ScalarType.DURATION)
+QUANTITIES = (*SIGNED_QUANTITIES, ScalarType.ROTATIONAL_SPEED)
 
 
 @dataclass(frozen=True, kw_only=True)

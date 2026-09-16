@@ -4,6 +4,7 @@ With Python 3.12–3.14, you can write a procedure in a `.py` file and generate 
 AutoSuite function package (`.asfp`). The current author API lets you:
 
 - Declare inputs, outputs and working values, including typed lists.
+- Process text and calculate volumes, time intervals and rotational speeds with explicit units.
 - Calculate values, use `if` and `while`, and call reusable child Functions.
 - Save shaker settings and explicitly start or stop agitation.
 - Share a logical device between steps and bind it to an AutoSuite shaker.

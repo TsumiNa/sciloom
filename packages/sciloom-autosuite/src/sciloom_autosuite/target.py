@@ -13,7 +13,7 @@ from sciloom.core.ir.traversal import iter_nodes
 from sciloom.devices.declarations import bind_device
 from .agitation import AutoSuiteIndividualShaker
 from .codegen import lower_asfp
-from .validation import validate_array_outputs, validate_text_guards
+from .validation import validate_array_outputs, validate_runtime_guards
 from .xml import AutoSuiteVersion
 
 
@@ -97,7 +97,7 @@ class AutoSuiteTarget:
             if isinstance(node, Binary) and node.op in (BinaryOp.AND, BinaryOp.OR)
         ]
         errors.extend(validate_array_outputs(program))
-        errors.extend(validate_text_guards(program))
+        errors.extend(validate_runtime_guards(program))
         completed: set[str] = set()
         for root in calls:
             if root in completed:

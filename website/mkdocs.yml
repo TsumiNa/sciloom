@@ -94,6 +94,7 @@ nav:
       - Agitation: examples/agitation.md
       - Scale values: examples/scale-values.md
       - Prepare labels: examples/prepare-labels.md
+      - Quantity conversion: examples/quantity-conversion.md
       - Non Zero Array Min: examples/non-zero-array-min.md
       - Stir a rack of samples: examples/stir-rack.md
       - Agitation IR: examples/agitation-ir.md

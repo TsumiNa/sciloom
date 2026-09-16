@@ -10,12 +10,12 @@ of the Python script use ordinary Python.
 | `int`, `float` | Integers can widen to floats; floats do not narrow to integers |
 | `bool` | Separate from integers; only Boolean expressions are valid conditions |
 | `str` | Text without implicit numeric conversion or truthiness |
-| `RotationalSpeed` | `600 * rpm` or `10 * rps`; the only physical quantity currently supported |
-| `list[T]` | One-dimensional list of `int`, `float`, `bool`, `str` or `RotationalSpeed` |
+| `RotationalSpeed` | Nonnegative speed, such as `600 * rpm` or `10 * rps` |
+| `Volume`, `Duration` | Signed, finite quantities, such as `2 * mL` or `1 * minute` |
+| `list[T]` | One-dimensional list of a supported scalar or quantity type |
 
-A speed literal uses a number known when the program is compiled. For a speed
-supplied by the caller, use `Input[RotationalSpeed]`.
-The internal unit for speed is revolutions per second.
+For a speed supplied by the caller, use `Input[RotationalSpeed]`.
+The internal units are revolutions per second, cubic metres and seconds.
 
 Lists require an element type: no bare `list`, `list[Any]`, mixed types
 or nested lists. An empty `[]` gets its element type from its destination.
@@ -32,16 +32,48 @@ List-to-list assignment requires the same element type; a literal assigned to
 | `and`, `or` | Conditional expressions such as `a if flag else b` |
 | List literals, indexing, `len(self.items)` | Slicing, comprehensions, list methods such as `append` |
 | Text concatenation, equality, `len`, `text.trim`, `text.split_part` | String slicing, implicit conversion, arbitrary string methods |
-| `300 * rpm` from a host number | Attaching a unit to a runtime number |
+| Number times a known unit; quantity divided by a unit | Arbitrary dimensional algebra or implicit unit conversion |
 
-Arithmetic and ordering comparisons require numeric operands. Division produces
-a float. Speeds support equality and inequality, but no runtime arithmetic. A condition
+Ordinary numeric division produces a float. Volume and duration support
+same-dimension arithmetic and ordering; quantity rules are below. A condition
 must be Boolean: use `self.count > 0`, not `self.count`. Text also supports `+`
 for concatenation and `==`/`!=` for exact comparisons.
 Lists have no implicit truth value, whole-list comparisons or arithmetic.
 
 **AutoSuite restriction:** although SciLoom accepts `and` and `or`,
 this target rejects them. Use [nested conditions](../troubleshooting.md#autosuite-rejects-boolean-combinations).
+
+## Physical quantities
+
+Import `Volume`, `Duration`, `uL`, `mL`, `L`, `s`, `minute` and `hour` from
+`sciloom`. Declare them as inputs, outputs or initialized state just like speed.
+Multiplying a runtime number by a unit constructs the corresponding quantity.
+
+| Operation | Example | Result |
+| --- | --- | --- |
+| Add/subtract the same dimension | `self.volume - 1 * mL` | Volume, possibly negative |
+| Multiply/divide by a number | `self.interval / 2` | Duration |
+| Compare the same dimension | `self.interval < 1 * minute` | bool |
+| Divide like quantities | `self.volume / self.reference_volume` | float |
+| Express a quantity in a unit | `self.volume / mL` | float |
+| Construct from a number | `self.number * mL` | Volume |
+
+Volume and duration also support unary `+` and `-`. Speed supports scaling and
+like-quantity ratios, while retaining its nonnegative constraint; speed addition,
+negation and ordering remain unsupported. Booleans are never numeric quantities.
+Results use floating arithmetic, so unit conversions can have ordinary rounding.
+
+**AutoSuite restriction:** quantity division currently requires a literal nonzero
+divisor. Speed scaling requires a literal nonnegative factor, positive for
+division. Runtime number-to-speed construction needs a sign check and is refused
+until runtime failure propagation is verified. Volume/duration lists support
+whole-list construction, copying and calls; guarded indexing awaits the same
+verification. The reference interpreter supports these operations and reports
+invalid values when they occur.
+
+The [quantity example](../../examples/quantity-conversion.md) shows conversion in
+a complete function. A Duration value stores an interval; waiting and timers are
+separate operations.
 
 ## Text
 

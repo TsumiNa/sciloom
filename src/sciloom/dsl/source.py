@@ -8,7 +8,7 @@ import inspect
 import tokenize
 from typing import Any
 
-from sciloom.units import SpeedUnit
+from sciloom.units import DurationUnit, SpeedUnit, VolumeUnit
 from .context import LoweringContext, RuntimeSource
 
 
@@ -35,7 +35,11 @@ def runtime_source(context: LoweringContext) -> ast.FunctionDef:
     context.source = RuntimeSource(
         filename=method.__code__.co_filename,
         static_names={**method.__globals__, **bindings.nonlocals},
-        unit_names={name: value for name, value in method.__globals__.items() if isinstance(value, SpeedUnit)},
+        unit_names={
+            name: value
+            for name, value in {**method.__globals__, **bindings.nonlocals}.items()
+            if isinstance(value, (SpeedUnit, VolumeUnit, DurationUnit))
+        },
         allows_len=resolved_len is builtins.len,
     )
     if not context.source.filename.endswith(".py"):

@@ -12,10 +12,16 @@ They do not contain AutoSuite UUIDs, task encodings or hidden context parameters
 ## Types, ownership and identity
 
 Variables have an owner function, role and value type. Scalars are INTEGER, REAL,
-BOOLEAN, TEXT and ROTATIONAL_SPEED internally; a ListType contains one scalar element
+BOOLEAN, TEXT, ROTATIONAL_SPEED, VOLUME and DURATION internally; a ListType contains one scalar element
 type. Public Python authors use native int/float/bool/str rather than these IR enums.
 Internal variables require literal initializers. Input/output defaults are not
 supported. Conditions are Boolean and list element types are invariant.
+
+Volume and duration literals hold finite SI numbers (m³ and seconds). Unit
+construction and conversion reuse typed Binary/Literal operations: multiplying
+REAL by a VOLUME literal yields VOLUME; dividing two VOLUME values yields REAL.
+No Python unit object enters JSON. Quantity constraints apply to intermediate
+values too, so a negative speed cannot be hidden inside a later comparison.
 
 IDs identify node occurrences in a program-wide namespace. Two reads of one
 variable use different node IDs but the same symbol_id. References cannot cross

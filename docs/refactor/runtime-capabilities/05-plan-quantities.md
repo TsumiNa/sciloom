@@ -22,7 +22,29 @@ Update stage status and relevant handbook/examples when implemented. Complete
 review, fixes, latest checks and squash merge before starting the next stage.
 Consult [evidence](20-evidence.md) and collect new uncertainties in [Q&A](21-qa.md).
 
+## Implementation
+
+Canonical constructors and typed host arithmetic live in `sciloom.units`; root
+imports expose quantities and unit aliases. Runtime unit syntax lowers to the
+existing typed Literal/Binary nodes. No new record kinds or format change are
+needed. Intermediate expression normalization preserves the nonnegative speed
+constraint even when a temporary value is used only inside a comparison.
+
+The [AutoSuite mapping](../../../autosuite/docs/20_QUANTITY_MAPPING.md) records
+current volume/local-time evidence and a historical APP's time parameter. The
+target rejects new unchecked division, speed sign and quantity-list bounds cases
+until the failure gate. Reference execution supports them with explicit errors.
+
+`examples/quantity_conversion.py` is the complete author example, with its
+same-name ASFP companion. Direct IR/JSON, mypy, copy/state and read-only corpus
+tests cover the stage's interfaces.
+
+Local acceptance: 448 code/example tests, 79 website tests, mypy (72 files),
+Ruff, strict website build, all 15 example commands, proposed-example syntax,
+AutoSuite smoke, recipe validation and read-only corpus audit. Previous v4
+golden JSON/ASFP and existing companions remain byte-identical. Remote review
+and latest-head CI remain the merge gate.
+
 ## Version
 
-Version: PATCH within lockstep 0.3.x for shipped changes, by the user's explicit series-level version decision. Choose the next patch after final review; documentation-only follow-ups use none. JSON stays v4.
-
+Version: PATCH 0.3.1 → 0.3.2 for both workspace packages, by the user's explicit series-level version decision. JSON stays v4.

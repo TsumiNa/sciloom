@@ -85,7 +85,7 @@ the compiler special-cases either; the
 ## Where to go
 
 The current implementation supports Function programs, scalar and list state,
-physical rotational-speed values, device configuration and explicit start/stop.
+text, physical volume/time/speed values, device configuration and explicit start/stop.
 
 - [Get started](introduction/getting-started.md)
 - [User guide](user-guide/index.md)

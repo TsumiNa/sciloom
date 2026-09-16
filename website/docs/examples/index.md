@@ -15,6 +15,7 @@ to the repository root.
 | [Non Zero Array Min](non-zero-array-min.md) | Find the smallest value above a threshold in supplied numbers |
 | [Stir a rack of samples](stir-rack.md) | Choose a speed from supplied volumes and count start requests |
 | [Prepare labels](prepare-labels.md) | Trim supplied text, select a part and return independent labels |
+| [Quantity conversion](quantity-conversion.md) | Calculate volumes and time differences with explicit units |
 
 ## For contributors
 

@@ -26,12 +26,14 @@ Import `rpm` and supply the unit:
 self.speed = 600 * rpm
 ```
 
-For a speed chosen by the caller, declare `Input[RotationalSpeed]`. Do not
-multiply a runtime number by `rpm`; unit literals use host numbers.
+For a speed chosen by the caller, declare `Input[RotationalSpeed]`. Runtime
+number-times-unit construction is supported by the language; AutoSuite currently
+refuses speed construction that needs an unverified runtime sign check.
 
 | Code | Cause | Fix |
 | --- | --- | --- |
-| `quantity_literal` | `self.value * rpm` when `value` is a runtime field | take a speed input, or use a host number times a unit |
+| `quantity_literal` | a constant unit value is nonfinite or invalid for its quantity | use a finite value; speed must be nonnegative |
+| `unsupported_runtime_guard` | runtime speed construction or a variable quantity divisor | supply a typed speed input or a literal nonzero divisor; see [quantity rules](reference/runtime-language.md#physical-quantities) |
 | `type_mismatch` | `integer` to `rotational_speed`, `real` to `integer` | use the declared type ([tutorial 2](tutorial/inputs-and-units.md)) |
 
 ## A counter does not reset, or cannot be read in Python

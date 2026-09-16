@@ -8,6 +8,7 @@ from typing import assert_never
 from sciloom.core.diagnostics import IRValidationError
 from sciloom.core.ir import (
     Assignment,
+    Binary,
     Call,
     ConfigureProperty,
     DeviceCommand,
@@ -20,10 +21,13 @@ from sciloom.core.ir import (
     StartAgitation,
     Statement,
     StopAgitation,
+    Unary,
+    ValueType,
     VariableRole,
     While,
     validate,
 )
+from sciloom.core.ir.expressions import ExpressionChecker
 from sciloom.core.ir.model import Node
 from sciloom.core.ir.traversal import iter_nodes
 from .device_state import DeviceEvent, DeviceSession, DeviceState
@@ -109,6 +113,16 @@ class Interpreter:
         self.config = config if config is not None else ExecutionConfig()
         self._functions = {f.node_id: f for f in program.functions}
         self._variables = {v.node_id: v for f in program.functions for v in f.variables}
+        # Enforce refined value constraints at intermediate operations too:
+        # a negative speed must fail even if only used by a later comparison.
+        self._expression_types: dict[str, ValueType] = {}
+        checker = ExpressionChecker(self._variables, lambda *args: None)
+        for function in program.functions:
+            for expression, path in iter_nodes(function):
+                if isinstance(expression, (Binary, Unary)):
+                    value_type = checker.check(expression, function, path)
+                    assert value_type is not None  # Program validation already succeeded.
+                    self._expression_types[expression.node_id] = value_type
         self._state: dict[str, dict[str, RuntimeValue]] = {f.node_id: {} for f in program.functions}
         self._steps = 0
         self._devices = DeviceSession(program)
