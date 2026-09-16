@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='utf-8'?>
+<functions>
+  <function typeid="Chemspeed.SATaskFunctionDefinition.1">
+    <description />
+    <name>CalculatePortions</name>
+    <edittime>0</edittime>
+    <expanded>1</expanded>
+    <functiondata>
+      <inputs>
+        <count>2</count>
+        <item0>
+          <id>{AF04EADF-1FA6-5057-B941-DAB282F5298E}</id>
+          <name>amount</name>
+          <variablename>amount</variablename>
+          <variabletype>volume</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item0>
+        <item1>
+          <id>{A60ACC86-08C3-542A-8078-7C0CF3B13038}</id>
+          <name>reference</name>
+          <variablename>reference</variablename>
+          <variabletype>volume</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item1>
+        <sortType>0</sortType>
+      </inputs>
+      <outputs>
+        <count>2</count>
+        <item0>
+          <id>{3973F25C-2B30-54F7-8C1D-DA270189EC8A}</id>
+          <name>whole_portions</name>
+          <variablename>whole_portions</variablename>
+          <variabletype>integer</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item0>
+        <item1>
+          <id>{A1D17DBB-D4A5-512E-95D6-8994224C7ABA}</id>
+          <name>difference</name>
+          <variablename>difference</variablename>
+          <variabletype>volume</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item1>
+        <sortType>0</sortType>
+      </outputs>
+    </functiondata>
+    <id>{730AD8BF-264C-5FB8-905B-DB9D054F06BE}</id>
+    <components>
+      <component typeid="Chemspeed.SATaskSetVariable.1">
+        <description />
+        <name>Set Variable</name>
+        <edittime>0</edittime>
+        <variablename>whole_portions</variablename>
+        <expressiontext>floor((amount / 1e-06))</expressiontext>
+        <elementselectmode>0</elementselectmode>
+        <elementnumber />
+        <numberofelements />
+        <startindex>0</startindex>
+        <clearvariable>0</clearvariable>
+        <sortwells>0</sortwells>
+        <enumerationtype>0</enumerationtype>
+        <wellsenumeration>0</wellsenumeration>
+        <elementsenumeration>0</elementsenumeration>
+        <id>{C3C66FD0-F2BB-5E3F-9692-1119EC5668FA}</id>
+      </component>
+      <component typeid="Chemspeed.SATaskSetVariable.1">
+        <description />
+        <name>Set Variable</name>
+        <edittime>0</edittime>
+        <variablename>difference</variablename>
+        <expressiontext>abs((amount - reference))</expressiontext>
+        <elementselectmode>0</elementselectmode>
+        <elementnumber />
+        <numberofelements />
+        <startindex>0</startindex>
+        <clearvariable>0</clearvariable>
+        <sortwells>0</sortwells>
+        <enumerationtype>0</enumerationtype>
+        <wellsenumeration>0</wellsenumeration>
+        <elementsenumeration>0</elementsenumeration>
+        <id>{30221FD6-C617-51A5-85AD-255C2F9ABF5A}</id>
+      </component>
+    </components>
+  </function>
+</functions>

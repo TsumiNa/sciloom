@@ -1189,6 +1189,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#numeric-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Numeric functions
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#physical-quantities" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2558,6 +2569,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/numeric-operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Numeric operations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -3218,6 +3256,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#numeric-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Numeric functions
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#physical-quantities" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3288,8 +3337,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.2
-    · <code title="4e5f5c5d421981ce8da1ee78d3ea95cd1d1cbe83">4e5f5c5d</code>
+    · SciLoom 0.3.3
+    · <code title="6d5c91f54e20f478898936e2ccbb568b3b784ac4">6d5c91f5</code>
   </p>
 </aside>
 
@@ -3376,6 +3425,10 @@ List-to-list assignment requires the same element type; a literal assigned to
 <td>Number times a known unit; quantity divided by a unit</td>
 <td>Arbitrary dimensional algebra or implicit unit conversion</td>
 </tr>
+<tr>
+<td><code>abs(value)</code>, <code>math.floor(value)</code>, <code>round(value)</code></td>
+<td><code>round(value, ndigits)</code>, other math functions</td>
+</tr>
 </tbody>
 </table>
 <p>Ordinary numeric division produces a float. Volume and duration support
@@ -3385,6 +3438,24 @@ for concatenation and <code>==</code>/<code>!=</code> for exact comparisons.
 Lists have no implicit truth value, whole-list comparisons or arithmetic.</p>
 <p><strong>AutoSuite restriction:</strong> although SciLoom accepts <code>and</code> and <code>or</code>,
 this target rejects them. Use <a href="../../troubleshooting/#autosuite-rejects-boolean-combinations">nested conditions</a>.</p>
+<h2 id="numeric-functions">Numeric functions</h2>
+<p>Use <code>abs(self.value)</code> for magnitude and <code>floor(self.value)</code> after importing
+<code>floor</code> from <code>math</code> for the greatest integer no larger than a number.
+<code>round(self.value)</code> returns the nearest integer, choosing the even integer on
+an exact half: <code>round(2.5)</code> is 2, <code>round(3.5)</code> is 4, and <code>round(-2.5)</code> is −2.
+Only the one-argument forms are supported. Imported aliases and <code>math.floor</code>
+work too; a user-defined function with the same name is not a runtime operation.</p>
+<p><code>abs</code> preserves <code>int</code> or <code>float</code>, and also accepts Volume and Duration.
+<code>floor</code> and <code>round</code> return <code>int</code>. Convert a quantity to a number first, for example
+<code>floor(self.amount / mL)</code>. Booleans, text and lists are not numeric arguments.
+Reference inputs and arithmetic results must be finite.</p>
+<p><strong>AutoSuite restriction:</strong> <code>abs</code> and <code>floor</code> use the documented native functions.
+Floor and round of an integer keep the integer unchanged. Rounding a float is
+currently refused: AutoSuite's rule for half values and an equivalent expansion's
+range have not been verified. The reference interpreter supports Python's rule.
+Large-number reference results do not establish AutoSuite's numeric limits.</p>
+<p>The <a href="../../../examples/numeric-operations/">portion calculation</a> combines quantity
+conversion, floor and magnitude without controlling equipment.</p>
 <h2 id="physical-quantities">Physical quantities</h2>
 <p>Import <code>Volume</code>, <code>Duration</code>, <code>uL</code>, <code>mL</code>, <code>L</code>, <code>s</code>, <code>minute</code> and <code>hour</code> from
 <code>sciloom</code>. Declare them as inputs, outputs or initialized state just like speed.

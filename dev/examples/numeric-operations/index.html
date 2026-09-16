@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/examples/agitation-ir/">
+        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/examples/numeric-operations/">
       
       
-        <link rel="prev" href="../stir-rack/">
+        <link rel="prev" href="../quantity-conversion/">
       
       
-        <link rel="next" href="../list-ir/">
+        <link rel="next" href="../non-zero-array-min/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Agitation IR - SciLoom</title>
+        <title>Numeric operations - SciLoom</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#persist-and-reference-execute-agitation" class="md-skip">
+        <a href="#calculate-whole-portions-and-a-volume-difference" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Agitation IR
+              Numeric operations
             
           </span>
         </div>
@@ -2420,10 +2420,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../numeric-operations/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2438,6 +2447,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -2501,36 +2511,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Agitation IR
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="././" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../agitation-ir/" class="md-nav__link">
         
   
   
@@ -2545,49 +2529,6 @@
   
 
       </a>
-      
-        
-
-
-<nav class="md-nav md-nav--secondary" aria-label="On this page">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#run-and-inspect" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Run and inspect
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#source-and-generated-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Source and generated files
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3133,11 +3074,6 @@
                       
                     
                     
-                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-                      <div class="md-sidebar-button__wrapper">
-                        <label class="md-sidebar-button" for="__toc"></label>
-                      </div>
-                    
                   
                   <div class="md-sidebar__inner">
                     
@@ -3149,36 +3085,6 @@
   
     
   
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#run-and-inspect" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Run and inspect
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#source-and-generated-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Source and generated files
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -3201,85 +3107,84 @@
 
                   
 
-<h1 id="persist-and-reference-execute-agitation">Persist and reference-execute agitation</h1>
-<p>This developer example reuses the author-facing agitation Function, writes JSON v4, restores it, and exercises configuration/start/stop in one reference session.</p>
-<h2 id="run-and-inspect">Run and inspect</h2>
-<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>examples.developer.agitation_ir
-</code></pre></div>
-<p>At the configuration event, saved speed is 600 rpm while applied configuration is empty. After start, both are 600 rpm; stop clears enabled while retaining saved and applied values. The first result remains unchanged after the second run. JSON persistence is an intentional interchange test, not a required step before interpretation. SourceSpan paths in the downloadable JSON are relative to the repository root, so regenerating it in another checkout produces the same file.</p>
-<p>The module docstring below records expected terminal output.</p>
-<div class="admonition note">
-<p class="admonition-title">Compilation is not hardware acceptance</p>
-<p>Compilation and reference execution check a program's structure and its
-mapped semantics. They do not operate equipment, and they do not replace
-AutoSuite Executor validation on the deployment host.</p>
-</div>
-<h2 id="source-and-generated-files">Source and generated files</h2>
-<p><a href="../../_generated/examples/developer/agitation_ir.py">Download Python source</a></p>
-<ul>
-<li><a href="../../_generated/examples/developer/agitation_ir.json">agitation_ir.json</a></li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="sd">"""For SciLoom developers: persist IR and exercise its reference semantics.</span>
+<h1 id="calculate-whole-portions-and-a-volume-difference">Calculate whole portions and a volume difference</h1>
+<p>Use this function to calculate how many whole 1 mL portions fit in a supplied
+volume, then find its absolute difference from a reference volume.
+It performs calculations only; it does not transfer or measure liquid.</p>
+<table>
+<thead>
+<tr>
+<th>Inputs</th>
+<th>Results when the function runs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>amount = 2.5 * mL</code>, <code>reference = 3 * mL</code></td>
+<td><code>whole_portions = 2</code>, <code>difference = 0.5 * mL</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>self.amount / mL</code> converts the quantity to a number before <code>floor</code> rounds down.
+<code>abs(self.amount - self.reference)</code> keeps the volume unit and removes the sign
+of the difference. Quantity arithmetic uses ordinary floating rounding.</p>
+<div class="highlight"><pre><span></span><code><span class="sd">"""Experiment-author example: calculate whole portions and a volume difference.</span>
 
-<span class="sd">Run from the repository root:</span>
-<span class="sd">    uv run python -m examples.developer.agitation_ir</span>
+<span class="sd">Run from the repository root::</span>
 
-<span class="sd">Expected terminal output:</span>
-<span class="sd">    agitation_ir.json</span>
-<span class="sd">    Configured: {'speed': RotationalSpeed(rps=10.0)}</span>
-<span class="sd">    Applied before start: {}</span>
-<span class="sd">    Started: True {'speed': RotationalSpeed(rps=10.0)}</span>
-<span class="sd">    Stopped: False {'speed': RotationalSpeed(rps=10.0)}</span>
+<span class="sd">    uv run python examples/numeric_operations.py</span>
 
-<span class="sd">Full generated output: agitation_ir.json, beside this source file. Source paths</span>
-<span class="sd">are rewritten relative to the repository root so the committed companion file</span>
-<span class="sd">does not depend on the checkout that produced it.</span>
+<span class="sd">Terminal output::</span>
 
-<span class="sd">The JSON file stores the same Function's Program. Reloading it preserves the IR.</span>
-<span class="sd">The first run saves 600 rpm (10 revolutions per second), then explicitly starts.</span>
-<span class="sd">The configuration event precedes application. The second run stops agitation</span>
-<span class="sd">while retaining both saved and last-applied configurations in reference state.</span>
-<span class="sd">These are reference-model states, not measurements of a physical device.</span>
+<span class="sd">    numeric_operations.asfp</span>
 
-<span class="sd">Reuse the experiment author's Function, then inspect the compiler boundary.</span>
-<span class="sd">This developer example writes JSON and executes the restored IR; it emits no ASFP.</span>
+<span class="sd">With amount=2.5*mL and reference=3*mL, the generated function returns</span>
+<span class="sd">whole_portions=2 and difference=0.5*mL (subject to floating rounding).</span>
+<span class="sd">One portion is 1 mL here; this is a calculation, not a liquid-transfer operation.</span>
+<span class="sd">The complete generated package is beside this file as numeric_operations.asfp.</span>
 <span class="sd">"""</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">floor</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">examples.agitation</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigureAgitation</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">rpm</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.interpreter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Interpreter</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.ir</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_json</span><span class="p">,</span> <span class="n">to_json</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.source_paths</span><span class="w"> </span><span class="kn">import</span> <span class="n">repository_relative</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">Volume</span><span class="p">,</span> <span class="n">mL</span><span class="p">,</span> <span class="n">runtime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteTarget</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">CalculatePortions</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Calculate the number of whole 1 mL portions and distance from a reference.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        amount: Supplied volume to divide into portions.</span>
+<span class="sd">        reference: Volume used for comparison.</span>
+<span class="sd">        whole_portions: Number rounded down after conversion to millilitres.</span>
+<span class="sd">        difference: Absolute volume difference from the reference.</span>
+<span class="sd">    """</span>
+
+    <span class="n">amount</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="n">Volume</span><span class="p">]</span>
+    <span class="n">reference</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="n">Volume</span><span class="p">]</span>
+    <span class="n">whole_portions</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">difference</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="n">Volume</span><span class="p">]</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">whole_portions</span> <span class="o">=</span> <span class="n">floor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">/</span> <span class="n">mL</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">difference</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">amount</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">reference</span><span class="p">)</span>
+
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
-    <span class="n">function</span> <span class="o">=</span> <span class="n">ConfigureAgitation</span><span class="p">()</span>
-    <span class="n">program</span> <span class="o">=</span> <span class="n">repository_relative</span><span class="p">(</span><span class="n">function</span><span class="o">.</span><span class="n">to_ir</span><span class="p">())</span>
-
-    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".json"</span><span class="p">)</span>
-    <span class="n">path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">to_json</span><span class="p">(</span><span class="n">program</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span>
-    <span class="n">restored</span> <span class="o">=</span> <span class="n">from_json</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">))</span>
-    <span class="k">assert</span> <span class="n">restored</span> <span class="o">==</span> <span class="n">program</span>
-
-    <span class="n">session</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">(</span><span class="n">restored</span><span class="p">)</span>
-    <span class="n">started</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">"shaker_speed"</span><span class="p">:</span> <span class="mi">600</span> <span class="o">*</span> <span class="n">rpm</span><span class="p">,</span> <span class="s2">"enabled"</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
-    <span class="n">stopped</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">"shaker_speed"</span><span class="p">:</span> <span class="mi">600</span> <span class="o">*</span> <span class="n">rpm</span><span class="p">,</span> <span class="s2">"enabled"</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
-    <span class="n">configured</span> <span class="o">=</span> <span class="n">started</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">state</span>
-    <span class="k">assert</span> <span class="n">configured</span><span class="o">.</span><span class="n">configuration</span> <span class="o">==</span> <span class="p">{</span><span class="s2">"speed"</span><span class="p">:</span> <span class="mi">600</span> <span class="o">*</span> <span class="n">rpm</span><span class="p">}</span>
-    <span class="k">assert</span> <span class="ow">not</span> <span class="n">configured</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">configured</span><span class="o">.</span><span class="n">applied_configuration</span>
-
+    <span class="n">path</span> <span class="o">=</span> <span class="n">CalculatePortions</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">())</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".asfp"</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="n">resource_id</span> <span class="o">=</span> <span class="n">program</span><span class="o">.</span><span class="n">resources</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">node_id</span>
-    <span class="n">active</span> <span class="o">=</span> <span class="n">started</span><span class="o">.</span><span class="n">resources</span><span class="p">[</span><span class="n">resource_id</span><span class="p">]</span>
-    <span class="n">inactive</span> <span class="o">=</span> <span class="n">stopped</span><span class="o">.</span><span class="n">resources</span><span class="p">[</span><span class="n">resource_id</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">active</span><span class="o">.</span><span class="n">enabled</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">inactive</span><span class="o">.</span><span class="n">enabled</span>
-    <span class="k">assert</span> <span class="n">active</span><span class="o">.</span><span class="n">configuration</span> <span class="o">==</span> <span class="n">inactive</span><span class="o">.</span><span class="n">configuration</span> <span class="o">==</span> <span class="n">inactive</span><span class="o">.</span><span class="n">applied_configuration</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Configured:"</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">configured</span><span class="o">.</span><span class="n">configuration</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Applied before start:"</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">configured</span><span class="o">.</span><span class="n">applied_configuration</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Started:"</span><span class="p">,</span> <span class="n">active</span><span class="o">.</span><span class="n">enabled</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">active</span><span class="o">.</span><span class="n">applied_configuration</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Stopped:"</span><span class="p">,</span> <span class="n">inactive</span><span class="o">.</span><span class="n">enabled</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">inactive</span><span class="o">.</span><span class="n">applied_configuration</span><span class="p">))</span>
 </code></pre></div>
+<p>From a source checkout, run:</p>
+<div class="highlight"><pre><span></span><code><span class="go">uv run python examples/numeric_operations.py</span>
+</code></pre></div>
+<p>The command prints <code>numeric_operations.asfp</code> and writes the file beside the Python
+source. AutoSuite supplies the inputs when it calls the generated function.</p>
+<p><a href="../../_generated/examples/numeric_operations.py">Download Python</a> ·
+<a href="../../_generated/examples/numeric_operations.asfp">Download ASFP</a></p>
+<p>See <a href="../../user-guide/reference/runtime-language/#numeric-functions">numeric function rules</a>
+for result types and the current restriction on nearest-integer rounding.</p>
 
 
 
@@ -3312,7 +3217,7 @@ AutoSuite Executor validation on the deployment host.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../stir-rack/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Stir a rack of samples">
+          <a href="../quantity-conversion/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Quantity conversion">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -3322,20 +3227,20 @@ AutoSuite Executor validation on the deployment host.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Stir a rack of samples
+                Quantity conversion
               </div>
             </div>
           </a>
         
         
           
-          <a href="../list-ir/" class="md-footer__link md-footer__link--next" aria-label="Next: List IR">
+          <a href="../non-zero-array-min/" class="md-footer__link md-footer__link--next" aria-label="Next: Non Zero Array Min">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                List IR
+                Non Zero Array Min
               </div>
             </div>
             <div class="md-footer__button md-icon">

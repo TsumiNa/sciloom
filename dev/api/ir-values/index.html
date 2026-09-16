@@ -2418,6 +2418,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/numeric-operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Numeric operations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -3261,6 +3288,39 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         NOT
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.ir.UnaryOp.ABSOLUTE" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        ABSOLUTE
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.ir.UnaryOp.FLOOR" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        FLOOR
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.ir.UnaryOp.ROUND" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        ROUND
       </span>
     </span>
   </a>
@@ -4329,6 +4389,39 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#sciloom.core.ir.UnaryOp.ABSOLUTE" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        ABSOLUTE
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.ir.UnaryOp.FLOOR" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        FLOOR
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.ir.UnaryOp.ROUND" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        ROUND
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4811,8 +4904,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.2
-    · <code title="4e5f5c5d421981ce8da1ee78d3ea95cd1d1cbe83">4e5f5c5d</code>
+    · SciLoom 0.3.3
+    · <code title="6d5c91f54e20f478898936e2ccbb568b3b784ac4">6d5c91f5</code>
   </p>
 </aside>
 
@@ -5783,7 +5876,9 @@
 
 
 
-        <p>Numeric sign and Boolean negation operations.</p>
+        <p>Sign, magnitude, integer rounding and Boolean negation operations.</p>
+<p>FLOOR and ROUND return integers; ROUND uses Python ties-to-even semantics.
+ABSOLUTE preserves the operand's numeric or signed-quantity type.</p>
 
 
 
@@ -5864,6 +5959,75 @@
 
 </h3>
 <div class="doc-signature highlight"><pre><span></span><code><span class="n">NOT</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sciloom.core.ir.UnaryOp.ABSOLUTE" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">ABSOLUTE</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">ABSOLUTE</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sciloom.core.ir.UnaryOp.FLOOR" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">FLOOR</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">FLOOR</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sciloom.core.ir.UnaryOp.ROUND" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">ROUND</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">ROUND</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">

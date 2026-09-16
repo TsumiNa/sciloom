@@ -2506,6 +2506,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/numeric-operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Numeric operations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -3181,8 +3208,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.2
-    · <code title="4e5f5c5d421981ce8da1ee78d3ea95cd1d1cbe83">4e5f5c5d</code>
+    · SciLoom 0.3.3
+    · <code title="6d5c91f54e20f478898936e2ccbb568b3b784ac4">6d5c91f5</code>
   </p>
 </aside>
 
@@ -3207,6 +3234,12 @@ construction and conversion reuse typed Binary/Literal operations: multiplying
 REAL by a VOLUME literal yields VOLUME; dividing two VOLUME values yields REAL.
 No Python unit object enters JSON. Quantity constraints apply to intermediate
 values too, so a negative speed cannot be hidden inside a later comparison.</p>
+<p><code>Unary</code> also represents numeric magnitude and rounding: <code>UnaryOp.ABSOLUTE</code>
+preserves its numeric or signed-quantity operand type; <code>UnaryOp.FLOOR</code> and
+<code>UnaryOp.ROUND</code> require INTEGER/REAL and return INTEGER. ROUND uses ties-to-even.
+Their wire values are <code>abs</code>, <code>floor</code> and <code>round</code>. These additions reuse the v4
+record structure and leave earlier JSON unchanged. Type checking, reference
+execution and target generation dispatch explicitly over the operation enum.</p>
 <p>IDs identify node occurrences in a program-wide namespace. Two reads of one
 variable use different node IDs but the same symbol_id. References cannot cross
 function ownership. Calls use callee variable IDs for their complete I/O bindings.

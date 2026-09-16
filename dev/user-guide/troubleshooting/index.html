@@ -2611,6 +2611,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/numeric-operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Numeric operations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -3396,8 +3423,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.2
-    · <code title="4e5f5c5d421981ce8da1ee78d3ea95cd1d1cbe83">4e5f5c5d</code>
+    · SciLoom 0.3.3
+    · <code title="6d5c91f54e20f478898936e2ccbb568b3b784ac4">6d5c91f5</code>
   </p>
 </aside>
 
@@ -3759,6 +3786,11 @@ identify the restricted operation before generating a function package:</p>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><code>unsupported_rounding</code></td>
+<td><code>round()</code> of a float in an AutoSuite program</td>
+<td>use reference execution until the target's ties-to-even mapping is verified; <code>floor()</code> has different semantics and should only be used when rounding down is intended</td>
+</tr>
 <tr>
 <td><code>unsupported_text_length</code></td>
 <td>runtime text or non-BMP text passed to <code>len()</code></td>
