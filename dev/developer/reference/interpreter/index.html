@@ -1146,6 +1146,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../user-guide/reference/zones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Sample locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../user-guide/reference/devices-and-targets/" class="md-nav__link">
         
   
@@ -2139,6 +2166,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#fixed-location-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Fixed location directory
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-and-snapshots" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3085,6 +3123,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/resolve-locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Resolve sample locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/zone-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Zone IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3339,6 +3431,33 @@
     
   
   Runtime CSV
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/zones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Zone values
 
     
   </span>
@@ -3708,6 +3827,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#fixed-location-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Fixed location directory
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-and-snapshots" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3745,8 +3875,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.11
-    · <code title="ec5616082add8918524724ff87e6c70cbd6ef050">ec561608</code>
+    · SciLoom 0.3.12
+    · <code title="89d82048a3d4322e982ada260be5172098c7686b">89d82048</code>
   </p>
 </aside>
 
@@ -3903,6 +4033,17 @@ file-read event remains. Previously completed actions are not rolled back.</p>
 <p>The <a href="../../../examples/csv-read-ir/">CSV IR example</a> demonstrates JSON restoration
 without reading a host file. Native AutoSuite task probes remain separate from
 portable compilation and cannot establish parser equivalence by static inspection.</p>
+<h2 id="fixed-location-directory">Fixed location directory</h2>
+<p>Supply <code>ReferenceEnvironment(locations=LocationDirectory(...))</code> for ZoneFind and
+WellName. The directory copies its mapping and retains immutable Zone values.
+Lookups and labels are deterministic expressions, so they do not add external
+events. An unknown name returns an empty Zone; an unknown well identity fails.
+WellName requires exactly one well. ZoneLength and ZoneCombine need no directory.
+See the <a href="../../../examples/zone-ir/">direct Zone example</a>.</p>
+<p>Zone values remain immutable in inputs, state and results. Whole-value assignment
+or a child parameter does not create a writable alias. The directory does not
+authorize device use: deployment checks belong to the target and later dynamic
+location scopes.</p>
 <h2 id="session-and-snapshots">Session and snapshots</h2>
 <p>Internal variables initialize once per session and function identity. Repeated
 calls retain state; a new Interpreter starts a fresh session. Input/output call

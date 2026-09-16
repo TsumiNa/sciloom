@@ -1146,6 +1146,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../user-guide/reference/zones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Sample locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../user-guide/reference/devices-and-targets/" class="md-nav__link">
         
   
@@ -2931,6 +2958,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/resolve-locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Resolve sample locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/zone-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Zone IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3190,6 +3271,33 @@
     
   
   Runtime CSV
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zones/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Zone values
 
     
   </span>
@@ -4801,8 +4909,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.11
-    · <code title="ec5616082add8918524724ff87e6c70cbd6ef050">ec561608</code>
+    · SciLoom 0.3.12
+    · <code title="89d82048a3d4322e982ada260be5172098c7686b">89d82048</code>
   </p>
 </aside>
 
@@ -4826,7 +4934,10 @@
 
 </h2>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">PropertyContract</span><span class="p">(</span>
-    <span class="o">*</span><span class="p">,</span> <span class="n">semantic_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">:</span> <span class="n">ValueType</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">semantic_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">ScalarType</span> <span class="o">|</span> <span class="n">ListType</span><span class="p">,</span>
 <span class="p">)</span>
 </code></pre></div>
 
@@ -4834,7 +4945,7 @@
 
 
 
-        <p>Serializable configuration property identity, user-facing name and value type.</p>
+        <p>Configuration identity and scalar/list value type; locations are not capabilities.</p>
 
 
 
@@ -4911,7 +5022,7 @@
   </span>
 
 </h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nb">type</span><span class="p">:</span> <span class="n">ValueType</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nb">type</span><span class="p">:</span> <span class="n">ScalarType</span> <span class="o">|</span> <span class="n">ListType</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -4944,14 +5055,14 @@
   </span>
 
 </h2>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">CommandParameter</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">:</span> <span class="n">ValueType</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">CommandParameter</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">type</span><span class="p">:</span> <span class="n">ScalarType</span> <span class="o">|</span> <span class="n">ListType</span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
 
 
 
-        <p>Named, typed argument of a no-return device command.</p>
+        <p>Scalar/list argument of a no-return device command; excludes Zone values.</p>
 
 
 
@@ -5006,7 +5117,7 @@
   </span>
 
 </h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nb">type</span><span class="p">:</span> <span class="n">ValueType</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nb">type</span><span class="p">:</span> <span class="n">ScalarType</span> <span class="o">|</span> <span class="n">ListType</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">

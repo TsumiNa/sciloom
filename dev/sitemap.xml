@@ -61,6 +61,9 @@
         <loc>https://tsumina.github.io/sciloom/dev/user-guide/reference/csv/</loc>
       </url>
       <url>
+        <loc>https://tsumina.github.io/sciloom/dev/user-guide/reference/zones/</loc>
+      </url>
+      <url>
         <loc>https://tsumina.github.io/sciloom/dev/user-guide/reference/devices-and-targets/</loc>
       </url>
       <url>
@@ -220,6 +223,12 @@
         <loc>https://tsumina.github.io/sciloom/dev/examples/csv-append-ir/</loc>
       </url>
       <url>
+        <loc>https://tsumina.github.io/sciloom/dev/examples/resolve-locations/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/examples/zone-ir/</loc>
+      </url>
+      <url>
         <loc>https://tsumina.github.io/sciloom/dev/examples/demo-device/</loc>
       </url>
       <url>
@@ -242,6 +251,9 @@
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/api/csv/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/api/zones/</loc>
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/api/autosuite/</loc>
