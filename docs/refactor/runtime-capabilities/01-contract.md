@@ -691,6 +691,36 @@ body are not substitutes. Until the propagation mechanism is verified, reject
 new AutoSuite programs requiring it; do not broaden that restriction into a
 silent change to old accepted programs. Record the unavailable gate explicitly.
 
+Stage 8 provides repository tooling, not a new author API or a bypass flag:
+
+```console
+uv run python autosuite/tools/probe_runtime_failure.py --output-dir /tmp/sciloom-failure-probes
+```
+
+The output directory must not exist and must not resolve inside the corpus.
+It receives entry/child/loop ASFP and JSON pairs, each with an in-bounds control,
+positive out-of-range read and negative-index read (nine packages). The generator
+uses the existing numeric-list checked-read path; it does not weaken validation
+of newly guarded capabilities or synthesize an application/deployment.
+
+`manifest.json` records source commit and dirty-tree status, package and target
+versions, hashes, generated function names, expected ordered markers and reference
+diagnostics. Its Executor status is always `pending`: generation cannot promote
+it to verified. Source and node IDs identify the candidate failing expression.
+Package versions come from this checkout's two pyproject files, with lockstep
+validation. Loaded authoring/target implementations must also resolve inside
+this checkout; a foreign installation fails before output is written.
+Run each package in a separate disposable APP and add an outer caller marker in
+that APP. A failed child must suppress both its remaining markers and the outer
+caller marker. A successful control must first demonstrate the same observation
+path. Record real host results separately with the APP/re-export/log hashes.
+
+The existing `unsupported_runtime_guard` diagnostics remain the target gate.
+Stage 8 tests entry, nested and loop composition, source provenance and old v4
+acceptance. There is no configuration switch accepting unverified guards. No
+Executor executable is available in the current macOS checkout, so the stage
+delivers the probes and enforced pending gate, not a platform-success claim.
+
 ## 8. Wall clock (A12, stage 9)
 
 ```python

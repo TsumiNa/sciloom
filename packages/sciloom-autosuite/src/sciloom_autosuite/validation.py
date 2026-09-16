@@ -52,8 +52,8 @@ def validate_runtime_guards(program: Program) -> tuple[Diagnostic, ...]:
     errors = []
     symbols = {v.node_id: v for f in program.functions for v in f.variables}
     checker = ExpressionChecker(symbols, lambda *args: None)
-    for function in program.functions:
-        for node, path in iter_nodes(function):
+    for function_index, function in enumerate(program.functions):
+        for node, path in iter_nodes(function, f"$.functions[{function_index}]"):
             message = None
             code = "unsupported_runtime_guard"
             if isinstance(node, Unary) and node.op == UnaryOp.ROUND:

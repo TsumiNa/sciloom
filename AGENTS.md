@@ -152,7 +152,10 @@ Aim for:
 6. XML/reference validation
 7. real `AutoSuiteExecutor.exe /r /sim 100 /s /c` integration gate
 
-Static XML parse success is not equivalent to Executor acceptance.
+Static XML parse success is not equivalent to Executor acceptance. New guarded
+AutoSuite operations remain rejected until failure propagation is verified. The
+[failure probes and host gate](autosuite/docs/24_RUNTIME_FAILURE_GATE.md) retain
+a pending status; generating them is not an Executor result.
 
 ## 7. Before changing serialization
 
@@ -175,6 +178,7 @@ Run at minimum:
 uv run ruff check
 uv run ruff format --check
 uv run pytest src/sciloom packages/sciloom-autosuite/src examples
+uv run pytest autosuite/tools
 uv run mypy
 python autosuite/tools/smoke_test.py
 python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv

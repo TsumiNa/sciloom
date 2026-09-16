@@ -29,7 +29,7 @@ commit, target/profile version, command and environment needed to reproduce it.
 | A10 notify | Seven primary APP showmessage/OK tasks; F21/F47 use other buttons; [mapping](../../../autosuite/docs/23_NOTIFICATION_MAPPING.md) | 3.6.17 pp. 66–71 | Implemented stage 7 | Capture/envelope checked; actual indefinite blocking and continuation after OK still need Executor |
 | A11 math | F30/F35 abs/floor; historical round expressions | 3.11.7 p. 162 | Implemented stage 4, including Python ties-to-even and large integers | abs/floor mapping and operand ordering checked statically; target ranges and native round ties pending. AutoSuite rejects real round rather than claiming equivalence |
 | A12 wall time | F15 DateTime format | 3.11.1 pp. 146–149 | Pending stage 9 | Local time and supported formatting, read-once behavior |
-| Runtime failure | Existing generated checked-array-read technique; F32/F47 error conventions are different | Fatal faults in 3.9.4; no generic recoverable exception proof | Pending stage 8 | No subsequent marker after a failure in entry, child call or loop; checked read is only a candidate |
+| Runtime failure | Nine generated candidate/control pairs; [host procedure](../../../autosuite/docs/24_RUNTIME_FAILURE_GATE.md); F32/F47 conventions are different | Upper-bound errors in 3.8.5 and error stopping in 3.9.4 | Stage 8 probes/reference tests and enforced target rejection implemented | Executor unavailable: entry/child/loop/outer-caller propagation and re-export remain pending; checked read is only a candidate |
 
 ## Probe and availability policy
 

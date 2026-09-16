@@ -22,7 +22,49 @@ Update stage status and relevant handbook/examples when implemented. Complete
 review, fixes, latest checks and squash merge before starting the next stage.
 Consult [evidence](20-evidence.md) and collect new uncertainties in [Q&A](21-qa.md).
 
+## Implementation
+
+The current macOS environment has neither AutoSuiteExecutor.exe nor Wine. The
+accepted unavailable-Executor path applies: platform propagation remains
+pending, and newly guarded target operations remain rejected.
+
+`autosuite/tools/probe_runtime_failure.py` generates nine numeric-list candidate
+and control ASFP/JSON pairs outside the corpus. Entry, child and loop scopes each
+test an in-bounds read, upper-bound read and negative-index conversion. The
+manifest records actual JSON-restored reference results, ordered markers,
+node/source diagnostics, source commit/dirty status, package/target versions and
+artifact hashes. Its Executor status cannot become verified through generation.
+It refuses existing output directories and resolved corpus paths.
+
+The [host procedure](../../../autosuite/docs/24_RUNTIME_FAILURE_GATE.md) requires
+working controls, native bounds errors, absence of remaining markers and stopped
+outer caller execution. It records re-export, APP/log hashes and configuration
+separately; it does not synthesize an APP or claim platform execution.
+
+Regression tests prove that child/loop/JSON composition cannot bypass the new
+capability gate. They exposed missing function ownership in target diagnostic
+paths; paths now include `$.functions[n]` while preserving node/source IDs.
+No accepted v4 artifact changes and no unverified-guard override is introduced.
+CI runs the colocated probe-tool tests alongside existing checks.
+
+Acceptance passed: 565 code/example/tool tests, 82 website tests, mypy over the
+82 package/example files plus a focused probe-generator type check, Ruff,
+strict website build, smoke/recipe checks, 22 example/syntax commands and
+`git diff --check`. The tool was actually run into a fresh scratch directory;
+nine pairs and a pending manifest were inspected. Read-only corpus audit passed
+for 271 files, 127 archive entries, 52 function matches and 67 templates.
+
+Review found that installed distribution metadata could mislabel a source
+checkout. The generator now reads both source pyproject versions, validates
+lockstep and checks the loaded authoring/target implementation paths before
+writing output. Tests cover stale-environment independence, version drift and
+foreign implementation rejection. Tool imports now name the owning modules
+instead of author-facing package facades. Six probe-tool tests and the focused
+type check pass after these fixes; the shipped change and 0.3.7 decision remain
+unchanged.
+
 ## Version
 
-Version: PATCH within lockstep 0.3.x for shipped changes, by the user's explicit series-level version decision. Choose the next patch after final review; documentation-only follow-ups use none. JSON stays v4.
-
+Version: PATCH 0.3.6 → 0.3.7, correcting target diagnostic provenance while
+establishing the explicitly pending failure gate. Both packages remain lockstep;
+JSON stays v4.
