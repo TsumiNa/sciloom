@@ -54,7 +54,7 @@ class BadTarget:
 bad: Target = BadTarget()
 compile_ir(program, target=BadTarget())
 Artifact(content="text", media_type="text/plain", suffix=".txt")
-Literal(node_id="bad", type=ScalarType.REAL, value="text")
+Literal(node_id="bad", type=ScalarType.REAL, value=b"bytes")
 ListType(element_type=float)
 def bad_artifact() -> Artifact:
     return "not an artifact"

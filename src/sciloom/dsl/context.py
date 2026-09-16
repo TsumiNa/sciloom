@@ -95,6 +95,14 @@ class LoweringContext:
             return vars(self.instance)[name]
         return inspect.getattr_static(type(self.instance), name, _MISSING)
 
+    def static_object(self, node: ast.AST) -> object:
+        """Resolve a trusted declaration by identity without running descriptors."""
+        if isinstance(node, ast.Name):
+            return self.source.static_names.get(node.id)
+        if isinstance(node, ast.Attribute):
+            return inspect.getattr_static(self.static_object(node.value), node.attr, None)
+        return None
+
     def device_member(self, node: ast.AST) -> tuple[DeviceReference, str] | None:
         """Recognize `self.<device slot>.<member>`; any other shape returns None."""
         if not (

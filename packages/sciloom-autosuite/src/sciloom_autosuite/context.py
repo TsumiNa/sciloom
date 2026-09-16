@@ -69,7 +69,7 @@ class CodegenContext:
         while name in occupied:
             name += "_"
         scalar = value_type.element_type if isinstance(value_type, ListType) else value_type
-        zero = False if scalar == ScalarType.BOOLEAN else 0
+        zero = "" if scalar == ScalarType.TEXT else (False if scalar == ScalarType.BOOLEAN else 0)
         initial = (
             ListLiteral(
                 node_id=identity + ":initial",

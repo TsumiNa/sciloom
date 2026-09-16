@@ -98,7 +98,7 @@ def _build_function(context: LoweringContext) -> FunctionIR:
                     type=field.type,
                     value=field.default.rps
                     if isinstance(field.default, RotationalSpeed)
-                    else cast(bool | int | float, field.default),
+                    else cast(bool | int | float | str, field.default),
                 )
         variables.append(
             Variable(

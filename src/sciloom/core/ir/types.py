@@ -13,6 +13,7 @@ class ScalarType(StrEnum):
     INTEGER = "integer"
     REAL = "real"
     BOOLEAN = "boolean"
+    TEXT = "text"
     ROTATIONAL_SPEED = "rotational_speed"
 
 

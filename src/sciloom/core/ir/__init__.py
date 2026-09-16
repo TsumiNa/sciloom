@@ -32,6 +32,9 @@ from .model import (
     Statement,
     StopAgitation,
     SupportsOperation,
+    TextLength,
+    TextSplitPart,
+    TextTrim,
     Unary,
     UnaryOp,
     Variable,
@@ -42,6 +45,9 @@ from .types import ListType, ScalarType, ValueType
 from .validation import validate
 
 __all__ = [
+    "TextLength",
+    "TextTrim",
+    "TextSplitPart",
     "PropertyContract",
     "CommandContract",
     "CommandParameter",

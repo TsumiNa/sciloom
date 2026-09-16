@@ -10,7 +10,7 @@ from sciloom.core.ir.model import ListLiteral, Literal, Node
 from sciloom.core.ir.types import ListType, ScalarType, ValueType
 from sciloom.units import RotationalSpeed
 
-ScalarValue = bool | int | float
+ScalarValue = bool | int | float | str
 RuntimeValue = ScalarValue | tuple[ScalarValue, ...]
 InputScalar = ScalarValue | RotationalSpeed
 # Lists are invariant: spell out homogeneous alternatives so list[float] etc.
@@ -20,6 +20,7 @@ InputValue = (
     | list[bool]
     | list[int]
     | list[float]
+    | list[str]
     | list[RotationalSpeed]
     | list[InputScalar]
     | tuple[InputScalar, ...]
@@ -58,11 +59,16 @@ def coerce(value: RuntimeValue, scalar: ValueType, node: Node) -> RuntimeValue:
         ScalarType.INTEGER: (int,),
         ScalarType.REAL: (int, float),
         ScalarType.BOOLEAN: (bool,),
+        ScalarType.TEXT: (str,),
         ScalarType.ROTATIONAL_SPEED: (int, float),
     }[scalar]
     if type(value) not in allowed:
         fail("runtime_type", f"Expected {scalar.value}, received {type(value).__name__}.", node)
     assert not isinstance(value, tuple)
+    if scalar == ScalarType.TEXT:
+        assert isinstance(value, str)
+        return value
+    assert not isinstance(value, str)
     try:
         result = float(value) if scalar in (ScalarType.REAL, ScalarType.ROTATIONAL_SPEED) else value
     except OverflowError:
@@ -124,7 +130,10 @@ def output_value(value: RuntimeValue, value_type: ValueType) -> OutputValue:
         assert isinstance(value, tuple)
         return tuple(output_value(item, value_type.element_type) for item in value)
     assert not isinstance(value, tuple)
-    return RotationalSpeed(rps=value) if value_type == ScalarType.ROTATIONAL_SPEED else value
+    if value_type == ScalarType.ROTATIONAL_SPEED:
+        assert not isinstance(value, str)
+        return RotationalSpeed(rps=value)
+    return value
 
 
 def checked_index(value: RuntimeValue, index: RuntimeValue, node: Node) -> int:

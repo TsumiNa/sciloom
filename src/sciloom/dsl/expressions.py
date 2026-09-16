@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import ast
+import inspect
 from typing import TypeGuard, cast
 
 from sciloom.core.ir import (
@@ -16,10 +17,14 @@ from sciloom.core.ir import (
     Literal,
     Reference,
     ScalarType,
+    TextLength,
+    TextSplitPart,
+    TextTrim,
     Unary,
     UnaryOp,
     ValueType,
 )
+from sciloom.flow import text
 from sciloom.units import RotationalSpeed
 from .context import LoweringContext
 
@@ -63,8 +68,33 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
                 "python_subset", "len must resolve to the Python builtin; shadowed calls are unsupported.", node
             )
         if len(node.args) != 1 or node.keywords:
-            context.fail("python_subset", "len requires one positional list argument.", node)
-        return ListLength(**context.metadata(node), value=expression(context, node.args[0]))
+            context.fail("python_subset", "len requires one positional list or text argument.", node)
+        metadata = context.metadata(node)
+        length_value = expression(context, node.args[0])
+        if context.type_of(length_value) == ScalarType.TEXT:
+            return TextLength(**metadata, value=length_value)
+        return ListLength(**metadata, value=length_value)
+    if isinstance(node, ast.Call):
+        marker = context.static_object(node.func)
+        if marker is text.trim or marker is text.split_part:
+            intrinsic = text.trim if marker is text.trim else text.split_part
+            if any(isinstance(a, ast.Starred) for a in node.args) or any(k.arg is None for k in node.keywords):
+                context.fail("python_subset", "Text operations do not accept argument expansion.", node)
+            try:
+                bound = inspect.signature(intrinsic).bind(
+                    *node.args, **{k.arg: k.value for k in node.keywords if k.arg is not None}
+                )
+            except TypeError as error:
+                context.fail("python_subset", str(error), node)
+            arguments = {name: expression(context, value) for name, value in bound.arguments.items()}
+            if marker is text.trim:
+                return TextTrim(**context.metadata(node), value=arguments["value"])
+            return TextSplitPart(
+                **context.metadata(node),
+                value=arguments["value"],
+                delimiter=arguments["delimiter"],
+                index=arguments["index"],
+            )
     if isinstance(node, ast.Constant):
         value = node.value
     elif isinstance(node, ast.Attribute) and isinstance(node.value, ast.Name) and node.value.id == "self":
@@ -85,7 +115,7 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
                 node,
             )
         try:
-            speed = context.source.unit_names[node.right.id].__rmul__(number.value)
+            speed = context.source.unit_names[node.right.id].__rmul__(cast(int | float, number.value))
         except (ValueError, TypeError) as error:
             context.fail("quantity_literal", str(error), node)
         return Literal(**context.metadata(node), type=ScalarType.ROTATIONAL_SPEED, value=speed.rps)
@@ -121,14 +151,25 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
         context.fail("python_subset", f"Unsupported runtime expression: {type(node).__name__}.", node)
     if isinstance(value, RotationalSpeed):
         return Literal(**context.metadata(node), type=ScalarType.ROTATIONAL_SPEED, value=value.rps)
-    scalar = {bool: ScalarType.BOOLEAN, int: ScalarType.INTEGER, float: ScalarType.REAL}.get(type(value))
+    scalar = {bool: ScalarType.BOOLEAN, int: ScalarType.INTEGER, float: ScalarType.REAL, str: ScalarType.TEXT}.get(
+        type(value)
+    )
     if scalar is None:
-        context.fail("host_value", "Only scalar bool/int/float host values can enter runtime expressions.", node)
-    return Literal(**context.metadata(node), type=scalar, value=cast(bool | int | float, value))
+        context.fail("host_value", "Only scalar bool/int/float/str host values can enter runtime expressions.", node)
+    return Literal(**context.metadata(node), type=scalar, value=cast(bool | int | float | str, value))
 
 
 def is_length_call(node: ast.AST) -> TypeGuard[ast.Call]:
     return isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "len"
+
+
+def is_expression_call(context: LoweringContext, node: ast.AST) -> bool:
+    if is_length_call(node):
+        return True
+    if isinstance(node, ast.Call):
+        marker = context.static_object(node.func)
+        return marker is text.trim or marker is text.split_part
+    return False
 
 
 def _list_literal(

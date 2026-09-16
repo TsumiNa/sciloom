@@ -16,6 +16,9 @@ from .model import (
     Literal,
     Node,
     Reference,
+    TextLength,
+    TextSplitPart,
+    TextTrim,
     Unary,
     UnaryOp,
     Variable,
@@ -31,6 +34,20 @@ class ExpressionChecker:
         self.report = report
 
     def check(self, expr: Expression, function: FunctionIR, path: str) -> ValueType | None:
+        if isinstance(expr, (TextLength, TextTrim, TextSplitPart)):
+            value_type = self.check(expr.value, function, f"{path}.value")
+            if value_type is not None and value_type != ScalarType.TEXT:
+                self.report("text_type", "Operation requires text.", f"{path}.value", expr.value)
+            if isinstance(expr, TextSplitPart):
+                delimiter = self.check(expr.delimiter, function, f"{path}.delimiter")
+                index = self.check(expr.index, function, f"{path}.index")
+                if delimiter is not None and delimiter != ScalarType.TEXT:
+                    self.report("text_type", "Delimiter must be text.", f"{path}.delimiter", expr.delimiter)
+                if index is not None and index != ScalarType.INTEGER:
+                    self.report(
+                        "index_type", "Part indices must be integers, excluding bool.", f"{path}.index", expr.index
+                    )
+            return ScalarType.INTEGER if isinstance(expr, TextLength) else ScalarType.TEXT
         if isinstance(expr, ListLiteral):
             for i, element in enumerate(expr.elements):
                 element_type = self.check(element, function, f"{path}.elements[{i}]")
@@ -61,7 +78,10 @@ class ExpressionChecker:
                 ScalarType.INTEGER: type(expr.value) is int,
                 ScalarType.REAL: type(expr.value) in (int, float),
                 ScalarType.BOOLEAN: type(expr.value) is bool,
-                ScalarType.ROTATIONAL_SPEED: type(expr.value) in (int, float) and expr.value >= 0,
+                ScalarType.TEXT: type(expr.value) is str,
+                ScalarType.ROTATIONAL_SPEED: type(expr.value) in (int, float)
+                and isinstance(expr.value, (int, float))
+                and expr.value >= 0,
             }[expr.type]
             if not valid:
                 self.report("literal_type", f"Value does not represent {expr.type.value}.", path, expr)
@@ -106,6 +126,8 @@ class ExpressionChecker:
             )
             return None
         numeric = left in (ScalarType.INTEGER, ScalarType.REAL) and right in (ScalarType.INTEGER, ScalarType.REAL)
+        if op == BinaryOp.ADD and left == right == ScalarType.TEXT:
+            return ScalarType.TEXT
         if op in (BinaryOp.AND, BinaryOp.OR):
             if left == right == ScalarType.BOOLEAN:
                 return ScalarType.BOOLEAN

@@ -1,7 +1,6 @@
 """Recognize trusted predicate markers and the narrowing they authorize."""
 
 import ast
-import inspect
 from dataclasses import dataclass
 
 from sciloom.core.ir import CanWrite, IsDevice, SupportsOperation
@@ -27,21 +26,12 @@ class DeviceCondition:
     narrowed_type: type[BaseDevice] | None
 
 
-def _static_object(context: LoweringContext, node: ast.AST) -> object:
-    """Resolve names/static attributes without evaluating host calls/descriptors."""
-    if isinstance(node, ast.Name):
-        return context.source.static_names.get(node.id)
-    if isinstance(node, ast.Attribute):
-        return inspect.getattr_static(_static_object(context, node.value), node.attr, None)
-    return None
-
-
 def device_condition(context: LoweringContext, node: ast.If) -> DeviceCondition | None:
     """Return the device query in `node.test`, or None for an ordinary condition."""
     call = node.test
     if not isinstance(call, ast.Call):
         return None
-    marker = _static_object(context, call.func)
+    marker = context.static_object(call.func)
     if not any(marker is query for query in (comptime.can_write, comptime.supports, comptime.is_device)):
         return None
     if len(call.args) != 2 or call.keywords:
@@ -59,7 +49,7 @@ def device_condition(context: LoweringContext, node: ast.If) -> DeviceCondition 
     narrowed = None
     condition: CanWrite | SupportsOperation | IsDevice
     if marker is comptime.is_device:
-        cls = _static_object(context, call.args[1])
+        cls = context.static_object(call.args[1])
         if not isinstance(cls, type) or not issubclass(cls, BaseDevice):
             context.fail("device_condition", "is_device requires a declared device class.", call.args[1])
         if not (issubclass(cls, declared) or issubclass(declared, cls)):
@@ -75,7 +65,7 @@ def device_condition(context: LoweringContext, node: ast.If) -> DeviceCondition 
         member = call.args[1]
         if not isinstance(member, ast.Attribute):
             context.fail("device_condition", "supports requires a registered DeviceType.command declaration.", member)
-        owner = _static_object(context, member.value)
+        owner = context.static_object(member.value)
         if not isinstance(owner, type) or not issubclass(owner, BaseDevice):
             context.fail("device_condition", "supports requires a registered device command.", member)
         contract = device_contract(owner)

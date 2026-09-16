@@ -36,6 +36,7 @@ _TYPES = {
     int: ScalarType.INTEGER,
     float: ScalarType.REAL,
     bool: ScalarType.BOOLEAN,
+    str: ScalarType.TEXT,
     RotationalSpeed: ScalarType.ROTATIONAL_SPEED,
 }
 
@@ -45,7 +46,9 @@ class RuntimeField:
     name: str
     role: VariableRole
     type: ValueType
-    default: bool | int | float | RotationalSpeed | tuple[bool | int | float | RotationalSpeed, ...] | None = None
+    default: (
+        bool | int | float | str | RotationalSpeed | tuple[bool | int | float | str | RotationalSpeed, ...] | None
+    ) = None
 
 
 def _schema_error(name: str, message: str, code: str = "class_schema") -> NoReturn:
@@ -125,7 +128,8 @@ def _value_type(name: str, annotation: Any) -> ValueType:
         return ListType(element_type=_TYPES[args[0]])
     if not isinstance(annotation, type) or annotation not in _TYPES:
         _schema_error(
-            name, "Input, Output and Var require int, float, bool, RotationalSpeed or a typed list of those values."
+            name,
+            "Input, Output and Var require int, float, bool, str, RotationalSpeed or a typed list of those values.",
         )
     return _TYPES[annotation]
 
@@ -141,6 +145,7 @@ def _default(name: str, value: Any, value_type: ValueType) -> Any:
         ScalarType.INTEGER: (int,),
         ScalarType.REAL: (int, float),
         ScalarType.BOOLEAN: (bool,),
+        ScalarType.TEXT: (str,),
         ScalarType.ROTATIONAL_SPEED: (RotationalSpeed,),
     }[value_type]
     if type(value) not in allowed or (type(value) is float and not math.isfinite(value)):

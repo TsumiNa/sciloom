@@ -15,6 +15,9 @@ from sciloom.core.ir import (
     ListLiteral,
     Literal,
     Reference,
+    TextLength,
+    TextSplitPart,
+    TextTrim,
     Unary,
     UnaryOp,
 )
@@ -27,6 +30,22 @@ if TYPE_CHECKING:
 
 def evaluate(session: Interpreter, expression: Expression, frame: dict[str, RuntimeValue]) -> RuntimeValue:
     session._tick(expression)
+    if isinstance(expression, (TextLength, TextTrim, TextSplitPart)):
+        text_value = evaluate(session, expression.value, frame)
+        assert isinstance(text_value, str)
+        if isinstance(expression, TextLength):
+            return len(text_value)
+        if isinstance(expression, TextTrim):
+            return text_value.strip(" \t\r\n")
+        delimiter = evaluate(session, expression.delimiter, frame)
+        index = evaluate(session, expression.index, frame)
+        assert isinstance(delimiter, str) and type(index) is int
+        if not delimiter:
+            fail("text_delimiter", "Split delimiter must not be empty.", expression)
+        if index < 0:
+            fail("index_bounds", "Text part indices must be nonnegative.", expression)
+        parts = text_value.split(delimiter)
+        return parts[index] if index < len(parts) else ""
     if isinstance(expression, ListLiteral):
         elements: list[ScalarValue] = []
         for item in expression.elements:
@@ -49,7 +68,7 @@ def evaluate(session: Interpreter, expression: Expression, frame: dict[str, Runt
     try:
         if isinstance(expression, Unary):
             value = evaluate(session, expression.operand, frame)
-            assert not isinstance(value, tuple)
+            assert not isinstance(value, (tuple, str))
             if expression.op == UnaryOp.NOT:
                 result = not value
             elif expression.op == UnaryOp.POSITIVE:
@@ -79,6 +98,15 @@ def evaluate(session: Interpreter, expression: Expression, frame: dict[str, Runt
 
 def apply_binary(op: BinaryOp, left: ScalarValue, right: ScalarValue, node: Node) -> ScalarValue:
     """Apply a validated scalar operation, also used by augmented list writes."""
+    if isinstance(left, str) or isinstance(right, str):
+        assert isinstance(left, str) and isinstance(right, str)
+        if op == BinaryOp.ADD:
+            return left + right
+        if op == BinaryOp.EQUAL:
+            return left == right
+        if op == BinaryOp.NOT_EQUAL:
+            return left != right
+        fail("operator_type", "Text supports only concatenation and equality comparisons.", node)
     try:
         result = {
             BinaryOp.ADD: operator.add,

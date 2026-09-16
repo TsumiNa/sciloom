@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='utf-8'?>
+<functions>
+  <function typeid="Chemspeed.SATaskFunctionDefinition.1">
+    <description />
+    <name>PrepareLabels</name>
+    <edittime>0</edittime>
+    <expanded>1</expanded>
+    <functiondata>
+      <inputs>
+        <count>1</count>
+        <item0>
+          <id>{6CD434B1-07EC-5137-B9C5-7F2805B87880}</id>
+          <name>name</name>
+          <variablename>name</variablename>
+          <variabletype>text</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item0>
+        <sortType>0</sortType>
+      </inputs>
+      <outputs>
+        <count>2</count>
+        <item0>
+          <id>{530EF15C-56BD-5FF5-9AB5-BE06D50A4C22}</id>
+          <name>label</name>
+          <variablename>label</variablename>
+          <variabletype>text</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item0>
+        <item1>
+          <id>{5B4CF666-8034-5F81-8650-3FA09F1EA161}</id>
+          <name>labels</name>
+          <variablename>labels</variablename>
+          <variabletype>text</variabletype>
+          <isarray>1</isarray>
+          <expression />
+        </item1>
+        <sortType>0</sortType>
+      </outputs>
+    </functiondata>
+    <id>{B1A03385-27F5-5A9D-89EA-CD33F28A03B1}</id>
+    <components>
+      <component typeid="Chemspeed.SAMacroTask.1">
+        <description />
+        <name>Macro Task</name>
+        <edittime>0</edittime>
+        <expanded>1</expanded>
+        <conditionloop>1</conditionloop>
+        <conditionif />
+        <conditionwhile />
+        <conditiontype>0</conditiontype>
+        <loopvariable>loop</loopvariable>
+        <fragmentvariable>fragment</fragmentvariable>
+        <executionmode>0</executionmode>
+        <sequentialzones>
+          <count>0</count>
+        </sequentialzones>
+        <multicondition>0</multicondition>
+        <multiloop>0</multiloop>
+        <variables sortingType="1">
+          <variable>
+            <name>sciloom_tmp_1</name>
+            <values>
+              <count>0</count>
+            </values>
+            <type>8</type>
+            <siunit>text</siunit>
+            <unit>K/s</unit>
+            <array>1</array>
+            <creationtime>0</creationtime>
+            <constant>0</constant>
+          </variable>
+          <variable>
+            <name>sciloom_tmp_3</name>
+            <values>
+              <count>2</count>
+              <value0>
+                <type>8</type>
+                <value>''</value>
+              </value0>
+              <value1>
+                <type>8</type>
+                <value>''</value>
+              </value1>
+            </values>
+            <type>8</type>
+            <siunit>text</siunit>
+            <unit>K/s</unit>
+            <array>1</array>
+            <creationtime>0</creationtime>
+            <constant>0</constant>
+          </variable>
+        </variables>
+        <id>{77A0E1F8-0A0F-5EF4-8F53-C6C9EB38969D}</id>
+        <tasks>
+          <task typeid="Chemspeed.SATaskSetVariable.1">
+            <description />
+            <name>Set Variable</name>
+            <edittime>0</edittime>
+            <variablename>label</variablename>
+            <expressiontext>TrimText(name)</expressiontext>
+            <elementselectmode>0</elementselectmode>
+            <elementnumber />
+            <numberofelements />
+            <startindex>0</startindex>
+            <clearvariable>0</clearvariable>
+            <sortwells>0</sortwells>
+            <enumerationtype>0</enumerationtype>
+            <wellsenumeration>0</wellsenumeration>
+            <elementsenumeration>0</elementsenumeration>
+            <id>{4BAB2E62-AE0A-5811-BFFE-A4ECF1BF4723}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskSetVariable.1">
+            <description />
+            <name>Set Variable</name>
+            <edittime>0</edittime>
+            <variablename>label</variablename>
+            <expressiontext>SplitTextAndGet(label, ',', 0) + '_processed'</expressiontext>
+            <elementselectmode>0</elementselectmode>
+            <elementnumber />
+            <numberofelements />
+            <startindex>0</startindex>
+            <clearvariable>0</clearvariable>
+            <sortwells>0</sortwells>
+            <enumerationtype>0</enumerationtype>
+            <wellsenumeration>0</wellsenumeration>
+            <elementsenumeration>0</elementsenumeration>
+            <id>{FE49F46A-A837-5A8A-B5B0-1FFCC7C71B8E}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskSetVariable.1">
+            <description />
+            <name>Set Variable</name>
+            <edittime>0</edittime>
+            <variablename>sciloom_tmp_3</variablename>
+            <expressiontext>label</expressiontext>
+            <elementselectmode>0</elementselectmode>
+            <elementnumber>0</elementnumber>
+            <numberofelements />
+            <startindex>0</startindex>
+            <clearvariable>0</clearvariable>
+            <sortwells>0</sortwells>
+            <enumerationtype>0</enumerationtype>
+            <wellsenumeration>0</wellsenumeration>
+            <elementsenumeration>0</elementsenumeration>
+            <id>{81E0B915-19EA-5948-9F46-2A3D5FE7A93B}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskSetVariable.1">
+            <description />
+            <name>Set Variable</name>
+            <edittime>0</edittime>
+            <variablename>sciloom_tmp_3</variablename>
+            <expressiontext>'ready'</expressiontext>
+            <elementselectmode>0</elementselectmode>
+            <elementnumber>1</elementnumber>
+            <numberofelements />
+            <startindex>0</startindex>
+            <clearvariable>0</clearvariable>
+            <sortwells>0</sortwells>
+            <enumerationtype>0</enumerationtype>
+            <wellsenumeration>0</wellsenumeration>
+            <elementsenumeration>0</elementsenumeration>
+            <id>{2233F0CC-3DD6-5FFA-B6AC-BB3600879697}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskSetVariable.1">
+            <description />
+            <name>Set Variable</name>
+            <edittime>0</edittime>
+            <variablename>sciloom_tmp_1</variablename>
+            <expressiontext>sciloom_tmp_3</expressiontext>
+            <elementselectmode>4</elementselectmode>
+            <elementnumber />
+            <numberofelements />
+            <startindex>0</startindex>
+            <clearvariable>0</clearvariable>
+            <sortwells>0</sortwells>
+            <enumerationtype>0</enumerationtype>
+            <wellsenumeration>0</wellsenumeration>
+            <elementsenumeration>0</elementsenumeration>
+            <id>{FF1033BC-0592-5E34-BE08-9ACC4F28571E}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskSetVariable.1">
+            <description />
+            <name>Set Variable</name>
+            <edittime>0</edittime>
+            <variablename>labels</variablename>
+            <expressiontext>sciloom_tmp_1</expressiontext>
+            <elementselectmode>4</elementselectmode>
+            <elementnumber />
+            <numberofelements />
+            <startindex>0</startindex>
+            <clearvariable>0</clearvariable>
+            <sortwells>0</sortwells>
+            <enumerationtype>0</enumerationtype>
+            <wellsenumeration>0</wellsenumeration>
+            <elementsenumeration>0</elementsenumeration>
+            <id>{9E958F7A-E94C-5670-8FF1-1092FD4AFFFB}</id>
+          </task>
+        </tasks>
+      </component>
+    </components>
+  </function>
+</functions>

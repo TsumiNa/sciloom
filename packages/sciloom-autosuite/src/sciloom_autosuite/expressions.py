@@ -15,12 +15,15 @@ from sciloom.core.ir import (
     Literal,
     Reference,
     ScalarType,
+    TextLength,
+    TextSplitPart,
+    TextTrim,
     Unary,
     ValueType,
 )
 from sciloom.core.ir.expressions import ExpressionChecker
 from .context import CodegenContext
-from .encoding import number
+from .encoding import literal_value
 from .primitives import macro, set_variable
 from .xml import XmlNode
 
@@ -63,12 +66,21 @@ def plan_expression(
     context: CodegenContext, function: FunctionIR, expression: Expression, tag: str, *, nested: bool = False
 ) -> ExpressionPlan:
     if isinstance(expression, Literal):
-        text = (
-            ("true" if expression.value else "false")
-            if expression.type == ScalarType.BOOLEAN
-            else number(expression.value)
-        )
-        return ExpressionPlan(text, expression.type)
+        return ExpressionPlan(literal_value(expression), expression.type)
+    if isinstance(expression, (TextLength, TextTrim)):
+        value = plan_expression(context, function, expression.value, tag)
+        name = "TextLength" if isinstance(expression, TextLength) else "TrimText"
+        kind = ScalarType.INTEGER if isinstance(expression, TextLength) else ScalarType.TEXT
+        return ExpressionPlan(f"{name}({value.text})", kind, value.prerequisites)
+    if isinstance(expression, TextSplitPart):
+        arguments = [
+            plan_expression(context, function, arg, tag)
+            for arg in (expression.value, expression.delimiter, expression.index)
+        ]
+        if any(arg.prerequisites for arg in arguments):
+            arguments = [materialize(context, function, arg, tag) for arg in arguments]
+        text = "SplitTextAndGet(" + ", ".join(arg.text for arg in arguments) + ")"
+        return ExpressionPlan(text, ScalarType.TEXT, tuple(task for arg in arguments for task in arg.prerequisites))
     if isinstance(expression, Reference):
         return ExpressionPlan(context.names[expression.symbol_id], context.variables[expression.symbol_id].type)
     if isinstance(expression, ListLiteral):

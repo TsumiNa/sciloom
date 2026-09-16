@@ -76,7 +76,12 @@ class DemoTarget:
         for node, path in iter_nodes(program):
             if isinstance(node, ConfigureProperty) and node.property_id == "example.demo-agitator.gain/v1":
                 value = node.value
-                if not (isinstance(value, Literal) and type(value.value) in (int, float) and 0 <= value.value <= 1):
+                if not (
+                    isinstance(value, Literal)
+                    and isinstance(value.value, (int, float))
+                    and type(value.value) is not bool
+                    and 0 <= value.value <= 1
+                ):
                     diagnostics.append(
                         Diagnostic(
                             code="demo_gain_range",

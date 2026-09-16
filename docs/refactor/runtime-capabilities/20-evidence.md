@@ -7,14 +7,15 @@ contains source filenames and printed manual page numbers. Fxx here refers to
 that source key, not a public download. Vendor files stay in the locally shared,
 ignored corpus. Copy neither the corpus nor the internal plan to the website.
 
-The starting state is documentation only: **none of these new feature probes
-has run in SciLoom or Executor**. Source presence is not Editor acceptance or a
-hardware result. Record each future result with the input/output hashes, source
+Stage 2 adds reference text tests and static XML checks, recorded in the
+[text mapping](../../../autosuite/docs/19_TEXT_MAPPING.md). No new capability has
+passed Executor. Source presence is not Editor acceptance or a hardware result.
+Record each future result with the input/output hashes, source
 commit, target/profile version, command and environment needed to reproduce it.
 
 | Capability | Existing XML evidence | Documented semantics | Reference execution | Executor verification required |
 | --- | --- | --- | --- | --- |
-| A01 text | F25/F28/F33/F45, text variables and expressions | Manual 3.8.5, 3.10.4, 3.11.3 | Pending stage 2 | Quotes/backslashes/CR-LF, Unicode/non-BMP length, empty split tokens, delimiter/index limits |
+| A01 text | F25/F28/F33/F41; static encoding checks | Manual 3.8.5, 3.10.4, 3.11.3 | Implemented stage 2 | Unicode length, whitespace, Char/encoding and runtime guards still pending; unproven lengths and guard-dependent programs are rejected |
 | A02 quantities | F28/F31 volume parameters, F11/F13 timing | 3.8.5 pp. 111–112 | Pending stage 3 | SI defaults versus mL import units, signed values, finite/numeric representation |
 | A03 Zone | F24 dynamic Stir; F30/F34/F48, primary APP layout | 3.6.19 pp. 73–74, 3.8.5 p. 113, 3.9.2–3, 3.11.5 | Pending stages 13/16 | Enumeration/identity, candidate well/controller ancestry, empty/foreign/mixed selections and fail-before-action |
 | A04 traversal | F43 and F46 sequential macros | 3.8.10–12 pp. 121–126 | Pending stage 14 | Correct fragment index, divisibility, empty traversal and checks before body effects |

@@ -63,7 +63,7 @@ class Literal(Node):
     __ir_kind__: ClassVar[str] = "Literal"
 
     type: ScalarType
-    value: bool | int | float
+    value: bool | int | float | str
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -125,7 +125,38 @@ class ListGet(Node):
     index: "Expression"
 
 
-Expression = Literal | Reference | Unary | Binary | ListLiteral | ListLength | ListGet
+@dataclass(frozen=True, kw_only=True)
+class TextLength(Node):
+    """Count Unicode code points without encoding conversion or normalization."""
+
+    __ir_kind__: ClassVar[str] = "TextLength"
+
+    value: "Expression"
+
+
+@dataclass(frozen=True, kw_only=True)
+class TextTrim(Node):
+    """Remove only space, tab, CR and LF at both ends of a text value."""
+
+    __ir_kind__: ClassVar[str] = "TextTrim"
+
+    value: "Expression"
+
+
+@dataclass(frozen=True, kw_only=True)
+class TextSplitPart(Node):
+    """Split on a nonempty delimiter and select a nonnegative part; missing means empty."""
+
+    __ir_kind__: ClassVar[str] = "TextSplitPart"
+
+    value: "Expression"
+    delimiter: "Expression"
+    index: "Expression"
+
+
+Expression = (
+    Literal | Reference | Unary | Binary | ListLiteral | ListLength | ListGet | TextLength | TextTrim | TextSplitPart
+)
 """Closed set of typed runtime expressions."""
 
 
