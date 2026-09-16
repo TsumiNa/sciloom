@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from collections.abc import Callable, Mapping
 from typing import assert_never
 
@@ -85,6 +86,12 @@ class ExpressionChecker:
                 and isinstance(expr.value, (int, float))
                 and expr.value >= 0,
             }[expr.type]
+            if valid and expr.type in SIGNED_QUANTITIES:
+                assert isinstance(expr.value, (int, float))
+                try:
+                    valid = math.isfinite(expr.value)
+                except OverflowError:
+                    valid = False
             if not valid:
                 self.report("literal_type", f"Value does not represent {expr.type.value}.", path, expr)
                 return None
