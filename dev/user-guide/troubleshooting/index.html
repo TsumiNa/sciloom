@@ -1212,6 +1212,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#selecting-or-visiting-wells-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Selecting or visiting wells fails
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#python-raises-typeerror-or-valueerror-before-compilation" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3238,6 +3249,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/visit-locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Visit sample locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/zone-traversal-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Zone traversal IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3976,6 +4041,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#selecting-or-visiting-wells-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Selecting or visiting wells fails
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#python-raises-typeerror-or-valueerror-before-compilation" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -4002,8 +4078,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.12
-    · <code title="89d82048a3d4322e982ada260be5172098c7686b">89d82048</code>
+    · SciLoom 0.3.13
+    · <code title="d393e43bf3e74d62861af9272eb956fc9f3a90b4">d393e43b</code>
   </p>
 </aside>
 
@@ -4166,7 +4242,7 @@ that takes only <code>self</code>. Its body supports a
 <a href="../reference/runtime-language/">subset of Python</a>; constructors still use
 ordinary Python.</p>
 <p>For example, with <code>values: Input[list[float]]</code> and <code>total: Output[float]</code>,
-a <code>for</code> loop is not supported:</p>
+a <code>for</code> loop over that list is not supported:</p>
 <!-- correction: loop wrong -->
 <div class="highlight"><pre><span></span><code><span class="bp">self</span><span class="o">.</span><span class="n">total</span> <span class="o">=</span> <span class="mf">0.0</span>
 <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
@@ -4201,8 +4277,8 @@ a <code>for</code> loop is not supported:</p>
 </tr>
 <tr>
 <td><code>python_subset</code></td>
-<td><code>For</code>, <code>Return</code>, <code>Try</code>, <code>Break</code>, ...</td>
-<td>see the <a href="../reference/runtime-language/">runtime language</a>; loops use <code>while</code> (<a href="../tutorial/lists-and-loops/">lesson 4</a>)</td>
+<td>general Python iteration, <code>Return</code>, <code>Try</code>, <code>Break</code>, ...</td>
+<td>use <code>while</code> for lists (<a href="../tutorial/lists-and-loops/">lesson 4</a>); Zone <code>for</code> requires a declared <code>Var[Zone]</code> target (<a href="../reference/zones/">locations</a>)</td>
 </tr>
 <tr>
 <td><code>python_subset</code></td>
@@ -4749,6 +4825,46 @@ permissions. Partial writes are not rolled back; inspect the destination before
 deciding whether to retry. <code>csv_encoding</code> means the row could not be encoded;
 replace invalid Unicode text or unrepresentable numeric text before writing.
 See <a href="../reference/csv/#append-one-row">append rules</a>.</p>
+<h2 id="selecting-or-visiting-wells-fails">Selecting or visiting wells fails</h2>
+<p>An index selects a position within a Zone, not the displayed well number. Use
+zero for its first well. Loop targets must already be declared as <code>Var[Zone]</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Cause and correction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>index_type</code></td>
+<td>Use an integer index, excluding Boolean values</td>
+</tr>
+<tr>
+<td><code>index_bounds</code></td>
+<td>Select a nonnegative index smaller than <code>len(selection)</code></td>
+</tr>
+<tr>
+<td><code>zone_loop_target</code></td>
+<td>Declare the loop target as <code>Var[Zone]</code>; inputs and outputs are not loop state</td>
+</tr>
+<tr>
+<td><code>zone_type</code></td>
+<td>Iterate over a Zone; list iteration still uses <code>while</code></td>
+</tr>
+<tr>
+<td><code>zone_fragment_size</code></td>
+<td>Use a positive host-time size and a well count divisible by that size; no partial final group is produced</td>
+</tr>
+<tr>
+<td><code>unsupported_zone_index</code>, <code>unsupported_zone_grouping</code></td>
+<td>Reference execution supports these operations; the current AutoSuite target accepts only size-one traversal until its failure checks are verified</td>
+</tr>
+</tbody>
+</table>
+<p>A grouping error occurs before the first loop-body operation. Earlier completed
+steps remain completed. See <a href="../reference/zones/">sample locations</a> for capture
+and persistent-target behavior.</p>
 <h2 id="python-raises-typeerror-or-valueerror-before-compilation">Python raises TypeError or ValueError before compilation</h2>
 <p>These exceptions report invalid host calls or configuration rather than a
 runtime step failing. The message identifies what to change.</p>

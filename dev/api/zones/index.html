@@ -3012,6 +3012,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/visit-locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Visit sample locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/zone-traversal-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Zone traversal IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3382,6 +3436,39 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#sciloom.Zone.__len__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        __len__
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.Zone.__getitem__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        __getitem__
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.Zone.__iter__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        __iter__
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3426,6 +3513,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         well_name
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.zones.fragments" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        fragments
       </span>
     </span>
   </a>
@@ -3881,6 +3979,39 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#sciloom.Zone.__len__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        __len__
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.Zone.__getitem__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        __getitem__
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.Zone.__iter__" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        __iter__
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -3925,6 +4056,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         well_name
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.zones.fragments" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        fragments
       </span>
     </span>
   </a>
@@ -4063,8 +4205,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.12
-    · <code title="89d82048a3d4322e982ada260be5172098c7686b">89d82048</code>
+    · SciLoom 0.3.13
+    · <code title="d393e43bf3e74d62861af9272eb956fc9f3a90b4">d393e43b</code>
   </p>
 </aside>
 
@@ -4225,6 +4367,99 @@ values from a trusted directory rather than guessing their spelling.</p>
     <div class="doc doc-contents ">
 
         <p>Return an empty selection, suitable for an explicit Var default.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="sciloom.Zone.__len__" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">__len__</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">__len__</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Return the selected well count without consulting equipment.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="sciloom.Zone.__getitem__" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">__getitem__</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">__getitem__</span><span class="p">(</span><span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Zone</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Select one well by nonnegative position; reject bool and slicing.</p>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The index is not an integer (excluding bool).</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="IndexError">IndexError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The index is negative or outside this selection.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="sciloom.Zone.__iter__" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">__iter__</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">__iter__</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Zone</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Yield independent one-well selections in their stored order.</p>
 
 
     </div>
@@ -4601,6 +4836,147 @@ values from a trusted directory rather than guessing their spelling.</p>
     </table>
         <p>Reference execution rejects empty/multiple wells, unknown identities and a
 missing location directory. Target support depends on its cardinality checks.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="sciloom.zones.fragments" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">fragments</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">fragments</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Zone</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Zone</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Visit fixed-size groups in a runtime for loop over a captured Zone.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>value</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.Zone&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="./#sciloom.Zone">Zone</a></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Selection captured once before iteration.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>size</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Positive host-time integer; the well count must be divisible by it.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="collections.abc.Iterable">Iterable</span>[<a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.Zone&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="./#sciloom.Zone">Zone</a>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A runtime-only iterable for a declared Var[Zone] loop target. Empty</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="collections.abc.Iterable">Iterable</span>[<a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.Zone&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="./#sciloom.Zone">Zone</a>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>selections skip the body and preserve the target's previous value.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Called by host Python instead of as a runtime for iterable.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>Reference execution rejects incomplete final groups before assigning the
+target or executing the body. Equipment targets may restrict grouping until
+their runtime failure propagation has been verified.</p>
 
 
     </div>

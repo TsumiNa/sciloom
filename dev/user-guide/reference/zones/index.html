@@ -1171,6 +1171,23 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Sample locations
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="././" class="md-nav__link md-nav__link--active">
         
   
@@ -1186,6 +1203,48 @@
   
 
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#visit-the-selected-wells" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Visit the selected wells
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autosuite-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        AutoSuite support
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -3038,6 +3097,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/visit-locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Visit sample locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/zone-traversal-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Zone traversal IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3598,6 +3711,11 @@
                       
                     
                     
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
                   
                   <div class="md-sidebar__inner">
                     
@@ -3609,6 +3727,36 @@
   
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#visit-the-selected-wells" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Visit the selected wells
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autosuite-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        AutoSuite support
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -3624,8 +3772,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.12
-    · <code title="89d82048a3d4322e982ada260be5172098c7686b">89d82048</code>
+    · SciLoom 0.3.13
+    · <code title="d393e43bf3e74d62861af9272eb956fc9f3a90b4">d393e43b</code>
   </p>
 </aside>
 
@@ -3684,21 +3832,101 @@ reassigning <code>working</code> later does not change <code>selected</code>.</p
 <td><code>zones.well_name(selection)</code></td>
 <td>Display label of exactly one known well</td>
 </tr>
+<tr>
+<td><code>selection[index]</code></td>
+<td>One-well Zone at a nonnegative integer position</td>
+</tr>
+<tr>
+<td><code>for self.well in self.rack</code></td>
+<td>Visit one well at a time, in selection order</td>
+</tr>
+<tr>
+<td><code>zones.fragments(self.rack, size=2)</code></td>
+<td>Visit complete groups of two inside a <code>for</code> loop</td>
+</tr>
 </tbody>
 </table>
 <p><code>Var[Zone]</code> state persists across calls. Reset it explicitly if needed. Use
 <code>len(self.selected) &gt; 0</code> in a condition: Zones have no implicit truth value.
-<code>list[Zone]</code>, indexing, traversal, arithmetic and whole-Zone comparisons are not
-supported in this stage. A well's displayed number is not its position in a Zone.</p>
+<code>list[Zone]</code>, arithmetic and whole-Zone comparisons are not supported. A well's
+displayed number is not its position in a Zone: index <code>0</code> selects the first well,
+even when its label ends in <code>27</code>. Boolean, negative and out-of-range indices fail.</p>
+<h2 id="visit-the-selected-wells">Visit the selected wells</h2>
+<p>Declare the current well as <code>Var[Zone]</code>, then use an ordinary <code>for</code> loop:</p>
+<div class="highlight"><pre><span></span><code><span class="sd">"""For experiment authors: visit each selected well and count the visits.</span>
+
+<span class="sd">Run: ``uv run python examples/visit_locations.py``</span>
+<span class="sd">Expected terminal output: ``visit_locations.asfp``</span>
+
+<span class="sd">The caller supplies a Zone when AutoSuite executes the generated function. A</span>
+<span class="sd">selection of three wells produces count=3 and last containing the third well.</span>
+<span class="sd">An empty selection produces count=0 and leaves the previous well unchanged;</span>
+<span class="sd">on the first call that value is empty. No hardware is moved or started.</span>
+
+<span class="sd">visit_locations.asfp is the complete generated companion. Sequential Macro XML</span>
+<span class="sd">matches the supplied corpus; Executor simulation remains a separate check.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">Var</span><span class="p">,</span> <span class="n">Zone</span><span class="p">,</span> <span class="n">runtime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteTarget</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">VisitLocations</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Count wells in their selection order.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        rack: Ordered wells supplied by the runtime caller.</span>
+<span class="sd">        well: Current one-well selection; retained after the loop and across calls.</span>
+<span class="sd">        count: Visits during this call, reset explicitly before iteration.</span>
+<span class="sd">        last: Final saved well, including the previous value for an empty rack.</span>
+<span class="sd">    """</span>
+
+    <span class="n">rack</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="n">Zone</span><span class="p">]</span>
+    <span class="n">well</span><span class="p">:</span> <span class="n">Var</span><span class="p">[</span><span class="n">Zone</span><span class="p">]</span> <span class="o">=</span> <span class="n">Zone</span><span class="o">.</span><span class="n">empty</span><span class="p">()</span>
+    <span class="n">count</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">last</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="n">Zone</span><span class="p">]</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="bp">self</span><span class="o">.</span><span class="n">well</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rack</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">well</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">VisitLocations</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">())</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".asfp"</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</code></pre></div>
+<p>The loop captures <code>rack</code> once. Reassigning <code>rack</code> inside it does not change the
+remaining visits. Each iteration assigns the next well to <code>well</code> before running
+the body. An empty rack skips the body and leaves <code>well</code> unchanged; after a
+nonempty loop, its last value remains available, including across calls.</p>
+<p>For pairs, replace the loop header with
+<code>for self.well in zones.fragments(self.rack, size=2):</code>. The size must be a positive
+integer literal or an ordinary host-time <code>self</code> attribute. A rack of four wells
+produces two groups; three wells cause an error before any loop-body operation.
+An empty rack produces no groups. There is no shorter final group.</p>
+<p>Loop targets must be <code>Var[Zone]</code> fields, rather than inputs, outputs or newly
+created Python names. <code>break</code>, <code>continue</code>, <code>for/else</code>, slices and coordinated
+multi-Zone iteration are not supported.</p>
+<h2 id="autosuite-support">AutoSuite support</h2>
 <p>AutoSuite currently compiles Zone inputs, outputs, empty state, assignment,
-<code>find</code>, <code>combine</code> and length queries. It rejects nonempty host literals containing
+<code>find</code>, <code>combine</code>, length queries and single-well <code>for</code> loops. It rejects indexing
+and groups larger than one until reliable bounds/divisibility failure propagation
+is verified. These operations already work in reference execution.
+It also rejects nonempty host literals containing
 opaque well IDs and <code>well_name</code>, whose single-well runtime check still needs
 platform validation. Supply Zone parameters from AutoSuite or resolve names at
 runtime. Dynamic device selection with <code>at()</code> is not implemented yet; fixed
 hardware bindings keep their existing behavior.</p>
 <p>The <a href="../../../examples/resolve-locations/">location example</a> compiles a complete
 function. The <a href="../../../examples/zone-ir/">developer example</a> executes it against
-an explicit directory without equipment.</p>
+an explicit directory without equipment. The <a href="../../../examples/visit-locations/">visit example</a>
+compiles a single-well loop; the <a href="../../../examples/zone-traversal-ir/">grouping example</a>
+demonstrates indexing and complete groups through reference execution.</p>
 
 
 

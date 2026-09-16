@@ -2003,6 +2003,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#zone-values-and-traversal" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Zone values and traversal
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#typed-csv-statements" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3111,6 +3122,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/visit-locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Visit sample locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/zone-traversal-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Zone traversal IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3706,6 +3771,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#zone-values-and-traversal" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Zone values and traversal
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#typed-csv-statements" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3743,8 +3819,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.12
-    · <code title="89d82048a3d4322e982ada260be5172098c7686b">89d82048</code>
+    · SciLoom 0.3.13
+    · <code title="d393e43bf3e74d62861af9272eb956fc9f3a90b4">d393e43b</code>
   </p>
 </aside>
 
@@ -3756,7 +3832,7 @@
 the Python DSL. Experiment authors normally use Function instead.</p>
 <p>Program selects an entry FunctionIR and contains referenced functions, resources
 and a declarative device-type directory. Frozen semantic nodes retain structured
-If/While, calls, list operations, property configuration and lifecycle intent.
+If/While/ForEachZone, calls, list operations, property configuration and lifecycle intent.
 They do not contain AutoSuite UUIDs, task encodings or hidden context parameters.</p>
 <h2 id="types-ownership-and-identity">Types, ownership and identity</h2>
 <p>Variables have an owner function, role and value type. Scalars are INTEGER, REAL,
@@ -3791,6 +3867,21 @@ statements, not expressions. See the <a href="../../../examples/timing-ir/">dire
 Device bindings apply only to DeviceResource. Specialization removes timers
 whose owning functions become unreachable; existing device wire fields do not
 change. Definite timer starts are checked after device specialization.</p>
+<h2 id="zone-values-and-traversal">Zone values and traversal</h2>
+<p><code>ZoneType</code> is separate from scalars and lists. <code>ZoneLiteral</code>, <code>ZoneFind</code>,
+<code>ZoneCombine</code>, <code>ZoneLength</code> and <code>WellName</code> retain location intent. <code>ZoneGet(value,
+index)</code> evaluates the selection and index once in that order and returns a
+one-well Zone. The index must be a nonnegative INTEGER within the selection.</p>
+<p><code>ForEachZone(target, value, body=(), fragment_size=1)</code> captures <code>value</code> once,
+checks divisibility, then assigns each fragment to a Function-owned internal Zone
+variable before running <code>body</code>. Empty input preserves the target. Body writes
+cannot change the captured selection; the final target value persists without
+an implicit restore. Nested loops capture independently, even when reusing a
+target. Body writes do not establish definite configuration or timer starts after
+a potentially empty loop. Specialization recursively selects branches inside it.</p>
+<p>Both are additive v4 kinds. The <a href="../../../examples/zone-traversal-ir/">direct traversal example</a>
+shows JSON round trips, grouping and reference execution. AutoSuite only accepts
+size-one traversal until its index/divisibility failure checks are verified.</p>
 <h2 id="typed-csv-statements">Typed CSV statements</h2>
 <p><code>ReadCsv</code> is an ordered, result-producing statement. <code>CsvReadMode</code> selects one
 row or whole columns; <code>CsvErrorPolicy</code> selects fatal failure or status results.

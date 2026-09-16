@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/examples/csv-append-ir/">
+        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/examples/visit-locations/">
       
       
-        <link rel="prev" href="../append-sample-log/">
+        <link rel="prev" href="../zone-ir/">
       
       
-        <link rel="next" href="../resolve-locations/">
+        <link rel="next" href="../zone-traversal-ir/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>CSV append IR - SciLoom</title>
+        <title>Visit sample locations - SciLoom</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#execute-a-csv-append" class="md-skip">
+        <a href="#visit-sample-locations" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              CSV append IR
+              Visit sample locations
             
           </span>
         </div>
@@ -2933,19 +2933,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      
-      
-      
-        
-      
-      
-      <a href="././" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../csv-append-ir/" class="md-nav__link">
         
   
   
@@ -2960,7 +2951,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -3024,10 +3014,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../visit-locations/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
@@ -3042,6 +3041,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -3674,92 +3674,70 @@
 
                   
 
-<h1 id="execute-a-csv-append">Execute a CSV append</h1>
-<p>Build an AppendCsv node, restore it from JSON, and call it twice with MemoryFiles.
-The second call keeps the first record. No CSV file is written to the host disk.</p>
-<div class="highlight"><pre><span></span><code><span class="go">uv run python -m examples.developer.csv_append_ir</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>csv_append_ir.json
-File bytes: b'"sample,A"\r\n"sample,A"\r\n'
-Append events: 2
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="sd">"""For developers: append through explicit files and inspect captured events.</span>
+<h1 id="visit-sample-locations">Visit sample locations</h1>
+<p>Count the wells supplied by the caller and return the last visited well. No
+equipment is started. A Zone containing wells in order <code>27, 0, 8</code> produces
+<code>count=3</code> and a one-well Zone for <code>8</code>; those labels are not loop indices.</p>
+<div class="highlight"><pre><span></span><code><span class="sd">"""For experiment authors: visit each selected well and count the visits.</span>
 
-<span class="sd">Run: ``uv run python -m examples.developer.csv_append_ir``</span>
-<span class="sd">Expected terminal output:</span>
-<span class="sd">    csv_append_ir.json</span>
-<span class="sd">    File bytes: b'"sample,A"\\r\\n"sample,A"\\r\\n'</span>
-<span class="sd">    Append events: 2</span>
+<span class="sd">Run: ``uv run python examples/visit_locations.py``</span>
+<span class="sd">Expected terminal output: ``visit_locations.asfp``</span>
 
-<span class="sd">csv_append_ir.json is the complete companion JSON v4 program. MemoryFiles begins</span>
-<span class="sd">empty; two calls append two independent records. Only the JSON companion is</span>
-<span class="sd">written to the host. The CSV bytes printed above stay in memory. This is reference</span>
-<span class="sd">execution, not an AutoSuite or instrument result.</span>
+<span class="sd">The caller supplies a Zone when AutoSuite executes the generated function. A</span>
+<span class="sd">selection of three wells produces count=3 and last containing the third well.</span>
+<span class="sd">An empty selection produces count=0 and leaves the previous well unchanged;</span>
+<span class="sd">on the first call that value is empty. No hardware is moved or started.</span>
+
+<span class="sd">visit_locations.asfp is the complete generated companion. Sequential Macro XML</span>
+<span class="sd">matches the supplied corpus; Executor simulation remains a separate check.</span>
 <span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.interpreter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Interpreter</span><span class="p">,</span> <span class="n">MemoryFiles</span><span class="p">,</span> <span class="n">ReferenceEnvironment</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.ir</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">AppendCsv</span><span class="p">,</span>
-    <span class="n">FunctionIR</span><span class="p">,</span>
-    <span class="n">Program</span><span class="p">,</span>
-    <span class="n">Reference</span><span class="p">,</span>
-    <span class="n">ScalarType</span><span class="p">,</span>
-    <span class="n">Variable</span><span class="p">,</span>
-    <span class="n">VariableRole</span><span class="p">,</span>
-    <span class="n">from_json</span><span class="p">,</span>
-    <span class="n">to_json</span><span class="p">,</span>
-<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">Var</span><span class="p">,</span> <span class="n">Zone</span><span class="p">,</span> <span class="n">runtime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteTarget</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">build_program</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Construct a row append from two caller-supplied text inputs."""</span>
-    <span class="k">return</span> <span class="n">Program</span><span class="p">(</span>
-        <span class="n">entry_function_id</span><span class="o">=</span><span class="s2">"append"</span><span class="p">,</span>
-        <span class="n">functions</span><span class="o">=</span><span class="p">(</span>
-            <span class="n">FunctionIR</span><span class="p">(</span>
-                <span class="n">node_id</span><span class="o">=</span><span class="s2">"append"</span><span class="p">,</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">"AppendSampleLog"</span><span class="p">,</span>
-                <span class="n">variables</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span>
-                    <span class="n">Variable</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">owner_id</span><span class="o">=</span><span class="s2">"append"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">INPUT</span><span class="p">)</span>
-                    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"path"</span><span class="p">,</span> <span class="s2">"label"</span><span class="p">)</span>
-                <span class="p">),</span>
-                <span class="n">body</span><span class="o">=</span><span class="p">(</span>
-                    <span class="n">AppendCsv</span><span class="p">(</span>
-                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"write"</span><span class="p">,</span>
-                        <span class="n">path</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"path-read"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"path"</span><span class="p">),</span>
-                        <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"label-read"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"label"</span><span class="p">),),</span>
-                    <span class="p">),</span>
-                <span class="p">),</span>
-            <span class="p">),</span>
-        <span class="p">),</span>
-    <span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">VisitLocations</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Count wells in their selection order.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        rack: Ordered wells supplied by the runtime caller.</span>
+<span class="sd">        well: Current one-well selection; retained after the loop and across calls.</span>
+<span class="sd">        count: Visits during this call, reset explicitly before iteration.</span>
+<span class="sd">        last: Final saved well, including the previous value for an empty rack.</span>
+<span class="sd">    """</span>
+
+    <span class="n">rack</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="n">Zone</span><span class="p">]</span>
+    <span class="n">well</span><span class="p">:</span> <span class="n">Var</span><span class="p">[</span><span class="n">Zone</span><span class="p">]</span> <span class="o">=</span> <span class="n">Zone</span><span class="o">.</span><span class="n">empty</span><span class="p">()</span>
+    <span class="n">count</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+    <span class="n">last</span><span class="p">:</span> <span class="n">Output</span><span class="p">[</span><span class="n">Zone</span><span class="p">]</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="bp">self</span><span class="o">.</span><span class="n">well</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rack</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">well</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".json"</span><span class="p">)</span>
-    <span class="n">path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">to_json</span><span class="p">(</span><span class="n">build_program</span><span class="p">()),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span>
-    <span class="n">program</span> <span class="o">=</span> <span class="n">from_json</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">))</span>
-    <span class="k">assert</span> <span class="n">program</span> <span class="o">==</span> <span class="n">build_program</span><span class="p">()</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="n">MemoryFiles</span><span class="p">()</span>
-    <span class="n">environment</span> <span class="o">=</span> <span class="n">ReferenceEnvironment</span><span class="p">(</span><span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
-    <span class="n">session</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">)</span>
-    <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">"path"</span><span class="p">:</span> <span class="s2">"samples.csv"</span><span class="p">,</span> <span class="s2">"label"</span><span class="p">:</span> <span class="s2">"sample,A"</span><span class="p">})</span>
-    <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">"path"</span><span class="p">:</span> <span class="s2">"samples.csv"</span><span class="p">,</span> <span class="s2">"label"</span><span class="p">:</span> <span class="s2">"sample,A"</span><span class="p">})</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">VisitLocations</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">())</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".asfp"</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"File bytes:"</span><span class="p">,</span> <span class="n">files</span><span class="o">.</span><span class="n">snapshot</span><span class="p">()[</span><span class="s2">"samples.csv"</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Append events:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">environment</span><span class="o">.</span><span class="n">events</span><span class="p">))</span>
 </code></pre></div>
-<p><a href="../../_generated/examples/developer/csv_append_ir.py">Download Python</a> ·
-<a href="../../_generated/examples/developer/csv_append_ir.json">Download JSON</a></p>
-<p>AppendCsv captures path and values in order, then makes one append_bytes call.
-CsvAppendEvent holds the requested typed row and its status. It does not assert
-that every byte reached storage when a write failed partway through.</p>
-<p>With CsvErrorPolicy.STATUS, bind status to an integer Reference. File errors
-produce IO_ERROR and allow later statements; ordinary appends raise after
-recording the failed attempt. Neither form rolls back partial writes or retries.
-Reference snapshots remain immutable across subsequent calls.</p>
+<div class="highlight"><pre><span></span><code><span class="go">uv run python examples/visit_locations.py</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>visit_locations.asfp
+</code></pre></div>
+<p><a href="../../_generated/examples/visit_locations.py">Download Python</a> ·
+<a href="../../_generated/examples/visit_locations.asfp">Download ASFP</a></p>
+<p>The count resets on each call because the first runtime statement assigns zero.
+The current well persists. Calling again with an empty Zone returns zero visits
+and the previous well; a fresh session starts with an empty value.</p>
+<p>Compilation writes the function package. The loop runs when AutoSuite calls that
+function. Its sequential Macro structure follows the supplied XML evidence;
+Executor validation remains required on the intended deployment. See
+<a href="../../user-guide/reference/zones/">sample locations</a> for grouping and index limits.</p>
 
 
 
@@ -3792,7 +3770,7 @@ Reference snapshots remain immutable across subsequent calls.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../append-sample-log/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Append a sample log">
+          <a href="../zone-ir/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Zone IR">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -3802,20 +3780,20 @@ Reference snapshots remain immutable across subsequent calls.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Append a sample log
+                Zone IR
               </div>
             </div>
           </a>
         
         
           
-          <a href="../resolve-locations/" class="md-footer__link md-footer__link--next" aria-label="Next: Resolve sample locations">
+          <a href="../zone-traversal-ir/" class="md-footer__link md-footer__link--next" aria-label="Next: Zone traversal IR">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Resolve sample locations
+                Zone traversal IR
               </div>
             </div>
             <div class="md-footer__button md-icon">

@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/examples/csv-append-ir/">
+        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/examples/zone-traversal-ir/">
       
       
-        <link rel="prev" href="../append-sample-log/">
+        <link rel="prev" href="../visit-locations/">
       
       
-        <link rel="next" href="../resolve-locations/">
+        <link rel="next" href="../demo-device/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>CSV append IR - SciLoom</title>
+        <title>Zone traversal IR - SciLoom</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#execute-a-csv-append" class="md-skip">
+        <a href="#execute-zone-indexing-and-grouped-traversal" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              CSV append IR
+              Zone traversal IR
             
           </span>
         </div>
@@ -2933,19 +2933,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      
-      
-      
-        
-      
-      
-      <a href="././" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../csv-append-ir/" class="md-nav__link">
         
   
   
@@ -2960,7 +2951,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -3051,10 +3041,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../zone-traversal-ir/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
@@ -3069,6 +3068,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -3674,62 +3674,143 @@
 
                   
 
-<h1 id="execute-a-csv-append">Execute a CSV append</h1>
-<p>Build an AppendCsv node, restore it from JSON, and call it twice with MemoryFiles.
-The second call keeps the first record. No CSV file is written to the host disk.</p>
-<div class="highlight"><pre><span></span><code><span class="go">uv run python -m examples.developer.csv_append_ir</span>
+<h1 id="execute-zone-indexing-and-grouped-traversal">Execute Zone indexing and grouped traversal</h1>
+<p>Read the first well of a four-well selection, then visit it in pairs. The direct
+IR uses <code>ZoneGet</code> and <code>ForEachZone</code>; JSON v4 retains both operations. Reference
+execution needs no location directory for indexing or grouping supplied values.</p>
+<div class="highlight"><pre><span></span><code><span class="go">uv run python -m examples.developer.zone_traversal_ir</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>csv_append_ir.json
-File bytes: b'"sample,A"\r\n"sample,A"\r\n'
-Append events: 2
+<div class="highlight"><pre><span></span><code>zone_traversal_ir.json
+First well: ('well:27',)
+Groups: 2
+Last group: ('well:8', 'well:2')
 </code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="sd">"""For developers: append through explicit files and inspect captured events.</span>
+<details class="example">
+<summary>Complete program</summary>
+<div class="highlight"><pre><span></span><code><span class="sd">"""For developers: index and group Zone values through direct IR and JSON v4.</span>
 
-<span class="sd">Run: ``uv run python -m examples.developer.csv_append_ir``</span>
+<span class="sd">Run: ``uv run python -m examples.developer.zone_traversal_ir``</span>
 <span class="sd">Expected terminal output:</span>
-<span class="sd">    csv_append_ir.json</span>
-<span class="sd">    File bytes: b'"sample,A"\\r\\n"sample,A"\\r\\n'</span>
-<span class="sd">    Append events: 2</span>
+<span class="sd">    zone_traversal_ir.json</span>
+<span class="sd">    First well: ('well:27',)</span>
+<span class="sd">    Groups: 2</span>
+<span class="sd">    Last group: ('well:8', 'well:2')</span>
 
-<span class="sd">csv_append_ir.json is the complete companion JSON v4 program. MemoryFiles begins</span>
-<span class="sd">empty; two calls append two independent records. Only the JSON companion is</span>
-<span class="sd">written to the host. The CSV bytes printed above stay in memory. This is reference</span>
-<span class="sd">execution, not an AutoSuite or instrument result.</span>
+<span class="sd">The complete semantic program is zone_traversal_ir.json beside this file. This</span>
+<span class="sd">reference example uses groups of two; AutoSuite currently rejects grouped</span>
+<span class="sd">traversal and indexing until runtime failure propagation has been verified.</span>
+<span class="sd">Single-well native traversal is demonstrated in examples/visit_locations.py.</span>
 <span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.interpreter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Interpreter</span><span class="p">,</span> <span class="n">MemoryFiles</span><span class="p">,</span> <span class="n">ReferenceEnvironment</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.interpreter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Interpreter</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.ir</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">AppendCsv</span><span class="p">,</span>
+    <span class="n">Assignment</span><span class="p">,</span>
+    <span class="n">Binary</span><span class="p">,</span>
+    <span class="n">BinaryOp</span><span class="p">,</span>
+    <span class="n">ForEachZone</span><span class="p">,</span>
     <span class="n">FunctionIR</span><span class="p">,</span>
+    <span class="n">If</span><span class="p">,</span>
+    <span class="n">Literal</span><span class="p">,</span>
     <span class="n">Program</span><span class="p">,</span>
     <span class="n">Reference</span><span class="p">,</span>
     <span class="n">ScalarType</span><span class="p">,</span>
     <span class="n">Variable</span><span class="p">,</span>
     <span class="n">VariableRole</span><span class="p">,</span>
+    <span class="n">ZoneGet</span><span class="p">,</span>
+    <span class="n">ZoneLength</span><span class="p">,</span>
+    <span class="n">ZoneLiteral</span><span class="p">,</span>
+    <span class="n">ZoneType</span><span class="p">,</span>
     <span class="n">from_json</span><span class="p">,</span>
     <span class="n">to_json</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.locations</span><span class="w"> </span><span class="kn">import</span> <span class="n">Zone</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">build_program</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Construct a row append from two caller-supplied text inputs."""</span>
+<span class="w">    </span><span class="sd">"""Select the first well, then count complete pairs in a captured selection."""</span>
     <span class="k">return</span> <span class="n">Program</span><span class="p">(</span>
-        <span class="n">entry_function_id</span><span class="o">=</span><span class="s2">"append"</span><span class="p">,</span>
+        <span class="n">entry_function_id</span><span class="o">=</span><span class="s2">"visit"</span><span class="p">,</span>
         <span class="n">functions</span><span class="o">=</span><span class="p">(</span>
             <span class="n">FunctionIR</span><span class="p">(</span>
-                <span class="n">node_id</span><span class="o">=</span><span class="s2">"append"</span><span class="p">,</span>
-                <span class="n">name</span><span class="o">=</span><span class="s2">"AppendSampleLog"</span><span class="p">,</span>
-                <span class="n">variables</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span>
-                    <span class="n">Variable</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">owner_id</span><span class="o">=</span><span class="s2">"append"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">INPUT</span><span class="p">)</span>
-                    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"path"</span><span class="p">,</span> <span class="s2">"label"</span><span class="p">)</span>
+                <span class="n">node_id</span><span class="o">=</span><span class="s2">"visit"</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">"VisitPairs"</span><span class="p">,</span>
+                <span class="n">variables</span><span class="o">=</span><span class="p">(</span>
+                    <span class="n">Variable</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"rack"</span><span class="p">,</span> <span class="n">owner_id</span><span class="o">=</span><span class="s2">"visit"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"rack"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ZoneType</span><span class="p">(),</span> <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">INPUT</span><span class="p">),</span>
+                    <span class="n">Variable</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"first"</span><span class="p">,</span> <span class="n">owner_id</span><span class="o">=</span><span class="s2">"visit"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"first"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ZoneType</span><span class="p">(),</span> <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">OUTPUT</span>
+                    <span class="p">),</span>
+                    <span class="n">Variable</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"groups"</span><span class="p">,</span>
+                        <span class="n">owner_id</span><span class="o">=</span><span class="s2">"visit"</span><span class="p">,</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">"groups"</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span>
+                        <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">OUTPUT</span><span class="p">,</span>
+                    <span class="p">),</span>
+                    <span class="n">Variable</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"last"</span><span class="p">,</span> <span class="n">owner_id</span><span class="o">=</span><span class="s2">"visit"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"last"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ZoneType</span><span class="p">(),</span> <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">OUTPUT</span><span class="p">),</span>
+                    <span class="n">Variable</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"fragment"</span><span class="p">,</span>
+                        <span class="n">owner_id</span><span class="o">=</span><span class="s2">"visit"</span><span class="p">,</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">"fragment"</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="n">ZoneType</span><span class="p">(),</span>
+                        <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">INTERNAL</span><span class="p">,</span>
+                        <span class="n">initial</span><span class="o">=</span><span class="n">ZoneLiteral</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"initial-fragment"</span><span class="p">),</span>
+                    <span class="p">),</span>
                 <span class="p">),</span>
                 <span class="n">body</span><span class="o">=</span><span class="p">(</span>
-                    <span class="n">AppendCsv</span><span class="p">(</span>
-                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"write"</span><span class="p">,</span>
-                        <span class="n">path</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"path-read"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"path"</span><span class="p">),</span>
-                        <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"label-read"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"label"</span><span class="p">),),</span>
+                    <span class="n">Assignment</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"empty-first"</span><span class="p">,</span>
+                        <span class="n">target</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"first-reset"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"first"</span><span class="p">),</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">ZoneLiteral</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"empty"</span><span class="p">),</span>
+                    <span class="p">),</span>
+                    <span class="n">Assignment</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"reset-count"</span><span class="p">,</span>
+                        <span class="n">target</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"groups-reset"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"groups"</span><span class="p">),</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"zero"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+                    <span class="p">),</span>
+                    <span class="n">If</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"nonempty"</span><span class="p">,</span>
+                        <span class="n">condition</span><span class="o">=</span><span class="n">Binary</span><span class="p">(</span>
+                            <span class="n">node_id</span><span class="o">=</span><span class="s2">"positive"</span><span class="p">,</span>
+                            <span class="n">op</span><span class="o">=</span><span class="n">BinaryOp</span><span class="o">.</span><span class="n">GREATER</span><span class="p">,</span>
+                            <span class="n">left</span><span class="o">=</span><span class="n">ZoneLength</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"length"</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"length-rack"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"rack"</span><span class="p">)),</span>
+                            <span class="n">right</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"empty-count"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+                        <span class="p">),</span>
+                        <span class="n">then_body</span><span class="o">=</span><span class="p">(</span>
+                            <span class="n">Assignment</span><span class="p">(</span>
+                                <span class="n">node_id</span><span class="o">=</span><span class="s2">"first-well"</span><span class="p">,</span>
+                                <span class="n">target</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"first-write"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"first"</span><span class="p">),</span>
+                                <span class="n">value</span><span class="o">=</span><span class="n">ZoneGet</span><span class="p">(</span>
+                                    <span class="n">node_id</span><span class="o">=</span><span class="s2">"get"</span><span class="p">,</span>
+                                    <span class="n">value</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"index-rack"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"rack"</span><span class="p">),</span>
+                                    <span class="n">index</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"index"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+                                <span class="p">),</span>
+                            <span class="p">),</span>
+                        <span class="p">),</span>
+                    <span class="p">),</span>
+                    <span class="n">ForEachZone</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"visit-pairs"</span><span class="p">,</span>
+                        <span class="n">target</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"current"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"fragment"</span><span class="p">),</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"loop-rack"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"rack"</span><span class="p">),</span>
+                        <span class="n">fragment_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                        <span class="n">body</span><span class="o">=</span><span class="p">(</span>
+                            <span class="n">Assignment</span><span class="p">(</span>
+                                <span class="n">node_id</span><span class="o">=</span><span class="s2">"increment"</span><span class="p">,</span>
+                                <span class="n">target</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"groups-write"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"groups"</span><span class="p">),</span>
+                                <span class="n">value</span><span class="o">=</span><span class="n">Binary</span><span class="p">(</span>
+                                    <span class="n">node_id</span><span class="o">=</span><span class="s2">"add"</span><span class="p">,</span>
+                                    <span class="n">op</span><span class="o">=</span><span class="n">BinaryOp</span><span class="o">.</span><span class="n">ADD</span><span class="p">,</span>
+                                    <span class="n">left</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"groups-read"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"groups"</span><span class="p">),</span>
+                                    <span class="n">right</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"one"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+                                <span class="p">),</span>
+                            <span class="p">),</span>
+                        <span class="p">),</span>
+                    <span class="p">),</span>
+                    <span class="n">Assignment</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"last-group"</span><span class="p">,</span>
+                        <span class="n">target</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"last-write"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"last"</span><span class="p">),</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"fragment-read"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"fragment"</span><span class="p">),</span>
                     <span class="p">),</span>
                 <span class="p">),</span>
             <span class="p">),</span>
@@ -3742,24 +3823,25 @@ Append events: 2
     <span class="n">path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">to_json</span><span class="p">(</span><span class="n">build_program</span><span class="p">()),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span>
     <span class="n">program</span> <span class="o">=</span> <span class="n">from_json</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">))</span>
     <span class="k">assert</span> <span class="n">program</span> <span class="o">==</span> <span class="n">build_program</span><span class="p">()</span>
-    <span class="n">files</span> <span class="o">=</span> <span class="n">MemoryFiles</span><span class="p">()</span>
-    <span class="n">environment</span> <span class="o">=</span> <span class="n">ReferenceEnvironment</span><span class="p">(</span><span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">)</span>
-    <span class="n">session</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">)</span>
-    <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">"path"</span><span class="p">:</span> <span class="s2">"samples.csv"</span><span class="p">,</span> <span class="s2">"label"</span><span class="p">:</span> <span class="s2">"sample,A"</span><span class="p">})</span>
-    <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">"path"</span><span class="p">:</span> <span class="s2">"samples.csv"</span><span class="p">,</span> <span class="s2">"label"</span><span class="p">:</span> <span class="s2">"sample,A"</span><span class="p">})</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">(</span><span class="n">program</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">"rack"</span><span class="p">:</span> <span class="n">Zone</span><span class="p">(</span><span class="n">well_ids</span><span class="o">=</span><span class="p">(</span><span class="s2">"well:27"</span><span class="p">,</span> <span class="s2">"well:0"</span><span class="p">,</span> <span class="s2">"well:8"</span><span class="p">,</span> <span class="s2">"well:2"</span><span class="p">))})</span>
+    <span class="n">first</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"first"</span><span class="p">],</span> <span class="n">result</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"last"</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">Zone</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">last</span><span class="p">,</span> <span class="n">Zone</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"File bytes:"</span><span class="p">,</span> <span class="n">files</span><span class="o">.</span><span class="n">snapshot</span><span class="p">()[</span><span class="s2">"samples.csv"</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Append events:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">environment</span><span class="o">.</span><span class="n">events</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"First well:"</span><span class="p">,</span> <span class="n">first</span><span class="o">.</span><span class="n">well_ids</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Groups:"</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"groups"</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Last group:"</span><span class="p">,</span> <span class="n">last</span><span class="o">.</span><span class="n">well_ids</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="../../_generated/examples/developer/csv_append_ir.py">Download Python</a> ·
-<a href="../../_generated/examples/developer/csv_append_ir.json">Download JSON</a></p>
-<p>AppendCsv captures path and values in order, then makes one append_bytes call.
-CsvAppendEvent holds the requested typed row and its status. It does not assert
-that every byte reached storage when a write failed partway through.</p>
-<p>With CsvErrorPolicy.STATUS, bind status to an integer Reference. File errors
-produce IO_ERROR and allow later statements; ordinary appends raise after
-recording the failed attempt. Neither form rolls back partial writes or retries.
-Reference snapshots remain immutable across subsequent calls.</p>
+</details>
+<p><a href="../../_generated/examples/developer/zone_traversal_ir.py">Download Python</a> ·
+<a href="../../_generated/examples/developer/zone_traversal_ir.json">Download JSON</a></p>
+<p>The loop captures the ordered selection once and validates divisibility before
+its first target write. An incomplete group raises an execution error without
+running the body. An earlier assignment, such as selecting the first well, is
+not rolled back. Empty input skips indexing through the explicit condition and
+skips the loop, preserving the previous fragment.</p>
+<p>AutoSuite currently accepts single-well traversal, demonstrated in
+<a href="../visit-locations/">Visit sample locations</a>. Indexing and grouped traversal
+remain target diagnostics until runtime failure propagation is verified.</p>
 
 
 
@@ -3792,7 +3874,7 @@ Reference snapshots remain immutable across subsequent calls.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../append-sample-log/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Append a sample log">
+          <a href="../visit-locations/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Visit sample locations">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -3802,20 +3884,20 @@ Reference snapshots remain immutable across subsequent calls.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Append a sample log
+                Visit sample locations
               </div>
             </div>
           </a>
         
         
           
-          <a href="../resolve-locations/" class="md-footer__link md-footer__link--next" aria-label="Next: Resolve sample locations">
+          <a href="../demo-device/" class="md-footer__link md-footer__link--next" aria-label="Next: Independent device">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Resolve sample locations
+                Independent device
               </div>
             </div>
             <div class="md-footer__button md-icon">

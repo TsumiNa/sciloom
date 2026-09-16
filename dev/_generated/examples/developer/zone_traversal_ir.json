@@ -1,0 +1,245 @@
+{
+  "device_types": [],
+  "entry_function_id": "visit",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "Assignment",
+          "node_id": "empty-first",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "first-reset",
+            "source": null,
+            "symbol_id": "first"
+          },
+          "value": {
+            "kind": "ZoneLiteral",
+            "node_id": "empty",
+            "source": null,
+            "well_ids": []
+          }
+        },
+        {
+          "kind": "Assignment",
+          "node_id": "reset-count",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "groups-reset",
+            "source": null,
+            "symbol_id": "groups"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "zero",
+            "source": null,
+            "type": "integer",
+            "value": 0
+          }
+        },
+        {
+          "condition": {
+            "kind": "Binary",
+            "left": {
+              "kind": "ZoneLength",
+              "node_id": "length",
+              "source": null,
+              "value": {
+                "kind": "Reference",
+                "node_id": "length-rack",
+                "source": null,
+                "symbol_id": "rack"
+              }
+            },
+            "node_id": "positive",
+            "op": ">",
+            "right": {
+              "kind": "Literal",
+              "node_id": "empty-count",
+              "source": null,
+              "type": "integer",
+              "value": 0
+            },
+            "source": null
+          },
+          "else_body": [],
+          "kind": "If",
+          "node_id": "nonempty",
+          "source": null,
+          "then_body": [
+            {
+              "kind": "Assignment",
+              "node_id": "first-well",
+              "source": null,
+              "target": {
+                "kind": "Reference",
+                "node_id": "first-write",
+                "source": null,
+                "symbol_id": "first"
+              },
+              "value": {
+                "index": {
+                  "kind": "Literal",
+                  "node_id": "index",
+                  "source": null,
+                  "type": "integer",
+                  "value": 0
+                },
+                "kind": "ZoneGet",
+                "node_id": "get",
+                "source": null,
+                "value": {
+                  "kind": "Reference",
+                  "node_id": "index-rack",
+                  "source": null,
+                  "symbol_id": "rack"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "body": [
+            {
+              "kind": "Assignment",
+              "node_id": "increment",
+              "source": null,
+              "target": {
+                "kind": "Reference",
+                "node_id": "groups-write",
+                "source": null,
+                "symbol_id": "groups"
+              },
+              "value": {
+                "kind": "Binary",
+                "left": {
+                  "kind": "Reference",
+                  "node_id": "groups-read",
+                  "source": null,
+                  "symbol_id": "groups"
+                },
+                "node_id": "add",
+                "op": "+",
+                "right": {
+                  "kind": "Literal",
+                  "node_id": "one",
+                  "source": null,
+                  "type": "integer",
+                  "value": 1
+                },
+                "source": null
+              }
+            }
+          ],
+          "fragment_size": 2,
+          "kind": "ForEachZone",
+          "node_id": "visit-pairs",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "current",
+            "source": null,
+            "symbol_id": "fragment"
+          },
+          "value": {
+            "kind": "Reference",
+            "node_id": "loop-rack",
+            "source": null,
+            "symbol_id": "rack"
+          }
+        },
+        {
+          "kind": "Assignment",
+          "node_id": "last-group",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "last-write",
+            "source": null,
+            "symbol_id": "last"
+          },
+          "value": {
+            "kind": "Reference",
+            "node_id": "fragment-read",
+            "source": null,
+            "symbol_id": "fragment"
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "VisitPairs",
+      "node_id": "visit",
+      "source": null,
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "rack",
+          "node_id": "rack",
+          "owner_id": "visit",
+          "role": "input",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "first",
+          "node_id": "first",
+          "owner_id": "visit",
+          "role": "output",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "groups",
+          "node_id": "groups",
+          "owner_id": "visit",
+          "role": "output",
+          "source": null,
+          "type": "integer"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "last",
+          "node_id": "last",
+          "owner_id": "visit",
+          "role": "output",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        },
+        {
+          "initial": {
+            "kind": "ZoneLiteral",
+            "node_id": "initial-fragment",
+            "source": null,
+            "well_ids": []
+          },
+          "kind": "Variable",
+          "name": "fragment",
+          "node_id": "fragment",
+          "owner_id": "visit",
+          "role": "internal",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": []
+}

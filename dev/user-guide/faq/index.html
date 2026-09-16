@@ -3260,6 +3260,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/visit-locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Visit sample locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/zone-traversal-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Zone traversal IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/demo-device/" class="md-nav__link">
         
   
@@ -4046,8 +4100,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.12
-    · <code title="89d82048a3d4322e982ada260be5172098c7686b">89d82048</code>
+    · SciLoom 0.3.13
+    · <code title="d393e43bf3e74d62861af9272eb956fc9f3a90b4">d393e43b</code>
   </p>
 </aside>
 
@@ -4094,9 +4148,11 @@ receives it with <code>self.result = self.child(...)</code>; do not write <code>
 in the runtime method. <a href="../tutorial/agitator/">Lesson 3</a> shows a speed calculation.</p>
 <h2 id="can-i-use-a-temporary-variable-or-a-for-loop">Can I use a temporary variable or a for loop?</h2>
 <p>Declare working values as <code>Var</code> fields and refer to them through <code>self</code>.
-Use a <code>while</code> loop with an index for a list; <code>for</code> is not yet supported
-inside <code>@runtime</code>. Ordinary Python outside that method can still use local
-variables and <code>for</code>.
+Use a <code>while</code> loop with an index for a list. For sample locations, use
+<code>for self.well in self.rack</code> with a declared <code>Var[Zone]</code> target; see
+<a href="../reference/zones/">sample locations</a>. General Python iteration and local
+runtime variables remain unsupported. Ordinary Python outside <code>@runtime</code> can
+use both.
 See <a href="../tutorial/lists-and-loops/">lesson 4</a> and the
 <a href="../reference/runtime-language/">runtime syntax reference</a>.</p>
 <h2 id="will-changing-a-childs-input-list-change-the-parents-list">Will changing a child's input list change the parent's list?</h2>
