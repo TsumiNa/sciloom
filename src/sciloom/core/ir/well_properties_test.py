@@ -5,10 +5,12 @@ from dataclasses import replace
 import pytest
 
 from sciloom.core.bindings import DeviceBindings
+from sciloom.core.compiler import compile_ir
 from sciloom.core.diagnostics import IRValidationError, SourceSpan
 from sciloom.core.interpreter import Interpreter, ReferenceEnvironment, WellProperties
 from sciloom.core.locations import LocationDirectory, Well, Zone
 from sciloom.core.specialization import specialize
+from sciloom_autosuite import AutoSuiteTarget
 from . import (
     FunctionIR,
     Literal,
@@ -102,4 +104,22 @@ def test_unknown_wire_fields_and_types_are_rejected():
     document = to_dict(property_program())
     document["functions"][0]["body"][0]["property"]["getter"] = "python.import"
     with pytest.raises(IRValidationError):
+        from_dict(document)
+
+
+@pytest.mark.parametrize("name", [3, True, None, ["sample_ID"]])
+def test_non_text_names_are_rejected_by_shared_structural_validation(name):
+    program = property_program()
+    function = program.functions[0]
+    bad = replace(function.body[0], property=WellPropertySpec(name=name, type=ScalarType.TEXT))
+    malformed = replace(program, functions=(replace(function, body=(bad, function.body[1])),))
+    diagnostics = validate(malformed)
+    assert diagnostics[0].code == "ir_shape"
+    assert diagnostics[0].path == "$.functions[0].body[0].property.name"
+    for action in (to_json, Interpreter, lambda value: compile_ir(value, target=AutoSuiteTarget())):
+        with pytest.raises(IRValidationError, match="ir_shape"):
+            action(malformed)
+    document = to_dict(program)
+    document["functions"][0]["body"][0]["property"]["name"] = name
+    with pytest.raises(IRValidationError, match="json_shape"):
         from_dict(document)

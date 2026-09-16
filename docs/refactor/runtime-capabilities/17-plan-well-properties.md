@@ -45,6 +45,14 @@ commands and corpus audit passed. The final empty-selection adapter-skip fix
 also passed focused regression checks. Old v4 fixtures and pre-existing example
 companions are unchanged. Remote review/CI are pending.
 
+Copilot review on `4dd2284` completed. Its two suppressed suggestions were audited:
+the reference guide count is corrected to 32 documents (00–31), and four added
+regressions prove non-text property names are already rejected by the shared
+dataclass structure validator before semantic validation, interpretation or
+target processing. No duplicate name-type check is needed. Focused tests and
+corpus audit passed; the review follow-up changes tests/docs only and retains
+the version decision below. Latest-head CI remains the merge gate.
+
 ## Version
 
 Version: PATCH 0.3.13 → 0.3.14 in both workspace packages, adding stored well text
