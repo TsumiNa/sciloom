@@ -39,7 +39,11 @@ and RC-QA-004/008; no Executor validation is claimed.
 the explicit website download list. The public reference and API pages describe
 the new vocabulary and target limitations.
 
-Local acceptance: 408 code/example tests, 79 website tests, mypy (71 files), Ruff,
+Review added explicit scalar-text child-call coverage through Python/JSON
+reference execution and AutoSuite scalar input/output bindings, alongside text
+intrinsic calls in the same parent method.
+
+Local acceptance: 411 code/example tests, 79 website tests, mypy (71 files), Ruff,
 strict website build, all 14 current example commands, proposed-example syntax,
 AutoSuite smoke, recipe validation and corpus audit. Existing example companions
 remain byte-identical. Remote review and latest-head CI are the merge gate.

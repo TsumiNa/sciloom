@@ -7,7 +7,8 @@ import pytest
 
 from sciloom import Function, Input, Output, Var, runtime, text
 from sciloom.core.diagnostics import CompilationError
-from sciloom.core.ir import Literal, ScalarType
+from sciloom.core.interpreter import Interpreter
+from sciloom.core.ir import Literal, ScalarType, from_json, to_json
 from .encoding import literal_value
 from .target import AutoSuiteTarget
 
@@ -109,6 +110,46 @@ def test_text_array_call_uses_private_copy_binding():
     assert binding.findtext("isarray") == "1"
     assert binding.findtext("variablename").startswith("sciloom_tmp_")
     assert not binding.findtext("expression")
+
+
+@pytest.mark.parametrize("value", ["", " Sample A ", " 試料🧪 "])
+def test_scalar_text_child_call_execution_and_binding(value):
+    class CleanLabel(Function):
+        value: Input[str]
+        label: Output[str]
+
+        @runtime
+        def run(self) -> None:
+            self.label = text.trim(self.value) + "!"
+
+    class Caller(Function):
+        name: Input[str]
+        result: Output[str]
+
+        def __init__(self):
+            self.clean = CleanLabel()
+
+        @runtime
+        def run(self) -> None:
+            self.result = self.clean(value=self.name)
+            self.result = text.split_part(self.result, ",", 0)
+
+    compiled = Caller().compile(target=AutoSuiteTarget())
+    for program in (compiled.semantic_ir, from_json(to_json(compiled.semantic_ir))):
+        result = Interpreter(program).run(inputs={"name": value})
+        assert result.outputs == {"result": value.strip(" \t\r\n") + "!"}
+
+    xml = ET.fromstring(compiled.artifact.content)
+    call = xml.find(".//*[@typeid='Chemspeed.SATaskExecuteFunction.1']/functiondata")
+    incoming = call.find("inputs/item0")
+    outgoing = call.find("outputs/item0")
+    for parameter in (incoming, outgoing):
+        assert parameter.findtext("variabletype") == "text"
+        assert parameter.findtext("isarray") == "0"
+    assert incoming.findtext("expression") == "name"
+    assert not incoming.findtext("variablename")
+    assert outgoing.findtext("variablename") == "result"
+    assert not outgoing.findtext("expression")
 
 
 def test_unknown_split_selectors_are_not_silently_delegated():
