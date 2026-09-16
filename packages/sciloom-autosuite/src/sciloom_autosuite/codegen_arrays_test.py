@@ -3,6 +3,7 @@
 import ast
 import gzip
 import importlib
+import math
 import operator
 import re
 import xml.etree.ElementTree as ET
@@ -82,8 +83,8 @@ class WireModel:
             if isinstance(node, ast.UnaryOp):
                 return {ast.Not: operator.not_, ast.USub: operator.neg}[type(node.op)](visit(node.operand))
             if isinstance(node, ast.Call):
-                assert isinstance(node.func, ast.Name) and node.func.id == "ArraySize"
-                return len(visit(node.args[0]))
+                assert isinstance(node.func, ast.Name) and len(node.args) == 1
+                return {"ArraySize": len, "abs": abs, "floor": math.floor}[node.func.id](visit(node.args[0]))
             if isinstance(node, ast.Subscript):
                 values, index = visit(node.value), visit(node.slice)
                 if type(index) is not int or index < 0 or index >= len(values):

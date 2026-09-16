@@ -36,7 +36,7 @@ because they capture distinct configurations and task/version combinations.
 
 ## Reading order
 
-The 21 reference documents are in one directory, numbered 00–20. This guide is
+The 22 reference documents are in one directory, numbered 00–21. This guide is
 00; read the following documents in order or jump to the relevant group.
 
 ### Sources and runtime semantics
@@ -57,6 +57,7 @@ The 21 reference documents are in one directory, numbered 00–20. This guide is
 - [18 · Capability gaps and runtime Zone parameters](18_CAPABILITY_GAPS_AND_ZONE_PARAMETERS.md)
 - [19 · Runtime text mapping](19_TEXT_MAPPING.md)
 - [20 · Volume and duration mapping](20_QUANTITY_MAPPING.md)
+- [21 · Numeric expressions and rounding](21_NUMERIC_MAPPING.md)
 
 ### Current application and workflow
 

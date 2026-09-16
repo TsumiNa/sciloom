@@ -1,6 +1,6 @@
 [project]
 name = "sciloom-autosuite"
-version = "0.3.2"
+version = "0.3.3"
 description = "AutoSuite target for SciLoom: device profiles, deployment checks and .asfp generation."
 requires-python = ">=3.12,<3.15"
 dependencies = ["sciloom"]

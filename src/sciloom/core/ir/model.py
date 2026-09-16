@@ -39,11 +39,18 @@ class BinaryOp(StrEnum):
 
 
 class UnaryOp(StrEnum):
-    """Numeric sign and Boolean negation operations."""
+    """Sign, magnitude, integer rounding and Boolean negation operations.
+
+    FLOOR and ROUND return integers; ROUND uses Python ties-to-even semantics.
+    ABSOLUTE preserves the operand's numeric or signed-quantity type.
+    """
 
     POSITIVE = "+"
     NEGATIVE = "-"
     NOT = "not"
+    ABSOLUTE = "abs"
+    FLOOR = "floor"
+    ROUND = "round"
 
 
 @dataclass(frozen=True, kw_only=True)

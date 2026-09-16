@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import ast
+import builtins
 import inspect
+import math
 from typing import TypeGuard, cast
 
 from sciloom.core.ir import (
@@ -43,6 +45,11 @@ BINARY_OPERATORS = {
     ast.Or: BinaryOp.OR,
 }
 UNARY_OPERATORS = {ast.UAdd: UnaryOp.POSITIVE, ast.USub: UnaryOp.NEGATIVE, ast.Not: UnaryOp.NOT}
+NUMERIC_OPERATIONS = (
+    (builtins.abs, UnaryOp.ABSOLUTE),
+    (math.floor, UnaryOp.FLOOR),
+    (builtins.round, UnaryOp.ROUND),
+)
 
 
 def expression(context: LoweringContext, node: ast.AST, expected: ValueType | None = None) -> Expression:
@@ -76,6 +83,11 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
         return ListLength(**metadata, value=length_value)
     if isinstance(node, ast.Call):
         marker = context.static_object(node.func)
+        for numeric_intrinsic, operation in NUMERIC_OPERATIONS:
+            if marker is numeric_intrinsic:
+                if len(node.args) != 1 or node.keywords or isinstance(node.args[0], ast.Starred):
+                    context.fail("python_subset", f"{operation.value} requires one positional argument.", node)
+                return Unary(**context.metadata(node), op=operation, operand=expression(context, node.args[0]))
         if marker is text.trim or marker is text.split_part:
             intrinsic = text.trim if marker is text.trim else text.split_part
             if any(isinstance(a, ast.Starred) for a in node.args) or any(k.arg is None for k in node.keywords):
@@ -197,7 +209,11 @@ def is_expression_call(context: LoweringContext, node: ast.AST) -> bool:
         return True
     if isinstance(node, ast.Call):
         marker = context.static_object(node.func)
-        return marker is text.trim or marker is text.split_part
+        return (
+            marker is text.trim
+            or marker is text.split_part
+            or any(marker is intrinsic for intrinsic, _ in NUMERIC_OPERATIONS)
+        )
     return False
 
 

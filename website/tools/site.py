@@ -33,6 +33,8 @@ EXAMPLES = (
     "prepare_labels.asfp",
     "quantity_conversion.py",
     "quantity_conversion.asfp",
+    "numeric_operations.py",
+    "numeric_operations.asfp",
     "non_zero_array_min.py",
     "non_zero_array_min.asfp",
     "stir_rack.py",

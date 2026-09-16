@@ -190,6 +190,7 @@ and `uv run python examples/agitation.py`. Run the list author examples with `uv
 `uv run python examples/non_zero_array_min.py`. Run
 `uv run python examples/prepare_labels.py` for runtime text and
 `uv run python examples/quantity_conversion.py` for volume/time conversion.
+Run `uv run python examples/numeric_operations.py` for magnitude and floor.
 Run `uv run python -m examples.developer.agitation_ir` from the repository root.
 Run `uv run python -m examples.developer.list_ir` for direct list IR and JSON v4.
 Run each independent user lesson with `uv run python examples/tutorial/start_shaker.py`,

@@ -7,9 +7,10 @@ contains source filenames and printed manual page numbers. Fxx here refers to
 that source key, not a public download. Vendor files stay in the locally shared,
 ignored corpus. Copy neither the corpus nor the internal plan to the website.
 
-Stages 2–3 add reference tests and static XML checks, recorded in the
+Stages 2–4 add reference tests and static XML checks, recorded in the
 [text mapping](../../../autosuite/docs/19_TEXT_MAPPING.md) and
-[quantity mapping](../../../autosuite/docs/20_QUANTITY_MAPPING.md). No new capability has
+[quantity mapping](../../../autosuite/docs/20_QUANTITY_MAPPING.md) and
+[numeric mapping](../../../autosuite/docs/21_NUMERIC_MAPPING.md). No new capability has
 passed Executor. Source presence is not Editor acceptance or a hardware result.
 Record each future result with the input/output hashes, source
 commit, target/profile version, command and environment needed to reproduce it.
@@ -26,7 +27,7 @@ commit, target/profile version, command and environment needed to reproduce it.
 | A08 timing | F11/F13, SetTimer, Wait mode 0/2 | 3.6.24 pp. 76–77; 3.7.12 pp. 101–102 | Pending stage 10 | Timer naming/scope, reset, elapsed waits, negative input failure and unchanged device state |
 | A09 log | F24 and APP LogData | 3.7.11 pp. 100–101 | Pending stage 6 | Typed values/units and category/stream capture/order |
 | A10 notify | F21/F47, showmessage/OK | 3.6.17 pp. 66–71 | Pending stage 7 | Confirmation actually suspends later actions |
-| A11 math | F30/F31/F35 and APP round expressions | 3.11.7 p. 162 | Pending stage 4 | Negative values, half ties, target numeric range; native round is not proof of Python equivalence |
+| A11 math | F30/F35 abs/floor; historical round expressions | 3.11.7 p. 162 | Implemented stage 4, including Python ties-to-even and large integers | abs/floor mapping and operand ordering checked statically; target ranges and native round ties pending. AutoSuite rejects real round rather than claiming equivalence |
 | A12 wall time | F15 DateTime format | 3.11.1 pp. 146–149 | Pending stage 9 | Local time and supported formatting, read-once behavior |
 | Runtime failure | Existing generated checked-array-read technique; F32/F47 error conventions are different | Fatal faults in 3.9.4; no generic recoverable exception proof | Pending stage 8 | No subsequent marker after a failure in entry, child call or loop; checked read is only a candidate |
 

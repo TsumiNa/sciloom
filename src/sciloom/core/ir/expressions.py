@@ -111,11 +111,18 @@ class ExpressionChecker:
             operand = self.check(expr.operand, function, f"{path}.operand")
             if operand is None:
                 return None
-            if expr.op == UnaryOp.NOT:
+            op = expr.op
+            if op == UnaryOp.NOT:
                 if operand == ScalarType.BOOLEAN:
                     return ScalarType.BOOLEAN
-            elif operand in (ScalarType.INTEGER, ScalarType.REAL, *SIGNED_QUANTITIES):
-                return operand
+            elif op in (UnaryOp.POSITIVE, UnaryOp.NEGATIVE, UnaryOp.ABSOLUTE):
+                if operand in (ScalarType.INTEGER, ScalarType.REAL, *SIGNED_QUANTITIES):
+                    return operand
+            elif op in (UnaryOp.FLOOR, UnaryOp.ROUND):
+                if operand in (ScalarType.INTEGER, ScalarType.REAL):
+                    return ScalarType.INTEGER
+            else:
+                assert_never(op)
             self.report("operator_type", f"Operator {expr.op.value!r} cannot take {operand.value}.", path, expr)
             return None
         if not isinstance(expr, Binary):

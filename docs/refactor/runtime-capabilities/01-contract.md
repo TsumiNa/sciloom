@@ -6,8 +6,8 @@ This is the authority for the [implementation sequence](00-overview.md). All new
 signatures and snippets below are **target interfaces** until their stated stage
 lands. They have not been executed. Existing Program/JSON v4, Function.compile,
 device property/command contracts and the Target protocol are current.
-Stages 1–3 implement section 1's explicit wire identities, section 3's text
-interfaces and section 4's quantity interfaces. Later sections remain target
+Stages 1–4 implement section 1's explicit wire identities, section 3's text,
+section 4's quantity interfaces and section 5's numeric operations. Later sections remain target
 contracts until their owning stage lands.
 
 Experiment authors import from `sciloom`; targets from `sciloom_autosuite` or an
@@ -303,6 +303,24 @@ Expected: floor(-1.2) = -2; round(2.5) = 2; round(3.5) = 4;
 round(-2.5) = -2. Native AutoSuite round is not presumed equivalent. A verified
 arithmetic expansion is acceptable; reject unprovable target ranges. Do not
 infer an integer width or floating-point equivalence from XML variable type IDs.
+
+Stage 4 reuses `Unary(op, operand)` with stable enum values `abs`, `floor` and
+`round`; no new record kind or wire-version change is needed. `abs` retains its
+operand type; `floor` and `round` return INTEGER. Boolean, text, lists and
+unconverted quantities cannot be rounded. `Volume` and `Duration` also implement
+host `__abs__` so ordinary Python and type checkers agree with runtime source.
+
+Source recognition uses callable identity for builtin `abs`, builtin `round` and
+`math.floor`, including imported aliases. Exactly one positional argument is
+accepted; a shadowing function is not executed or treated as an intrinsic.
+
+The initial AutoSuite profile maps `abs` and real-valued `floor` to the documented
+native expressions. Floor/round of INTEGER are identity operations, avoiding an
+unnecessary real conversion. REAL `round` is explicitly refused with
+`unsupported_rounding`: neither ties-to-even nor an equivalent expansion's
+numeric range is established. No native `round` substitution or unchecked
+expansion is emitted. Native numeric limits still require Executor evidence;
+reference tests of large integers are not claims about vendor storage width.
 
 ## 6. Log and acknowledge (A09/A10, stages 6/7)
 

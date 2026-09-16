@@ -16,6 +16,7 @@ to the repository root.
 | [Stir a rack of samples](stir-rack.md) | Choose a speed from supplied volumes and count start requests |
 | [Prepare labels](prepare-labels.md) | Trim supplied text, select a part and return independent labels |
 | [Quantity conversion](quantity-conversion.md) | Calculate volumes and time differences with explicit units |
+| [Numeric operations](numeric-operations.md) | Calculate whole portions and an absolute volume difference |
 
 ## For contributors
 

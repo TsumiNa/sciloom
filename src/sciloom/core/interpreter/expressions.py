@@ -75,6 +75,12 @@ def evaluate(session: Interpreter, expression: Expression, frame: dict[str, Runt
                 result = +value
             elif expression.op == UnaryOp.NEGATIVE:
                 result = -value
+            elif expression.op == UnaryOp.ABSOLUTE:
+                result = abs(value)
+            elif expression.op == UnaryOp.FLOOR:
+                result = math.floor(value)
+            elif expression.op == UnaryOp.ROUND:
+                result = round(value)
             else:
                 assert_never(expression.op)
         elif isinstance(expression, Binary):
