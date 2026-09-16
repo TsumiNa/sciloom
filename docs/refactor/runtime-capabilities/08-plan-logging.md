@@ -48,7 +48,11 @@ tracked in RC-QA-009 and the logging evidence document.
 same-name JSON companion before reference execution. Their actual short outputs
 appear in module docstrings; public pages include/download the actual sources.
 
-Acceptance passed: 530 code/example tests, 82 website tests including strict
+Review additionally required a colocated author-marker test. `flow/logging_test.py`
+now checks host rejection, the lazy public export, required keyword-only labels
+and the no-result signature; the DSL test retains alias/lowering coverage.
+
+Acceptance passed: 532 code/example tests, 82 website tests including strict
 builds and API/source/download checks, mypy over 78 source files, Ruff checks,
 AutoSuite smoke, recipe validation, 20 CI example/syntax commands and
 `git diff --check`. Read-only corpus audit passed for 271 files, 127 archive

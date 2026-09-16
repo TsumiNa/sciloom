@@ -135,6 +135,7 @@ module = [
     "sciloom.flow.function_test",
     "sciloom.flow.fields_test",
     "sciloom.flow.fields_typing_test",
+    "sciloom.flow.logging_test",
     "sciloom.dsl.statements_test",
     "sciloom.core.compiler_test",
     "sciloom.core.compiler_typing_test",

@@ -93,7 +93,7 @@ def test_failed_log_does_not_append_or_continue():
     assert [e.value for e in session.environment.events] == ["before", "before"]
 
 
-def test_marker_alias_and_host_guard():
+def test_marker_alias():
     record = log
 
     class Alias(Function):
@@ -102,8 +102,6 @@ def test_marker_alias_and_host_guard():
             record(3, category="recipe", stream="count")
 
     assert Interpreter(Alias().to_ir()).run().events[0].value == 3
-    with pytest.raises(TypeError, match="runtime"):
-        log(1, category="host", stream="count")
 
 
 def test_log_rejects_lists_wrong_names_and_result_use():
