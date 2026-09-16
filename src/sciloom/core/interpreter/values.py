@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import math
-from typing import NoReturn, overload
+from typing import NoReturn, assert_never, overload
 
 from sciloom.core.diagnostics import Diagnostic, ExecutionError
 from sciloom.core.ir.model import ListLiteral, Literal, Node
@@ -81,7 +81,9 @@ def initial_value(literal: Literal | ListLiteral) -> RuntimeValue:
             assert isinstance(element, Literal)  # Shared validation requires constant initializers.
             values.append(element.value)
         return coerce(tuple(values), literal.type, literal)
-    return coerce(literal.value, literal.type, literal)
+    if isinstance(literal, Literal):
+        return coerce(literal.value, literal.type, literal)
+    assert_never(literal)
 
 
 @overload

@@ -1,17 +1,23 @@
 """Conservative array-output initialization checks for reusable vendor storage."""
 
+from typing import assert_never
+
 from sciloom.core.diagnostics import Diagnostic
 from sciloom.core.ir import (
     Assignment,
     Call,
     ConfigureProperty,
+    DeviceCommand,
+    DeviceIf,
     Expression,
     If,
     ListSet,
     ListType,
     Program,
     Reference,
+    StartAgitation,
     Statement,
+    StopAgitation,
     VariableRole,
     While,
 )
@@ -64,6 +70,12 @@ def validate_array_outputs(program: Program) -> tuple[Diagnostic, ...]:
                     block(statement.body, assigned)
                 elif isinstance(statement, ConfigureProperty):
                     read(statement.value, assigned)
+                elif isinstance(statement, (StartAgitation, StopAgitation)):
+                    pass  # Lifecycle commands have no variable reads or writes.
+                elif isinstance(statement, (DeviceCommand, DeviceIf)):
+                    pass  # Unsupported here; the task emitter explicitly rejects them.
+                else:
+                    assert_never(statement)
             return assigned
 
         assigned = block(function.body, set())

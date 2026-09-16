@@ -3,12 +3,14 @@
 from collections.abc import Mapping
 from dataclasses import dataclass
 from types import MappingProxyType
+from typing import assert_never
 
 from sciloom.core.diagnostics import IRValidationError
 from sciloom.core.ir import (
     Assignment,
     Call,
     ConfigureProperty,
+    DeviceCommand,
     DeviceIf,
     FunctionIR,
     If,
@@ -228,5 +230,7 @@ class Interpreter:
             elif isinstance(statement, (ConfigureProperty, StartAgitation, StopAgitation)):
                 value = evaluate(self, statement.value, frame) if isinstance(statement, ConfigureProperty) else None
                 self._events.append(self._devices.apply(statement, value))
-            else:
+            elif isinstance(statement, (DeviceCommand, DeviceIf)):
                 fail("unsupported_operation", f"Cannot execute {type(statement).__name__}.", statement)
+            else:
+                assert_never(statement)

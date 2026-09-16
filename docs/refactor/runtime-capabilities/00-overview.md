@@ -65,14 +65,14 @@ handwritten JSON model was rejected because it duplicates the typed definitions.
 
 ## Stage status and sequence
 
-Stage 0 is the current documentation change. Stages 1–17 are pending; no new
-runtime capability is claimed by this document. Update this table in the stage
-that implements an outcome and record its PR and verification.
+Stage 0 merged as PR #85. Stage 1 implements the wire foundation; stages 2–17
+remain pending. No new runtime operation is available yet. Update this table in
+the stage that implements an outcome and record its PR and verification.
 
 | Stage | Plan | Outcome | Status |
 | --- | --- | --- | --- |
-| 0 | [Record contract](02-plan-contract.md) | Interfaces, sequence, evidence gates and Q&A | In review |
-| 1 | [Wire contract](03-plan-wire-contract.md) | Stable kinds, v4 baselines, consumer completeness | Pending |
+| 0 | [Record contract](02-plan-contract.md) | Interfaces, sequence, evidence gates and Q&A | Merged, PR #85 |
+| 1 | [Wire contract](03-plan-wire-contract.md) | Stable kinds, v4 baselines, consumer completeness | Implemented; review pending |
 | 2 | [Text](04-plan-text.md) | A01 text and text lists | Pending |
 | 3 | [Quantities](05-plan-quantities.md) | A02 volume and time | Pending |
 | 4 | [Numeric operations](06-plan-numeric.md) | A11 abs, floor and round | Pending |
@@ -135,7 +135,8 @@ Do not extend an author/device contract merely to imitate vendor XML.
 
 ## Version
 
-Version: none for stage 0. By explicit user decision, the first shipped-code
+Version: MINOR 0.2.0 → 0.3.0 for stage 1's durable wire contract; stage 0 was none.
+By explicit user decision, the first shipped-code
 stage moves both packages from 0.2.0 to 0.3.0; later shipped-code stages remain
 lockstep in 0.3.x. This is an exception to the usual per-capability minor-bump
 rule, not an instruction to bump to 1.0.0. JSON stays v4. No release tag or PyPI

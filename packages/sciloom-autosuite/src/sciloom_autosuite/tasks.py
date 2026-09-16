@@ -1,10 +1,14 @@
 """Schedule semantic statements, expression checks and target-private call copies."""
 
+from typing import assert_never
+
 from sciloom.core.diagnostics import CompilationError, Diagnostic
 from sciloom.core.ir import (
     Assignment,
     Call,
     ConfigureProperty,
+    DeviceCommand,
+    DeviceIf,
     FunctionIR,
     If,
     ListSet,
@@ -175,7 +179,7 @@ def statements(
                 result.append(
                     macro(context, tag, statement.node_id, function, tuple(branches), name="If-Else", branches=True)
                 )
-        else:
+        elif isinstance(statement, (DeviceCommand, DeviceIf)):
             raise CompilationError(
                 (
                     Diagnostic(
@@ -187,4 +191,6 @@ def statements(
                     ),
                 )
             )
+        else:
+            assert_never(statement)
     return tuple(result)

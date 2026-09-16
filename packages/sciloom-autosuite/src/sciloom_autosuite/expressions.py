@@ -1,8 +1,10 @@
 """Plan expressions with ordered prerequisite tasks for checked array accesses."""
 
 from dataclasses import dataclass
+from typing import assert_never
 
 from sciloom.core.ir import (
+    Binary,
     BinaryOp,
     Expression,
     FunctionIR,
@@ -89,6 +91,8 @@ def plan_expression(
         operand = plan_expression(context, function, expression.operand, tag, nested=True)
         text = f"{expression.op.value} {operand.text}"
         return ExpressionPlan(f"({text})" if nested else text, operand.type, operand.prerequisites)
+    if not isinstance(expression, Binary):
+        assert_never(expression)
     left = plan_expression(context, function, expression.left, tag, nested=True)
     right = plan_expression(context, function, expression.right, tag, nested=True)
     if right.prerequisites:

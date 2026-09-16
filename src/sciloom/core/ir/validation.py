@@ -1,6 +1,7 @@
 """Symbol, type and control-flow validation shared by every frontend."""
 
 from dataclasses import replace
+from typing import assert_never
 
 from sciloom.core.diagnostics import Diagnostic, IRValidationError
 from .device_contracts import START_AGITATION_ID, STOP_AGITATION_ID
@@ -9,6 +10,7 @@ from .expressions import ExpressionChecker
 from .model import (
     Assignment,
     BinaryOp,
+    Call,
     CanWrite,
     ConfigureProperty,
     DeviceCommand,
@@ -208,6 +210,8 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                             p,
                             predicate,
                         )
+                else:
+                    assert_never(predicate)
                 true_types = dict(narrowed)
                 if isinstance(predicate, IsDevice) and resource is not None:
                     current_type = next((c for c in package.device_types if c.type_id == resource.device_type_id), None)
@@ -218,7 +222,7 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                         true_types[predicate.resource_id] = predicate.device_type_id
                 statements(stmt.then_body, function, f"{p}.then_body", true_types)
                 statements(stmt.else_body, function, f"{p}.else_body", narrowed)
-            else:
+            elif isinstance(stmt, Call):
                 callee = functions.get(stmt.function_id)
                 if callee is None:
                     report("unknown_function", f"Unknown function {stmt.function_id!r}.", p, stmt)
@@ -246,6 +250,8 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                         bound.add(binding.parameter_id)
                     if callee and (missing := set(expected) - bound):
                         report("call_binding", f"Missing {label}: {', '.join(sorted(missing))}.", f"{p}.{label}", stmt)
+            else:
+                assert_never(stmt)
 
     for i, function in enumerate(package.functions):
         p = f"$.functions[{i}]"

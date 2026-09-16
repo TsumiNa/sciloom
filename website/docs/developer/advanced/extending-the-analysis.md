@@ -38,3 +38,16 @@ session state.
 A shape that needs a new IR node is a change to the semantic contract and starts
 in `docs/` as a design document with concrete examples before any recognizer is
 written.
+
+Give a new serializable record its own stable `__ir_kind__: ClassVar[str]` and
+keep its field names part of the [wire contract](../reference/ir.md). Structural
+conversion follows those typed fields; do not add a second JSON schema. Reuse
+device property and command contracts when they already express the behavior.
+
+For a new expression or statement, update type checking, scope and flow validation,
+specialization, configuration analysis, reference execution and target handling
+together. An unsupported target must report a diagnostic. Closed-union dispatchers
+end in `assert_never`, so mypy identifies missing handlers. A test also removes
+supported handlers in a temporary copy to verify that these checks detect omissions.
+Keep the frozen v4 compatibility fixtures unchanged; they establish that old
+documents still execute and produce the same bytes, independently of current examples.

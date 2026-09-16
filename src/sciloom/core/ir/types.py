@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import StrEnum
+from typing import ClassVar
 
 
 class ScalarType(StrEnum):
@@ -21,6 +22,8 @@ class ListType:
 
     Args:
         element_type: Element type; nested lists and untyped lists are not supported."""
+
+    __ir_kind__: ClassVar[str] = "ListType"
 
     element_type: ScalarType
 

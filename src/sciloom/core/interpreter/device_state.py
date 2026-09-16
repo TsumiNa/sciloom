@@ -3,6 +3,7 @@
 from collections.abc import Mapping
 from dataclasses import dataclass, field, replace
 from types import MappingProxyType
+from typing import assert_never
 
 from sciloom.core.ir import ConfigureProperty, Program, StartAgitation, StopAgitation
 from sciloom.core.ir.device_contracts import START_AGITATION_ID, STOP_AGITATION_ID
@@ -63,9 +64,11 @@ class DeviceSession:
                 fail("device_configuration", "start() requires complete saved configuration.", statement)
             state = replace(previous, applied_configuration=previous.configuration, enabled=True)
             operation = START_AGITATION_ID
-        else:
+        elif isinstance(statement, StopAgitation):
             state = replace(previous, enabled=False)
             operation = STOP_AGITATION_ID
+        else:
+            assert_never(statement)
         self.states[statement.resource_id] = state
         return DeviceEvent(
             node_id=statement.node_id, resource_id=statement.resource_id, operation_id=operation, state=state

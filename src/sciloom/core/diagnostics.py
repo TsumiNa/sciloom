@@ -1,11 +1,14 @@
 """Source locations and structured errors shared across compilation and execution."""
 
 from dataclasses import dataclass
+from typing import ClassVar
 
 
 @dataclass(frozen=True, kw_only=True)
 class SourceSpan:
     """One-based source line and zero-based UTF-8 byte column."""
+
+    __ir_kind__: ClassVar[str] = "SourceSpan"
 
     path: str
     line: int
