@@ -7,6 +7,11 @@ Introduce environment injection and ordered external-event infrastructure.
 ## Scope
 
 Use [the authoritative contract](01-contract.md), not a separate API definition.
+Before production edits, extend that contract with concrete file, clock,
+location-directory, property-store and acknowledgement service constructor/method
+signatures, ownership, missing-service diagnostics and usage examples. Those
+service interfaces are not specified in stage 0; this is a required first task
+of stage 5, and its review must check the later consuming stages against them.
 Add ReferenceEnvironment to Interpreter as the optional environment keyword. Retain old constructor behavior, result fields and DeviceEvents. Establish service ownership, missing-service errors, isolated defaults and immutable event snapshots. Add each concrete service with its owning subsequent feature instead of exposing empty future APIs.
 
 ## Non-goals
@@ -25,4 +30,3 @@ Consult [evidence](20-evidence.md) and collect new uncertainties in [Q&A](21-qa.
 ## Version
 
 Version: PATCH within lockstep 0.3.x for shipped changes, by the user's explicit series-level version decision. Choose the next patch after final review; documentation-only follow-ups use none. JSON stays v4.
-

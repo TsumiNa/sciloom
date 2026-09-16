@@ -115,8 +115,13 @@ Retain ExecutionResult outputs/state/resources and existing DeviceEvent data for
 old programs. Extend the ordered event union for external events; retain immutable
 snapshots after later calls. Stage 16 adds physical-device snapshots rather than
 pretending one logical resource can represent several physical running states.
-ReferenceEnvironment implementation/service signatures are recorded here by
-stage 5 before its API is added; no absent service is exposed as a placeholder.
+Concrete file, clock, directory, property-store and acknowledgement service
+signatures are **not specified yet**. Stage 5 must first extend this contract with
+their constructor/method signatures, ownership, missing-service diagnostics and
+usage examples, before editing production code for the environment. Its review
+must check those signatures against the later consuming stages. Concrete services
+still land only with their owning features; absent services are not published as
+placeholder implementations. The injection signature above is already fixed.
 
 ## 3. Text (A01, stage 2)
 
@@ -278,25 +283,42 @@ runtime expressions in recognized DSL calls. Schema metadata (type/unit/count)
 is static; no runtime Python Column constructor is executed during lowering.
 
 ```python
-from sciloom import Volume, csv, mL
+from sciloom import Function, Input, Output, Volume, csv, mL, runtime
 
-# Inside @runtime with declared output fields:
-self.reagent_name, = csv.read_row(
-    self.path,
-    row=0,
-    header=False,
-    columns=(csv.Column(index=self.reagent_index + 1, value_type=str),),
-)
-self.ids, self.volumes = csv.read_columns(
-    self.path,
-    header=True,
-    columns=(
-        csv.Column(index=0, value_type=str, default=""),
-        csv.Column(index=self.reagent_index + 1, value_type=Volume,
-                   unit=mL, default=0 * mL),
-    ),
-)
+
+class ReadReagentTable(Function):
+    """Read a reagent column after the experiment-ID column."""
+
+    path: Input[str]
+    reagent_index: Input[int]
+    reagent_name: Output[str]
+    ids: Output[list[str]]
+    volumes: Output[list[Volume]]
+
+    @runtime
+    def run(self) -> None:
+        self.reagent_name, = csv.read_row(
+            self.path,
+            row=0,
+            header=False,
+            columns=(csv.Column(index=self.reagent_index + 1, value_type=str),),
+        )
+        self.ids, self.volumes = csv.read_columns(
+            self.path,
+            header=True,
+            columns=(
+                csv.Column(index=0, value_type=str, default=""),
+                csv.Column(index=self.reagent_index + 1, value_type=Volume,
+                           unit=mL, default=0 * mL),
+            ),
+        )
 ```
+
+`reagent_index` is zero-based **within the reagent columns**, excluding the
+experiment-ID column at CSV index 0. Thus reagent_index=0 selects CSV column 1,
+the first reagent. The `+ 1` skips that ID column; it is not conversion to vendor
+indexing. A caller already holding an absolute zero-based CSV column index passes
+that index directly. Only the backend converts to AutoSuite's one-based indexes.
 
 The call contract is:
 
@@ -330,17 +352,37 @@ text/Volume in mL with a zero default, produces `("A", "B")` and quantities
 
 Default policy: fail unless a column explicitly supplies a default for missing
 cells or conversion failures. A column default does not recover a file error.
-Try calls prepend an integer status; expose `csv.OK`, `csv.DEFAULT_USED`,
-`csv.EOF`, `csv.INVALID_DATA`, `csv.IO_ERROR` as named integer constants. Their
-meaning is SciLoom's, not the raw vendor result code. Successful default use is
-DEFAULT_USED; an unhandled bad/missing cell is INVALID_DATA. A file failure is
-IO_ERROR; a requested row beyond data is EOF.
+Try calls prepend exactly one integer status to a **flat** result tuple:
+`(status, value0, ..., valueN)` for try_read_row and
+`(status, list0, ..., listN)` for try_read_columns. A one-column result is
+`(status, value)` or `(status, values)`, not a nested results tuple. Expose
+`csv.OK = 0`, `csv.DEFAULT_USED = 1`, `csv.EOF = 2`, `csv.INVALID_DATA = 3`,
+`csv.IO_ERROR = 4`. These are SciLoom statuses, not raw vendor result codes.
 
-Try-read-row requires a default on every column so whole-operation failure has
-well-typed results. Try-read-columns returns empty lists on whole-operation
-failure. Normal failure commits no result destinations; accepted success commits
-them together. Do not promise a filesystem transaction or snapshot against other
-writers. Preserve effects completed before the operation.
+Aggregate outcomes in this priority order, highest first:
+IO_ERROR, EOF, INVALID_DATA, DEFAULT_USED, OK. EOF means a requested single row
+does not exist; natural exhaustion of an all-row read is successful completion,
+including an empty dataset. A converted/defaulted cell contributes DEFAULT_USED;
+an unhandled missing/bad cell or malformed record contributes INVALID_DATA. A
+file failure contributes IO_ERROR even after some cells were read. Column
+defaults recover only their own cell problems, never a whole-file failure.
+Invalid selectors, declaration errors and wrong-typed defaults remain programming
+errors rather than recoverable CSV statuses.
+
+Try-read-row requires a default on every column. With OK/DEFAULT_USED it returns
+the accepted values; on IO_ERROR/EOF/INVALID_DATA it returns **all** captured
+column defaults, never a mixture of partial values and fallback results.
+Try-read-columns returns all accepted lists on OK/DEFAULT_USED and **all empty
+lists** on whole-operation failure. Both try forms commit the status and the
+chosen complete payload together. Ordinary reads commit no result destinations
+on failure; accepted success commits them together. Do not promise a filesystem
+transaction or snapshot against other writers. Preserve earlier effects.
+
+For two selected columns, one defaulted cell plus one unhandled bad cell in an
+all-row read yields `(csv.INVALID_DATA, [], [])`; a later file failure instead
+yields `(csv.IO_ERROR, [], [])`. A missing requested row with defaults `""` and
+`0 * mL` yields `(csv.EOF, "", 0 * mL)`. These payload examples use author-level
+list notation; reference result snapshots continue to expose lists as tuples.
 
 Retain a typed CSV-read node with mode, columns, error policy and outputs. Backend
 private tasks may read/check separately; an aggregate vendor status is not proof
@@ -374,14 +416,19 @@ portable contracts; encoding and physical newline behavior are platform profiles
 ## 12. Zone values and directory (A03, stage 13)
 
 ```python
-from sciloom import Input, Output, Var, Zone, zones
+from sciloom import Function, Input, Output, Var, Zone, runtime, zones
 
-location: Input[Zone]
-selected: Output[Zone]
-scratch: Var[Zone] = Zone.empty()
 
-# Inside @runtime:
-self.selected = zones.find(self.zone_name)
+class ResolveLocation(Function):
+    """Resolve the caller's name in the configured location directory."""
+
+    zone_name: Input[str]
+    selected: Output[Zone]
+    scratch: Var[Zone] = Zone.empty()
+
+    @runtime
+    def run(self) -> None:
+        self.selected = zones.find(self.zone_name)
 ```
 
 Zone is an immutable ordered set of unique well references. It has its own value
@@ -405,20 +452,34 @@ application compilation. Device selection below uses this same read-only layout.
 ## 13. Zone traversal (A04, stage 14)
 
 ```python
-well: Var[Zone] = Zone.empty()
-fragment: Var[Zone] = Zone.empty()
+from sciloom import Function, Input, Output, Var, Zone, runtime, zones
 
-# Inside @runtime; the property write becomes available in stage 15:
-self.well = self.rack[0]
-for self.well in self.rack:
-    self.sample_label[self.well] = self.label
-for self.fragment in zones.fragments(self.rack, size=2):
-    self.sample_label[self.fragment] = self.label
+
+class CountRack(Function):
+    """Count wells and pairs in a rack with an even number of wells."""
+
+    rack: Input[Zone]
+    well: Var[Zone] = Zone.empty()
+    fragment: Var[Zone] = Zone.empty()
+    well_count: Output[int]
+    pair_count: Output[int]
+
+    @runtime
+    def run(self) -> None:
+        self.well_count = 0
+        self.pair_count = 0
+        if len(self.rack) > 0:
+            self.well = self.rack[0]
+        for self.well in self.rack:
+            self.well_count += 1
+        for self.fragment in zones.fragments(self.rack, size=2):
+            self.pair_count += 1
 ```
 
-Stage-14 tests use already-supported operations in the body; the displayed
-property example runs only after stage 15. Loop targets are declared Var[Zone]
-fields. Capture the iterable once. Index reads accept nonnegative non-bool ints
+This complete Function becomes runnable in stage 14, without a stage-15 property
+dependency. Four wells produce well_count=4 and pair_count=2; an empty rack gives
+both counts zero. Loop targets are declared Var[Zone] fields. Capture the iterable
+once. Index reads accept nonnegative non-bool ints
 and reject bounds failures. Fragment size is a positive host int. Empty zones
 skip; nonempty cardinality must be divisible by the size, with no short tail.
 Validate these conditions before body effects. Exclude multi-zone/batch traversal,
