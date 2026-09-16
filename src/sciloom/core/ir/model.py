@@ -617,6 +617,43 @@ class DeviceIf(Node):
     else_body: tuple["Statement", ...] = ()
 
 
+@dataclass(frozen=True, kw_only=True)
+class WellPropertySpec:
+    """Static user-property identity and value type; initially text only."""
+
+    __ir_kind__: ClassVar[str] = "WellPropertySpec"
+
+    name: str
+    type: ScalarType
+
+
+@dataclass(frozen=True, kw_only=True)
+class ReadWellProperty(Node):
+    """Capture a single-well selection and optional default, then read metadata.
+
+    The default handles only absent/incompatible data, not invalid locations.
+    Results commit after a successful read; this operation is not an expression.
+    """
+
+    __ir_kind__: ClassVar[str] = "ReadWellProperty"
+
+    property: WellPropertySpec
+    zone: Expression
+    target: Reference
+    default: Expression | None = None
+
+
+@dataclass(frozen=True, kw_only=True)
+class WriteWellProperty(Node):
+    """Capture text, then a Zone, and store the same text on all selected wells."""
+
+    __ir_kind__: ClassVar[str] = "WriteWellProperty"
+
+    property: WellPropertySpec
+    zone: Expression
+    value: Expression
+
+
 Statement = (
     Assignment
     | LogValue
@@ -624,6 +661,8 @@ Statement = (
     | ReadWallTime
     | ReadCsv
     | AppendCsv
+    | ReadWellProperty
+    | WriteWellProperty
     | Wait
     | StartTimer
     | WaitUntil

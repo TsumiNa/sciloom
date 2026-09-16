@@ -73,6 +73,8 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
         elements = tuple(expression(context, item, element_type) for item in node.elts)
         return _list_literal(context, node, elements, expected)
     if isinstance(node, ast.Subscript):
+        if context.well_property(node.value) is not None:
+            context.fail("external_operation", "Use property.get(...) as a complete assignment RHS.", node)
         if isinstance(node.slice, ast.Slice):
             context.fail("python_subset", "Slicing is unsupported.", node)
         metadata = context.metadata(node)
@@ -96,6 +98,8 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
             return ZoneLength(**metadata, value=length_value)
         return ListLength(**metadata, value=length_value)
     if isinstance(node, ast.Call):
+        if isinstance(node.func, ast.Attribute) and context.well_property(node.func.value) is not None:
+            context.fail("external_operation", "Assign a property read to one field before using its value.", node)
         if _is_empty_zone(context, node):
             if node.args or node.keywords:
                 context.fail("python_subset", "Zone.empty requires no arguments.", node)

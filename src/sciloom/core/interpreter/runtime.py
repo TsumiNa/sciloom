@@ -23,6 +23,7 @@ from sciloom.core.ir import (
     Program,
     ReadCsv,
     ReadWallTime,
+    ReadWellProperty,
     Reference,
     ScalarType,
     StartAgitation,
@@ -35,6 +36,7 @@ from sciloom.core.ir import (
     Wait,
     WaitUntil,
     While,
+    WriteWellProperty,
     validate,
 )
 from sciloom.core.ir.expressions import ExpressionChecker
@@ -68,6 +70,7 @@ from .values import (
     input_value,
     output_value,
 )
+from .well_properties import execute_property
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -291,6 +294,8 @@ class Interpreter:
                 execute_read(self, statement, frame)
             elif isinstance(statement, AppendCsv):
                 execute_append(self, statement, frame)
+            elif isinstance(statement, (ReadWellProperty, WriteWellProperty)):
+                execute_property(self, statement, frame)
             elif isinstance(statement, ReadWallTime):
                 clock = _require_service(self.environment.wall_clock, "wall_clock", statement)
                 try:

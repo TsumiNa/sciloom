@@ -19,6 +19,7 @@ from .ir import (
     Program,
     ReadCsv,
     ReadWallTime,
+    ReadWellProperty,
     StartAgitation,
     StartTimer,
     Statement,
@@ -26,6 +27,7 @@ from .ir import (
     Wait,
     WaitUntil,
     While,
+    WriteWellProperty,
     ZoneLiteral,
 )
 from .ir.traversal import iter_nodes
@@ -92,6 +94,8 @@ def validate_timer_usage(program: Program) -> tuple[Diagnostic, ...]:
                     LogValue,
                     Notify,
                     ReadWallTime,
+                    ReadWellProperty,
+                    WriteWellProperty,
                     AppendCsv,
                     ReadCsv,
                     Wait,

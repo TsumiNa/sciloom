@@ -43,3 +43,9 @@
 ::: sciloom.core.interpreter.MemoryFiles
 
 ::: sciloom.core.interpreter.LocalFiles
+
+::: sciloom.core.interpreter.WellProperties
+
+::: sciloom.core.interpreter.WellPropertyReadEvent
+
+::: sciloom.core.interpreter.WellPropertyWriteEvent

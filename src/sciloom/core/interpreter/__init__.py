@@ -13,11 +13,17 @@ from .environment import (
     TimerEvent,
     WaitEvent,
     WallTimeEvent,
+    WellPropertyReadEvent,
+    WellPropertyWriteEvent,
 )
 from .files import FileService, LocalFiles, MemoryFiles
+from .properties import WellProperties
 from .runtime import ExecutionConfig, ExecutionResult, Interpreter
 
 __all__ = [
+    "WellProperties",
+    "WellPropertyReadEvent",
+    "WellPropertyWriteEvent",
     "CsvAppendEvent",
     "FileService",
     "MemoryFiles",

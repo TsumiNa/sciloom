@@ -294,6 +294,15 @@ Backend context variables/parameters must not enter the public semantic Program.
 Consult `autosuite/docs/16_AGITATION_MAPPING.md` before changing this adapter.
 Do not infer generic physical limits or hardware equivalence from one device profile.
 
+Stored sample metadata is separate from device configuration and measurements.
+`WellProperty(name, str)` is a host declaration; indexed writes and whole-RHS
+`get` calls lower to ordered WriteWellProperty/ReadWellProperty nodes. Reference
+execution requires explicit location and property services. A default recovers
+only absent/incompatible property data, never an invalid selection or service
+failure. AutoSuite defaulted reads require conservative proof of one well;
+strict/unproven reads remain gated. Consult `autosuite/docs/31_WELL_PROPERTY_MAPPING.md`
+before changing the user-property adapter or claiming Executor equivalence.
+
 Runtime Zone values use immutable ordered unique well identities in
 `sciloom.core.locations`, with a separate IR ZoneType (never list[Zone]). Fixed
 reference directories enter through ReferenceEnvironment.locations; pure queries

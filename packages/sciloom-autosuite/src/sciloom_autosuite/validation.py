@@ -25,6 +25,7 @@ from sciloom.core.ir import (
     Program,
     ReadCsv,
     ReadWallTime,
+    ReadWellProperty,
     Reference,
     ScalarType,
     StartAgitation,
@@ -40,6 +41,7 @@ from sciloom.core.ir import (
     WaitUntil,
     WellName,
     While,
+    WriteWellProperty,
     ZoneGet,
     ZoneLiteral,
 )
@@ -217,6 +219,14 @@ def validate_array_outputs(program: Program) -> tuple[Diagnostic, ...]:
                     assigned.update(target.symbol_id for target in statement.targets)
                 elif isinstance(statement, ReadWallTime):
                     assigned.add(statement.target.symbol_id)
+                elif isinstance(statement, (ReadWellProperty, WriteWellProperty)):
+                    read(statement.zone, assigned)
+                    if isinstance(statement, WriteWellProperty):
+                        read(statement.value, assigned)
+                    else:
+                        if statement.default is not None:
+                            read(statement.default, assigned)
+                        assigned.add(statement.target.symbol_id)
                 elif isinstance(statement, (Wait, WaitUntil)):
                     read(statement.duration, assigned)
                 elif isinstance(statement, StartTimer):

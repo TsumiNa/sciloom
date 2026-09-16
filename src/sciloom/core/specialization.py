@@ -23,6 +23,7 @@ from .ir import (
     Program,
     ReadCsv,
     ReadWallTime,
+    ReadWellProperty,
     Resource,
     StartAgitation,
     StartTimer,
@@ -33,6 +34,7 @@ from .ir import (
     Wait,
     WaitUntil,
     While,
+    WriteWellProperty,
     validate,
 )
 from .ir.traversal import iter_nodes
@@ -130,6 +132,8 @@ def specialize(program: Program, *, bindings: DeviceBindings) -> Program:
                     LogValue,
                     Notify,
                     ReadWallTime,
+                    ReadWellProperty,
+                    WriteWellProperty,
                     AppendCsv,
                     ReadCsv,
                     Wait,

@@ -21,6 +21,7 @@ from .ir import (
     Program,
     ReadCsv,
     ReadWallTime,
+    ReadWellProperty,
     StartAgitation,
     StartTimer,
     Statement,
@@ -28,6 +29,7 @@ from .ir import (
     Wait,
     WaitUntil,
     While,
+    WriteWellProperty,
     ZoneLiteral,
 )
 from .ir.device_contracts import START_AGITATION_ID, STOP_AGITATION_ID
@@ -122,6 +124,8 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
                     LogValue,
                     Notify,
                     ReadWallTime,
+                    ReadWellProperty,
+                    WriteWellProperty,
                     AppendCsv,
                     ReadCsv,
                     Wait,

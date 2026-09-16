@@ -6,12 +6,13 @@ from typing import TypeAlias, TypeVar
 from sciloom.core.diagnostics import SourceSpan
 from sciloom.core.ir.model import CsvReadMode, Node
 from sciloom.core.ir.types import ScalarType
-from sciloom.core.locations import LocationDirectory
+from sciloom.core.locations import LocationDirectory, Zone
 from sciloom.units import Duration
 from .acknowledgements import QueuedAcknowledgements
 from .clocks import VirtualClock, WallClock
 from .device_state import DeviceEvent
 from .files import FileService
+from .properties import WellProperties
 from .values import InputScalar, fail
 
 
@@ -141,6 +142,31 @@ class CsvAppendEvent:
     status: int
 
 
+@dataclass(frozen=True, kw_only=True)
+class WellPropertyReadEvent:
+    """A completed metadata read with its selection, text and fallback decision."""
+
+    node_id: str
+    source: SourceSpan | None
+    zone: Zone
+    name: str
+    type: ScalarType
+    value: str
+    used_default: bool
+
+
+@dataclass(frozen=True, kw_only=True)
+class WellPropertyWriteEvent:
+    """A completed write of one captured text to an immutable well selection."""
+
+    node_id: str
+    source: SourceSpan | None
+    zone: Zone
+    name: str
+    type: ScalarType
+    value: str
+
+
 ExecutionEvent: TypeAlias = (
     DeviceEvent
     | LogEvent
@@ -150,6 +176,8 @@ ExecutionEvent: TypeAlias = (
     | WaitEvent
     | CsvReadEvent
     | CsvAppendEvent
+    | WellPropertyReadEvent
+    | WellPropertyWriteEvent
 )
 """Closed reference-event vocabulary; each effect adds its own immutable record."""
 
@@ -184,6 +212,9 @@ class ReferenceEnvironment:
 
     locations: LocationDirectory | None = None
     """Fixed, immutable location names and well identities; never inferred from hardware."""
+
+    properties: WellProperties | None = None
+    """Explicit stored well metadata, shared only when the caller supplies it."""
 
     _events: list[ExecutionEvent] = field(default_factory=list, init=False, repr=False)
 

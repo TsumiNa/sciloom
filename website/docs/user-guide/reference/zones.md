@@ -70,6 +70,10 @@ multi-Zone iteration are not supported.
 
 ## AutoSuite support
 
+Use a [well user property](well-properties.md) to store text such as a sample
+identifier on these locations. A property write can select several wells; a read
+selects exactly one.
+
 AutoSuite currently compiles Zone inputs, outputs, empty state, assignment,
 `find`, `combine`, length queries and single-well `for` loops. It rejects indexing
 and groups larger than one until reliable bounds/divisibility failure propagation

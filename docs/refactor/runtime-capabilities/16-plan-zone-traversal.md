@@ -29,6 +29,10 @@ Consult [evidence](20-evidence.md) and collect new uncertainties in [Q&A](21-qa.
 
 ## Implementation and verification
 
+Merged as PR #99, squash commit `d393e43bf3e74d62861af9272eb956fc9f3a90b4`.
+Exact-head CI and Copilot review completed; the suppressed integer-type suggestion
+was checked against the existing strict structure validator and answered on the PR.
+
 Implemented: ZoneGet/ForEachZone additive v4 records, typed host Zone indexing
 and iteration, source-only fragment markers, declared Var targets, captured
 reference iteration, explicit consumer handling and size-one AutoSuite sequential
