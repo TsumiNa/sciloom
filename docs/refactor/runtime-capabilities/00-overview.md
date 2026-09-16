@@ -135,7 +135,7 @@ Do not extend an author/device contract merely to imitate vendor XML.
 
 ## Version
 
-Version: PATCH 0.3.1 → 0.3.2 for stage 3, following the user's lockstep 0.3.x decision.
+Version: PATCH 0.3.2 → 0.3.3 for stage 4, following the user's lockstep 0.3.x decision.
 By explicit user decision, the first shipped-code
 stage moves both packages from 0.2.0 to 0.3.0; later shipped-code stages remain
 lockstep in 0.3.x. This is an exception to the usual per-capability minor-bump
