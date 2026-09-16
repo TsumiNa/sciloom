@@ -135,7 +135,12 @@ class WireModel:
                             ]
                         else:
                             text = variable.findtext("value/value")
-                            local[name] = float(text) if variable.findtext("value/type") == "5" else int(text)
+                            storage_type = variable.findtext("value/type")
+                            local[name] = (
+                                self.expression(text, frame)
+                                if storage_type == "8"
+                                else (float(text) if storage_type == "5" else int(text))
+                            )
                     frame[name] = local[name]
                 mode = task.findtext("conditiontype")
                 if task.findtext("multicondition") == "1":

@@ -28,7 +28,7 @@ from pathlib import Path
 
 from examples.agitation import ConfigureAgitation
 from sciloom import rpm
-from sciloom.core.interpreter import Interpreter
+from sciloom.core.interpreter import DeviceEvent, Interpreter
 from sciloom.core.ir import from_json, to_json
 from .source_paths import repository_relative
 
@@ -44,7 +44,9 @@ if __name__ == "__main__":
     session = Interpreter(restored)
     started = session.run(inputs={"shaker_speed": 600 * rpm, "enabled": True})
     stopped = session.run(inputs={"shaker_speed": 600 * rpm, "enabled": False})
-    configured = started.events[0].state
+    first_event = started.events[0]
+    assert isinstance(first_event, DeviceEvent)
+    configured = first_event.state
     assert configured.configuration == {"speed": 600 * rpm}
     assert not configured.enabled and not configured.applied_configuration
 

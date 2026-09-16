@@ -58,6 +58,7 @@ jobs:
       - run: uv run python examples/prepare_labels.py
       - run: uv run python examples/quantity_conversion.py
       - run: uv run python examples/numeric_operations.py
+      - run: uv run python examples/record_values.py
       - run: uv run python examples/non_zero_array_min.py
       - run: uv run python examples/stir_rack.py
       - run: uv run python examples/tutorial/start_shaker.py
@@ -67,6 +68,7 @@ jobs:
       - run: uv run python -m examples.developer.agitation_ir
       - run: uv run python -m examples.developer.list_ir
       - run: uv run python -m examples.developer.reference_environment
+      - run: uv run python -m examples.developer.logging_ir
       - run: uv run python -m examples.developer.demo_device
       - run: uv run python -m examples.developer.portable_agitation
       - run: git diff --exit-code

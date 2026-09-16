@@ -9,7 +9,9 @@ FRONTEND = Path(__file__).resolve().parent.parent
 PACKAGES = ("flow", "dsl")
 
 # What an author writes, evaluated while a class body runs.
-VOCABULARY = frozenset({"flow.comptime", "flow.device_slots", "flow.fields", "flow.function", "flow.text"})
+VOCABULARY = frozenset(
+    {"flow.comptime", "flow.device_slots", "flow.fields", "flow.function", "flow.text", "flow.logging"}
+)
 # What runs only inside Function.to_ir().
 ANALYSIS = frozenset(
     {

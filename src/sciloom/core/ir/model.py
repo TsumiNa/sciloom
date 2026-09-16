@@ -198,6 +198,21 @@ class Assignment(Node):
 
 
 @dataclass(frozen=True, kw_only=True)
+class LogValue(Node):
+    """Capture a scalar/quantity, category and stream once, in that order.
+
+    The value's type is derived from its expression. Category and stream must be
+    text. Logging is ordered with other statements and never measures a device.
+    """
+
+    __ir_kind__: ClassVar[str] = "LogValue"
+
+    value: Expression
+    category: Expression
+    stream: Expression
+
+
+@dataclass(frozen=True, kw_only=True)
 class ListSet(Node):
     """Update one existing element; an augmented op evaluates the index/read once."""
 
@@ -368,6 +383,7 @@ class DeviceIf(Node):
 
 Statement = (
     Assignment
+    | LogValue
     | ListSet
     | Call
     | If

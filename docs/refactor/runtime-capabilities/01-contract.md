@@ -11,6 +11,8 @@ section 4's quantity interfaces and section 5's numeric operations. Later sectio
 contracts until their owning stage lands.
 Stage 5 adds section 2's environment injection and event history. Its concrete
 service setup examples remain target interfaces until the listed consuming stage.
+Stage 6 implements section 6's log call, LogValue and LogEvent; notify remains
+pending stage 7. The runnable logging examples and tests verify the log contract.
 
 Experiment authors import from `sciloom`; targets from `sciloom_autosuite` or an
 independent package. `flow` declares author vocabulary; `dsl` alone analyzes
@@ -583,6 +585,48 @@ notify("Samples are ready. Confirm to continue.")
 quantities; category/stream can be runtime text. Capture the typed value, category
 and stream once, in order. No automatic list/Zone/object formatting, device read
 or application-level logging configuration. Reference events retain typed values.
+
+Stage 6 adds `LogValue` to `sciloom.core.ir` with stable kind `LogValue` and
+fields `value: Expression`, `category: Expression`, `stream: Expression`, plus
+the inherited node ID/source. Value must have ScalarType; category and stream
+must be TEXT. No duplicate result-type field is stored in JSON: expression
+typing is authoritative. All seven current scalar/quantity types are accepted.
+The operation returns no result and is only a standalone runtime statement.
+
+```python
+from sciloom.core.ir import LogValue, Literal, ScalarType
+
+record = LogValue(
+    node_id="record",
+    value=Literal(node_id="amount", type=ScalarType.VOLUME, value=0.000001),
+    category=Literal(node_id="category", type=ScalarType.TEXT, value="recipe"),
+    stream=Literal(node_id="stream", type=ScalarType.TEXT, value="dispensed_volume"),
+)
+```
+
+`sciloom.core.interpreter.LogEvent` is frozen and records `node_id: str`,
+`source: SourceSpan | None`, `type: ScalarType`, `value` (a native scalar or
+public quantity object), `category: str` and `stream: str`. Execution evaluates
+value, category, then stream exactly once in that order, independent of keyword
+spelling order, and only appends the event after all three succeed. A volume
+record with canonical value 0.000001 exposes `event.value == 1 * mL` and
+`event.type == ScalarType.VOLUME`. Events share the existing ordered history with
+device operations. Later variable assignments do not change earlier records.
+
+The author marker lives at `sciloom.flow.logging.log` and is lazily re-exported
+as `sciloom.log`. Its Python signature accepts native bool/int/float/str and the
+three current quantity classes, returning None; a host call raises TypeError.
+Source analysis recognizes the marker by identity without calling it. One
+positional value and the two named keywords are required; argument unpacking,
+list values and use as an assignment RHS are rejected.
+
+AutoSuite materializes all three operands in order into typed private variables,
+then emits `SATaskLogData.1`. This ensures the documented Macro/variable context
+even for a literal-only program. `resulttype` uses the existing scalar encoding;
+text and realnumber are directly observed in the latest APP, other current types
+combine the documented property-type choice with established type encodings.
+Such combinations and actual persisted log content remain Executor checks;
+neither an XML comparison nor a reference event claims physical measurement.
 
 `notify(message: str) -> None` is an OK-only acknowledgement. Subsequent steps
 wait for acknowledgement. Reference execution needs an explicitly configured

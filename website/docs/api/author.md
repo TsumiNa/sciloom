@@ -9,6 +9,8 @@ Import experiment-author interfaces from `sciloom`. See also [units](units.md),
 
 ::: sciloom.runtime
 
+::: sciloom.log
+
 ## Field declarations
 
 `Input[T]`, `Output[T]` and `Var[T]` mark runtime fields while keeping their Python

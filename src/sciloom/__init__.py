@@ -9,12 +9,17 @@ if TYPE_CHECKING:
     from .flow import comptime, text
     from .flow.fields import Input, Output, Var
     from .flow.function import Function, runtime
+    from .flow.logging import log
 
 _DSL_EXPORTS = {"Function", "Input", "Output", "Var", "runtime"}
 
 
 def __getattr__(name: str) -> Any:
     # Importing sciloom.core.ir or the interpreter must not load source analysis.
+    if name == "log":
+        from .flow.logging import log
+
+        return log
     if name == "comptime":
         from .flow import comptime
 
@@ -39,6 +44,7 @@ def __getattr__(name: str) -> Any:
 
 
 __all__ = [
+    "log",
     "text",
     "comptime",
     "Agitator",

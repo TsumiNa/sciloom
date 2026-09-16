@@ -96,11 +96,13 @@ nav:
       - Prepare labels: examples/prepare-labels.md
       - Quantity conversion: examples/quantity-conversion.md
       - Numeric operations: examples/numeric-operations.md
+      - Record values: examples/record-values.md
       - Non Zero Array Min: examples/non-zero-array-min.md
       - Stir a rack of samples: examples/stir-rack.md
       - Agitation IR: examples/agitation-ir.md
       - List IR: examples/list-ir.md
       - Reference environment: examples/reference-environment.md
+      - Typed log events: examples/logging-ir.md
       - Independent device: examples/demo-device.md
       - Portable agitation: examples/portable-agitation.md
   - API Reference:

@@ -37,8 +37,9 @@ assert environment.events == ()  # This calculation has no external events.
 
 `environment.events` returns an immutable history snapshot across all runs using
 that environment. `result.events` remains limited to one successful run.
-`ExecutionEvent` is the typed event vocabulary, currently DeviceEvent; new effects
-add their own immutable records. A failed run leaves earlier completed events in
+`ExecutionEvent` is the union of DeviceEvent and LogEvent. Narrow with
+`isinstance(event, LogEvent)` before accessing log-specific fields; device events
+carry state snapshots. A failed run leaves earlier completed events in
 environment history and does not roll back their state changes.
 
 Reuse the same environment to share history explicitly. This does not share
@@ -48,6 +49,19 @@ sequential and are not intended for concurrent execution.
 
 The [environment example](../../examples/reference-environment.md) runs two
 sessions and inspects their combined history and independent device snapshots.
+
+## Typed log events
+
+`LogValue` evaluates its value, category and stream once in that order. It appends
+a LogEvent only after all three succeed, so a failed argument does not leave a
+partial log record. Logs from child calls, loops and device actions share the
+same ordered event tuple. The event stores the operation ID/source, ScalarType,
+native scalar or public quantity value, and both captured labels. It does not
+read a device or require a file service.
+
+The [direct logging IR example](../../examples/logging-ir.md) constructs a volume
+log, restores JSON v4 and inspects the typed event. Prior records retain their
+values when fields change or the session runs again.
 
 ## Session and snapshots
 

@@ -18,6 +18,7 @@ from sciloom.core.ir import (
     ListSet,
     ListType,
     Literal,
+    LogValue,
     Program,
     Reference,
     ScalarType,
@@ -158,6 +159,9 @@ def validate_array_outputs(program: Program) -> tuple[Diagnostic, ...]:
                 if isinstance(statement, Assignment):
                     read(statement.value, assigned)
                     assigned.add(statement.target.symbol_id)
+                elif isinstance(statement, LogValue):
+                    for expression in (statement.value, statement.category, statement.stream):
+                        read(expression, assigned)
                 elif isinstance(statement, ListSet):
                     for expression in (statement.target, statement.index, statement.value):
                         read(expression, assigned)

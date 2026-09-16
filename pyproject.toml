@@ -1,6 +1,6 @@
 [project]
 name = "SciLoom"
-version = "0.3.4"
+version = "0.3.5"
 description = "SciLoom — programmable scientific automation from one semantic model."
 readme = "README.md"
 requires-python = ">=3.12,<3.15"
@@ -82,6 +82,7 @@ files = [
     "examples/prepare_labels.py",
     "examples/quantity_conversion.py",
     "examples/numeric_operations.py",
+    "examples/record_values.py",
     "examples/tutorial",
     "examples/developer",
 ]
@@ -109,6 +110,7 @@ module = [
     "examples.prepare_labels_test",
     "examples.quantity_conversion_test",
     "examples.numeric_operations_test",
+    "examples.record_values_test",
     "sciloom.units_test",
     "sciloom.units_quantities_test",
     "sciloom.devices.agitation_test",
@@ -127,11 +129,13 @@ module = [
     "sciloom.dsl.driver_text_test",
     "sciloom.dsl.driver_quantities_test",
     "sciloom.dsl.driver_numeric_test",
+    "sciloom.dsl.driver_logging_test",
     "sciloom.dsl.layering_test",
     "sciloom.dsl.driver_test",
     "sciloom.flow.function_test",
     "sciloom.flow.fields_test",
     "sciloom.flow.fields_typing_test",
+    "sciloom.flow.logging_test",
     "sciloom.dsl.statements_test",
     "sciloom.core.compiler_test",
     "sciloom.core.compiler_typing_test",
@@ -147,6 +151,7 @@ module = [
     "sciloom.core.ir.codec_text_test",
     "sciloom.core.ir.codec_quantities_test",
     "sciloom.core.ir.codec_numeric_test",
+    "sciloom.core.ir.codec_logging_test",
     "sciloom.core.ir.validation_test",
     "sciloom_autosuite.agitation_test",
     "sciloom_autosuite.codegen_test",
@@ -155,6 +160,7 @@ module = [
     "sciloom_autosuite.codegen_text_test",
     "sciloom_autosuite.codegen_quantities_test",
     "sciloom_autosuite.codegen_numeric_test",
+    "sciloom_autosuite.codegen_logging_test",
     "sciloom_autosuite.codegen_agitation_test",
     "sciloom_autosuite.target_test",
     "sciloom_autosuite.portability_test",

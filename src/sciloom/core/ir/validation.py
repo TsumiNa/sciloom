@@ -21,6 +21,7 @@ from .model import (
     ListLiteral,
     ListSet,
     Literal,
+    LogValue,
     Node,
     Program,
     StartAgitation,
@@ -106,6 +107,14 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                 target = expression(stmt.target, function, f"{p}.target")
                 source = expression(stmt.value, function, f"{p}.value")
                 check_assignment(source, target, p, stmt)
+            elif isinstance(stmt, LogValue):
+                value_type = expression(stmt.value, function, f"{p}.value")
+                if value_type is not None and not isinstance(value_type, ScalarType):
+                    report("log_type", "Logging requires a scalar or quantity value.", f"{p}.value", stmt)
+                for name in ("category", "stream"):
+                    label_type = expression(getattr(stmt, name), function, f"{p}.{name}")
+                    if label_type is not None and label_type != ScalarType.TEXT:
+                        report("log_type", f"Log {name} must be text.", f"{p}.{name}", stmt)
             elif isinstance(stmt, ListSet):
                 target = expression(stmt.target, function, f"{p}.target")
                 index = expression(stmt.index, function, f"{p}.index")
