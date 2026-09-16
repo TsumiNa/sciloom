@@ -101,6 +101,8 @@ hand-built or edited programs and from device declarations.
 | `empty_id`, `duplicate_id` | Semantic IDs must not be empty. / ID ... already occurs at ... | node ids are required and unique; they are never generated on import |
 | `source_span` | Source needs a path, line >= 1 and column >= 0. | an invalid span |
 | `resource_identity` | Logical resource IDs must be nonempty and unique. | two resources with one logical id |
+| `timer_resource` | Timers require an existing owner and a unique public declaration name. / Timer operations require a timer owned by this Function. | fix the TimerResource owner/name or the operation's resource ID; timers are not device bindings and cannot cross ownership |
+| `wait_type` | Waits require a Duration value. | supply a DURATION expression rather than a scalar or another quantity |
 | `entry_function`, `unknown_function` | Entry must reference a function in this package. / Unknown function ... | a dangling function id |
 | `unknown_symbol`, `symbol_scope` | Unknown variable ... / Variable belongs to a different function; globals are not implicit. | a reference across function ownership |
 | `variable_owner`, `variable_name`, `empty_name` | ownership and naming rules for hand-built functions | match owner ids; unique non-empty names |
@@ -110,7 +112,7 @@ hand-built or edited programs and from device declarations.
 ## CompilationError
 
 Raised by `compile_ir` after validation: by the binding check, the capability
-and configuration pass, and `Target.validate`.
+and configuration pass, definite timer-start analysis, and `Target.validate`.
 
 | Code | Message | Cause |
 |---|---|---|
@@ -121,6 +123,10 @@ and configuration pass, and `Target.validate`.
 | `device_contract` | Selected property query differs from the trusted signature. / Selected command query differs from the trusted signature. | a `CanWrite` or `SupportsOperation` query whose signature is not the profile's |
 | `device_capability` | The bound device does not implement this writable property contract. / ... this command contract. / ... does not support this lifecycle operation. | the selected program uses a member the profile does not list |
 | `device_configuration` | start() requires `<property>` to be configured on every reachable path in this invocation. | a `StartAgitation` reachable without its required writes |
+| `timer_not_started` | Timer must be started on every reachable path in this entry invocation. | start on each relevant path; diagnostics identify each wait needing a start, including waits reached through child calls |
+| `unsupported_timer_scope` | AutoSuite timer starts/resets must share one lexical Macro scope. | keep starts/resets in one scope with waits there or below; moving a start changes timing |
+| `unsupported_runtime_guard` | AutoSuite waits require a literal duration until runtime range failure propagation is verified. | use a bounded literal or reference-execute the dynamic program while the platform gate remains open |
+| `wait_duration` | AutoSuite wait duration must be within 0–79,999 hours. | use a literal inside the documented range |
 | your own code | your own message | whatever your `validate` proves; keep the code stable and the message actionable |
 
 ## ValueError from ExecutionConfig
@@ -148,7 +154,18 @@ Raised by the reference interpreter during a run.
 | `numeric_error` | Arithmetic produced a nonfinite value. / Nonfinite real value. | overflow, division by zero |
 | `invalid_speed` | Rotational speed must be nonnegative. | a negative speed at run time |
 | `device_configuration` | start() requires complete saved configuration. | `start` before every required property was saved |
+| `timer_not_started` | Timer was not started in this entry invocation. | the actual path missed StartTimer; prior entry invocations do not establish a valid origin |
+| `wait_duration` | Wait duration must be nonnegative. | validate or correct the supplied duration; waits do not accept signed differences below zero |
+| `missing_environment_service` | Reference execution requires the `<service>` environment service. | explicitly supply the needed clock or acknowledgement service; no host service is selected automatically |
+| `clock_error` | Virtual clock values must be finite and nonnegative. | the elapsed-time advance overflowed; use finite representable start/interval values |
 | `step_limit`, `call_depth`, `execution_depth` | Reference execution exhausted its step budget. / ... exceeded its call-depth budget. / Reference evaluation exceeded the host nesting limit. | a budget in `ExecutionConfig` was exhausted |
+
+For timing, construct `ReferenceEnvironment(clock=VirtualClock())` and pass it
+as `Interpreter(program, environment=environment)`. Both names are exported by
+`sciloom.core.interpreter`; see the [complete timing example](../examples/timing-ir.md).
+A rejected clock advance leaves its prior time intact and emits no wait event.
+Completed earlier events remain in `environment.events`, and later operations
+do not execute.
 
 
 ## Reproduce author-facing failures

@@ -306,6 +306,46 @@ For differences between device profiles, use
 | `device_configuration` | a path reaches `start()` without assigning `speed` | configure the required properties on every path before starting |
 | `unsupported_operation` | a statement the package format has no form for | use an operation supported by the selected target, or choose a target that implements it |
 
+## A wait or timer is rejected
+
+Declare `timer: Timer` on the Function and import `Timer` and `s` from `sciloom`.
+For `enabled: Input[bool]`, this code waits even when the timer was never started:
+
+<!-- correction: timer wrong -->
+```python
+if self.enabled:
+    self.timer.start()
+self.timer.wait_until(5 * s)
+```
+
+If the wait should happen only when enabled, put it in the same branch:
+
+<!-- correction: timer fixed -->
+```python
+if self.enabled:
+    self.timer.start()
+    self.timer.wait_until(5 * s)
+```
+
+If both paths need the wait, start the timer before the condition instead.
+Choose the start location to match when elapsed time should begin; moving it
+earlier changes the procedure's timing. A start in a previous entry call does
+not satisfy the compilation check.
+
+| Code | Cause | Fix |
+| --- | --- | --- |
+| `timer_not_started` | a path reaches `wait_until` without a start in this entry invocation | start on every path that reaches the wait, or put the wait inside the started branch |
+| `wait_type` | a wait receives a plain number or a different physical quantity | supply a Duration, such as `5 * s` |
+| `wait_duration` | a negative reference wait, or an AutoSuite literal outside 0–79,999 hours | use a nonnegative duration within the selected target's range |
+| `unsupported_runtime_guard` | AutoSuite receives a runtime duration expression | use a fixed duration for the current target, or reference-execute the dynamic procedure until target range checks are verified |
+| `unsupported_timer_scope` | starts/resets occupy different native scopes, or a wait is outside its start scope | keep starts/resets together, with waits in the same branch/loop scope or its descendants; preserve the intended start time |
+| `timer_operation` | an unsupported Timer command, such as `stop()` | timers support `start()` and `wait_until()`; stop equipment through its own device slot |
+
+For a reference run, `missing_environment_service` means no virtual clock was
+supplied; `clock_error` means advancing it would produce an invalid value, such
+as overflow. See the [developer execution diagnostics](../developer/troubleshooting.md#executionerror)
+and the [timing example](../examples/timing-ir.md) for explicit clock setup.
+
 ## Python raises TypeError or ValueError before compilation
 
 These exceptions report invalid host calls or configuration rather than a
@@ -315,6 +355,7 @@ runtime step failing. The message identifies what to change.
 | --- | --- |
 | Calling `program.run()` or `program()` raises `TypeError` | Use `program.compile(target=...)`; the runtime method is source to compile |
 | Calling `program.shaker.start()` raises `TypeError` | Put the operation inside `@runtime` |
+| Constructing `Timer()` or reading/assigning `program.timer` raises `TypeError` | Declare `timer: Timer` with no value in the class; use its commands only inside `@runtime` |
 | Assigning a hardware profile to `program.shaker` raises `TypeError` | Put the profile in `AutoSuiteTarget(devices={...})`; only compatible logical references can be shared between slots |
 | Calling a `comptime` query raises `TypeError` | Use it as a complete `if/elif` condition inside `@runtime` |
 | A private child name is rejected | Store the child under a public name such as `self.stage` |

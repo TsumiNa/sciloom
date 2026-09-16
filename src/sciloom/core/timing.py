@@ -40,7 +40,10 @@ def validate_timer_usage(program: Program) -> tuple[Diagnostic, ...]:
     graphs. Loops can execute zero times; only branch intersections escape.
     """
     guarantees: dict[str, set[str]] = {f.node_id: set() for f in program.functions}
+    # Requirements retain wait occurrences, not just timer IDs, so call summaries
+    # preserve the actual failing node and its source location.
     requirements: dict[str, set[str]] = {f.node_id: set() for f in program.functions}
+    waits = {node.node_id: (node, path) for node, path in iter_nodes(program) if isinstance(node, WaitUntil)}
 
     def analyze(body: tuple[Statement, ...], available: set[str]) -> tuple[set[str], set[str]]:
         started, required = available.copy(), set[str]()
@@ -48,9 +51,14 @@ def validate_timer_usage(program: Program) -> tuple[Diagnostic, ...]:
             if isinstance(statement, StartTimer):
                 started.add(statement.resource_id)
             elif isinstance(statement, WaitUntil):
-                required |= {statement.resource_id} - started
+                if statement.resource_id not in started:
+                    required.add(statement.node_id)
             elif isinstance(statement, Call):
-                required |= requirements[statement.function_id] - started
+                required |= {
+                    node_id
+                    for node_id in requirements[statement.function_id]
+                    if waits[node_id][0].resource_id not in started
+                }
                 started |= guarantees[statement.function_id]
             elif isinstance(statement, If):
                 if isinstance(statement.condition, Literal):
@@ -98,10 +106,9 @@ def validate_timer_usage(program: Program) -> tuple[Diagnostic, ...]:
                     summaries[function.node_id] = value
                     changed = True
     errors = []
-    for resource_id in sorted(requirements[program.entry_function_id]):
-        node, path = next(
-            (n, p) for n, p in iter_nodes(program) if isinstance(n, WaitUntil) and n.resource_id == resource_id
-        )
+    for node, path in waits.values():
+        if node.node_id not in requirements[program.entry_function_id]:
+            continue
         errors.append(
             Diagnostic(
                 code="timer_not_started",

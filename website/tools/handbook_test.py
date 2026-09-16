@@ -160,15 +160,23 @@ def test_troubleshooting_failure_examples(tmp_path):
             '    result = session.run(inputs={"speed": 300 * rpm, "enabled": enabled})\n'
             '    assert result.resources["resource:shaker"].enabled == enabled',
         ),
+        (
+            "timer",
+            "timer: Timer\nenabled: Input[bool]",
+            "timer_not_started",
+            "for enabled, elapsed in ((True, 5), (False, 5), (True, 10)):\n"
+            '    session.run(inputs={"enabled": enabled})\n'
+            "    assert clock.monotonic() == elapsed",
+        ),
     ),
 )
 def test_troubleshooting_corrections(name, fields, code, checks, tmp_path):
     """Compile the published failure and run its correction, including boundary inputs."""
     markdown = (ROOT / "website/docs/user-guide/troubleshooting.md").read_text()
     imports = (
-        "from sciloom import Agitator, Function, Input, Output, RotationalSpeed, Var, rpm, runtime\n"
+        "from sciloom import Agitator, Function, Input, Output, RotationalSpeed, Timer, Var, rpm, runtime, s\n"
         "from sciloom.core.diagnostics import DiagnosticError\n"
-        "from sciloom.core.interpreter import Interpreter\n"
+        "from sciloom.core.interpreter import Interpreter, ReferenceEnvironment, VirtualClock\n"
         "from sciloom_autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget\n\n"
     )
     target = "AutoSuiteTarget()"
@@ -189,7 +197,11 @@ def test_troubleshooting_corrections(name, fields, code, checks, tmp_path):
             )
             expected = code
         else:
-            source += "session = Interpreter(Example().compile(target=target).specialized_ir)\n"
+            if name == "timer":
+                source += "clock = VirtualClock()\n"
+                source += "session = Interpreter(Example().compile(target=target).specialized_ir, environment=ReferenceEnvironment(clock=clock))\n"
+            else:
+                source += "session = Interpreter(Example().compile(target=target).specialized_ir)\n"
             source += checks + '\nprint("ok")\n'
             expected = "ok"
         assert run_series_script(tmp_path / f"{name}_{form}.py", source, tmp_path).strip() == expected

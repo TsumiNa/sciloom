@@ -5,7 +5,7 @@ from dataclasses import replace
 import pytest
 
 from .bindings import DeviceBindings, validate_bindings
-from .diagnostics import IRValidationError
+from .diagnostics import IRValidationError, SourceSpan
 from .interpreter import Interpreter, ReferenceEnvironment, VirtualClock
 from .ir import (
     Call,
@@ -51,9 +51,11 @@ def start(identity="start"):
     return StartTimer(node_id=identity, resource_id="timer")
 
 
-def finish():
+def finish(identity="finish"):
     return WaitUntil(
-        node_id="finish", resource_id="timer", duration=Literal(node_id="duration", type=ScalarType.DURATION, value=5.0)
+        node_id=identity,
+        resource_id="timer",
+        duration=Literal(node_id=identity + ":duration", type=ScalarType.DURATION, value=5.0),
     )
 
 
@@ -120,6 +122,45 @@ def test_unstarted_timer_requirement_propagates_through_nested_calls():
     assert validate_timer_usage(restored)[0].node_id == "finish"
     started = replace(base.functions[0], body=(start(), finish()))
     assert validate_timer_usage(replace(program, functions=(started, middle, outer))) == ()
+
+
+def test_diagnostics_identify_each_unguarded_wait_instead_of_an_earlier_valid_wait():
+    span = SourceSpan(path="timed.py", line=20)
+    unsafe = replace(finish("unguarded"), source=span)
+    later = replace(finish("later"), source=replace(span, line=21))
+    program = program_with(
+        (
+            If(
+                node_id="branch",
+                condition=Reference(node_id="condition", symbol_id="enabled"),
+                then_body=(start(), finish("valid")),
+            ),
+            unsafe,
+            later,
+        )
+    )
+    caller = FunctionIR(
+        node_id="caller",
+        name="Caller",
+        body=(
+            Call(
+                node_id="call",
+                function_id="f",
+                inputs=(
+                    InputBinding(
+                        parameter_id="enabled", value=Literal(node_id="flag", type=ScalarType.BOOLEAN, value=False)
+                    ),
+                ),
+            ),
+        ),
+    )
+    program = replace(program, entry_function_id="caller", functions=(*program.functions, caller))
+    for candidate in (program, from_json(to_json(program))):
+        diagnostics = validate_timer_usage(candidate)
+        assert [(d.node_id, d.path, d.source) for d in diagnostics] == [
+            ("unguarded", "$.functions[0].body[1]", unsafe.source),
+            ("later", "$.functions[0].body[2]", later.source),
+        ]
 
 
 @pytest.mark.parametrize("change", ["owner", "name", "duplicate", "target", "cross_owner", "duration", "unknown"])

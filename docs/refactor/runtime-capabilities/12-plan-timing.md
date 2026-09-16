@@ -54,13 +54,16 @@ Consult [evidence](20-evidence.md) and collect new uncertainties in [Q&A](21-qa.
 
 Local acceptance on 2026-09-16:
 
-- 651 code/example/AutoSuite-tool tests and 82 website-tool tests passed.
+- 652 code/example/AutoSuite-tool tests and 83 website-tool tests passed.
 - mypy passed for 93 production/example files; Ruff check and format passed.
 - All 26 CI example/syntax commands, strict website build, AutoSuite smoke,
   recipe validation, corpus audit and `git diff --check` passed.
 - Existing canonical v4 JSON/UUID/ASFP fixtures remain unchanged. Regression
   checks cover pruning timers with unreachable functions, branch/loop starts,
   already elapsed thresholds, native scope rejection and clock failure effects.
+- Review corrections retain every failing wait's node/path/source through call
+  summaries and add author/developer timing diagnostics. The published
+  conditional-timer correction is compiled and reference-executed in handbook tests.
 - Executor scope/reset/cancellation/timing acceptance remains pending; local
   schedule simulation is not a platform run. Remote review/latest-head CI and
   squash merge are required before stage 11.

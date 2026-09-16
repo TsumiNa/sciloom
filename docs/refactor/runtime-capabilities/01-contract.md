@@ -862,6 +862,8 @@ the unchanged authored program for JSON interchange and later rebinding.
 structurally valid, specialized program. It computes definite starts and incoming
 requirements across branches, zero-iteration loops and calls, then checks the
 entry with an empty started set. Compiler failure uses `timer_not_started`.
+Diagnostics identify each wait occurrence requiring a missing start, preserving
+its path/source through call summaries rather than choosing any wait on that timer.
 Reference execution checks the actual path and resets timer validity at each
 entry run, so a previous run never authorizes a wait. Child calls share the entry
 clock and timer state; timer IDs still belong to their own Function instances.
