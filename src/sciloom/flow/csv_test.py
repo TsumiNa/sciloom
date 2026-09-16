@@ -5,7 +5,7 @@ import sys
 
 import pytest
 
-from sciloom import Volume, csv, mL, s
+from sciloom import Volume, Zone, csv, mL, s
 
 
 def test_column_metadata_defaults_and_host_read_guards():
@@ -15,6 +15,8 @@ def test_column_metadata_defaults_and_host_read_guards():
         {"index": True, "value_type": str},
         {"index": -1, "value_type": str},
         {"index": 0, "value_type": list[str]},
+        {"index": 0, "value_type": Zone},
+        {"index": 0, "value_type": Zone, "default": Zone.empty()},
         {"index": 0, "value_type": str, "default": 1},
         {"index": 0, "value_type": float, "unit": mL},
         {"index": 0, "value_type": Volume},

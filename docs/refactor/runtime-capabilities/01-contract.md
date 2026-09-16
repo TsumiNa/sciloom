@@ -311,29 +311,18 @@ assert responses.remaining == 0
 
 #### Fixed locations (stage 13) and stored properties (stage 15)
 
-Signatures live in `sciloom.core.interpreter.locations` and
+The implemented directory records live in `sciloom.core.locations`; use the
+[stage-13 concrete contract](#stage-13-concrete-values-and-directory) as the single
+definition of Zone, Well and LocationDirectory. They contain data only and do not
+depend on author classes. The earlier proposal for WellLocation, tuple-valued
+selections and describe() is superseded. Controller ancestry belongs to the
+target's AutoSuiteLayout, separately from the generic location directory.
+
+The following WellProperties interface remains a stage-15 target, in
 `sciloom.core.interpreter.properties`. Identifiers are data, never import paths.
-Zone runtime values use ordered well identities; these directory interfaces do
-not depend on the author's Python Zone class.
 
 ```python
 from collections.abc import Mapping
-from dataclasses import dataclass
-
-@dataclass(frozen=True, kw_only=True)
-class WellLocation:
-    well_id: str
-    label: str
-    controller_id: str | None = None
-    device_type_id: str | None = None
-
-class LocationDirectory:
-    def __init__(
-        self, *, wells: tuple[WellLocation, ...],
-        zones: Mapping[str, tuple[str, ...]],
-    ) -> None: ...
-    def find(self, name: str) -> tuple[str, ...]: ...
-    def describe(self, well_id: str) -> WellLocation: ...
 
 class WellProperties:
     def __init__(
@@ -344,13 +333,12 @@ class WellProperties:
     def snapshot(self) -> Mapping[tuple[str, str], str]: ...
 ```
 
-LocationDirectory copies and freezes inputs. Well identities are unique; zone
-members must exist, be ordered and not repeat. find returns an empty tuple for
-an unknown name; describe raises KeyError for an unknown identity. Labels are
-display text, not identities or positional indexes. Controller facts are optional
-for storage-only wells; at/device selection requires complete trusted deployment
-facts and compatible candidates. AutoSuiteLayout derives those facts from the
-read-only APP and explicit target profiles in stages 13/16, not guessed names.
+LocationDirectory.find returns Zone.empty() for an unknown name; well_name
+requires a Zone containing exactly one known well. Labels are display text, not
+identities or positional indexes. at/device selection requires complete trusted
+deployment facts and compatible candidates. AutoSuiteLayout derives those facts
+from the read-only APP and explicit target profiles in stages 13/16, not guessed
+names. The directory itself is immutable and equipment-independent.
 
 WellProperties copies the initial text mapping, keyed by (well identity, property
 name). Missing values raise KeyError. set validates its complete input and then
@@ -362,12 +350,13 @@ Example runnable after stage 15:
 
 ```python
 from sciloom.core.interpreter import (
-    Interpreter, LocationDirectory, ReferenceEnvironment, WellLocation, WellProperties,
+    Interpreter, ReferenceEnvironment, WellProperties,
 )
+from sciloom.core.locations import LocationDirectory, Well, Zone
 
 locations = LocationDirectory(
-    wells=(WellLocation(well_id="rack/1", label="1"),),
-    zones={"rack": ("rack/1",)},
+    wells=(Well(identity="rack/1", name="1"),),
+    zones={"rack": Zone(well_ids=("rack/1",))},
 )
 properties = WellProperties({("rack/1", "sample_ID"): "A"})
 environment = ReferenceEnvironment(locations=locations, properties=properties)
