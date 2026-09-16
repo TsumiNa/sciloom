@@ -2046,6 +2046,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#explicit-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Explicit environment
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-and-snapshots" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2641,6 +2652,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/reference-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Reference environment
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3171,6 +3209,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#explicit-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Explicit environment
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-and-snapshots" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3208,8 +3257,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.3
-    · <code title="6d5c91f54e20f478898936e2ccbb568b3b784ac4">6d5c91f5</code>
+    · SciLoom 0.3.4
+    · <code title="d842e2fa444d1f66c4c3cf0e981785dedfbb8db0">d842e2fa</code>
   </p>
 </aside>
 
@@ -3219,7 +3268,7 @@
 <p>Interpreter executes typed IR without generated Python or equipment imports. It
 defines SciLoom semantics, not vendor simulation or hardware behavior.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">examples.scale_values</span><span class="w"> </span><span class="kn">import</span> <span class="n">ScaleValues</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.interpreter</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExecutionConfig</span><span class="p">,</span> <span class="n">Interpreter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.interpreter</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExecutionConfig</span><span class="p">,</span> <span class="n">Interpreter</span><span class="p">,</span> <span class="n">ReferenceEnvironment</span>
 
 <span class="n">session</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">(</span><span class="n">ScaleValues</span><span class="p">()</span><span class="o">.</span><span class="n">to_ir</span><span class="p">(),</span> <span class="n">config</span><span class="o">=</span><span class="n">ExecutionConfig</span><span class="p">(</span><span class="n">max_steps</span><span class="o">=</span><span class="mi">10_000</span><span class="p">))</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">"values"</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="s2">"factor"</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">})</span>
@@ -3229,6 +3278,30 @@ defines SciLoom semantics, not vendor simulation or hardware behavior.</p>
 deliberately exercises it to verify the boundary. DeviceIf requires specialization
 before interpreter construction; after compilation use result.specialized_ir.
 Native commands without reference semantics fail explicitly.</p>
+<h2 id="explicit-environment">Explicit environment</h2>
+<p>Pass <code>environment=ReferenceEnvironment()</code> to make external-context ownership
+explicit. Omitting it creates a fresh environment for that Interpreter. Pure
+calculation and existing device programs keep their previous calling convention.
+The environment does not read host files, sample a real clock or confirm messages
+automatically. Concrete services arrive with the operations that need them.</p>
+<p>Using the imports above:</p>
+<div class="highlight"><pre><span></span><code><span class="n">environment</span> <span class="o">=</span> <span class="n">ReferenceEnvironment</span><span class="p">()</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">(</span><span class="n">ScaleValues</span><span class="p">()</span><span class="o">.</span><span class="n">to_ir</span><span class="p">(),</span> <span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">"values"</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="s2">"factor"</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">})</span>
+<span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"result"</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">environment</span><span class="o">.</span><span class="n">events</span> <span class="o">==</span> <span class="p">()</span>  <span class="c1"># This calculation has no external events.</span>
+</code></pre></div>
+<p><code>environment.events</code> returns an immutable history snapshot across all runs using
+that environment. <code>result.events</code> remains limited to one successful run.
+<code>ExecutionEvent</code> is the typed event vocabulary, currently DeviceEvent; new effects
+add their own immutable records. A failed run leaves earlier completed events in
+environment history and does not roll back their state changes.</p>
+<p>Reuse the same environment to share history explicitly. This does not share
+Function variables or device configurations between Interpreters. Child Function
+calls use their entry session's environment. Sessions and environments are
+sequential and are not intended for concurrent execution.</p>
+<p>The <a href="../../../examples/reference-environment/">environment example</a> runs two
+sessions and inspects their combined history and independent device snapshots.</p>
 <h2 id="session-and-snapshots">Session and snapshots</h2>
 <p>Internal variables initialize once per session and function identity. Repeated
 calls retain state; a new Interpreter starts a fresh session. Input/output call

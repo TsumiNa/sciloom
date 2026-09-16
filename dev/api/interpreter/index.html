@@ -2553,6 +2553,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/reference-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Reference environment
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3197,6 +3224,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#sciloom.core.interpreter.Interpreter.environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        environment
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#sciloom.core.interpreter.Interpreter.run" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3312,6 +3350,45 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         state
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sciloom.core.interpreter.ExecutionEvent" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        ExecutionEvent
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sciloom.core.interpreter.ReferenceEnvironment" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        ReferenceEnvironment
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ReferenceEnvironment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.interpreter.ReferenceEnvironment.events" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        events
       </span>
     </span>
   </a>
@@ -3552,6 +3629,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#sciloom.core.interpreter.Interpreter.environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        environment
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#sciloom.core.interpreter.Interpreter.run" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3678,6 +3766,45 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#sciloom.core.interpreter.ExecutionEvent" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        ExecutionEvent
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sciloom.core.interpreter.ReferenceEnvironment" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        ReferenceEnvironment
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ReferenceEnvironment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.interpreter.ReferenceEnvironment.events" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        events
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -3694,8 +3821,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.3
-    · <code title="6d5c91f54e20f478898936e2ccbb568b3b784ac4">6d5c91f5</code>
+    · SciLoom 0.3.4
+    · <code title="d842e2fa444d1f66c4c3cf0e981785dedfbb8db0">d842e2fa</code>
   </p>
 </aside>
 
@@ -3893,7 +4020,7 @@
     <span class="n">state</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">RuntimeValue</span><span class="p">]],</span>
     <span class="n">steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">resources</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DeviceState</span><span class="p">],</span>
-    <span class="n">events</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">DeviceEvent</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+    <span class="n">events</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ExecutionEvent</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
 <span class="p">)</span>
 </code></pre></div>
 
@@ -3991,16 +4118,16 @@
       &lt;small class=&quot;doc doc-label doc-label-instance-attribute&quot;&gt;&lt;code&gt;instance-attribute&lt;/code&gt;&lt;/small&gt;
   &lt;/span&gt;" href="./#sciloom.core.interpreter.ExecutionResult.events">events</a></code></td>
             <td>
-                  <code><span title="tuple">tuple</span>[<a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.core.interpreter.DeviceEvent&lt;/span&gt;
+                  <code><span title="tuple">tuple</span>[<a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-attribute-name&quot;&gt;sciloom.core.interpreter.ExecutionEvent&lt;/span&gt;
 
 
   &lt;span class=&quot;doc doc-labels&quot;&gt;
-      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="./#sciloom.core.interpreter.DeviceEvent">DeviceEvent</a>, ...]</code>
+      &lt;small class=&quot;doc doc-label doc-label-module-attribute&quot;&gt;&lt;code&gt;module-attribute&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="./#sciloom.core.interpreter.ExecutionEvent">ExecutionEvent</a>, ...]</code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Ordered device events from this run.</p>
+                <p>Ordered completed events from this run.</p>
               </div>
             </td>
           </tr>
@@ -4127,7 +4254,7 @@
   </span>
 
 </h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">events</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">DeviceEvent</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">events</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ExecutionEvent</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -4160,6 +4287,7 @@
     <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">config</span><span class="p">:</span> <span class="n">ExecutionConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">environment</span><span class="p">:</span> <span class="n">ReferenceEnvironment</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span>
 </code></pre></div>
 
@@ -4221,6 +4349,28 @@ sequential execution, not a transactional rollback or physical simulator.</p>
             <td>
               <div class="doc-md-description">
                 <p>Optional execution budgets.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>environment</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.core.interpreter.ReferenceEnvironment&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="./#sciloom.core.interpreter.ReferenceEnvironment">ReferenceEnvironment</a> | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Explicit external context; omitted means a fresh one.
+Reusing it shares external services/history, not Function or device state.</p>
               </div>
             </td>
             <td>
@@ -4317,6 +4467,28 @@ sequential execution, not a transactional rollback or physical simulator.</p>
 
 </h3>
 <div class="doc-signature highlight"><pre><span></span><code><span class="n">config</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sciloom.core.interpreter.Interpreter.environment" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">environment</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">environment</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -4764,6 +4936,112 @@ uninitialized, an extension lacks semantics, or a budget is exhausted.</p>
 </code></pre></div>
 
     <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="sciloom.core.interpreter.ExecutionEvent" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">sciloom.core.interpreter.ExecutionEvent</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">ExecutionEvent</span><span class="p">:</span> <span class="n">TypeAlias</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Closed reference-event vocabulary; each effect adds its own immutable record.</p>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="sciloom.core.interpreter.ReferenceEnvironment" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">sciloom.core.interpreter.ReferenceEnvironment</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">ReferenceEnvironment</span><span class="p">()</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Caller-owned external context and chronological event history.</p>
+<p>An omitted environment creates an independent context for each Interpreter.
+Pass the same instance explicitly to share its history across sessions.
+Function variables and device configurations remain session-owned.</p>
+<p>Services are added with the capabilities that use them. This environment
+never reads host files, samples a real clock or acknowledges messages by
+default. Runs are sequential; no concurrent or transactional behavior is
+implied. Completed events remain visible after later execution failures.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sciloom.core.interpreter.ReferenceEnvironment.events" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">events</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-property"><code>property</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">events</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">ExecutionEvent</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Return an immutable history snapshot across runs using this environment.</p>
 
     </div>
 
