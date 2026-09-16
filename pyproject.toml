@@ -1,6 +1,6 @@
 [project]
 name = "SciLoom"
-version = "0.3.1"
+version = "0.3.2"
 description = "SciLoom — programmable scientific automation from one semantic model."
 readme = "README.md"
 requires-python = ">=3.12,<3.15"
@@ -27,6 +27,7 @@ pythonpath = ["."]
 # examples/ has no __init__.py; resolve its modules as namespace packages so the
 # developer examples keep their single-dot relative imports under pytest.
 consider_namespace_packages = true
+markers = ["requires_corpus: reads optional, read-only AutoSuite evidence from the local corpus"]
 
 [tool.ruff]
 # Python only: never reformat code blocks inside Markdown documentation or evidence.
@@ -79,6 +80,7 @@ files = [
     "examples/non_zero_array_min.py",
     "examples/stir_rack.py",
     "examples/prepare_labels.py",
+    "examples/quantity_conversion.py",
     "examples/tutorial",
     "examples/developer",
 ]
@@ -104,7 +106,9 @@ module = [
     "examples.tutorial.stir_sample_rack_test",
     "examples.stir_rack_test",
     "examples.prepare_labels_test",
+    "examples.quantity_conversion_test",
     "sciloom.units_test",
+    "sciloom.units_quantities_test",
     "sciloom.devices.agitation_test",
     "sciloom.devices.declarations_test",
     "sciloom.dsl.device_operations_test",
@@ -118,6 +122,7 @@ module = [
     "sciloom.core.bindings_test",
     "sciloom.dsl.driver_list_test",
     "sciloom.dsl.driver_text_test",
+    "sciloom.dsl.driver_quantities_test",
     "sciloom.dsl.layering_test",
     "sciloom.dsl.driver_test",
     "sciloom.flow.function_test",
@@ -136,12 +141,14 @@ module = [
     "sciloom.core.ir.codec_devices_test",
     "sciloom.core.ir.codec_list_test",
     "sciloom.core.ir.codec_text_test",
+    "sciloom.core.ir.codec_quantities_test",
     "sciloom.core.ir.validation_test",
     "sciloom_autosuite.agitation_test",
     "sciloom_autosuite.codegen_test",
     "sciloom_autosuite.codegen_compatibility_test",
     "sciloom_autosuite.codegen_arrays_test",
     "sciloom_autosuite.codegen_text_test",
+    "sciloom_autosuite.codegen_quantities_test",
     "sciloom_autosuite.codegen_agitation_test",
     "sciloom_autosuite.target_test",
     "sciloom_autosuite.portability_test",

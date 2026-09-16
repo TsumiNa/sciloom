@@ -107,8 +107,12 @@ compiled = ScaleValues().compile(target=AutoSuiteTarget())
 compiled.write("scale_values.asfp")
 ```
 
-The final root exports are Function, Input, Output, Var, runtime, Agitator,
-RotationalSpeed, rpm and rps. Real/Integer/Boolean are replaced by float/int/bool.
+At the end of this historical sequence, root exports were Function, Input,
+Output, Var, runtime, Agitator, RotationalSpeed, rpm and rps. Subsequent stages
+extend them; use the [current author API](../../../website/docs/api/author.md),
+[unit API](../../../website/docs/api/units.md) and
+[runtime-capability contract](../runtime-capabilities/01-contract.md) for current
+interfaces. Real/Integer/Boolean were replaced by float/int/bool.
 Target, Artifact, CompileResult and compile_ir are imported from core.compiler.
 RuntimeField belongs to the DSL schema implementation. Function.to_ir() remains
 available to developers; Function.compile(target=...) remains the author entry.
@@ -352,3 +356,8 @@ live beside same-base-name code. Do not overwrite raw evidence. After reference
 documentation changes update MANIFEST hashes and run audit_corpus.py.
 Static XML/reference checks do not establish Executor acceptance or physical
 equivalence; retain the AutoSuite host simulation gate.
+
+## Version
+
+Version: none, this update labels the earlier API inventory as historical and
+links to current interfaces; the runtime-capability stage records its own bump.

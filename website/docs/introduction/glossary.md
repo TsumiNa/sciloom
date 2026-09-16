@@ -58,9 +58,10 @@ property an agitation `start()` requires was assigned on every path that reaches
 **Diagnostic.** A structured error: code, message, path into the program and,
 when known, the source line. [Troubleshooting](../user-guide/troubleshooting.md).
 
-**Rotational speed, rpm, rps.** The one physical quantity in this release,
-written as a number times a unit; revolutions per second is canonical.
-[Tutorial 2](../user-guide/tutorial/inputs-and-units.md).
+**Physical quantity.** A value with a dimension: `RotationalSpeed`, `Volume` or
+`Duration`. Write a number times a unit, such as `300 * rpm`, `2 * mL` or `5 * s`.
+Canonical values use revolutions per second, cubic metres and seconds respectively.
+[Quantity rules](../user-guide/reference/runtime-language.md#physical-quantities).
 
 **Whole-list assignment.** Copying all values from a list into a field, such as
 `self.result = self.values`. AutoSuite requires output lists to be assigned

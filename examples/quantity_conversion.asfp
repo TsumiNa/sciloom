@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='utf-8'?>
+<functions>
+  <function typeid="Chemspeed.SATaskFunctionDefinition.1">
+    <description />
+    <name>QuantityConversion</name>
+    <edittime>0</edittime>
+    <expanded>1</expanded>
+    <functiondata>
+      <inputs>
+        <count>3</count>
+        <item0>
+          <id>{9E3ED387-E86B-5DD0-952E-00BC650463F1}</id>
+          <name>amount</name>
+          <variablename>amount</variablename>
+          <variabletype>volume</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item0>
+        <item1>
+          <id>{39A76320-8C4E-599D-B92F-82048FC7D639}</id>
+          <name>extra_ml</name>
+          <variablename>extra_ml</variablename>
+          <variabletype>realnumber</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item1>
+        <item2>
+          <id>{C283AA6D-3828-5C01-A916-D6730F55D2B2}</id>
+          <name>elapsed</name>
+          <variablename>elapsed</variablename>
+          <variabletype>time</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item2>
+        <sortType>0</sortType>
+      </inputs>
+      <outputs>
+        <count>3</count>
+        <item0>
+          <id>{1B195224-4743-5719-9632-81438AA4679D}</id>
+          <name>total</name>
+          <variablename>total</variablename>
+          <variabletype>volume</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item0>
+        <item1>
+          <id>{AEC24C64-1ACE-5CA6-8D76-7CF965E3F8A5}</id>
+          <name>total_ml</name>
+          <variablename>total_ml</variablename>
+          <variabletype>realnumber</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item1>
+        <item2>
+          <id>{3B57866B-01F2-5559-A1B2-D62A8F91DDCA}</id>
+          <name>difference</name>
+          <variablename>difference</variablename>
+          <variabletype>time</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item2>
+        <sortType>0</sortType>
+      </outputs>
+    </functiondata>
+    <id>{DC1C8A28-66C7-5A80-95CA-8112CFB64DA7}</id>
+    <components>
+      <component typeid="Chemspeed.SATaskSetVariable.1">
+        <description />
+        <name>Set Variable</name>
+        <edittime>0</edittime>
+        <variablename>total</variablename>
+        <expressiontext>amount + (extra_ml * 1e-06)</expressiontext>
+        <elementselectmode>0</elementselectmode>
+        <elementnumber />
+        <numberofelements />
+        <startindex>0</startindex>
+        <clearvariable>0</clearvariable>
+        <sortwells>0</sortwells>
+        <enumerationtype>0</enumerationtype>
+        <wellsenumeration>0</wellsenumeration>
+        <elementsenumeration>0</elementsenumeration>
+        <id>{6724BDD3-2737-514F-99DB-A0FF29FFE7CA}</id>
+      </component>
+      <component typeid="Chemspeed.SATaskSetVariable.1">
+        <description />
+        <name>Set Variable</name>
+        <edittime>0</edittime>
+        <variablename>total_ml</variablename>
+        <expressiontext>total / 1e-06</expressiontext>
+        <elementselectmode>0</elementselectmode>
+        <elementnumber />
+        <numberofelements />
+        <startindex>0</startindex>
+        <clearvariable>0</clearvariable>
+        <sortwells>0</sortwells>
+        <enumerationtype>0</enumerationtype>
+        <wellsenumeration>0</wellsenumeration>
+        <elementsenumeration>0</elementsenumeration>
+        <id>{7DC58FF9-579D-54D9-962A-06BCEC00434C}</id>
+      </component>
+      <component typeid="Chemspeed.SATaskSetVariable.1">
+        <description />
+        <name>Set Variable</name>
+        <edittime>0</edittime>
+        <variablename>difference</variablename>
+        <expressiontext>60 - elapsed</expressiontext>
+        <elementselectmode>0</elementselectmode>
+        <elementnumber />
+        <numberofelements />
+        <startindex>0</startindex>
+        <clearvariable>0</clearvariable>
+        <sortwells>0</sortwells>
+        <enumerationtype>0</enumerationtype>
+        <wellsenumeration>0</wellsenumeration>
+        <elementsenumeration>0</elementsenumeration>
+        <id>{C482E18D-62DD-5BAF-900E-AFCD4203ACAB}</id>
+      </component>
+    </components>
+  </function>
+</functions>

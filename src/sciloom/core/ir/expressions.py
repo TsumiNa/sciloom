@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from collections.abc import Callable, Mapping
 from typing import assert_never
 
@@ -23,7 +24,7 @@ from .model import (
     UnaryOp,
     Variable,
 )
-from .types import ListType, ScalarType, ValueType, is_assignable
+from .types import QUANTITIES, SIGNED_QUANTITIES, ListType, ScalarType, ValueType, is_assignable
 
 Report = Callable[[str, str, str, Node | None], None]
 
@@ -79,10 +80,18 @@ class ExpressionChecker:
                 ScalarType.REAL: type(expr.value) in (int, float),
                 ScalarType.BOOLEAN: type(expr.value) is bool,
                 ScalarType.TEXT: type(expr.value) is str,
+                ScalarType.VOLUME: type(expr.value) in (int, float),
+                ScalarType.DURATION: type(expr.value) in (int, float),
                 ScalarType.ROTATIONAL_SPEED: type(expr.value) in (int, float)
                 and isinstance(expr.value, (int, float))
                 and expr.value >= 0,
             }[expr.type]
+            if valid and expr.type in SIGNED_QUANTITIES:
+                assert isinstance(expr.value, (int, float))
+                try:
+                    valid = math.isfinite(expr.value)
+                except OverflowError:
+                    valid = False
             if not valid:
                 self.report("literal_type", f"Value does not represent {expr.type.value}.", path, expr)
                 return None
@@ -105,7 +114,7 @@ class ExpressionChecker:
             if expr.op == UnaryOp.NOT:
                 if operand == ScalarType.BOOLEAN:
                     return ScalarType.BOOLEAN
-            elif operand in (ScalarType.INTEGER, ScalarType.REAL):
+            elif operand in (ScalarType.INTEGER, ScalarType.REAL, *SIGNED_QUANTITIES):
                 return operand
             self.report("operator_type", f"Operator {expr.op.value!r} cannot take {operand.value}.", path, expr)
             return None
@@ -135,8 +144,20 @@ class ExpressionChecker:
             if left == right or numeric:
                 return ScalarType.BOOLEAN
         elif op in (BinaryOp.LESS, BinaryOp.LESS_EQUAL, BinaryOp.GREATER, BinaryOp.GREATER_EQUAL):
-            if numeric:
+            if numeric or left == right and left in SIGNED_QUANTITIES:
                 return ScalarType.BOOLEAN
+        elif op in (BinaryOp.ADD, BinaryOp.SUBTRACT) and left == right and left in SIGNED_QUANTITIES:
+            return left
+        elif op == BinaryOp.DIVIDE and left == right and left in QUANTITIES:
+            return ScalarType.REAL
+        elif (
+            op in (BinaryOp.MULTIPLY, BinaryOp.DIVIDE)
+            and left in QUANTITIES
+            and right in (ScalarType.INTEGER, ScalarType.REAL)
+        ):
+            return left
+        elif op == BinaryOp.MULTIPLY and right in QUANTITIES and left in (ScalarType.INTEGER, ScalarType.REAL):
+            return right
         elif numeric:
             return ScalarType.REAL if op == BinaryOp.DIVIDE or ScalarType.REAL in (left, right) else ScalarType.INTEGER
         self.report(

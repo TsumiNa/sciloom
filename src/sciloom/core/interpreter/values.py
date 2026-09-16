@@ -7,12 +7,12 @@ from typing import NoReturn, assert_never, overload
 
 from sciloom.core.diagnostics import Diagnostic, ExecutionError
 from sciloom.core.ir.model import ListLiteral, Literal, Node
-from sciloom.core.ir.types import ListType, ScalarType, ValueType
-from sciloom.units import RotationalSpeed
+from sciloom.core.ir.types import QUANTITIES, ListType, ScalarType, ValueType
+from sciloom.units import Duration, RotationalSpeed, Volume
 
 ScalarValue = bool | int | float | str
 RuntimeValue = ScalarValue | tuple[ScalarValue, ...]
-InputScalar = ScalarValue | RotationalSpeed
+InputScalar = ScalarValue | RotationalSpeed | Volume | Duration
 # Lists are invariant: spell out homogeneous alternatives so list[float] etc.
 # remain accepted without widening the public API to arbitrary sequences.
 InputValue = (
@@ -22,6 +22,8 @@ InputValue = (
     | list[float]
     | list[str]
     | list[RotationalSpeed]
+    | list[Volume]
+    | list[Duration]
     | list[InputScalar]
     | tuple[InputScalar, ...]
 )
@@ -61,6 +63,8 @@ def coerce(value: RuntimeValue, scalar: ValueType, node: Node) -> RuntimeValue:
         ScalarType.BOOLEAN: (bool,),
         ScalarType.TEXT: (str,),
         ScalarType.ROTATIONAL_SPEED: (int, float),
+        ScalarType.VOLUME: (int, float),
+        ScalarType.DURATION: (int, float),
     }[scalar]
     if type(value) not in allowed:
         fail("runtime_type", f"Expected {scalar.value}, received {type(value).__name__}.", node)
@@ -70,7 +74,7 @@ def coerce(value: RuntimeValue, scalar: ValueType, node: Node) -> RuntimeValue:
         return value
     assert not isinstance(value, str)
     try:
-        result = float(value) if scalar in (ScalarType.REAL, ScalarType.ROTATIONAL_SPEED) else value
+        result = float(value) if scalar in (ScalarType.REAL, *QUANTITIES) else value
     except OverflowError:
         fail("numeric_error", "Value cannot be represented as a finite real.", node)
     if isinstance(result, float) and not math.isfinite(result):
@@ -106,11 +110,19 @@ def input_value(value: InputValue, value_type: ValueType, node: Node) -> Runtime
             fail("runtime_type", f"Expected {value_type.value} input.", node)
         assert isinstance(value, (list, tuple))
         return tuple(input_value(item, value_type.element_type, node) for item in value)
-    if value_type == ScalarType.ROTATIONAL_SPEED:
+    if value_type == ScalarType.VOLUME:
+        if not isinstance(value, Volume):
+            fail("runtime_type", "A volume input requires a Volume such as 1 * mL.", node)
+        value = value.m3
+    elif value_type == ScalarType.DURATION:
+        if not isinstance(value, Duration):
+            fail("runtime_type", "A duration input requires a Duration such as 1 * s.", node)
+        value = value.seconds
+    elif value_type == ScalarType.ROTATIONAL_SPEED:
         if not isinstance(value, RotationalSpeed):
             fail("runtime_type", "A rotational-speed input requires a quantity such as 600 * rpm.", node)
         value = value.rps
-    elif isinstance(value, RotationalSpeed):
+    elif isinstance(value, (RotationalSpeed, Volume, Duration)):
         fail("runtime_type", "A quantity cannot be passed to a scalar input.", node)
     if isinstance(value, (list, tuple)):
         fail("runtime_type", f"Expected {value_type.value}, received {type(value).__name__}.", node)
@@ -130,6 +142,12 @@ def output_value(value: RuntimeValue, value_type: ValueType) -> OutputValue:
         assert isinstance(value, tuple)
         return tuple(output_value(item, value_type.element_type) for item in value)
     assert not isinstance(value, tuple)
+    if value_type == ScalarType.VOLUME:
+        assert not isinstance(value, str)
+        return Volume(m3=value)
+    if value_type == ScalarType.DURATION:
+        assert not isinstance(value, str)
+        return Duration(seconds=value)
     if value_type == ScalarType.ROTATIONAL_SPEED:
         assert not isinstance(value, str)
         return RotationalSpeed(rps=value)

@@ -31,6 +31,8 @@ EXAMPLES = (
     "scale_values.asfp",
     "prepare_labels.py",
     "prepare_labels.asfp",
+    "quantity_conversion.py",
+    "quantity_conversion.asfp",
     "non_zero_array_min.py",
     "non_zero_array_min.asfp",
     "stir_rack.py",

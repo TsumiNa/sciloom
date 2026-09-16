@@ -18,7 +18,7 @@ from sciloom.devices.base import BaseDevice
 from sciloom.devices.declarations import device_contract
 from sciloom.flow.device_slots import DeviceReference
 from sciloom.flow.function import Function
-from sciloom.units import SpeedUnit
+from sciloom.units import DurationUnit, SpeedUnit, VolumeUnit
 
 _MISSING = object()
 
@@ -55,7 +55,7 @@ class RuntimeSource:
 
     filename: str = ""
     static_names: Mapping[str, Any] = MappingProxyType({})
-    unit_names: Mapping[str, SpeedUnit] = MappingProxyType({})
+    unit_names: Mapping[str, SpeedUnit | VolumeUnit | DurationUnit] = MappingProxyType({})
     allows_len: bool = False
 
 
