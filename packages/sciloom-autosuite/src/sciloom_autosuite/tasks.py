@@ -10,6 +10,7 @@ from sciloom.core.ir import (
     ConfigureProperty,
     DeviceCommand,
     DeviceIf,
+    ForEachZone,
     FunctionIR,
     If,
     ListSet,
@@ -33,7 +34,7 @@ from .context import CodegenContext
 from .encoding import SCALARS, literal_value
 from .expressions import checked_read, materialize, plan_expression
 from .parameters import functiondata
-from .primitives import macro, set_variable
+from .primitives import SequentialZone, macro, set_variable
 from .timing import timing_task
 from .xml import XmlNode, xml_node as _xml
 
@@ -223,6 +224,49 @@ def statements(
                 )
             )
             result.extend(after)
+        elif isinstance(statement, ForEachZone):
+            if statement.fragment_size != 1:
+                raise CompilationError(
+                    (
+                        Diagnostic(
+                            code="unsupported_zone_grouping",
+                            message="Grouped Zone traversal needs verified divisibility failure propagation.",
+                            path="$",
+                            node_id=statement.node_id,
+                            source=statement.source,
+                        ),
+                    )
+                )
+            selection = materialize(context, function, plan_expression(context, function, statement.value, tag), tag)
+            result.extend(selection.prerequisites)
+            iterator = context.sequential_zone(function)
+            loop_body = (
+                set_variable(
+                    context, "task", context.names[statement.target.symbol_id], context.names[iterator.node_id]
+                ),
+                *statements(context, statement.body, function, "task"),
+            )
+            sequential = macro(
+                context,
+                "task",
+                statement.node_id,
+                function,
+                loop_body,
+                name="For each well",
+                sequential=SequentialZone(source=selection.text, variable=iterator),
+            )
+            result.append(
+                macro(
+                    context,
+                    tag,
+                    context.fresh_id(),
+                    function,
+                    (sequential,),
+                    name="Skip empty Zone",
+                    condition_type="1",
+                    condition=f"ZoneSize({selection.text}) > 0",
+                )
+            )
         elif isinstance(statement, While):
             condition = plan_expression(context, function, statement.condition, tag)
             loop_body = statements(context, statement.body, function, "task")

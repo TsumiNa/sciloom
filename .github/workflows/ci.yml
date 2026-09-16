@@ -69,6 +69,8 @@ jobs:
       - run: uv run python -m examples.developer.csv_append_ir
       - run: uv run python examples/resolve_locations.py
       - run: uv run python -m examples.developer.zone_ir
+      - run: uv run python examples/visit_locations.py
+      - run: uv run python -m examples.developer.zone_traversal_ir
       - run: uv run python examples/non_zero_array_min.py
       - run: uv run python examples/stir_rack.py
       - run: uv run python examples/tutorial/start_shaker.py

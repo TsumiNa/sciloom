@@ -14,6 +14,7 @@ from sciloom.core.ir import (
     ConfigureProperty,
     DeviceCommand,
     DeviceIf,
+    ForEachZone,
     FunctionIR,
     If,
     ListSet,
@@ -362,6 +363,16 @@ class Interpreter:
                 self._statements(branch, frame, depth)
             elif isinstance(statement, While):
                 while evaluate(self, statement.condition, frame):
+                    self._statements(statement.body, frame, depth)
+            elif isinstance(statement, ForEachZone):
+                selection = evaluate(self, statement.value, frame)
+                assert isinstance(selection, Zone)
+                if len(selection) % statement.fragment_size:
+                    fail("zone_fragment_size", "Zone well count must be divisible by fragment size.", statement)
+                for offset in range(0, len(selection), statement.fragment_size):
+                    self._tick(statement)
+                    fragment = Zone(well_ids=selection.well_ids[offset : offset + statement.fragment_size])
+                    self._write(statement.target, fragment, frame)
                     self._statements(statement.body, frame, depth)
             elif isinstance(statement, Call):
                 callee = self._functions[statement.function_id]

@@ -25,6 +25,7 @@ from sciloom.core.ir import (
     WellName,
     ZoneCombine,
     ZoneFind,
+    ZoneGet,
     ZoneLength,
     ZoneLiteral,
     ZoneType,
@@ -102,6 +103,18 @@ def plan_expression(
             left_zone = materialize(context, function, left_zone, tag)
         return ExpressionPlan(
             f"({left_zone.text} + {right_zone.text})", ZoneType(), (*left_zone.prerequisites, *right_zone.prerequisites)
+        )
+    if isinstance(expression, ZoneGet):
+        raise CompilationError(
+            (
+                Diagnostic(
+                    code="unsupported_zone_index",
+                    message="Zone indexing requires verified AutoSuite bounds failure propagation.",
+                    path="$",
+                    node_id=expression.node_id,
+                    source=expression.source,
+                ),
+            )
         )
     if isinstance(expression, WellName):
         raise CompilationError(

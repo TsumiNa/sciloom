@@ -18,6 +18,8 @@ All objects below are available from `sciloom.core.ir`. Frozen records describe 
 
 ::: sciloom.core.ir.ZoneLength
 
+::: sciloom.core.ir.ZoneGet
+
 ::: sciloom.core.ir.WellName
 
 ::: sciloom.core.ir.VariableRole

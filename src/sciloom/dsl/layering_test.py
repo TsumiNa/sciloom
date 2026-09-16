@@ -37,6 +37,7 @@ ANALYSIS = frozenset(
         "dsl.source",
         "dsl.statements",
         "dsl.timing",
+        "dsl.zone_iteration",
     }
 )
 

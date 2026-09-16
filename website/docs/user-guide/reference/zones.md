@@ -35,14 +35,46 @@ reassigning `working` later does not change `selected`.
 | `zones.combine(left, right)` | Ordered union without duplicate wells |
 | `len(selection)` | Well count, including zero for an empty Zone |
 | `zones.well_name(selection)` | Display label of exactly one known well |
+| `selection[index]` | One-well Zone at a nonnegative integer position |
+| `for self.well in self.rack` | Visit one well at a time, in selection order |
+| `zones.fragments(self.rack, size=2)` | Visit complete groups of two inside a `for` loop |
 
 `Var[Zone]` state persists across calls. Reset it explicitly if needed. Use
 `len(self.selected) > 0` in a condition: Zones have no implicit truth value.
-`list[Zone]`, indexing, traversal, arithmetic and whole-Zone comparisons are not
-supported in this stage. A well's displayed number is not its position in a Zone.
+`list[Zone]`, arithmetic and whole-Zone comparisons are not supported. A well's
+displayed number is not its position in a Zone: index `0` selects the first well,
+even when its label ends in `27`. Boolean, negative and out-of-range indices fail.
+
+## Visit the selected wells
+
+Declare the current well as `Var[Zone]`, then use an ordinary `for` loop:
+
+```python
+--8<-- "examples/visit_locations.py"
+```
+
+The loop captures `rack` once. Reassigning `rack` inside it does not change the
+remaining visits. Each iteration assigns the next well to `well` before running
+the body. An empty rack skips the body and leaves `well` unchanged; after a
+nonempty loop, its last value remains available, including across calls.
+
+For pairs, replace the loop header with
+`for self.well in zones.fragments(self.rack, size=2):`. The size must be a positive
+integer literal or an ordinary host-time `self` attribute. A rack of four wells
+produces two groups; three wells cause an error before any loop-body operation.
+An empty rack produces no groups. There is no shorter final group.
+
+Loop targets must be `Var[Zone]` fields, rather than inputs, outputs or newly
+created Python names. `break`, `continue`, `for/else`, slices and coordinated
+multi-Zone iteration are not supported.
+
+## AutoSuite support
 
 AutoSuite currently compiles Zone inputs, outputs, empty state, assignment,
-`find`, `combine` and length queries. It rejects nonempty host literals containing
+`find`, `combine`, length queries and single-well `for` loops. It rejects indexing
+and groups larger than one until reliable bounds/divisibility failure propagation
+is verified. These operations already work in reference execution.
+It also rejects nonempty host literals containing
 opaque well IDs and `well_name`, whose single-well runtime check still needs
 platform validation. Supply Zone parameters from AutoSuite or resolve names at
 runtime. Dynamic device selection with `at()` is not implemented yet; fixed
@@ -50,4 +82,6 @@ hardware bindings keep their existing behavior.
 
 The [location example](../../examples/resolve-locations.md) compiles a complete
 function. The [developer example](../../examples/zone-ir.md) executes it against
-an explicit directory without equipment.
+an explicit directory without equipment. The [visit example](../../examples/visit-locations.md)
+compiles a single-well loop; the [grouping example](../../examples/zone-traversal-ir.md)
+demonstrates indexing and complete groups through reference execution.

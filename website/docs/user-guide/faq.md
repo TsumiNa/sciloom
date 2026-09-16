@@ -55,9 +55,11 @@ in the runtime method. [Lesson 3](tutorial/agitator.md) shows a speed calculatio
 ## Can I use a temporary variable or a for loop?
 
 Declare working values as `Var` fields and refer to them through `self`.
-Use a `while` loop with an index for a list; `for` is not yet supported
-inside `@runtime`. Ordinary Python outside that method can still use local
-variables and `for`.
+Use a `while` loop with an index for a list. For sample locations, use
+`for self.well in self.rack` with a declared `Var[Zone]` target; see
+[sample locations](reference/zones.md). General Python iteration and local
+runtime variables remain unsupported. Ordinary Python outside `@runtime` can
+use both.
 See [lesson 4](tutorial/lists-and-loops.md) and the
 [runtime syntax reference](reference/runtime-language.md).
 

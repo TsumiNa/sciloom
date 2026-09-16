@@ -54,3 +54,16 @@ def test_directory_rejects_ambiguous_or_unknown_identity_and_wrong_queries():
         directory.well_name("a")
     with pytest.raises(TypeError):
         directory.find(1)
+
+
+def test_zone_host_index_and_iteration_use_positions_not_identity_numbers():
+    zone = Zone(well_ids=("rack:27", "rack:0"))
+    assert zone[0] == Zone(well_ids=("rack:27",))
+    assert tuple(zone) == (zone[0], zone[1])
+    assert tuple(Zone.empty()) == ()
+    for index in (-1, 2, 27):
+        with pytest.raises(IndexError):
+            zone[index]
+    for index in (True, 1.0, "0", slice(None)):
+        with pytest.raises(TypeError):
+            zone[index]

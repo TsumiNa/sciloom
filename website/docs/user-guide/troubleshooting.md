@@ -81,7 +81,7 @@ that takes only `self`. Its body supports a
 ordinary Python.
 
 For example, with `values: Input[list[float]]` and `total: Output[float]`,
-a `for` loop is not supported:
+a `for` loop over that list is not supported:
 
 <!-- correction: loop wrong -->
 ```python
@@ -105,7 +105,7 @@ while self.index < len(self.values):
 | --- | --- | --- |
 | `runtime_method` | none or two `@runtime` methods | keep one |
 | `source_unavailable` | a notebook cell, `exec()`, `async def` | move the class to a `.py` file |
-| `python_subset` | `For`, `Return`, `Try`, `Break`, ... | see the [runtime language](reference/runtime-language.md); loops use `while` ([lesson 4](tutorial/lists-and-loops.md)) |
+| `python_subset` | general Python iteration, `Return`, `Try`, `Break`, ... | use `while` for lists ([lesson 4](tutorial/lists-and-loops.md)); Zone `for` requires a declared `Var[Zone]` target ([locations](reference/zones.md)) |
 | `python_subset` | a chained comparison, an unsupported call or attribute chain | split comparisons; use declared fields and the supported calls in [runtime syntax](reference/runtime-language.md) |
 | `python_subset` | parameters on the runtime method | declare `Input` fields ([tutorial 2](tutorial/inputs-and-units.md)) |
 | `python_subset` | calling a helper or a function that is not an attribute | create the child in `__init__` ([composition](advanced/composition.md)) |
@@ -380,6 +380,24 @@ permissions. Partial writes are not rolled back; inspect the destination before
 deciding whether to retry. `csv_encoding` means the row could not be encoded;
 replace invalid Unicode text or unrepresentable numeric text before writing.
 See [append rules](reference/csv.md#append-one-row).
+
+## Selecting or visiting wells fails
+
+An index selects a position within a Zone, not the displayed well number. Use
+zero for its first well. Loop targets must already be declared as `Var[Zone]`.
+
+| Code | Cause and correction |
+| --- | --- |
+| `index_type` | Use an integer index, excluding Boolean values |
+| `index_bounds` | Select a nonnegative index smaller than `len(selection)` |
+| `zone_loop_target` | Declare the loop target as `Var[Zone]`; inputs and outputs are not loop state |
+| `zone_type` | Iterate over a Zone; list iteration still uses `while` |
+| `zone_fragment_size` | Use a positive host-time size and a well count divisible by that size; no partial final group is produced |
+| `unsupported_zone_index`, `unsupported_zone_grouping` | Reference execution supports these operations; the current AutoSuite target accepts only size-one traversal until its failure checks are verified |
+
+A grouping error occurs before the first loop-body operation. Earlier completed
+steps remain completed. See [sample locations](reference/zones.md) for capture
+and persistent-target behavior.
 
 ## Python raises TypeError or ValueError before compilation
 

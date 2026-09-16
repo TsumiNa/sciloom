@@ -1,6 +1,6 @@
 [project]
 name = "SciLoom"
-version = "0.3.12"
+version = "0.3.13"
 description = "SciLoom — programmable scientific automation from one semantic model."
 readme = "README.md"
 requires-python = ">=3.12,<3.15"
@@ -89,6 +89,7 @@ files = [
     "examples/read_reagent_table.py",
     "examples/append_sample_log.py",
     "examples/resolve_locations.py",
+    "examples/visit_locations.py",
     "examples/tutorial",
     "examples/developer",
 ]
@@ -123,9 +124,13 @@ module = [
     "examples.read_reagent_table_test",
     "examples.append_sample_log_test",
     "examples.resolve_locations_test",
+    "examples.visit_locations_test",
     "sciloom.dsl.driver_zones_test",
     "sciloom.core.ir.codec_zones_test",
     "sciloom_autosuite.codegen_zones_test",
+    "sciloom_autosuite.codegen_zone_traversal_test",
+    "sciloom.core.ir.zone_traversal_test",
+    "sciloom.dsl.driver_zone_traversal_test",
     "sciloom.units_test",
     "sciloom.units_quantities_test",
     "sciloom.devices.agitation_test",
