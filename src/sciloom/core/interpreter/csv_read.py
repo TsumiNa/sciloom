@@ -14,6 +14,7 @@ from sciloom.core.ir.model import CsvColumn, CsvErrorPolicy, CsvReadMode, ReadCs
 from sciloom.core.ir.types import QUANTITIES, ScalarType
 from .environment import CsvReadEvent, _require_service
 from .expressions import evaluate
+from .files import _InvalidFilePath
 from .values import RuntimeValue, ScalarValue, coerce, fail
 
 if TYPE_CHECKING:
@@ -75,7 +76,7 @@ def execute_read(session: Interpreter, node: ReadCsv, frame: dict[str, RuntimeVa
         data = files.read_bytes(path)
     except OSError:
         status = IO_ERROR
-    except (ValueError, TypeError) as error:
+    except _InvalidFilePath as error:
         fail("csv_path", str(error), node)
     except Exception as error:
         fail("file_service_error", f"File service failed: {error}", node)

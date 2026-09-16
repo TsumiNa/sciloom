@@ -36,7 +36,7 @@ because they capture distinct configurations and task/version combinations.
 
 ## Reading order
 
-The 27 reference documents are in one directory, numbered 00–26. This guide is
+The 28 reference documents are in one directory, numbered 00–27. This guide is
 00; read the following documents in order or jump to the relevant group.
 
 ### Sources and runtime semantics

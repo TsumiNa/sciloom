@@ -6,6 +6,10 @@ from types import MappingProxyType
 from typing import Protocol
 
 
+class _InvalidFilePath(ValueError):
+    """A built-in adapter rejected a path before accessing its byte service."""
+
+
 class FileService(Protocol):
     """Provide bytes without selecting a filesystem implicitly."""
 
@@ -22,7 +26,7 @@ def _validate_path(path: str) -> None:
     if type(path) is not str:
         raise TypeError("File paths must be text.")
     if not path or "\x00" in path:
-        raise ValueError("File paths must be nonempty and contain no NUL characters.")
+        raise _InvalidFilePath("File paths must be nonempty and contain no NUL characters.")
 
 
 class MemoryFiles:
@@ -97,10 +101,10 @@ class LocalFiles:
         _validate_path(path)
         requested = Path(path)
         if requested.is_absolute():
-            raise ValueError("Local file paths must be relative to the configured root.")
+            raise _InvalidFilePath("Local file paths must be relative to the configured root.")
         resolved = (self._root / requested).resolve()
         if not resolved.is_relative_to(self._root):
-            raise ValueError("Local file path escapes the configured root.")
+            raise _InvalidFilePath("Local file path escapes the configured root.")
         return resolved
 
     def read_bytes(self, path: str) -> bytes:

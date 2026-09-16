@@ -25,7 +25,7 @@ from sciloom.core.ir import (
 from sciloom.core.ir.csv import DEFAULT_USED, EOF, INVALID_DATA, IO_ERROR, OK
 from sciloom.units import mL, rpm, s
 from .environment import CsvReadEvent, ReferenceEnvironment
-from .files import MemoryFiles
+from .files import LocalFiles, MemoryFiles
 from .runtime import Interpreter
 
 
@@ -203,7 +203,15 @@ def test_no_default_filesystem_and_invalid_selectors_fail_before_a_read_event():
         Interpreter(recipe_program(mode=CsvReadMode.ROW, row=-1))
 
 
-@pytest.mark.parametrize("value", [bytearray(b"data"), RuntimeError("provider failed")])
+@pytest.mark.parametrize(
+    "value",
+    [
+        bytearray(b"data"),
+        RuntimeError("provider failed"),
+        ValueError("provider value error"),
+        TypeError("provider type error"),
+    ],
+)
 def test_invalid_file_provider_is_not_disguised_as_recoverable_io_status(value):
     class BadFiles:
         def read_bytes(self, path):
@@ -215,6 +223,20 @@ def test_invalid_file_provider_is_not_disguised_as_recoverable_io_status(value):
     with pytest.raises(ExecutionError, match="file_service_error"):
         Interpreter(recipe_program(policy=CsvErrorPolicy.STATUS), environment=environment).run()
     assert environment.events == ()
+
+
+def test_builtin_path_rejection_remains_a_path_error_without_an_event(tmp_path):
+    program = recipe_program(policy=CsvErrorPolicy.STATUS)
+    function = program.functions[0]
+    read = function.body[0]
+    for path in (str(tmp_path / "outside.csv"), "../outside.csv"):
+        candidate = replace(
+            program, functions=(replace(function, body=(replace(read, path=replace(read.path, value=path)),)),)
+        )
+        environment = ReferenceEnvironment(files=LocalFiles(root=tmp_path))
+        with pytest.raises(ExecutionError, match="csv_path"):
+            Interpreter(candidate, environment=environment).run()
+        assert environment.events == ()
 
 
 @pytest.mark.parametrize(

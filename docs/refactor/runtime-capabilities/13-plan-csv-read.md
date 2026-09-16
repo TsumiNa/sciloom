@@ -63,5 +63,6 @@ and squash merge remain the gate before stage 12 begins.
 
 Version: PATCH 0.3.9 → 0.3.10 for typed CSV reads and explicit file services,
 following the user's 0.3.x sequence decision. Both workspace packages move in
-lockstep. JSON remains v4; no release tag or PyPI publication. Re-evaluate after
-review if the change's extent changes.
+lockstep. Review corrections distinguish adapter path validation from provider
+failures and fix the reference index count; they retain this scope and version.
+JSON remains v4; no release tag or PyPI publication.
