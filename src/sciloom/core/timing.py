@@ -8,6 +8,7 @@ from .ir import (
     Assignment,
     Call,
     ConfigureProperty,
+    DeviceAt,
     DeviceCommand,
     DeviceIf,
     ForEachZone,
@@ -76,6 +77,9 @@ def validate_timer_usage(program: Program) -> tuple[Diagnostic, ...]:
                     right, right_needs = analyze(statement.else_body, started)
                     started = left & right
                     required |= left_needs | right_needs
+            elif isinstance(statement, DeviceAt):
+                started, needs = analyze(statement.body, started)
+                required |= needs
             elif isinstance(statement, While):
                 if not (isinstance(statement.condition, Literal) and statement.condition.value is False):
                     _, needs = analyze(statement.body, started)

@@ -654,6 +654,22 @@ class WriteWellProperty(Node):
     value: Expression
 
 
+@dataclass(frozen=True, kw_only=True)
+class DeviceAt(Node):
+    """Capture and validate a device location, then execute one lexical body.
+
+    Calls inherit the selection. Exit unwinds context without stopping equipment
+    or restoring physical state. A logical resource cannot be selected twice in
+    nested scopes. Deployment candidates remain outside the semantic program.
+    """
+
+    __ir_kind__: ClassVar[str] = "DeviceAt"
+
+    resource_id: str
+    location: Expression
+    body: tuple["Statement", ...] = ()
+
+
 Statement = (
     Assignment
     | LogValue
@@ -676,6 +692,7 @@ Statement = (
     | StopAgitation
     | DeviceCommand
     | DeviceIf
+    | DeviceAt
 )
 """Closed set of high-level flow, state and device operations."""
 

@@ -7,6 +7,8 @@ See the [location reference](../user-guide/reference/zones.md) for current limit
     options:
       members: [empty, well_ids, __len__, __getitem__, __iter__]
 
+::: sciloom.at
+
 ::: sciloom.zones
     options:
       members: [find, combine, well_name, fragments]

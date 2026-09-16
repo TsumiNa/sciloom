@@ -72,6 +72,7 @@ jobs:
       - run: uv run python examples/visit_locations.py
       - run: uv run python examples/label_wells.py
       - run: uv run python -m examples.developer.well_properties_ir
+      - run: uv run python -m examples.developer.device_locations_ir
       - run: uv run python -m examples.developer.zone_traversal_ir
       - run: uv run python examples/non_zero_array_min.py
       - run: uv run python examples/stir_rack.py

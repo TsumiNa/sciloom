@@ -10,6 +10,8 @@
 
 ::: sciloom.core.interpreter.DeviceState
 
+::: sciloom.core.interpreter.PhysicalDeviceState
+
 ::: sciloom.core.interpreter.DeviceEvent
 
 ::: sciloom.core.interpreter.ExecutionEvent

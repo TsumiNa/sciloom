@@ -146,6 +146,7 @@ keywords become available in the listed stage.
 | 11 | `files` | `FileService`, `MemoryFiles` or explicit `LocalFiles` |
 | 13 | `locations` | `LocationDirectory` |
 | 15 | `properties` | `WellProperties` |
+| 16 | `device_bindings` | `DeviceBindings`, including explicit candidate selections |
 
 Services are owned by the caller when injected; the interpreter never clones
 them. Reuse one environment, or the same service object in two environments,
@@ -1557,7 +1558,9 @@ the location once and checks it before body effects. Exit does **not** stop the
 device or restore an earlier physical state. Reject same-device nested selection;
 different devices can nest. Calls using a shared logical reference inherit the
 selection, passed through backend-private context. A dynamically bound device
-operation outside a provable selection scope fails; fixed bindings keep working.
+physical command outside a provable selection scope fails; fixed bindings keep
+working. Configuration writes save logical state and may precede a selection;
+they do not act on a physical controller.
 
 AutoSuiteAgitatorSelection has a nonempty immutable candidate tuple, each with
 the same concrete contract in this first profile. Validate candidate well/device
@@ -1585,6 +1588,117 @@ events without changing old program behavior. A reference environment provides
 trusted selection facts. Backend shared configuration and active selection are
 private parameters, with normal-return propagation as before; abnormal recovery
 equivalence remains an explicitly unverified question.
+
+### Stage-16 concrete selection contract
+
+The following are target interfaces, recorded before implementation. Stage 16
+adds one high-level structured statement and leaves existing resource records
+unchanged:
+
+```python
+from sciloom.core.ir import DeviceAt, Reference
+
+scope = DeviceAt(
+    node_id="select", resource_id="resource:agitator",
+    location=Reference(node_id="location-read", symbol_id="location"),
+    body=(),
+)
+```
+
+`DeviceAt` has stable wire kind `DeviceAt`, a Zone-valued location and an ordered
+body. The body executes once after successful selection; its normal completion
+preserves definite configuration/output/timer facts. A selection failure aborts
+before its body. The scope is lexical and unwinds even on failure, without
+stopping a controller or rolling back prior configuration/device effects.
+
+Bindings remain data outside Program/JSON. Exact new records in
+`sciloom.core.bindings` are:
+
+```python
+@dataclass(frozen=True, kw_only=True)
+class DeviceCandidate:
+    binding: DeviceBinding
+    wells: Zone
+
+@dataclass(frozen=True, kw_only=True)
+class DeviceSelectionBinding:
+    logical_id: str
+    candidates: tuple[DeviceCandidate, ...]
+```
+
+Every candidate's existing DeviceBinding still describes one physical controller
+and must use the selection's logical ID. Candidates have nonempty, disjoint
+allowed well sets, distinct physical IDs, the same complete concrete/ancestor
+contracts and the same writable/supported member sets. Read-only properties on
+the selection expose this common `contract`, `base_contracts`,
+`writable_properties` and `supported_operations`; no common `physical_id` exists.
+`DeviceBindings.devices` accepts fixed bindings or these selection records and
+rejects physical/well overlap across logical resources. A one-candidate selection
+is valid. `at` requires a selection binding; use a one-candidate selection when a
+fixed controller needs an explicit runtime location scope. Existing unscoped
+DeviceBinding behavior is unchanged.
+
+```python
+from sciloom.core.bindings import DeviceBindings, DeviceCandidate, DeviceSelectionBinding
+from sciloom.core.interpreter import Interpreter, ReferenceEnvironment
+from sciloom.core.locations import LocationDirectory, Well, Zone
+from sciloom.core.specialization import specialize
+
+# first_binding / second_binding are trusted single-controller DeviceBinding
+# records sharing logical_id="agitator" and the same complete device contract.
+bindings = DeviceBindings(devices=(DeviceSelectionBinding(
+    logical_id="agitator",
+    candidates=(
+        DeviceCandidate(binding=first_binding, wells=Zone(well_ids=("well:a",))),
+        DeviceCandidate(binding=second_binding, wells=Zone(well_ids=("well:b",))),
+    ),
+),))
+directory = LocationDirectory(wells=(
+    Well(identity="well:a", name="A"), Well(identity="well:b", name="B"),
+))
+selected = specialize(program, bindings=bindings)
+session = Interpreter(selected, environment=ReferenceEnvironment(
+    device_bindings=bindings, locations=directory,
+))
+# Supply the selected program's declared input names to session.run(...).
+# Starting on A then starting on B leaves both physical snapshots enabled.
+```
+
+The environment supplies trusted immutable deployment facts, while device state
+remains session-owned even when environments are shared. Entry checks require a
+known, nonempty selection wholly within exactly one candidate's allowed wells.
+Unknown identities, outside wells and selections spanning controllers fail.
+Same-resource nested scopes are invalid, including through calls; different
+resources can nest. Shared-device callees inherit the active selection. Core
+scope analysis computes transitive scope requirements/opened resources and checks
+the entry without historical-scope assumptions. Configuration remains logical;
+start/stop/native commands on selection bindings require an active scope.
+
+`PhysicalDeviceState(applied_configuration=..., enabled=False)` is immutable.
+`ExecutionResult.physical_devices` is a read-only mapping keyed by physical ID.
+DeviceEvent adds optional `physical_id` and `physical_state` fields; old unbound
+reference programs retain logical snapshots with an empty physical map. With
+bindings supplied, fixed devices also receive physical snapshots. A logical
+DeviceState keeps saved configuration, the last configuration applied by that
+logical resource and its last lifecycle result; physical snapshots show which
+controllers remain running. A stop preserves the selected controller's applied
+configuration. Successful scope entry alone creates no device event.
+
+AutoSuite candidate construction verifies the named Zone's well identities and
+actual ancestor controller type/address from the supplied layout. It never
+equates a rack/well address with a shaker ID. A supplied layout also validates
+fixed profiles, while omitting it preserves the existing fixed-profile contract.
+
+**Platform gate:** this checkout has no verified fail-before-action primitive.
+AutoSuite therefore rejects DeviceAt/candidate compilation with
+`unsupported_device_location` after validating deployment/scope facts. The public
+target must not emit an unchecked dynamic Stir sequence or a silent skip. Native
+runtime-Zone Stir and future private selection-parameter transport remain
+documented evidence, not a callable bypass or unused production emitter. Their
+activation requires the stage-8 Executor gate; reference semantics, JSON
+rebinding and contribution bindings can be delivered independently. The initial
+StirSelected snippet above is a source/validation example and remains target-gated,
+not a claim that an ASFP was generated successfully.
 
 ## 16. Target extension boundary (current protocol, all stages)
 

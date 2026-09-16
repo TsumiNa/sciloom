@@ -1,6 +1,6 @@
 [project]
 name = "SciLoom"
-version = "0.3.14"
+version = "0.3.15"
 description = "SciLoom — programmable scientific automation from one semantic model."
 readme = "README.md"
 requires-python = ">=3.12,<3.15"
@@ -135,6 +135,11 @@ module = [
     "sciloom.core.interpreter.properties_test",
     "sciloom.core.ir.well_properties_test",
     "sciloom.dsl.driver_well_properties_test",
+    "sciloom.dsl.driver_device_locations_test",
+    "sciloom.core.bindings_selection_test",
+    "sciloom.core.device_locations_test",
+    "sciloom_autosuite.selection_test",
+    "examples.developer.device_locations_ir_test",
     "sciloom.core.ir.zone_traversal_test",
     "sciloom.dsl.driver_zone_traversal_test",
     "sciloom.units_test",

@@ -8,6 +8,7 @@ from sciloom.core.ir import (
     Assignment,
     Call,
     ConfigureProperty,
+    DeviceAt,
     DeviceCommand,
     DeviceIf,
     ForEachZone,
@@ -58,6 +59,8 @@ def validate_timer_scopes(program: Program) -> tuple[Diagnostic, ...]:
                 visit(node.else_body, (*scope, node.node_id, "else"), f"{location}.else_body")
             elif isinstance(node, (While, ForEachZone)):
                 visit(node.body, (*scope, node.node_id), f"{location}.body")
+            elif isinstance(node, DeviceAt):
+                visit(node.body, scope, f"{location}.body")
             elif isinstance(node, DeviceIf):
                 raise AssertionError("Specialize device conditions before native timer scope checks.")
             elif isinstance(

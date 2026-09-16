@@ -42,6 +42,7 @@ to the repository root.
 | [CSV append IR](csv-append-ir.md) | Append twice in memory and inspect captured records |
 | [Zone IR](zone-ir.md) | Query an explicit immutable location directory after JSON restoration |
 | [Zone traversal IR](zone-traversal-ir.md) | Index an ordered selection and visit complete groups after JSON restoration |
+| [Physical device snapshots](device-locations-ir.md) | Select two controllers while retaining independent applied values and running states |
 | [Well property IR](well-properties-ir.md) | Supply an explicit metadata store and inspect immutable read/write events |
 | [Independent device](demo-device.md) | A new property, command and target outside core |
 | [Portable agitation](portable-agitation.md) | Device specialization and rebinding the same authored JSON |

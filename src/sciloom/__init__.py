@@ -10,6 +10,7 @@ if TYPE_CHECKING:
     from .flow import comptime, csv, text, zones
     from .flow.fields import Input, Output, Var
     from .flow.function import Function, runtime
+    from .flow.locations import at
     from .flow.logging import log
     from .flow.messages import notify
     from .flow.properties import WellProperty
@@ -20,6 +21,10 @@ _DSL_EXPORTS = {"Function", "Input", "Output", "Var", "runtime"}
 
 def __getattr__(name: str) -> Any:
     # Importing sciloom.core.ir or the interpreter must not load source analysis.
+    if name == "at":
+        from .flow.locations import at
+
+        return at
     if name == "WellProperty":
         from .flow.properties import WellProperty
 
@@ -76,6 +81,7 @@ def __getattr__(name: str) -> Any:
 
 
 __all__ = [
+    "at",
     "WellProperty",
     "Zone",
     "zones",

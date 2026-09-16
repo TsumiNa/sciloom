@@ -209,8 +209,8 @@ when the body is empty. The target's last value remains in Function state. See
 
 Zone values remain immutable in inputs, state and results. Whole-value assignment
 or a child parameter does not create a writable alias. The directory does not
-authorize device use: deployment checks belong to the target and later dynamic
-location scopes.
+authorize device use: explicit deployment bindings and `DeviceAt` scope checks
+provide that boundary.
 
 ## Session and snapshots
 
@@ -229,6 +229,23 @@ restored to physical types in public outputs.
 Device snapshots separate saved configuration, applied configuration and enabled
 state. Configure captures immediately, start applies complete saved values, and
 stop retains configuration. Events preserve snapshots at each operation.
+
+For bound reference execution, supply `ReferenceEnvironment(device_bindings=...,
+locations=...)`. `DeviceSelectionBinding` holds immutable candidates; each
+`DeviceCandidate` pairs one existing `DeviceBinding` with its allowed wells.
+Bindings stay outside Program/JSON. Specialize device conditions explicitly
+before constructing the interpreter.
+
+The interpreter checks complete bindings and transitive location scopes before
+running. A `DeviceAt` validates its captured Zone before the body, inherits its
+context through calls and releases it on return or failure. It never implicitly
+stops equipment. Saved configuration belongs to the logical resource;
+`ExecutionResult.physical_devices` separately retains each controller's applied
+values and enabled state. `DeviceEvent` identifies the selected physical
+controller when one exists. The logical snapshot describes its last action, not
+every controller's running state. Even sessions sharing one environment have
+independent physical state. Unbound existing programs retain empty physical maps.
+See [the direct IR example](../../examples/device-locations-ir.md).
 
 Uninitialized reads and missing outputs are execution errors. Earlier state writes
 remain after a failed run: execution is not transactional. A session is sequential

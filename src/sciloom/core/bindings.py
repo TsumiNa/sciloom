@@ -7,6 +7,7 @@ from .ir import DeviceResource, Program
 from .ir.device_contracts import DeviceTypeContract
 from .ir.device_validation import semantic_id, validate_directory
 from .ir.schema import _convert
+from .locations import Zone
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -66,31 +67,134 @@ class DeviceBinding:
 
 
 @dataclass(frozen=True, kw_only=True)
+class DeviceCandidate:
+    """One trusted physical controller and its nonempty allowed well selection.
+
+    Args:
+        binding: Existing single-controller deployment facts.
+        wells: Opaque identities allowed for this candidate, not display names.
+
+    Raises:
+        TypeError: Either value is not its declared immutable record type.
+        ValueError: No wells are allowed.
+    """
+
+    binding: DeviceBinding
+    wells: Zone
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.binding, DeviceBinding) or type(self.wells) is not Zone:
+            raise TypeError("DeviceCandidate requires a DeviceBinding and a Zone.")
+        if not self.wells.well_ids:
+            raise ValueError("A device candidate requires nonempty allowed wells.")
+
+
+@dataclass(frozen=True, kw_only=True)
+class DeviceSelectionBinding:
+    """Bounded runtime choice among controllers with one common trusted contract.
+
+    Args:
+        logical_id: Declared logical resource shared by all candidates.
+        candidates: Nonempty, copied tuple of distinct physical candidates.
+
+    Raises:
+        TypeError: A candidate is not a DeviceCandidate.
+        ValueError: Logical IDs, contracts or capabilities differ, or physical
+            identities/allowed well sets overlap.
+
+    There is no physical_id on this record: selection happens during execution.
+    """
+
+    logical_id: str
+    candidates: tuple[DeviceCandidate, ...]
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "candidates", tuple(self.candidates))
+        if any(type(candidate) is not DeviceCandidate for candidate in self.candidates):
+            raise TypeError("Selection bindings require DeviceCandidate records.")
+        if not self.candidates:
+            raise ValueError("Selection bindings require at least one candidate.")
+        first = self.candidates[0].binding
+        physical: set[str] = set()
+        wells: set[str] = set()
+        for candidate in self.candidates:
+            binding = candidate.binding
+            if binding.logical_id != self.logical_id:
+                raise ValueError("Every candidate must bind the selection's logical_id.")
+            if (
+                binding.contract != first.contract
+                or {c.type_id: c for c in binding.base_contracts} != {c.type_id: c for c in first.base_contracts}
+                or set(binding.writable_properties) != set(first.writable_properties)
+                or set(binding.supported_operations) != set(first.supported_operations)
+            ):
+                raise ValueError("Selection candidates must have identical trusted contracts and capabilities.")
+            if binding.physical_id in physical or wells.intersection(candidate.wells.well_ids):
+                raise ValueError("Selection candidates must have distinct controllers and disjoint wells.")
+            physical.add(binding.physical_id)
+            wells.update(candidate.wells.well_ids)
+
+    @property
+    def contract(self) -> DeviceTypeContract:
+        """Common concrete type contract, independent of the runtime selection."""
+        return self.candidates[0].binding.contract
+
+    @property
+    def base_contracts(self) -> tuple[DeviceTypeContract, ...]:
+        """Common complete ancestor directory."""
+        return self.candidates[0].binding.base_contracts
+
+    @property
+    def writable_properties(self) -> tuple[str, ...]:
+        """Properties supported by every candidate."""
+        return self.candidates[0].binding.writable_properties
+
+    @property
+    def supported_operations(self) -> tuple[str, ...]:
+        """Commands supported by every candidate."""
+        return self.candidates[0].binding.supported_operations
+
+
+@dataclass(frozen=True, kw_only=True)
 class DeviceBindings:
     """Immutable, conflict-checked collection of trusted device bindings.
 
     Args:
-        devices: Bindings with unique logical and physical identities.
+        devices: Fixed/selection bindings with unique logical and physical identities.
 
     Raises:
-        TypeError: An entry is not a DeviceBinding.
+        TypeError: An entry is not a DeviceBinding or DeviceSelectionBinding.
         ValueError: Identities or trusted contract definitions conflict."""
 
-    devices: tuple[DeviceBinding, ...] = ()
+    devices: tuple[DeviceBinding | DeviceSelectionBinding, ...] = ()
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "devices", tuple(self.devices))
-        if any(not isinstance(value, DeviceBinding) for value in self.devices):
-            raise TypeError("DeviceBindings requires DeviceBinding records.")
+        if any(not isinstance(value, (DeviceBinding, DeviceSelectionBinding)) for value in self.devices):
+            raise TypeError("DeviceBindings requires DeviceBinding or DeviceSelectionBinding records.")
         contracts: dict[str, DeviceTypeContract] = {}
         for binding in self.devices:
             for contract in (*binding.base_contracts, binding.contract):
                 if contracts.setdefault(contract.type_id, contract) != contract:
                     raise ValueError("Conflicting trusted device contracts across bindings.")
-        for field in ("logical_id", "physical_id"):
-            values = [getattr(value, field) for value in self.devices]
-            if len(values) != len(set(values)):
-                raise ValueError(f"Duplicate device binding {field}.")
+        logical = [value.logical_id for value in self.devices]
+        if len(logical) != len(set(logical)):
+            raise ValueError("Duplicate device binding logical_id.")
+        physical: set[str] = set()
+        wells: set[str] = set()
+        for value in self.devices:
+            identities = (
+                (value.physical_id,)
+                if isinstance(value, DeviceBinding)
+                else tuple(candidate.binding.physical_id for candidate in value.candidates)
+            )
+            if physical.intersection(identities):
+                raise ValueError("Duplicate device binding physical_id.")
+            physical.update(identities)
+            if isinstance(value, DeviceSelectionBinding):
+                selected = {well for candidate in value.candidates for well in candidate.wells.well_ids}
+                if wells.intersection(selected):
+                    raise ValueError("Different logical resources cannot share candidate wells.")
+                wells.update(selected)
 
 
 def validate_bindings(program: Program, bindings: DeviceBindings) -> tuple[Diagnostic, ...]:

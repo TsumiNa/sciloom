@@ -14,7 +14,8 @@ import pytest
 
 
 @pytest.mark.parametrize(
-    "mutation_kind", ["missing_node", "missing_zone_node", "missing_property_node", "new_unary_operation"]
+    "mutation_kind",
+    ["missing_node", "missing_zone_node", "missing_property_node", "missing_location_node", "new_unary_operation"],
 )
 def test_missing_consumer_handlers_fail_exhaustiveness(tmp_path, mutation_kind):
     root = Path(__file__).resolve().parents[4]
@@ -34,6 +35,7 @@ def test_missing_consumer_handlers_fail_exhaustiveness(tmp_path, mutation_kind):
         "sciloom/core/specialization.py": "While",
         "sciloom/core/configuration.py": "While",
         "sciloom/core/timing.py": "While",
+        "sciloom/core/device_locations.py": "While",
         "sciloom_autosuite/timing.py": "While",
         "sciloom/core/interpreter/expressions.py": "ListLiteral",
         "sciloom/core/interpreter/runtime.py": "ListSet",
@@ -46,6 +48,8 @@ def test_missing_consumer_handlers_fail_exhaustiveness(tmp_path, mutation_kind):
         omissions = {name: "ZoneGet" if name.endswith("/expressions.py") else "ForEachZone" for name in omissions}
     if mutation_kind == "missing_property_node":
         omissions = {name: "ReadWellProperty" for name in omissions if not name.endswith("/expressions.py")}
+    if mutation_kind == "missing_location_node":
+        omissions = {name: "DeviceAt" for name in omissions if not name.endswith("/expressions.py")}
     if mutation_kind == "new_unary_operation":
         model = tmp_path / "sciloom/core/ir/model.py"
         model.write_text(model.read_text().replace('    NOT = "not"', '    NOT = "not"\n    UNHANDLED = "unhandled"'))
@@ -92,7 +96,7 @@ def test_missing_consumer_handlers_fail_exhaustiveness(tmp_path, mutation_kind):
     paths = []
     for name, kind in omissions.items():
         path = tmp_path / name
-        if mutation_kind in ("missing_node", "missing_zone_node", "missing_property_node"):
+        if mutation_kind != "new_unary_operation":
             mutation = RemoveHandler(kind)
             changed = mutation.visit(ast.parse(path.read_text()))
             assert mutation.removed >= 1, name

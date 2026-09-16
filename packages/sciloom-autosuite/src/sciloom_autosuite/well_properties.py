@@ -8,6 +8,7 @@ from sciloom.core.ir import (
     Assignment,
     Call,
     ConfigureProperty,
+    DeviceAt,
     DeviceCommand,
     DeviceIf,
     Expression,
@@ -103,6 +104,8 @@ def validate_well_properties(program: Program) -> tuple[Diagnostic, ...]:
                     invariant = narrowed
                 block(node.body, entry, f"{p}.body", report)
                 facts &= after
+            elif isinstance(node, DeviceAt):
+                facts = block(node.body, facts, f"{p}.body", report)
             elif isinstance(node, DeviceIf):
                 raise AssertionError("Specialize device conditions before checking property reads.")
             elif isinstance(

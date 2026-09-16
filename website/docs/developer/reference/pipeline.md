@@ -14,7 +14,7 @@ flowchart TD
     IR --> Validate["Structure and types"]
     Validate --> Resolve["Target.resolve_devices"]
     Resolve --> Specialize["Device specialization"]
-    Specialize --> Config["Capabilities, device configuration and timer starts"]
+    Specialize --> Config["Capabilities, configuration, timer starts and location scopes"]
     Config --> Target["Target.validate and emit"]
     Target --> Artifact["Platform artifact"]
     Specialize --> Interpreter["Reference interpreter"]
@@ -28,7 +28,7 @@ flowchart TD
 | 1 | `validate(program)` | authored | `IRValidationError` |
 | 2 | `target.resolve_devices(program)` | authored: the only step that sees device branches unselected | the target's own `TypeError` or `ValueError`; `TypeError` when the result is not `DeviceBindings` |
 | 3 | `specialize(program, bindings)` | authored in, selected out: bindings validated, branches selected, unreachable functions and their timers pruned, devices retyped to the bound profile, re-validated | `CompilationError` (`missing_resource_binding`, `unknown_resource_binding`, `device_type`, `device_contract`) |
-| 4 | capability, definite-configuration and definite-timer-start checks | selected | `CompilationError` (`device_capability`, `device_configuration`, `timer_not_started`) |
+| 4 | capability, definite-configuration, timer-start and transitive location-scope checks | selected | `CompilationError` (`device_capability`, `device_configuration`, `timer_not_started`, `device_selection_required`, `device_selection_nesting`, `device_selection_binding`) |
 | 5 | `target.validate(program)` | selected | `CompilationError` with the target's own codes |
 | 6 | `target.emit(program)` | selected | returns an `Artifact` |
 
@@ -37,6 +37,13 @@ the selected program. What step 4 proves about required configuration is stated
 on [device contracts](device-contracts.md#required-configuration).
 Timer analysis starts each entry invocation with no established timer origins;
 branch intersections and possibly empty loops cannot rely on earlier runs.
+
+Location scopes are lexical and inherited through calls, not retained between
+entry invocations. A DeviceAt body executes once after successful entry; its
+normal-return configuration and timer-start guarantees propagate outward. Scope
+analysis uses call-graph summaries, so indirect or recursive calls cannot hide
+same-resource nesting. Candidate bindings expose a common concrete contract for
+compile-time queries without inventing one physical controller identity.
 
 
 `CompileResult` retains `semantic_ir` (authored), `specialized_ir` (selected),

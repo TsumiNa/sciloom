@@ -310,8 +310,16 @@ do not perform I/O or emit external events. AutoSuiteLayout.from_app only reads
 deployment data and rejects unobserved profiles. Read
 `autosuite/docs/29_ZONE_VALUES_AND_LAYOUT.md` before changing location encoding or
 APP extraction. Well identity, Zone enumeration index and controller device ID
-are distinct. Dynamic at/candidate binding remains a later stage; Zone values do
-not implicitly authorize device actions.
+are distinct. Runtime `at()` produces DeviceAt: capture and validate a nonempty
+single-controller Zone before the body, inherit shared-device context through
+calls, reject same-resource nesting, and release context without implicit stop.
+DeviceSelectionBinding contains common-contract DeviceCandidates; never change
+single-controller DeviceBinding into an ambiguous selection. Configuration is
+logical state; PhysicalDeviceState is session-owned per controller. Reference
+execution requires explicit device_bindings and locations. AutoSuite checks APP
+well ancestry but rejects dynamic emission pending the fatal-propagation gate;
+consult `autosuite/docs/32_DYNAMIC_DEVICE_LOCATIONS.md`. No unchecked bypass or
+private selection-parameter transport should be activated before that evidence.
 
 ## 11. Runtime capability implementation sequence
 

@@ -57,6 +57,7 @@ nav:
           - Stored well labels: user-guide/reference/well-properties.md
           - CSV files: user-guide/reference/csv.md
           - Sample locations: user-guide/reference/zones.md
+          - Runtime device locations: user-guide/reference/device-locations.md
           - Devices and targets: user-guide/reference/devices-and-targets.md
   - Developer Guide:
       - Overview: developer/index.md
@@ -122,6 +123,7 @@ nav:
       - Zone traversal IR: examples/zone-traversal-ir.md
       - Label selected wells: examples/label-wells.md
       - Well property IR: examples/well-properties-ir.md
+      - Physical device snapshots: examples/device-locations-ir.md
       - Independent device: examples/demo-device.md
       - Portable agitation: examples/portable-agitation.md
   - API Reference:

@@ -57,6 +57,8 @@ EXAMPLES = (
     "label_wells.asfp",
     "developer/well_properties_ir.py",
     "developer/well_properties_ir.json",
+    "developer/device_locations_ir.py",
+    "developer/device_locations_ir.json",
     "visit_locations.asfp",
     "developer/zone_traversal_ir.py",
     "developer/zone_traversal_ir.json",

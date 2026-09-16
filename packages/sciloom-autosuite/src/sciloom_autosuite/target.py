@@ -8,11 +8,12 @@ from typing import Mapping
 from sciloom.core.bindings import DeviceBindings
 from sciloom.core.compiler import Artifact
 from sciloom.core.diagnostics import CompilationError, Diagnostic
-from sciloom.core.ir import Binary, BinaryOp, Call, Program
+from sciloom.core.ir import Binary, BinaryOp, Call, DeviceAt, Program
 from sciloom.core.ir.traversal import iter_nodes
-from sciloom.devices.declarations import bind_device
 from .agitation import AutoSuiteIndividualShaker
 from .codegen import lower_asfp
+from .layout import AutoSuiteLayout
+from .selection import AutoSuiteAgitatorSelection, profile_binding
 from .timing import validate_timer_scopes
 from .validation import validate_array_outputs, validate_runtime_guards
 from .well_properties import validate_well_properties
@@ -25,20 +26,28 @@ class AutoSuiteTarget:
 
     Args:
         version: Supported AutoSuite serialization profile.
-        devices: Logical field/component paths mapped to individual shaker profiles.
+        devices: Logical paths mapped to fixed shakers or bounded candidate selections.
+        layout: Read-only APP deployment facts. Required for candidate selection;
+            when supplied, also validates fixed profiles against real well ancestry.
 
     Raises:
-        TypeError: A binding is not an AutoSuiteIndividualShaker.
-        ValueError: A profile/version/path is invalid or physical bindings are duplicated.
+        TypeError: A binding or layout has an unsupported record type.
+        ValueError: A profile/version/path is invalid, physical bindings overlap,
+            or layout facts do not resolve the declared controller and wells.
 
+    Dynamic selection is representable and validated, but compilation reports
+    unsupported_device_location until native failure guards have been verified.
     Generated XML still requires AutoSuite Executor validation on the deployment host."""
 
     version: AutoSuiteVersion = AutoSuiteVersion.V2_47_1_1
-    devices: Mapping[str, AutoSuiteIndividualShaker] = field(default_factory=dict)
+    devices: Mapping[str, AutoSuiteIndividualShaker | AutoSuiteAgitatorSelection] = field(default_factory=dict)
+    layout: AutoSuiteLayout | None = None
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "version", AutoSuiteVersion(self.version))
         object.__setattr__(self, "devices", MappingProxyType(dict(self.devices)))
+        if self.layout is not None and type(self.layout) is not AutoSuiteLayout:
+            raise TypeError("layout must be an AutoSuiteLayout.")
         device_ids: set[str] = set()
         zones: set[str] = set()
         for name, binding in self.devices.items():
@@ -48,26 +57,22 @@ class AutoSuiteTarget:
                 or any(not part.isidentifier() or part.startswith("_") for part in name.split("."))
             ):
                 raise ValueError("Device binding names must be logical field/component paths.")
-            if type(binding) is not AutoSuiteIndividualShaker:
-                raise TypeError("devices must contain AutoSuiteIndividualShaker records.")
-            if binding.device_id in device_ids:
-                raise ValueError(f"Distinct resources cannot alias shaker device {binding.device_id}.")
-            if binding.zone in zones:
-                raise ValueError(f"Distinct resources cannot bind the same AutoSuite zone {binding.zone!r}.")
-            device_ids.add(binding.device_id)
-            zones.add(binding.zone)
+            if type(binding) not in (AutoSuiteIndividualShaker, AutoSuiteAgitatorSelection):
+                raise TypeError("devices must contain AutoSuiteIndividualShaker or AutoSuiteAgitatorSelection records.")
+            profiles = (binding,) if isinstance(binding, AutoSuiteIndividualShaker) else binding.candidates
+            for profile in profiles:
+                if profile.device_id in device_ids:
+                    raise ValueError(f"Distinct resources cannot alias shaker device {profile.device_id}.")
+                if profile.zone in zones:
+                    raise ValueError(f"Distinct resources cannot bind the same AutoSuite zone {profile.zone!r}.")
+                device_ids.add(profile.device_id)
+                zones.add(profile.zone)
+            profile_binding(name, binding, self.layout)
 
     def resolve_devices(self, program: Program) -> DeviceBindings:
         """Translate explicit deployment profiles into trusted, contributor-neutral facts."""
         return DeviceBindings(
-            devices=tuple(
-                bind_device(
-                    logical_id=name,
-                    device=device,
-                    physical_id=f"autosuite:individual-shaker:{device.device_id}",
-                )
-                for name, device in sorted(self.devices.items())
-            )
+            devices=tuple(profile_binding(name, device, self.layout) for name, device in sorted(self.devices.items()))
         )
 
     @property
@@ -102,6 +107,16 @@ class AutoSuiteTarget:
         errors.extend(validate_runtime_guards(program))
         errors.extend(validate_timer_scopes(program))
         errors.extend(validate_well_properties(program))
+        if any(isinstance(profile, AutoSuiteAgitatorSelection) for profile in self.devices.values()) and not any(
+            isinstance(node, DeviceAt) for node, _ in iter_nodes(program)
+        ):
+            errors.append(
+                Diagnostic(
+                    code="unsupported_device_location",
+                    message="AutoSuite candidate deployment requires verified runtime selection guards before emission.",
+                    path="$.resources",
+                )
+            )
         completed: set[str] = set()
         for root in calls:
             if root in completed:
@@ -145,7 +160,20 @@ class AutoSuiteTarget:
             CompilationError: Generation cannot represent the program or produce valid XML.
 
         Use compile_ir or Function.compile to run all preceding validation stages."""
-        serialization_ir = lower_asfp(program, self.version, devices=self.devices)
+        fixed: dict[str, AutoSuiteIndividualShaker] = {}
+        for name, profile in self.devices.items():
+            if not isinstance(profile, AutoSuiteIndividualShaker):
+                raise CompilationError(
+                    (
+                        Diagnostic(
+                            code="unsupported_device_location",
+                            message="Unchecked dynamic device emission is not supported.",
+                            path="$.resources",
+                        ),
+                    )
+                )
+            fixed[name] = profile
+        serialization_ir = lower_asfp(program, self.version, devices=fixed)
         try:
             content = serialization_ir.to_xml()
             ET.fromstring(content)

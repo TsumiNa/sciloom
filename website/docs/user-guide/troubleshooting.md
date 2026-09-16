@@ -424,12 +424,23 @@ runtime step failing. The message identifies what to change.
 | Assigning a hardware profile to `program.shaker` raises `TypeError` | Put the profile in `AutoSuiteTarget(devices={...})`; only compatible logical references can be shared between slots |
 | Calling a `comptime` query raises `TypeError` | Use it as a complete `if/elif` condition inside `@runtime` |
 | A private child name is rejected | Store the child under a public name such as `self.stage` |
-| `devices must contain AutoSuiteIndividualShaker records` | Replace another object in the target dictionary with the required profile |
+| `devices must contain AutoSuiteIndividualShaker or AutoSuiteAgitatorSelection records` | Use a fixed profile, or an explicit candidate selection with a layout |
 | A binding name is rejected | Use a field name or dotted child path, not an arbitrary label |
 | Two devices have the same ID or zone | Bind separate logical devices to separate hardware, or share one logical reference between steps |
 | `device_id` is rejected | Supply a positive decimal individual shaker ID; `"0"` is invalid |
 | The zone string is rejected | Supply a nonempty single-line name from the installed configuration |
 | A speed literal is rejected | Use a finite nonnegative number times `rpm` or `rps`; strings and Booleans are invalid |
+
+For [runtime device locations](reference/device-locations.md), these diagnostics
+identify a missing or invalid selection:
+
+| Diagnostic | What to change |
+| --- | --- |
+| `device_selection_required` | Put every command on a selection-bound device inside `with at(...)`; configuration assignments may stay outside |
+| `device_selection_nesting` | Remove the inner selection for the same device; shared child calls already inherit the outer location |
+| `device_selection_binding` | Bind explicit candidates, including a single candidate, when using `at()` |
+| `device_location`, `unknown_well` | Supply a nonempty Zone inside one candidate's known wells |
+| `unsupported_device_location` | Dynamic reference execution is available; AutoSuite emission awaits verified failure propagation. A fixed-binding program without `at()` can still compile |
 
 The [developer troubleshooting page](../developer/troubleshooting.md) covers
 hand-built IR, reference execution and a runnable collection of these failures.
