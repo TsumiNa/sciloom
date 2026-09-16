@@ -58,6 +58,9 @@
         <loc>https://tsumina.github.io/sciloom/dev/user-guide/reference/runtime-language/</loc>
       </url>
       <url>
+        <loc>https://tsumina.github.io/sciloom/dev/user-guide/reference/csv/</loc>
+      </url>
+      <url>
         <loc>https://tsumina.github.io/sciloom/dev/user-guide/reference/devices-and-targets/</loc>
       </url>
       <url>
@@ -178,6 +181,9 @@
         <loc>https://tsumina.github.io/sciloom/dev/examples/timed-agitation/</loc>
       </url>
       <url>
+        <loc>https://tsumina.github.io/sciloom/dev/examples/read-reagent-table/</loc>
+      </url>
+      <url>
         <loc>https://tsumina.github.io/sciloom/dev/examples/non-zero-array-min/</loc>
       </url>
       <url>
@@ -205,6 +211,9 @@
         <loc>https://tsumina.github.io/sciloom/dev/examples/timing-ir/</loc>
       </url>
       <url>
+        <loc>https://tsumina.github.io/sciloom/dev/examples/csv-read-ir/</loc>
+      </url>
+      <url>
         <loc>https://tsumina.github.io/sciloom/dev/examples/demo-device/</loc>
       </url>
       <url>
@@ -224,6 +233,9 @@
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/api/text/</loc>
+      </url>
+      <url>
+        <loc>https://tsumina.github.io/sciloom/dev/api/csv/</loc>
       </url>
       <url>
         <loc>https://tsumina.github.io/sciloom/dev/api/autosuite/</loc>

@@ -1119,6 +1119,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../user-guide/reference/csv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  CSV reads
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../user-guide/reference/devices-and-targets/" class="md-nav__link">
         
   
@@ -1877,6 +1904,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         CompilationError
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#csv-file-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        CSV file services
       </span>
     </span>
   </a>
@@ -2705,6 +2743,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/read-reagent-table/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Read a reagent table
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2929,6 +2994,33 @@
     
   
   Elapsed-time IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/csv-read-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typed CSV IR
 
     
   </span>
@@ -3175,6 +3267,33 @@
     
   
   Runtime text
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/csv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime CSV
 
     
   </span>
@@ -3533,6 +3652,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#csv-file-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        CSV file services
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#valueerror-from-executionconfig" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3581,8 +3711,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.9
-    · <code title="f37b21dc22c951c96427b2b194b39ec2cafd6403">f37b21dc</code>
+    · SciLoom 0.3.10
+    · <code title="5b70d5c7bc5971c5f964a51f0833ccf1e03d7a13">5b70d5c7</code>
   </p>
 </aside>
 
@@ -3928,6 +4058,18 @@ and configuration pass, definite timer-start analysis, and <code>Target.validate
 </tr>
 </tbody>
 </table>
+<h2 id="csv-file-services">CSV file services</h2>
+<p><code>missing_environment_service</code> for ReadCsv means no FileService was supplied.
+Use <code>ReferenceEnvironment(files=MemoryFiles({...}))</code> for deterministic byte input,
+or opt in to <code>LocalFiles(root=...)</code>. <code>file_service_error</code> reports an unexpected
+provider exception or a non-bytes result; it does not become a recoverable IO_ERROR.
+The built-in adapters reject invalid paths with <code>csv_path</code> before a read event.</p>
+<p><code>csv_eof</code>, <code>csv_invalid_data</code> and <code>csv_io_error</code> are fatal ordinary-read outcomes;
+the corresponding try-forms return named statuses and complete fallbacks. Earlier
+events remain in environment history, including the failed CsvReadEvent. No
+destination of an unsuccessful ordinary read is changed. Check <a href="../../user-guide/reference/csv/">CSV rules</a>
+for schema/source diagnostics and <a href="../reference/interpreter/#explicit-files-and-csv-outcomes">file ownership</a>.
+AutoSuite's <code>unsupported_csv_semantics</code> is a target gate, not a missing file service.</p>
 <h2 id="valueerror-from-executionconfig">ValueError from ExecutionConfig</h2>
 <p>Raised when the interpreter's configuration is constructed, before any run.</p>
 <table>

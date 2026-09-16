@@ -1190,6 +1190,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#a-csv-read-fails-or-will-not-compile" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        A CSV read fails or will not compile
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#python-raises-typeerror-or-valueerror-before-compilation" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -1304,6 +1315,33 @@
     
   
   Runtime language
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/csv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  CSV reads
 
     
   </span>
@@ -2757,6 +2795,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/read-reagent-table/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Read a reagent table
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2981,6 +3046,33 @@
     
   
   Elapsed-time IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/csv-read-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typed CSV IR
 
     
   </span>
@@ -3227,6 +3319,33 @@
     
   
   Runtime text
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/csv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime CSV
 
     
   </span>
@@ -3662,6 +3781,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#a-csv-read-fails-or-will-not-compile" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        A CSV read fails or will not compile
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#python-raises-typeerror-or-valueerror-before-compilation" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3688,8 +3818,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.9
-    · <code title="f37b21dc22c951c96427b2b194b39ec2cafd6403">f37b21dc</code>
+    · SciLoom 0.3.10
+    · <code title="5b70d5c7bc5971c5f964a51f0833ccf1e03d7a13">5b70d5c7</code>
   </p>
 </aside>
 
@@ -4375,6 +4505,55 @@ not satisfy the compilation check.</p>
 supplied; <code>clock_error</code> means advancing it would produce an invalid value, such
 as overflow. See the <a href="../../developer/troubleshooting/#executionerror">developer execution diagnostics</a>
 and the <a href="../../examples/timing-ir/">timing example</a> for explicit clock setup.</p>
+<h2 id="a-csv-read-fails-or-will-not-compile">A CSV read fails or will not compile</h2>
+<p><code>unsupported_csv_semantics</code> means AutoSuite's parsing and failure behavior have
+not yet been verified against SciLoom's read contract. Changing the file path
+does not remove that target limitation. The same procedure can be checked with
+an explicit reference file service; see <a href="../reference/csv/">CSV reads</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Correction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>csv_binding</code></td>
+<td>Unpack every result into distinct, correctly typed fields; include the status for try-forms and a trailing comma for one result</td>
+</tr>
+<tr>
+<td><code>csv_columns</code>, <code>csv_metadata</code></td>
+<td>Use a nonempty fixed tuple of inline Column declarations, scalar types and host Boolean header selection</td>
+</tr>
+<tr>
+<td><code>csv_unit</code>, <code>csv_default</code></td>
+<td>Give quantities a matching unit and typed defaults; every try_read_row column needs a default</td>
+</tr>
+<tr>
+<td><code>csv_index</code>, <code>csv_row</code></td>
+<td>Use nonnegative integer selectors; only row reads have a row argument</td>
+</tr>
+<tr>
+<td><code>csv_path</code></td>
+<td>Supply nonempty text without NUL; local adapter paths must stay within its root</td>
+</tr>
+<tr>
+<td><code>csv_eof</code></td>
+<td>Choose an existing data row, remembering that header=True skips the first record</td>
+</tr>
+<tr>
+<td><code>csv_invalid_data</code></td>
+<td>Correct the file/cell format or declare a cell fallback where the experiment permits it</td>
+</tr>
+<tr>
+<td><code>csv_io_error</code></td>
+<td>Supply a readable file; column defaults do not recover a file error</td>
+</tr>
+</tbody>
+</table>
+<p>For reference execution, missing files services and invalid service implementations
+are described in the <a href="../../developer/troubleshooting/#csv-file-services">developer diagnostics</a>.</p>
 <h2 id="python-raises-typeerror-or-valueerror-before-compilation">Python raises TypeError or ValueError before compilation</h2>
 <p>These exceptions report invalid host calls or configuration rather than a
 runtime step failing. The message identifies what to change.</p>

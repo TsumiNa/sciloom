@@ -16,7 +16,7 @@
         <link rel="prev" href="../declarations/">
       
       
-        <link rel="next" href="../devices-and-targets/">
+        <link rel="next" href="../csv/">
       
       
         
@@ -1288,6 +1288,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#csv-reads" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        CSV reads
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#child-function-calls" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -1302,6 +1313,33 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  CSV reads
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2748,6 +2786,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/read-reagent-table/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Read a reagent table
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2972,6 +3037,33 @@
     
   
   Elapsed-time IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/csv-read-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typed CSV IR
 
     
   </span>
@@ -3218,6 +3310,33 @@
     
   
   Runtime text
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/csv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime CSV
 
     
   </span>
@@ -3642,6 +3761,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#csv-reads" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        CSV reads
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#child-function-calls" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3668,8 +3798,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.9
-    · <code title="f37b21dc22c951c96427b2b194b39ec2cafd6403">f37b21dc</code>
+    · SciLoom 0.3.10
+    · <code title="5b70d5c7bc5971c5f964a51f0833ccf1e03d7a13">5b70d5c7</code>
   </p>
 </aside>
 
@@ -4053,6 +4183,9 @@ See <a href="../../tutorial/lists-and-loops/">lesson 4</a>.</p>
 <p><strong>AutoSuite restriction:</strong> assign each output list as a whole on every return
 path, before reading or updating its elements. A loop can run zero times.
 An empty assignment is a valid empty result but supplies no elements to update.</p>
+<h2 id="csv-reads">CSV reads</h2>
+<p>CSV reads return tuples and always require unpacking even for a single
+column. See <a href="../csv/">CSV reads</a> for their distinct row/column and error rules.</p>
 <h2 id="child-function-calls">Child Function calls</h2>
 <table>
 <thead>
@@ -4129,13 +4262,13 @@ store it in a field first. See <a href="../../advanced/composition/">composition
         
         
           
-          <a href="../devices-and-targets/" class="md-footer__link md-footer__link--next" aria-label="Next: Devices and targets">
+          <a href="../csv/" class="md-footer__link md-footer__link--next" aria-label="Next: CSV reads">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Devices and targets
+                CSV reads
               </div>
             </div>
             <div class="md-footer__button md-icon">

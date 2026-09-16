@@ -1119,6 +1119,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../user-guide/reference/csv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  CSV reads
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../user-guide/reference/devices-and-targets/" class="md-nav__link">
         
   
@@ -1949,6 +1976,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#typed-csv-statements" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Typed CSV statements
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#validation-and-serialization" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2641,6 +2679,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/read-reagent-table/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Read a reagent table
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2865,6 +2930,33 @@
     
   
   Elapsed-time IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/csv-read-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typed CSV IR
 
     
   </span>
@@ -3111,6 +3203,33 @@
     
   
   Runtime text
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/csv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime CSV
 
     
   </span>
@@ -3425,6 +3544,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#typed-csv-statements" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Typed CSV statements
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#validation-and-serialization" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3451,8 +3581,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.9
-    · <code title="f37b21dc22c951c96427b2b194b39ec2cafd6403">f37b21dc</code>
+    · SciLoom 0.3.10
+    · <code title="5b70d5c7bc5971c5f964a51f0833ccf1e03d7a13">5b70d5c7</code>
   </p>
 </aside>
 
@@ -3499,6 +3629,14 @@ statements, not expressions. See the <a href="../../../examples/timing-ir/">dire
 Device bindings apply only to DeviceResource. Specialization removes timers
 whose owning functions become unreachable; existing device wire fields do not
 change. Definite timer starts are checked after device specialization.</p>
+<h2 id="typed-csv-statements">Typed CSV statements</h2>
+<p><code>ReadCsv</code> is an ordered, result-producing statement. <code>CsvReadMode</code> selects one
+row or whole columns; <code>CsvErrorPolicy</code> selects fatal failure or status results.
+Each <code>CsvColumn</code> stores a typed selector, optional unit literal and default.
+Distinct target references bind the whole result tuple. No CSV parser function,
+Python type object or vendor result code is stored in JSON. The
+<a href="../../../examples/csv-read-ir/">direct CSV example</a> demonstrates these additive v4
+records; new readers still preserve old canonical documents unchanged.</p>
 <h2 id="validation-and-serialization">Validation and serialization</h2>
 <p><code>validate(program)</code> returns a tuple of Diagnostic records. <code>to_dict/from_dict</code>
 operate on mappings; <code>to_json/from_json</code> operate on strings. Import and export

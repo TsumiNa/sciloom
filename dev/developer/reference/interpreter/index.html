@@ -1119,6 +1119,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../user-guide/reference/csv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  CSV reads
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../user-guide/reference/devices-and-targets/" class="md-nav__link">
         
   
@@ -2101,6 +2128,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#explicit-files-and-csv-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Explicit files and CSV outcomes
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-and-snapshots" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2696,6 +2734,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/read-reagent-table/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Read a reagent table
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2920,6 +2985,33 @@
     
   
   Elapsed-time IR
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/csv-read-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typed CSV IR
 
     
   </span>
@@ -3166,6 +3258,33 @@
     
   
   Runtime text
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../api/csv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime CSV
 
     
   </span>
@@ -3524,6 +3643,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#explicit-files-and-csv-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Explicit files and CSV outcomes
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-and-snapshots" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3561,8 +3691,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.9
-    · <code title="f37b21dc22c951c96427b2b194b39ec2cafd6403">f37b21dc</code>
+    · SciLoom 0.3.10
+    · <code title="5b70d5c7bc5971c5f964a51f0833ccf1e03d7a13">5b70d5c7</code>
   </p>
 </aside>
 
@@ -3598,7 +3728,7 @@ automatically. Concrete services arrive with the operations that need them.</p>
 <p><code>environment.events</code> returns an immutable history snapshot across all runs using
 that environment. <code>result.events</code> remains limited to one successful run.
 <code>ExecutionEvent</code> is the union of DeviceEvent, LogEvent, AcknowledgementEvent,
-WallTimeEvent, TimerEvent and WaitEvent. Narrow with
+WallTimeEvent, TimerEvent, WaitEvent and CsvReadEvent. Narrow with
 <code>isinstance(event, LogEvent)</code> before accessing log-specific fields; device events
 carry state snapshots. A failed run leaves earlier completed events in
 environment history and does not roll back their state changes.</p>
@@ -3686,6 +3816,31 @@ existing <code>result.resources</code> mapping continues to contain device state
 <p>The <a href="../../../examples/timing-ir/">timer IR example</a> advances five virtual seconds.
 This defines ordering and elapsed-time semantics; it is not a latency or scheduling
 simulation of AutoSuite or physical equipment.</p>
+<h2 id="explicit-files-and-csv-outcomes">Explicit files and CSV outcomes</h2>
+<p>Provide <code>ReferenceEnvironment(files=MemoryFiles({"recipe.csv": data_bytes}))</code>
+for isolated reference reads. MemoryFiles copies its initial mapping; immutable
+byte snapshots stay unchanged after later appends. Each newly constructed service
+has independent state. Sharing a service explicitly shares its file contents.</p>
+<p>Use <code>LocalFiles(root=...)</code> only when host file access is intended. The root must
+already be a directory. Paths are relative to it; absolute paths, traversal and
+resolved symlinks outside it are rejected. This containment check is not a sandbox
+against concurrent filesystem changes. FileService exposes <code>read_bytes(path)</code> and
+<code>append_bytes(path, data)</code>; append creates a missing file but never parent directories.
+Runtime CSV append is not available yet.</p>
+<p>ReadCsv captures path, optional row, then each column's index/default once before
+reading. It parses and converts all results, normalizes them for destinations,
+then commits them together. Lists use the usual immutable internal representation.
+A failed ordinary read leaves every destination unchanged. The
+<a href="../../../user-guide/reference/csv/">CSV reference</a> defines encoding, conversions,
+try-form fallbacks and named statuses; it does not promise a filesystem transaction.</p>
+<p>CsvReadEvent records a completed read attempt, including IO/parse/EOF failures,
+with captured path, selectors and status. It is appended before result assignment
+or a fatal diagnostic. Invalid arguments or a missing file service produce no
+read event. Even if destination normalization subsequently fails, the completed
+file-read event remains. Previously completed actions are not rolled back.</p>
+<p>The <a href="../../../examples/csv-read-ir/">CSV IR example</a> demonstrates JSON restoration
+without reading a host file. Native AutoSuite task probes remain separate from
+portable compilation and cannot establish parser equivalence by static inspection.</p>
 <h2 id="session-and-snapshots">Session and snapshots</h2>
 <p>Internal variables initialize once per session and function identity. Repeated
 calls retain state; a new Interpreter starts a fresh session. Input/output call
