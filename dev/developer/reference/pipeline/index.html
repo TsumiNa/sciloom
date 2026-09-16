@@ -1200,6 +1200,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../user-guide/reference/device-locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime device locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../user-guide/reference/devices-and-targets/" class="md-nav__link">
         
   
@@ -3235,6 +3262,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/device-locations-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Physical device snapshots
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3856,8 +3910,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.14
-    · <code title="e8ee675c5864da5c3dd09949c00383eddb43ea13">e8ee675c</code>
+    · SciLoom 0.3.15
+    · <code title="aa75dce16e94384e2bfeaa167cd82dc2bb98ab43">aa75dce1</code>
   </p>
 </aside>
 
@@ -3876,7 +3930,7 @@ same diagram block by block.</p>
     IR --&gt; Validate["Structure and types"]
     Validate --&gt; Resolve["Target.resolve_devices"]
     Resolve --&gt; Specialize["Device specialization"]
-    Specialize --&gt; Config["Capabilities, device configuration and timer starts"]
+    Specialize --&gt; Config["Capabilities, configuration, timer starts and location scopes"]
     Config --&gt; Target["Target.validate and emit"]
     Target --&gt; Artifact["Platform artifact"]
     Specialize --&gt; Interpreter["Reference interpreter"]
@@ -3912,9 +3966,9 @@ same diagram block by block.</p>
 </tr>
 <tr>
 <td>4</td>
-<td>capability, definite-configuration and definite-timer-start checks</td>
+<td>capability, definite-configuration, timer-start and transitive location-scope checks</td>
 <td>selected</td>
-<td><code>CompilationError</code> (<code>device_capability</code>, <code>device_configuration</code>, <code>timer_not_started</code>)</td>
+<td><code>CompilationError</code> (<code>device_capability</code>, <code>device_configuration</code>, <code>timer_not_started</code>, <code>device_selection_required</code>, <code>device_selection_nesting</code>, <code>device_selection_binding</code>)</td>
 </tr>
 <tr>
 <td>5</td>
@@ -3935,6 +3989,12 @@ the selected program. What step 4 proves about required configuration is stated
 on <a href="../device-contracts/#required-configuration">device contracts</a>.
 Timer analysis starts each entry invocation with no established timer origins;
 branch intersections and possibly empty loops cannot rely on earlier runs.</p>
+<p>Location scopes are lexical and inherited through calls, not retained between
+entry invocations. A DeviceAt body executes once after successful entry; its
+normal-return configuration and timer-start guarantees propagate outward. Scope
+analysis uses call-graph summaries, so indirect or recursive calls cannot hide
+same-resource nesting. Candidate bindings expose a common concrete contract for
+compile-time queries without inventing one physical controller identity.</p>
 <p><code>CompileResult</code> retains <code>semantic_ir</code> (authored), <code>specialized_ir</code> (selected),
 <code>target_id</code>, <code>artifact</code> and <code>diagnostics</code>, which is empty for a returned result
 because every failure raises. <code>write(path)</code> writes the artifact's bytes and

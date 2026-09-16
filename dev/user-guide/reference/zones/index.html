@@ -16,7 +16,7 @@
         <link rel="prev" href="../csv/">
       
       
-        <link rel="next" href="../devices-and-targets/">
+        <link rel="next" href="../device-locations/">
       
       
         
@@ -1273,6 +1273,33 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../device-locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime device locations
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -3232,6 +3259,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/device-locations-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Physical device snapshots
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3853,8 +3907,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.14
-    · <code title="e8ee675c5864da5c3dd09949c00383eddb43ea13">e8ee675c</code>
+    · SciLoom 0.3.15
+    · <code title="aa75dce16e94384e2bfeaa167cd82dc2bb98ab43">aa75dce1</code>
   </p>
 </aside>
 
@@ -4004,8 +4058,9 @@ is verified. These operations already work in reference execution.
 It also rejects nonempty host literals containing
 opaque well IDs and <code>well_name</code>, whose single-well runtime check still needs
 platform validation. Supply Zone parameters from AutoSuite or resolve names at
-runtime. Dynamic device selection with <code>at()</code> is not implemented yet; fixed
-hardware bindings keep their existing behavior.</p>
+runtime. <a href="../device-locations/">Dynamic device selection with <code>at()</code></a> works in
+reference execution; AutoSuite emission remains gated on verified runtime
+failure propagation. Fixed hardware bindings keep their existing behavior.</p>
 <p>The <a href="../../../examples/resolve-locations/">location example</a> compiles a complete
 function. The <a href="../../../examples/zone-ir/">developer example</a> executes it against
 an explicit directory without equipment. The <a href="../../../examples/visit-locations/">visit example</a>
@@ -4060,13 +4115,13 @@ demonstrates indexing and complete groups through reference execution.</p>
         
         
           
-          <a href="../devices-and-targets/" class="md-footer__link md-footer__link--next" aria-label="Next: Devices and targets">
+          <a href="../device-locations/" class="md-footer__link md-footer__link--next" aria-label="Next: Runtime device locations">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Devices and targets
+                Runtime device locations
               </div>
             </div>
             <div class="md-footer__button md-icon">

@@ -1200,6 +1200,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../user-guide/reference/device-locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime device locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../user-guide/reference/devices-and-targets/" class="md-nav__link">
         
   
@@ -3147,6 +3174,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/device-locations-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Physical device snapshots
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3545,6 +3599,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#sciloom_autosuite.AutoSuiteTarget.layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        layout
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#sciloom_autosuite.AutoSuiteTarget.target_id" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3665,6 +3730,34 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         device_id
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sciloom_autosuite.AutoSuiteAgitatorSelection" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        AutoSuiteAgitatorSelection
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AutoSuiteAgitatorSelection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sciloom_autosuite.AutoSuiteAgitatorSelection.candidates" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        candidates
       </span>
     </span>
   </a>
@@ -4205,6 +4298,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#sciloom_autosuite.AutoSuiteTarget.layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        layout
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#sciloom_autosuite.AutoSuiteTarget.target_id" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -4325,6 +4429,34 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         device_id
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sciloom_autosuite.AutoSuiteAgitatorSelection" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        AutoSuiteAgitatorSelection
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AutoSuiteAgitatorSelection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sciloom_autosuite.AutoSuiteAgitatorSelection.candidates" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        candidates
       </span>
     </span>
   </a>
@@ -4574,8 +4706,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.14
-    · <code title="e8ee675c5864da5c3dd09949c00383eddb43ea13">e8ee675c</code>
+    · SciLoom 0.3.15
+    · <code title="aa75dce16e94384e2bfeaa167cd82dc2bb98ab43">aa75dce1</code>
   </p>
 </aside>
 
@@ -4602,8 +4734,11 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">version</span><span class="p">:</span> <span class="n">AutoSuiteVersion</span> <span class="o">=</span> <span class="n">AutoSuiteVersion</span><span class="o">.</span><span class="n">V2_47_1_1</span><span class="p">,</span>
     <span class="n">devices</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span>
-        <span class="nb">str</span><span class="p">,</span> <span class="n">AutoSuiteIndividualShaker</span>
+        <span class="nb">str</span><span class="p">,</span>
+        <span class="n">AutoSuiteIndividualShaker</span>
+        <span class="o">|</span> <span class="n">AutoSuiteAgitatorSelection</span><span class="p">,</span>
     <span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(),</span>
+    <span class="n">layout</span><span class="p">:</span> <span class="n">AutoSuiteLayout</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span>
 </code></pre></div>
 
@@ -4657,15 +4792,42 @@
 
   &lt;span class=&quot;doc doc-labels&quot;&gt;
       &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="./#sciloom_autosuite.AutoSuiteIndividualShaker">AutoSuiteIndividualShaker</a>]</code>
+  &lt;/span&gt;" href="./#sciloom_autosuite.AutoSuiteIndividualShaker">AutoSuiteIndividualShaker</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom_autosuite.AutoSuiteAgitatorSelection&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="./#sciloom_autosuite.AutoSuiteAgitatorSelection">AutoSuiteAgitatorSelection</a>]</code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Logical field/component paths mapped to individual shaker profiles.</p>
+                <p>Logical paths mapped to fixed shakers or bounded candidate selections.</p>
               </div>
             </td>
             <td>
                   <code><span title="dict">dict</span>()</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>layout</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom_autosuite.AutoSuiteLayout&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="./#sciloom_autosuite.AutoSuiteLayout">AutoSuiteLayout</a> | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Read-only APP deployment facts. Required for candidate selection;
+when supplied, also validates fixed profiles against real well ancestry.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
             </td>
           </tr>
       </tbody>
@@ -4687,7 +4849,7 @@
             </td>
             <td>
               <div class="doc-md-description">
-                <p>A binding is not an AutoSuiteIndividualShaker.</p>
+                <p>A binding or layout has an unsupported record type.</p>
               </div>
             </td>
           </tr>
@@ -4697,13 +4859,16 @@
             </td>
             <td>
               <div class="doc-md-description">
-                <p>A profile/version/path is invalid or physical bindings are duplicated.</p>
+                <p>A profile/version/path is invalid, physical bindings overlap,
+or layout facts do not resolve the declared controller and wells.</p>
               </div>
             </td>
           </tr>
       </tbody>
     </table>
-        <p>Generated XML still requires AutoSuite Executor validation on the deployment host.</p>
+        <p>Dynamic selection is representable and validated, but compilation reports
+unsupported_device_location until native failure guards have been verified.
+Generated XML still requires AutoSuite Executor validation on the deployment host.</p>
 
 
 
@@ -4760,7 +4925,33 @@
   </span>
 
 </h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">devices</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">AutoSuiteIndividualShaker</span><span class="p">]</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">devices</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span>
+    <span class="nb">str</span><span class="p">,</span>
+    <span class="n">AutoSuiteIndividualShaker</span> <span class="o">|</span> <span class="n">AutoSuiteAgitatorSelection</span><span class="p">,</span>
+<span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sciloom_autosuite.AutoSuiteTarget.layout" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">layout</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">layout</span><span class="p">:</span> <span class="n">AutoSuiteLayout</span> <span class="o">|</span> <span class="kc">None</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -5185,6 +5376,152 @@ record does not discover hardware or establish physical speed limits.</p>
 
 </h3>
 <div class="doc-signature highlight"><pre><span></span><code><span class="n">device_id</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="sciloom_autosuite.AutoSuiteAgitatorSelection" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">sciloom_autosuite.AutoSuiteAgitatorSelection</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">AutoSuiteAgitatorSelection</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span> <span class="n">candidates</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">AutoSuiteIndividualShaker</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+
+
+        <p>Declare allowed individual shakers for one runtime-selected logical device.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>candidates</code>
+            </td>
+            <td>
+                  <code><span title="tuple">tuple</span>[<a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom_autosuite.AutoSuiteIndividualShaker&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="./#sciloom_autosuite.AutoSuiteIndividualShaker">AutoSuiteIndividualShaker</a>, ...]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Nonempty profiles with distinct shaker IDs and Zone names.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A profile is not an AutoSuiteIndividualShaker.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The selection is empty or repeats a controller/Zone.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>The target requires a layout and verifies real well ancestry. This immutable
+record performs no hardware I/O and does not bypass native failure checks.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sciloom_autosuite.AutoSuiteAgitatorSelection.candidates" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">candidates</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">candidates</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">AutoSuiteIndividualShaker</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">

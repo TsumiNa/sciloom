@@ -1200,6 +1200,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../user-guide/reference/device-locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime device locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../user-guide/reference/devices-and-targets/" class="md-nav__link">
         
   
@@ -3147,6 +3174,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/device-locations-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Physical device snapshots
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3857,6 +3911,56 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         device_type_id
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sciloom.core.ir.DeviceAt" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        DeviceAt
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DeviceAt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.ir.DeviceAt.resource_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        resource_id
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.ir.DeviceAt.location" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        location
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.ir.DeviceAt.body" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        body
       </span>
     </span>
   </a>
@@ -4656,6 +4760,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sciloom.core.ir.DeviceAt" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        DeviceAt
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DeviceAt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.ir.DeviceAt.resource_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        resource_id
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.ir.DeviceAt.location" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        location
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sciloom.core.ir.DeviceAt.body" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        body
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#sciloom.core.ir.ConfigureProperty" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -5044,8 +5198,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.14
-    · <code title="e8ee675c5864da5c3dd09949c00383eddb43ea13">e8ee675c</code>
+    · SciLoom 0.3.15
+    · <code title="aa75dce16e94384e2bfeaa167cd82dc2bb98ab43">aa75dce1</code>
   </p>
 </aside>
 
@@ -5759,6 +5913,136 @@
 
 </h3>
 <div class="doc-signature highlight"><pre><span></span><code><span class="n">device_type_id</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="sciloom.core.ir.DeviceAt" class="doc doc-heading">
+            <span class="doc doc-object-name doc-class-name">sciloom.core.ir.DeviceAt</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">DeviceAt</span><span class="p">(</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">node_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">source</span><span class="p">:</span> <span class="n">SourceSpan</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">resource_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">location</span><span class="p">:</span> <span class="n">Expression</span><span class="p">,</span>
+    <span class="n">body</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Statement</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(),</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="sciloom.core.ir.model.Node">Node</span></code></p>
+
+
+
+        <p>Capture and validate a device location, then execute one lexical body.</p>
+<p>Calls inherit the selection. Exit unwinds context without stopping equipment
+or restoring physical state. A logical resource cannot be selected twice in
+nested scopes. Deployment candidates remain outside the semantic program.</p>
+
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sciloom.core.ir.DeviceAt.resource_id" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">resource_id</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">resource_id</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sciloom.core.ir.DeviceAt.location" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">location</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">location</span><span class="p">:</span> <span class="n">Expression</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h3 id="sciloom.core.ir.DeviceAt.body" class="doc doc-heading">
+            <span class="doc doc-object-name doc-attribute-name">body</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-class-attribute"><code>class-attribute</code></small>
+      <small class="doc doc-label doc-label-instance-attribute"><code>instance-attribute</code></small>
+  </span>
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">body</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Statement</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">

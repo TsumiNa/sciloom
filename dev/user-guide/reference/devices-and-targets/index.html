@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/user-guide/reference/devices-and-targets/">
       
       
-        <link rel="prev" href="../zones/">
+        <link rel="prev" href="../device-locations/">
       
       
         <link rel="next" href="../../../developer/">
@@ -1197,6 +1197,33 @@
     
   
   Sample locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../device-locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime device locations
 
     
   </span>
@@ -3254,6 +3281,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/device-locations-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Physical device snapshots
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/demo-device/" class="md-nav__link">
         
   
@@ -3897,8 +3951,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.14
-    · <code title="e8ee675c5864da5c3dd09949c00383eddb43ea13">e8ee675c</code>
+    · SciLoom 0.3.15
+    · <code title="aa75dce16e94384e2bfeaa167cd82dc2bb98ab43">aa75dce1</code>
   </p>
 </aside>
 
@@ -4012,8 +4066,11 @@ See <a href="../../advanced/composition/">the complete sharing example</a>.</p>
 </tr>
 </tbody>
 </table>
-<p>Zone names must be nonempty single-line strings. SciLoom does not discover
-zones or check which physical instrument is connected.
+<p>Zone names must be nonempty single-line strings. An optional
+<code>layout=AutoSuiteLayout.from_app(path)</code> validates fixed profiles against APP
+well/controller ancestry. It does not contact the instrument. See
+<a href="../device-locations/">runtime device locations</a> for bounded candidate bindings
+and the current dynamic-compilation gate.
 See <a href="../../advanced/autosuite/">AutoSuite compilation</a> for package handoff and
 target-specific language restrictions.</p>
 <h2 id="compile-time-queries">Compile-time queries</h2>
@@ -4075,7 +4132,7 @@ See <a href="../../advanced/device-branches/">device-dependent branches</a>.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../zones/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Sample locations">
+          <a href="../device-locations/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Runtime device locations">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -4085,7 +4142,7 @@ See <a href="../../advanced/device-branches/">device-dependent branches</a>.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Sample locations
+                Runtime device locations
               </div>
             </div>
           </a>

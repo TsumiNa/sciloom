@@ -1437,6 +1437,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../reference/device-locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime device locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../reference/devices-and-targets/" class="md-nav__link">
         
   
@@ -3384,6 +3411,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/device-locations-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Physical device snapshots
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/demo-device/" class="md-nav__link">
         
   
@@ -4159,8 +4213,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.14
-    · <code title="e8ee675c5864da5c3dd09949c00383eddb43ea13">e8ee675c</code>
+    · SciLoom 0.3.15
+    · <code title="aa75dce16e94384e2bfeaa167cd82dc2bb98ab43">aa75dce1</code>
   </p>
 </aside>
 
@@ -4992,8 +5046,8 @@ runtime step failing. The message identifies what to change.</p>
 <td>Store the child under a public name such as <code>self.stage</code></td>
 </tr>
 <tr>
-<td><code>devices must contain AutoSuiteIndividualShaker records</code></td>
-<td>Replace another object in the target dictionary with the required profile</td>
+<td><code>devices must contain AutoSuiteIndividualShaker or AutoSuiteAgitatorSelection records</code></td>
+<td>Use a fixed profile, or an explicit candidate selection with a layout</td>
 </tr>
 <tr>
 <td>A binding name is rejected</td>
@@ -5014,6 +5068,38 @@ runtime step failing. The message identifies what to change.</p>
 <tr>
 <td>A speed literal is rejected</td>
 <td>Use a finite nonnegative number times <code>rpm</code> or <code>rps</code>; strings and Booleans are invalid</td>
+</tr>
+</tbody>
+</table>
+<p>For <a href="../reference/device-locations/">runtime device locations</a>, these diagnostics
+identify a missing or invalid selection:</p>
+<table>
+<thead>
+<tr>
+<th>Diagnostic</th>
+<th>What to change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>device_selection_required</code></td>
+<td>Put every command on a selection-bound device inside <code>with at(...)</code>; configuration assignments may stay outside</td>
+</tr>
+<tr>
+<td><code>device_selection_nesting</code></td>
+<td>Remove the inner selection for the same device; shared child calls already inherit the outer location</td>
+</tr>
+<tr>
+<td><code>device_selection_binding</code></td>
+<td>Bind explicit candidates, including a single candidate, when using <code>at()</code></td>
+</tr>
+<tr>
+<td><code>device_location</code>, <code>unknown_well</code></td>
+<td>Supply a nonempty Zone inside one candidate's known wells</td>
+</tr>
+<tr>
+<td><code>unsupported_device_location</code></td>
+<td>Dynamic reference execution is available; AutoSuite emission awaits verified failure propagation. A fixed-binding program without <code>at()</code> can still compile</td>
 </tr>
 </tbody>
 </table>

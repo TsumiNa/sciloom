@@ -1200,6 +1200,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../user-guide/reference/device-locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Runtime device locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../user-guide/reference/devices-and-targets/" class="md-nav__link">
         
   
@@ -3323,6 +3350,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/device-locations-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Physical device snapshots
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/demo-device/" class="md-nav__link">
         
   
@@ -4032,8 +4086,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.14
-    · <code title="e8ee675c5864da5c3dd09949c00383eddb43ea13">e8ee675c</code>
+    · SciLoom 0.3.15
+    · <code title="aa75dce16e94384e2bfeaa167cd82dc2bb98ab43">aa75dce1</code>
   </p>
 </aside>
 
@@ -4205,8 +4259,8 @@ when the body is empty. The target's last value remains in Function state. See
 <a href="../../../examples/zone-traversal-ir/">grouped traversal</a> for a direct IR example.</p>
 <p>Zone values remain immutable in inputs, state and results. Whole-value assignment
 or a child parameter does not create a writable alias. The directory does not
-authorize device use: deployment checks belong to the target and later dynamic
-location scopes.</p>
+authorize device use: explicit deployment bindings and <code>DeviceAt</code> scope checks
+provide that boundary.</p>
 <h2 id="session-and-snapshots">Session and snapshots</h2>
 <p>Internal variables initialize once per session and function identity. Repeated
 calls retain state; a new Interpreter starts a fresh session. Input/output call
@@ -4221,6 +4275,21 @@ restored to physical types in public outputs.</p>
 <p>Device snapshots separate saved configuration, applied configuration and enabled
 state. Configure captures immediately, start applies complete saved values, and
 stop retains configuration. Events preserve snapshots at each operation.</p>
+<p>For bound reference execution, supply <code>ReferenceEnvironment(device_bindings=...,
+locations=...)</code>. <code>DeviceSelectionBinding</code> holds immutable candidates; each
+<code>DeviceCandidate</code> pairs one existing <code>DeviceBinding</code> with its allowed wells.
+Bindings stay outside Program/JSON. Specialize device conditions explicitly
+before constructing the interpreter.</p>
+<p>The interpreter checks complete bindings and transitive location scopes before
+running. A <code>DeviceAt</code> validates its captured Zone before the body, inherits its
+context through calls and releases it on return or failure. It never implicitly
+stops equipment. Saved configuration belongs to the logical resource;
+<code>ExecutionResult.physical_devices</code> separately retains each controller's applied
+values and enabled state. <code>DeviceEvent</code> identifies the selected physical
+controller when one exists. The logical snapshot describes its last action, not
+every controller's running state. Even sessions sharing one environment have
+independent physical state. Unbound existing programs retain empty physical maps.
+See <a href="../../../examples/device-locations-ir/">the direct IR example</a>.</p>
 <p>Uninitialized reads and missing outputs are execution errors. Earlier state writes
 remain after a failed run: execution is not transactional. A session is sequential
 and is not intended for concurrent run calls.</p>
