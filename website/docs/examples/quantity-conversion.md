@@ -30,8 +30,8 @@ Python source. The generated function takes its inputs when called at runtime.
 The results are 3 mL, the number 3 and −30 seconds, subject to normal floating
 rounding. This is a calculation example; it does not control equipment.
 
-[Download Python](../downloads/examples/quantity_conversion.py) ·
-[Download ASFP](../downloads/examples/quantity_conversion.asfp)
+[Download Python](../_generated/examples/quantity_conversion.py) ·
+[Download ASFP](../_generated/examples/quantity_conversion.asfp)
 
 See [quantity rules](../user-guide/reference/runtime-language.md#physical-quantities)
 for dimensional checks and current AutoSuite restrictions.

@@ -39,7 +39,11 @@ until the failure gate. Reference execution supports them with explicit errors.
 same-name ASFP companion. Direct IR/JSON, mypy, copy/state and read-only corpus
 tests cover the stage's interfaces.
 
-Local acceptance: 448 code/example tests, 79 website tests, mypy (72 files),
+Review fixes make host equality/inequality reject mismatched dimensions, preserve
+quantity hashing, and verify rendered example download links against source
+bytes. The glossary and historical inventories now distinguish their scope.
+
+Local acceptance: 453 code/example tests, 79 website tests, mypy (72 files),
 Ruff, strict website build, all 15 example commands, proposed-example syntax,
 AutoSuite smoke, recipe validation and read-only corpus audit. Previous v4
 golden JSON/ASFP and existing companions remain byte-identical. Remote review
@@ -47,4 +51,4 @@ and latest-head CI remain the merge gate.
 
 ## Version
 
-Version: PATCH 0.3.1 → 0.3.2 for both workspace packages, by the user's explicit series-level version decision. JSON stays v4.
+Version: PATCH 0.3.1 → 0.3.2 for both workspace packages, by the user's explicit series-level version decision. Review fixes remain within this stage's quantity contract; the decision is unchanged. JSON stays v4.

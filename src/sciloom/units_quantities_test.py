@@ -1,5 +1,7 @@
 """Finite quantity construction, dimensional arithmetic and unit conversion."""
 
+import operator
+
 import pytest
 
 from .units import Duration, L, Volume, hour, minute, mL, rpm, rps, s, uL
@@ -48,6 +50,23 @@ def test_wrong_dimensions_and_numeric_arguments():
         (1 * s) / (0 * s)
     with pytest.raises(ValueError):
         (1e308 * s) * 2
+
+
+@pytest.mark.parametrize("compare", [operator.eq, operator.ne])
+@pytest.mark.parametrize("left,right", [(1 * mL, 1 * s), (1 * s, 1 * mL)])
+def test_equality_rejects_wrong_dimensions(compare, left, right):
+    with pytest.raises(TypeError, match="Comparison requires two"):
+        compare(left, right)
+
+
+def test_quantity_equality_and_hashing():
+    assert 1 * s == Duration(seconds=1)
+    assert 1 * s != 2 * s
+    assert 1 * mL == Volume(m3=1e-6)
+    assert 1 * mL != 2 * mL
+    # Equal canonical numbers in different dimensions remain distinct keys.
+    values = {Duration(seconds=1), 1 * s, Volume(m3=1), Volume(m3=1)}
+    assert len(values) == 2
 
 
 def test_speed_scaling_and_conversion_keep_nonnegative_values():

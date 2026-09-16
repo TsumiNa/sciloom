@@ -141,6 +141,14 @@ class Volume:
     def __neg__(self) -> Volume:
         return Volume(m3=-self.m3)
 
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Volume):
+            raise TypeError("Comparison requires two Volume values.")
+        return self.m3 == other.m3
+
+    def __hash__(self) -> int:
+        return hash((Volume, self.m3))
+
     def __lt__(self, other: Volume) -> bool:
         if not isinstance(other, Volume):
             raise TypeError("Comparison requires two Volume values.")
@@ -213,6 +221,14 @@ class Duration:
 
     def __neg__(self) -> Duration:
         return Duration(seconds=-self.seconds)
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Duration):
+            raise TypeError("Comparison requires two Duration values.")
+        return self.seconds == other.seconds
+
+    def __hash__(self) -> int:
+        return hash((Duration, self.seconds))
 
     def __lt__(self, other: Duration) -> bool:
         if not isinstance(other, Duration):

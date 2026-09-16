@@ -21,6 +21,21 @@ class BrandReferences(HTMLParser):
                 self.urls.add(value)
 
 
+class ExampleDownloads(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.urls = set()
+
+    def handle_starttag(self, tag, attrs):
+        if tag != "a":
+            return
+        for key, value in attrs:
+            if key == "href" and value:
+                parsed = urlsplit(value)
+                if not parsed.scheme and Path(parsed.path).suffix in {".py", ".asfp", ".json", ".txt"}:
+                    self.urls.add(parsed.path)
+
+
 def test_rendered_api_and_revision():
     # Always rebuild: a stale local artifact must not mask a broken API change.
     output = ROOT / "website/.build/site"
@@ -36,6 +51,19 @@ def test_rendered_api_and_revision():
     assert not (output / "autosuite").exists()
     assert not (output / "refactor").exists()
     assert not (output / "_generated/examples/proposed_frontend").exists()
+
+    # Strict rendering does not reject every missing non-Markdown download.
+    # Resolve links from their actual nested HTML locations, then check bytes.
+    download_count = 0
+    for page in (output / "examples").rglob("index.html"):
+        downloads = ExampleDownloads()
+        downloads.feed(page.read_text())
+        for url in downloads.urls:
+            asset = (page.parent / url).resolve()
+            relative = asset.relative_to((output / "_generated/examples").resolve())
+            assert asset.read_bytes() == (ROOT / "examples" / relative).read_bytes()
+            download_count += 1
+    assert download_count > 0
 
     # Branding must survive nested page URLs and publication under /dev/.
     for name in ("index.html", "developer/brand/index.html", "api/author/index.html"):

@@ -62,7 +62,7 @@ count alone understates the remaining language work. Conversely, a task manager
 container is not an independent experiment operation. No coverage percentage is
 inferred from these counts.
 
-The code boundary can be checked in:
+At the audited 0.2.0 baseline, the code boundary was:
 
 - [Semantic types](../../src/sciloom/core/ir/types.py): integer, real, Boolean,
   rotational speed, and homogeneous lists of those types; no text, Zone, volume
@@ -74,6 +74,14 @@ The code boundary can be checked in:
   [primitives](../../packages/sciloom-autosuite/src/sciloom_autosuite/primitives.py),
   [function generation](../../packages/sciloom-autosuite/src/sciloom_autosuite/functions.py),
   and [agitation](../../packages/sciloom-autosuite/src/sciloom_autosuite/agitation.py).
+
+Implementation update for 0.3.2: A01 text/text lists and A02 volume/duration
+quantities are now implemented, including their reference execution and bounded
+AutoSuite mappings. The inventory above records the earlier baseline, not the
+current type set. See [text mapping](19_TEXT_MAPPING.md),
+[quantity mapping](20_QUANTITY_MAPPING.md) and the
+[stage status](../../docs/refactor/runtime-capabilities/00-overview.md#stage-status-and-sequence)
+for the implemented subset, remaining guards and pending Executor checks.
 
 The contributor `DeviceCommand` mechanism does not itself implement AutoSuite's
 Execute Operation task, arbitrary measurement results, or all vendor devices.
