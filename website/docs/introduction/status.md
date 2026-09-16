@@ -6,6 +6,7 @@ AutoSuite function package (`.asfp`). The current author API lets you:
 - Declare inputs, outputs and working values, including typed lists.
 - Process text and calculate volumes, time intervals and rotational speeds with explicit units.
 - Calculate values, use `if` and `while`, and call reusable child Functions.
+- Calculate magnitudes and round down; nearest-integer rounding of floats is available in reference execution, pending AutoSuite equivalence checks.
 - Save shaker settings and explicitly start or stop agitation.
 - Share a logical device between steps and bind it to an AutoSuite shaker.
 - Choose device-specific branches when compiling for a target.

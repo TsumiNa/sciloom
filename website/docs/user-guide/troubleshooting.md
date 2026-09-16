@@ -189,6 +189,7 @@ identify the restricted operation before generating a function package:
 
 | Code | Cause | Current option |
 | --- | --- | --- |
+| `unsupported_rounding` | `round()` of a float in an AutoSuite program | use reference execution until the target's ties-to-even mapping is verified; `floor()` has different semantics and should only be used when rounding down is intended |
 | `unsupported_text_length` | runtime text or non-BMP text passed to `len()` | use reference execution; target length currently accepts BMP literals only |
 | `unsupported_runtime_guard` | a dynamic split selector, empty delimiter, negative split index or guarded text-list indexing | use a literal nonempty delimiter and nonnegative index; pass whole text lists |
 | `unsupported_text_literal` | NUL, surrogate code points or U+FFFE/U+FFFF | remove characters that cannot be represented in the XML expression |

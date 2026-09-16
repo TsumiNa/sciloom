@@ -141,6 +141,10 @@ class Volume:
     def __neg__(self) -> Volume:
         return Volume(m3=-self.m3)
 
+    def __abs__(self) -> Volume:
+        """Return the nonnegative magnitude, retaining the volume dimension."""
+        return Volume(m3=abs(self.m3))
+
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Volume):
             raise TypeError("Comparison requires two Volume values.")
@@ -221,6 +225,10 @@ class Duration:
 
     def __neg__(self) -> Duration:
         return Duration(seconds=-self.seconds)
+
+    def __abs__(self) -> Duration:
+        """Return the nonnegative magnitude, retaining the duration dimension."""
+        return Duration(seconds=abs(self.seconds))
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Duration):

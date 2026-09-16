@@ -34,7 +34,7 @@ def runtime_source(context: LoweringContext) -> ast.FunctionDef:
     # One hand-off instead of five attributes filled from another module.
     context.source = RuntimeSource(
         filename=method.__code__.co_filename,
-        static_names={**method.__globals__, **bindings.nonlocals},
+        static_names={**bindings.builtins, **method.__globals__, **bindings.nonlocals},
         unit_names={
             name: value
             for name, value in {**method.__globals__, **bindings.nonlocals}.items()

@@ -26,6 +26,8 @@ from sciloom.core.ir import (
     StopAgitation,
     TextLength,
     TextSplitPart,
+    Unary,
+    UnaryOp,
     VariableRole,
     While,
 )
@@ -52,7 +54,11 @@ def validate_runtime_guards(program: Program) -> tuple[Diagnostic, ...]:
         for node, path in iter_nodes(function):
             message = None
             code = "unsupported_runtime_guard"
-            if isinstance(node, TextLength):
+            if isinstance(node, Unary) and node.op == UnaryOp.ROUND:
+                if checker.check(node.operand, function, path) != ScalarType.INTEGER:
+                    message = "AutoSuite round for real values has no verified Python ties-to-even mapping or expansion range; round of an integer remains an identity."
+                    code = "unsupported_rounding"
+            elif isinstance(node, TextLength):
                 if not (
                     isinstance(node.value, Literal)
                     and isinstance(node.value.value, str)

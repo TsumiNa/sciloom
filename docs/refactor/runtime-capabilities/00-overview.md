@@ -65,8 +65,8 @@ handwritten JSON model was rejected because it duplicates the typed definitions.
 
 ## Stage status and sequence
 
-Stages 0–2 merged as PRs #85–87. Stage 3 implements volume and duration;
-stages 4–17 remain pending. Update this table in the stage that implements an
+Stages 0–3 merged as PRs #85–88. Stage 4 implements numeric operations;
+stages 5–17 remain pending. Update this table in the stage that implements an
 outcome and record its PR and verification.
 
 | Stage | Plan | Outcome | Status |
@@ -74,8 +74,8 @@ outcome and record its PR and verification.
 | 0 | [Record contract](02-plan-contract.md) | Interfaces, sequence, evidence gates and Q&A | Merged, PR #85 |
 | 1 | [Wire contract](03-plan-wire-contract.md) | Stable kinds, v4 baselines, consumer completeness | Merged, PR #86 |
 | 2 | [Text](04-plan-text.md) | A01 text and text lists | Merged, PR #87 |
-| 3 | [Quantities](05-plan-quantities.md) | A02 volume and time | Implemented; acceptance/review pending |
-| 4 | [Numeric operations](06-plan-numeric.md) | A11 abs, floor and round | Pending |
+| 3 | [Quantities](05-plan-quantities.md) | A02 volume and time | Merged, PR #88 |
+| 4 | [Numeric operations](06-plan-numeric.md) | A11 abs, floor and round | Implemented; acceptance/review pending |
 | 5 | [Reference environment](07-plan-environment.md) | Explicit environment and ordered external events | Pending |
 | 6 | [Logging](08-plan-logging.md) | A09 typed log events | Pending |
 | 7 | [Confirmation](09-plan-confirmation.md) | A10 acknowledged messages | Pending |

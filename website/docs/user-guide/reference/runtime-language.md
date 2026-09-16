@@ -33,6 +33,7 @@ List-to-list assignment requires the same element type; a literal assigned to
 | List literals, indexing, `len(self.items)` | Slicing, comprehensions, list methods such as `append` |
 | Text concatenation, equality, `len`, `text.trim`, `text.split_part` | String slicing, implicit conversion, arbitrary string methods |
 | Number times a known unit; quantity divided by a unit | Arbitrary dimensional algebra or implicit unit conversion |
+| `abs(value)`, `math.floor(value)`, `round(value)` | `round(value, ndigits)`, other math functions |
 
 Ordinary numeric division produces a float. Volume and duration support
 same-dimension arithmetic and ordering; quantity rules are below. A condition
@@ -42,6 +43,29 @@ Lists have no implicit truth value, whole-list comparisons or arithmetic.
 
 **AutoSuite restriction:** although SciLoom accepts `and` and `or`,
 this target rejects them. Use [nested conditions](../troubleshooting.md#autosuite-rejects-boolean-combinations).
+
+## Numeric functions
+
+Use `abs(self.value)` for magnitude and `floor(self.value)` after importing
+`floor` from `math` for the greatest integer no larger than a number.
+`round(self.value)` returns the nearest integer, choosing the even integer on
+an exact half: `round(2.5)` is 2, `round(3.5)` is 4, and `round(-2.5)` is −2.
+Only the one-argument forms are supported. Imported aliases and `math.floor`
+work too; a user-defined function with the same name is not a runtime operation.
+
+`abs` preserves `int` or `float`, and also accepts Volume and Duration.
+`floor` and `round` return `int`. Convert a quantity to a number first, for example
+`floor(self.amount / mL)`. Booleans, text and lists are not numeric arguments.
+Reference inputs and arithmetic results must be finite.
+
+**AutoSuite restriction:** `abs` and `floor` use the documented native functions.
+Floor and round of an integer keep the integer unchanged. Rounding a float is
+currently refused: AutoSuite's rule for half values and an equivalent expansion's
+range have not been verified. The reference interpreter supports Python's rule.
+Large-number reference results do not establish AutoSuite's numeric limits.
+
+The [portion calculation](../../examples/numeric-operations.md) combines quantity
+conversion, floor and magnitude without controlling equipment.
 
 ## Physical quantities
 

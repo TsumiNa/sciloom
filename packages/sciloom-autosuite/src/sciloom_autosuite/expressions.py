@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 from typing import assert_never
 
+from sciloom.core.diagnostics import CompilationError, Diagnostic
 from sciloom.core.ir import (
     Binary,
     BinaryOp,
@@ -19,6 +20,7 @@ from sciloom.core.ir import (
     TextSplitPart,
     TextTrim,
     Unary,
+    UnaryOp,
     ValueType,
 )
 from sciloom.core.ir.expressions import ExpressionChecker
@@ -101,8 +103,29 @@ def plan_expression(
         return ExpressionPlan(value.text, value.type, (*array.prerequisites, *value.prerequisites))
     if isinstance(expression, Unary):
         operand = plan_expression(context, function, expression.operand, tag, nested=True)
-        text = f"{expression.op.value} {operand.text}"
-        return ExpressionPlan(f"({text})" if nested else text, operand.type, operand.prerequisites)
+        op = expression.op
+        if op in (UnaryOp.ABSOLUTE, UnaryOp.FLOOR, UnaryOp.ROUND):
+            if op in (UnaryOp.FLOOR, UnaryOp.ROUND) and operand.type == ScalarType.INTEGER:
+                return operand
+            if op == UnaryOp.ROUND:
+                # Target validation rejects this before code generation.
+                raise CompilationError(
+                    (
+                        Diagnostic(
+                            code="unsupported_rounding",
+                            message="AutoSuite real round has no verified ties-to-even mapping.",
+                            path="$",
+                            node_id=expression.node_id,
+                            source=expression.source,
+                        ),
+                    )
+                )
+            result_type = ScalarType.INTEGER if op == UnaryOp.FLOOR else operand.type
+            return ExpressionPlan(f"{op.value}({operand.text})", result_type, operand.prerequisites)
+        if op in (UnaryOp.POSITIVE, UnaryOp.NEGATIVE, UnaryOp.NOT):
+            text = f"{op.value} {operand.text}"
+            return ExpressionPlan(f"({text})" if nested else text, operand.type, operand.prerequisites)
+        assert_never(op)
     if not isinstance(expression, Binary):
         assert_never(expression)
     left = plan_expression(context, function, expression.left, tag, nested=True)

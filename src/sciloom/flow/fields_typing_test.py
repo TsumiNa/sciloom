@@ -12,6 +12,7 @@ import pytest
 def test_native_declaration_type_contract(tmp_path, valid):
     source = """
 from collections.abc import Callable
+from math import floor
 from typing import assert_type
 from sciloom import Agitator, Duration, Function, Input, Output, RotationalSpeed, Var, Volume, mL, minute, rpm, runtime, s, text
 from sciloom.core.interpreter import Interpreter
@@ -42,6 +43,12 @@ class Scale(Function):
         assert_type(self.amount / mL, float)
         assert_type(self.factor * mL, Volume)
         assert_type(self.elapsed - 1 * s, Duration)
+        assert_type(abs(self.amount), Volume)
+        assert_type(abs(self.elapsed), Duration)
+        assert_type(abs(self.index), int)
+        assert_type(abs(self.factor), float)
+        assert_type(floor(self.factor), int)
+        assert_type(round(self.factor), int)
         self.amount = self.amount + 1 * mL
         self.elapsed = self.elapsed / 2
         self.name = text.trim(self.name)
@@ -72,6 +79,9 @@ class Bad(Function):
     def run(self) -> None:
         self.amount = self.elapsed
         self.amount = self.amount + self.elapsed
+        floor(self.amount)
+        round(self.elapsed)
+        abs(self.name)
         self.factor = "text"
         self.name = 3
         text.trim(3)
@@ -104,6 +114,6 @@ class Bad(Function):
         assert result.returncode == 0, result.stdout + result.stderr
     else:
         assert result.returncode == 1, result.stdout + result.stderr
-        assert result.stdout.count(" error: ") == 15, result.stdout
+        assert result.stdout.count(" error: ") == 18, result.stdout
         for code in ("[assignment]", "[list-item]"):
             assert code in result.stdout

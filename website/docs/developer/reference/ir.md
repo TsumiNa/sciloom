@@ -23,6 +23,13 @@ REAL by a VOLUME literal yields VOLUME; dividing two VOLUME values yields REAL.
 No Python unit object enters JSON. Quantity constraints apply to intermediate
 values too, so a negative speed cannot be hidden inside a later comparison.
 
+`Unary` also represents numeric magnitude and rounding: `UnaryOp.ABSOLUTE`
+preserves its numeric or signed-quantity operand type; `UnaryOp.FLOOR` and
+`UnaryOp.ROUND` require INTEGER/REAL and return INTEGER. ROUND uses ties-to-even.
+Their wire values are `abs`, `floor` and `round`. These additions reuse the v4
+record structure and leave earlier JSON unchanged. Type checking, reference
+execution and target generation dispatch explicitly over the operation enum.
+
 IDs identify node occurrences in a program-wide namespace. Two reads of one
 variable use different node IDs but the same symbol_id. References cannot cross
 function ownership. Calls use callee variable IDs for their complete I/O bindings.

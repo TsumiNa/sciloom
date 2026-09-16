@@ -10,8 +10,11 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
 
-def test_missing_consumer_handlers_fail_exhaustiveness(tmp_path):
+
+@pytest.mark.parametrize("mutation_kind", ["missing_node", "new_unary_operation"])
+def test_missing_consumer_handlers_fail_exhaustiveness(tmp_path, mutation_kind):
     root = Path(__file__).resolve().parents[4]
     for package, source in (
         ("sciloom", root / "src/sciloom"),
@@ -34,6 +37,17 @@ def test_missing_consumer_handlers_fail_exhaustiveness(tmp_path):
         "sciloom_autosuite/tasks.py": "ListSet",
         "sciloom_autosuite/validation.py": "ListSet",
     }
+    if mutation_kind == "new_unary_operation":
+        model = tmp_path / "sciloom/core/ir/model.py"
+        model.write_text(model.read_text().replace('    NOT = "not"', '    NOT = "not"\n    UNHANDLED = "unhandled"'))
+        omissions = {
+            name: "UnaryOp.UNHANDLED"
+            for name in (
+                "sciloom/core/ir/expressions.py",
+                "sciloom/core/interpreter/expressions.py",
+                "sciloom_autosuite/expressions.py",
+            )
+        }
 
     class RemoveHandler(ast.NodeTransformer):
         def __init__(self, kind):
@@ -57,10 +71,11 @@ def test_missing_consumer_handlers_fail_exhaustiveness(tmp_path):
     paths = []
     for name, kind in omissions.items():
         path = tmp_path / name
-        mutation = RemoveHandler(kind)
-        changed = mutation.visit(ast.parse(path.read_text()))
-        assert mutation.removed == 1, name
-        path.write_text(ast.unparse(changed))
+        if mutation_kind == "missing_node":
+            mutation = RemoveHandler(kind)
+            changed = mutation.visit(ast.parse(path.read_text()))
+            assert mutation.removed == 1, name
+            path.write_text(ast.unparse(changed))
         paths.append(str(path))
 
     config = tmp_path / "mypy.ini"
@@ -85,6 +100,6 @@ def test_missing_consumer_handlers_fail_exhaustiveness(tmp_path):
     assert result.returncode == 1, result.stdout + result.stderr
     for name, kind in omissions.items():
         assert any(
-            name in line.replace("\\", "/") and '"assert_never"' in line and f'"{kind}"' in line and '"Never"' in line
+            name in line.replace("\\", "/") and '"assert_never"' in line and kind in line and '"Never"' in line
             for line in result.stdout.splitlines()
         ), result.stdout + result.stderr
