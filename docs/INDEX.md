@@ -40,6 +40,9 @@ are indexes; design proposals and validation records retain their historical con
 - [Example-led handbooks](refactor/handbook-restructure/00-overview.md)
 - [User Guide readability and experimental learning path](refactor/user-guide-readability/00-overview.md)
 - [Durable IR and twelve runtime capabilities](refactor/runtime-capabilities/00-overview.md)
+  — implemented source/IR/reference contracts and staged AutoSuite mappings;
+  [integration acceptance](refactor/runtime-capabilities/19-plan-integration.md)
+  distinguishes completed checks from pending Executor evidence.
 
 ## AutoSuite reference
 

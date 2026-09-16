@@ -31,6 +31,10 @@ Consult [evidence](20-evidence.md) and collect new uncertainties in [Q&A](21-qa.
 
 ## Implementation and validation
 
+Merged as PR #101, commit `aa75dce16e94384e2bfeaa167cd82dc2bb98ab43`, after
+Copilot review (no code comments/threads), all review surfaces checked and
+Python 3.12–3.14/documentation CI passed. The following records pre-merge checks.
+
 Implementation is ready for review: Python/direct IR/JSON, captured scopes,
 transitive call checks, physical snapshots and APP ancestry validation are
 covered. The developer example prints A running at 300 rpm and B stopped with

@@ -55,9 +55,9 @@ declared limit is a rejection, never a clamp.
 
 ## Bindings
 
-`resolve_devices` returns `DeviceBindings`, an envelope of `DeviceBinding`
-records that `bind_device(logical_id=..., device=..., physical_id=...)` builds
-from a profile:
+`resolve_devices` returns `DeviceBindings`. Each entry is a fixed `DeviceBinding`
+or a `DeviceSelectionBinding` with explicit candidates. For a fixed profile,
+`bind_device(logical_id=..., device=..., physical_id=...)` builds this record:
 
 | Field | Meaning |
 |---|---|
@@ -67,6 +67,18 @@ from a profile:
 | `base_contracts` | the complete ancestor directory, family and `BaseDevice` included |
 | `writable_properties` | semantic ids the profile accepts writes to |
 | `supported_operations` | semantic ids the profile runs |
+
+A selection wraps each fixed binding in `DeviceCandidate(binding=..., wells=...)`
+and supplies the tuple to `DeviceSelectionBinding(logical_id=..., candidates=...)`.
+Candidates share one concrete contract, ancestor directory and capability sets.
+They have distinct physical identities and disjoint nonempty well sets. The
+selection exposes the common contract/capabilities but has no single `physical_id`.
+Physical candidates cannot overlap across logical resources.
+
+`DeviceAt` captures a Zone for a selection-bound resource. Shared compilation
+checks its scope across function calls; a target must implement it or return an
+explicit unsupported diagnostic. The [complete workflow example](../../examples/runtime-workflows-ir.md)
+shows both a selection binding and an independent reference-archive target.
 
 | Rule | Detail |
 |---|---|

@@ -2,24 +2,18 @@
 
 ## Status and ownership
 
-This is the authority for the [implementation sequence](00-overview.md). All new
-signatures and snippets below are **target interfaces** until their stated stage
-lands. They have not been executed. Existing Program/JSON v4, Function.compile,
-device property/command contracts and the Target protocol are current.
-Stages 1–4 implement section 1's explicit wire identities, section 3's text,
-section 4's quantity interfaces and section 5's numeric operations. Later sections remain target
-contracts until their owning stage lands.
-Stage 5 adds section 2's environment injection and event history. Its concrete
-service setup examples remain target interfaces until the listed consuming stage.
-Stage 6 implements section 6's log call, LogValue and LogEvent. Stage 7 implements
-section 7's notify call, Notify and explicit acknowledgement service. Stage 8
-supplies failure probes while retaining the unverified Executor gate. Stage 9
-implements section 8's now_text call, ReadWallTime and explicit wall clock.
-Stage 10 implements section 9's Function-owned timers, waits and virtual clock.
-Their runnable examples and tests verify reference semantics and static mappings;
-none establishes Executor acceptance. Stages 11–15 implement CSV reads/appends,
-Zone values, traversal and stored well properties. Their target-specific gates
-are recorded in each section; stages 16–17 remain pending.
+This is the authority for the [implementation sequence](00-overview.md).
+Stages 1–16 now implement the described source/IR/reference interfaces, including
+explicit environments, typed CSV, Zone traversal, stored properties and dynamic
+device scopes. Stage 17 supplies complete source/direct-IR/JSON workflow checks
+and the public capability matrix. The runnable files under `examples/` and their
+tests verify these interfaces; partial snippets here remain illustrative rather
+than independent scripts. Earlier stage labels record when each interface landed.
+
+Program/JSON remains v4; existing wire documents and generated artifacts retain
+their baseline behavior. AutoSuite only accepts the subsets recorded in each
+section. Failure propagation, CSV equivalence and dynamic native selection remain
+gated. No reference test or static mapping establishes Executor acceptance.
 
 Experiment authors import from `sciloom`; targets from `sciloom_autosuite` or an
 independent package. `flow` declares author vocabulary; `dsl` alone analyzes
@@ -1309,7 +1303,7 @@ query needs single-well validation; until the failure gate is verified, reject
 unproven cardinality rather than emitting an unchecked native call. Record
 enumeration/name/combination execution checks separately from static XML evidence.
 Existing fixed equipment profiles remain unchanged. Selection bindings, at()
-scopes and physical state tracking are not added ahead of stage 16.
+scopes and physical state tracking are implemented separately in stage 16 below.
 
 ## 13. Zone traversal (A04, stage 14)
 
@@ -1546,11 +1540,13 @@ target = AutoSuiteTarget(
     devices={
         "agitator": AutoSuiteAgitatorSelection(candidates=(
             AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="23"),
-            AutoSuiteIndividualShaker(zone="Heater Shaker 24", device_id="24"),
+            AutoSuiteIndividualShaker(zone="Heater Shaker 22", device_id="22"),
         )),
     },
 )
-StirSelected().compile(target=target).write("stir_selected.asfp")
+# Current AutoSuite result: unsupported_device_location; no ASFP is written.
+# Native emission must pass the failure-propagation and selection gates first.
+StirSelected().compile(target=target)
 ```
 
 `at(device, location: Zone)` is a recognized lexical runtime scope. Entry captures
@@ -1591,7 +1587,7 @@ equivalence remains an explicitly unverified question.
 
 ### Stage-16 concrete selection contract
 
-The following are target interfaces, recorded before implementation. Stage 16
+The following interfaces were recorded before implementation. Stage 16
 adds one high-level structured statement and leaves existing resource records
 unchanged:
 

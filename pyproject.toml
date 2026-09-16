@@ -91,6 +91,9 @@ files = [
     "examples/resolve_locations.py",
     "examples/visit_locations.py",
     "examples/label_wells.py",
+    "examples/stir_selected_location.py",
+    "examples/label_sample_log.py",
+    "examples/aspiration_chunk.py",
     "examples/tutorial",
     "examples/developer",
 ]
@@ -140,6 +143,8 @@ module = [
     "sciloom.core.device_locations_test",
     "sciloom_autosuite.selection_test",
     "examples.developer.device_locations_ir_test",
+    "examples.developer.runtime_workflows_ir_test",
+    "examples.aspiration_chunk_test",
     "sciloom.core.ir.zone_traversal_test",
     "sciloom.dsl.driver_zone_traversal_test",
     "sciloom.units_test",

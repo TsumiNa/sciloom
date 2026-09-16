@@ -23,3 +23,9 @@ For a quick answer, try the [FAQ](faq.md). For an error, use
 
 You can also browse [complete examples](../examples/index.md) or look up an
 object in the [API reference](../api/index.md).
+
+For data-driven procedures, start with [reading a reagent table](../examples/read-reagent-table.md),
+[selecting a shaker](../examples/stir-selected-location.md), or
+[labeling wells and appending a log](../examples/label-sample-log.md).
+These combined procedures currently run in the reference interpreter; their
+AutoSuite compilation gates are listed in [current capabilities](../introduction/status.md).

@@ -22,6 +22,33 @@ JSON and reference execution. AutoSuite CSV compilation is explicitly unavailabl
 until its parsing, conversion, append mode, encoding and failure behavior can
 meet the same contract.
 
+## Runtime additions at a glance
+
+All twelve additions below have typed IR, JSON v4 and reference execution.
+The right column describes what the AutoSuite compiler currently accepts, not
+what has passed Executor simulation. Follow the linked examples for complete
+code, results and specific restrictions.
+
+| Capability | AutoSuite compilation today |
+|---|---|
+| [Text and text lists](../examples/prepare-labels.md) | Declarations, copying, concatenation, comparison and trim; length only for literal BMP text, split with literal nonempty delimiter and nonnegative index; new text-list bounds guards remain gated |
+| [Volume and Duration](../examples/quantity-conversion.md) | SI declarations and unit-aware arithmetic; new guarded quantity-list access is rejected |
+| [Zone values and selection](../user-guide/reference/device-locations.md) | Named lookup, size and union; deployment ancestry checks work. Dynamic device scopes, well-name queries and nonempty Zone literals are rejected |
+| [Zone indexing and traversal](../examples/visit-locations.md) | One-well sequential traversal; indexing and larger fragments await reliable runtime checks |
+| [CSV reads](../examples/read-reagent-table.md) | Rejected pending literal conversion, defaults, result and failure equivalence |
+| [CSV append](../examples/append-sample-log.md) | Rejected pending append mode, encoding and failure evidence |
+| [Well text properties](../examples/label-wells.md) | Same-value writes; defaulted reads only with local proof of one well. Strict reads remain gated |
+| [Waits and timers](../examples/timed-agitation.md) | Bounded literal durations and supported lexical timer scopes; dynamic durations and broader scope patterns are rejected |
+| [Typed logs](../examples/record-values.md) | Captured scalar and quantity values |
+| [OK confirmation](../examples/confirm-samples.md) | Text dialog with explicit OK continuation |
+| [Numeric operations](../examples/numeric-operations.md) | `abs`, `floor`, integer `round`; floating `round` is rejected pending tie/range evidence |
+| [Wall-time text](../examples/timestamp-path.md) | Selected constant formatting directives, evaluated once per call |
+
+The [combined workflows](../examples/runtime-workflows-ir.md) exercise table
+reading, a selected shaker and per-well logging with explicit reference services.
+They do not produce native ASFP while the relevant target gates remain open.
+Existing fixed-shaker and scalar tutorial programs continue to compile.
+
 Contributors can define devices and targets. The developer examples include a
 demonstration target, JSON v4 interchange and a reference interpreter for checking
 calculations and state changes. That interpreter does not simulate laboratory hardware.

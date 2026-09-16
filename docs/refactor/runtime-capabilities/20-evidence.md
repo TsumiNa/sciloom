@@ -33,6 +33,15 @@ commit, target/profile version, command and environment needed to reproduce it.
 
 ## Probe and availability policy
 
+Stage 17 exercises three combined source/direct-IR/JSON procedures with explicit
+reference services: reagent heading/column reads, a selected shaker with a timed
+stop, and per-well properties with timestamped CSV appends. Ordered effects,
+empty/repeated calls and partial failures agree across those entry paths. An
+independent reference-archive Target validates bindings and rejects native
+commands without semantics. The separate F30/F31 arithmetic adaptation covers
+volume packing and resumption without liquid-transfer operations. These checks
+close the integration scope; they do not change any Executor status above.
+
 One probe changes one relevant option and contains a distinguishable operation
 after the behavior under test. For failure probes, absence of that marker must
 be an observed Executor outcome, not inferred from SciLoom interpreter results.
