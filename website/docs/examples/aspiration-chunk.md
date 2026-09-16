@@ -23,7 +23,9 @@ Starting at index 3, for example, cannot advance into index 4 in that call.
 
 This adapts a vendor program's packing formula and its caller's group boundary.
 It retains their 1e-12 m³ tolerance, but uses an explicit `valid` output instead
-of a vendor global error latch. It checks all requested volumes before packing.
+of a vendor global error latch. It checks all requested volumes before packing
+and rejects a residual larger than its original request, allowing only the
+retained tolerance.
 Invalid numeric preconditions return `valid=False` with zero volume outputs.
 Empty input returns no work; it does not invent a transfer. All runtime values
 must still satisfy SciLoom's declared types and finite-number rules.

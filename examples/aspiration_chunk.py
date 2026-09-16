@@ -10,7 +10,8 @@ aspiration. This is arithmetic only, not a dispensing recipe or device operation
 
 Adapted from Get Aspirate Chunk's capacity/partial-fill calculation and its
 caller's four-position boundary. The 1e-12 m^3 tolerance is retained. This example
-prevalidates all volume entries and returns valid=False with initialized results
+prevalidates all volume entries and rejects a residual exceeding its requested
+volume beyond the tolerance. It returns valid=False with initialized results
 for invalid numeric input. It does not implement the vendor global error latch.
 Empty/no-work input returns zero volumes and end_idx=start_idx-1. Indices are
 zero-based; state is reset each call. See developer/aspiration_chunk_ir.py for
@@ -109,6 +110,10 @@ class AspirationChunk(Function):
         if self.start_idx < len(self.volumes):
             if self.max_idx < self.start_idx:
                 self.valid = False
+        if self.valid:
+            if self.start_idx < len(self.volumes):
+                if self.start_residual > self.volumes[self.start_idx] + self.epsilon:
+                    self.valid = False
         if self.syringe <= 0 * mL:
             self.valid = False
         if self.airgap <= 0 * mL:

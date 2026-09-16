@@ -14,8 +14,9 @@ First: next=2, residual=3 mL, aspirate=4.25 mL
 Resumed: next=3, residual=0 mL, aspirate=3.25 mL
 ```
 
-The runner normalizes only diagnostic `SourceSpan.path` values to repository-relative
-paths in a detached JSON document. Line numbers and semantic fields remain
+The runner reuses `repository_relative` to normalize diagnostic `SourceSpan.path`
+values inside the repository. Already-relative and out-of-tree paths are preserved.
+Line numbers and semantic fields remain
 unchanged. This makes the committed learning artifact portable; normal
 compilation does not rewrite source paths.
 
@@ -30,5 +31,6 @@ There is no liquid-handling driver or simulated fluid transfer.
 ```
 
 [Download runner](../_generated/examples/developer/aspiration_chunk_ir.py) ·
+[Path helper](../_generated/examples/developer/source_paths.py) ·
 [Download author source](../_generated/examples/aspiration_chunk.py) ·
 [Download JSON](../_generated/examples/developer/aspiration_chunk_ir.json)

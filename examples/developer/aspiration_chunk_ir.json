@@ -11,7 +11,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 88,
+            "line": 89,
             "path": "examples/aspiration_chunk.py"
           },
           "target": {
@@ -20,7 +20,7 @@
             "source": {
               "column": 8,
               "kind": "SourceSpan",
-              "line": 88,
+              "line": 89,
               "path": "examples/aspiration_chunk.py"
             },
             "symbol_id": "fn:0:var:valid"
@@ -31,7 +31,7 @@
             "source": {
               "column": 21,
               "kind": "SourceSpan",
-              "line": 88,
+              "line": 89,
               "path": "examples/aspiration_chunk.py"
             },
             "type": "boolean",
@@ -44,7 +44,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 89,
+            "line": 90,
             "path": "examples/aspiration_chunk.py"
           },
           "target": {
@@ -53,7 +53,7 @@
             "source": {
               "column": 8,
               "kind": "SourceSpan",
-              "line": 89,
+              "line": 90,
               "path": "examples/aspiration_chunk.py"
             },
             "symbol_id": "fn:0:var:next_idx"
@@ -64,7 +64,7 @@
             "source": {
               "column": 24,
               "kind": "SourceSpan",
-              "line": 89,
+              "line": 90,
               "path": "examples/aspiration_chunk.py"
             },
             "symbol_id": "fn:0:var:start_idx"
@@ -76,7 +76,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 90,
+            "line": 91,
             "path": "examples/aspiration_chunk.py"
           },
           "target": {
@@ -85,7 +85,7 @@
             "source": {
               "column": 8,
               "kind": "SourceSpan",
-              "line": 90,
+              "line": 91,
               "path": "examples/aspiration_chunk.py"
             },
             "symbol_id": "fn:0:var:end_idx"
@@ -98,7 +98,7 @@
               "source": {
                 "column": 23,
                 "kind": "SourceSpan",
-                "line": 90,
+                "line": 91,
                 "path": "examples/aspiration_chunk.py"
               },
               "symbol_id": "fn:0:var:start_idx"
@@ -111,7 +111,7 @@
               "source": {
                 "column": 40,
                 "kind": "SourceSpan",
-                "line": 90,
+                "line": 91,
                 "path": "examples/aspiration_chunk.py"
               },
               "type": "integer",
@@ -120,7 +120,7 @@
             "source": {
               "column": 23,
               "kind": "SourceSpan",
-              "line": 90,
+              "line": 91,
               "path": "examples/aspiration_chunk.py"
             }
           }
@@ -131,7 +131,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 91,
+            "line": 92,
             "path": "examples/aspiration_chunk.py"
           },
           "target": {
@@ -140,7 +140,7 @@
             "source": {
               "column": 8,
               "kind": "SourceSpan",
-              "line": 91,
+              "line": 92,
               "path": "examples/aspiration_chunk.py"
             },
             "symbol_id": "fn:0:var:end_dispense"
@@ -151,7 +151,7 @@
             "source": {
               "column": 28,
               "kind": "SourceSpan",
-              "line": 91,
+              "line": 92,
               "path": "examples/aspiration_chunk.py"
             },
             "type": "volume",
@@ -164,7 +164,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 92,
+            "line": 93,
             "path": "examples/aspiration_chunk.py"
           },
           "target": {
@@ -173,7 +173,7 @@
             "source": {
               "column": 8,
               "kind": "SourceSpan",
-              "line": 92,
+              "line": 93,
               "path": "examples/aspiration_chunk.py"
             },
             "symbol_id": "fn:0:var:next_residual"
@@ -184,7 +184,7 @@
             "source": {
               "column": 29,
               "kind": "SourceSpan",
-              "line": 92,
+              "line": 93,
               "path": "examples/aspiration_chunk.py"
             },
             "type": "volume",
@@ -197,7 +197,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 93,
+            "line": 94,
             "path": "examples/aspiration_chunk.py"
           },
           "target": {
@@ -206,7 +206,7 @@
             "source": {
               "column": 8,
               "kind": "SourceSpan",
-              "line": 93,
+              "line": 94,
               "path": "examples/aspiration_chunk.py"
             },
             "symbol_id": "fn:0:var:aspirate"
@@ -217,7 +217,7 @@
             "source": {
               "column": 24,
               "kind": "SourceSpan",
-              "line": 93,
+              "line": 94,
               "path": "examples/aspiration_chunk.py"
             },
             "type": "volume",
@@ -230,7 +230,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 94,
+            "line": 95,
             "path": "examples/aspiration_chunk.py"
           },
           "target": {
@@ -239,7 +239,7 @@
             "source": {
               "column": 8,
               "kind": "SourceSpan",
-              "line": 94,
+              "line": 95,
               "path": "examples/aspiration_chunk.py"
             },
             "symbol_id": "fn:0:var:packed"
@@ -250,7 +250,7 @@
             "source": {
               "column": 22,
               "kind": "SourceSpan",
-              "line": 94,
+              "line": 95,
               "path": "examples/aspiration_chunk.py"
             },
             "type": "volume",
@@ -263,7 +263,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 95,
+            "line": 96,
             "path": "examples/aspiration_chunk.py"
           },
           "target": {
@@ -272,7 +272,7 @@
             "source": {
               "column": 8,
               "kind": "SourceSpan",
-              "line": 95,
+              "line": 96,
               "path": "examples/aspiration_chunk.py"
             },
             "symbol_id": "fn:0:var:check_index"
@@ -283,7 +283,7 @@
             "source": {
               "column": 27,
               "kind": "SourceSpan",
-              "line": 95,
+              "line": 96,
               "path": "examples/aspiration_chunk.py"
             },
             "type": "integer",
@@ -302,7 +302,7 @@
                     "source": {
                       "column": 28,
                       "kind": "SourceSpan",
-                      "line": 97,
+                      "line": 98,
                       "path": "examples/aspiration_chunk.py"
                     },
                     "symbol_id": "fn:0:var:check_index"
@@ -312,7 +312,7 @@
                   "source": {
                     "column": 15,
                     "kind": "SourceSpan",
-                    "line": 97,
+                    "line": 98,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "value": {
@@ -321,7 +321,7 @@
                     "source": {
                       "column": 15,
                       "kind": "SourceSpan",
-                      "line": 97,
+                      "line": 98,
                       "path": "examples/aspiration_chunk.py"
                     },
                     "symbol_id": "fn:0:var:volumes"
@@ -335,7 +335,7 @@
                   "source": {
                     "column": 48,
                     "kind": "SourceSpan",
-                    "line": 97,
+                    "line": 98,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "type": "volume",
@@ -344,7 +344,7 @@
                 "source": {
                   "column": 15,
                   "kind": "SourceSpan",
-                  "line": 97,
+                  "line": 98,
                   "path": "examples/aspiration_chunk.py"
                 }
               },
@@ -354,7 +354,7 @@
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 97,
+                "line": 98,
                 "path": "examples/aspiration_chunk.py"
               },
               "then_body": [
@@ -364,7 +364,7 @@
                   "source": {
                     "column": 16,
                     "kind": "SourceSpan",
-                    "line": 98,
+                    "line": 99,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "target": {
@@ -373,7 +373,7 @@
                     "source": {
                       "column": 16,
                       "kind": "SourceSpan",
-                      "line": 98,
+                      "line": 99,
                       "path": "examples/aspiration_chunk.py"
                     },
                     "symbol_id": "fn:0:var:valid"
@@ -384,7 +384,7 @@
                     "source": {
                       "column": 29,
                       "kind": "SourceSpan",
-                      "line": 98,
+                      "line": 99,
                       "path": "examples/aspiration_chunk.py"
                     },
                     "type": "boolean",
@@ -399,7 +399,7 @@
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 99,
+                "line": 100,
                 "path": "examples/aspiration_chunk.py"
               },
               "target": {
@@ -408,7 +408,7 @@
                 "source": {
                   "column": 12,
                   "kind": "SourceSpan",
-                  "line": 99,
+                  "line": 100,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "symbol_id": "fn:0:var:check_index"
@@ -421,7 +421,7 @@
                   "source": {
                     "column": 12,
                     "kind": "SourceSpan",
-                    "line": 99,
+                    "line": 100,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "symbol_id": "fn:0:var:check_index"
@@ -434,7 +434,7 @@
                   "source": {
                     "column": 32,
                     "kind": "SourceSpan",
-                    "line": 99,
+                    "line": 100,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "type": "integer",
@@ -443,7 +443,7 @@
                 "source": {
                   "column": 12,
                   "kind": "SourceSpan",
-                  "line": 99,
+                  "line": 100,
                   "path": "examples/aspiration_chunk.py"
                 }
               }
@@ -457,7 +457,7 @@
               "source": {
                 "column": 14,
                 "kind": "SourceSpan",
-                "line": 96,
+                "line": 97,
                 "path": "examples/aspiration_chunk.py"
               },
               "symbol_id": "fn:0:var:check_index"
@@ -470,7 +470,7 @@
               "source": {
                 "column": 33,
                 "kind": "SourceSpan",
-                "line": 96,
+                "line": 97,
                 "path": "examples/aspiration_chunk.py"
               },
               "value": {
@@ -479,7 +479,7 @@
                 "source": {
                   "column": 37,
                   "kind": "SourceSpan",
-                  "line": 96,
+                  "line": 97,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "symbol_id": "fn:0:var:volumes"
@@ -488,7 +488,7 @@
             "source": {
               "column": 14,
               "kind": "SourceSpan",
-              "line": 96,
+              "line": 97,
               "path": "examples/aspiration_chunk.py"
             }
           },
@@ -497,7 +497,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 96,
+            "line": 97,
             "path": "examples/aspiration_chunk.py"
           }
         },
@@ -510,7 +510,7 @@
               "source": {
                 "column": 11,
                 "kind": "SourceSpan",
-                "line": 100,
+                "line": 101,
                 "path": "examples/aspiration_chunk.py"
               },
               "symbol_id": "fn:0:var:start_idx"
@@ -523,7 +523,7 @@
               "source": {
                 "column": 28,
                 "kind": "SourceSpan",
-                "line": 100,
+                "line": 101,
                 "path": "examples/aspiration_chunk.py"
               },
               "type": "integer",
@@ -532,7 +532,7 @@
             "source": {
               "column": 11,
               "kind": "SourceSpan",
-              "line": 100,
+              "line": 101,
               "path": "examples/aspiration_chunk.py"
             }
           },
@@ -542,7 +542,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 100,
+            "line": 101,
             "path": "examples/aspiration_chunk.py"
           },
           "then_body": [
@@ -552,7 +552,7 @@
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 101,
+                "line": 102,
                 "path": "examples/aspiration_chunk.py"
               },
               "target": {
@@ -561,7 +561,7 @@
                 "source": {
                   "column": 12,
                   "kind": "SourceSpan",
-                  "line": 101,
+                  "line": 102,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "symbol_id": "fn:0:var:valid"
@@ -572,7 +572,7 @@
                 "source": {
                   "column": 25,
                   "kind": "SourceSpan",
-                  "line": 101,
+                  "line": 102,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "type": "boolean",
@@ -590,7 +590,7 @@
               "source": {
                 "column": 11,
                 "kind": "SourceSpan",
-                "line": 102,
+                "line": 103,
                 "path": "examples/aspiration_chunk.py"
               },
               "symbol_id": "fn:0:var:start_idx"
@@ -603,7 +603,7 @@
               "source": {
                 "column": 28,
                 "kind": "SourceSpan",
-                "line": 102,
+                "line": 103,
                 "path": "examples/aspiration_chunk.py"
               },
               "value": {
@@ -612,7 +612,7 @@
                 "source": {
                   "column": 32,
                   "kind": "SourceSpan",
-                  "line": 102,
+                  "line": 103,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "symbol_id": "fn:0:var:volumes"
@@ -621,7 +621,7 @@
             "source": {
               "column": 11,
               "kind": "SourceSpan",
-              "line": 102,
+              "line": 103,
               "path": "examples/aspiration_chunk.py"
             }
           },
@@ -631,7 +631,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 102,
+            "line": 103,
             "path": "examples/aspiration_chunk.py"
           },
           "then_body": [
@@ -641,7 +641,7 @@
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 103,
+                "line": 104,
                 "path": "examples/aspiration_chunk.py"
               },
               "target": {
@@ -650,7 +650,7 @@
                 "source": {
                   "column": 12,
                   "kind": "SourceSpan",
-                  "line": 103,
+                  "line": 104,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "symbol_id": "fn:0:var:valid"
@@ -661,7 +661,7 @@
                 "source": {
                   "column": 25,
                   "kind": "SourceSpan",
-                  "line": 103,
+                  "line": 104,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "type": "boolean",
@@ -679,7 +679,7 @@
               "source": {
                 "column": 11,
                 "kind": "SourceSpan",
-                "line": 104,
+                "line": 105,
                 "path": "examples/aspiration_chunk.py"
               },
               "symbol_id": "fn:0:var:start_residual"
@@ -692,7 +692,7 @@
               "source": {
                 "column": 33,
                 "kind": "SourceSpan",
-                "line": 104,
+                "line": 105,
                 "path": "examples/aspiration_chunk.py"
               },
               "type": "volume",
@@ -701,7 +701,7 @@
             "source": {
               "column": 11,
               "kind": "SourceSpan",
-              "line": 104,
+              "line": 105,
               "path": "examples/aspiration_chunk.py"
             }
           },
@@ -711,7 +711,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 104,
+            "line": 105,
             "path": "examples/aspiration_chunk.py"
           },
           "then_body": [
@@ -721,7 +721,7 @@
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 105,
+                "line": 106,
                 "path": "examples/aspiration_chunk.py"
               },
               "target": {
@@ -730,7 +730,7 @@
                 "source": {
                   "column": 12,
                   "kind": "SourceSpan",
-                  "line": 105,
+                  "line": 106,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "symbol_id": "fn:0:var:valid"
@@ -741,7 +741,7 @@
                 "source": {
                   "column": 25,
                   "kind": "SourceSpan",
-                  "line": 105,
+                  "line": 106,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "type": "boolean",
@@ -759,7 +759,7 @@
               "source": {
                 "column": 11,
                 "kind": "SourceSpan",
-                "line": 106,
+                "line": 107,
                 "path": "examples/aspiration_chunk.py"
               },
               "symbol_id": "fn:0:var:start_idx"
@@ -772,7 +772,7 @@
               "source": {
                 "column": 29,
                 "kind": "SourceSpan",
-                "line": 106,
+                "line": 107,
                 "path": "examples/aspiration_chunk.py"
               },
               "value": {
@@ -781,7 +781,7 @@
                 "source": {
                   "column": 33,
                   "kind": "SourceSpan",
-                  "line": 106,
+                  "line": 107,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "symbol_id": "fn:0:var:volumes"
@@ -790,7 +790,7 @@
             "source": {
               "column": 11,
               "kind": "SourceSpan",
-              "line": 106,
+              "line": 107,
               "path": "examples/aspiration_chunk.py"
             }
           },
@@ -800,7 +800,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 106,
+            "line": 107,
             "path": "examples/aspiration_chunk.py"
           },
           "then_body": [
@@ -813,7 +813,7 @@
                   "source": {
                     "column": 15,
                     "kind": "SourceSpan",
-                    "line": 107,
+                    "line": 108,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "symbol_id": "fn:0:var:start_residual"
@@ -826,7 +826,7 @@
                   "source": {
                     "column": 37,
                     "kind": "SourceSpan",
-                    "line": 107,
+                    "line": 108,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "type": "volume",
@@ -835,7 +835,7 @@
                 "source": {
                   "column": 15,
                   "kind": "SourceSpan",
-                  "line": 107,
+                  "line": 108,
                   "path": "examples/aspiration_chunk.py"
                 }
               },
@@ -845,7 +845,7 @@
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 107,
+                "line": 108,
                 "path": "examples/aspiration_chunk.py"
               },
               "then_body": [
@@ -855,7 +855,7 @@
                   "source": {
                     "column": 16,
                     "kind": "SourceSpan",
-                    "line": 108,
+                    "line": 109,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "target": {
@@ -864,7 +864,7 @@
                     "source": {
                       "column": 16,
                       "kind": "SourceSpan",
-                      "line": 108,
+                      "line": 109,
                       "path": "examples/aspiration_chunk.py"
                     },
                     "symbol_id": "fn:0:var:valid"
@@ -875,7 +875,7 @@
                     "source": {
                       "column": 29,
                       "kind": "SourceSpan",
-                      "line": 108,
+                      "line": 109,
                       "path": "examples/aspiration_chunk.py"
                     },
                     "type": "boolean",
@@ -895,7 +895,7 @@
               "source": {
                 "column": 11,
                 "kind": "SourceSpan",
-                "line": 109,
+                "line": 110,
                 "path": "examples/aspiration_chunk.py"
               },
               "symbol_id": "fn:0:var:start_idx"
@@ -908,7 +908,7 @@
               "source": {
                 "column": 28,
                 "kind": "SourceSpan",
-                "line": 109,
+                "line": 110,
                 "path": "examples/aspiration_chunk.py"
               },
               "value": {
@@ -917,7 +917,7 @@
                 "source": {
                   "column": 32,
                   "kind": "SourceSpan",
-                  "line": 109,
+                  "line": 110,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "symbol_id": "fn:0:var:volumes"
@@ -926,7 +926,7 @@
             "source": {
               "column": 11,
               "kind": "SourceSpan",
-              "line": 109,
+              "line": 110,
               "path": "examples/aspiration_chunk.py"
             }
           },
@@ -936,7 +936,7 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 109,
+            "line": 110,
             "path": "examples/aspiration_chunk.py"
           },
           "then_body": [
@@ -949,7 +949,7 @@
                   "source": {
                     "column": 15,
                     "kind": "SourceSpan",
-                    "line": 110,
+                    "line": 111,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "symbol_id": "fn:0:var:max_idx"
@@ -962,7 +962,7 @@
                   "source": {
                     "column": 30,
                     "kind": "SourceSpan",
-                    "line": 110,
+                    "line": 111,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "symbol_id": "fn:0:var:start_idx"
@@ -970,7 +970,7 @@
                 "source": {
                   "column": 15,
                   "kind": "SourceSpan",
-                  "line": 110,
+                  "line": 111,
                   "path": "examples/aspiration_chunk.py"
                 }
               },
@@ -980,7 +980,7 @@
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 110,
+                "line": 111,
                 "path": "examples/aspiration_chunk.py"
               },
               "then_body": [
@@ -990,7 +990,7 @@
                   "source": {
                     "column": 16,
                     "kind": "SourceSpan",
-                    "line": 111,
+                    "line": 112,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "target": {
@@ -999,7 +999,7 @@
                     "source": {
                       "column": 16,
                       "kind": "SourceSpan",
-                      "line": 111,
+                      "line": 112,
                       "path": "examples/aspiration_chunk.py"
                     },
                     "symbol_id": "fn:0:var:valid"
@@ -1010,7 +1010,7 @@
                     "source": {
                       "column": 29,
                       "kind": "SourceSpan",
-                      "line": 111,
+                      "line": 112,
                       "path": "examples/aspiration_chunk.py"
                     },
                     "type": "boolean",
@@ -1023,38 +1023,15 @@
         },
         {
           "condition": {
-            "kind": "Binary",
-            "left": {
-              "kind": "Reference",
-              "node_id": "fn:0:node:100",
-              "source": {
-                "column": 11,
-                "kind": "SourceSpan",
-                "line": 112,
-                "path": "examples/aspiration_chunk.py"
-              },
-              "symbol_id": "fn:0:var:syringe"
-            },
+            "kind": "Reference",
             "node_id": "fn:0:node:99",
-            "op": "<=",
-            "right": {
-              "kind": "Literal",
-              "node_id": "fn:0:node:102",
-              "source": {
-                "column": 27,
-                "kind": "SourceSpan",
-                "line": 112,
-                "path": "examples/aspiration_chunk.py"
-              },
-              "type": "volume",
-              "value": 0.0
-            },
             "source": {
               "column": 11,
               "kind": "SourceSpan",
-              "line": 112,
+              "line": 113,
               "path": "examples/aspiration_chunk.py"
-            }
+            },
+            "symbol_id": "fn:0:var:valid"
           },
           "else_body": [],
           "kind": "If",
@@ -1062,42 +1039,188 @@
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 112,
+            "line": 113,
             "path": "examples/aspiration_chunk.py"
           },
           "then_body": [
             {
-              "kind": "Assignment",
-              "node_id": "fn:0:node:103",
+              "condition": {
+                "kind": "Binary",
+                "left": {
+                  "kind": "Reference",
+                  "node_id": "fn:0:node:102",
+                  "source": {
+                    "column": 15,
+                    "kind": "SourceSpan",
+                    "line": 114,
+                    "path": "examples/aspiration_chunk.py"
+                  },
+                  "symbol_id": "fn:0:var:start_idx"
+                },
+                "node_id": "fn:0:node:101",
+                "op": "<",
+                "right": {
+                  "kind": "ListLength",
+                  "node_id": "fn:0:node:103",
+                  "source": {
+                    "column": 32,
+                    "kind": "SourceSpan",
+                    "line": 114,
+                    "path": "examples/aspiration_chunk.py"
+                  },
+                  "value": {
+                    "kind": "Reference",
+                    "node_id": "fn:0:node:104",
+                    "source": {
+                      "column": 36,
+                      "kind": "SourceSpan",
+                      "line": 114,
+                      "path": "examples/aspiration_chunk.py"
+                    },
+                    "symbol_id": "fn:0:var:volumes"
+                  }
+                },
+                "source": {
+                  "column": 15,
+                  "kind": "SourceSpan",
+                  "line": 114,
+                  "path": "examples/aspiration_chunk.py"
+                }
+              },
+              "else_body": [],
+              "kind": "If",
+              "node_id": "fn:0:node:100",
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 113,
+                "line": 114,
                 "path": "examples/aspiration_chunk.py"
               },
-              "target": {
-                "kind": "Reference",
-                "node_id": "fn:0:node:104",
-                "source": {
-                  "column": 12,
-                  "kind": "SourceSpan",
-                  "line": 113,
-                  "path": "examples/aspiration_chunk.py"
-                },
-                "symbol_id": "fn:0:var:valid"
-              },
-              "value": {
-                "kind": "Literal",
-                "node_id": "fn:0:node:105",
-                "source": {
-                  "column": 25,
-                  "kind": "SourceSpan",
-                  "line": 113,
-                  "path": "examples/aspiration_chunk.py"
-                },
-                "type": "boolean",
-                "value": false
-              }
+              "then_body": [
+                {
+                  "condition": {
+                    "kind": "Binary",
+                    "left": {
+                      "kind": "Reference",
+                      "node_id": "fn:0:node:107",
+                      "source": {
+                        "column": 19,
+                        "kind": "SourceSpan",
+                        "line": 115,
+                        "path": "examples/aspiration_chunk.py"
+                      },
+                      "symbol_id": "fn:0:var:start_residual"
+                    },
+                    "node_id": "fn:0:node:106",
+                    "op": ">",
+                    "right": {
+                      "kind": "Binary",
+                      "left": {
+                        "index": {
+                          "kind": "Reference",
+                          "node_id": "fn:0:node:111",
+                          "source": {
+                            "column": 54,
+                            "kind": "SourceSpan",
+                            "line": 115,
+                            "path": "examples/aspiration_chunk.py"
+                          },
+                          "symbol_id": "fn:0:var:start_idx"
+                        },
+                        "kind": "ListGet",
+                        "node_id": "fn:0:node:109",
+                        "source": {
+                          "column": 41,
+                          "kind": "SourceSpan",
+                          "line": 115,
+                          "path": "examples/aspiration_chunk.py"
+                        },
+                        "value": {
+                          "kind": "Reference",
+                          "node_id": "fn:0:node:110",
+                          "source": {
+                            "column": 41,
+                            "kind": "SourceSpan",
+                            "line": 115,
+                            "path": "examples/aspiration_chunk.py"
+                          },
+                          "symbol_id": "fn:0:var:volumes"
+                        }
+                      },
+                      "node_id": "fn:0:node:108",
+                      "op": "+",
+                      "right": {
+                        "kind": "Literal",
+                        "node_id": "fn:0:node:112",
+                        "source": {
+                          "column": 72,
+                          "kind": "SourceSpan",
+                          "line": 115,
+                          "path": "examples/aspiration_chunk.py"
+                        },
+                        "type": "volume",
+                        "value": 1.0000000000000002e-12
+                      },
+                      "source": {
+                        "column": 41,
+                        "kind": "SourceSpan",
+                        "line": 115,
+                        "path": "examples/aspiration_chunk.py"
+                      }
+                    },
+                    "source": {
+                      "column": 19,
+                      "kind": "SourceSpan",
+                      "line": 115,
+                      "path": "examples/aspiration_chunk.py"
+                    }
+                  },
+                  "else_body": [],
+                  "kind": "If",
+                  "node_id": "fn:0:node:105",
+                  "source": {
+                    "column": 16,
+                    "kind": "SourceSpan",
+                    "line": 115,
+                    "path": "examples/aspiration_chunk.py"
+                  },
+                  "then_body": [
+                    {
+                      "kind": "Assignment",
+                      "node_id": "fn:0:node:113",
+                      "source": {
+                        "column": 20,
+                        "kind": "SourceSpan",
+                        "line": 116,
+                        "path": "examples/aspiration_chunk.py"
+                      },
+                      "target": {
+                        "kind": "Reference",
+                        "node_id": "fn:0:node:114",
+                        "source": {
+                          "column": 20,
+                          "kind": "SourceSpan",
+                          "line": 116,
+                          "path": "examples/aspiration_chunk.py"
+                        },
+                        "symbol_id": "fn:0:var:valid"
+                      },
+                      "value": {
+                        "kind": "Literal",
+                        "node_id": "fn:0:node:115",
+                        "source": {
+                          "column": 33,
+                          "kind": "SourceSpan",
+                          "line": 116,
+                          "path": "examples/aspiration_chunk.py"
+                        },
+                        "type": "boolean",
+                        "value": false
+                      }
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -1106,153 +1229,73 @@
             "kind": "Binary",
             "left": {
               "kind": "Reference",
-              "node_id": "fn:0:node:108",
-              "source": {
-                "column": 11,
-                "kind": "SourceSpan",
-                "line": 114,
-                "path": "examples/aspiration_chunk.py"
-              },
-              "symbol_id": "fn:0:var:airgap"
-            },
-            "node_id": "fn:0:node:107",
-            "op": "<=",
-            "right": {
-              "kind": "Literal",
-              "node_id": "fn:0:node:110",
-              "source": {
-                "column": 26,
-                "kind": "SourceSpan",
-                "line": 114,
-                "path": "examples/aspiration_chunk.py"
-              },
-              "type": "volume",
-              "value": 0.0
-            },
-            "source": {
-              "column": 11,
-              "kind": "SourceSpan",
-              "line": 114,
-              "path": "examples/aspiration_chunk.py"
-            }
-          },
-          "else_body": [],
-          "kind": "If",
-          "node_id": "fn:0:node:106",
-          "source": {
-            "column": 8,
-            "kind": "SourceSpan",
-            "line": 114,
-            "path": "examples/aspiration_chunk.py"
-          },
-          "then_body": [
-            {
-              "kind": "Assignment",
-              "node_id": "fn:0:node:111",
-              "source": {
-                "column": 12,
-                "kind": "SourceSpan",
-                "line": 115,
-                "path": "examples/aspiration_chunk.py"
-              },
-              "target": {
-                "kind": "Reference",
-                "node_id": "fn:0:node:112",
-                "source": {
-                  "column": 12,
-                  "kind": "SourceSpan",
-                  "line": 115,
-                  "path": "examples/aspiration_chunk.py"
-                },
-                "symbol_id": "fn:0:var:valid"
-              },
-              "value": {
-                "kind": "Literal",
-                "node_id": "fn:0:node:113",
-                "source": {
-                  "column": 25,
-                  "kind": "SourceSpan",
-                  "line": 115,
-                  "path": "examples/aspiration_chunk.py"
-                },
-                "type": "boolean",
-                "value": false
-              }
-            }
-          ]
-        },
-        {
-          "condition": {
-            "kind": "Binary",
-            "left": {
-              "kind": "Reference",
-              "node_id": "fn:0:node:116",
-              "source": {
-                "column": 11,
-                "kind": "SourceSpan",
-                "line": 116,
-                "path": "examples/aspiration_chunk.py"
-              },
-              "symbol_id": "fn:0:var:safety"
-            },
-            "node_id": "fn:0:node:115",
-            "op": "<=",
-            "right": {
-              "kind": "Literal",
               "node_id": "fn:0:node:118",
               "source": {
-                "column": 26,
-                "kind": "SourceSpan",
-                "line": 116,
-                "path": "examples/aspiration_chunk.py"
-              },
-              "type": "volume",
-              "value": 0.0
-            },
-            "source": {
-              "column": 11,
-              "kind": "SourceSpan",
-              "line": 116,
-              "path": "examples/aspiration_chunk.py"
-            }
-          },
-          "else_body": [],
-          "kind": "If",
-          "node_id": "fn:0:node:114",
-          "source": {
-            "column": 8,
-            "kind": "SourceSpan",
-            "line": 116,
-            "path": "examples/aspiration_chunk.py"
-          },
-          "then_body": [
-            {
-              "kind": "Assignment",
-              "node_id": "fn:0:node:119",
-              "source": {
-                "column": 12,
+                "column": 11,
                 "kind": "SourceSpan",
                 "line": 117,
                 "path": "examples/aspiration_chunk.py"
               },
+              "symbol_id": "fn:0:var:syringe"
+            },
+            "node_id": "fn:0:node:117",
+            "op": "<=",
+            "right": {
+              "kind": "Literal",
+              "node_id": "fn:0:node:120",
+              "source": {
+                "column": 27,
+                "kind": "SourceSpan",
+                "line": 117,
+                "path": "examples/aspiration_chunk.py"
+              },
+              "type": "volume",
+              "value": 0.0
+            },
+            "source": {
+              "column": 11,
+              "kind": "SourceSpan",
+              "line": 117,
+              "path": "examples/aspiration_chunk.py"
+            }
+          },
+          "else_body": [],
+          "kind": "If",
+          "node_id": "fn:0:node:116",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 117,
+            "path": "examples/aspiration_chunk.py"
+          },
+          "then_body": [
+            {
+              "kind": "Assignment",
+              "node_id": "fn:0:node:121",
+              "source": {
+                "column": 12,
+                "kind": "SourceSpan",
+                "line": 118,
+                "path": "examples/aspiration_chunk.py"
+              },
               "target": {
                 "kind": "Reference",
-                "node_id": "fn:0:node:120",
+                "node_id": "fn:0:node:122",
                 "source": {
                   "column": 12,
                   "kind": "SourceSpan",
-                  "line": 117,
+                  "line": 118,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "symbol_id": "fn:0:var:valid"
               },
               "value": {
                 "kind": "Literal",
-                "node_id": "fn:0:node:121",
+                "node_id": "fn:0:node:123",
                 "source": {
                   "column": 25,
                   "kind": "SourceSpan",
-                  "line": 117,
+                  "line": 118,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "type": "boolean",
@@ -1266,24 +1309,24 @@
             "kind": "Binary",
             "left": {
               "kind": "Reference",
-              "node_id": "fn:0:node:124",
+              "node_id": "fn:0:node:126",
               "source": {
                 "column": 11,
                 "kind": "SourceSpan",
-                "line": 118,
+                "line": 119,
                 "path": "examples/aspiration_chunk.py"
               },
-              "symbol_id": "fn:0:var:extra"
+              "symbol_id": "fn:0:var:airgap"
             },
-            "node_id": "fn:0:node:123",
+            "node_id": "fn:0:node:125",
             "op": "<=",
             "right": {
               "kind": "Literal",
-              "node_id": "fn:0:node:126",
+              "node_id": "fn:0:node:128",
               "source": {
-                "column": 25,
+                "column": 26,
                 "kind": "SourceSpan",
-                "line": 118,
+                "line": 119,
                 "path": "examples/aspiration_chunk.py"
               },
               "type": "volume",
@@ -1292,47 +1335,207 @@
             "source": {
               "column": 11,
               "kind": "SourceSpan",
-              "line": 118,
+              "line": 119,
               "path": "examples/aspiration_chunk.py"
             }
           },
           "else_body": [],
           "kind": "If",
-          "node_id": "fn:0:node:122",
+          "node_id": "fn:0:node:124",
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 118,
+            "line": 119,
             "path": "examples/aspiration_chunk.py"
           },
           "then_body": [
             {
               "kind": "Assignment",
-              "node_id": "fn:0:node:127",
+              "node_id": "fn:0:node:129",
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 119,
+                "line": 120,
                 "path": "examples/aspiration_chunk.py"
               },
               "target": {
                 "kind": "Reference",
-                "node_id": "fn:0:node:128",
+                "node_id": "fn:0:node:130",
                 "source": {
                   "column": 12,
                   "kind": "SourceSpan",
-                  "line": 119,
+                  "line": 120,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "symbol_id": "fn:0:var:valid"
               },
               "value": {
                 "kind": "Literal",
-                "node_id": "fn:0:node:129",
+                "node_id": "fn:0:node:131",
                 "source": {
                   "column": 25,
                   "kind": "SourceSpan",
-                  "line": 119,
+                  "line": 120,
+                  "path": "examples/aspiration_chunk.py"
+                },
+                "type": "boolean",
+                "value": false
+              }
+            }
+          ]
+        },
+        {
+          "condition": {
+            "kind": "Binary",
+            "left": {
+              "kind": "Reference",
+              "node_id": "fn:0:node:134",
+              "source": {
+                "column": 11,
+                "kind": "SourceSpan",
+                "line": 121,
+                "path": "examples/aspiration_chunk.py"
+              },
+              "symbol_id": "fn:0:var:safety"
+            },
+            "node_id": "fn:0:node:133",
+            "op": "<=",
+            "right": {
+              "kind": "Literal",
+              "node_id": "fn:0:node:136",
+              "source": {
+                "column": 26,
+                "kind": "SourceSpan",
+                "line": 121,
+                "path": "examples/aspiration_chunk.py"
+              },
+              "type": "volume",
+              "value": 0.0
+            },
+            "source": {
+              "column": 11,
+              "kind": "SourceSpan",
+              "line": 121,
+              "path": "examples/aspiration_chunk.py"
+            }
+          },
+          "else_body": [],
+          "kind": "If",
+          "node_id": "fn:0:node:132",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 121,
+            "path": "examples/aspiration_chunk.py"
+          },
+          "then_body": [
+            {
+              "kind": "Assignment",
+              "node_id": "fn:0:node:137",
+              "source": {
+                "column": 12,
+                "kind": "SourceSpan",
+                "line": 122,
+                "path": "examples/aspiration_chunk.py"
+              },
+              "target": {
+                "kind": "Reference",
+                "node_id": "fn:0:node:138",
+                "source": {
+                  "column": 12,
+                  "kind": "SourceSpan",
+                  "line": 122,
+                  "path": "examples/aspiration_chunk.py"
+                },
+                "symbol_id": "fn:0:var:valid"
+              },
+              "value": {
+                "kind": "Literal",
+                "node_id": "fn:0:node:139",
+                "source": {
+                  "column": 25,
+                  "kind": "SourceSpan",
+                  "line": 122,
+                  "path": "examples/aspiration_chunk.py"
+                },
+                "type": "boolean",
+                "value": false
+              }
+            }
+          ]
+        },
+        {
+          "condition": {
+            "kind": "Binary",
+            "left": {
+              "kind": "Reference",
+              "node_id": "fn:0:node:142",
+              "source": {
+                "column": 11,
+                "kind": "SourceSpan",
+                "line": 123,
+                "path": "examples/aspiration_chunk.py"
+              },
+              "symbol_id": "fn:0:var:extra"
+            },
+            "node_id": "fn:0:node:141",
+            "op": "<=",
+            "right": {
+              "kind": "Literal",
+              "node_id": "fn:0:node:144",
+              "source": {
+                "column": 25,
+                "kind": "SourceSpan",
+                "line": 123,
+                "path": "examples/aspiration_chunk.py"
+              },
+              "type": "volume",
+              "value": 0.0
+            },
+            "source": {
+              "column": 11,
+              "kind": "SourceSpan",
+              "line": 123,
+              "path": "examples/aspiration_chunk.py"
+            }
+          },
+          "else_body": [],
+          "kind": "If",
+          "node_id": "fn:0:node:140",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 123,
+            "path": "examples/aspiration_chunk.py"
+          },
+          "then_body": [
+            {
+              "kind": "Assignment",
+              "node_id": "fn:0:node:145",
+              "source": {
+                "column": 12,
+                "kind": "SourceSpan",
+                "line": 124,
+                "path": "examples/aspiration_chunk.py"
+              },
+              "target": {
+                "kind": "Reference",
+                "node_id": "fn:0:node:146",
+                "source": {
+                  "column": 12,
+                  "kind": "SourceSpan",
+                  "line": 124,
+                  "path": "examples/aspiration_chunk.py"
+                },
+                "symbol_id": "fn:0:var:valid"
+              },
+              "value": {
+                "kind": "Literal",
+                "node_id": "fn:0:node:147",
+                "source": {
+                  "column": 25,
+                  "kind": "SourceSpan",
+                  "line": 124,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "type": "boolean",
@@ -1343,20 +1546,20 @@
         },
         {
           "kind": "Assignment",
-          "node_id": "fn:0:node:130",
+          "node_id": "fn:0:node:148",
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 120,
+            "line": 125,
             "path": "examples/aspiration_chunk.py"
           },
           "target": {
             "kind": "Reference",
-            "node_id": "fn:0:node:131",
+            "node_id": "fn:0:node:149",
             "source": {
               "column": 8,
               "kind": "SourceSpan",
-              "line": 120,
+              "line": 125,
               "path": "examples/aspiration_chunk.py"
             },
             "symbol_id": "fn:0:var:usable"
@@ -1369,24 +1572,24 @@
                 "kind": "Binary",
                 "left": {
                   "kind": "Reference",
-                  "node_id": "fn:0:node:135",
+                  "node_id": "fn:0:node:153",
                   "source": {
                     "column": 22,
                     "kind": "SourceSpan",
-                    "line": 120,
+                    "line": 125,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "symbol_id": "fn:0:var:syringe"
                 },
-                "node_id": "fn:0:node:134",
+                "node_id": "fn:0:node:152",
                 "op": "-",
                 "right": {
                   "kind": "Reference",
-                  "node_id": "fn:0:node:136",
+                  "node_id": "fn:0:node:154",
                   "source": {
                     "column": 37,
                     "kind": "SourceSpan",
-                    "line": 120,
+                    "line": 125,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "symbol_id": "fn:0:var:airgap"
@@ -1394,19 +1597,19 @@
                 "source": {
                   "column": 22,
                   "kind": "SourceSpan",
-                  "line": 120,
+                  "line": 125,
                   "path": "examples/aspiration_chunk.py"
                 }
               },
-              "node_id": "fn:0:node:133",
+              "node_id": "fn:0:node:151",
               "op": "-",
               "right": {
                 "kind": "Reference",
-                "node_id": "fn:0:node:137",
+                "node_id": "fn:0:node:155",
                 "source": {
                   "column": 51,
                   "kind": "SourceSpan",
-                  "line": 120,
+                  "line": 125,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "symbol_id": "fn:0:var:extra"
@@ -1414,19 +1617,19 @@
               "source": {
                 "column": 22,
                 "kind": "SourceSpan",
-                "line": 120,
+                "line": 125,
                 "path": "examples/aspiration_chunk.py"
               }
             },
-            "node_id": "fn:0:node:132",
+            "node_id": "fn:0:node:150",
             "op": "-",
             "right": {
               "kind": "Reference",
-              "node_id": "fn:0:node:138",
+              "node_id": "fn:0:node:156",
               "source": {
                 "column": 64,
                 "kind": "SourceSpan",
-                "line": 120,
+                "line": 125,
                 "path": "examples/aspiration_chunk.py"
               },
               "symbol_id": "fn:0:var:safety"
@@ -1434,7 +1637,7 @@
             "source": {
               "column": 22,
               "kind": "SourceSpan",
-              "line": 120,
+              "line": 125,
               "path": "examples/aspiration_chunk.py"
             }
           }
@@ -1444,24 +1647,24 @@
             "kind": "Binary",
             "left": {
               "kind": "Reference",
-              "node_id": "fn:0:node:141",
+              "node_id": "fn:0:node:159",
               "source": {
                 "column": 11,
                 "kind": "SourceSpan",
-                "line": 121,
+                "line": 126,
                 "path": "examples/aspiration_chunk.py"
               },
               "symbol_id": "fn:0:var:usable"
             },
-            "node_id": "fn:0:node:140",
+            "node_id": "fn:0:node:158",
             "op": "<=",
             "right": {
               "kind": "Literal",
-              "node_id": "fn:0:node:142",
+              "node_id": "fn:0:node:160",
               "source": {
                 "column": 26,
                 "kind": "SourceSpan",
-                "line": 121,
+                "line": 126,
                 "path": "examples/aspiration_chunk.py"
               },
               "type": "volume",
@@ -1470,47 +1673,47 @@
             "source": {
               "column": 11,
               "kind": "SourceSpan",
-              "line": 121,
+              "line": 126,
               "path": "examples/aspiration_chunk.py"
             }
           },
           "else_body": [],
           "kind": "If",
-          "node_id": "fn:0:node:139",
+          "node_id": "fn:0:node:157",
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 121,
+            "line": 126,
             "path": "examples/aspiration_chunk.py"
           },
           "then_body": [
             {
               "kind": "Assignment",
-              "node_id": "fn:0:node:143",
+              "node_id": "fn:0:node:161",
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 122,
+                "line": 127,
                 "path": "examples/aspiration_chunk.py"
               },
               "target": {
                 "kind": "Reference",
-                "node_id": "fn:0:node:144",
+                "node_id": "fn:0:node:162",
                 "source": {
                   "column": 12,
                   "kind": "SourceSpan",
-                  "line": 122,
+                  "line": 127,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "symbol_id": "fn:0:var:valid"
               },
               "value": {
                 "kind": "Literal",
-                "node_id": "fn:0:node:145",
+                "node_id": "fn:0:node:163",
                 "source": {
                   "column": 25,
                   "kind": "SourceSpan",
-                  "line": 122,
+                  "line": 127,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "type": "boolean",
@@ -1521,31 +1724,31 @@
         },
         {
           "kind": "Assignment",
-          "node_id": "fn:0:node:146",
+          "node_id": "fn:0:node:164",
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 123,
+            "line": 128,
             "path": "examples/aspiration_chunk.py"
           },
           "target": {
             "kind": "Reference",
-            "node_id": "fn:0:node:147",
+            "node_id": "fn:0:node:165",
             "source": {
               "column": 8,
               "kind": "SourceSpan",
-              "line": 123,
+              "line": 128,
               "path": "examples/aspiration_chunk.py"
             },
             "symbol_id": "fn:0:var:index"
           },
           "value": {
             "kind": "Reference",
-            "node_id": "fn:0:node:148",
+            "node_id": "fn:0:node:166",
             "source": {
               "column": 21,
               "kind": "SourceSpan",
-              "line": 123,
+              "line": 128,
               "path": "examples/aspiration_chunk.py"
             },
             "symbol_id": "fn:0:var:start_idx"
@@ -1553,31 +1756,31 @@
         },
         {
           "kind": "Assignment",
-          "node_id": "fn:0:node:149",
+          "node_id": "fn:0:node:167",
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 124,
+            "line": 129,
             "path": "examples/aspiration_chunk.py"
           },
           "target": {
             "kind": "Reference",
-            "node_id": "fn:0:node:150",
+            "node_id": "fn:0:node:168",
             "source": {
               "column": 8,
               "kind": "SourceSpan",
-              "line": 124,
+              "line": 129,
               "path": "examples/aspiration_chunk.py"
             },
             "symbol_id": "fn:0:var:active"
           },
           "value": {
             "kind": "Reference",
-            "node_id": "fn:0:node:151",
+            "node_id": "fn:0:node:169",
             "source": {
               "column": 22,
               "kind": "SourceSpan",
-              "line": 124,
+              "line": 129,
               "path": "examples/aspiration_chunk.py"
             },
             "symbol_id": "fn:0:var:valid"
@@ -1585,35 +1788,35 @@
         },
         {
           "kind": "Assignment",
-          "node_id": "fn:0:node:152",
+          "node_id": "fn:0:node:170",
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 125,
+            "line": 130,
             "path": "examples/aspiration_chunk.py"
           },
           "target": {
             "kind": "Reference",
-            "node_id": "fn:0:node:153",
+            "node_id": "fn:0:node:171",
             "source": {
               "column": 8,
               "kind": "SourceSpan",
-              "line": 125,
+              "line": 130,
               "path": "examples/aspiration_chunk.py"
             },
             "symbol_id": "fn:0:var:last_allowed"
           },
           "value": {
             "kind": "Unary",
-            "node_id": "fn:0:node:154",
+            "node_id": "fn:0:node:172",
             "op": "-",
             "operand": {
               "kind": "Literal",
-              "node_id": "fn:0:node:155",
+              "node_id": "fn:0:node:173",
               "source": {
                 "column": 29,
                 "kind": "SourceSpan",
-                "line": 125,
+                "line": 130,
                 "path": "examples/aspiration_chunk.py"
               },
               "type": "integer",
@@ -1622,7 +1825,7 @@
             "source": {
               "column": 28,
               "kind": "SourceSpan",
-              "line": 125,
+              "line": 130,
               "path": "examples/aspiration_chunk.py"
             }
           }
@@ -1630,41 +1833,41 @@
         {
           "condition": {
             "kind": "Reference",
-            "node_id": "fn:0:node:157",
+            "node_id": "fn:0:node:175",
             "source": {
               "column": 11,
               "kind": "SourceSpan",
-              "line": 126,
+              "line": 131,
               "path": "examples/aspiration_chunk.py"
             },
             "symbol_id": "fn:0:var:valid"
           },
           "else_body": [],
           "kind": "If",
-          "node_id": "fn:0:node:156",
+          "node_id": "fn:0:node:174",
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 126,
+            "line": 131,
             "path": "examples/aspiration_chunk.py"
           },
           "then_body": [
             {
               "kind": "Assignment",
-              "node_id": "fn:0:node:158",
+              "node_id": "fn:0:node:176",
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 127,
+                "line": 132,
                 "path": "examples/aspiration_chunk.py"
               },
               "target": {
                 "kind": "Reference",
-                "node_id": "fn:0:node:159",
+                "node_id": "fn:0:node:177",
                 "source": {
                   "column": 12,
                   "kind": "SourceSpan",
-                  "line": 127,
+                  "line": 132,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "symbol_id": "fn:0:var:last_allowed"
@@ -1677,30 +1880,30 @@
                     "kind": "Binary",
                     "left": {
                       "kind": "Unary",
-                      "node_id": "fn:0:node:163",
+                      "node_id": "fn:0:node:181",
                       "op": "floor",
                       "operand": {
                         "kind": "Binary",
                         "left": {
                           "kind": "Reference",
-                          "node_id": "fn:0:node:165",
+                          "node_id": "fn:0:node:183",
                           "source": {
                             "column": 38,
                             "kind": "SourceSpan",
-                            "line": 127,
+                            "line": 132,
                             "path": "examples/aspiration_chunk.py"
                           },
                           "symbol_id": "fn:0:var:start_idx"
                         },
-                        "node_id": "fn:0:node:164",
+                        "node_id": "fn:0:node:182",
                         "op": "/",
                         "right": {
                           "kind": "Literal",
-                          "node_id": "fn:0:node:166",
+                          "node_id": "fn:0:node:184",
                           "source": {
                             "column": 55,
                             "kind": "SourceSpan",
-                            "line": 127,
+                            "line": 132,
                             "path": "examples/aspiration_chunk.py"
                           },
                           "type": "integer",
@@ -1709,26 +1912,26 @@
                         "source": {
                           "column": 38,
                           "kind": "SourceSpan",
-                          "line": 127,
+                          "line": 132,
                           "path": "examples/aspiration_chunk.py"
                         }
                       },
                       "source": {
                         "column": 32,
                         "kind": "SourceSpan",
-                        "line": 127,
+                        "line": 132,
                         "path": "examples/aspiration_chunk.py"
                       }
                     },
-                    "node_id": "fn:0:node:162",
+                    "node_id": "fn:0:node:180",
                     "op": "*",
                     "right": {
                       "kind": "Literal",
-                      "node_id": "fn:0:node:167",
+                      "node_id": "fn:0:node:185",
                       "source": {
                         "column": 74,
                         "kind": "SourceSpan",
-                        "line": 127,
+                        "line": 132,
                         "path": "examples/aspiration_chunk.py"
                       },
                       "type": "integer",
@@ -1737,19 +1940,19 @@
                     "source": {
                       "column": 32,
                       "kind": "SourceSpan",
-                      "line": 127,
+                      "line": 132,
                       "path": "examples/aspiration_chunk.py"
                     }
                   },
-                  "node_id": "fn:0:node:161",
+                  "node_id": "fn:0:node:179",
                   "op": "+",
                   "right": {
                     "kind": "Literal",
-                    "node_id": "fn:0:node:168",
+                    "node_id": "fn:0:node:186",
                     "source": {
                       "column": 92,
                       "kind": "SourceSpan",
-                      "line": 127,
+                      "line": 132,
                       "path": "examples/aspiration_chunk.py"
                     },
                     "type": "integer",
@@ -1758,19 +1961,19 @@
                   "source": {
                     "column": 32,
                     "kind": "SourceSpan",
-                    "line": 127,
+                    "line": 132,
                     "path": "examples/aspiration_chunk.py"
                   }
                 },
-                "node_id": "fn:0:node:160",
+                "node_id": "fn:0:node:178",
                 "op": "-",
                 "right": {
                   "kind": "Literal",
-                  "node_id": "fn:0:node:169",
+                  "node_id": "fn:0:node:187",
                   "source": {
                     "column": 110,
                     "kind": "SourceSpan",
-                    "line": 127,
+                    "line": 132,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "type": "integer",
@@ -1779,7 +1982,7 @@
                 "source": {
                   "column": 32,
                   "kind": "SourceSpan",
-                  "line": 127,
+                  "line": 132,
                   "path": "examples/aspiration_chunk.py"
                 }
               }
@@ -1789,24 +1992,24 @@
                 "kind": "Binary",
                 "left": {
                   "kind": "Reference",
-                  "node_id": "fn:0:node:172",
+                  "node_id": "fn:0:node:190",
                   "source": {
                     "column": 15,
                     "kind": "SourceSpan",
-                    "line": 128,
+                    "line": 133,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "symbol_id": "fn:0:var:max_idx"
                 },
-                "node_id": "fn:0:node:171",
+                "node_id": "fn:0:node:189",
                 "op": "<",
                 "right": {
                   "kind": "Reference",
-                  "node_id": "fn:0:node:173",
+                  "node_id": "fn:0:node:191",
                   "source": {
                     "column": 30,
                     "kind": "SourceSpan",
-                    "line": 128,
+                    "line": 133,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "symbol_id": "fn:0:var:last_allowed"
@@ -1814,47 +2017,47 @@
                 "source": {
                   "column": 15,
                   "kind": "SourceSpan",
-                  "line": 128,
+                  "line": 133,
                   "path": "examples/aspiration_chunk.py"
                 }
               },
               "else_body": [],
               "kind": "If",
-              "node_id": "fn:0:node:170",
+              "node_id": "fn:0:node:188",
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 128,
+                "line": 133,
                 "path": "examples/aspiration_chunk.py"
               },
               "then_body": [
                 {
                   "kind": "Assignment",
-                  "node_id": "fn:0:node:174",
+                  "node_id": "fn:0:node:192",
                   "source": {
                     "column": 16,
                     "kind": "SourceSpan",
-                    "line": 129,
+                    "line": 134,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "target": {
                     "kind": "Reference",
-                    "node_id": "fn:0:node:175",
+                    "node_id": "fn:0:node:193",
                     "source": {
                       "column": 16,
                       "kind": "SourceSpan",
-                      "line": 129,
+                      "line": 134,
                       "path": "examples/aspiration_chunk.py"
                     },
                     "symbol_id": "fn:0:var:last_allowed"
                   },
                   "value": {
                     "kind": "Reference",
-                    "node_id": "fn:0:node:176",
+                    "node_id": "fn:0:node:194",
                     "source": {
                       "column": 36,
                       "kind": "SourceSpan",
-                      "line": 129,
+                      "line": 134,
                       "path": "examples/aspiration_chunk.py"
                     },
                     "symbol_id": "fn:0:var:max_idx"
@@ -1868,31 +2071,31 @@
           "body": [
             {
               "kind": "Assignment",
-              "node_id": "fn:0:node:179",
+              "node_id": "fn:0:node:197",
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 131,
+                "line": 136,
                 "path": "examples/aspiration_chunk.py"
               },
               "target": {
                 "kind": "Reference",
-                "node_id": "fn:0:node:180",
+                "node_id": "fn:0:node:198",
                 "source": {
                   "column": 12,
                   "kind": "SourceSpan",
-                  "line": 131,
+                  "line": 136,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "symbol_id": "fn:0:var:active"
               },
               "value": {
                 "kind": "Literal",
-                "node_id": "fn:0:node:181",
+                "node_id": "fn:0:node:199",
                 "source": {
                   "column": 26,
                   "kind": "SourceSpan",
-                  "line": 131,
+                  "line": 136,
                   "path": "examples/aspiration_chunk.py"
                 },
                 "type": "boolean",
@@ -1904,33 +2107,33 @@
                 "kind": "Binary",
                 "left": {
                   "kind": "Reference",
-                  "node_id": "fn:0:node:184",
+                  "node_id": "fn:0:node:202",
                   "source": {
                     "column": 15,
                     "kind": "SourceSpan",
-                    "line": 132,
+                    "line": 137,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "symbol_id": "fn:0:var:index"
                 },
-                "node_id": "fn:0:node:183",
+                "node_id": "fn:0:node:201",
                 "op": "<",
                 "right": {
                   "kind": "ListLength",
-                  "node_id": "fn:0:node:185",
+                  "node_id": "fn:0:node:203",
                   "source": {
                     "column": 28,
                     "kind": "SourceSpan",
-                    "line": 132,
+                    "line": 137,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "value": {
                     "kind": "Reference",
-                    "node_id": "fn:0:node:186",
+                    "node_id": "fn:0:node:204",
                     "source": {
                       "column": 32,
                       "kind": "SourceSpan",
-                      "line": 132,
+                      "line": 137,
                       "path": "examples/aspiration_chunk.py"
                     },
                     "symbol_id": "fn:0:var:volumes"
@@ -1939,17 +2142,17 @@
                 "source": {
                   "column": 15,
                   "kind": "SourceSpan",
-                  "line": 132,
+                  "line": 137,
                   "path": "examples/aspiration_chunk.py"
                 }
               },
               "else_body": [],
               "kind": "If",
-              "node_id": "fn:0:node:182",
+              "node_id": "fn:0:node:200",
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 132,
+                "line": 137,
                 "path": "examples/aspiration_chunk.py"
               },
               "then_body": [
@@ -1958,24 +2161,24 @@
                     "kind": "Binary",
                     "left": {
                       "kind": "Reference",
-                      "node_id": "fn:0:node:189",
+                      "node_id": "fn:0:node:207",
                       "source": {
                         "column": 19,
                         "kind": "SourceSpan",
-                        "line": 133,
+                        "line": 138,
                         "path": "examples/aspiration_chunk.py"
                       },
                       "symbol_id": "fn:0:var:index"
                     },
-                    "node_id": "fn:0:node:188",
+                    "node_id": "fn:0:node:206",
                     "op": "<=",
                     "right": {
                       "kind": "Reference",
-                      "node_id": "fn:0:node:190",
+                      "node_id": "fn:0:node:208",
                       "source": {
                         "column": 33,
                         "kind": "SourceSpan",
-                        "line": 133,
+                        "line": 138,
                         "path": "examples/aspiration_chunk.py"
                       },
                       "symbol_id": "fn:0:var:last_allowed"
@@ -1983,17 +2186,17 @@
                     "source": {
                       "column": 19,
                       "kind": "SourceSpan",
-                      "line": 133,
+                      "line": 138,
                       "path": "examples/aspiration_chunk.py"
                     }
                   },
                   "else_body": [],
                   "kind": "If",
-                  "node_id": "fn:0:node:187",
+                  "node_id": "fn:0:node:205",
                   "source": {
                     "column": 16,
                     "kind": "SourceSpan",
-                    "line": 133,
+                    "line": 138,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "then_body": [
@@ -2004,24 +2207,24 @@
                           "kind": "Binary",
                           "left": {
                             "kind": "Reference",
-                            "node_id": "fn:0:node:194",
+                            "node_id": "fn:0:node:212",
                             "source": {
                               "column": 23,
                               "kind": "SourceSpan",
-                              "line": 134,
+                              "line": 139,
                               "path": "examples/aspiration_chunk.py"
                             },
                             "symbol_id": "fn:0:var:usable"
                           },
-                          "node_id": "fn:0:node:193",
+                          "node_id": "fn:0:node:211",
                           "op": "-",
                           "right": {
                             "kind": "Reference",
-                            "node_id": "fn:0:node:195",
+                            "node_id": "fn:0:node:213",
                             "source": {
                               "column": 37,
                               "kind": "SourceSpan",
-                              "line": 134,
+                              "line": 139,
                               "path": "examples/aspiration_chunk.py"
                             },
                             "symbol_id": "fn:0:var:packed"
@@ -2029,19 +2232,19 @@
                           "source": {
                             "column": 23,
                             "kind": "SourceSpan",
-                            "line": 134,
+                            "line": 139,
                             "path": "examples/aspiration_chunk.py"
                           }
                         },
-                        "node_id": "fn:0:node:192",
+                        "node_id": "fn:0:node:210",
                         "op": ">",
                         "right": {
                           "kind": "Literal",
-                          "node_id": "fn:0:node:196",
+                          "node_id": "fn:0:node:214",
                           "source": {
                             "column": 51,
                             "kind": "SourceSpan",
-                            "line": 134,
+                            "line": 139,
                             "path": "examples/aspiration_chunk.py"
                           },
                           "type": "volume",
@@ -2050,36 +2253,36 @@
                         "source": {
                           "column": 23,
                           "kind": "SourceSpan",
-                          "line": 134,
+                          "line": 139,
                           "path": "examples/aspiration_chunk.py"
                         }
                       },
                       "else_body": [],
                       "kind": "If",
-                      "node_id": "fn:0:node:191",
+                      "node_id": "fn:0:node:209",
                       "source": {
                         "column": 20,
                         "kind": "SourceSpan",
-                        "line": 134,
+                        "line": 139,
                         "path": "examples/aspiration_chunk.py"
                       },
                       "then_body": [
                         {
                           "kind": "Assignment",
-                          "node_id": "fn:0:node:197",
+                          "node_id": "fn:0:node:215",
                           "source": {
                             "column": 24,
                             "kind": "SourceSpan",
-                            "line": 135,
+                            "line": 140,
                             "path": "examples/aspiration_chunk.py"
                           },
                           "target": {
                             "kind": "Reference",
-                            "node_id": "fn:0:node:198",
+                            "node_id": "fn:0:node:216",
                             "source": {
                               "column": 24,
                               "kind": "SourceSpan",
-                              "line": 135,
+                              "line": 140,
                               "path": "examples/aspiration_chunk.py"
                             },
                             "symbol_id": "fn:0:var:requested"
@@ -2087,30 +2290,30 @@
                           "value": {
                             "index": {
                               "kind": "Reference",
-                              "node_id": "fn:0:node:201",
+                              "node_id": "fn:0:node:219",
                               "source": {
                                 "column": 54,
                                 "kind": "SourceSpan",
-                                "line": 135,
+                                "line": 140,
                                 "path": "examples/aspiration_chunk.py"
                               },
                               "symbol_id": "fn:0:var:index"
                             },
                             "kind": "ListGet",
-                            "node_id": "fn:0:node:199",
+                            "node_id": "fn:0:node:217",
                             "source": {
                               "column": 41,
                               "kind": "SourceSpan",
-                              "line": 135,
+                              "line": 140,
                               "path": "examples/aspiration_chunk.py"
                             },
                             "value": {
                               "kind": "Reference",
-                              "node_id": "fn:0:node:200",
+                              "node_id": "fn:0:node:218",
                               "source": {
                                 "column": 41,
                                 "kind": "SourceSpan",
-                                "line": 135,
+                                "line": 140,
                                 "path": "examples/aspiration_chunk.py"
                               },
                               "symbol_id": "fn:0:var:volumes"
@@ -2122,24 +2325,24 @@
                             "kind": "Binary",
                             "left": {
                               "kind": "Reference",
-                              "node_id": "fn:0:node:204",
+                              "node_id": "fn:0:node:222",
                               "source": {
                                 "column": 27,
                                 "kind": "SourceSpan",
-                                "line": 136,
+                                "line": 141,
                                 "path": "examples/aspiration_chunk.py"
                               },
                               "symbol_id": "fn:0:var:index"
                             },
-                            "node_id": "fn:0:node:203",
+                            "node_id": "fn:0:node:221",
                             "op": "==",
                             "right": {
                               "kind": "Reference",
-                              "node_id": "fn:0:node:205",
+                              "node_id": "fn:0:node:223",
                               "source": {
                                 "column": 41,
                                 "kind": "SourceSpan",
-                                "line": 136,
+                                "line": 141,
                                 "path": "examples/aspiration_chunk.py"
                               },
                               "symbol_id": "fn:0:var:start_idx"
@@ -2147,17 +2350,17 @@
                             "source": {
                               "column": 27,
                               "kind": "SourceSpan",
-                              "line": 136,
+                              "line": 141,
                               "path": "examples/aspiration_chunk.py"
                             }
                           },
                           "else_body": [],
                           "kind": "If",
-                          "node_id": "fn:0:node:202",
+                          "node_id": "fn:0:node:220",
                           "source": {
                             "column": 24,
                             "kind": "SourceSpan",
-                            "line": 136,
+                            "line": 141,
                             "path": "examples/aspiration_chunk.py"
                           },
                           "then_body": [
@@ -2166,24 +2369,24 @@
                                 "kind": "Binary",
                                 "left": {
                                   "kind": "Reference",
-                                  "node_id": "fn:0:node:208",
+                                  "node_id": "fn:0:node:226",
                                   "source": {
                                     "column": 31,
                                     "kind": "SourceSpan",
-                                    "line": 137,
+                                    "line": 142,
                                     "path": "examples/aspiration_chunk.py"
                                   },
                                   "symbol_id": "fn:0:var:start_residual"
                                 },
-                                "node_id": "fn:0:node:207",
+                                "node_id": "fn:0:node:225",
                                 "op": ">",
                                 "right": {
                                   "kind": "Literal",
-                                  "node_id": "fn:0:node:209",
+                                  "node_id": "fn:0:node:227",
                                   "source": {
                                     "column": 53,
                                     "kind": "SourceSpan",
-                                    "line": 137,
+                                    "line": 142,
                                     "path": "examples/aspiration_chunk.py"
                                   },
                                   "type": "volume",
@@ -2192,47 +2395,47 @@
                                 "source": {
                                   "column": 31,
                                   "kind": "SourceSpan",
-                                  "line": 137,
+                                  "line": 142,
                                   "path": "examples/aspiration_chunk.py"
                                 }
                               },
                               "else_body": [],
                               "kind": "If",
-                              "node_id": "fn:0:node:206",
+                              "node_id": "fn:0:node:224",
                               "source": {
                                 "column": 28,
                                 "kind": "SourceSpan",
-                                "line": 137,
+                                "line": 142,
                                 "path": "examples/aspiration_chunk.py"
                               },
                               "then_body": [
                                 {
                                   "kind": "Assignment",
-                                  "node_id": "fn:0:node:210",
+                                  "node_id": "fn:0:node:228",
                                   "source": {
                                     "column": 32,
                                     "kind": "SourceSpan",
-                                    "line": 138,
+                                    "line": 143,
                                     "path": "examples/aspiration_chunk.py"
                                   },
                                   "target": {
                                     "kind": "Reference",
-                                    "node_id": "fn:0:node:211",
+                                    "node_id": "fn:0:node:229",
                                     "source": {
                                       "column": 32,
                                       "kind": "SourceSpan",
-                                      "line": 138,
+                                      "line": 143,
                                       "path": "examples/aspiration_chunk.py"
                                     },
                                     "symbol_id": "fn:0:var:requested"
                                   },
                                   "value": {
                                     "kind": "Reference",
-                                    "node_id": "fn:0:node:212",
+                                    "node_id": "fn:0:node:230",
                                     "source": {
                                       "column": 49,
                                       "kind": "SourceSpan",
-                                      "line": 138,
+                                      "line": 143,
                                       "path": "examples/aspiration_chunk.py"
                                     },
                                     "symbol_id": "fn:0:var:start_residual"
@@ -2244,20 +2447,20 @@
                         },
                         {
                           "kind": "Assignment",
-                          "node_id": "fn:0:node:213",
+                          "node_id": "fn:0:node:231",
                           "source": {
                             "column": 24,
                             "kind": "SourceSpan",
-                            "line": 139,
+                            "line": 144,
                             "path": "examples/aspiration_chunk.py"
                           },
                           "target": {
                             "kind": "Reference",
-                            "node_id": "fn:0:node:214",
+                            "node_id": "fn:0:node:232",
                             "source": {
                               "column": 24,
                               "kind": "SourceSpan",
-                              "line": 139,
+                              "line": 144,
                               "path": "examples/aspiration_chunk.py"
                             },
                             "symbol_id": "fn:0:var:remaining"
@@ -2266,24 +2469,24 @@
                             "kind": "Binary",
                             "left": {
                               "kind": "Reference",
-                              "node_id": "fn:0:node:216",
+                              "node_id": "fn:0:node:234",
                               "source": {
                                 "column": 41,
                                 "kind": "SourceSpan",
-                                "line": 139,
+                                "line": 144,
                                 "path": "examples/aspiration_chunk.py"
                               },
                               "symbol_id": "fn:0:var:usable"
                             },
-                            "node_id": "fn:0:node:215",
+                            "node_id": "fn:0:node:233",
                             "op": "-",
                             "right": {
                               "kind": "Reference",
-                              "node_id": "fn:0:node:217",
+                              "node_id": "fn:0:node:235",
                               "source": {
                                 "column": 55,
                                 "kind": "SourceSpan",
-                                "line": 139,
+                                "line": 144,
                                 "path": "examples/aspiration_chunk.py"
                               },
                               "symbol_id": "fn:0:var:packed"
@@ -2291,7 +2494,7 @@
                             "source": {
                               "column": 41,
                               "kind": "SourceSpan",
-                              "line": 139,
+                              "line": 144,
                               "path": "examples/aspiration_chunk.py"
                             }
                           }
@@ -2301,39 +2504,39 @@
                             "kind": "Binary",
                             "left": {
                               "kind": "Reference",
-                              "node_id": "fn:0:node:220",
+                              "node_id": "fn:0:node:238",
                               "source": {
                                 "column": 27,
                                 "kind": "SourceSpan",
-                                "line": 140,
+                                "line": 145,
                                 "path": "examples/aspiration_chunk.py"
                               },
                               "symbol_id": "fn:0:var:requested"
                             },
-                            "node_id": "fn:0:node:219",
+                            "node_id": "fn:0:node:237",
                             "op": "<=",
                             "right": {
                               "kind": "Binary",
                               "left": {
                                 "kind": "Reference",
-                                "node_id": "fn:0:node:222",
+                                "node_id": "fn:0:node:240",
                                 "source": {
                                   "column": 45,
                                   "kind": "SourceSpan",
-                                  "line": 140,
+                                  "line": 145,
                                   "path": "examples/aspiration_chunk.py"
                                 },
                                 "symbol_id": "fn:0:var:remaining"
                               },
-                              "node_id": "fn:0:node:221",
+                              "node_id": "fn:0:node:239",
                               "op": "+",
                               "right": {
                                 "kind": "Literal",
-                                "node_id": "fn:0:node:223",
+                                "node_id": "fn:0:node:241",
                                 "source": {
                                   "column": 62,
                                   "kind": "SourceSpan",
-                                  "line": 140,
+                                  "line": 145,
                                   "path": "examples/aspiration_chunk.py"
                                 },
                                 "type": "volume",
@@ -2342,181 +2545,21 @@
                               "source": {
                                 "column": 45,
                                 "kind": "SourceSpan",
-                                "line": 140,
+                                "line": 145,
                                 "path": "examples/aspiration_chunk.py"
                               }
                             },
                             "source": {
                               "column": 27,
                               "kind": "SourceSpan",
-                              "line": 140,
+                              "line": 145,
                               "path": "examples/aspiration_chunk.py"
                             }
                           },
                           "else_body": [
                             {
                               "kind": "Assignment",
-                              "node_id": "fn:0:node:257",
-                              "source": {
-                                "column": 28,
-                                "kind": "SourceSpan",
-                                "line": 151,
-                                "path": "examples/aspiration_chunk.py"
-                              },
-                              "target": {
-                                "kind": "Reference",
-                                "node_id": "fn:0:node:258",
-                                "source": {
-                                  "column": 28,
-                                  "kind": "SourceSpan",
-                                  "line": 151,
-                                  "path": "examples/aspiration_chunk.py"
-                                },
-                                "symbol_id": "fn:0:var:dispense"
-                              },
-                              "value": {
-                                "kind": "Reference",
-                                "node_id": "fn:0:node:259",
-                                "source": {
-                                  "column": 44,
-                                  "kind": "SourceSpan",
-                                  "line": 151,
-                                  "path": "examples/aspiration_chunk.py"
-                                },
-                                "symbol_id": "fn:0:var:remaining"
-                              }
-                            },
-                            {
-                              "kind": "Assignment",
-                              "node_id": "fn:0:node:260",
-                              "source": {
-                                "column": 28,
-                                "kind": "SourceSpan",
-                                "line": 152,
-                                "path": "examples/aspiration_chunk.py"
-                              },
-                              "target": {
-                                "kind": "Reference",
-                                "node_id": "fn:0:node:261",
-                                "source": {
-                                  "column": 28,
-                                  "kind": "SourceSpan",
-                                  "line": 152,
-                                  "path": "examples/aspiration_chunk.py"
-                                },
-                                "symbol_id": "fn:0:var:packed"
-                              },
-                              "value": {
-                                "kind": "Reference",
-                                "node_id": "fn:0:node:262",
-                                "source": {
-                                  "column": 42,
-                                  "kind": "SourceSpan",
-                                  "line": 152,
-                                  "path": "examples/aspiration_chunk.py"
-                                },
-                                "symbol_id": "fn:0:var:usable"
-                              }
-                            },
-                            {
-                              "kind": "Assignment",
-                              "node_id": "fn:0:node:263",
-                              "source": {
-                                "column": 28,
-                                "kind": "SourceSpan",
-                                "line": 153,
-                                "path": "examples/aspiration_chunk.py"
-                              },
-                              "target": {
-                                "kind": "Reference",
-                                "node_id": "fn:0:node:264",
-                                "source": {
-                                  "column": 28,
-                                  "kind": "SourceSpan",
-                                  "line": 153,
-                                  "path": "examples/aspiration_chunk.py"
-                                },
-                                "symbol_id": "fn:0:var:end_idx"
-                              },
-                              "value": {
-                                "kind": "Reference",
-                                "node_id": "fn:0:node:265",
-                                "source": {
-                                  "column": 43,
-                                  "kind": "SourceSpan",
-                                  "line": 153,
-                                  "path": "examples/aspiration_chunk.py"
-                                },
-                                "symbol_id": "fn:0:var:index"
-                              }
-                            },
-                            {
-                              "kind": "Assignment",
-                              "node_id": "fn:0:node:266",
-                              "source": {
-                                "column": 28,
-                                "kind": "SourceSpan",
-                                "line": 154,
-                                "path": "examples/aspiration_chunk.py"
-                              },
-                              "target": {
-                                "kind": "Reference",
-                                "node_id": "fn:0:node:267",
-                                "source": {
-                                  "column": 28,
-                                  "kind": "SourceSpan",
-                                  "line": 154,
-                                  "path": "examples/aspiration_chunk.py"
-                                },
-                                "symbol_id": "fn:0:var:end_dispense"
-                              },
-                              "value": {
-                                "kind": "Reference",
-                                "node_id": "fn:0:node:268",
-                                "source": {
-                                  "column": 48,
-                                  "kind": "SourceSpan",
-                                  "line": 154,
-                                  "path": "examples/aspiration_chunk.py"
-                                },
-                                "symbol_id": "fn:0:var:dispense"
-                              }
-                            },
-                            {
-                              "kind": "Assignment",
-                              "node_id": "fn:0:node:269",
-                              "source": {
-                                "column": 28,
-                                "kind": "SourceSpan",
-                                "line": 155,
-                                "path": "examples/aspiration_chunk.py"
-                              },
-                              "target": {
-                                "kind": "Reference",
-                                "node_id": "fn:0:node:270",
-                                "source": {
-                                  "column": 28,
-                                  "kind": "SourceSpan",
-                                  "line": 155,
-                                  "path": "examples/aspiration_chunk.py"
-                                },
-                                "symbol_id": "fn:0:var:next_idx"
-                              },
-                              "value": {
-                                "kind": "Reference",
-                                "node_id": "fn:0:node:271",
-                                "source": {
-                                  "column": 44,
-                                  "kind": "SourceSpan",
-                                  "line": 155,
-                                  "path": "examples/aspiration_chunk.py"
-                                },
-                                "symbol_id": "fn:0:var:index"
-                              }
-                            },
-                            {
-                              "kind": "Assignment",
-                              "node_id": "fn:0:node:272",
+                              "node_id": "fn:0:node:275",
                               "source": {
                                 "column": 28,
                                 "kind": "SourceSpan",
@@ -2525,11 +2568,171 @@
                               },
                               "target": {
                                 "kind": "Reference",
-                                "node_id": "fn:0:node:273",
+                                "node_id": "fn:0:node:276",
                                 "source": {
                                   "column": 28,
                                   "kind": "SourceSpan",
                                   "line": 156,
+                                  "path": "examples/aspiration_chunk.py"
+                                },
+                                "symbol_id": "fn:0:var:dispense"
+                              },
+                              "value": {
+                                "kind": "Reference",
+                                "node_id": "fn:0:node:277",
+                                "source": {
+                                  "column": 44,
+                                  "kind": "SourceSpan",
+                                  "line": 156,
+                                  "path": "examples/aspiration_chunk.py"
+                                },
+                                "symbol_id": "fn:0:var:remaining"
+                              }
+                            },
+                            {
+                              "kind": "Assignment",
+                              "node_id": "fn:0:node:278",
+                              "source": {
+                                "column": 28,
+                                "kind": "SourceSpan",
+                                "line": 157,
+                                "path": "examples/aspiration_chunk.py"
+                              },
+                              "target": {
+                                "kind": "Reference",
+                                "node_id": "fn:0:node:279",
+                                "source": {
+                                  "column": 28,
+                                  "kind": "SourceSpan",
+                                  "line": 157,
+                                  "path": "examples/aspiration_chunk.py"
+                                },
+                                "symbol_id": "fn:0:var:packed"
+                              },
+                              "value": {
+                                "kind": "Reference",
+                                "node_id": "fn:0:node:280",
+                                "source": {
+                                  "column": 42,
+                                  "kind": "SourceSpan",
+                                  "line": 157,
+                                  "path": "examples/aspiration_chunk.py"
+                                },
+                                "symbol_id": "fn:0:var:usable"
+                              }
+                            },
+                            {
+                              "kind": "Assignment",
+                              "node_id": "fn:0:node:281",
+                              "source": {
+                                "column": 28,
+                                "kind": "SourceSpan",
+                                "line": 158,
+                                "path": "examples/aspiration_chunk.py"
+                              },
+                              "target": {
+                                "kind": "Reference",
+                                "node_id": "fn:0:node:282",
+                                "source": {
+                                  "column": 28,
+                                  "kind": "SourceSpan",
+                                  "line": 158,
+                                  "path": "examples/aspiration_chunk.py"
+                                },
+                                "symbol_id": "fn:0:var:end_idx"
+                              },
+                              "value": {
+                                "kind": "Reference",
+                                "node_id": "fn:0:node:283",
+                                "source": {
+                                  "column": 43,
+                                  "kind": "SourceSpan",
+                                  "line": 158,
+                                  "path": "examples/aspiration_chunk.py"
+                                },
+                                "symbol_id": "fn:0:var:index"
+                              }
+                            },
+                            {
+                              "kind": "Assignment",
+                              "node_id": "fn:0:node:284",
+                              "source": {
+                                "column": 28,
+                                "kind": "SourceSpan",
+                                "line": 159,
+                                "path": "examples/aspiration_chunk.py"
+                              },
+                              "target": {
+                                "kind": "Reference",
+                                "node_id": "fn:0:node:285",
+                                "source": {
+                                  "column": 28,
+                                  "kind": "SourceSpan",
+                                  "line": 159,
+                                  "path": "examples/aspiration_chunk.py"
+                                },
+                                "symbol_id": "fn:0:var:end_dispense"
+                              },
+                              "value": {
+                                "kind": "Reference",
+                                "node_id": "fn:0:node:286",
+                                "source": {
+                                  "column": 48,
+                                  "kind": "SourceSpan",
+                                  "line": 159,
+                                  "path": "examples/aspiration_chunk.py"
+                                },
+                                "symbol_id": "fn:0:var:dispense"
+                              }
+                            },
+                            {
+                              "kind": "Assignment",
+                              "node_id": "fn:0:node:287",
+                              "source": {
+                                "column": 28,
+                                "kind": "SourceSpan",
+                                "line": 160,
+                                "path": "examples/aspiration_chunk.py"
+                              },
+                              "target": {
+                                "kind": "Reference",
+                                "node_id": "fn:0:node:288",
+                                "source": {
+                                  "column": 28,
+                                  "kind": "SourceSpan",
+                                  "line": 160,
+                                  "path": "examples/aspiration_chunk.py"
+                                },
+                                "symbol_id": "fn:0:var:next_idx"
+                              },
+                              "value": {
+                                "kind": "Reference",
+                                "node_id": "fn:0:node:289",
+                                "source": {
+                                  "column": 44,
+                                  "kind": "SourceSpan",
+                                  "line": 160,
+                                  "path": "examples/aspiration_chunk.py"
+                                },
+                                "symbol_id": "fn:0:var:index"
+                              }
+                            },
+                            {
+                              "kind": "Assignment",
+                              "node_id": "fn:0:node:290",
+                              "source": {
+                                "column": 28,
+                                "kind": "SourceSpan",
+                                "line": 161,
+                                "path": "examples/aspiration_chunk.py"
+                              },
+                              "target": {
+                                "kind": "Reference",
+                                "node_id": "fn:0:node:291",
+                                "source": {
+                                  "column": 28,
+                                  "kind": "SourceSpan",
+                                  "line": 161,
                                   "path": "examples/aspiration_chunk.py"
                                 },
                                 "symbol_id": "fn:0:var:next_residual"
@@ -2538,24 +2741,24 @@
                                 "kind": "Binary",
                                 "left": {
                                   "kind": "Reference",
-                                  "node_id": "fn:0:node:275",
+                                  "node_id": "fn:0:node:293",
                                   "source": {
                                     "column": 49,
                                     "kind": "SourceSpan",
-                                    "line": 156,
+                                    "line": 161,
                                     "path": "examples/aspiration_chunk.py"
                                   },
                                   "symbol_id": "fn:0:var:requested"
                                 },
-                                "node_id": "fn:0:node:274",
+                                "node_id": "fn:0:node:292",
                                 "op": "-",
                                 "right": {
                                   "kind": "Reference",
-                                  "node_id": "fn:0:node:276",
+                                  "node_id": "fn:0:node:294",
                                   "source": {
                                     "column": 66,
                                     "kind": "SourceSpan",
-                                    "line": 156,
+                                    "line": 161,
                                     "path": "examples/aspiration_chunk.py"
                                   },
                                   "symbol_id": "fn:0:var:dispense"
@@ -2563,217 +2766,21 @@
                                 "source": {
                                   "column": 49,
                                   "kind": "SourceSpan",
-                                  "line": 156,
+                                  "line": 161,
                                   "path": "examples/aspiration_chunk.py"
                                 }
                               }
                             }
                           ],
                           "kind": "If",
-                          "node_id": "fn:0:node:218",
+                          "node_id": "fn:0:node:236",
                           "source": {
                             "column": 24,
                             "kind": "SourceSpan",
-                            "line": 140,
+                            "line": 145,
                             "path": "examples/aspiration_chunk.py"
                           },
                           "then_body": [
-                            {
-                              "kind": "Assignment",
-                              "node_id": "fn:0:node:224",
-                              "source": {
-                                "column": 28,
-                                "kind": "SourceSpan",
-                                "line": 141,
-                                "path": "examples/aspiration_chunk.py"
-                              },
-                              "target": {
-                                "kind": "Reference",
-                                "node_id": "fn:0:node:225",
-                                "source": {
-                                  "column": 28,
-                                  "kind": "SourceSpan",
-                                  "line": 141,
-                                  "path": "examples/aspiration_chunk.py"
-                                },
-                                "symbol_id": "fn:0:var:dispense"
-                              },
-                              "value": {
-                                "kind": "Reference",
-                                "node_id": "fn:0:node:226",
-                                "source": {
-                                  "column": 44,
-                                  "kind": "SourceSpan",
-                                  "line": 141,
-                                  "path": "examples/aspiration_chunk.py"
-                                },
-                                "symbol_id": "fn:0:var:requested"
-                              }
-                            },
-                            {
-                              "condition": {
-                                "kind": "Binary",
-                                "left": {
-                                  "kind": "Reference",
-                                  "node_id": "fn:0:node:229",
-                                  "source": {
-                                    "column": 31,
-                                    "kind": "SourceSpan",
-                                    "line": 142,
-                                    "path": "examples/aspiration_chunk.py"
-                                  },
-                                  "symbol_id": "fn:0:var:dispense"
-                                },
-                                "node_id": "fn:0:node:228",
-                                "op": ">",
-                                "right": {
-                                  "kind": "Reference",
-                                  "node_id": "fn:0:node:230",
-                                  "source": {
-                                    "column": 47,
-                                    "kind": "SourceSpan",
-                                    "line": 142,
-                                    "path": "examples/aspiration_chunk.py"
-                                  },
-                                  "symbol_id": "fn:0:var:remaining"
-                                },
-                                "source": {
-                                  "column": 31,
-                                  "kind": "SourceSpan",
-                                  "line": 142,
-                                  "path": "examples/aspiration_chunk.py"
-                                }
-                              },
-                              "else_body": [],
-                              "kind": "If",
-                              "node_id": "fn:0:node:227",
-                              "source": {
-                                "column": 28,
-                                "kind": "SourceSpan",
-                                "line": 142,
-                                "path": "examples/aspiration_chunk.py"
-                              },
-                              "then_body": [
-                                {
-                                  "kind": "Assignment",
-                                  "node_id": "fn:0:node:231",
-                                  "source": {
-                                    "column": 32,
-                                    "kind": "SourceSpan",
-                                    "line": 143,
-                                    "path": "examples/aspiration_chunk.py"
-                                  },
-                                  "target": {
-                                    "kind": "Reference",
-                                    "node_id": "fn:0:node:232",
-                                    "source": {
-                                      "column": 32,
-                                      "kind": "SourceSpan",
-                                      "line": 143,
-                                      "path": "examples/aspiration_chunk.py"
-                                    },
-                                    "symbol_id": "fn:0:var:dispense"
-                                  },
-                                  "value": {
-                                    "kind": "Reference",
-                                    "node_id": "fn:0:node:233",
-                                    "source": {
-                                      "column": 48,
-                                      "kind": "SourceSpan",
-                                      "line": 143,
-                                      "path": "examples/aspiration_chunk.py"
-                                    },
-                                    "symbol_id": "fn:0:var:remaining"
-                                  }
-                                }
-                              ]
-                            },
-                            {
-                              "kind": "Assignment",
-                              "node_id": "fn:0:node:234",
-                              "source": {
-                                "column": 28,
-                                "kind": "SourceSpan",
-                                "line": 144,
-                                "path": "examples/aspiration_chunk.py"
-                              },
-                              "target": {
-                                "kind": "Reference",
-                                "node_id": "fn:0:node:235",
-                                "source": {
-                                  "column": 28,
-                                  "kind": "SourceSpan",
-                                  "line": 144,
-                                  "path": "examples/aspiration_chunk.py"
-                                },
-                                "symbol_id": "fn:0:var:packed"
-                              },
-                              "value": {
-                                "kind": "Binary",
-                                "left": {
-                                  "kind": "Reference",
-                                  "node_id": "fn:0:node:237",
-                                  "source": {
-                                    "column": 28,
-                                    "kind": "SourceSpan",
-                                    "line": 144,
-                                    "path": "examples/aspiration_chunk.py"
-                                  },
-                                  "symbol_id": "fn:0:var:packed"
-                                },
-                                "node_id": "fn:0:node:236",
-                                "op": "+",
-                                "right": {
-                                  "kind": "Reference",
-                                  "node_id": "fn:0:node:238",
-                                  "source": {
-                                    "column": 43,
-                                    "kind": "SourceSpan",
-                                    "line": 144,
-                                    "path": "examples/aspiration_chunk.py"
-                                  },
-                                  "symbol_id": "fn:0:var:dispense"
-                                },
-                                "source": {
-                                  "column": 28,
-                                  "kind": "SourceSpan",
-                                  "line": 144,
-                                  "path": "examples/aspiration_chunk.py"
-                                }
-                              }
-                            },
-                            {
-                              "kind": "Assignment",
-                              "node_id": "fn:0:node:239",
-                              "source": {
-                                "column": 28,
-                                "kind": "SourceSpan",
-                                "line": 145,
-                                "path": "examples/aspiration_chunk.py"
-                              },
-                              "target": {
-                                "kind": "Reference",
-                                "node_id": "fn:0:node:240",
-                                "source": {
-                                  "column": 28,
-                                  "kind": "SourceSpan",
-                                  "line": 145,
-                                  "path": "examples/aspiration_chunk.py"
-                                },
-                                "symbol_id": "fn:0:var:end_idx"
-                              },
-                              "value": {
-                                "kind": "Reference",
-                                "node_id": "fn:0:node:241",
-                                "source": {
-                                  "column": 43,
-                                  "kind": "SourceSpan",
-                                  "line": 145,
-                                  "path": "examples/aspiration_chunk.py"
-                                },
-                                "symbol_id": "fn:0:var:index"
-                              }
-                            },
                             {
                               "kind": "Assignment",
                               "node_id": "fn:0:node:242",
@@ -2792,22 +2799,56 @@
                                   "line": 146,
                                   "path": "examples/aspiration_chunk.py"
                                 },
-                                "symbol_id": "fn:0:var:end_dispense"
+                                "symbol_id": "fn:0:var:dispense"
                               },
                               "value": {
                                 "kind": "Reference",
                                 "node_id": "fn:0:node:244",
                                 "source": {
-                                  "column": 48,
+                                  "column": 44,
                                   "kind": "SourceSpan",
                                   "line": 146,
                                   "path": "examples/aspiration_chunk.py"
                                 },
-                                "symbol_id": "fn:0:var:dispense"
+                                "symbol_id": "fn:0:var:requested"
                               }
                             },
                             {
-                              "kind": "Assignment",
+                              "condition": {
+                                "kind": "Binary",
+                                "left": {
+                                  "kind": "Reference",
+                                  "node_id": "fn:0:node:247",
+                                  "source": {
+                                    "column": 31,
+                                    "kind": "SourceSpan",
+                                    "line": 147,
+                                    "path": "examples/aspiration_chunk.py"
+                                  },
+                                  "symbol_id": "fn:0:var:dispense"
+                                },
+                                "node_id": "fn:0:node:246",
+                                "op": ">",
+                                "right": {
+                                  "kind": "Reference",
+                                  "node_id": "fn:0:node:248",
+                                  "source": {
+                                    "column": 47,
+                                    "kind": "SourceSpan",
+                                    "line": 147,
+                                    "path": "examples/aspiration_chunk.py"
+                                  },
+                                  "symbol_id": "fn:0:var:remaining"
+                                },
+                                "source": {
+                                  "column": 31,
+                                  "kind": "SourceSpan",
+                                  "line": 147,
+                                  "path": "examples/aspiration_chunk.py"
+                                }
+                              },
+                              "else_body": [],
+                              "kind": "If",
                               "node_id": "fn:0:node:245",
                               "source": {
                                 "column": 28,
@@ -2815,87 +2856,44 @@
                                 "line": 147,
                                 "path": "examples/aspiration_chunk.py"
                               },
-                              "target": {
-                                "kind": "Reference",
-                                "node_id": "fn:0:node:246",
-                                "source": {
-                                  "column": 28,
-                                  "kind": "SourceSpan",
-                                  "line": 147,
-                                  "path": "examples/aspiration_chunk.py"
-                                },
-                                "symbol_id": "fn:0:var:index"
-                              },
-                              "value": {
-                                "kind": "Binary",
-                                "left": {
-                                  "kind": "Reference",
-                                  "node_id": "fn:0:node:248",
-                                  "source": {
-                                    "column": 28,
-                                    "kind": "SourceSpan",
-                                    "line": 147,
-                                    "path": "examples/aspiration_chunk.py"
-                                  },
-                                  "symbol_id": "fn:0:var:index"
-                                },
-                                "node_id": "fn:0:node:247",
-                                "op": "+",
-                                "right": {
-                                  "kind": "Literal",
+                              "then_body": [
+                                {
+                                  "kind": "Assignment",
                                   "node_id": "fn:0:node:249",
                                   "source": {
-                                    "column": 42,
+                                    "column": 32,
                                     "kind": "SourceSpan",
-                                    "line": 147,
+                                    "line": 148,
                                     "path": "examples/aspiration_chunk.py"
                                   },
-                                  "type": "integer",
-                                  "value": 1
-                                },
-                                "source": {
-                                  "column": 28,
-                                  "kind": "SourceSpan",
-                                  "line": 147,
-                                  "path": "examples/aspiration_chunk.py"
+                                  "target": {
+                                    "kind": "Reference",
+                                    "node_id": "fn:0:node:250",
+                                    "source": {
+                                      "column": 32,
+                                      "kind": "SourceSpan",
+                                      "line": 148,
+                                      "path": "examples/aspiration_chunk.py"
+                                    },
+                                    "symbol_id": "fn:0:var:dispense"
+                                  },
+                                  "value": {
+                                    "kind": "Reference",
+                                    "node_id": "fn:0:node:251",
+                                    "source": {
+                                      "column": 48,
+                                      "kind": "SourceSpan",
+                                      "line": 148,
+                                      "path": "examples/aspiration_chunk.py"
+                                    },
+                                    "symbol_id": "fn:0:var:remaining"
+                                  }
                                 }
-                              }
+                              ]
                             },
                             {
                               "kind": "Assignment",
-                              "node_id": "fn:0:node:250",
-                              "source": {
-                                "column": 28,
-                                "kind": "SourceSpan",
-                                "line": 148,
-                                "path": "examples/aspiration_chunk.py"
-                              },
-                              "target": {
-                                "kind": "Reference",
-                                "node_id": "fn:0:node:251",
-                                "source": {
-                                  "column": 28,
-                                  "kind": "SourceSpan",
-                                  "line": 148,
-                                  "path": "examples/aspiration_chunk.py"
-                                },
-                                "symbol_id": "fn:0:var:next_idx"
-                              },
-                              "value": {
-                                "kind": "Reference",
-                                "node_id": "fn:0:node:252",
-                                "source": {
-                                  "column": 44,
-                                  "kind": "SourceSpan",
-                                  "line": 148,
-                                  "path": "examples/aspiration_chunk.py"
-                                },
-                                "symbol_id": "fn:0:var:index"
-                              }
-                            },
-                            {
-                              "kind": "Assignment",
-                              "node_id": "fn:0:node:253",
+                              "node_id": "fn:0:node:252",
                               "source": {
                                 "column": 28,
                                 "kind": "SourceSpan",
@@ -2904,22 +2902,227 @@
                               },
                               "target": {
                                 "kind": "Reference",
-                                "node_id": "fn:0:node:254",
+                                "node_id": "fn:0:node:253",
                                 "source": {
                                   "column": 28,
                                   "kind": "SourceSpan",
                                   "line": 149,
                                   "path": "examples/aspiration_chunk.py"
                                 },
+                                "symbol_id": "fn:0:var:packed"
+                              },
+                              "value": {
+                                "kind": "Binary",
+                                "left": {
+                                  "kind": "Reference",
+                                  "node_id": "fn:0:node:255",
+                                  "source": {
+                                    "column": 28,
+                                    "kind": "SourceSpan",
+                                    "line": 149,
+                                    "path": "examples/aspiration_chunk.py"
+                                  },
+                                  "symbol_id": "fn:0:var:packed"
+                                },
+                                "node_id": "fn:0:node:254",
+                                "op": "+",
+                                "right": {
+                                  "kind": "Reference",
+                                  "node_id": "fn:0:node:256",
+                                  "source": {
+                                    "column": 43,
+                                    "kind": "SourceSpan",
+                                    "line": 149,
+                                    "path": "examples/aspiration_chunk.py"
+                                  },
+                                  "symbol_id": "fn:0:var:dispense"
+                                },
+                                "source": {
+                                  "column": 28,
+                                  "kind": "SourceSpan",
+                                  "line": 149,
+                                  "path": "examples/aspiration_chunk.py"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "Assignment",
+                              "node_id": "fn:0:node:257",
+                              "source": {
+                                "column": 28,
+                                "kind": "SourceSpan",
+                                "line": 150,
+                                "path": "examples/aspiration_chunk.py"
+                              },
+                              "target": {
+                                "kind": "Reference",
+                                "node_id": "fn:0:node:258",
+                                "source": {
+                                  "column": 28,
+                                  "kind": "SourceSpan",
+                                  "line": 150,
+                                  "path": "examples/aspiration_chunk.py"
+                                },
+                                "symbol_id": "fn:0:var:end_idx"
+                              },
+                              "value": {
+                                "kind": "Reference",
+                                "node_id": "fn:0:node:259",
+                                "source": {
+                                  "column": 43,
+                                  "kind": "SourceSpan",
+                                  "line": 150,
+                                  "path": "examples/aspiration_chunk.py"
+                                },
+                                "symbol_id": "fn:0:var:index"
+                              }
+                            },
+                            {
+                              "kind": "Assignment",
+                              "node_id": "fn:0:node:260",
+                              "source": {
+                                "column": 28,
+                                "kind": "SourceSpan",
+                                "line": 151,
+                                "path": "examples/aspiration_chunk.py"
+                              },
+                              "target": {
+                                "kind": "Reference",
+                                "node_id": "fn:0:node:261",
+                                "source": {
+                                  "column": 28,
+                                  "kind": "SourceSpan",
+                                  "line": 151,
+                                  "path": "examples/aspiration_chunk.py"
+                                },
+                                "symbol_id": "fn:0:var:end_dispense"
+                              },
+                              "value": {
+                                "kind": "Reference",
+                                "node_id": "fn:0:node:262",
+                                "source": {
+                                  "column": 48,
+                                  "kind": "SourceSpan",
+                                  "line": 151,
+                                  "path": "examples/aspiration_chunk.py"
+                                },
+                                "symbol_id": "fn:0:var:dispense"
+                              }
+                            },
+                            {
+                              "kind": "Assignment",
+                              "node_id": "fn:0:node:263",
+                              "source": {
+                                "column": 28,
+                                "kind": "SourceSpan",
+                                "line": 152,
+                                "path": "examples/aspiration_chunk.py"
+                              },
+                              "target": {
+                                "kind": "Reference",
+                                "node_id": "fn:0:node:264",
+                                "source": {
+                                  "column": 28,
+                                  "kind": "SourceSpan",
+                                  "line": 152,
+                                  "path": "examples/aspiration_chunk.py"
+                                },
+                                "symbol_id": "fn:0:var:index"
+                              },
+                              "value": {
+                                "kind": "Binary",
+                                "left": {
+                                  "kind": "Reference",
+                                  "node_id": "fn:0:node:266",
+                                  "source": {
+                                    "column": 28,
+                                    "kind": "SourceSpan",
+                                    "line": 152,
+                                    "path": "examples/aspiration_chunk.py"
+                                  },
+                                  "symbol_id": "fn:0:var:index"
+                                },
+                                "node_id": "fn:0:node:265",
+                                "op": "+",
+                                "right": {
+                                  "kind": "Literal",
+                                  "node_id": "fn:0:node:267",
+                                  "source": {
+                                    "column": 42,
+                                    "kind": "SourceSpan",
+                                    "line": 152,
+                                    "path": "examples/aspiration_chunk.py"
+                                  },
+                                  "type": "integer",
+                                  "value": 1
+                                },
+                                "source": {
+                                  "column": 28,
+                                  "kind": "SourceSpan",
+                                  "line": 152,
+                                  "path": "examples/aspiration_chunk.py"
+                                }
+                              }
+                            },
+                            {
+                              "kind": "Assignment",
+                              "node_id": "fn:0:node:268",
+                              "source": {
+                                "column": 28,
+                                "kind": "SourceSpan",
+                                "line": 153,
+                                "path": "examples/aspiration_chunk.py"
+                              },
+                              "target": {
+                                "kind": "Reference",
+                                "node_id": "fn:0:node:269",
+                                "source": {
+                                  "column": 28,
+                                  "kind": "SourceSpan",
+                                  "line": 153,
+                                  "path": "examples/aspiration_chunk.py"
+                                },
+                                "symbol_id": "fn:0:var:next_idx"
+                              },
+                              "value": {
+                                "kind": "Reference",
+                                "node_id": "fn:0:node:270",
+                                "source": {
+                                  "column": 44,
+                                  "kind": "SourceSpan",
+                                  "line": 153,
+                                  "path": "examples/aspiration_chunk.py"
+                                },
+                                "symbol_id": "fn:0:var:index"
+                              }
+                            },
+                            {
+                              "kind": "Assignment",
+                              "node_id": "fn:0:node:271",
+                              "source": {
+                                "column": 28,
+                                "kind": "SourceSpan",
+                                "line": 154,
+                                "path": "examples/aspiration_chunk.py"
+                              },
+                              "target": {
+                                "kind": "Reference",
+                                "node_id": "fn:0:node:272",
+                                "source": {
+                                  "column": 28,
+                                  "kind": "SourceSpan",
+                                  "line": 154,
+                                  "path": "examples/aspiration_chunk.py"
+                                },
                                 "symbol_id": "fn:0:var:next_residual"
                               },
                               "value": {
                                 "kind": "Literal",
-                                "node_id": "fn:0:node:256",
+                                "node_id": "fn:0:node:274",
                                 "source": {
                                   "column": 49,
                                   "kind": "SourceSpan",
-                                  "line": 149,
+                                  "line": 154,
                                   "path": "examples/aspiration_chunk.py"
                                 },
                                 "type": "volume",
@@ -2930,31 +3133,31 @@
                         },
                         {
                           "kind": "Assignment",
-                          "node_id": "fn:0:node:277",
+                          "node_id": "fn:0:node:295",
                           "source": {
                             "column": 24,
                             "kind": "SourceSpan",
-                            "line": 157,
+                            "line": 162,
                             "path": "examples/aspiration_chunk.py"
                           },
                           "target": {
                             "kind": "Reference",
-                            "node_id": "fn:0:node:278",
+                            "node_id": "fn:0:node:296",
                             "source": {
                               "column": 24,
                               "kind": "SourceSpan",
-                              "line": 157,
+                              "line": 162,
                               "path": "examples/aspiration_chunk.py"
                             },
                             "symbol_id": "fn:0:var:active"
                           },
                           "value": {
                             "kind": "Literal",
-                            "node_id": "fn:0:node:279",
+                            "node_id": "fn:0:node:297",
                             "source": {
                               "column": 38,
                               "kind": "SourceSpan",
-                              "line": 157,
+                              "line": 162,
                               "path": "examples/aspiration_chunk.py"
                             },
                             "type": "boolean",
@@ -2970,43 +3173,43 @@
           ],
           "condition": {
             "kind": "Reference",
-            "node_id": "fn:0:node:178",
+            "node_id": "fn:0:node:196",
             "source": {
               "column": 14,
               "kind": "SourceSpan",
-              "line": 130,
+              "line": 135,
               "path": "examples/aspiration_chunk.py"
             },
             "symbol_id": "fn:0:var:active"
           },
           "kind": "While",
-          "node_id": "fn:0:node:177",
+          "node_id": "fn:0:node:195",
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 130,
+            "line": 135,
             "path": "examples/aspiration_chunk.py"
           }
         },
         {
           "condition": {
             "kind": "Reference",
-            "node_id": "fn:0:node:281",
+            "node_id": "fn:0:node:299",
             "source": {
               "column": 11,
               "kind": "SourceSpan",
-              "line": 158,
+              "line": 163,
               "path": "examples/aspiration_chunk.py"
             },
             "symbol_id": "fn:0:var:valid"
           },
           "else_body": [],
           "kind": "If",
-          "node_id": "fn:0:node:280",
+          "node_id": "fn:0:node:298",
           "source": {
             "column": 8,
             "kind": "SourceSpan",
-            "line": 158,
+            "line": 163,
             "path": "examples/aspiration_chunk.py"
           },
           "then_body": [
@@ -3015,24 +3218,24 @@
                 "kind": "Binary",
                 "left": {
                   "kind": "Reference",
-                  "node_id": "fn:0:node:284",
+                  "node_id": "fn:0:node:302",
                   "source": {
                     "column": 15,
                     "kind": "SourceSpan",
-                    "line": 159,
+                    "line": 164,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "symbol_id": "fn:0:var:packed"
                 },
-                "node_id": "fn:0:node:283",
+                "node_id": "fn:0:node:301",
                 "op": ">",
                 "right": {
                   "kind": "Literal",
-                  "node_id": "fn:0:node:285",
+                  "node_id": "fn:0:node:303",
                   "source": {
                     "column": 29,
                     "kind": "SourceSpan",
-                    "line": 159,
+                    "line": 164,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "type": "volume",
@@ -3041,36 +3244,36 @@
                 "source": {
                   "column": 15,
                   "kind": "SourceSpan",
-                  "line": 159,
+                  "line": 164,
                   "path": "examples/aspiration_chunk.py"
                 }
               },
               "else_body": [],
               "kind": "If",
-              "node_id": "fn:0:node:282",
+              "node_id": "fn:0:node:300",
               "source": {
                 "column": 12,
                 "kind": "SourceSpan",
-                "line": 159,
+                "line": 164,
                 "path": "examples/aspiration_chunk.py"
               },
               "then_body": [
                 {
                   "kind": "Assignment",
-                  "node_id": "fn:0:node:286",
+                  "node_id": "fn:0:node:304",
                   "source": {
                     "column": 16,
                     "kind": "SourceSpan",
-                    "line": 160,
+                    "line": 165,
                     "path": "examples/aspiration_chunk.py"
                   },
                   "target": {
                     "kind": "Reference",
-                    "node_id": "fn:0:node:287",
+                    "node_id": "fn:0:node:305",
                     "source": {
                       "column": 16,
                       "kind": "SourceSpan",
-                      "line": 160,
+                      "line": 165,
                       "path": "examples/aspiration_chunk.py"
                     },
                     "symbol_id": "fn:0:var:aspirate"
@@ -3079,24 +3282,24 @@
                     "kind": "Binary",
                     "left": {
                       "kind": "Reference",
-                      "node_id": "fn:0:node:289",
+                      "node_id": "fn:0:node:307",
                       "source": {
                         "column": 32,
                         "kind": "SourceSpan",
-                        "line": 160,
+                        "line": 165,
                         "path": "examples/aspiration_chunk.py"
                       },
                       "symbol_id": "fn:0:var:packed"
                     },
-                    "node_id": "fn:0:node:288",
+                    "node_id": "fn:0:node:306",
                     "op": "+",
                     "right": {
                       "kind": "Reference",
-                      "node_id": "fn:0:node:290",
+                      "node_id": "fn:0:node:308",
                       "source": {
                         "column": 46,
                         "kind": "SourceSpan",
-                        "line": 160,
+                        "line": 165,
                         "path": "examples/aspiration_chunk.py"
                       },
                       "symbol_id": "fn:0:var:extra"
@@ -3104,7 +3307,7 @@
                     "source": {
                       "column": 32,
                       "kind": "SourceSpan",
-                      "line": 160,
+                      "line": 165,
                       "path": "examples/aspiration_chunk.py"
                     }
                   }
@@ -3120,7 +3323,7 @@
       "source": {
         "column": 4,
         "kind": "SourceSpan",
-        "line": 87,
+        "line": 88,
         "path": "examples/aspiration_chunk.py"
       },
       "variables": [

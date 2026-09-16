@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from examples.aspiration_chunk import AspirationChunk
-from examples.developer.aspiration_chunk_ir import portable_program
+from examples.developer.source_paths import repository_relative
 from sciloom.core.diagnostics import CompilationError
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import from_json, to_json
@@ -29,7 +29,7 @@ def inputs(**changes):
 
 
 def test_partial_fill_resume_and_reset_after_json_restoration():
-    for program in (AspirationChunk().to_ir(), from_json(to_json(portable_program()))):
+    for program in (AspirationChunk().to_ir(), from_json(to_json(repository_relative(AspirationChunk().to_ir())))):
         session = Interpreter(program)
         first = session.run(inputs=inputs())
         assert first.outputs["valid"]
@@ -56,6 +56,7 @@ def test_partial_fill_resume_and_reset_after_json_restoration():
         ({"volumes": [0.5 * mL] * 6, "start_idx": 3, "max_idx": 5}, 4, 3, 0.75, 0),
         ({"max_idx": 0}, 1, 0, 1.25, 0),
         ({"start_residual": 0.5 * mL, "max_idx": 0}, 1, 0, 0.75, 0),
+        ({"volumes": [1 * mL], "start_residual": 1.0000005 * mL}, 1, 0, 1.2500005, 0),
     ],
 )
 def test_empty_zero_exact_tolerance_and_aligned_boundary(changes, next_idx, end_idx, aspirate, residual):
@@ -79,13 +80,18 @@ def test_empty_zero_exact_tolerance_and_aligned_boundary(changes, next_idx, end_
         {"safety": 0 * mL},
         {"extra": -1 * mL},
         {"volumes": [1 * mL, -1 * mL], "max_idx": 0},
+        {"volumes": [1 * mL], "start_residual": 2 * mL},
+        {"volumes": [0 * mL], "start_residual": 0.01 * mL},
+        {"start_idx": 2, "start_residual": 4.000002 * mL},
     ],
 )
 def test_invalid_input_has_defined_outputs_without_partial_packing(changes):
-    output = Interpreter(AspirationChunk().to_ir()).run(inputs=inputs(**changes)).outputs
-    assert not output["valid"]
-    assert output["aspirate"] == output["end_dispense"] == output["next_residual"] == 0 * mL
-    assert output["next_idx"] == changes.get("start_idx", 0)
+    program = AspirationChunk().to_ir()
+    for entry in (program, from_json(to_json(program))):
+        output = Interpreter(entry).run(inputs=inputs(**changes)).outputs
+        assert not output["valid"]
+        assert output["aspirate"] == output["end_dispense"] == output["next_residual"] == 0 * mL
+        assert output["next_idx"] == changes.get("start_idx", 0)
 
 
 def test_host_configuration_companion_and_native_boundary():
@@ -94,7 +100,7 @@ def test_host_configuration_companion_and_native_boundary():
             AspirationChunk(chunk_size=invalid)
     with pytest.raises(CompilationError, match="unsupported_runtime_guard"):
         AspirationChunk().compile(target=AutoSuiteTarget())
-    text = to_json(portable_program())
+    text = to_json(repository_relative(AspirationChunk().to_ir()))
     assert Path(__file__).parent.joinpath("developer/aspiration_chunk_ir.json").read_text() == text
     assert str(Path(__file__).resolve().parents[1]) not in text
 

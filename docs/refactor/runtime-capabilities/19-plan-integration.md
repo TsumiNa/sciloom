@@ -67,7 +67,7 @@ includes five walkthroughs, explicit downloads, updated device/Target references
 and a twelve-capability availability matrix. No runtime implementation changes
 are included in this closing stage.
 
-Local acceptance: 960 code/target/example/probe tests, 97 documentation tests,
+Local acceptance: 964 code/target/example/probe tests, 97 documentation tests,
 42 CI example commands, mypy on 129 source files, Ruff check/format, strict site
 build, AutoSuite smoke, recipe validation, proposed-example syntax and diff
 whitespace checks pass. Corpus audit reports 271 files, 127 archive entries,
@@ -81,6 +81,14 @@ now uses verified 23/22 profiles, with ancestry checked again for each supplied
 layout. The finding is recorded in the selection evidence and Q&A without
 changing raw data. Native failure propagation, CSV equivalence and dynamic
 selection emission remain explicitly gated pending Executor results.
+
+PR #102 review identified an oversized residual and duplicated path-normalization
+logic. The calculation now rejects residuals above the original request plus
+epsilon before packing; source/JSON regressions cover oversized, zero-request,
+last-item and accepted-within-tolerance cases. The developer runner reuses
+`repository_relative`, whose existing tests cover relative and outside-repository
+paths. Companions and explanations were regenerated/updated. Version remains
+none: these corrections affect examples only.
 
 ## Version
 

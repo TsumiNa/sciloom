@@ -49,7 +49,8 @@ Chunk` and F30's aligned group boundary. F31 computes usable volume as
 requests, and adds extra only for nonempty packed work. The retained tolerance
 is 1e-12 m³. F30 supplies the `floor` boundary shown above.
 
-The adaptation prevalidates all volume entries, returns an explicit `valid`
+The adaptation prevalidates all volume entries and rejects a residual exceeding
+the original request by more than the retained tolerance. It returns an explicit `valid`
 Boolean instead of the vendor global error latch, and defines zero outputs for
 empty/no-work input. It does not port the liquid-transfer tasks or the original
 error handler. Source/JSON reference tests cover partial fills, resume, exact and

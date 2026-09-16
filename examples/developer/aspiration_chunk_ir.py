@@ -14,31 +14,17 @@ same session. The caller explicitly supplies the previous residual to resume.
 No liquid transfer, device operation or vendor error-handler equivalence is claimed.
 """
 
-import json
 from pathlib import Path
-from typing import Any
 
 from examples.aspiration_chunk import AspirationChunk
 from sciloom.core.interpreter import Interpreter
-from sciloom.core.ir import Program, from_dict, from_json, to_json
+from sciloom.core.ir import from_json, to_json
 from sciloom.units import Volume, mL
-
-
-def portable_program() -> Program:
-    """Normalize only diagnostic filenames in a detached interchange document."""
-    root = Path(__file__).resolve().parents[2]
-
-    def relative_source(record: dict[str, Any]) -> dict[str, Any]:
-        if record.get("kind") == "SourceSpan":
-            record["path"] = Path(record["path"]).resolve().relative_to(root).as_posix()
-        return record
-
-    return from_dict(json.loads(to_json(AspirationChunk().to_ir()), object_hook=relative_source))
-
+from .source_paths import repository_relative
 
 if __name__ == "__main__":
     path = Path(__file__).with_suffix(".json")
-    path.write_text(to_json(portable_program()), encoding="utf-8")
+    path.write_text(to_json(repository_relative(AspirationChunk().to_ir())), encoding="utf-8")
     session = Interpreter(from_json(path.read_text(encoding="utf-8")))
     inputs: dict[str, int | Volume | list[Volume]] = {
         "volumes": [1 * mL, 2 * mL, 4 * mL],
