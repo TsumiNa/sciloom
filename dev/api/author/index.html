@@ -2499,6 +2499,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/timestamp-path/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Timestamp a filename
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2669,6 +2696,33 @@
     
   
   Explicit confirmation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/wall-time-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Explicit wall clock
 
     
   </span>
@@ -2955,6 +3009,17 @@
     <span class="md-ellipsis">
       <span class="md-typeset">
         notify
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sciloom.now_text" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        now_text
       </span>
     </span>
   </a>
@@ -3508,6 +3573,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sciloom.now_text" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        now_text
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#field-declarations" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3617,8 +3693,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.7
-    · <code title="69db0805694ccc5518deaa3bc0122272fcad9b11">69db0805</code>
+    · SciLoom 0.3.8
+    · <code title="912fb137fb23c45f11cb886cb78887d19b3e85b0">912fb137</code>
   </p>
 </aside>
 
@@ -4153,6 +4229,115 @@ does not measure hardware or configure application-level log storage.</p>
     </table>
         <p>Subsequent steps execute only after acknowledgement. This operation has no
 return value, timeout, cancellation branch or implicit confirmation.</p>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Called by host Python instead of written in a runtime method.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="sciloom.now_text" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">sciloom.now_text</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">now_text</span><span class="p">(</span><span class="nb">format</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Read wall time once and format it into a declared runtime text field.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>format</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Host-time text using %Y, %m, %d, %H, %M, %S, %% and literal text.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Formatted runtime time. Assign the entire call to one text field before</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>using the result in a larger expression.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>AutoSuite uses platform-local time; reference execution needs an explicit
+aware wall clock. This does not guarantee a unique filename.</p>
 
 
 <p><span class="doc-section-title">Raises:</span></p>

@@ -1,0 +1,41 @@
+{
+  "device_types": [],
+  "entry_function_id": "timestamp",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "format": "%Y-%m-%d_%H%M%S",
+          "kind": "ReadWallTime",
+          "node_id": "read",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "destination",
+            "source": null,
+            "symbol_id": "stamp"
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "Timestamp",
+      "node_id": "timestamp",
+      "source": null,
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "stamp",
+          "node_id": "stamp",
+          "owner_id": "timestamp",
+          "role": "output",
+          "source": null,
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": []
+}

@@ -1255,6 +1255,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#read-wall-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Read wall time
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#lists-and-indices" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2672,6 +2683,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/timestamp-path/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Timestamp a filename
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2842,6 +2880,33 @@
     
   
   Explicit confirmation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/wall-time-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Explicit wall clock
 
     
   </span>
@@ -3479,6 +3544,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#read-wall-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Read wall time
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#lists-and-indices" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3516,8 +3592,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.7
-    · <code title="69db0805694ccc5518deaa3bc0122272fcad9b11">69db0805</code>
+    · SciLoom 0.3.8
+    · <code title="912fb137fb23c45f11cb886cb78887d19b3e85b0">912fb137</code>
   </p>
 </aside>
 
@@ -3774,6 +3850,10 @@ has not been verified.</p>
 <td>Timeout, automatic confirmation, cancellation branches or a returned value</td>
 </tr>
 <tr>
+<td><code>self.stamp = now_text(format)</code></td>
+<td>Clock reads inside larger expressions, runtime format strings</td>
+</tr>
+<tr>
 <td>Whole <code>if/elif</code> conditions using <code>comptime</code> queries</td>
 <td>Combining these queries with <code>and</code> / <code>or</code> or runtime arguments</td>
 </tr>
@@ -3809,6 +3889,48 @@ not in the constructor or compilation script.</p>
 <p>The <a href="../../../examples/confirm-samples/">confirmation example</a> generates an AutoSuite
 function with a message followed by a log. The generated OK dialog still needs
 Executor validation of blocking and continuation on the deployed host.</p>
+<h2 id="read-wall-time">Read wall time</h2>
+<p>Import <code>now_text</code> from <code>sciloom</code>. Assign its result to one declared text field
+before using it in another expression:</p>
+<div class="highlight"><pre><span></span><code><span class="bp">self</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">now_text</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">_%H%M%S"</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">stamp</span> <span class="o">+</span> <span class="s2">".csv"</span>
+</code></pre></div>
+<p>Each call reads the clock once when the generated function runs. Reusing
+<code>self.stamp</code> reuses that captured value. Compilation does not read the clock.
+The format must be host-time text: a literal, a module/closure text constant,
+or an ordinary <code>self</code> setting. It cannot come from a runtime input.</p>
+<table>
+<thead>
+<tr>
+<th>Directive</th>
+<th>Field</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>%Y</code></td>
+<td>Year, at least four digits</td>
+</tr>
+<tr>
+<td><code>%m</code>, <code>%d</code></td>
+<td>Two-digit month and day</td>
+</tr>
+<tr>
+<td><code>%H</code>, <code>%M</code>, <code>%S</code></td>
+<td>Two-digit 24-hour hour, minute and second</td>
+</tr>
+<tr>
+<td><code>%%</code></td>
+<td>Literal percent sign</td>
+</tr>
+</tbody>
+</table>
+<p>Other characters appear as written. Unsupported directives and an unmatched
+<code>%</code> are rejected. Empty or literal-only formats still perform a clock read.
+AutoSuite uses local time; no timezone conversion or unique-name guarantee is
+provided. The <a href="../../../examples/timestamp-path/">filename example</a> is a complete
+program. Calendar boundaries, local daylight-saving changes and format encoding
+still need Executor validation.</p>
 <h2 id="lists-and-indices">Lists and indices</h2>
 <p><code>self.result = self.values</code> copies the complete list. Changing
 <code>self.result[0]</code> afterwards does not change <code>self.values[0]</code>. A child

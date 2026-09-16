@@ -2079,6 +2079,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#wall-clock-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Wall-clock input
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-and-snapshots" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2620,6 +2631,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/timestamp-path/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Timestamp a filename
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
         
   
@@ -2790,6 +2828,33 @@
     
   
   Explicit confirmation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/wall-time-ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Explicit wall clock
 
     
   </span>
@@ -3372,6 +3437,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#wall-clock-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Wall-clock input
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#session-and-snapshots" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -3409,8 +3485,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.7
-    · <code title="69db0805694ccc5518deaa3bc0122272fcad9b11">69db0805</code>
+    · SciLoom 0.3.8
+    · <code title="912fb137fb23c45f11cb886cb78887d19b3e85b0">912fb137</code>
   </p>
 </aside>
 
@@ -3445,7 +3521,8 @@ automatically. Concrete services arrive with the operations that need them.</p>
 </code></pre></div>
 <p><code>environment.events</code> returns an immutable history snapshot across all runs using
 that environment. <code>result.events</code> remains limited to one successful run.
-<code>ExecutionEvent</code> is the union of DeviceEvent, LogEvent and AcknowledgementEvent. Narrow with
+<code>ExecutionEvent</code> is the union of DeviceEvent, LogEvent, AcknowledgementEvent and
+WallTimeEvent. Narrow with
 <code>isinstance(event, LogEvent)</code> before accessing log-specific fields; device events
 carry state snapshots. A failed run leaves earlier completed events in
 environment history and does not roll back their state changes.</p>
@@ -3490,6 +3567,29 @@ entry, rather than resuming the failed statement.</p>
 <p>The <a href="../../../examples/confirmation-ir/">direct IR example</a> shows JSON restoration
 and a typed acknowledgement event. This reference behavior does not establish
 that a generated AutoSuite dialog blocks correctly on the target host.</p>
+<h2 id="wall-clock-input">Wall-clock input</h2>
+<p>Provide a WallClock service for ReadWallTime. VirtualWallClock returns the aware
+instant supplied by the caller until <code>set()</code> changes it:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">timezone</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">examples.timestamp_path</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimestampPath</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.interpreter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Interpreter</span><span class="p">,</span> <span class="n">ReferenceEnvironment</span><span class="p">,</span> <span class="n">VirtualWallClock</span>
+
+<span class="n">clock</span> <span class="o">=</span> <span class="n">VirtualWallClock</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">timezone</span><span class="p">(</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">9</span><span class="p">))))</span>
+<span class="n">environment</span> <span class="o">=</span> <span class="n">ReferenceEnvironment</span><span class="p">(</span><span class="n">wall_clock</span><span class="o">=</span><span class="n">clock</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">(</span><span class="n">TimestampPath</span><span class="p">()</span><span class="o">.</span><span class="n">to_ir</span><span class="p">(),</span> <span class="n">environment</span><span class="o">=</span><span class="n">environment</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">"directory"</span><span class="p">:</span> <span class="s2">"results"</span><span class="p">})</span>
+<span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"path"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"results/2026-09-16_140506.csv"</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">events</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+</code></pre></div>
+<p>A custom service implements <code>now() -&gt; datetime</code>. Each ReadWallTime calls it
+once, validates an aware datetime, formats it without host locale/timezone
+conversion, then writes the field and records a WallTimeEvent. The event holds
+the source, format and text, not the provider or a mutable timezone object.</p>
+<p>No service means <code>missing_environment_service</code>. A provider exception or invalid
+datetime becomes <code>wall_clock_error</code>; the destination and event history are not
+partially updated. Earlier completed effects remain. Separate environments do
+not share clocks unless explicitly given the same service. This wall clock is
+independent of elapsed-time waits; it does not advance automatically.</p>
+<p>The <a href="../../../examples/wall-time-ir/">direct IR example</a> also checks JSON v4 restoration.</p>
 <h2 id="session-and-snapshots">Session and snapshots</h2>
 <p>Internal variables initialize once per session and function identity. Repeated
 calls retain state; a new Interpreter starts a fresh session. Input/output call

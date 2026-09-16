@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8'?>
+<functions>
+  <function typeid="Chemspeed.SATaskFunctionDefinition.1">
+    <description />
+    <name>TimestampPath</name>
+    <edittime>0</edittime>
+    <expanded>1</expanded>
+    <functiondata>
+      <inputs>
+        <count>1</count>
+        <item0>
+          <id>{22BD3E68-459E-5D17-A984-C12DD0894EC6}</id>
+          <name>directory</name>
+          <variablename>directory</variablename>
+          <variabletype>text</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item0>
+        <sortType>0</sortType>
+      </inputs>
+      <outputs>
+        <count>2</count>
+        <item0>
+          <id>{F195ACF0-66C5-5C73-81FA-336101B09AC8}</id>
+          <name>stamp</name>
+          <variablename>stamp</variablename>
+          <variabletype>text</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item0>
+        <item1>
+          <id>{5BCDFA4A-1C87-530E-AF87-024E35FADE67}</id>
+          <name>path</name>
+          <variablename>path</variablename>
+          <variabletype>text</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item1>
+        <sortType>0</sortType>
+      </outputs>
+    </functiondata>
+    <id>{C97E5785-5804-584C-B80C-9F82FA9C25B6}</id>
+    <components>
+      <component typeid="Chemspeed.SATaskSetVariable.1">
+        <description />
+        <name>Set Variable</name>
+        <edittime>0</edittime>
+        <variablename>stamp</variablename>
+        <expressiontext>DateTime('%Y-%m-%d_%H%M%S')</expressiontext>
+        <elementselectmode>0</elementselectmode>
+        <elementnumber />
+        <numberofelements />
+        <startindex>0</startindex>
+        <clearvariable>0</clearvariable>
+        <sortwells>0</sortwells>
+        <enumerationtype>0</enumerationtype>
+        <wellsenumeration>0</wellsenumeration>
+        <elementsenumeration>0</elementsenumeration>
+        <id>{B51DFCAC-599A-5A8E-8FA9-3E84784F415F}</id>
+      </component>
+      <component typeid="Chemspeed.SATaskSetVariable.1">
+        <description />
+        <name>Set Variable</name>
+        <edittime>0</edittime>
+        <variablename>path</variablename>
+        <expressiontext>((directory + '/') + stamp) + '.csv'</expressiontext>
+        <elementselectmode>0</elementselectmode>
+        <elementnumber />
+        <numberofelements />
+        <startindex>0</startindex>
+        <clearvariable>0</clearvariable>
+        <sortwells>0</sortwells>
+        <enumerationtype>0</enumerationtype>
+        <wellsenumeration>0</wellsenumeration>
+        <elementsenumeration>0</elementsenumeration>
+        <id>{17DF04F4-6735-5F72-A59B-CF093E3069B3}</id>
+      </component>
+    </components>
+  </function>
+</functions>
