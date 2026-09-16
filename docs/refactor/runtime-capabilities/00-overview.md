@@ -65,8 +65,9 @@ handwritten JSON model was rejected because it duplicates the typed definitions.
 
 ## Stage status and sequence
 
-Stages 0–11 merged as PRs #85–96. Stage 12 implements typed CSV append and awaits its review/merge gate;
-stages 13–17 remain pending. The stage 8 Executor gate remains unverified.
+Stages 0–12 merged as PRs #85–97. Stage 13 is implementing Zone values and a
+read-only location directory; stages 14–17 remain pending. The stage 8 Executor
+gate remains unverified.
 Update this table in the stage that implements an
 outcome and record its PR and verification.
 
@@ -84,8 +85,8 @@ outcome and record its PR and verification.
 | 9 | [Wall clock](11-plan-wall-clock.md) | A12 formatted wall-clock reads | Merged, PR #94 |
 | 10 | [Wait and timer](12-plan-timing.md) | A08 durations and elapsed-time waits | Merged, PR #95 |
 | 11 | [CSV reads](13-plan-csv-read.md) | A05 row/column reads and typed results | Merged, PR #96 |
-| 12 | [CSV append](14-plan-csv-append.md) | A06 bounded row append | Implemented; review/merge pending |
-| 13 | [Zone values](15-plan-zone-values.md) | A03 values and read-only deployment directory | Pending |
+| 12 | [CSV append](14-plan-csv-append.md) | A06 bounded row append | Merged, PR #97 |
+| 13 | [Zone values](15-plan-zone-values.md) | A03 values and read-only deployment directory | In progress |
 | 14 | [Zone traversal](16-plan-zone-traversal.md) | A04 indexing and sequential fragments | Pending |
 | 15 | [Well properties](17-plan-well-properties.md) | A07 stored text properties | Pending |
 | 16 | [Dynamic locations](18-plan-dynamic-locations.md) | A03 candidate binding and physical state | Pending |
@@ -137,7 +138,7 @@ Do not extend an author/device contract merely to imitate vendor XML.
 
 ## Version
 
-Version: PATCH 0.3.8 → 0.3.9 for stage 10, following the user's lockstep 0.3.x decision.
+Version: PATCH 0.3.11 → 0.3.12 for stage 13, following the user's lockstep 0.3.x decision.
 By explicit user decision, the first shipped-code
 stage moves both packages from 0.2.0 to 0.3.0; later shipped-code stages remain
 lockstep in 0.3.x. This is an exception to the usual per-capability minor-bump

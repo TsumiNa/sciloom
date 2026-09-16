@@ -20,8 +20,15 @@ from sciloom.core.ir import (
     TextTrim,
     Unary,
     UnaryOp,
+    WellName,
+    ZoneCombine,
+    ZoneFind,
+    ZoneLength,
+    ZoneLiteral,
 )
 from sciloom.core.ir.model import Node
+from sciloom.core.locations import Zone
+from .environment import _require_service
 from .values import RuntimeValue, ScalarValue, checked_index, coerce, fail
 
 if TYPE_CHECKING:
@@ -30,6 +37,30 @@ if TYPE_CHECKING:
 
 def evaluate(session: Interpreter, expression: Expression, frame: dict[str, RuntimeValue]) -> RuntimeValue:
     session._tick(expression)
+    if isinstance(expression, ZoneLiteral):
+        return Zone(well_ids=expression.well_ids)
+    if isinstance(expression, ZoneFind):
+        name = evaluate(session, expression.name, frame)
+        assert isinstance(name, str)
+        directory = _require_service(session.environment.locations, "locations", expression)
+        return directory.find(name)
+    if isinstance(expression, ZoneCombine):
+        left_zone = evaluate(session, expression.left, frame)
+        right_zone = evaluate(session, expression.right, frame)
+        assert isinstance(left_zone, Zone) and isinstance(right_zone, Zone)
+        return Zone(well_ids=tuple(dict.fromkeys((*left_zone.well_ids, *right_zone.well_ids))))
+    if isinstance(expression, (ZoneLength, WellName)):
+        zone = evaluate(session, expression.value, frame)
+        assert isinstance(zone, Zone)
+        if isinstance(expression, ZoneLength):
+            return len(zone)
+        if len(zone) != 1:
+            fail("zone_cardinality", "well_name requires exactly one well.", expression)
+        directory = _require_service(session.environment.locations, "locations", expression)
+        try:
+            return directory.well_name(zone)
+        except KeyError:
+            fail("unknown_well", "The well identity is absent from the location directory.", expression)
     if isinstance(expression, (TextLength, TextTrim, TextSplitPart)):
         text_value = evaluate(session, expression.value, frame)
         assert isinstance(text_value, str)
@@ -50,7 +81,7 @@ def evaluate(session: Interpreter, expression: Expression, frame: dict[str, Runt
         elements: list[ScalarValue] = []
         for item in expression.elements:
             element = evaluate(session, item, frame)
-            assert not isinstance(element, tuple)  # Validated homogeneous scalar elements.
+            assert not isinstance(element, (tuple, Zone))  # Validated homogeneous scalar elements.
             elements.append(element)
         return coerce(tuple(elements), expression.type, expression)
     if isinstance(expression, (ListLength, ListGet)):
@@ -68,7 +99,7 @@ def evaluate(session: Interpreter, expression: Expression, frame: dict[str, Runt
     try:
         if isinstance(expression, Unary):
             value = evaluate(session, expression.operand, frame)
-            assert not isinstance(value, (tuple, str))
+            assert not isinstance(value, (tuple, str, Zone))
             if expression.op == UnaryOp.NOT:
                 result = not value
             elif expression.op == UnaryOp.POSITIVE:
@@ -85,13 +116,13 @@ def evaluate(session: Interpreter, expression: Expression, frame: dict[str, Runt
                 assert_never(expression.op)
         elif isinstance(expression, Binary):
             left = evaluate(session, expression.left, frame)
-            assert not isinstance(left, tuple)
+            assert not isinstance(left, (tuple, Zone))
             if expression.op == BinaryOp.AND and not left:
                 return False
             if expression.op == BinaryOp.OR and left:
                 return True
             right = evaluate(session, expression.right, frame)
-            assert not isinstance(right, tuple)
+            assert not isinstance(right, (tuple, Zone))
             result = apply_binary(expression.op, left, right, expression)
         else:
             assert_never(expression)

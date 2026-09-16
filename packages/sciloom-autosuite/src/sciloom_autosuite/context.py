@@ -18,6 +18,8 @@ from sciloom.core.ir import (
     ValueType,
     Variable,
     VariableRole,
+    ZoneLiteral,
+    ZoneType,
 )
 from sciloom.core.ir.traversal import iter_nodes
 from .agitation import AutoSuiteIndividualShaker
@@ -78,19 +80,23 @@ class CodegenContext:
         name = f"sciloom_tmp_{self.sequence}"
         while name in occupied:
             name += "_"
-        scalar = value_type.element_type if isinstance(value_type, ListType) else value_type
-        zero = "" if scalar == ScalarType.TEXT else (False if scalar == ScalarType.BOOLEAN else 0)
-        initial = (
-            ListLiteral(
-                node_id=identity + ":initial",
-                type=value_type,
-                elements=tuple(
-                    Literal(node_id=f"{identity}:initial:{i}", type=scalar, value=zero) for i in range(length)
-                ),
+        initial: ZoneLiteral | ListLiteral | Literal
+        if isinstance(value_type, ZoneType):
+            initial = ZoneLiteral(node_id=identity + ":initial")
+        else:
+            scalar = value_type.element_type if isinstance(value_type, ListType) else value_type
+            zero = "" if scalar == ScalarType.TEXT else (False if scalar == ScalarType.BOOLEAN else 0)
+            initial = (
+                ListLiteral(
+                    node_id=identity + ":initial",
+                    type=value_type,
+                    elements=tuple(
+                        Literal(node_id=f"{identity}:initial:{i}", type=scalar, value=zero) for i in range(length)
+                    ),
+                )
+                if isinstance(value_type, ListType)
+                else Literal(node_id=identity + ":initial", type=scalar, value=zero)
             )
-            if isinstance(value_type, ListType)
-            else Literal(node_id=identity + ":initial", type=scalar, value=zero)
-        )
         variable = Variable(
             node_id=identity,
             owner_id=function.node_id,

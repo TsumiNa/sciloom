@@ -126,6 +126,27 @@ assert result.outputs == {"ids": ("A", "B"), "volumes": (1.5 * mL, 0 * mL)}
     assert run_series_script(tmp_path / "csv_example.py", source, tmp_path) == ""
 
 
+def test_zone_reference_program_preserves_well_identity_order(tmp_path):
+    markdown = (ROOT / "website/docs/user-guide/reference/zones.md").read_text()
+    source = re.search(r"```python\n(.*?)\n```", markdown, re.DOTALL).group(1)
+    source += """
+from sciloom.core.interpreter import Interpreter, ReferenceEnvironment
+from sciloom.core.locations import LocationDirectory, Well
+from sciloom_autosuite import AutoSuiteTarget
+directory = LocationDirectory(
+    wells=(Well(identity="w:27", name="Rack: Well #27"), Well(identity="w:0", name="Rack: Well #0")),
+    zones={"rack": Zone(well_ids=("w:27",))},
+)
+instance = SelectLocations()
+result = Interpreter(instance.to_ir(), environment=ReferenceEnvironment(locations=directory)).run(
+    inputs={"name": "rack", "extra": Zone(well_ids=("w:27", "w:0"))}
+)
+assert result.outputs == {"selected": Zone(well_ids=("w:27", "w:0")), "count": 2}
+instance.compile(target=AutoSuiteTarget())
+"""
+    assert run_series_script(tmp_path / "zone_example.py", source, tmp_path) == ""
+
+
 def test_csv_append_reference_program_matches_documented_records(tmp_path):
     markdown = (ROOT / "website/docs/user-guide/reference/csv.md").read_text()
     source = re.search(r"<!-- example: csv-append -->\n```python\n(.*?)\n```", markdown, re.DOTALL).group(1)
@@ -331,6 +352,8 @@ class Text(HTMLParser):
         ("examples/csv-read-ir", "developer/csv_read_ir"),
         ("examples/append-sample-log", "append_sample_log"),
         ("examples/csv-append-ir", "developer/csv_append_ir"),
+        ("examples/resolve-locations", "resolve_locations"),
+        ("examples/zone-ir", "developer/zone_ir"),
         ("examples/demo-device", "developer/demo_device"),
         ("examples/portable-agitation", "developer/portable_agitation"),
     ),

@@ -191,6 +191,20 @@ The [CSV IR example](../../examples/csv-read-ir.md) demonstrates JSON restoratio
 without reading a host file. Native AutoSuite task probes remain separate from
 portable compilation and cannot establish parser equivalence by static inspection.
 
+## Fixed location directory
+
+Supply `ReferenceEnvironment(locations=LocationDirectory(...))` for ZoneFind and
+WellName. The directory copies its mapping and retains immutable Zone values.
+Lookups and labels are deterministic expressions, so they do not add external
+events. An unknown name returns an empty Zone; an unknown well identity fails.
+WellName requires exactly one well. ZoneLength and ZoneCombine need no directory.
+See the [direct Zone example](../../examples/zone-ir.md).
+
+Zone values remain immutable in inputs, state and results. Whole-value assignment
+or a child parameter does not create a writable alias. The directory does not
+authorize device use: deployment checks belong to the target and later dynamic
+location scopes.
+
 ## Session and snapshots
 
 Internal variables initialize once per session and function identity. Repeated

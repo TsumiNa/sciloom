@@ -15,8 +15,11 @@ from sciloom.core.ir import (
     TimerResource,
     Variable,
     VariableRole,
+    ZoneLiteral,
+    ZoneType,
     validate,
 )
+from sciloom.core.locations import Zone
 from sciloom.flow.device_slots import DeviceReference
 
 # Function is read at runtime below, not only in annotations. Do not move this
@@ -90,9 +93,12 @@ def _build_function(context: LoweringContext) -> FunctionIR:
     node = runtime_source(context)
     variables = []
     for field in context.instance.model_fields.values():
-        initial: Literal | ListLiteral | None = None
+        initial: Literal | ListLiteral | ZoneLiteral | None = None
         if field.role == VariableRole.INTERNAL:
-            if isinstance(field.type, ListType):
+            if isinstance(field.type, ZoneType):
+                assert isinstance(field.default, Zone)
+                initial = ZoneLiteral(node_id=f"{context.symbol(field.name)}:initial", well_ids=field.default.well_ids)
+            elif isinstance(field.type, ListType):
                 assert isinstance(field.default, tuple)
                 initial = ListLiteral(
                     node_id=f"{context.symbol(field.name)}:initial",

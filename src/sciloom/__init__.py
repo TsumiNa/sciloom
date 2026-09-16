@@ -5,8 +5,9 @@ from typing import TYPE_CHECKING, Any
 from .units import Duration, L, RotationalSpeed, Volume, hour, minute, mL, rpm, rps, s, uL
 
 if TYPE_CHECKING:
+    from .core.locations import Zone
     from .devices.agitation import Agitator
-    from .flow import comptime, csv, text
+    from .flow import comptime, csv, text, zones
     from .flow.fields import Input, Output, Var
     from .flow.function import Function, runtime
     from .flow.logging import log
@@ -18,6 +19,14 @@ _DSL_EXPORTS = {"Function", "Input", "Output", "Var", "runtime"}
 
 def __getattr__(name: str) -> Any:
     # Importing sciloom.core.ir or the interpreter must not load source analysis.
+    if name == "Zone":
+        from .core.locations import Zone
+
+        return Zone
+    if name == "zones":
+        from .flow import zones
+
+        return zones
     if name == "csv":
         from .flow import csv
 
@@ -62,6 +71,8 @@ def __getattr__(name: str) -> Any:
 
 
 __all__ = [
+    "Zone",
+    "zones",
     "csv",
     "Timer",
     "wait",

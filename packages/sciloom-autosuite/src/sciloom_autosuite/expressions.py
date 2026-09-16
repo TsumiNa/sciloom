@@ -22,6 +22,12 @@ from sciloom.core.ir import (
     Unary,
     UnaryOp,
     ValueType,
+    WellName,
+    ZoneCombine,
+    ZoneFind,
+    ZoneLength,
+    ZoneLiteral,
+    ZoneType,
 )
 from sciloom.core.ir.expressions import ExpressionChecker
 from .context import CodegenContext
@@ -67,6 +73,48 @@ def checked_read(
 def plan_expression(
     context: CodegenContext, function: FunctionIR, expression: Expression, tag: str, *, nested: bool = False
 ) -> ExpressionPlan:
+    if isinstance(expression, ZoneLiteral):
+        if expression.well_ids:
+            raise CompilationError(
+                (
+                    Diagnostic(
+                        code="unsupported_zone_literal",
+                        message="AutoSuite cannot encode opaque well identities as a Zone expression; use zones.find.",
+                        path="$",
+                        node_id=expression.node_id,
+                        source=expression.source,
+                    ),
+                )
+            )
+        # A fresh, never-written Zone variable uses the observed empty initial
+        # representation. Do not guess an expression literal for an empty Zone.
+        return ExpressionPlan(context.temporary(function, ZoneType()), ZoneType())
+    if isinstance(expression, ZoneFind):
+        zone_name = plan_expression(context, function, expression.name, tag)
+        return ExpressionPlan(f"FindZone({zone_name.text})", ZoneType(), zone_name.prerequisites)
+    if isinstance(expression, ZoneLength):
+        value = plan_expression(context, function, expression.value, tag)
+        return ExpressionPlan(f"ZoneSize({value.text})", ScalarType.INTEGER, value.prerequisites)
+    if isinstance(expression, ZoneCombine):
+        left_zone = plan_expression(context, function, expression.left, tag)
+        right_zone = plan_expression(context, function, expression.right, tag)
+        if right_zone.prerequisites:
+            left_zone = materialize(context, function, left_zone, tag)
+        return ExpressionPlan(
+            f"({left_zone.text} + {right_zone.text})", ZoneType(), (*left_zone.prerequisites, *right_zone.prerequisites)
+        )
+    if isinstance(expression, WellName):
+        raise CompilationError(
+            (
+                Diagnostic(
+                    code="unsupported_zone_cardinality",
+                    message="well_name requires a verified single-well check before AutoSuite WellFullName can be emitted.",
+                    path="$",
+                    node_id=expression.node_id,
+                    source=expression.source,
+                ),
+            )
+        )
     if isinstance(expression, Literal):
         return ExpressionPlan(literal_value(expression), expression.type)
     if isinstance(expression, (TextLength, TextTrim)):

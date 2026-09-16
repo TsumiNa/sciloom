@@ -3,7 +3,7 @@
 import ast
 import inspect
 
-from sciloom.core.ir import CsvColumn, CsvErrorPolicy, CsvReadMode, ListType, ReadCsv
+from sciloom.core.ir import CsvColumn, CsvErrorPolicy, CsvReadMode, ReadCsv, ScalarType
 from sciloom.flow import csv
 from sciloom.flow.fields import _value_type
 from sciloom.units import DurationUnit, SpeedUnit, VolumeUnit
@@ -85,7 +85,7 @@ def csv_read(context: LoweringContext, assignment: ast.Assign) -> ReadCsv | None
             scalar = _value_type("csv.Column", _metadata_value(context, keywords["value_type"]))
         except (TypeError, ValueError) as error:
             context.fail("csv_columns", str(error), keywords["value_type"])
-        if isinstance(scalar, ListType):
+        if not isinstance(scalar, ScalarType):
             context.fail("csv_columns", "Each CSV column declares a scalar element type.", column_node)
         index = expression(context, keywords["index"])
         unit = None

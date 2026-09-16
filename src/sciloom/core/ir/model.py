@@ -161,8 +161,68 @@ class TextSplitPart(Node):
     index: "Expression"
 
 
+@dataclass(frozen=True, kw_only=True)
+class ZoneLiteral(Node):
+    """An ordered, duplicate-free tuple of opaque well identities."""
+
+    __ir_kind__: ClassVar[str] = "ZoneLiteral"
+
+    well_ids: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True, kw_only=True)
+class ZoneFind(Node):
+    """Look up a name in a fixed directory; an unknown name yields an empty Zone."""
+
+    __ir_kind__: ClassVar[str] = "ZoneFind"
+
+    name: "Expression"
+
+
+@dataclass(frozen=True, kw_only=True)
+class ZoneCombine(Node):
+    """Combine two Zones, preserving the order of each well's first occurrence."""
+
+    __ir_kind__: ClassVar[str] = "ZoneCombine"
+
+    left: "Expression"
+    right: "Expression"
+
+
+@dataclass(frozen=True, kw_only=True)
+class ZoneLength(Node):
+    """Count wells in a Zone without consulting a location directory."""
+
+    __ir_kind__: ClassVar[str] = "ZoneLength"
+
+    value: "Expression"
+
+
+@dataclass(frozen=True, kw_only=True)
+class WellName(Node):
+    """Read the display name of exactly one known well from the fixed directory."""
+
+    __ir_kind__: ClassVar[str] = "WellName"
+
+    value: "Expression"
+
+
 Expression = (
-    Literal | Reference | Unary | Binary | ListLiteral | ListLength | ListGet | TextLength | TextTrim | TextSplitPart
+    Literal
+    | Reference
+    | Unary
+    | Binary
+    | ListLiteral
+    | ListLength
+    | ListGet
+    | TextLength
+    | TextTrim
+    | TextSplitPart
+    | ZoneLiteral
+    | ZoneFind
+    | ZoneCombine
+    | ZoneLength
+    | WellName
 )
 """Closed set of typed runtime expressions."""
 
@@ -175,7 +235,7 @@ class Variable(Node):
         owner_id: Owning FunctionIR occurrence ID.
         name: User-facing field name.
         role: Input, output or persistent internal state.
-        type: Scalar or homogeneous list type.
+        type: Scalar, homogeneous list or Zone type.
         initial: Required literal default for internal state; not reset on each call."""
 
     __ir_kind__: ClassVar[str] = "Variable"
@@ -184,7 +244,7 @@ class Variable(Node):
     name: str
     role: VariableRole
     type: ValueType
-    initial: Literal | ListLiteral | None = None
+    initial: Literal | ListLiteral | ZoneLiteral | None = None
 
 
 @dataclass(frozen=True, kw_only=True)

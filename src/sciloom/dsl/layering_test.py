@@ -17,6 +17,7 @@ VOCABULARY = frozenset(
         "flow.fields",
         "flow.function",
         "flow.text",
+        "flow.zones",
         "flow.logging",
         "flow.messages",
         "flow.timing",

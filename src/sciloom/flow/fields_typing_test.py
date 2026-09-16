@@ -14,7 +14,7 @@ def test_native_declaration_type_contract(tmp_path, valid):
 from collections.abc import Callable
 from math import floor
 from typing import assert_type
-from sciloom import Agitator, Duration, Function, Input, Output, RotationalSpeed, Timer, Var, Volume, log, mL, minute, notify, now_text, rpm, runtime, s, text, wait
+from sciloom import Agitator, Duration, Function, Input, Output, RotationalSpeed, Timer, Var, Volume, Zone, log, mL, minute, notify, now_text, rpm, runtime, s, text, wait, zones
 from sciloom.core.interpreter import Interpreter
 from sciloom.core.ir import Program
 
@@ -32,10 +32,16 @@ class Scale(Function):
     elapsed: Var[Duration] = 1 * minute
     amounts: Var[list[Volume]] = [1 * mL]
     timer: Timer
+    location: Var[Zone] = Zone.empty()
 
     @runtime
     def run(self) -> None:
         assert_type(self.factor, float)
+        assert_type(self.location, Zone)
+        assert_type(zones.find(self.name), Zone)
+        assert_type(zones.combine(self.location, Zone.empty()), Zone)
+        assert_type(zones.well_name(self.location), str)
+        assert_type(len(self.location), int)
         assert_type(self.index, int)
         assert_type(self.values, list[float])
         assert_type(self.name, str)
@@ -81,6 +87,7 @@ def check_inputs(program: Program, values: list[float], flags: list[bool], speed
 wrong_callback: Callable[[int], str] = Scale().run
 class Bad(Function):
     timer: Timer
+    location: Var[Zone] = 1
     amount: Var[Volume] = 1.0
     elapsed: Var[Duration] = 1 * mL
     factor: Input[float]
@@ -92,6 +99,8 @@ class Bad(Function):
     @runtime
     def run(self) -> None:
         self.amount = self.elapsed
+        self.location = "rack"
+        zones.combine(self.location, 0)
         self.amount = self.amount + self.elapsed
         floor(self.amount)
         round(self.elapsed)
@@ -136,6 +145,6 @@ class Bad(Function):
         assert result.returncode == 0, result.stdout + result.stderr
     else:
         assert result.returncode == 1, result.stdout + result.stderr
-        assert result.stdout.count(" error: ") == 26, result.stdout
+        assert result.stdout.count(" error: ") == 29, result.stdout
         for code in ("[assignment]", "[list-item]"):
             assert code in result.stdout

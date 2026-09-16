@@ -1232,6 +1232,90 @@ without modifying it. Extract only required zone/well/device relationships,
 preserving the verified enumeration order. No task import, APP writing or
 application compilation. Device selection below uses this same read-only layout.
 
+### Stage-13 concrete values and directory
+
+The following interfaces were recorded before implementation and are runnable
+in stage 13, verified by the Zone author/developer examples and tests.
+`Zone` is a frozen, keyword-only data value in `sciloom.core.locations`,
+lazily exported by `sciloom`. `Zone(well_ids: tuple[str, ...] = ())` requires unique,
+nonempty opaque identities and owns an immutable tuple. `Zone.empty()` returns an
+empty value; host `len()` is available and `bool(zone)` raises TypeError. Runtime
+indexing/traversal wait for stage 14. A well identity is never its integer position
+in a Zone; consumers cannot infer hardware from its spelling.
+
+```python
+from sciloom import Zone
+from sciloom.core.locations import LocationDirectory, Well
+from sciloom.core.interpreter import ReferenceEnvironment
+
+directory = LocationDirectory(
+    wells=(Well(identity="rack:a", name="Rack: Well #0"),
+           Well(identity="rack:b", name="Rack: Well #1")),
+    zones={"rack": Zone(well_ids=("rack:a", "rack:b")),
+           "first": Zone(well_ids=("rack:a",))},
+)
+assert directory.find("rack").well_ids == ("rack:a", "rack:b")
+assert directory.find("missing") == Zone.empty()
+assert directory.well_name(directory.find("first")) == "Rack: Well #0"
+environment = ReferenceEnvironment(locations=directory)
+```
+
+Well and LocationDirectory are frozen keyword-only core data records. Well has
+`identity: str` and `name: str`. Directory accepts `wells: tuple[Well, ...]` and
+`zones: Mapping[str, Zone]`, copies/freeze-protects its mappings, and rejects
+duplicate identities, empty names, unknown membership and wrong value types.
+`find(name: str) -> Zone` and `well_name(value: Zone) -> str` are deterministic
+queries. The latter requires one known well. An explicitly supplied directory
+may be shared between sessions because it cannot change. Omitted directories
+cause missing_environment_service only when a lookup/name query needs one.
+Zone assignment, passing, combining and length need no external directory; using
+opaque values does not itself assert that a deployment contains those wells.
+
+`sciloom.flow.zones` supplies the root `zones` runtime markers `find`, `combine`
+and `well_name` with the signatures above (`combine(left: Zone, right: Zone) -> Zone`).
+They are analyzed without executing host calls. Zone.empty() is also recognized
+as a constant runtime expression. Combine retains left order then unseen right
+members. Runtime arithmetic, comparison and truthiness remain unsupported.
+
+IR uses a separate frozen `ZoneType` (stable kind ZoneType, diagnostic value
+`zone`), alongside ScalarType and ListType. It is not a list element type. Add
+frozen expression nodes with matching stable kinds: ZoneLiteral(well_ids tuple),
+ZoneFind(name Expression), ZoneCombine(left/right Expression), ZoneLength(value
+Expression) and WellName(value Expression). Variable.initial accepts ZoneLiteral;
+old fields/kinds and canonical JSON remain unchanged. Runtime values and result
+snapshots use immutable Zone values, not tuples that could be mistaken for lists.
+Schema/default, expression, codec, interpreter, specializer and target consumers
+all handle or explicitly reject these values. Log/CSV scalar rules exclude Zone.
+
+The target exports immutable `AutoSuiteElement(identity, name, type_id, device_id,
+parent_id)` and `AutoSuiteWell(identity, element_id, well_id)` records, and
+`AutoSuiteLayout(elements, wells, directory)`, all keyword-only. Its
+`from_app(path: str | Path) -> AutoSuiteLayout` classmethod reads only gzip APP
+configuration and zones. Element identity is its normalized XML UUID; opaque well
+identity derives from that element identity and the element-local well ID. Zone
+references resolve the observed `(progID, deviceID, id)` triple; ambiguous or
+missing references are errors. Parent links retain the actual element tree, not
+a guessed relation based on matching names.
+
+The current APP enumerates explicit well `index` values consecutively from zero;
+preserve that order and validate completeness/uniqueness. Do not sort by local
+well ID, element ID or display name. Accept the observed ordinary-zone profile
+(virtualVial=0, enumerationType=0); other profiles are explicit layout errors.
+Read all well records for membership validation, including wells absent from a
+named zone. Display labels use the documented parent-name / `Well #ID` format.
+Unknown profiles, unresolved references and malformed gzip/XML do not silently
+produce a partial layout. No layout import mutates the APP or imports tasks.
+
+Stage-13 AutoSuite supports zone parameters, empty initial state, assignment,
+function passing, FindZone, ZoneSize and documented zone addition where the
+profile can preserve semantics. Nonempty opaque Zone literals have no established
+general XML expression mapping and are rejected explicitly. A runtime WellName
+query needs single-well validation; until the failure gate is verified, reject
+unproven cardinality rather than emitting an unchecked native call. Record
+enumeration/name/combination execution checks separately from static XML evidence.
+Existing fixed equipment profiles remain unchanged. Selection bindings, at()
+scopes and physical state tracking are not added ahead of stage 16.
+
 ## 13. Zone traversal (A04, stage 14)
 
 ```python

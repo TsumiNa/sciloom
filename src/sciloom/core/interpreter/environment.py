@@ -6,6 +6,7 @@ from typing import TypeAlias, TypeVar
 from sciloom.core.diagnostics import SourceSpan
 from sciloom.core.ir.model import CsvReadMode, Node
 from sciloom.core.ir.types import ScalarType
+from sciloom.core.locations import LocationDirectory
 from sciloom.units import Duration
 from .acknowledgements import QueuedAcknowledgements
 from .clocks import VirtualClock, WallClock
@@ -180,6 +181,9 @@ class ReferenceEnvironment:
 
     files: FileService | None = None
     """Explicit byte adapter; host files are inaccessible unless supplied."""
+
+    locations: LocationDirectory | None = None
+    """Fixed, immutable location names and well identities; never inferred from hardware."""
 
     _events: list[ExecutionEvent] = field(default_factory=list, init=False, repr=False)
 

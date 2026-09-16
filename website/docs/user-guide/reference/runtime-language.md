@@ -13,6 +13,7 @@ of the Python script use ordinary Python.
 | `RotationalSpeed` | Nonnegative speed, such as `600 * rpm` or `10 * rps` |
 | `Volume`, `Duration` | Signed, finite quantities, such as `2 * mL` or `1 * minute` |
 | `list[T]` | One-dimensional list of a supported scalar or quantity type |
+| `Zone` | Ordered unique wells; no list nesting or implicit truthiness; see [locations](zones.md) |
 
 For a speed supplied by the caller, use `Input[RotationalSpeed]`.
 The internal units are revolutions per second, cubic metres and seconds.

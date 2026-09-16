@@ -11,7 +11,8 @@ from typing import Annotated, Any, NoReturn, TypeAlias, TypeVar, get_args, get_o
 
 from sciloom.core.diagnostics import Diagnostic, IRValidationError
 from sciloom.core.ir import VariableRole
-from sciloom.core.ir.types import ListType, ScalarType, ValueType
+from sciloom.core.ir.types import ListType, ScalarType, ValueType, ZoneType
+from sciloom.core.locations import Zone
 from sciloom.units import Duration, RotationalSpeed, Volume
 
 
@@ -56,6 +57,7 @@ class RuntimeField:
         | RotationalSpeed
         | Volume
         | Duration
+        | Zone
         | tuple[bool | int | float | str | RotationalSpeed | Volume | Duration, ...]
         | None
     ) = None
@@ -129,6 +131,8 @@ def _contains_role(annotation: Any) -> bool:
 
 
 def _value_type(name: str, annotation: Any) -> ValueType:
+    if annotation is Zone:
+        return ZoneType()
     if get_origin(annotation) is list:
         args = get_args(annotation)
         if len(args) != 1 or not isinstance(args[0], type) or args[0] not in _TYPES:
@@ -139,12 +143,16 @@ def _value_type(name: str, annotation: Any) -> ValueType:
     if not isinstance(annotation, type) or annotation not in _TYPES:
         _schema_error(
             name,
-            "Input, Output and Var require a supported scalar, quantity or homogeneous list type.",
+            "Input, Output and Var require a supported scalar, quantity, homogeneous list or Zone type.",
         )
     return _TYPES[annotation]
 
 
 def _default(name: str, value: Any, value_type: ValueType) -> Any:
+    if isinstance(value_type, ZoneType):
+        if type(value) is not Zone:
+            _schema_error(name, "Var[Zone] requires an explicit Zone initial value, such as Zone.empty().")
+        return value
     if isinstance(value_type, ListType):
         if type(value) is not list:
             _schema_error(name, "Var requires an explicit list initial value.")

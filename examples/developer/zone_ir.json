@@ -1,0 +1,121 @@
+{
+  "device_types": [],
+  "entry_function_id": "resolve",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "Assignment",
+          "node_id": "combine",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "selected-write",
+            "source": null,
+            "symbol_id": "selected"
+          },
+          "value": {
+            "kind": "ZoneCombine",
+            "left": {
+              "kind": "ZoneFind",
+              "name": {
+                "kind": "Reference",
+                "node_id": "name1",
+                "source": null,
+                "symbol_id": "first_name"
+              },
+              "node_id": "first",
+              "source": null
+            },
+            "node_id": "union",
+            "right": {
+              "kind": "ZoneFind",
+              "name": {
+                "kind": "Reference",
+                "node_id": "name2",
+                "source": null,
+                "symbol_id": "second_name"
+              },
+              "node_id": "second",
+              "source": null
+            },
+            "source": null
+          }
+        },
+        {
+          "kind": "Assignment",
+          "node_id": "count-write",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "count-target",
+            "source": null,
+            "symbol_id": "count"
+          },
+          "value": {
+            "kind": "ZoneLength",
+            "node_id": "length",
+            "source": null,
+            "value": {
+              "kind": "Reference",
+              "node_id": "selected-read",
+              "source": null,
+              "symbol_id": "selected"
+            }
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "ResolveLocations",
+      "node_id": "resolve",
+      "source": null,
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "first_name",
+          "node_id": "first_name",
+          "owner_id": "resolve",
+          "role": "input",
+          "source": null,
+          "type": "text"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "second_name",
+          "node_id": "second_name",
+          "owner_id": "resolve",
+          "role": "input",
+          "source": null,
+          "type": "text"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "selected",
+          "node_id": "selected",
+          "owner_id": "resolve",
+          "role": "output",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "count",
+          "node_id": "count",
+          "owner_id": "resolve",
+          "role": "output",
+          "source": null,
+          "type": "integer"
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": []
+}

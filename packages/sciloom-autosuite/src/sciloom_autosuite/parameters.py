@@ -2,7 +2,7 @@
 
 from sciloom.core.ir import FunctionIR, ListType, VariableRole
 from .context import CodegenContext
-from .encoding import SCALARS
+from .encoding import value_encoding
 from .xml import XmlNode, xml_node as _xml
 
 
@@ -19,7 +19,6 @@ def functiondata(
         entries = [_xml("count", str(len(parameters)))]
         for i, variable in enumerate(parameters):
             array = isinstance(variable.type, ListType)
-            scalar = variable.type.element_type if isinstance(variable.type, ListType) else variable.type
             variable_name = context.parameter_names[variable.node_id]
             expression_text = ""
             if inputs is not None and role == VariableRole.INPUT:
@@ -34,7 +33,7 @@ def functiondata(
                     _xml("id", context.identifier("parameter", variable.node_id)),
                     _xml("name", variable.name),
                     _xml("variablename", variable_name),
-                    _xml("variabletype", SCALARS[scalar].parameter_type),
+                    _xml("variabletype", value_encoding(variable.type).parameter_type),
                     _xml("isarray", "1" if array else "0"),
                     _xml("expression", expression_text),
                 )

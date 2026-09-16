@@ -25,8 +25,15 @@ from sciloom.core.ir import (
     Unary,
     UnaryOp,
     ValueType,
+    WellName,
+    ZoneCombine,
+    ZoneFind,
+    ZoneLength,
+    ZoneLiteral,
+    ZoneType,
 )
-from sciloom.flow import csv, text
+from sciloom.core.locations import Zone
+from sciloom.flow import csv, text, zones
 from sciloom.flow.timing import now_text
 from sciloom.units import Duration, RotationalSpeed, Volume
 from .context import LoweringContext
@@ -76,14 +83,36 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
                 "python_subset", "len must resolve to the Python builtin; shadowed calls are unsupported.", node
             )
         if len(node.args) != 1 or node.keywords:
-            context.fail("python_subset", "len requires one positional list or text argument.", node)
+            context.fail("python_subset", "len requires one positional list, text or Zone argument.", node)
         metadata = context.metadata(node)
         length_value = expression(context, node.args[0])
         if context.type_of(length_value) == ScalarType.TEXT:
             return TextLength(**metadata, value=length_value)
+        if isinstance(context.type_of(length_value), ZoneType):
+            return ZoneLength(**metadata, value=length_value)
         return ListLength(**metadata, value=length_value)
     if isinstance(node, ast.Call):
+        if _is_empty_zone(context, node):
+            if node.args or node.keywords:
+                context.fail("python_subset", "Zone.empty requires no arguments.", node)
+            return ZoneLiteral(**context.metadata(node))
         marker = context.static_object(node.func)
+        for zone_intrinsic in (zones.find, zones.combine, zones.well_name):
+            if marker is zone_intrinsic:
+                if any(isinstance(a, ast.Starred) for a in node.args) or any(k.arg is None for k in node.keywords):
+                    context.fail("python_subset", "Zone operations do not accept argument expansion.", node)
+                try:
+                    bound = inspect.signature(zone_intrinsic).bind(
+                        *node.args, **{k.arg: k.value for k in node.keywords if k.arg is not None}
+                    )
+                except TypeError as error:
+                    context.fail("python_subset", str(error), node)
+                arguments = {name: expression(context, value) for name, value in bound.arguments.items()}
+                if marker is zones.find:
+                    return ZoneFind(**context.metadata(node), name=arguments["name"])
+                if marker is zones.combine:
+                    return ZoneCombine(**context.metadata(node), left=arguments["left"], right=arguments["right"])
+                return WellName(**context.metadata(node), value=arguments["value"])
         if marker is now_text:
             context.fail("external_operation", "Assign now_text(...) to one text field before using its result.", node)
         for numeric_intrinsic, operation in NUMERIC_OPERATIONS:
@@ -191,6 +220,8 @@ def expression(context: LoweringContext, node: ast.AST, expected: ValueType | No
         return result
     else:
         context.fail("python_subset", f"Unsupported runtime expression: {type(node).__name__}.", node)
+    if type(value) is Zone:
+        return ZoneLiteral(**context.metadata(node), well_ids=value.well_ids)
     return literal(context, node, value)
 
 
@@ -218,13 +249,24 @@ def is_expression_call(context: LoweringContext, node: ast.AST) -> bool:
     if is_length_call(node):
         return True
     if isinstance(node, ast.Call):
+        if _is_empty_zone(context, node):
+            return True
         marker = context.static_object(node.func)
         return (
             marker is text.trim
             or marker is text.split_part
+            or any(marker is intrinsic for intrinsic in (zones.find, zones.combine, zones.well_name))
             or any(marker is intrinsic for intrinsic, _ in NUMERIC_OPERATIONS)
         )
     return False
+
+
+def _is_empty_zone(context: LoweringContext, node: ast.Call) -> bool:
+    return (
+        isinstance(node.func, ast.Attribute)
+        and node.func.attr == "empty"
+        and context.static_object(node.func.value) is Zone
+    )
 
 
 def _list_literal(

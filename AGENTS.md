@@ -294,6 +294,16 @@ Backend context variables/parameters must not enter the public semantic Program.
 Consult `autosuite/docs/16_AGITATION_MAPPING.md` before changing this adapter.
 Do not infer generic physical limits or hardware equivalence from one device profile.
 
+Runtime Zone values use immutable ordered unique well identities in
+`sciloom.core.locations`, with a separate IR ZoneType (never list[Zone]). Fixed
+reference directories enter through ReferenceEnvironment.locations; pure queries
+do not perform I/O or emit external events. AutoSuiteLayout.from_app only reads
+deployment data and rejects unobserved profiles. Read
+`autosuite/docs/29_ZONE_VALUES_AND_LAYOUT.md` before changing location encoding or
+APP extraction. Well identity, Zone enumeration index and controller device ID
+are distinct. Dynamic at/candidate binding remains a later stage; Zone values do
+not implicitly authorize device actions.
+
 ## 11. Runtime capability implementation sequence
 
 Follow the accepted [durable IR and runtime capability plan](docs/refactor/runtime-capabilities/00-overview.md)

@@ -37,7 +37,9 @@ from sciloom.core.ir import (
     VariableRole,
     Wait,
     WaitUntil,
+    WellName,
     While,
+    ZoneLiteral,
 )
 from sciloom.core.ir.expressions import ExpressionChecker
 from sciloom.core.ir.traversal import iter_nodes
@@ -62,7 +64,13 @@ def validate_runtime_guards(program: Program) -> tuple[Diagnostic, ...]:
         for node, path in iter_nodes(function, f"$.functions[{function_index}]"):
             message = None
             code = "unsupported_runtime_guard"
-            if isinstance(node, ReadCsv):
+            if isinstance(node, ZoneLiteral) and node.well_ids:
+                code = "unsupported_zone_literal"
+                message = "AutoSuite cannot encode opaque well identities as a Zone expression; use zones.find or Zone inputs."
+            elif isinstance(node, WellName):
+                code = "unsupported_zone_cardinality"
+                message = "well_name requires a verified single-well check before AutoSuite WellFullName can be emitted; reference execution is available."
+            elif isinstance(node, ReadCsv):
                 code = "unsupported_csv_semantics"
                 message = "AutoSuite CSV expression evaluation, conversion and per-column result aggregation are not verified against typed literal CSV semantics; reference execution is available."
             elif isinstance(node, AppendCsv):
