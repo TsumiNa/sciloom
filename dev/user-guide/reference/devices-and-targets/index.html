@@ -1332,6 +1332,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="AutoSuite target">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inspect-application-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Inspect application settings
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -4057,6 +4074,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="AutoSuite target">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inspect-application-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Inspect application settings
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -4086,8 +4120,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.15
-    · <code title="e4e4c8229af86c8954b8a2e97c02b20471e77456">e4e4c822</code>
+    · SciLoom 0.4.0
+    · <code title="f6352d5987a90a9c4276f0e8986873b0d6215b25">f6352d59</code>
   </p>
 </aside>
 
@@ -4208,6 +4242,25 @@ well/controller ancestry. It does not contact the instrument. See
 and the current dynamic-compilation gate.
 See <a href="../../advanced/autosuite/">AutoSuite compilation</a> for package handoff and
 target-specific language restrictions.</p>
+<h3 id="inspect-application-settings">Inspect application settings</h3>
+<p><code>AutoSuiteDeployment.from_app(path)</code> reads the product version, configuration
+label and Macro variable-reset setting without changing the application. Missing
+settings stay <code>None</code>; duplicate or malformed reset settings are rejected.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteDeployment</span><span class="p">,</span> <span class="n">AutoSuiteLayout</span>
+
+<span class="n">deployment</span> <span class="o">=</span> <span class="n">AutoSuiteDeployment</span><span class="o">.</span><span class="n">from_app</span><span class="p">(</span><span class="s2">"instrument.app"</span><span class="p">)</span>
+<span class="n">layout</span> <span class="o">=</span> <span class="n">AutoSuiteLayout</span><span class="o">.</span><span class="n">from_app</span><span class="p">(</span><span class="s2">"instrument.app"</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">deployment</span><span class="o">.</span><span class="n">app_sha256</span> <span class="o">==</span> <span class="n">layout</span><span class="o">.</span><span class="n">app_sha256</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">deployment</span><span class="o">.</span><span class="n">product_version</span><span class="p">,</span> <span class="n">deployment</span><span class="o">.</span><span class="n">reset_variables</span><span class="p">)</span>
+</code></pre></div>
+<p>The hash identifies the exact compressed APP bytes. A manually constructed layout
+has unknown provenance by default. The configuration label is only a display
+name, not a unique application identity.</p>
+<p>These read-only records do not yet attach settings to <code>AutoSuiteTarget</code> or reject
+compilation based on them. In particular, check Macro reset behavior before using
+persistent <code>Var</code> state in a native APP. A deployment report's <code>compatible</code> status
+means only its checked conditions match; its separate <code>native_status</code> remains
+<code>pending</code>. See the <a href="../../../api/autosuite/#read-only-application-settings">settings API</a>.</p>
 <h2 id="compile-time-queries">Compile-time queries</h2>
 <table>
 <thead>

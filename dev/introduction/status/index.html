@@ -4031,8 +4031,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.3.15
-    · <code title="e4e4c8229af86c8954b8a2e97c02b20471e77456">e4e4c822</code>
+    · SciLoom 0.4.0
+    · <code title="f6352d5987a90a9c4276f0e8986873b0d6215b25">f6352d59</code>
   </p>
 </aside>
 
@@ -4132,6 +4132,10 @@ calculations and state changes. That interpreter does not simulate laboratory ha
 <p>A visual editor, server, public Application/global API, measured property reads,
 and notebook or interactive source support are not yet available.</p>
 <h2 id="what-compilation-establishes">What compilation establishes</h2>
+<p><code>AutoSuiteDeployment.from_app</code> now reads APP product/reset settings and exact-byte
+provenance without modifying the file. Layouts read from APP also retain this
+source hash. Deployment facts and report records are available, but integration
+of reset-setting rejection into <code>AutoSuiteTarget</code> is not yet implemented.</p>
 <p>Compilation checks the source, value types, declared device bindings and required
 configuration before generating XML. It does not connect to the instrument or
 prove that the procedure will run correctly on your deployment.</p>
