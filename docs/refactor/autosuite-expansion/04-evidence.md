@@ -37,6 +37,13 @@ precision, profile and lifecycle capture matrices. No new native receipt exists;
 R5.3 is documentation-only implemented/gated. Standard core SI and target thermal
 rejections are unchanged.
 
+[Transfer measurements](../../../autosuite/docs/38_FIXED_TRANSFER_MEASUREMENTS.md)
+record all 17 primary-APP transfer task IDs, the separate 48-row screenshot task,
+raw masks/addresses and the required single-pair capture matrix. R6.3 is
+documentation-only implemented/gated: tool/channel/calibration/rinse topology,
+valid minimal exports and ordered native results remain pending. Core reference
+transfer is available; no native constructor or adapter is inferred from these tasks.
+
 ## Findings requiring action
 
 | Evidence | Established fact | Not established | Owner |

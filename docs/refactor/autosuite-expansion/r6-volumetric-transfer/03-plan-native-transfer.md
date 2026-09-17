@@ -8,7 +8,7 @@ Map one evidenced fixed-tool transfer while preserving the accepted semantic con
 
 [Authoritative interface](../01-contract.md#r6-location-arguments-and-bounded-transfer).
 R6.2 reviewed and remotely merged.
-Current code status: pending. Native status follows the [group overview](00-overview.md)
+Current code status: documentation-only implemented/gated; review/merge pending. Native status follows the [group overview](00-overview.md)
 and the [evidence register](../04-evidence.md), not a successful local test.
 
 ## Implementation preflight
@@ -23,6 +23,16 @@ Do not start this PR merely from a stale stage-status table.
 ## Scope
 
 Before implementation complete the native constructor/binding example from a valid minimal transfer export with explicit tool/channel/calibration/position/rinse fields. Validate deployment connectivity and one-to-one well addresses. Emit a typed native transfer payload only for statically proven supported locations/parameters.
+
+### Evidence-limited implementation (D025)
+
+The [native capture guide](../../../../autosuite/docs/38_FIXED_TRANSFER_MEASUREMENTS.md)
+records all 17 primary-APP liquid tasks and the secondary 48-row task, exact
+hashes, single-pair measurements, required explicit topology/calibration/rinse
+facts and future unlock criteria. Existing command/quantity gates stay enabled.
+No validated minimal profile or native result exists, so native constructor,
+typed payload implementation and Executor acceptance remain pending. This is
+the planned implemented/gated path; R7 can proceed after review/merge.
 
 ## Non-goals
 
@@ -45,12 +55,17 @@ before beginning the next implementation PR. Inspect all review surfaces.
 An evidence-limited implementation may be complete as implemented/gated, but its
 native acceptance remains pending and compiler rejection stays enabled.
 
+## Local acceptance (2026-09-18)
+
+Direct XML checks matched all 17 documented task IDs, counts, masks, rinse flags
+and address pairs; four source hashes match. Product/configuration metadata
+was read from the original compressed APP. 229 scoped relative links and 16
+Python contract snippets pass. Transfer/binding/quantity gate tests: 56 passed;
+website tooling: 98 passed; strict documentation build passed. Read-only corpus
+audit passed: 271 files, 127 archive entries, 52 function matches, 67 templates.
+No new native capture, re-export or Executor result is claimed.
+
 ## Version
 
-Version: none, this revision records a plan and changes no shipped code.
-
-Implementation expectation: MINOR, adds verified single-pair native transfer support; reassess to none for tooling/docs-only gated scope.
-Before the implementation PR is reviewed, replace this planning-only decision
-with the exact lockstep from/to transition based on its actual shipped scope and
-then-current baseline. The user explicitly requested no preallocated future
-version numbers. Reassess after review changes; no publication.
+Version: none, adds internal evidence/measurement documentation and stage status
+only. Both packages remain 0.11.0; no shipped interface, adapter, tag or publication.

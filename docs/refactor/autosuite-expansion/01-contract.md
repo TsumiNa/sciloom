@@ -6,7 +6,7 @@ R1 facts/report records, layout provenance, target guards and review export are
 **implemented** (R1.1 merged #104; R1.2 merged #105). R2.1 receipt tooling is
 merged #106; R3.1 dialog semantics merged #107. R3.2 native measurement tooling
 merged #108; R4.1/R4.2 merged #109/#110, R5.1–R5.3 merged #111–#113,
-and R6.1 merged #114. R6.2 is implemented in this PR, pending review/merge.
+and R6.1 merged #114. R6.2 merged #115. R6.3 measurement documentation is implemented/gated in this PR, pending review/merge.
 New AutoSuite dialog, thermal and transfer emission remains gated and native
 acceptance pending.
 Other interfaces introduced here are **planned**, not currently importable unless
@@ -838,6 +838,13 @@ device I/O is simulated. A failed check updates neither last-applied state nor
 the event history with a transfer; earlier configuration events remain visible.
 
 ### Native profile entry gate — R6.3
+
+The current stage supplies the
+[fixed-transfer measurement procedure](../../../autosuite/docs/38_FIXED_TRANSFER_MEASUREMENTS.md),
+with primary task identities, raw row/mask evidence and paired Editor/re-export/
+Executor cases. It ships no native profile constructor or adapter. The exact
+native constructor example remains intentionally unset until valid profile
+evidence can establish its fields; there is no callable placeholder API.
 
 First profile: fixed tool, one explicit channel, exactly one source/destination
 pair per operation. Tool/calibration/channel, needle/position policy and rinse
