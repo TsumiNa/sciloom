@@ -6,6 +6,14 @@
 
 ::: sciloom.Heater
 
+::: sciloom.LiquidHandler
+
+::: sciloom.core.bindings.TransferDeviceBinding
+
+LiquidHandler provides bounded reference transfer intent with explicit fixed
+deployment facts. Native transfer remains gated. See the
+[single-well transfer example](../examples/transfer-sample.md).
+
 Heater has core/reference semantics for fixed bindings. Both `temperature` and
 `ramp_rate` are required before start; native AutoSuite mapping is still gated.
 See the [complete author/contributor example](../examples/warm-sample.md).

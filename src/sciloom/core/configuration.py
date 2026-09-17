@@ -2,7 +2,7 @@
 
 from typing import assert_never
 
-from .bindings import DeviceBindings
+from .bindings import DeviceBindings, TransferDeviceBinding
 from .diagnostics import Diagnostic
 from .ir import (
     AppendCsv,
@@ -35,7 +35,14 @@ from .ir import (
     WriteWellProperty,
     ZoneLiteral,
 )
-from .ir.device_contracts import START_AGITATION_ID, STOP_AGITATION_ID, LifecycleCommandContract, LifecycleEffect
+from .ir.device_contracts import (
+    LIQUID_HANDLER_CONTRACT,
+    START_AGITATION_ID,
+    STOP_AGITATION_ID,
+    TRANSFER_ID,
+    LifecycleCommandContract,
+    LifecycleEffect,
+)
 from .ir.traversal import iter_nodes
 
 Configuration = set[tuple[str, str]]
@@ -63,6 +70,8 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
             actual_command = next((c for c in binding.contract.operations if c.semantic_id == node.operation_id), None)
             if node.operation_id not in binding.supported_operations or expected_command != actual_command:
                 message = "The bound device does not implement this command contract."
+            elif node.operation_id == TRANSFER_ID and not isinstance(binding, TransferDeviceBinding):
+                message = "Transfer requires an explicit fixed TransferDeviceBinding."
         elif isinstance(node, ConfigureProperty):
             binding = resources[node.resource_id]
             expected = next(
@@ -94,6 +103,9 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
             contract = resources[node.resource_id].contract
             command = next(op for op in contract.operations if op.semantic_id == node.operation_id)
             needs: set[str] = set()
+            if node.operation_id == TRANSFER_ID:
+                needs.update(LIQUID_HANDLER_CONTRACT.required_configuration)
+                needs.update(contract.required_configuration)
             if isinstance(command, LifecycleCommandContract):
                 needs.update(command.required_configuration)
                 if command.effect == LifecycleEffect.APPLY_AND_ENABLE:

@@ -5,7 +5,13 @@ from dataclasses import dataclass, field, replace
 from types import MappingProxyType
 from typing import assert_never
 
-from sciloom.core.bindings import DeviceBinding, DeviceBindings, DeviceCandidate, DeviceSelectionBinding
+from sciloom.core.bindings import (
+    DeviceBinding,
+    DeviceBindings,
+    DeviceCandidate,
+    DeviceSelectionBinding,
+    TransferDeviceBinding,
+)
 from sciloom.core.ir import (
     ConfigureProperty,
     DeviceAt,
@@ -16,12 +22,15 @@ from sciloom.core.ir import (
     StopAgitation,
 )
 from sciloom.core.ir.device_contracts import (
+    LIQUID_HANDLER_CONTRACT,
     START_AGITATION_ID,
     STOP_AGITATION_ID,
+    TRANSFER_ID,
     LifecycleCommandContract,
     LifecycleEffect,
 )
 from sciloom.core.locations import LocationDirectory, Zone
+from sciloom.units import FlowRate, Volume
 from .values import OutputValue, RuntimeValue, coerce, fail, output_value
 
 
@@ -73,6 +82,23 @@ class DeviceEvent:
     physical_state: PhysicalDeviceState | None = None
 
 
+@dataclass(frozen=True, kw_only=True)
+class TransferEvent:
+    """Validated single-well transfer intent, without simulating liquid inventory."""
+
+    node_id: str
+    resource_id: str
+    physical_id: str
+    source: Zone
+    destination: Zone
+    volume: Volume
+    configuration: Mapping[str, OutputValue]
+    operation_id: str = TRANSFER_ID
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "configuration", MappingProxyType(dict(self.configuration)))
+
+
 class DeviceSession:
     def __init__(self, program: Program, bindings: DeviceBindings | None = None) -> None:
         devices = tuple(r for r in program.resources if isinstance(r, DeviceResource))
@@ -83,7 +109,7 @@ class DeviceSession:
         for binding in self.bindings.values():
             identities = (
                 (binding.physical_id,)
-                if isinstance(binding, DeviceBinding)
+                if isinstance(binding, (DeviceBinding, TransferDeviceBinding))
                 else tuple(candidate.binding.physical_id for candidate in binding.candidates)
             )
             self.physical.update((identity, PhysicalDeviceState()) for identity in identities)
@@ -129,7 +155,7 @@ class DeviceSession:
     ) -> DeviceEvent:
         previous = self.states[statement.resource_id]
         binding = self.bindings.get(statement.resource_id)
-        physical_id = binding.physical_id if isinstance(binding, DeviceBinding) else None
+        physical_id = binding.physical_id if isinstance(binding, (DeviceBinding, TransferDeviceBinding)) else None
         if isinstance(binding, DeviceSelectionBinding):
             selected = self.active.get(statement.resource_id)
             if selected is not None:
@@ -189,3 +215,57 @@ class DeviceSession:
             physical_id=physical_id,
             physical_state=self.physical.get(physical_id) if physical_id is not None else None,
         )
+
+    def transfer(
+        self,
+        statement: DeviceCommand,
+        source: Zone,
+        destination: Zone,
+        volume: Volume,
+        directory: LocationDirectory | None,
+    ) -> TransferEvent:
+        """Validate captured arguments and deployment facts before any applied-state change."""
+        binding = self.bindings.get(statement.resource_id)
+        if binding is None or directory is None:
+            fail("missing_environment_service", "Transfer requires explicit device_bindings and locations.", statement)
+        if not isinstance(binding, TransferDeviceBinding):
+            fail("transfer_binding", "Transfer requires a fixed TransferDeviceBinding.", statement)
+        known = {well.identity for well in directory.wells}
+        if not set((*binding.source_wells.well_ids, *binding.destination_wells.well_ids)) <= known:
+            fail("transfer_binding", "Transfer binding contains unknown well identities.", statement)
+        for selected, allowed in ((source, binding.source_wells), (destination, binding.destination_wells)):
+            if len(selected) != 1:
+                fail("transfer_location", "Transfer requires exactly one source and one destination well.", statement)
+            if not set(selected.well_ids) <= known:
+                fail("unknown_well", "Transfer contains a well absent from the location directory.", statement)
+            if not set(selected.well_ids) <= set(allowed.well_ids):
+                fail("transfer_location", "Transfer well is outside the tool's allowed locations.", statement)
+        if source == destination:
+            fail("transfer_location", "Source and destination must be distinct wells.", statement)
+        previous = self.states[statement.resource_id]
+        contract = self.contracts[statement.resource_id]
+        requirements = set(LIQUID_HANDLER_CONTRACT.required_configuration) | set(contract.required_configuration)
+        if not {self.properties[p].name for p in requirements} <= previous.configuration.keys():
+            fail("device_configuration", "Transfer requires complete saved configuration.", statement)
+        aspirate = previous.configuration["aspirate_flow"]
+        dispense = previous.configuration["dispense_flow"]
+        gap = previous.configuration["air_gap"]
+        assert isinstance(aspirate, FlowRate) and isinstance(dispense, FlowRate) and isinstance(gap, Volume)
+        if volume.m3 <= 0 or aspirate.m3_per_second <= 0 or dispense.m3_per_second <= 0 or gap.m3 < 0:
+            fail("transfer_range", "Volume and flow rates must be positive; air gap must be nonnegative.", statement)
+        if volume.m3 + gap.m3 > binding.usable_capacity.m3:
+            fail("transfer_capacity", "Requested liquid and air gap exceed usable tool capacity.", statement)
+        event = TransferEvent(
+            node_id=statement.node_id,
+            resource_id=statement.resource_id,
+            physical_id=binding.physical_id,
+            source=source,
+            destination=destination,
+            volume=volume,
+            configuration=previous.configuration,
+        )
+        self.states[statement.resource_id] = replace(previous, applied_configuration=previous.configuration)
+        self.physical[binding.physical_id] = replace(
+            self.physical[binding.physical_id], applied_configuration=previous.configuration
+        )
+        return event

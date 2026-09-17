@@ -7,8 +7,8 @@ plan agreed after the independent review of 33 Editor screenshots and their
 native ASFP. The baseline is main commit
 `28a00c8c57a182f19bab3661a12fc06ee30f74c9`, lockstep version 0.3.15.
 
-**R0–R5 implementation stages are merged; R6.1 is implemented in this PR.**
-R2 native unlocks, R6.2–R6.3 and R7 remain pending; native verification is recorded separately.
+**R0–R6.1 implementation stages are merged; R6.2 is implemented in this PR.**
+R2 native unlocks, R6.3 and R7 remain pending; native verification is recorded separately.
 The [contract](01-contract.md) is the single authority for new interfaces.
 The [execution rules](02-execution-rules.md) require reassessment before every
 refactor and PR, and whenever implementation or native evidence contradicts a plan.
@@ -40,7 +40,7 @@ lockstep. No tag, release or package publication is authorized.
 | R3 | Text and yes/no operator results | [Overview](r3-operator-dialogs/00-overview.md) | R3.1 merged #107; R3.2 merged #108 (implemented/gated) | Result/cancel/timeout pending |
 | R4 | Typed command effects and multi-property device state | [Overview](r4-device-contracts/00-overview.md) | R4.1 merged #109; R4.2 merged #110 | No new platform claim |
 | R5 | Temperature values and a fixed thermal device | [Overview](r5-thermal-control/00-overview.md) | R5.1 merged #111; R5.2 merged #112; R5.3 merged #113 (capture procedure; native gated) | Exact thermal profile pending |
-| R6 | Location arguments and simple volumetric transfer | [Overview](r6-volumetric-transfer/00-overview.md) | R6.1 implemented, review/merge pending; R6.2–R6.3 pending | Exact transfer profile pending |
+| R6 | Location arguments and simple volumetric transfer | [Overview](r6-volumetric-transfer/00-overview.md) | R6.1 merged; R6.2 implemented, review/merge pending; R6.3 pending | Exact transfer profile pending |
 | R7 | Integrated source/IR/JSON workflows and status | [Overview](r7-integration/00-overview.md) | Pending | Per capability |
 
 Default implementation order:

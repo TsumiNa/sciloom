@@ -35,7 +35,7 @@ from .ir import (
     WriteWellProperty,
     ZoneLiteral,
 )
-from .ir.device_contracts import HEATER_TYPE_ID
+from .ir.device_contracts import HEATER_TYPE_ID, LIQUID_HANDLER_TYPE_ID
 from .ir.traversal import iter_nodes
 
 
@@ -77,6 +77,24 @@ def validate_device_locations(program: Program, bindings: DeviceBindings) -> tup
             *deployed[resource.logical_id].contract.base_type_ids,
         )
     ]
+
+    errors.extend(
+        Diagnostic(
+            code="unsupported_transfer_selection",
+            message="LiquidHandler requires a fixed transfer binding; dynamic tool selection is unsupported.",
+            path=f"$.resources[{i}]",
+            node_id=resource.node_id,
+            source=resource.source,
+        )
+        for i, resource in enumerate(program.resources)
+        if isinstance(resource, DeviceResource)
+        and resource.node_id in dynamic
+        and LIQUID_HANDLER_TYPE_ID
+        in (
+            deployed[resource.logical_id].contract.type_id,
+            *deployed[resource.logical_id].contract.base_type_ids,
+        )
+    )
 
     def block(body: tuple[Statement, ...], active: set[str], path: str, report: bool) -> tuple[set[str], set[str]]:
         needs: set[str] = set()

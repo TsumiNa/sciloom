@@ -8,6 +8,7 @@ from .device_contracts import (
     AGITATOR_TYPE_ID,
     BASE_DEVICE_CONTRACT,
     HEATER_CONTRACT,
+    LIQUID_HANDLER_CONTRACT,
     CommandContract,
     DeviceTypeContract,
     LifecycleCommandContract,
@@ -26,6 +27,8 @@ def validate_directory(program: Program, report: Report) -> None:
         *AGITATOR_CONTRACT.operations,
         *HEATER_CONTRACT.properties,
         *HEATER_CONTRACT.operations,
+        *LIQUID_HANDLER_CONTRACT.properties,
+        *LIQUID_HANDLER_CONTRACT.operations,
     )
     builtins = {p.semantic_id: p for p in builtin_members}
     for i, contract in enumerate(program.device_types):
@@ -101,7 +104,7 @@ def validate_directory(program: Program, report: Report) -> None:
                     "$.device_types",
                     None,
                 )
-    for builtin in (BASE_DEVICE_CONTRACT, AGITATOR_CONTRACT, HEATER_CONTRACT):
+    for builtin in (BASE_DEVICE_CONTRACT, AGITATOR_CONTRACT, HEATER_CONTRACT, LIQUID_HANDLER_CONTRACT):
         if builtin.type_id in types and types[builtin.type_id] != builtin:
             report("device_contract", "Built-in semantic contracts cannot be redefined.", "$.device_types", None)
     for resource in program.resources:

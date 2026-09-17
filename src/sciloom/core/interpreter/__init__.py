@@ -2,7 +2,7 @@
 
 from .acknowledgements import QueuedAcknowledgements
 from .clocks import VirtualClock, VirtualWallClock, WallClock
-from .device_state import DeviceEvent, DeviceState, PhysicalDeviceState
+from .device_state import DeviceEvent, DeviceState, PhysicalDeviceState, TransferEvent
 from .dialogs import DialogOutcome, DialogResponse, QueuedDialogResponses
 from .environment import (
     AcknowledgementEvent,
@@ -50,6 +50,7 @@ __all__ = [
     "Interpreter",
     "DeviceState",
     "DeviceEvent",
+    "TransferEvent",
     "ExecutionEvent",
     "ReferenceEnvironment",
 ]

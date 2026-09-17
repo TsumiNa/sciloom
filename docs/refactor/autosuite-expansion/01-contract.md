@@ -5,8 +5,10 @@
 R1 facts/report records, layout provenance, target guards and review export are
 **implemented** (R1.1 merged #104; R1.2 merged #105). R2.1 receipt tooling is
 merged #106; R3.1 dialog semantics merged #107. R3.2 native measurement tooling
-is implemented/gated in this PR, pending review/merge. All new AutoSuite dialog
-emission remains gated and native acceptance pending.
+merged #108; R4.1/R4.2 merged #109/#110, R5.1–R5.3 merged #111–#113,
+and R6.1 merged #114. R6.2 is implemented in this PR, pending review/merge.
+New AutoSuite dialog, thermal and transfer emission remains gated and native
+acceptance pending.
 Other interfaces introduced here are **planned**, not currently importable unless
 explicitly called implemented. Availability is tied to the named PR and its merge,
 not to presence of these examples. Reassess under
@@ -361,7 +363,7 @@ The first two lifecycle effects are parameterless: the typed `parameters` field
 must be empty. They apply saved properties or disable the resource; no argument
 has a defined role in either effect. Declarations and direct IR with lifecycle
 arguments are rejected rather than silently ignoring values. Ordinary commands
-retain typed parameters, including the planned R6 transfer arguments.
+retain typed parameters, including the R6 transfer arguments.
 
 A claimed lifecycle contract is validated against the supplied trusted binding
 where supplied, just like other device contracts; IDs never import code.
@@ -653,7 +655,7 @@ reads with explicit matching flow/length units using the existing multiplicative
 column contract. It adds no dimensional inference (for example flow × time) or
 new CSV API. AutoSuite flow/length encoding remains explicitly rejected pending
 native evidence, including direct emitter calls. Unknown device commands remain
-rejected by reference execution; the defined transfer effect lands in R6.2.
+rejected by reference execution; the defined transfer effect is implemented in R6.2.
 
 Exact quantity usage (runnable in R6.1):
 
@@ -699,7 +701,14 @@ contributor declaration and explicit recording target; it writes JSON in declare
 argument order and demonstrates unknown-command rejection. These examples
 control no hardware and have complete same-base-name companions.
 
-### LiquidHandler family — planned after R6.2
+### LiquidHandler family — implemented in R6.2, native gated
+
+Runnable author example: `uv run python examples/transfer_sample.py` reports
+the native profile gate. Contributor example:
+`uv run python -m examples.developer.transfer_sample_ir` compares source,
+direct IR and JSON with explicit reference locations and a 1 mL tool capacity,
+then reports the 0.25 mL transfer followed by a log. Its complete companion is
+`transfer_sample_ir.json`; it does not simulate fluid motion or instrument precision.
 
 Lazy author import `LiquidHandler`, owned by sciloom.devices. Write-only
 configuration properties: aspirate_flow: FlowRate, dispense_flow: FlowRate,
@@ -743,7 +752,7 @@ class TransferOne(Function):
         self.liquid.transfer(self.source, self.destination, self.amount)
 ```
 
-After R6.2 this has reference semantics with explicit locations/bindings and
+This has reference semantics with explicit locations/bindings and
 compatible trusted limits. AutoSuite initially requires statically proven named
 single-well selections/parameters; this runtime-input form remains rejected
 there until its checks have native proof. Provide a separate statically bound
@@ -772,6 +781,56 @@ A completed reference TransferEvent captures source/destination/volume,
 configuration and physical identity. It records intent, not measured liquid
 movement; it does not invent a mutable physical inventory. Failed preconditions
 produce no transfer event or later action. No automatic recovery or retries.
+
+R6.2 implementation details (available in this implementation): stable IDs are
+`sciloom.liquid-handler/v1`, `sciloom.liquid-handler.aspirate-flow/v1`,
+`sciloom.liquid-handler.dispense-flow/v1`, `sciloom.liquid-handler.air-gap/v1`
+and `sciloom.liquid-handler.transfer/v1`. The protected ordinary CommandContract
+has `source: ZoneType`, `destination: ZoneType`, `volume: VOLUME`, in that order.
+All three family properties plus any concrete profile requirements are mandatory
+for transfer, even when a subclass narrows its device-wide requirement tuple.
+No fields are added to the existing CommandContract wire form.
+
+The immutable binding constructor is keyword-only:
+
+```python
+from typing import ClassVar
+from sciloom import LiquidHandler, Zone, mL
+from sciloom.core.bindings import DeviceBindings, TransferDeviceBinding
+from sciloom.devices.declarations import bind_device
+
+class BenchLiquidHandler(LiquidHandler):
+    device_type_id: ClassVar[str] = "example.bench-liquid-handler/v1"
+    writable_properties = ("aspirate_flow", "dispense_flow", "air_gap")
+    required_configuration = ("aspirate_flow", "dispense_flow", "air_gap")
+    supported_operations = (LiquidHandler.transfer,)
+
+bindings = DeviceBindings(devices=(TransferDeviceBinding(
+    binding=bind_device(logical_id="liquid", device=BenchLiquidHandler(),
+                        physical_id="reference:liquid-1"),
+    source_wells=Zone(well_ids=("well:source",)),
+    destination_wells=Zone(well_ids=("well:destination",)),
+    usable_capacity=1 * mL,
+),))
+```
+
+This contributor is reference-only; it is not a native profile. The wrapper
+requires a compatible fixed LiquidHandler binding supporting transfer, all
+mandatory properties writable, nonempty immutable allowed Zones and positive
+finite Volume capacity. Its logical/physical IDs, contracts and capabilities
+are read-only projections of that binding. All allowed wells must exist in the
+explicit LocationDirectory when transfer is requested. Candidate transfer
+selection and `at()` on this fixed binding are rejected; no hidden one-controller
+context substitutes for the two typed arguments.
+
+`from sciloom.core.interpreter import TransferEvent` exposes a frozen record with
+`node_id`, `resource_id`, `physical_id`, `source: Zone`, `destination: Zone`,
+`volume: Volume`, `configuration: Mapping[str, OutputValue]` and the transfer
+`operation_id`. Configuration is a detached immutable snapshot. Successful
+transfer retains saved configuration and updates last-applied configuration;
+logical/physical enabled flags remain unchanged. No inventory, measurement or
+device I/O is simulated. A failed check updates neither last-applied state nor
+the event history with a transfer; earlier configuration events remain visible.
 
 ### Native profile entry gate — R6.3
 

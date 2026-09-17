@@ -11,7 +11,7 @@ from sciloom.core.locations import LocationDirectory, Zone
 from sciloom.units import Duration
 from .acknowledgements import QueuedAcknowledgements
 from .clocks import VirtualClock, WallClock
-from .device_state import DeviceEvent
+from .device_state import DeviceEvent, TransferEvent
 from .dialogs import DialogOutcome, QueuedDialogResponses
 from .files import FileService
 from .properties import WellProperties
@@ -201,6 +201,7 @@ class WellPropertyWriteEvent:
 
 ExecutionEvent: TypeAlias = (
     DeviceEvent
+    | TransferEvent
     | LogEvent
     | AcknowledgementEvent
     | DialogEvent

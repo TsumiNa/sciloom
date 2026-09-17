@@ -8,7 +8,7 @@ Bounded reference transfer effect while preserving the accepted semantic contrac
 
 [Authoritative interface](../01-contract.md#r6-location-arguments-and-bounded-transfer).
 R6.1 reviewed and remotely merged.
-Current code status: pending. Native status follows the [group overview](00-overview.md)
+Current code status: implemented; review/merge pending. Native status follows the [group overview](00-overview.md)
 and the [evidence register](../04-evidence.md), not a successful local test.
 
 ## Implementation preflight
@@ -23,6 +23,11 @@ Do not start this PR merely from a stale stage-status table.
 ## Scope
 
 Implement LiquidHandler family, explicit flow/air-gap configuration, single-pair transfer DeviceCommand semantics and immutable TransferEvent. Add typed target-neutral trusted transfer-binding facts for physical identity, allowed wells and usable capacity outside Program. Validate all captured values and configuration before the event.
+
+D024 fixes the concrete binding/event contract before implementation. Require
+all family settings independently of subclass overrides, reject dynamic transfer
+selection, capture arguments in declared order across JSON, and update only
+last-applied configuration on success without an enable/disable fiction.
 
 ## Non-goals
 
@@ -45,12 +50,19 @@ before beginning the next implementation PR. Inspect all review surfaces.
 An evidence-limited implementation may be complete as implemented/gated, but its
 native acceptance remains pending and compiler rejection stays enabled.
 
+## Local acceptance (2026-09-18)
+
+49 added focused tests pass; full source/target/examples/tools suite: 1448 passed.
+Website tooling: 98 passed; 57 CI example/syntax commands pass and existing
+companions are unchanged. Ruff check/format (326 files), mypy (145 sources),
+strict website build, AutoSuite smoke and recipe validation pass. 180 relative
+plan links and 16 Python contract snippets validate. The API catalogue check
+initially found the missing TransferEvent API entry; it was added and the full
+website suite rerun successfully. No native receipt or Executor result exists.
+
 ## Version
 
-Version: none, this revision records a plan and changes no shipped code.
-
-Implementation expectation: MINOR, adds a typed liquid-handling family and reference transfer semantics.
-Before the implementation PR is reviewed, replace this planning-only decision
-with the exact lockstep from/to transition based on its actual shipped scope and
-then-current baseline. The user explicitly requested no preallocated future
-version numbers. Reassess after review changes; no publication.
+Version: MINOR, lockstep 0.10.0 → 0.11.0. Adds LiquidHandler,
+TransferDeviceBinding and bounded TransferEvent reference semantics. Existing
+JSON v4 vocabulary and baseline output remain unchanged. No tag or publication.
+Reassess the decision if review changes the shipped scope.

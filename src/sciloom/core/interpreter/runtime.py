@@ -44,11 +44,12 @@ from sciloom.core.ir import (
     WriteWellProperty,
     validate,
 )
+from sciloom.core.ir.device_contracts import LIQUID_HANDLER_CONTRACT, TRANSFER_ID
 from sciloom.core.ir.expressions import ExpressionChecker
 from sciloom.core.ir.model import Node
 from sciloom.core.ir.traversal import iter_nodes
 from sciloom.core.locations import Zone
-from sciloom.units import Duration
+from sciloom.units import Duration, Volume
 from .clocks import format_wall_time
 from .csv_append import execute_append
 from .csv_read import execute_read
@@ -483,6 +484,22 @@ class Interpreter:
                 outputs = self._call(callee, arguments, depth + 1)
                 for binding in statement.outputs:
                     self._write(binding.target, outputs[binding.parameter_id], frame)
+            elif isinstance(statement, DeviceCommand) and statement.operation_id == TRANSFER_ID:
+                transfer_arguments = {argument.name: argument.value for argument in statement.arguments}
+                command = next(op for op in LIQUID_HANDLER_CONTRACT.operations if op.semantic_id == TRANSFER_ID)
+                captured = {
+                    parameter.name: coerce(
+                        evaluate(self, transfer_arguments[parameter.name], frame), parameter.type, statement
+                    )
+                    for parameter in command.parameters
+                }
+                source, destination, volume = captured["source"], captured["destination"], captured["volume"]
+                assert isinstance(source, Zone) and isinstance(destination, Zone) and isinstance(volume, float)
+                self._record_event(
+                    self._devices.transfer(
+                        statement, source, destination, Volume(m3=volume), self.environment.locations
+                    )
+                )
             elif isinstance(statement, (ConfigureProperty, StartAgitation, StopAgitation, DeviceCommand)):
                 value = evaluate(self, statement.value, frame) if isinstance(statement, ConfigureProperty) else None
                 self._record_event(self._devices.apply(statement, value))

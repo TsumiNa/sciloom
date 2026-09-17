@@ -420,6 +420,36 @@ until the evidence-backed adapter stage. Add exact author/contributor examples
 to the authority now and runnable counterparts during R6.1. No placeholder
 LiquidHandler API is shipped before its semantics. No class D deviation.
 
+## D024 — R6.2 preflight (2026-09-18)
+
+Baseline dd7e4eb816cdc4ab409d5896264c5ec30edec08a, lockstep 0.10.0. The previous
+goal turn made progress by implementing and remotely merging R6.1 #114. Review
+5240080940 had no actionable/suppressed comments or threads; its broad concern
+was answered with full regression evidence. All four latest-head CI jobs
+35261240293 passed, alongside 1399 local tests, 98 website tests and 55 examples.
+This branch follows a fresh main fetch and clean-worktree check.
+
+Inspected binding validation and all binding consumers, configuration fixed
+points, specialization, runtime argument evaluation, location services and event
+snapshots. Typed Zone/FlowRate now express the planned signature directly.
+Class A: add one protected LiquidHandler contract and recognize its explicit
+transfer ID; do not create another IR statement or lifecycle effect.
+
+Class B bounded details, recorded in the authority before code: the new binding
+record wraps one fixed DeviceBinding and exposes its facts to existing consumers;
+transfer requires it and rejects candidate selection. All three family settings
+are mandatory even if a derived profile narrows its device-wide requirements.
+The known transfer effect also requires any additional concrete requirements.
+Successful transfer updates last-applied configuration while preserving enabled
+state; it never invents a start/stop or liquid inventory. Arguments are evaluated
+once in signature order even for reordered direct-IR/JSON argument tuples.
+Allowed-well identity membership is checked against explicit reference locations
+at the requesting operation; constructing a binding does not access equipment.
+
+Class C: no new native tool/channel/calibration/rinse receipt exists. Keep native
+transfer and quantity rejection, and publish only a reference contributor example.
+No class D change to lifetime, fault behavior, old JSON or scope is needed.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,

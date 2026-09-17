@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from enum import StrEnum
 from typing import ClassVar
 
-from .types import ListType, ScalarType, ValueType
+from .types import ListType, ScalarType, ValueType, ZoneType
 
 DEVICE_TYPE_ID = "sciloom.device/v1"
 AGITATOR_TYPE_ID = "sciloom.agitator/v1"
@@ -16,6 +16,11 @@ HEATER_TEMPERATURE_ID = "sciloom.heater.temperature/v1"
 HEATER_RAMP_RATE_ID = "sciloom.heater.ramp-rate/v1"
 START_HEATER_ID = "sciloom.heater.start/v1"
 STOP_HEATER_ID = "sciloom.heater.stop/v1"
+LIQUID_HANDLER_TYPE_ID = "sciloom.liquid-handler/v1"
+ASPIRATE_FLOW_ID = "sciloom.liquid-handler.aspirate-flow/v1"
+DISPENSE_FLOW_ID = "sciloom.liquid-handler.dispense-flow/v1"
+AIR_GAP_ID = "sciloom.liquid-handler.air-gap/v1"
+TRANSFER_ID = "sciloom.liquid-handler.transfer/v1"
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -124,4 +129,26 @@ HEATER_CONTRACT = DeviceTypeContract(
         LifecycleCommandContract(semantic_id=STOP_HEATER_ID, name="stop", effect=LifecycleEffect.DISABLE),
     ),
     required_configuration=(HEATER_TEMPERATURE_ID, HEATER_RAMP_RATE_ID),
+)
+
+LIQUID_HANDLER_CONTRACT = DeviceTypeContract(
+    type_id=LIQUID_HANDLER_TYPE_ID,
+    base_type_ids=(DEVICE_TYPE_ID,),
+    properties=(
+        PropertyContract(semantic_id=ASPIRATE_FLOW_ID, name="aspirate_flow", type=ScalarType.FLOW_RATE),
+        PropertyContract(semantic_id=DISPENSE_FLOW_ID, name="dispense_flow", type=ScalarType.FLOW_RATE),
+        PropertyContract(semantic_id=AIR_GAP_ID, name="air_gap", type=ScalarType.VOLUME),
+    ),
+    operations=(
+        CommandContract(
+            semantic_id=TRANSFER_ID,
+            name="transfer",
+            parameters=(
+                CommandParameter(name="source", type=ZoneType()),
+                CommandParameter(name="destination", type=ZoneType()),
+                CommandParameter(name="volume", type=ScalarType.VOLUME),
+            ),
+        ),
+    ),
+    required_configuration=(ASPIRATE_FLOW_ID, DISPENSE_FLOW_ID, AIR_GAP_ID),
 )

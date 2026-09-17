@@ -8,6 +8,7 @@ if TYPE_CHECKING:
     from .core.locations import Zone
     from .devices.agitation import Agitator
     from .devices.heating import Heater
+    from .devices.liquid_handling import LiquidHandler
     from .flow import comptime, csv, text, zones
     from .flow.fields import Input, Output, Var
     from .flow.function import Function, runtime
@@ -116,6 +117,10 @@ def __getattr__(name: str) -> Any:
         from .devices.heating import Heater
 
         return Heater
+    if name == "LiquidHandler":
+        from .devices.liquid_handling import LiquidHandler
+
+        return LiquidHandler
     if name in _DSL_EXPORTS:
         if name in {"Function", "runtime"}:
             from .flow import function
@@ -159,6 +164,7 @@ __all__ = [
     "comptime",
     "Agitator",
     "Heater",
+    "LiquidHandler",
     "RotationalSpeed",
     "Volume",
     "Duration",
