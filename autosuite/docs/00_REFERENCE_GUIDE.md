@@ -36,7 +36,7 @@ because they capture distinct configurations and task/version combinations.
 
 ## Reading order
 
-The 38 reference documents are in one directory, numbered 00–37. This guide is
+The 39 reference documents are in one directory, numbered 00–38. This guide is
 00; read the following documents in order or jump to the relevant group.
 
 ### Sources and runtime semantics
@@ -87,6 +87,7 @@ The 38 reference documents are in one directory, numbered 00–37. This guide is
 - [35 · Native measurement receipts](35_NATIVE_MEASUREMENT_RECEIPTS.md)
 - [36 · Result-dialog probes and host acceptance](36_DIALOG_RESULT_PROBES.md)
 - [37 · Fixed thermal measurements and native profile gate](37_FIXED_THERMAL_MEASUREMENTS.md)
+- [38 · Fixed transfer measurements and native profile gate](38_FIXED_TRANSFER_MEASUREMENTS.md)
 
 ## Commands
 

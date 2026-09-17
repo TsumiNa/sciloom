@@ -464,6 +464,35 @@ this intent-preserving decision in the review thread. No new dynamic binding
 variant, runtime behavior or native unlock is introduced. Version remains MINOR
 0.10.0 → 0.11.0, lockstep; review fixes do not alter the capability scope.
 
+## D025 — R6.3 preflight (2026-09-18)
+
+Baseline 5427e7dbaca2504df7ede717af9444d0642accee, lockstep 0.11.0.
+The preceding goal turn made progress: R6.2 #115 remotely merged after review
+5240288158, three answered/resolved threads and latest-head CI 35263509648
+(all four jobs passed). Local acceptance: 1449 tests, 98 website tests, 57
+examples, lint/format/type/docs/smoke/recipe checks. Fresh main fetch and clean
+worktree confirmed before creating this branch.
+
+Re-read R6.3, its authoritative native gate, existing dynamic-transfer evidence,
+the empirical catalog, source APP and screenshot ASFP. The primary APP contains
+17 liquid-transfer tasks (14 in functions, three in application tasks); the
+screenshot package contains one 48-row task. This is structural evidence, not
+a received execution/re-export receipt for the requested fixed-tool contract.
+
+Class A: reuse the current known-command/quantity gates and reference binding;
+do not introduce another probe framework or derive a public profile from the
+historical multi-channel algorithm. Class C: native tool capacity, channel and
+calibration identities, exact rinse connectivity, supported ranges and ordered
+Executor results are not established for a minimal supported profile. Complete
+this stage's evidence-limited scope as a measurement/capture guide with exact
+task provenance and a future unlock checklist; no native constructor or XML
+adapter is shipped. Native mapping/acceptance remains explicitly pending.
+
+This is the plan's allowed implemented/gated path, not a native-success claim
+or a relaxation of transfer semantics. R7 may proceed after this documentation
+PR is reviewed and merged, using current source/IR/JSON/reference capabilities.
+No class D deviation. Version expectation: none for reference/planning docs.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,
