@@ -2187,6 +2187,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#text-and-yesno-responses" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Text and yes/no responses
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#wall-clock-input" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -4129,6 +4140,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#text-and-yesno-responses" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Text and yes/no responses
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#wall-clock-input" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -4221,8 +4243,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.5.0
-    · <code title="e496f577c96a81f6e7e3d2dcaaaaae1d270577d9">e496f577</code>
+    · SciLoom 0.6.0
+    · <code title="df426a08e41bbd114f672e8f0922421351c86160">df426a08</code>
   </p>
 </aside>
 
@@ -4303,6 +4325,42 @@ entry, rather than resuming the failed statement.</p>
 <p>The <a href="../../../examples/confirmation-ir/">direct IR example</a> shows JSON restoration
 and a typed acknowledgement event. This reference behavior does not establish
 that a generated AutoSuite dialog blocks correctly on the target host.</p>
+<h2 id="text-and-yesno-responses">Text and yes/no responses</h2>
+<p><code>RequestText</code> and <code>AskYesNo</code> consume <code>DialogResponse</code> records from an explicit
+<code>QueuedDialogResponses</code> service. Supply it as <code>ReferenceEnvironment(dialogs=...)</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">examples.identify_sample</span><span class="w"> </span><span class="kn">import</span> <span class="n">IdentifySample</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">s</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.interpreter</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DialogOutcome</span><span class="p">,</span> <span class="n">DialogResponse</span><span class="p">,</span> <span class="n">Interpreter</span><span class="p">,</span> <span class="n">QueuedDialogResponses</span><span class="p">,</span> <span class="n">ReferenceEnvironment</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">responses</span> <span class="o">=</span> <span class="n">QueuedDialogResponses</span><span class="p">((</span>
+    <span class="n">DialogResponse</span><span class="p">(</span><span class="n">outcome</span><span class="o">=</span><span class="n">DialogOutcome</span><span class="o">.</span><span class="n">ACCEPTED</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">"S-001"</span><span class="p">,</span> <span class="n">elapsed</span><span class="o">=</span><span class="mi">2</span> <span class="o">*</span> <span class="n">s</span><span class="p">),</span>
+    <span class="n">DialogResponse</span><span class="p">(</span><span class="n">outcome</span><span class="o">=</span><span class="n">DialogOutcome</span><span class="o">.</span><span class="n">ACCEPTED</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+<span class="p">))</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">(</span>
+    <span class="n">IdentifySample</span><span class="p">()</span><span class="o">.</span><span class="n">to_ir</span><span class="p">(),</span> <span class="n">environment</span><span class="o">=</span><span class="n">ReferenceEnvironment</span><span class="p">(</span><span class="n">dialogs</span><span class="o">=</span><span class="n">responses</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">outputs</span> <span class="o">==</span> <span class="p">{</span><span class="s2">"barcode"</span><span class="p">:</span> <span class="s2">"S-001"</span><span class="p">,</span> <span class="s2">"accepted"</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+</code></pre></div>
+<p>Accepted values must match the operation exactly: text or bool. Empty text and
+False are valid results. Cancelled, stopped and timed-out outcomes have no value
+and raise <code>dialog_cancelled</code>, <code>dialog_stopped</code> or <code>dialog_timeout</code>. An accepted
+response at or after the deadline also times out. Each consumed response produces
+an immutable DialogEvent before any following statement; a wrong result type
+records no successful value and raises <code>dialog_response_type</code>. Failed requests
+leave their destination unchanged and stop subsequent effects. Earlier effects
+remain; an active device is not implicitly stopped.</p>
+<p>Message and timeout expressions evaluate once, in that order, before consuming
+a response. A supplied timeout must be positive. Missing service and exhaustion
+raise <code>missing_environment_service</code> and <code>dialog_response_required</code>; neither emits
+a consumed-response event. Elapsed time is explicit data and never samples or
+advances a clock. Sharing a queue shares its remaining responses; the constructor
+copies the supplied iterable. A new run restarts the entry, not the failed request.</p>
+<p>Run <code>uv run python -m examples.developer.dialogs_ir</code> for the direct IR, complete
+JSON v4 companion and source/IR output comparison. AutoSuite compilation rejects
+both result-bearing nodes pending native result and termination verification.
+The existing Notify operation and its acknowledgement service retain their own contract.</p>
 <h2 id="wall-clock-input">Wall-clock input</h2>
 <p>Provide a WallClock service for ReadWallTime. VirtualWallClock returns the aware
 instant supplied by the caller until <code>set()</code> changes it:</p>

@@ -3610,6 +3610,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sciloom.request_text" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        request_text
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sciloom.ask_yes_no" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        ask_yes_no
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#sciloom.now_text" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -4271,6 +4293,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sciloom.request_text" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        request_text
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sciloom.ask_yes_no" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        ask_yes_no
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#sciloom.now_text" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -4441,8 +4485,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.5.0
-    · <code title="e496f577c96a81f6e7e3d2dcaaaaae1d270577d9">e496f577</code>
+    · SciLoom 0.6.0
+    · <code title="df426a08e41bbd114f672e8f0922421351c86160">df426a08</code>
   </p>
 </aside>
 
@@ -5000,6 +5044,250 @@ return value, timeout, cancellation branch or implicit confirmation.</p>
           </tr>
       </tbody>
     </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="sciloom.request_text" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">sciloom.request_text</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">request_text</span><span class="p">(</span>
+    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="n">Duration</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Request one text result, including a valid empty string.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>message</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Text captured once before timeout evaluation.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>timeout</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.Duration&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../units/#sciloom.Duration">Duration</a> | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Optional positive duration; reaching the deadline terminates.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Accepted text, assigned as a whole RHS to a declared runtime field.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Called by host Python instead of written in a runtime method.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>Cancellation, Stop, timeout and absent responses terminate the experiment;
+there is no fallback. Reference execution requires an explicit dialog service.</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="sciloom.ask_yes_no" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">sciloom.ask_yes_no</span>
+
+
+</h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">ask_yes_no</span><span class="p">(</span>
+    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="n">Duration</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span>
+</code></pre></div>
+
+    <div class="doc doc-contents first">
+
+        <p>Request one Boolean result; No is a normal False result.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>message</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Text captured once before timeout evaluation.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>timeout</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.Duration&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../units/#sciloom.Duration">Duration</a> | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Optional positive duration; reaching the deadline terminates.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Accepted bool, assigned as a whole RHS to a declared runtime field.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="TypeError">TypeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Called by host Python instead of written in a runtime method.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+        <p>Cancellation, Stop, timeout and absent responses terminate without returning
+a default or performing following effects.</p>
 
 
     </div>

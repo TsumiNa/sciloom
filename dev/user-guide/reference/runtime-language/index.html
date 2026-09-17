@@ -4284,8 +4284,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.5.0
-    · <code title="e496f577c96a81f6e7e3d2dcaaaaae1d270577d9">e496f577</code>
+    · SciLoom 0.6.0
+    · <code title="df426a08e41bbd114f672e8f0922421351c86160">df426a08</code>
   </p>
 </aside>
 
@@ -4548,6 +4548,10 @@ has not been verified.</p>
 <tr>
 <td><code>notify(message)</code></td>
 <td>Timeout, automatic confirmation, cancellation branches or a returned value</td>
+</tr>
+<tr>
+<td><code>self.text = request_text(message, timeout=...)</code>; <code>self.answer = ask_yes_no(message, timeout=...)</code></td>
+<td>Nested expressions, discarded results, fallback on cancel/Stop/timeout; AutoSuite generation is pending native verification</td>
 </tr>
 <tr>
 <td><code>self.stamp = now_text(format)</code></td>
