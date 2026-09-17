@@ -466,9 +466,10 @@ emission still requires R5's explicit profile evidence and remains rejected.
 
 Use explicit typed dispatch for supported profiles/tasks, not a generic dict or
 discovery registry. Do not publish a new profile plugin protocol merely to wrap
-one implementation. R5.3's real second profile validates the needed shared seam;
-its concrete constructor must be specified here after profile evidence is obtained
-and before that implementation begins.
+one implementation. A future evidence-backed thermal profile must validate the
+needed shared seam; R5.3 delivered only capture documentation and did not establish
+a second native profile. Specify its concrete constructor here after profile
+evidence is obtained and before that implementation begins.
 
 Conflict identity is an installed physical actuator, not a well-zone name or
 bare vendor device number. Separate controllers may share a zone; the same
@@ -619,6 +620,15 @@ constructor and a runnable binding example. The supplied incomplete test.asfp
 does not justify inventing them. If evidence is absent, R5.3 may land diagnostic/
 probe/documentation work with native emission rejected; do not publish a fake
 unusable hardware profile. Keep Q6–Q9 pending.
+
+R5.3 has completed the evidence-limited documentation scope: the
+[native thermal capture procedure](../../../autosuite/docs/37_FIXED_THERMAL_MEASUREMENTS.md)
+records primary-APP task identities, exact input/re-export and lifecycle matrices,
+receipt requirements and the later narrow unlock boundary. No precise nonzero
+gradient/temperature or Executor receipt has arrived; no constructor or adapter
+is implemented. Existing source/IR examples and target rejection tests remain
+the executable diagnostics. Thermal receipt review is manual; the failure/CSV
+validator does not accept this suite.
 
 ## R6: Location arguments and bounded transfer
 

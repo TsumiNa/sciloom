@@ -31,6 +31,12 @@ answers separately. Thirty generated probes cover entry/call/loop controls;
 generation is not an Executor result. Product/profile and all terminal-path
 receipts remain pending; public result-dialog compilation stays rejected.
 
+[Thermal measurements](../../../autosuite/docs/37_FIXED_THERMAL_MEASUREMENTS.md)
+record eight primary-APP temperature tasks, all with zero gradients, and define
+precision, profile and lifecycle capture matrices. No new native receipt exists;
+R5.3 is documentation-only implemented/gated. Standard core SI and target thermal
+rejections are unchanged.
+
 ## Findings requiring action
 
 | Evidence | Established fact | Not established | Owner |

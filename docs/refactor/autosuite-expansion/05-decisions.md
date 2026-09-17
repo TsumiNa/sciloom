@@ -356,6 +356,41 @@ Two suppressed comments identify the same stale public device-contract reference
 Update shipped families, protected IDs and thermal value types there. Reassessed
 Version remains MINOR 0.8.0 → 0.9.0; review fixes preserve the planned API meaning.
 
+## D021 — R5.3 preflight and evidence-limited scope (2026-09-18)
+
+Baseline 1711817937b702ab515656fd142cedf7ce98e6e6, lockstep 0.9.0. R5.2 #112
+is remotely MERGED after review 5239812251, inherited-start requirement and both
+suppressed documentation fixes, 1299 tests, 98 website tests and four successful
+latest-head CI jobs (35259110478). The only review thread was replied to and
+resolved. This goal turn made progress completing that gate; branch creation
+followed fetching merged main.
+
+Inspected primary gzip APP bytes, all eight SATaskSetTemperature payloads,
+thermal encoding/validation rejection, fixed Heater examples, existing receipt
+suites and the screenshot register. Primary APP SHA is recorded in doc 37. All
+eight gradients are zero; six tasks use variable zones with blank controller
+fields. An explicit on/off pair identifies thermostat 0.1 but supplies no exact
+entered-temperature, nonzero-gradient or execution receipt. No new evidence or
+Executor host is available; Q6/Q7/Q9 remain unresolved.
+
+Class C, using R5.3's accepted fallback: deliver capture documentation and reuse
+existing executable diagnostics. Do not invent a profile constructor, guess a
+273.16 conversion, activate native emission or start a parallel receipt framework.
+The exact immutable constructor remains an entry condition for a future unlock
+PR. Core/reference behavior is unchanged and R6 may continue after this PR's
+review/merge gate. Class A: refresh stale overview status sentences and links.
+No class D semantic compromise or human decision is required.
+
+## D022 — R5.3 review: traceable observations and status (2026-09-18)
+
+Review 5239920819 / inline 4040252205 requests the six remaining task IDs and
+their individual payload mappings. Record all eight, preserving repeated payloads
+as distinct tasks. Both suppressed findings are also addressed: update the
+canonical reference guide to 38 documents (00–37), and replace the authority's
+outdated second-native-profile wording with an explicit future requirement.
+Class A documentation corrections; no evidence is promoted to native acceptance.
+Version remains none, packages 0.9.0; recheck links/docs and read-only corpus audit.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,

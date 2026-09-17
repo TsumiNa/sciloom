@@ -17,15 +17,17 @@ an explicit developer decision.
 | Stage | Outcome | Code status |
 | --- | --- | --- |
 | R5.1 | [Typed absolute temperature and rates](01-plan-temperature-values.md) | Merged #111 |
-| R5.2 | [Fixed heater configuration and lifecycle](02-plan-heater-semantics.md) | Implemented in this PR; review/merge pending |
-| R5.3 | [Bind an evidenced fixed thermal profile](03-plan-native-thermal-profile.md) | Pending |
+| R5.2 | [Fixed heater configuration and lifecycle](02-plan-heater-semantics.md) | Merged #112 |
+| R5.3 | [Bind an evidenced fixed thermal profile](03-plan-native-thermal-profile.md) | Capture procedure implemented/gated; review/merge pending |
 
 Native status: Thermal profile and apparent temperature offset unresolved.
 R5.1 provides core/reference thermal values, typed fields/lists and JSON v4;
 AutoSuite explicitly rejects thermal types pending native encoding evidence.
 R5.2 adds the fixed Heater family, protected built-in signatures, generic
 configuration/lifecycle behavior and executable source/direct-IR/JSON examples.
-R5.3 remains pending. Native-unlock prerequisites are distinct
+R5.3 supplies the [native capture procedure](../../../../autosuite/docs/37_FIXED_THERMAL_MEASUREMENTS.md),
+primary-APP observations and narrow unlock criteria. No thermal constructor or
+payload adapter is published without the missing evidence. Native-unlock prerequisites are distinct
 from review/merge prerequisites. Finish each PR green and remotely squash merged
 before beginning another; an implemented/gated stage preserves its rejection.
 

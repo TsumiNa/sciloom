@@ -8,7 +8,7 @@ Bind an evidenced fixed thermal profile while preserving the accepted semantic c
 
 [Authoritative interface](../01-contract.md#r5-physical-temperature-and-a-fixed-thermal-family).
 R5.2 reviewed and remotely merged.
-Current code status: pending. Native status follows the [group overview](00-overview.md)
+Current code status: implemented/gated (capture documentation only); review/merge pending. Native status follows the [group overview](00-overview.md)
 and the [evidence register](../04-evidence.md), not a successful local test.
 
 ## Implementation preflight
@@ -22,7 +22,16 @@ Do not start this PR merely from a stale stage-status table.
 
 ## Scope
 
-Before implementation finalize the exact immutable profile constructor and binding example in the contract using a valid export, installed physical identity, control mode/ranges and conversion measurements. Add typed Heat/Cool payload adaptation at the minimal shared backend seam demonstrated by this second profile.
+D021 preflight found no new precision, nonzero-gradient or Executor receipt.
+This PR therefore takes the explicitly permitted gated scope: record primary-APP
+observations and a precise Editor/simulation capture procedure in
+[thermal measurements](../../../../autosuite/docs/37_FIXED_THERMAL_MEASUREMENTS.md).
+Reuse current examples and rejection tests. No shipped code changes.
+
+A later evidence-backed unlock PR must finalize the exact immutable profile
+constructor and binding example in the contract using valid original exports,
+installed physical identity, mode/ranges and conversion measurements, then add
+typed Heat/Cool payload adaptation at the shared backend seam.
 
 ## Non-goals
 
@@ -38,6 +47,12 @@ For tools/docs-only scope use relevant tools/docs checks and read-only corpus
 audit when references change. Record actual results, never predicted passes.
 Update the contract's availability and group/main status table before review.
 
+Completed local checks: 26 existing thermal/reference rejection tests, 98 website
+tests, strict docs build, both warm-sample examples with unchanged JSON companion,
+local plan links/snippet syntax/required sections and diff checks. Read-only corpus
+audit: 271 files, 127 archive entries, 52 function XML matches and 67 templates.
+No Executor ran and no native acceptance criterion is marked passed.
+
 ## Review and completion
 
 Review, fix feedback, recheck latest head, squash merge and confirm remote MERGED
@@ -47,10 +62,6 @@ native acceptance remains pending and compiler rejection stays enabled.
 
 ## Version
 
-Version: none, this revision records a plan and changes no shipped code.
-
-Implementation expectation: MINOR, adds verified thermal profile support; reassess to none for tooling/docs-only gated scope.
-Before the implementation PR is reviewed, replace this planning-only decision
-with the exact lockstep from/to transition based on its actual shipped scope and
-then-current baseline. The user explicitly requested no preallocated future
-version numbers. Reassess after review changes; no publication.
+Version: none, native capture procedure and evidence/status documentation only;
+no shipped code or public interface changes. Both packages remain 0.9.0.
+Reassess after review; no tag or publication.
