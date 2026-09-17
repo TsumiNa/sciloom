@@ -1313,6 +1313,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#heater" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Heater
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#binding-names" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2658,6 +2669,33 @@
     
   
   Temperature values
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/warm-sample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Fixed heater intent
 
     
   </span>
@@ -4136,6 +4174,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#heater" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Heater
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#binding-names" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -4201,8 +4250,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.8.0
-    · <code title="c4abeb82f906b10c3c4a9f13fc3eab0475855247">c4abeb82</code>
+    · SciLoom 0.9.0
+    · <code title="1711817937b702ab515656fd142cedf7ce98e6e6">17118179</code>
   </p>
 </aside>
 
@@ -4211,7 +4260,7 @@
 <h1 id="devices-and-targets">Devices and targets</h1>
 <p>Declare the device your procedure needs; bind it to an instrument when compiling.</p>
 <h2 id="agitator">Agitator</h2>
-<p><code>Agitator</code> is the built-in device family. Declare <code>shaker: Agitator</code> in
+<p><code>Agitator</code> is a built-in device family. Declare <code>shaker: Agitator</code> in
 the Function. The slot already provides a logical reference; you do not need to
 create an Agitator object. Concrete hardware profiles belong in the target.
 See <a href="../../tutorial/first-function/">lesson 1</a>.</p>
@@ -4254,6 +4303,18 @@ means <code>speed</code>. Configuration may come from a child called earlier in 
 same invocation; compilation does not assume a previous invocation supplied it.</p>
 <p>Property reads and augmented assignments such as <code>+=</code> are not supported.
 There is no measured getter, generic duration parameter or timed stop.</p>
+<h2 id="heater">Heater</h2>
+<p>Declare <code>heater: Heater</code> using <code>from sciloom import Heater</code>. Its two write-only
+properties are <code>temperature: Temperature</code> and <code>ramp_rate: TemperatureRate</code>.
+Configure both before calling <code>start()</code>. Assignments capture values without
+changing applied settings; repeated start applies the complete saved configuration.
+<code>stop()</code> disables the heater while retaining saved and applied settings.</p>
+<p>The core/reference implementation supports fixed bindings only. Candidate
+selection is rejected for Heater and its subclasses. AutoSuite thermal profiles
+remain gated pending native evidence; there is no measured temperature getter,
+automatic stop or wait-to-temperature operation. A fixed <code>wait(10 * s)</code> requires
+an explicit reference clock and does not establish that a temperature was reached.
+See the <a href="../../../examples/warm-sample/">complete author and contributor example</a>.</p>
 <h2 id="binding-names">Binding names</h2>
 <table>
 <thead>
@@ -4304,7 +4365,7 @@ See <a href="../../advanced/composition/">the complete sharing example</a>.</p>
 </tr>
 <tr>
 <td>Separate logical devices</td>
-<td>Must have different IDs and zones</td>
+<td>Must have distinct physical actuator identities; a shared zone name alone is not a conflict</td>
 </tr>
 <tr>
 <td>Generated file</td>

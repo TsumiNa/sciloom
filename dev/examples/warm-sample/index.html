@@ -10,36 +10,36 @@
       
       
       
-        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/developer/advanced/specialization/">
+        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/examples/warm-sample/">
       
       
-        <link rel="prev" href="../json-interchange/">
+        <link rel="prev" href="../temperature-values/">
       
       
-        <link rel="next" href="../native-commands/">
+        <link rel="next" href="../numeric-operations/">
       
       
         
       
       
-      <link rel="icon" href="../../../assets/brand/favicon.svg">
+      <link rel="icon" href="../../assets/brand/favicon.svg">
       <meta name="generator" content="zensical-0.0.61">
     
     
       
-        <title>Specialization internals - SciLoom</title>
+        <title>Fixed heater intent - SciLoom</title>
       
     
     
       
         
       
-      <link rel="stylesheet" href="../../../assets/stylesheets/modern/main.ce62732f.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.ce62732f.min.css">
       
         
           
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/modern/palette.812a03bb.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.812a03bb.min.css">
       
       
 
@@ -52,9 +52,9 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/brand.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/brand.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
     
       
 
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#specialization-internals" class="md-skip">
+        <a href="#fixed-heater-intent" class="md-skip">
           Skip to content
         </a>
       
@@ -97,9 +97,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="SciLoom" class="md-header__button md-logo" aria-label="SciLoom" data-md-component="logo">
-      <img class="sciloom-brand-light" src="../../../assets/brand/svg/sciloom-mark-light.svg" alt="SciLoom">
-<img class="sciloom-brand-dark" src="../../../assets/brand/svg/sciloom-mark-dark.svg" alt="SciLoom">
+    <a href="../.." title="SciLoom" class="md-header__button md-logo" aria-label="SciLoom" data-md-component="logo">
+      <img class="sciloom-brand-light" src="../../assets/brand/svg/sciloom-mark-light.svg" alt="SciLoom">
+<img class="sciloom-brand-dark" src="../../assets/brand/svg/sciloom-mark-dark.svg" alt="SciLoom">
     </a>
     <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Specialization internals
+              Fixed heater intent
             
           </span>
         </div>
@@ -194,7 +194,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../.." class="md-tabs__link">
+        <a href="../.." class="md-tabs__link">
           
   
   Introduction
@@ -216,10 +216,32 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../user-guide/" class="md-tabs__link">
+        <a href="../../user-guide/" class="md-tabs__link">
           
   
   User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../developer/" class="md-tabs__link">
+          
+  
+  Developer Guide
 
         </a>
       </li>
@@ -240,29 +262,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../" class="md-tabs__link">
-          
-  
-  Developer Guide
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-      
-    
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../../examples/" class="md-tabs__link">
+        <a href="../" class="md-tabs__link">
           
   
   Examples
@@ -284,7 +284,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../api/" class="md-tabs__link">
+        <a href="../../api/" class="md-tabs__link">
           
   
   API Reference
@@ -317,9 +317,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="SciLoom" class="md-nav__button md-logo" aria-label="SciLoom" data-md-component="logo">
-      <img class="sciloom-brand-light" src="../../../assets/brand/svg/sciloom-mark-light.svg" alt="SciLoom">
-<img class="sciloom-brand-dark" src="../../../assets/brand/svg/sciloom-mark-dark.svg" alt="SciLoom">
+    <a href="../.." title="SciLoom" class="md-nav__button md-logo" aria-label="SciLoom" data-md-component="logo">
+      <img class="sciloom-brand-light" src="../../assets/brand/svg/sciloom-mark-light.svg" alt="SciLoom">
+<img class="sciloom-brand-dark" src="../../assets/brand/svg/sciloom-mark-dark.svg" alt="SciLoom">
     </a>
     SciLoom
   </label>
@@ -383,7 +383,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -410,7 +410,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../introduction/getting-started/" class="md-nav__link">
+      <a href="../../introduction/getting-started/" class="md-nav__link">
         
   
   
@@ -437,7 +437,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../introduction/status/" class="md-nav__link">
+      <a href="../../introduction/status/" class="md-nav__link">
         
   
   
@@ -464,7 +464,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../introduction/glossary/" class="md-nav__link">
+      <a href="../../introduction/glossary/" class="md-nav__link">
         
   
   
@@ -548,7 +548,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/" class="md-nav__link">
+      <a href="../../user-guide/" class="md-nav__link">
         
   
   
@@ -625,7 +625,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/tutorial/" class="md-nav__link">
+      <a href="../../user-guide/tutorial/" class="md-nav__link">
         
   
   
@@ -652,7 +652,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/tutorial/first-function/" class="md-nav__link">
+      <a href="../../user-guide/tutorial/first-function/" class="md-nav__link">
         
   
   
@@ -679,7 +679,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/tutorial/inputs-and-units/" class="md-nav__link">
+      <a href="../../user-guide/tutorial/inputs-and-units/" class="md-nav__link">
         
   
   
@@ -706,7 +706,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/tutorial/agitator/" class="md-nav__link">
+      <a href="../../user-guide/tutorial/agitator/" class="md-nav__link">
         
   
   
@@ -733,7 +733,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/tutorial/lists-and-loops/" class="md-nav__link">
+      <a href="../../user-guide/tutorial/lists-and-loops/" class="md-nav__link">
         
   
   
@@ -760,7 +760,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/tutorial/compile/" class="md-nav__link">
+      <a href="../../user-guide/tutorial/compile/" class="md-nav__link">
         
   
   
@@ -845,7 +845,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/advanced/composition/" class="md-nav__link">
+      <a href="../../user-guide/advanced/composition/" class="md-nav__link">
         
   
   
@@ -872,7 +872,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/advanced/specialization/" class="md-nav__link">
+      <a href="../../user-guide/advanced/specialization/" class="md-nav__link">
         
   
   
@@ -899,7 +899,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/advanced/device-branches/" class="md-nav__link">
+      <a href="../../user-guide/advanced/device-branches/" class="md-nav__link">
         
   
   
@@ -926,7 +926,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/advanced/autosuite/" class="md-nav__link">
+      <a href="../../user-guide/advanced/autosuite/" class="md-nav__link">
         
   
   
@@ -961,7 +961,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/faq/" class="md-nav__link">
+      <a href="../../user-guide/faq/" class="md-nav__link">
         
   
   
@@ -988,7 +988,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/troubleshooting/" class="md-nav__link">
+      <a href="../../user-guide/troubleshooting/" class="md-nav__link">
         
   
   
@@ -1065,7 +1065,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/reference/declarations/" class="md-nav__link">
+      <a href="../../user-guide/reference/declarations/" class="md-nav__link">
         
   
   
@@ -1092,7 +1092,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/reference/runtime-language/" class="md-nav__link">
+      <a href="../../user-guide/reference/runtime-language/" class="md-nav__link">
         
   
   
@@ -1119,7 +1119,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/reference/well-properties/" class="md-nav__link">
+      <a href="../../user-guide/reference/well-properties/" class="md-nav__link">
         
   
   
@@ -1146,7 +1146,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/reference/csv/" class="md-nav__link">
+      <a href="../../user-guide/reference/csv/" class="md-nav__link">
         
   
   
@@ -1173,7 +1173,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/reference/zones/" class="md-nav__link">
+      <a href="../../user-guide/reference/zones/" class="md-nav__link">
         
   
   
@@ -1200,7 +1200,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/reference/device-locations/" class="md-nav__link">
+      <a href="../../user-guide/reference/device-locations/" class="md-nav__link">
         
   
   
@@ -1227,7 +1227,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../user-guide/reference/devices-and-targets/" class="md-nav__link">
+      <a href="../../user-guide/reference/devices-and-targets/" class="md-nav__link">
         
   
   
@@ -1235,1128 +1235,6 @@
     
   
   Devices and targets
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-    
-  
-  
-  
-    
-    
-    
-    
-      
-        
-        
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Developer Guide
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-  Developer Guide
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Overview
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-          
-          
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Tutorial
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_2">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-  Tutorial
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorial/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  The heater story
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorial/declare-a-family/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  1. Declare a family
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorial/declare-profiles/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  2. Declare profiles
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorial/write-a-function/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  3. Write a Function against the family
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorial/write-a-target/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  4. Write a target
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorial/reject-a-program/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  5. Reject a program
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorial/adapt-with-comptime/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  6. Adapt with comptime
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorial/execute-what-you-can/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  7. Execute what you can
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../tutorial/complete-program/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  8. The complete program
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-          
-          
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Advanced
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3_3">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-  Advanced
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../json-interchange/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  JSON interchange and portability
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Specialization internals
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="././" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Specialization internals
-
-    
-  </span>
-  
-  
-
-      </a>
-      
-        
-
-
-<nav class="md-nav md-nav--secondary" aria-label="On this page">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#what-it-does-in-order" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        What it does, in order
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../native-commands/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Native commands
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../extending-the-analysis/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Extending the analysis
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../typing-without-inheritance/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Typing without inheritance
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../faq/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  FAQ
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../troubleshooting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Troubleshooting
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-          
-          
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Reference
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_6">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-  Reference
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/architecture/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Architecture and ownership
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/ir/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Semantic IR and JSON v4
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/pipeline/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Compilation pipeline
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/target-contract/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Target contract
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/device-contracts/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Device contracts
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/interpreter/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Reference execution
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/verification/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Verification
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-          
-          
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Project
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_7">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-  Project
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../typing-and-tests/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Typing and tests
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../documentation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Building documentation
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../publication/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Versioned publication
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../brand/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Brand assets
 
     
   </span>
@@ -2404,10 +1282,1060 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Developer Guide
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Developer Guide
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Overview
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tutorial
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Tutorial
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  The heater story
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/declare-a-family/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1. Declare a family
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/declare-profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2. Declare profiles
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/write-a-function/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3. Write a Function against the family
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/write-a-target/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4. Write a target
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/reject-a-program/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5. Reject a program
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/adapt-with-comptime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6. Adapt with comptime
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/execute-what-you-can/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7. Execute what you can
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/tutorial/complete-program/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8. The complete program
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Advanced
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Advanced
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/advanced/json-interchange/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  JSON interchange and portability
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/advanced/specialization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Specialization internals
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/advanced/native-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Native commands
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/advanced/extending-the-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Extending the analysis
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/advanced/typing-without-inheritance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typing without inheritance
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  FAQ
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Troubleshooting
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Reference
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Reference
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Architecture and ownership
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/ir/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Semantic IR and JSON v4
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Compilation pipeline
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/target-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Target contract
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/device-contracts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Device contracts
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/interpreter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Reference execution
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/reference/verification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Verification
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Project
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Project
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/typing-and-tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Typing and tests
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/documentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Building documentation
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/publication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Versioned publication
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/brand/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Brand assets
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
@@ -2424,7 +2352,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2441,7 +2369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -2468,7 +2396,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/function-call/" class="md-nav__link">
+      <a href="../function-call/" class="md-nav__link">
         
   
   
@@ -2495,7 +2423,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/agitation/" class="md-nav__link">
+      <a href="../agitation/" class="md-nav__link">
         
   
   
@@ -2522,7 +2450,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/scale-values/" class="md-nav__link">
+      <a href="../scale-values/" class="md-nav__link">
         
   
   
@@ -2549,7 +2477,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/prepare-labels/" class="md-nav__link">
+      <a href="../prepare-labels/" class="md-nav__link">
         
   
   
@@ -2576,7 +2504,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/quantity-conversion/" class="md-nav__link">
+      <a href="../quantity-conversion/" class="md-nav__link">
         
   
   
@@ -2603,7 +2531,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/temperature-values/" class="md-nav__link">
+      <a href="../temperature-values/" class="md-nav__link">
         
   
   
@@ -2627,10 +2555,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../examples/warm-sample/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2645,6 +2582,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -2657,7 +2595,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/numeric-operations/" class="md-nav__link">
+      <a href="../numeric-operations/" class="md-nav__link">
         
   
   
@@ -2684,7 +2622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/record-values/" class="md-nav__link">
+      <a href="../record-values/" class="md-nav__link">
         
   
   
@@ -2711,7 +2649,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/confirm-samples/" class="md-nav__link">
+      <a href="../confirm-samples/" class="md-nav__link">
         
   
   
@@ -2738,7 +2676,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/capture-barcode/" class="md-nav__link">
+      <a href="../capture-barcode/" class="md-nav__link">
         
   
   
@@ -2765,7 +2703,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/timestamp-path/" class="md-nav__link">
+      <a href="../timestamp-path/" class="md-nav__link">
         
   
   
@@ -2792,7 +2730,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/timed-agitation/" class="md-nav__link">
+      <a href="../timed-agitation/" class="md-nav__link">
         
   
   
@@ -2819,7 +2757,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/read-reagent-table/" class="md-nav__link">
+      <a href="../read-reagent-table/" class="md-nav__link">
         
   
   
@@ -2846,7 +2784,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/non-zero-array-min/" class="md-nav__link">
+      <a href="../non-zero-array-min/" class="md-nav__link">
         
   
   
@@ -2873,7 +2811,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/stir-rack/" class="md-nav__link">
+      <a href="../stir-rack/" class="md-nav__link">
         
   
   
@@ -2900,7 +2838,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/agitation-ir/" class="md-nav__link">
+      <a href="../agitation-ir/" class="md-nav__link">
         
   
   
@@ -2927,7 +2865,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/list-ir/" class="md-nav__link">
+      <a href="../list-ir/" class="md-nav__link">
         
   
   
@@ -2954,7 +2892,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/reference-environment/" class="md-nav__link">
+      <a href="../reference-environment/" class="md-nav__link">
         
   
   
@@ -2981,7 +2919,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/logging-ir/" class="md-nav__link">
+      <a href="../logging-ir/" class="md-nav__link">
         
   
   
@@ -3008,7 +2946,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/confirmation-ir/" class="md-nav__link">
+      <a href="../confirmation-ir/" class="md-nav__link">
         
   
   
@@ -3035,7 +2973,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/wall-time-ir/" class="md-nav__link">
+      <a href="../wall-time-ir/" class="md-nav__link">
         
   
   
@@ -3062,7 +3000,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/timing-ir/" class="md-nav__link">
+      <a href="../timing-ir/" class="md-nav__link">
         
   
   
@@ -3089,7 +3027,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/csv-read-ir/" class="md-nav__link">
+      <a href="../csv-read-ir/" class="md-nav__link">
         
   
   
@@ -3116,7 +3054,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/append-sample-log/" class="md-nav__link">
+      <a href="../append-sample-log/" class="md-nav__link">
         
   
   
@@ -3143,7 +3081,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/csv-append-ir/" class="md-nav__link">
+      <a href="../csv-append-ir/" class="md-nav__link">
         
   
   
@@ -3170,7 +3108,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/resolve-locations/" class="md-nav__link">
+      <a href="../resolve-locations/" class="md-nav__link">
         
   
   
@@ -3197,7 +3135,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/zone-ir/" class="md-nav__link">
+      <a href="../zone-ir/" class="md-nav__link">
         
   
   
@@ -3224,7 +3162,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/visit-locations/" class="md-nav__link">
+      <a href="../visit-locations/" class="md-nav__link">
         
   
   
@@ -3251,7 +3189,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/zone-traversal-ir/" class="md-nav__link">
+      <a href="../zone-traversal-ir/" class="md-nav__link">
         
   
   
@@ -3278,7 +3216,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/label-wells/" class="md-nav__link">
+      <a href="../label-wells/" class="md-nav__link">
         
   
   
@@ -3305,7 +3243,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/well-properties-ir/" class="md-nav__link">
+      <a href="../well-properties-ir/" class="md-nav__link">
         
   
   
@@ -3332,7 +3270,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/device-locations-ir/" class="md-nav__link">
+      <a href="../device-locations-ir/" class="md-nav__link">
         
   
   
@@ -3359,7 +3297,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/stir-selected-location/" class="md-nav__link">
+      <a href="../stir-selected-location/" class="md-nav__link">
         
   
   
@@ -3386,7 +3324,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/label-sample-log/" class="md-nav__link">
+      <a href="../label-sample-log/" class="md-nav__link">
         
   
   
@@ -3413,7 +3351,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/aspiration-chunk/" class="md-nav__link">
+      <a href="../aspiration-chunk/" class="md-nav__link">
         
   
   
@@ -3440,7 +3378,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/runtime-workflows-ir/" class="md-nav__link">
+      <a href="../runtime-workflows-ir/" class="md-nav__link">
         
   
   
@@ -3467,7 +3405,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/aspiration-chunk-ir/" class="md-nav__link">
+      <a href="../aspiration-chunk-ir/" class="md-nav__link">
         
   
   
@@ -3494,7 +3432,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/demo-device/" class="md-nav__link">
+      <a href="../demo-device/" class="md-nav__link">
         
   
   
@@ -3521,7 +3459,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/lifecycle-commands/" class="md-nav__link">
+      <a href="../lifecycle-commands/" class="md-nav__link">
         
   
   
@@ -3548,7 +3486,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../examples/portable-agitation/" class="md-nav__link">
+      <a href="../portable-agitation/" class="md-nav__link">
         
   
   
@@ -3632,7 +3570,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/" class="md-nav__link">
+      <a href="../../api/" class="md-nav__link">
         
   
   
@@ -3659,7 +3597,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/author/" class="md-nav__link">
+      <a href="../../api/author/" class="md-nav__link">
         
   
   
@@ -3686,7 +3624,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/units/" class="md-nav__link">
+      <a href="../../api/units/" class="md-nav__link">
         
   
   
@@ -3713,7 +3651,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/comptime/" class="md-nav__link">
+      <a href="../../api/comptime/" class="md-nav__link">
         
   
   
@@ -3740,7 +3678,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/text/" class="md-nav__link">
+      <a href="../../api/text/" class="md-nav__link">
         
   
   
@@ -3767,7 +3705,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/csv/" class="md-nav__link">
+      <a href="../../api/csv/" class="md-nav__link">
         
   
   
@@ -3794,7 +3732,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/zones/" class="md-nav__link">
+      <a href="../../api/zones/" class="md-nav__link">
         
   
   
@@ -3821,7 +3759,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/autosuite/" class="md-nav__link">
+      <a href="../../api/autosuite/" class="md-nav__link">
         
   
   
@@ -3848,7 +3786,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/devices/" class="md-nav__link">
+      <a href="../../api/devices/" class="md-nav__link">
         
   
   
@@ -3875,7 +3813,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/ir-values/" class="md-nav__link">
+      <a href="../../api/ir-values/" class="md-nav__link">
         
   
   
@@ -3902,7 +3840,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/ir-flow/" class="md-nav__link">
+      <a href="../../api/ir-flow/" class="md-nav__link">
         
   
   
@@ -3929,7 +3867,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/ir-devices/" class="md-nav__link">
+      <a href="../../api/ir-devices/" class="md-nav__link">
         
   
   
@@ -3956,7 +3894,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/ir-json/" class="md-nav__link">
+      <a href="../../api/ir-json/" class="md-nav__link">
         
   
   
@@ -3983,7 +3921,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/compiler/" class="md-nav__link">
+      <a href="../../api/compiler/" class="md-nav__link">
         
   
   
@@ -4010,7 +3948,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/interpreter/" class="md-nav__link">
+      <a href="../../api/interpreter/" class="md-nav__link">
         
   
   
@@ -4037,7 +3975,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../api/diagnostics/" class="md-nav__link">
+      <a href="../../api/diagnostics/" class="md-nav__link">
         
   
   
@@ -4081,11 +4019,6 @@
                       
                     
                     
-                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-                      <div class="md-sidebar-button__wrapper">
-                        <label class="md-sidebar-button" for="__toc"></label>
-                      </div>
-                    
                   
                   <div class="md-sidebar__inner">
                     
@@ -4097,25 +4030,6 @@
   
     
   
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#what-it-does-in-order" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        What it does, in order
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -4138,48 +4052,234 @@
 
                   
 
-<h1 id="specialization-internals">Specialization internals</h1>
-<p><code>specialize(program, bindings)</code> is the step that turns the authored program into
-the selected one. It is a pure function of its two arguments and never imports
-a device implementation.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">examples.scale_values</span><span class="w"> </span><span class="kn">import</span> <span class="n">ScaleValues</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteTarget</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.compiler</span><span class="w"> </span><span class="kn">import</span> <span class="n">compile_ir</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.ir</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_json</span><span class="p">,</span> <span class="n">to_json</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.specialization</span><span class="w"> </span><span class="kn">import</span> <span class="n">specialize</span>
+<h1 id="fixed-heater-intent">Fixed heater intent</h1>
+<p>Declare a <code>Heater</code> dependency, assign both its absolute <code>temperature</code> and
+<code>ramp_rate</code>, then explicitly call <code>start()</code> and <code>stop()</code>. Setting a property saves
+the value at assignment; it does not change already applied settings. Calling
+<code>start()</code> again applies the complete updated configuration. Stopping retains
+both saved and last-applied values.</p>
+<div class="highlight"><pre><span></span><code><span class="sd">"""For experiment authors: configure a heater, wait a fixed time, then stop.</span>
 
-<span class="n">program</span> <span class="o">=</span> <span class="n">from_json</span><span class="p">(</span><span class="n">to_json</span><span class="p">(</span><span class="n">ScaleValues</span><span class="p">()</span><span class="o">.</span><span class="n">to_ir</span><span class="p">()))</span>
-<span class="n">target</span> <span class="o">=</span> <span class="n">AutoSuiteTarget</span><span class="p">()</span>
-<span class="n">selected</span> <span class="o">=</span> <span class="n">specialize</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">bindings</span><span class="o">=</span><span class="n">target</span><span class="o">.</span><span class="n">resolve_devices</span><span class="p">(</span><span class="n">program</span><span class="p">))</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">compile_ir</span><span class="p">(</span><span class="n">program</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">semantic_ir</span> <span class="o">==</span> <span class="n">program</span>
-<span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">specialized_ir</span> <span class="o">==</span> <span class="n">selected</span>
-<span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">artifact</span><span class="o">.</span><span class="n">media_type</span> <span class="o">==</span> <span class="s2">"application/xml"</span>
+<span class="sd">Run: ``uv run python examples/warm_sample.py``</span>
+<span class="sd">Output: ``AutoSuite heater profile awaits native validation.``</span>
+
+<span class="sd">Both settings are explicit. Assignments save configuration; start applies it.</span>
+<span class="sd">Ten seconds is a fixed wait, not evidence that the target temperature was reached.</span>
+<span class="sd">The developer warm_sample_ir example supplies fixed reference bindings and a</span>
+<span class="sd">virtual clock. No AutoSuite thermal profile is available in this stage.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Heater</span><span class="p">,</span> <span class="n">degC</span><span class="p">,</span> <span class="n">degC_per_min</span><span class="p">,</span> <span class="n">runtime</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">wait</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.diagnostics</span><span class="w"> </span><span class="kn">import</span> <span class="n">CompilationError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteTarget</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">WarmSample</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Demonstrate staged settings and explicit thermal lifecycle.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        heater: Logical fixed heater, independently bound by a target.</span>
+<span class="sd">    """</span>
+
+    <span class="n">heater</span><span class="p">:</span> <span class="n">Heater</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heater</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">degC</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heater</span><span class="o">.</span><span class="n">ramp_rate</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">degC_per_min</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heater</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">wait</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heater</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">WarmSample</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">())</span>
+    <span class="k">except</span> <span class="n">CompilationError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">error</span><span class="o">.</span><span class="n">diagnostics</span> <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">code</span> <span class="o">!=</span> <span class="s2">"missing_resource_binding"</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">error</span><span class="o">.</span><span class="n">diagnostics</span><span class="p">):</span>
+            <span class="k">raise</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"AutoSuite heater profile awaits native validation."</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">"No native heater profile has been validated."</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="what-it-does-in-order">What it does, in order</h2>
-<ol>
-<li>Validates the authored program.</li>
-<li>Validates the bindings against it: every declared resource has one compatible
-   binding, no binding is stray, and no two bindings disagree about a type
-   (<code>missing_resource_binding</code>, <code>unknown_resource_binding</code>, <code>device_type</code>,
-   <code>device_contract</code>).</li>
-<li>Answers every device-dependent <code>if</code> from the binding of its resource:
-   <code>IsDevice</code> by the profile's type and ancestry, <code>CanWrite</code> by its writable
-   properties, <code>SupportsOperation</code> by its supported operations. The winning
-   branch is spliced inline; the other is dropped. A query about a resource with
-   no binding is an error even when its answer would have been false.</li>
-<li>Prunes functions that no longer have a caller.</li>
-<li>Retypes each resource to the bound profile's type and rebuilds the device
-   directory from the bindings' trusted contracts, discarding the serialized
-   ones. A selected query whose signature differs from the trusted contract is
-   <code>device_contract</code>.</li>
-<li>Validates the result.</li>
-</ol>
-<p>Node ids and source spans survive, so a diagnostic raised later still points at
-the author's line. The authored program is left unchanged and is returned as
-<code>CompileResult.semantic_ir</code>; the tutorial's
-<a href="../../tutorial/adapt-with-comptime/">adapt with comptime</a> page shows the
-selected bodies for two profiles.</p>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>examples/warm_sample.py
+</code></pre></div>
+<p>This command reports that the AutoSuite heater profile awaits native validation.
+The numerical settings illustrate the language, not a process recipe. A fixed
+ten-second wait does not mean the target temperature was reached. There are no
+temperature getters or feedback control in this family.</p>
+<p>For contributors, the complete example below declares a fixed reference profile
+and an independent recording target, builds the same flow directly in IR, and
+compares its state with the Python program using an explicit virtual clock:</p>
+<div class="highlight"><pre><span></span><code><span class="sd">"""For contributors: fixed heater binding, direct IR and explicit reference time.</span>
+
+<span class="sd">Run: ``uv run python -m examples.developer.warm_sample_ir``</span>
+<span class="sd">Expected output:</span>
+<span class="sd">    warm_sample_ir.json</span>
+<span class="sd">    Elapsed: 10.0 s; enabled: False; saved target: 293.15 K</span>
+
+<span class="sd">The complete JSON companion comes from direct IR. The author WarmSample produces</span>
+<span class="sd">the same ordered effects. BenchHeater is an explicit reference contributor, not</span>
+<span class="sd">an AutoSuite profile or a simulation of temperature/heat transfer.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClassVar</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">examples.warm_sample</span><span class="w"> </span><span class="kn">import</span> <span class="n">WarmSample</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Heater</span><span class="p">,</span> <span class="n">Temperature</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.bindings</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeviceBindings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.compiler</span><span class="w"> </span><span class="kn">import</span> <span class="n">Artifact</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.diagnostics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Diagnostic</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.interpreter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Interpreter</span><span class="p">,</span> <span class="n">ReferenceEnvironment</span><span class="p">,</span> <span class="n">VirtualClock</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.ir</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ConfigureProperty</span><span class="p">,</span>
+    <span class="n">DeviceCommand</span><span class="p">,</span>
+    <span class="n">DeviceResource</span><span class="p">,</span>
+    <span class="n">FunctionIR</span><span class="p">,</span>
+    <span class="n">Literal</span><span class="p">,</span>
+    <span class="n">Program</span><span class="p">,</span>
+    <span class="n">ScalarType</span><span class="p">,</span>
+    <span class="n">Wait</span><span class="p">,</span>
+    <span class="n">from_json</span><span class="p">,</span>
+    <span class="n">to_json</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.ir.device_contracts</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BASE_DEVICE_CONTRACT</span><span class="p">,</span>
+    <span class="n">HEATER_CONTRACT</span><span class="p">,</span>
+    <span class="n">HEATER_RAMP_RATE_ID</span><span class="p">,</span>
+    <span class="n">HEATER_TEMPERATURE_ID</span><span class="p">,</span>
+    <span class="n">START_HEATER_ID</span><span class="p">,</span>
+    <span class="n">STOP_HEATER_ID</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.devices.declarations</span><span class="w"> </span><span class="kn">import</span> <span class="n">bind_device</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">BenchHeater</span><span class="p">(</span><span class="n">Heater</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Explicit fixed reference profile, carrying no instrument identity guesses."""</span>
+
+    <span class="n">device_type_id</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"example.bench-heater/v1"</span>
+    <span class="n">writable_properties</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"temperature"</span><span class="p">,</span> <span class="s2">"ramp_rate"</span><span class="p">)</span>
+    <span class="n">required_configuration</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"temperature"</span><span class="p">,</span> <span class="s2">"ramp_rate"</span><span class="p">)</span>
+    <span class="n">supported_operations</span> <span class="o">=</span> <span class="p">(</span><span class="n">Heater</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">Heater</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ThermalRecordingTarget</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Compile to semantic JSON with an explicit trusted fixed reference binding."""</span>
+
+    <span class="n">target_id</span> <span class="o">=</span> <span class="s2">"example.thermal-recording/v1"</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">resolve_devices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DeviceBindings</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Bind the logical heater to one reference actuator."""</span>
+        <span class="k">return</span> <span class="n">DeviceBindings</span><span class="p">(</span>
+            <span class="n">devices</span><span class="o">=</span><span class="p">(</span><span class="n">bind_device</span><span class="p">(</span><span class="n">logical_id</span><span class="o">=</span><span class="s2">"heater"</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">BenchHeater</span><span class="p">(),</span> <span class="n">physical_id</span><span class="o">=</span><span class="s2">"reference:heater-1"</span><span class="p">),)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Diagnostic</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Reference recording adds no native target restrictions."""</span>
+        <span class="k">return</span> <span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Artifact</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Produce JSON, never label this recording as ASFP."""</span>
+        <span class="k">return</span> <span class="n">Artifact</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">to_json</span><span class="p">(</span><span class="n">program</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">media_type</span><span class="o">=</span><span class="s2">"application/json"</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">".json"</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">build_program</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Build the same fixed heater flow without source analysis."""</span>
+    <span class="k">return</span> <span class="n">Program</span><span class="p">(</span>
+        <span class="n">entry_function_id</span><span class="o">=</span><span class="s2">"warm"</span><span class="p">,</span>
+        <span class="n">device_types</span><span class="o">=</span><span class="p">(</span><span class="n">BASE_DEVICE_CONTRACT</span><span class="p">,</span> <span class="n">HEATER_CONTRACT</span><span class="p">),</span>
+        <span class="n">resources</span><span class="o">=</span><span class="p">(</span><span class="n">DeviceResource</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"heater"</span><span class="p">,</span> <span class="n">logical_id</span><span class="o">=</span><span class="s2">"heater"</span><span class="p">,</span> <span class="n">device_type_id</span><span class="o">=</span><span class="n">HEATER_CONTRACT</span><span class="o">.</span><span class="n">type_id</span><span class="p">),),</span>
+        <span class="n">functions</span><span class="o">=</span><span class="p">(</span>
+            <span class="n">FunctionIR</span><span class="p">(</span>
+                <span class="n">node_id</span><span class="o">=</span><span class="s2">"warm"</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">"WarmSample"</span><span class="p">,</span>
+                <span class="n">body</span><span class="o">=</span><span class="p">(</span>
+                    <span class="n">ConfigureProperty</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"set-temperature"</span><span class="p">,</span>
+                        <span class="n">resource_id</span><span class="o">=</span><span class="s2">"heater"</span><span class="p">,</span>
+                        <span class="n">property_id</span><span class="o">=</span><span class="n">HEATER_TEMPERATURE_ID</span><span class="p">,</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"temperature"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEMPERATURE</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">293.15</span><span class="p">),</span>
+                    <span class="p">),</span>
+                    <span class="n">ConfigureProperty</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"set-rate"</span><span class="p">,</span>
+                        <span class="n">resource_id</span><span class="o">=</span><span class="s2">"heater"</span><span class="p">,</span>
+                        <span class="n">property_id</span><span class="o">=</span><span class="n">HEATER_RAMP_RATE_ID</span><span class="p">,</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"rate"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEMPERATURE_RATE</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">60</span><span class="p">),</span>
+                    <span class="p">),</span>
+                    <span class="n">DeviceCommand</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"start"</span><span class="p">,</span> <span class="n">resource_id</span><span class="o">=</span><span class="s2">"heater"</span><span class="p">,</span> <span class="n">operation_id</span><span class="o">=</span><span class="n">START_HEATER_ID</span><span class="p">),</span>
+                    <span class="n">Wait</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"wait"</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"duration"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">DURATION</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">10.0</span><span class="p">)),</span>
+                    <span class="n">DeviceCommand</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"stop"</span><span class="p">,</span> <span class="n">resource_id</span><span class="o">=</span><span class="s2">"heater"</span><span class="p">,</span> <span class="n">operation_id</span><span class="o">=</span><span class="n">STOP_HEATER_ID</span><span class="p">),</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">ThermalRecordingTarget</span><span class="p">()</span>
+    <span class="n">authored</span> <span class="o">=</span> <span class="n">WarmSample</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
+    <span class="n">program</span> <span class="o">=</span> <span class="n">build_program</span><span class="p">()</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".json"</span><span class="p">)</span>
+    <span class="n">path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">to_json</span><span class="p">(</span><span class="n">program</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span>
+    <span class="n">restored</span> <span class="o">=</span> <span class="n">from_json</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">restored</span> <span class="o">==</span> <span class="n">program</span>
+    <span class="n">states</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">authored</span><span class="o">.</span><span class="n">semantic_ir</span><span class="p">,</span> <span class="n">authored</span><span class="o">.</span><span class="n">specialized_ir</span><span class="p">,</span> <span class="n">restored</span><span class="p">):</span>
+        <span class="n">clock</span> <span class="o">=</span> <span class="n">VirtualClock</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">(</span>
+            <span class="n">candidate</span><span class="p">,</span> <span class="n">environment</span><span class="o">=</span><span class="n">ReferenceEnvironment</span><span class="p">(</span><span class="n">clock</span><span class="o">=</span><span class="n">clock</span><span class="p">,</span> <span class="n">device_bindings</span><span class="o">=</span><span class="n">target</span><span class="o">.</span><span class="n">resolve_devices</span><span class="p">(</span><span class="n">candidate</span><span class="p">))</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+        <span class="n">states</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">clock</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">==</span> <span class="mf">10.0</span>
+    <span class="k">assert</span> <span class="n">states</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">states</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">states</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">saved</span> <span class="o">=</span> <span class="n">states</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">configuration</span><span class="p">[</span><span class="s2">"temperature"</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">saved</span><span class="p">,</span> <span class="n">Temperature</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">states</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">enabled</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Elapsed: </span><span class="si">{</span><span class="n">clock</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> s; enabled: </span><span class="si">{</span><span class="n">states</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">enabled</span><span class="si">}</span><span class="s2">; saved target: </span><span class="si">{</span><span class="n">saved</span><span class="o">.</span><span class="n">kelvin</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> K"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>examples.developer.warm_sample_ir
+</code></pre></div>
+<p>It writes <code>warm_sample_ir.json</code> and reports 10 seconds elapsed, heater disabled,
+and a retained target of 293.15 K. This records ordered intent, not physical
+heat transfer or a measured temperature. The recording target emits JSON only.</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python, direct IR, JSON v4</td>
+<td>Implemented</td>
+</tr>
+<tr>
+<td>Reference state and event order</td>
+<td>Implemented with explicit fixed binding and virtual clock</td>
+</tr>
+<tr>
+<td>AutoSuite thermal profile and static emission</td>
+<td>Gated pending exact native mapping</td>
+</tr>
+<tr>
+<td>Executor / instrument acceptance</td>
+<td>Not verified</td>
+</tr>
+</tbody>
+</table>
+<p>Extend Heater through a subclass when an instrument needs additional properties
+or registered operations; do not modify Heater or BaseDevice for that instrument.
+Required additional properties must be configured before an applying command.
+Use fixed <code>DeviceBinding</code> facts; heater candidate selection is currently rejected,
+including for derived contracts. Unknown commands still require defined semantics.</p>
+<p><a href="../../_generated/examples/warm_sample.py">Download author Python</a> ·
+<a href="../../_generated/examples/developer/warm_sample_ir.py">Download contributor Python</a> ·
+<a href="../../_generated/examples/developer/warm_sample_ir.json">Download direct IR JSON</a></p>
+<p>See <a href="../temperature-values/">temperature values</a> and <a href="../../api/devices/">device contracts</a>.</p>
 
 
 
@@ -4212,7 +4312,7 @@ selected bodies for two profiles.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../json-interchange/" class="md-footer__link md-footer__link--prev" aria-label="Previous: JSON interchange and portability">
+          <a href="../temperature-values/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Temperature values">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -4222,20 +4322,20 @@ selected bodies for two profiles.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                JSON interchange and portability
+                Temperature values
               </div>
             </div>
           </a>
         
         
           
-          <a href="../native-commands/" class="md-footer__link md-footer__link--next" aria-label="Next: Native commands">
+          <a href="../numeric-operations/" class="md-footer__link md-footer__link--next" aria-label="Next: Numeric operations">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Native commands
+                Numeric operations
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -4276,10 +4376,10 @@ selected bodies for two profiles.</p>
       
         
         
-      <script id="__config" type="application/json">{"annotate":null,"base":"../../..","features":["navigation.tabs","navigation.sections","navigation.footer","content.code.copy","search.highlight"],"redirect":null,"search":"../../../assets/javascripts/workers/search.7d14d953.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"provider":"mike"}}</script>
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["navigation.tabs","navigation.sections","navigation.footer","content.code.copy","search.highlight"],"redirect":null,"search":"../../assets/javascripts/workers/search.7d14d953.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"provider":"mike"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.df5d1f2b.min.js"></script>
+      <script src="../../assets/javascripts/bundle.df5d1f2b.min.js"></script>
       
     
   </body>

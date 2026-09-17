@@ -2685,6 +2685,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/warm-sample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Fixed heater intent
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/numeric-operations/" class="md-nav__link">
         
   
@@ -4214,8 +4241,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.8.0
-    · <code title="c4abeb82f906b10c3c4a9f13fc3eab0475855247">c4abeb82</code>
+    · SciLoom 0.9.0
+    · <code title="1711817937b702ab515656fd142cedf7ce98e6e6">17118179</code>
   </p>
 </aside>
 
@@ -4225,8 +4252,11 @@
 <p>How a device family, a profile and their members are declared, and how those
 declarations become semantic IR. The walkthrough is
 <a href="../../tutorial/declare-a-family/">declare a family</a>; the shipped families and profiles are
-<code>Agitator</code>, <code>AutoSuiteIndividualShaker</code> and, outside core, <code>DemoAgitator</code> in the
-<a href="../../../examples/demo-device/">independent contribution example</a>.</p>
+<code>Agitator</code> and <code>Heater</code>, with the native <code>AutoSuiteIndividualShaker</code> profile.
+Outside core, <code>DemoAgitator</code> appears in the
+<a href="../../../examples/demo-device/">independent contribution example</a>, and the
+<a href="../../../examples/warm-sample/">fixed heater example</a> supplies a reference-only
+profile. AutoSuite thermal profiles remain gated pending native evidence.</p>
 <h2 id="identity">Identity</h2>
 <table>
 <thead>
@@ -4246,7 +4276,7 @@ declarations become semantic IR. The walkthrough is
 </tr>
 <tr>
 <td>built-in contracts are fixed</td>
-<td>redefining <code>sciloom.device/v1</code> or <code>sciloom.agitator/v1</code>, or a built-in member signature, is refused</td>
+<td>redefining <code>sciloom.device/v1</code>, <code>sciloom.agitator/v1</code> or <code>sciloom.heater/v1</code>, or a built-in member signature, is refused</td>
 </tr>
 <tr>
 <td><code>BaseDevice</code> imposes nothing</td>
@@ -4281,7 +4311,7 @@ declarations become semantic IR. The walkthrough is
 </tr>
 <tr>
 <td>value types</td>
-<td><code>int</code>, <code>float</code>, <code>bool</code>, <code>str</code>, <code>RotationalSpeed</code>, <code>Volume</code>, <code>Duration</code>, or a homogeneous list of one of them</td>
+<td><code>int</code>, <code>float</code>, <code>bool</code>, <code>str</code>, <code>RotationalSpeed</code>, <code>Volume</code>, <code>Duration</code>, <code>Temperature</code>, <code>TemperatureDifference</code>, <code>TemperatureRate</code>, or a homogeneous list of one of them</td>
 <td>no other Python objects</td>
 </tr>
 </tbody>
@@ -4344,6 +4374,16 @@ of the three lists, or that names a member the family never declared, with a
 <td>agitation lifecycle</td>
 <td><code>StartAgitation</code>, <code>StopAgitation</code></td>
 </tr>
+<tr>
+<td><code>self.heater.temperature = value</code>, <code>self.heater.ramp_rate = value</code></td>
+<td>built-in thermal configuration</td>
+<td><code>ConfigureProperty</code></td>
+</tr>
+<tr>
+<td><code>self.heater.start()</code>, <code>self.heater.stop()</code></td>
+<td>explicit thermal lifecycle contracts</td>
+<td><code>DeviceCommand</code></td>
+</tr>
 </tbody>
 </table>
 <p>Only agitation has dedicated lifecycle nodes today; every other family speaks
@@ -4372,6 +4412,12 @@ requirements and retains saved and applied values. Writes capture values without
 applying them; no command method name implies an effect. Both effects currently
 require no arguments. Unknown or repeated property names, lifecycle setters and
 <code>requires</code> without <code>lifecycle</code> are rejected.</p>
+<p>Heater's protected start command explicitly requires both <code>temperature</code> and
+<code>ramp_rate</code>, in addition to any concrete profile requirements. A derived profile
+cannot waive those family requirements by clearing its own list, and a profile
+supporting start must make both properties writable. Stop has no mandatory
+configuration. Heater and its subclasses currently require fixed bindings;
+candidate selection is rejected before compilation/reference execution.</p>
 <p>Reference execution implements these effects and checks requirements before
 changing state or recording an action. Supplied bindings must exactly match
 serialized contracts; IDs never load Python implementations. A plain

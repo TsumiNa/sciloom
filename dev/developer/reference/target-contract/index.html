@@ -2652,6 +2652,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/warm-sample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Fixed heater intent
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/numeric-operations/" class="md-nav__link">
         
   
@@ -4148,8 +4175,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.8.0
-    · <code title="c4abeb82f906b10c3c4a9f13fc3eab0475855247">c4abeb82</code>
+    · SciLoom 0.9.0
+    · <code title="1711817937b702ab515656fd142cedf7ce98e6e6">17118179</code>
   </p>
 </aside>
 
@@ -4228,7 +4255,11 @@ declared limit is a rejection, never a clamp.</p>
 <h2 id="bindings">Bindings</h2>
 <p><code>resolve_devices</code> returns <code>DeviceBindings</code>. Each entry is a fixed <code>DeviceBinding</code>
 or a <code>DeviceSelectionBinding</code> with explicit candidates. For a fixed profile,
-<code>bind_device(logical_id=..., device=..., physical_id=...)</code> builds this record:</p>
+<code>bind_device(logical_id=..., device=..., physical_id=...)</code> constructs trusted deployment facts.</p>
+<p>The built-in Heater family and its derived contracts currently support fixed
+bindings only. Shared binding-use validation rejects thermal candidate selection
+before compilation or reference execution. The <a href="../../../examples/warm-sample/">heater recording example</a>
+demonstrates a fixed reference contributor; it is not an AutoSuite profile.</p>
 <table>
 <thead>
 <tr>
