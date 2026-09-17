@@ -19,13 +19,18 @@ does; a promise inherited by accident is not a promise. `bind_device` refuses a
 profile that omits a list. See [device contracts](reference/device-contracts.md#profiles).
 
 **Why is my family's `required_configuration` not enforced?** The compiler
-enforces definite configuration only where a `StartAgitation` node requires it;
-a generic `DeviceCommand` neither requires nor supplies configuration. Enforce
-it in your target's `validate`. See
+enforces it before `StartAgitation` and explicit `APPLY_AND_ENABLE` lifecycle
+commands. The latter also checks the command's `requires` properties. A `DISABLE`
+command checks only its explicit requirements. Ordinary `CommandContract`
+operations have no implicit configuration effect; their target defines any
+additional checks. Declare a lifecycle effect only when it matches the intended
+behavior, as in the [lifecycle example](../examples/lifecycle-commands.md). See
 [required configuration](reference/device-contracts.md#required-configuration).
 
-**Why can't the interpreter run my command?** A native command has meaning only
-on its hardware; the interpreter refuses to invent one. See
+**Why can't the interpreter run my command?** Ordinary native commands have no
+defined reference effect, so they raise `unsupported_operation`. Explicit
+lifecycle contracts and the dedicated agitation nodes do have reference effects;
+that does not prove physical or AutoSuite execution. See
 [native commands](advanced/native-commands.md).
 
 **Reject or adapt?** Reject what your platform cannot do and can prove; let a

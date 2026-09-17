@@ -169,7 +169,7 @@ Raised by the reference interpreter during a run.
 | Code | Message | Cause |
 |---|---|---|
 | `unspecialized_device_condition` | Specialize device conditions before reference execution. | a `DeviceIf` still in the program; use `result.specialized_ir` |
-| `unsupported_operation` | Cannot execute DeviceCommand. | a native command; see [native commands](advanced/native-commands.md) |
+| `unsupported_operation` | Cannot execute DeviceCommand. | an ordinary native command without defined reference effects; explicit lifecycle contracts are executable; see [native commands](advanced/native-commands.md) |
 | `input_binding` | Supply exactly the entry function's named inputs. | a missing or extra input |
 | `runtime_type` | Expected `<type>`, received ... / A rotational-speed input requires a quantity such as 600 * rpm. / A quantity cannot be passed to a scalar input. | an input of the wrong Python type |
 | `uninitialized_read` | Variable `<name>` has no value in this call. | an input or output read before it was bound |

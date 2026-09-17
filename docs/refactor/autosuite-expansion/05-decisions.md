@@ -226,6 +226,18 @@ Explicit per-command property requirements remain separate from the concrete
 device's requirements so inherited command IDs retain exactly one signature.
 Class C: native profiles/effects are not unlocked by reference implementation.
 
+## D015 — R4.1 review handbook consistency (2026-09-18)
+
+Review 5239301901 identified a stale native-command guide and FAQ, plus a
+suppressed comment about the user troubleshooting table. Update those public
+pages to distinguish ordinary CommandContract operations (still unsupported in
+reference execution) from explicit lifecycle effects carried by DeviceCommand.
+Explain device-wide/apply requirements, explicit-only disable requirements and
+the separate AutoSuite adapter gate. Keep the ordinary tutorial's real rejection
+example and clarify its scope. Class A documentation correction; no behavior or
+wire change. Reassessed Version remains MINOR 0.6.0 → 0.7.0. Latest-head CI and
+resolved review remain required before merge.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,

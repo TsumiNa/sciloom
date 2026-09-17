@@ -46,6 +46,11 @@ valid and its artifact was emitted, but its `hold` is a native command with no
 reference semantics, so the interpreter refuses to run it. Compilation and
 target emission still work; only simulated execution stops.
 
+This `hold` uses an ordinary command contract. Explicit parameterless lifecycle
+contracts do define reference apply/disable effects; see the separate
+[lifecycle contribution](../../examples/lifecycle-commands.md). Their availability
+does not assign a meaning to this tutorial's timed `hold` command.
+
 `Preheat` writes a property and nothing else. Property writes have reference
 semantics for every family, so the session runs, reports the output, and shows
 the saved configuration on the resource. The interpreter takes the **selected**

@@ -303,7 +303,8 @@ For differences between device profiles, use
 | `device_capability` | the selected branch writes a property the profile does not list as writable | guard it with `comptime.can_write` ([device branches](advanced/device-branches.md)) |
 | `device_capability` | the selected branch calls a command the profile does not support | guard it with `comptime.supports` |
 | `device_capability` | `start()` or `stop()` on a profile that does not support it | guard it with `comptime.supports` |
-| `device_configuration` | a path reaches `start()` without assigning `speed` | configure the required properties on every path before starting |
+| `device_configuration` | a path reaches agitation `start()` or an explicit lifecycle command without its required properties | configure every required property before the command on every reachable path; apply checks device-wide and command-specific requirements, while disable checks only explicit command requirements |
+| `unsupported_device_command` | AutoSuite has no verified profile adapter for an explicit lifecycle command | use the recording target/reference interpreter to check intent; native execution requires a supported adapter and evidence, even when reference execution succeeds |
 | `unsupported_operation` | a statement the package format has no form for | use an operation supported by the selected target, or choose a target that implements it |
 
 ## A wait or timer is rejected
