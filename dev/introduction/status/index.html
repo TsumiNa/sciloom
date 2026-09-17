@@ -2708,6 +2708,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/expansion-workflows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Operator and equipment workflows
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/numeric-operations/" class="md-nav__link">
         
   
@@ -4194,7 +4221,7 @@
   <p>
     <strong>dev</strong>
     · SciLoom 0.11.0
-    · <code title="d23a3a37d3782ad2f4179828d03f4d03fe9b883b">d23a3a37</code>
+    · <code title="db09cb43662289bf74f6ed064d5ee35e1c2349ac">db09cb43</code>
   </p>
 </aside>
 
@@ -4300,6 +4327,12 @@ verified fixed-tool profile.</p>
 <p>Contributors can define devices and targets. The developer examples include a
 demonstration target, JSON v4 interchange and a reference interpreter for checking
 calculations and state changes. That interpreter does not simulate laboratory hardware.</p>
+<p>Text/yes-no result dialogs and fixed heater intent also have typed source,
+IR/JSON and reference semantics. Dialog cancellation/Stop/timeout never supplies
+a fallback result; heater settings apply only on explicit start. Their native
+AutoSuite profiles/termination behavior remain gated. The
+<a href="../../examples/expansion-workflows/">operator and equipment matrix</a> records each
+layer's actual status, including the mixed three-device workflow.</p>
 <p>A visual editor, server, public Application/global API, measured property reads,
 and notebook or interactive source support are not yet available.</p>
 <h2 id="what-compilation-establishes">What compilation establishes</h2>

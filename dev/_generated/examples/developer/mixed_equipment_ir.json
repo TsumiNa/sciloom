@@ -1,0 +1,1046 @@
+{
+  "device_types": [
+    {
+      "base_type_ids": [
+        "sciloom.heater/v1",
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "effect": "apply_and_enable",
+          "kind": "LifecycleCommandContract",
+          "name": "start",
+          "parameters": [],
+          "required_configuration": [
+            "sciloom.heater.temperature/v1",
+            "sciloom.heater.ramp-rate/v1"
+          ],
+          "semantic_id": "sciloom.heater.start/v1"
+        },
+        {
+          "effect": "disable",
+          "kind": "LifecycleCommandContract",
+          "name": "stop",
+          "parameters": [],
+          "required_configuration": [],
+          "semantic_id": "sciloom.heater.stop/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "temperature",
+          "semantic_id": "sciloom.heater.temperature/v1",
+          "type": "temperature"
+        },
+        {
+          "kind": "PropertyContract",
+          "name": "ramp_rate",
+          "semantic_id": "sciloom.heater.ramp-rate/v1",
+          "type": "temperature_rate"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.heater.temperature/v1",
+        "sciloom.heater.ramp-rate/v1"
+      ],
+      "type_id": "example.bench-heater/v1"
+    },
+    {
+      "base_type_ids": [
+        "sciloom.liquid-handler/v1",
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "kind": "CommandContract",
+          "name": "transfer",
+          "parameters": [
+            {
+              "kind": "CommandParameter",
+              "name": "source",
+              "type": {
+                "kind": "ZoneType"
+              }
+            },
+            {
+              "kind": "CommandParameter",
+              "name": "destination",
+              "type": {
+                "kind": "ZoneType"
+              }
+            },
+            {
+              "kind": "CommandParameter",
+              "name": "volume",
+              "type": "volume"
+            }
+          ],
+          "semantic_id": "sciloom.liquid-handler.transfer/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "aspirate_flow",
+          "semantic_id": "sciloom.liquid-handler.aspirate-flow/v1",
+          "type": "flow_rate"
+        },
+        {
+          "kind": "PropertyContract",
+          "name": "dispense_flow",
+          "semantic_id": "sciloom.liquid-handler.dispense-flow/v1",
+          "type": "flow_rate"
+        },
+        {
+          "kind": "PropertyContract",
+          "name": "air_gap",
+          "semantic_id": "sciloom.liquid-handler.air-gap/v1",
+          "type": "volume"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.liquid-handler.aspirate-flow/v1",
+        "sciloom.liquid-handler.dispense-flow/v1",
+        "sciloom.liquid-handler.air-gap/v1"
+      ],
+      "type_id": "example.bench-liquid-handler/v1"
+    },
+    {
+      "base_type_ids": [
+        "sciloom.agitator/v1",
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "kind": "CommandContract",
+          "name": "start",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.start/v1"
+        },
+        {
+          "kind": "CommandContract",
+          "name": "stop",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.stop/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "speed",
+          "semantic_id": "sciloom.agitator.speed/v1",
+          "type": "rotational_speed"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.agitator.speed/v1"
+      ],
+      "type_id": "example.integration-shaker/v1"
+    },
+    {
+      "base_type_ids": [
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "kind": "CommandContract",
+          "name": "start",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.start/v1"
+        },
+        {
+          "kind": "CommandContract",
+          "name": "stop",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.stop/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "speed",
+          "semantic_id": "sciloom.agitator.speed/v1",
+          "type": "rotational_speed"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.agitator.speed/v1"
+      ],
+      "type_id": "sciloom.agitator/v1"
+    },
+    {
+      "base_type_ids": [],
+      "kind": "DeviceTypeContract",
+      "operations": [],
+      "properties": [],
+      "required_configuration": [],
+      "type_id": "sciloom.device/v1"
+    },
+    {
+      "base_type_ids": [
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "effect": "apply_and_enable",
+          "kind": "LifecycleCommandContract",
+          "name": "start",
+          "parameters": [],
+          "required_configuration": [
+            "sciloom.heater.temperature/v1",
+            "sciloom.heater.ramp-rate/v1"
+          ],
+          "semantic_id": "sciloom.heater.start/v1"
+        },
+        {
+          "effect": "disable",
+          "kind": "LifecycleCommandContract",
+          "name": "stop",
+          "parameters": [],
+          "required_configuration": [],
+          "semantic_id": "sciloom.heater.stop/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "temperature",
+          "semantic_id": "sciloom.heater.temperature/v1",
+          "type": "temperature"
+        },
+        {
+          "kind": "PropertyContract",
+          "name": "ramp_rate",
+          "semantic_id": "sciloom.heater.ramp-rate/v1",
+          "type": "temperature_rate"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.heater.temperature/v1",
+        "sciloom.heater.ramp-rate/v1"
+      ],
+      "type_id": "sciloom.heater/v1"
+    },
+    {
+      "base_type_ids": [
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "kind": "CommandContract",
+          "name": "transfer",
+          "parameters": [
+            {
+              "kind": "CommandParameter",
+              "name": "source",
+              "type": {
+                "kind": "ZoneType"
+              }
+            },
+            {
+              "kind": "CommandParameter",
+              "name": "destination",
+              "type": {
+                "kind": "ZoneType"
+              }
+            },
+            {
+              "kind": "CommandParameter",
+              "name": "volume",
+              "type": "volume"
+            }
+          ],
+          "semantic_id": "sciloom.liquid-handler.transfer/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "aspirate_flow",
+          "semantic_id": "sciloom.liquid-handler.aspirate-flow/v1",
+          "type": "flow_rate"
+        },
+        {
+          "kind": "PropertyContract",
+          "name": "dispense_flow",
+          "semantic_id": "sciloom.liquid-handler.dispense-flow/v1",
+          "type": "flow_rate"
+        },
+        {
+          "kind": "PropertyContract",
+          "name": "air_gap",
+          "semantic_id": "sciloom.liquid-handler.air-gap/v1",
+          "type": "volume"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.liquid-handler.aspirate-flow/v1",
+        "sciloom.liquid-handler.dispense-flow/v1",
+        "sciloom.liquid-handler.air-gap/v1"
+      ],
+      "type_id": "sciloom.liquid-handler/v1"
+    }
+  ],
+  "entry_function_id": "fn:0",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "Assignment",
+          "node_id": "fn:0:node:1",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 79,
+            "path": "examples/mixed_equipment.py"
+          },
+          "target": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:2",
+            "source": {
+              "column": 8,
+              "kind": "SourceSpan",
+              "line": 79,
+              "path": "examples/mixed_equipment.py"
+            },
+            "symbol_id": "fn:0:var:well_name"
+          },
+          "value": {
+            "kind": "WellName",
+            "node_id": "fn:0:node:4",
+            "source": {
+              "column": 25,
+              "kind": "SourceSpan",
+              "line": 79,
+              "path": "examples/mixed_equipment.py"
+            },
+            "value": {
+              "kind": "Reference",
+              "node_id": "fn:0:node:3",
+              "source": {
+                "column": 41,
+                "kind": "SourceSpan",
+                "line": 79,
+                "path": "examples/mixed_equipment.py"
+              },
+              "symbol_id": "fn:0:var:destination"
+            }
+          }
+        },
+        {
+          "kind": "RequestText",
+          "message": {
+            "kind": "Binary",
+            "left": {
+              "kind": "Literal",
+              "node_id": "fn:0:node:7",
+              "source": {
+                "column": 36,
+                "kind": "SourceSpan",
+                "line": 80,
+                "path": "examples/mixed_equipment.py"
+              },
+              "type": "text",
+              "value": "Barcode for "
+            },
+            "node_id": "fn:0:node:6",
+            "op": "+",
+            "right": {
+              "kind": "Reference",
+              "node_id": "fn:0:node:8",
+              "source": {
+                "column": 53,
+                "kind": "SourceSpan",
+                "line": 80,
+                "path": "examples/mixed_equipment.py"
+              },
+              "symbol_id": "fn:0:var:well_name"
+            },
+            "source": {
+              "column": 36,
+              "kind": "SourceSpan",
+              "line": 80,
+              "path": "examples/mixed_equipment.py"
+            }
+          },
+          "node_id": "fn:0:node:11",
+          "source": {
+            "column": 23,
+            "kind": "SourceSpan",
+            "line": 80,
+            "path": "examples/mixed_equipment.py"
+          },
+          "target": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:5",
+            "source": {
+              "column": 8,
+              "kind": "SourceSpan",
+              "line": 80,
+              "path": "examples/mixed_equipment.py"
+            },
+            "symbol_id": "fn:0:var:barcode"
+          },
+          "timeout": {
+            "kind": "Literal",
+            "node_id": "fn:0:node:10",
+            "source": {
+              "column": 77,
+              "kind": "SourceSpan",
+              "line": 80,
+              "path": "examples/mixed_equipment.py"
+            },
+            "type": "duration",
+            "value": 30.0
+          }
+        },
+        {
+          "kind": "WriteWellProperty",
+          "node_id": "fn:0:node:12",
+          "property": {
+            "kind": "WellPropertySpec",
+            "name": "sample_ID",
+            "type": "text"
+          },
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 81,
+            "path": "examples/mixed_equipment.py"
+          },
+          "value": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:13",
+            "source": {
+              "column": 43,
+              "kind": "SourceSpan",
+              "line": 81,
+              "path": "examples/mixed_equipment.py"
+            },
+            "symbol_id": "fn:0:var:barcode"
+          },
+          "zone": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:14",
+            "source": {
+              "column": 23,
+              "kind": "SourceSpan",
+              "line": 81,
+              "path": "examples/mixed_equipment.py"
+            },
+            "symbol_id": "fn:0:var:destination"
+          }
+        },
+        {
+          "category": {
+            "kind": "Literal",
+            "node_id": "fn:0:node:17",
+            "source": {
+              "column": 35,
+              "kind": "SourceSpan",
+              "line": 82,
+              "path": "examples/mixed_equipment.py"
+            },
+            "type": "text",
+            "value": "samples"
+          },
+          "kind": "LogValue",
+          "node_id": "fn:0:node:15",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 82,
+            "path": "examples/mixed_equipment.py"
+          },
+          "stream": {
+            "kind": "Literal",
+            "node_id": "fn:0:node:18",
+            "source": {
+              "column": 53,
+              "kind": "SourceSpan",
+              "line": 82,
+              "path": "examples/mixed_equipment.py"
+            },
+            "type": "text",
+            "value": "barcode"
+          },
+          "value": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:16",
+            "source": {
+              "column": 12,
+              "kind": "SourceSpan",
+              "line": 82,
+              "path": "examples/mixed_equipment.py"
+            },
+            "symbol_id": "fn:0:var:barcode"
+          }
+        },
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "fn:0:node:19",
+          "property_id": "sciloom.heater.temperature/v1",
+          "resource_id": "resource:heater",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 83,
+            "path": "examples/mixed_equipment.py"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "fn:0:node:21",
+            "source": {
+              "column": 34,
+              "kind": "SourceSpan",
+              "line": 83,
+              "path": "examples/mixed_equipment.py"
+            },
+            "type": "temperature",
+            "value": 293.15
+          }
+        },
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "fn:0:node:22",
+          "property_id": "sciloom.heater.ramp-rate/v1",
+          "resource_id": "resource:heater",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 84,
+            "path": "examples/mixed_equipment.py"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "fn:0:node:24",
+            "source": {
+              "column": 32,
+              "kind": "SourceSpan",
+              "line": 84,
+              "path": "examples/mixed_equipment.py"
+            },
+            "type": "temperature_rate",
+            "value": 0.016666666666666666
+          }
+        },
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "fn:0:node:25",
+          "property_id": "sciloom.agitator.speed/v1",
+          "resource_id": "resource:shaker",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 85,
+            "path": "examples/mixed_equipment.py"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "fn:0:node:27",
+            "source": {
+              "column": 28,
+              "kind": "SourceSpan",
+              "line": 85,
+              "path": "examples/mixed_equipment.py"
+            },
+            "type": "rotational_speed",
+            "value": 5.0
+          }
+        },
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "fn:0:node:28",
+          "property_id": "sciloom.liquid-handler.aspirate-flow/v1",
+          "resource_id": "resource:liquid",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 86,
+            "path": "examples/mixed_equipment.py"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "fn:0:node:30",
+            "source": {
+              "column": 36,
+              "kind": "SourceSpan",
+              "line": 86,
+              "path": "examples/mixed_equipment.py"
+            },
+            "type": "flow_rate",
+            "value": 1.6666666666666667e-08
+          }
+        },
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "fn:0:node:31",
+          "property_id": "sciloom.liquid-handler.dispense-flow/v1",
+          "resource_id": "resource:liquid",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 87,
+            "path": "examples/mixed_equipment.py"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "fn:0:node:33",
+            "source": {
+              "column": 36,
+              "kind": "SourceSpan",
+              "line": 87,
+              "path": "examples/mixed_equipment.py"
+            },
+            "type": "flow_rate",
+            "value": 3.3333333333333334e-08
+          }
+        },
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "fn:0:node:34",
+          "property_id": "sciloom.liquid-handler.air-gap/v1",
+          "resource_id": "resource:liquid",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 88,
+            "path": "examples/mixed_equipment.py"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "fn:0:node:36",
+            "source": {
+              "column": 30,
+              "kind": "SourceSpan",
+              "line": 88,
+              "path": "examples/mixed_equipment.py"
+            },
+            "type": "volume",
+            "value": 5e-08
+          }
+        },
+        {
+          "function_id": "fn:1",
+          "inputs": [
+            {
+              "kind": "InputBinding",
+              "parameter_id": "fn:1:var:source",
+              "value": {
+                "kind": "Reference",
+                "node_id": "fn:0:node:38",
+                "source": {
+                  "column": 26,
+                  "kind": "SourceSpan",
+                  "line": 89,
+                  "path": "examples/mixed_equipment.py"
+                },
+                "symbol_id": "fn:0:var:source"
+              }
+            },
+            {
+              "kind": "InputBinding",
+              "parameter_id": "fn:1:var:destination",
+              "value": {
+                "kind": "Reference",
+                "node_id": "fn:0:node:39",
+                "source": {
+                  "column": 51,
+                  "kind": "SourceSpan",
+                  "line": 89,
+                  "path": "examples/mixed_equipment.py"
+                },
+                "symbol_id": "fn:0:var:destination"
+              }
+            }
+          ],
+          "kind": "Call",
+          "node_id": "fn:0:node:37",
+          "outputs": [],
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 89,
+            "path": "examples/mixed_equipment.py"
+          }
+        },
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "fn:0:node:40",
+          "property_id": "sciloom.liquid-handler.aspirate-flow/v1",
+          "resource_id": "resource:liquid",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 90,
+            "path": "examples/mixed_equipment.py"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "fn:0:node:42",
+            "source": {
+              "column": 36,
+              "kind": "SourceSpan",
+              "line": 90,
+              "path": "examples/mixed_equipment.py"
+            },
+            "type": "flow_rate",
+            "value": 5e-08
+          }
+        },
+        {
+          "function_id": "fn:1",
+          "inputs": [
+            {
+              "kind": "InputBinding",
+              "parameter_id": "fn:1:var:source",
+              "value": {
+                "kind": "Reference",
+                "node_id": "fn:0:node:44",
+                "source": {
+                  "column": 26,
+                  "kind": "SourceSpan",
+                  "line": 91,
+                  "path": "examples/mixed_equipment.py"
+                },
+                "symbol_id": "fn:0:var:source"
+              }
+            },
+            {
+              "kind": "InputBinding",
+              "parameter_id": "fn:1:var:destination",
+              "value": {
+                "kind": "Reference",
+                "node_id": "fn:0:node:45",
+                "source": {
+                  "column": 51,
+                  "kind": "SourceSpan",
+                  "line": 91,
+                  "path": "examples/mixed_equipment.py"
+                },
+                "symbol_id": "fn:0:var:destination"
+              }
+            }
+          ],
+          "kind": "Call",
+          "node_id": "fn:0:node:43",
+          "outputs": [],
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 91,
+            "path": "examples/mixed_equipment.py"
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "MixedEquipment",
+      "node_id": "fn:0",
+      "source": {
+        "column": 4,
+        "kind": "SourceSpan",
+        "line": 78,
+        "path": "examples/mixed_equipment.py"
+      },
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "source",
+          "node_id": "fn:0:var:source",
+          "owner_id": "fn:0",
+          "role": "input",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "destination",
+          "node_id": "fn:0:var:destination",
+          "owner_id": "fn:0",
+          "role": "input",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "barcode",
+          "node_id": "fn:0:var:barcode",
+          "owner_id": "fn:0",
+          "role": "output",
+          "source": null,
+          "type": "text"
+        },
+        {
+          "initial": {
+            "kind": "Literal",
+            "node_id": "fn:0:var:well_name:initial",
+            "source": null,
+            "type": "text",
+            "value": ""
+          },
+          "kind": "Variable",
+          "name": "well_name",
+          "node_id": "fn:0:var:well_name",
+          "owner_id": "fn:0",
+          "role": "internal",
+          "source": null,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "body": [
+        {
+          "arguments": [],
+          "kind": "DeviceCommand",
+          "node_id": "fn:1:node:1",
+          "operation_id": "sciloom.heater.start/v1",
+          "resource_id": "resource:heater",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 50,
+            "path": "examples/mixed_equipment.py"
+          }
+        },
+        {
+          "kind": "StartAgitation",
+          "node_id": "fn:1:node:2",
+          "resource_id": "resource:shaker",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 51,
+            "path": "examples/mixed_equipment.py"
+          }
+        },
+        {
+          "duration": {
+            "kind": "Literal",
+            "node_id": "fn:1:node:5",
+            "source": {
+              "column": 13,
+              "kind": "SourceSpan",
+              "line": 52,
+              "path": "examples/mixed_equipment.py"
+            },
+            "type": "duration",
+            "value": 10.0
+          },
+          "kind": "Wait",
+          "node_id": "fn:1:node:3",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 52,
+            "path": "examples/mixed_equipment.py"
+          }
+        },
+        {
+          "arguments": [
+            {
+              "kind": "CommandArgument",
+              "name": "source",
+              "value": {
+                "kind": "Reference",
+                "node_id": "fn:1:node:7",
+                "source": {
+                  "column": 29,
+                  "kind": "SourceSpan",
+                  "line": 53,
+                  "path": "examples/mixed_equipment.py"
+                },
+                "symbol_id": "fn:1:var:source"
+              }
+            },
+            {
+              "kind": "CommandArgument",
+              "name": "destination",
+              "value": {
+                "kind": "Reference",
+                "node_id": "fn:1:node:8",
+                "source": {
+                  "column": 42,
+                  "kind": "SourceSpan",
+                  "line": 53,
+                  "path": "examples/mixed_equipment.py"
+                },
+                "symbol_id": "fn:1:var:destination"
+              }
+            },
+            {
+              "kind": "CommandArgument",
+              "name": "volume",
+              "value": {
+                "kind": "Literal",
+                "node_id": "fn:1:node:10",
+                "source": {
+                  "column": 60,
+                  "kind": "SourceSpan",
+                  "line": 53,
+                  "path": "examples/mixed_equipment.py"
+                },
+                "type": "volume",
+                "value": 2.5e-07
+              }
+            }
+          ],
+          "kind": "DeviceCommand",
+          "node_id": "fn:1:node:6",
+          "operation_id": "sciloom.liquid-handler.transfer/v1",
+          "resource_id": "resource:liquid",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 53,
+            "path": "examples/mixed_equipment.py"
+          }
+        },
+        {
+          "kind": "StopAgitation",
+          "node_id": "fn:1:node:11",
+          "resource_id": "resource:shaker",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 54,
+            "path": "examples/mixed_equipment.py"
+          }
+        },
+        {
+          "arguments": [],
+          "kind": "DeviceCommand",
+          "node_id": "fn:1:node:12",
+          "operation_id": "sciloom.heater.stop/v1",
+          "resource_id": "resource:heater",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 55,
+            "path": "examples/mixed_equipment.py"
+          }
+        },
+        {
+          "category": {
+            "kind": "Literal",
+            "node_id": "fn:1:node:15",
+            "source": {
+              "column": 42,
+              "kind": "SourceSpan",
+              "line": 56,
+              "path": "examples/mixed_equipment.py"
+            },
+            "type": "text",
+            "value": "liquid"
+          },
+          "kind": "LogValue",
+          "node_id": "fn:1:node:13",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 56,
+            "path": "examples/mixed_equipment.py"
+          },
+          "stream": {
+            "kind": "Literal",
+            "node_id": "fn:1:node:16",
+            "source": {
+              "column": 59,
+              "kind": "SourceSpan",
+              "line": 56,
+              "path": "examples/mixed_equipment.py"
+            },
+            "type": "text",
+            "value": "experiment"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "fn:1:node:14",
+            "source": {
+              "column": 12,
+              "kind": "SourceSpan",
+              "line": 56,
+              "path": "examples/mixed_equipment.py"
+            },
+            "type": "text",
+            "value": "transfer complete"
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "EquipmentCycle",
+      "node_id": "fn:1",
+      "source": {
+        "column": 4,
+        "kind": "SourceSpan",
+        "line": 49,
+        "path": "examples/mixed_equipment.py"
+      },
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "source",
+          "node_id": "fn:1:var:source",
+          "owner_id": "fn:1",
+          "role": "input",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "destination",
+          "node_id": "fn:1:var:destination",
+          "owner_id": "fn:1",
+          "role": "input",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": [
+    {
+      "device_type_id": "example.bench-heater/v1",
+      "kind": "DeviceResource",
+      "logical_id": "heater",
+      "node_id": "resource:heater",
+      "source": null
+    },
+    {
+      "device_type_id": "example.integration-shaker/v1",
+      "kind": "DeviceResource",
+      "logical_id": "shaker",
+      "node_id": "resource:shaker",
+      "source": null
+    },
+    {
+      "device_type_id": "example.bench-liquid-handler/v1",
+      "kind": "DeviceResource",
+      "logical_id": "liquid",
+      "node_id": "resource:liquid",
+      "source": null
+    }
+  ]
+}
