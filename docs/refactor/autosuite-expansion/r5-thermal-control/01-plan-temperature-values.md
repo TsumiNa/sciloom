@@ -54,13 +54,15 @@ CSV reads and AutoSuite encoding reject explicitly. No new native profile.
 
 Author `examples/temperature_values.py` and developer
 `examples/developer/temperature_ir.py/.json` are executable and included in CI.
-Local acceptance: 1273 code/tool/example tests, 98 website tests, 50 example/
+Local acceptance after review: 1279 code/tool/example tests, 98 website tests, 50 example/
 syntax commands, Ruff checks/format (307 files), mypy (139 files), strict docs,
 smoke and recipe validation passed. Read-only corpus audit: 271 files, 127 archive
 entries, 52 extracted function matches, 67 templates. Regenerated existing ASFP
 and JSON companions are unchanged. A local test/example-generation race was
 resolved by finishing generators before rerunning the complete suite; no product
 change was needed. Native thermal encoding/range/profile evidence remains absent.
+Review 5239643141's suppressed declaration-path comment is covered by six
+property/command scalar/list contract and JSON cases; no production change.
 
 Review, fix feedback, recheck latest head, squash merge and confirm remote MERGED
 before beginning the next implementation PR. Inspect all review surfaces.

@@ -300,6 +300,17 @@ type rejection, as the plan permits; native mapping/profile remains R5.3 and
 gated if evidence is still absent. Core uses 273.15, without vendor adjustment.
 No class D semantic compromise or human decision is required.
 
+## D018 — R5.1 review declaration-path coverage (2026-09-18)
+
+Review 5239643141 has no inline threads and one suppressed actionable comment:
+thermal device declaration mappings lack focused tests. Add six cases covering
+all three scalar types as both properties and command arguments, including
+homogeneous lists. Inspect the actual contributed typed contracts, round-trip
+their complete Program through JSON and retain the built-in agitation contract.
+Declaration bodies must not execute. Class A validation-coverage correction;
+no interface or production behavior changes. Version remains MINOR 0.7.1 → 0.8.0.
+Recheck latest-head CI and every review surface before merge.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,
