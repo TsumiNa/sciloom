@@ -46,6 +46,22 @@ instruction to decide concrete versions after implementation rather than
 preallocate future version numbers; it overrides the review's contrary proposal.
 Classification A/B, no semantic or scope change. Both packages remain 0.3.15.
 
+## D004 — R1.1 preflight (2026-09-18)
+
+Baseline e4e4c8229af86c8954b8a2e97c02b20471e77456, packages 0.3.15. R0 PR #103
+is remotely MERGED; its two review findings were addressed and latest-head
+CI passed. Existing layout code has no provenance, and the original primary
+APP stores one direct root resetvariables element with text 1.
+
+R1.1 adds immutable facts/report records and a private shared assessment function;
+target integration and review export remain R1.2. Missing product/reset fields
+remain unknown; duplicate or structured reset fields are invalid. A layout
+source hash is optional for manual records and never affects codegen identity.
+Report requirements/findings reuse immutable Diagnostic records rather than
+inventing another diagnostic model; they stay outside CompileResult.diagnostics.
+Class B detail refinement, no changed intent. Native state experiments remain C
+pending; the current original APP is not modified.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,

@@ -8,7 +8,7 @@ Read-only deployment facts and reports while preserving the accepted semantic co
 
 [Authoritative interface](../01-contract.md#r1-deployment-conditions-and-review-artifacts).
 R0 merged.
-Current code status: pending. Native status follows the [group overview](00-overview.md)
+Current code status: implemented in this PR; review/merge pending. Native status follows the [group overview](00-overview.md)
 and the [evidence register](../04-evidence.md), not a successful local test.
 
 ## Implementation preflight
@@ -40,6 +40,16 @@ Update the contract's availability and group/main status table before review.
 
 ## Review and completion
 
+Local acceptance (2026-09-18): 982 core/target/example tests and 13 tools tests
+passed; 97 website tests and strict build passed. Ruff/format and mypy (130 source
+files) passed, as did smoke, recipe validation, read-only corpus audit and all
+42 CI example/syntax commands. Existing example companions were unchanged.
+Native reset behavior remains unmeasured. Production target integration is R1.2.
+
+PR #104 review corrected the version diagnostic to show the bare expected native
+product version rather than the internal target ID. Its regression, all 31
+deployment tests, Ruff/format and mypy passed. Scope and version remain unchanged.
+
 Review, fix feedback, recheck latest head, squash merge and confirm remote MERGED
 before beginning the next implementation PR. Inspect all review surfaces.
 An evidence-limited implementation may be complete as implemented/gated, but its
@@ -47,10 +57,5 @@ native acceptance remains pending and compiler rejection stays enabled.
 
 ## Version
 
-Version: none, this revision records a plan and changes no shipped code.
-
-Implementation expectation: MINOR, new public deployment facts and report APIs.
-Before the implementation PR is reviewed, replace this planning-only decision
-with the exact lockstep from/to transition based on its actual shipped scope and
-then-current baseline. The user explicitly requested no preallocated future
-version numbers. Reassess after review changes; no publication.
+Version: MINOR 0.3.15 → 0.4.0, adding public deployment facts/report records and
+layout source provenance. Both workspace packages change together; no publication.

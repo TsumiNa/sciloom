@@ -2,8 +2,9 @@
 
 ## Status and invariants
 
-All interfaces introduced here are **planned**, not currently importable unless
-explicitly called current. Availability is tied to the named PR and its merge,
+R1.1 facts/report records and layout provenance are **implemented in this PR**.
+Other interfaces introduced here are **planned**, not currently importable unless
+explicitly called implemented. Availability is tied to the named PR and its merge,
 not to presence of these examples. Reassess under
 [execution rules](02-execution-rules.md) before implementing each section.
 
@@ -18,7 +19,7 @@ Current: AutoSuiteTarget(version=..., devices=..., layout=...) emits ASFP.
 CompileResult contains original and specialized IR, target identity and Artifact;
 its write method writes only the artifact. Keep these current behaviors.
 
-### Planned after R1.1
+### Implemented in R1.1
 
 Public imports from sciloom_autosuite:
 
@@ -32,6 +33,9 @@ Public imports from sciloom_autosuite:
   source hash when known, checked settings, ordered requirements/reasons with
   affected node identities, and separate native status. `to_json() -> str`
   emits deterministic report data, not a Program/v4 document.
+  Its requirements and findings are immutable tuples of existing Diagnostic
+  records; its native_status is always pending. The private shared assessment
+  is implemented, but target integration and review export remain R1.2.
 - Add `app_sha256: str | None = None` to target-only AutoSuiteLayout.
   from_app computes it from the same exact input bytes as deployment reading;
   manually constructed layouts default to unknown provenance. Do not include

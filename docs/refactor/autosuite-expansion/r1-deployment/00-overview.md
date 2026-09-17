@@ -16,11 +16,11 @@ an explicit developer decision.
 
 | Stage | Outcome | Code status |
 | --- | --- | --- |
-| R1.1 | [Read-only deployment facts and reports](01-plan-deployment-facts.md) | Pending |
+| R1.1 | [Read-only deployment facts and reports](01-plan-deployment-facts.md) | Implemented in this PR; review/merge pending |
 | R1.2 | [Enforce known deployment incompatibilities](02-plan-state-guards.md) | Pending |
 
 Native status: Reset=0/1 lifetime experiments pending.
-No stage below is already implemented. Native-unlock prerequisites are distinct
+R1.2 remains pending. Native-unlock prerequisites are distinct
 from review/merge prerequisites. Finish each PR green and remotely squash merged
 before beginning another; an implemented/gated stage preserves its rejection.
 
