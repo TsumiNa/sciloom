@@ -357,9 +357,21 @@ class Interpreter:
                     )
                 )
                 if error_code is not None:
+                    if error_code == "dialog_response_type":
+                        reason = (
+                            f"Dialog response requires {expected.__name__}, received {type(response.value).__name__}."
+                        )
+                    elif error_code == "dialog_timeout":
+                        reason = "Dialog timed out."
+                        if deadline is not None:
+                            reason += f" Configured timeout: {deadline.seconds:g} s."
+                    elif error_code == "dialog_cancelled":
+                        reason = "The operator cancelled the dialog."
+                    else:
+                        reason = "The operator selected Stop."
                     fail(
                         error_code,
-                        f"Dialog {outcome.value}: expected an accepted {expected.__name__} response before its deadline.",
+                        reason + " No result was assigned; subsequent statements did not execute.",
                         statement,
                     )
             elif isinstance(statement, ReadCsv):

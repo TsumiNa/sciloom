@@ -137,7 +137,7 @@ copies the supplied iterable. A new run restarts the entry, not the failed reque
 Run `uv run python -m examples.developer.dialogs_ir` for the direct IR, complete
 JSON v4 companion and source/IR output comparison. AutoSuite compilation rejects
 both result-bearing nodes pending native result and termination verification.
-The existing Notify and acknowledgement service keep their separate contract.
+The existing Notify operation and its acknowledgement service retain their own contract.
 
 ## Wall-clock input
 

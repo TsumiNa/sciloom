@@ -158,6 +158,16 @@ before raising. Missing/exhausted services and invalid arguments consume nothing
 and emit no dialog event. Queue entries are frozen/copied; non-accepted outcomes
 have no value. No fallback, semantic deviation or native claim is introduced.
 
+## D011 — R3.1 review diagnostics (2026-09-18)
+
+Review 5238920846 identified a misleading shared failure message. Distinguish
+operator cancellation, Stop, timeout and exact response-type mismatch; mention
+configured timeout only when one exists. Add no-timeout regressions for all
+four outcomes. Correct the acknowledgement-contract sentence in the public
+handbook. Class A diagnostic/documentation correction; nodes, events, codes,
+state retention and native gates are unchanged. Reassessed Version remains
+MINOR 0.5.0 → 0.6.0; latest-head checks and resolved review are required.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,

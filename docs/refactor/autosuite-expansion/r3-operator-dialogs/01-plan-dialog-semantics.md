@@ -48,6 +48,10 @@ it was registered and the full suite passed after correction. Existing example
 companions and old JSON byte fixtures are unchanged. The two new examples ran
 and their complete direct-IR companion is committed. Native status stays pending.
 
+Review follow-up: distinct failure diagnostics and four no-timeout regressions
+passed the full 1089-test suite, mypy and strict site build. The handbook wording
+was corrected; version scope remains MINOR 0.6.0. Latest-head CI is still required.
+
 Review, fix feedback, recheck latest head, squash merge and confirm remote MERGED
 before beginning the next implementation PR. Inspect all review surfaces.
 An evidence-limited implementation may be complete as implemented/gated, but its

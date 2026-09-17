@@ -115,6 +115,32 @@ def test_missing_or_exhausted_service_never_invents_a_response(responses, code):
     assert [e.value for e in environment.events] == ["unchanged"]
 
 
+@pytest.mark.parametrize(
+    "response,reason",
+    [
+        (DialogResponse(outcome=DialogOutcome.CANCELLED), "operator cancelled"),
+        (DialogResponse(outcome=DialogOutcome.STOPPED), "operator selected Stop"),
+        (DialogResponse(outcome=DialogOutcome.TIMED_OUT), "Dialog timed out"),
+        (DialogResponse(outcome=DialogOutcome.ACCEPTED, value="Yes"), "requires bool, received str"),
+    ],
+)
+def test_failure_diagnostic_describes_actual_cause_without_inventing_deadline(response, reason):
+    class Choose(Function):
+        answer: Output[bool]
+
+        @runtime
+        def run(self) -> None:
+            self.answer = ask_yes_no("Continue?")
+
+    environment = ReferenceEnvironment(dialogs=QueuedDialogResponses([response]))
+    with pytest.raises(ExecutionError) as error:
+        Interpreter(Choose().to_ir(), environment=environment).run()
+    message = error.value.diagnostics[0].message
+    assert reason in message
+    assert "Configured timeout" not in message and "deadline" not in message
+    assert "No result was assigned" in message
+
+
 def test_arguments_are_captured_in_order_once_before_response(monkeypatch):
     from sciloom.core.interpreter import runtime as interpreter_runtime
 
