@@ -1313,6 +1313,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#liquidhandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        LiquidHandler
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#heater" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -2723,6 +2734,33 @@
     
   
   Transfer settings and typed locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/transfer-sample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Single-well transfer intent
 
     
   </span>
@@ -4201,6 +4239,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#liquidhandler" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        LiquidHandler
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#heater" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -4277,8 +4326,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.10.0
-    · <code title="dd7e4eb816cdc4ab409d5896264c5ec30edec08a">dd7e4eb8</code>
+    · SciLoom 0.11.0
+    · <code title="5427e7dbaca2504df7ede717af9444d0642accee">5427e7db</code>
   </p>
 </aside>
 
@@ -4330,6 +4379,16 @@ means <code>speed</code>. Configuration may come from a child called earlier in 
 same invocation; compilation does not assume a previous invocation supplied it.</p>
 <p>Property reads and augmented assignments such as <code>+=</code> are not supported.
 There is no measured getter, generic duration parameter or timed stop.</p>
+<h2 id="liquidhandler">LiquidHandler</h2>
+<p>Declare <code>liquid: LiquidHandler</code> from <code>sciloom</code>. Assign <code>aspirate_flow</code> and
+<code>dispense_flow</code> as FlowRate values, and <code>air_gap</code> as a Volume. All three settings
+are required explicitly. <code>transfer(source: Zone, destination: Zone, volume: Volume)</code>
+captures one source, one distinct destination and a positive amount, then checks
+the fixed tool's allowed locations and usable capacity before acting.</p>
+<p>Reference execution requires explicit locations and a <code>TransferDeviceBinding</code>;
+it records ordered intent without modelling liquid inventory or precision.
+Dynamic tool selection and native AutoSuite transfer profiles remain unavailable.
+See the <a href="../../../examples/transfer-sample/">complete example</a>.</p>
 <h2 id="heater">Heater</h2>
 <p>Declare <code>heater: Heater</code> using <code>from sciloom import Heater</code>. Its two write-only
 properties are <code>temperature: Temperature</code> and <code>ramp_rate: TemperatureRate</code>.

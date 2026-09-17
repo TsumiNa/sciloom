@@ -2794,6 +2794,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/transfer-sample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Single-well transfer intent
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/numeric-operations/" class="md-nav__link">
         
   
@@ -4378,8 +4405,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.10.0
-    · <code title="dd7e4eb816cdc4ab409d5896264c5ec30edec08a">dd7e4eb8</code>
+    · SciLoom 0.11.0
+    · <code title="5427e7dbaca2504df7ede717af9444d0642accee">5427e7db</code>
   </p>
 </aside>
 
@@ -4414,11 +4441,17 @@ automatically. Concrete services arrive with the operations that need them.</p>
 </code></pre></div>
 <p><code>environment.events</code> returns an immutable history snapshot across all runs using
 that environment. <code>result.events</code> remains limited to one successful run.
-<code>ExecutionEvent</code> is the union of DeviceEvent, LogEvent, AcknowledgementEvent,
-WallTimeEvent, TimerEvent, WaitEvent and CsvReadEvent. Narrow with
+<code>ExecutionEvent</code> is the union of DeviceEvent, TransferEvent, LogEvent,
+AcknowledgementEvent, DialogEvent, WallTimeEvent, TimerEvent, WaitEvent,
+CsvReadEvent, CsvAppendEvent, WellPropertyReadEvent and WellPropertyWriteEvent. Narrow with
 <code>isinstance(event, LogEvent)</code> before accessing log-specific fields; device events
 carry state snapshots. A failed run leaves earlier completed events in
 environment history and does not roll back their state changes.</p>
+<p><code>TransferEvent</code> contains the captured source/destination Zones, volume, physical
+identity and immutable applied configuration. It records a validated reference
+intent without changing enabled state or modelling liquid inventory. Invalid
+transfers leave no transfer event and stop subsequent effects. See the
+<a href="../../../examples/transfer-sample/">single-well example</a>.</p>
 <p>Reuse the same environment to share history explicitly. This does not share
 Function variables or device configurations between Interpreters. Child Function
 calls use their entry session's environment. Sessions and environments are

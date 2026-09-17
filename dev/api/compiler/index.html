@@ -2607,6 +2607,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/transfer-sample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Single-well transfer intent
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/numeric-operations/" class="md-nav__link">
         
   
@@ -5086,8 +5113,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.10.0
-    · <code title="dd7e4eb816cdc4ab409d5896264c5ec30edec08a">dd7e4eb8</code>
+    · SciLoom 0.11.0
+    · <code title="5427e7dbaca2504df7ede717af9444d0642accee">5427e7db</code>
   </p>
 </aside>
 
@@ -6893,7 +6920,10 @@ Configuration writes save logical values and do not require a selection.</p>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">DeviceBindings</span><span class="p">(</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">devices</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span>
-        <span class="n">DeviceBinding</span> <span class="o">|</span> <span class="n">DeviceSelectionBinding</span><span class="p">,</span> <span class="o">...</span>
+        <span class="n">DeviceBinding</span>
+        <span class="o">|</span> <span class="n">DeviceSelectionBinding</span>
+        <span class="o">|</span> <span class="n">TransferDeviceBinding</span><span class="p">,</span>
+        <span class="o">...</span><span class="p">,</span>
     <span class="p">]</span> <span class="o">=</span> <span class="p">(),</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -6931,11 +6961,16 @@ Configuration writes save logical values and do not require a selection.</p>
 
   &lt;span class=&quot;doc doc-labels&quot;&gt;
       &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="./#sciloom.core.bindings.DeviceSelectionBinding">DeviceSelectionBinding</a>, ...]</code>
+  &lt;/span&gt;" href="./#sciloom.core.bindings.DeviceSelectionBinding">DeviceSelectionBinding</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.core.bindings.TransferDeviceBinding&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../devices/#sciloom.core.bindings.TransferDeviceBinding">TransferDeviceBinding</a>, ...]</code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Fixed/selection bindings with unique logical and physical identities.</p>
+                <p>Fixed/selection/transfer bindings with unique logical and physical identities.</p>
               </div>
             </td>
             <td>
@@ -6961,7 +6996,7 @@ Configuration writes save logical values and do not require a selection.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>An entry is not a DeviceBinding or DeviceSelectionBinding.</p>
+                <p>An entry is not a supported typed binding record.</p>
               </div>
             </td>
           </tr>
@@ -7010,7 +7045,12 @@ Configuration writes save logical values and do not require a selection.</p>
   </span>
 
 </h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">devices</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">DeviceBinding</span> <span class="o">|</span> <span class="n">DeviceSelectionBinding</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">devices</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span>
+    <span class="n">DeviceBinding</span>
+    <span class="o">|</span> <span class="n">DeviceSelectionBinding</span>
+    <span class="o">|</span> <span class="n">TransferDeviceBinding</span><span class="p">,</span>
+    <span class="o">...</span><span class="p">,</span>
+<span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">

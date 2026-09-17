@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/examples/aspiration-chunk-ir/">
+        <link rel="canonical" href="https://tsumina.github.io/sciloom/dev/examples/transfer-sample/">
       
       
-        <link rel="prev" href="../runtime-workflows-ir/">
+        <link rel="prev" href="../transfer-settings/">
       
       
-        <link rel="next" href="../demo-device/">
+        <link rel="next" href="../numeric-operations/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Volume chunk after JSON - SciLoom</title>
+        <title>Single-well transfer intent - SciLoom</title>
       
     
     
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#resume-a-volume-calculation-after-json-restoration" class="md-skip">
+        <a href="#single-well-transfer-intent" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Volume chunk after JSON
+              Single-well transfer intent
             
           </span>
         </div>
@@ -2609,10 +2609,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../transfer-sample/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2627,6 +2636,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -3446,19 +3456,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      
-      
-      
-        
-      
-      
-      <a href="././" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../aspiration-chunk-ir/" class="md-nav__link">
         
   
   
@@ -3473,7 +3474,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -4106,80 +4106,289 @@
 
                   
 
-<h1 id="resume-a-volume-calculation-after-json-restoration">Resume a volume calculation after JSON restoration</h1>
-<p>This runner converts <a href="../aspiration-chunk/">AspirationChunk</a> from Python to IR,
-writes the full JSON, restores it and executes two calls in one reference
-session. The second call receives the first call's residual explicitly.</p>
-<div class="highlight"><pre><span></span><code><span class="go">uv run python -m examples.developer.aspiration_chunk_ir</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>aspiration_chunk_ir.json
-First: next=2, residual=3 mL, aspirate=4.25 mL
-Resumed: next=3, residual=0 mL, aspirate=3.25 mL
-</code></pre></div>
-<p>The runner reuses <code>repository_relative</code> to normalize diagnostic <code>SourceSpan.path</code>
-values inside the repository. Already-relative and out-of-tree paths are preserved.
-Line numbers and semantic fields remain
-unchanged. This makes the committed learning artifact portable; normal
-compilation does not rewrite source paths.</p>
-<p>This is a source-derived program, unlike the independent builders in
-<a href="../runtime-workflows-ir/">the workflow example</a>. Tests cover partial fills, exact
-capacity, the retained tolerance, group boundaries, empty and invalid inputs,
-and reset behavior. No environment services are needed for this pure calculation.
-There is no liquid-handling driver or simulated fluid transfer.</p>
-<div class="highlight"><pre><span></span><code><span class="sd">"""For developers: execute volume packing after a source-derived JSON round trip.</span>
+<h1 id="single-well-transfer-intent">Single-well transfer intent</h1>
+<p>Declare <code>liquid: LiquidHandler</code>, configure both flow rates and the air gap, then
+call <code>transfer(source, destination, volume)</code>. Configuration writes save their
+values without moving liquid. The command captures its three arguments once in
+declared order and validates them before producing a transfer event.</p>
+<div class="highlight"><pre><span></span><code><span class="sd">"""For experiment authors: configure and request one explicit single-well transfer.</span>
 
-<span class="sd">Run: ``uv run python -m examples.developer.aspiration_chunk_ir``</span>
-<span class="sd">Expected terminal output:</span>
-<span class="sd">    aspiration_chunk_ir.json</span>
-<span class="sd">    First: next=2, residual=3 mL, aspirate=4.25 mL</span>
-<span class="sd">    Resumed: next=3, residual=0 mL, aspirate=3.25 mL</span>
+<span class="sd">Run: ``uv run python examples/transfer_sample.py``</span>
+<span class="sd">Output: ``AutoSuite transfer profile awaits native validation.``</span>
 
-<span class="sd">The complete source-derived program is aspiration_chunk_ir.json. SourceSpan paths</span>
-<span class="sd">are explicitly normalized to repository-relative paths for this portable learning</span>
-<span class="sd">artifact; line positions and semantic fields are preserved. Compilation itself</span>
-<span class="sd">does not change paths. Repeated reference calls reset working state but reuse the</span>
-<span class="sd">same session. The caller explicitly supplies the previous residual to resume.</span>
-<span class="sd">No liquid transfer, device operation or vendor error-handler equivalence is claimed.</span>
+<span class="sd">Source and destination are runtime Zone inputs. Both flows and the air gap are</span>
+<span class="sd">explicit. The developer transfer_sample_ir example supplies trusted reference</span>
+<span class="sd">locations and tool capacity; it records intent without simulating liquid motion.</span>
+<span class="sd">No AutoSuite transfer profile is available in this stage.</span>
+<span class="sd">"""</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Function</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">LiquidHandler</span><span class="p">,</span> <span class="n">Zone</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">mL</span><span class="p">,</span> <span class="n">mL_per_min</span><span class="p">,</span> <span class="n">runtime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.diagnostics</span><span class="w"> </span><span class="kn">import</span> <span class="n">CompilationError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteTarget</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TransferSample</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Transfer 0.25 mL, then log only after the command succeeds."""</span>
+
+    <span class="n">liquid</span><span class="p">:</span> <span class="n">LiquidHandler</span>
+    <span class="n">source</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="n">Zone</span><span class="p">]</span>
+    <span class="n">destination</span><span class="p">:</span> <span class="n">Input</span><span class="p">[</span><span class="n">Zone</span><span class="p">]</span>
+
+    <span class="nd">@runtime</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">liquid</span><span class="o">.</span><span class="n">aspirate_flow</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">mL_per_min</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">liquid</span><span class="o">.</span><span class="n">dispense_flow</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">mL_per_min</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">liquid</span><span class="o">.</span><span class="n">air_gap</span> <span class="o">=</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">mL</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">liquid</span><span class="o">.</span><span class="n">transfer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">destination</span><span class="p">,</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">mL</span><span class="p">)</span>
+        <span class="n">log</span><span class="p">(</span><span class="s2">"transfer complete"</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="s2">"liquid"</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="s2">"experiment"</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">TransferSample</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">AutoSuiteTarget</span><span class="p">())</span>
+    <span class="k">except</span> <span class="n">CompilationError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">error</span><span class="o">.</span><span class="n">diagnostics</span> <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">code</span> <span class="o">!=</span> <span class="s2">"missing_resource_binding"</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">error</span><span class="o">.</span><span class="n">diagnostics</span><span class="p">):</span>
+            <span class="k">raise</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"AutoSuite transfer profile awaits native validation."</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">"No native transfer profile has been validated."</span><span class="p">)</span>
+</code></pre></div>
+<p>Run <code>uv run python examples/transfer_sample.py</code>. It reports that the AutoSuite
+transfer profile awaits native validation. The numbers illustrate typed intent;
+they are not a validated process recipe.</p>
+<p>For contributors, the example below adds a reference profile by subclassing
+<code>LiquidHandler</code>, supplies fixed locations and a typed <code>TransferDeviceBinding</code>,
+and compares Python, direct IR and JSON reference execution:</p>
+<div class="highlight"><pre><span></span><code><span class="sd">"""For contributors: fixed reference transfer, direct IR and JSON v4.</span>
+
+<span class="sd">Run: ``uv run python -m examples.developer.transfer_sample_ir``</span>
+<span class="sd">Expected output:</span>
+<span class="sd">    transfer_sample_ir.json</span>
+<span class="sd">    Transfer: well:source -&gt; well:destination; 0.25 mL</span>
+<span class="sd">    Reference intent only; native transfer remains gated.</span>
+
+<span class="sd">The complete direct-IR companion is transfer_sample_ir.json. The author flow</span>
+<span class="sd">has the same ordered configuration, transfer and log effects. BenchLiquidHandler</span>
+<span class="sd">is a reference contributor, not an AutoSuite tool/channel/calibration profile.</span>
 <span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClassVar</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">examples.aspiration_chunk</span><span class="w"> </span><span class="kn">import</span> <span class="n">AspirationChunk</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.interpreter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Interpreter</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.ir</span><span class="w"> </span><span class="kn">import</span> <span class="n">from_json</span><span class="p">,</span> <span class="n">to_json</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.units</span><span class="w"> </span><span class="kn">import</span> <span class="n">Volume</span><span class="p">,</span> <span class="n">mL</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.source_paths</span><span class="w"> </span><span class="kn">import</span> <span class="n">repository_relative</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">examples.transfer_sample</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransferSample</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">LiquidHandler</span><span class="p">,</span> <span class="n">mL</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.bindings</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeviceBindings</span><span class="p">,</span> <span class="n">TransferDeviceBinding</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.compiler</span><span class="w"> </span><span class="kn">import</span> <span class="n">Artifact</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.diagnostics</span><span class="w"> </span><span class="kn">import</span> <span class="n">Diagnostic</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.interpreter</span><span class="w"> </span><span class="kn">import</span> <span class="n">Interpreter</span><span class="p">,</span> <span class="n">ReferenceEnvironment</span><span class="p">,</span> <span class="n">TransferEvent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.ir</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CommandArgument</span><span class="p">,</span>
+    <span class="n">ConfigureProperty</span><span class="p">,</span>
+    <span class="n">DeviceCommand</span><span class="p">,</span>
+    <span class="n">DeviceResource</span><span class="p">,</span>
+    <span class="n">FunctionIR</span><span class="p">,</span>
+    <span class="n">Literal</span><span class="p">,</span>
+    <span class="n">LogValue</span><span class="p">,</span>
+    <span class="n">Program</span><span class="p">,</span>
+    <span class="n">Reference</span><span class="p">,</span>
+    <span class="n">ScalarType</span><span class="p">,</span>
+    <span class="n">Variable</span><span class="p">,</span>
+    <span class="n">VariableRole</span><span class="p">,</span>
+    <span class="n">ZoneType</span><span class="p">,</span>
+    <span class="n">from_json</span><span class="p">,</span>
+    <span class="n">to_json</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.ir.device_contracts</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AIR_GAP_ID</span><span class="p">,</span>
+    <span class="n">ASPIRATE_FLOW_ID</span><span class="p">,</span>
+    <span class="n">BASE_DEVICE_CONTRACT</span><span class="p">,</span>
+    <span class="n">DISPENSE_FLOW_ID</span><span class="p">,</span>
+    <span class="n">LIQUID_HANDLER_CONTRACT</span><span class="p">,</span>
+    <span class="n">TRANSFER_ID</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.core.locations</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocationDirectory</span><span class="p">,</span> <span class="n">Well</span><span class="p">,</span> <span class="n">Zone</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sciloom.devices.declarations</span><span class="w"> </span><span class="kn">import</span> <span class="n">bind_device</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">BenchLiquidHandler</span><span class="p">(</span><span class="n">LiquidHandler</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Explicit reference tool, with no guessed vendor connections."""</span>
+
+    <span class="n">device_type_id</span><span class="p">:</span> <span class="n">ClassVar</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"example.bench-liquid-handler/v1"</span>
+    <span class="n">writable_properties</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"aspirate_flow"</span><span class="p">,</span> <span class="s2">"dispense_flow"</span><span class="p">,</span> <span class="s2">"air_gap"</span><span class="p">)</span>
+    <span class="n">required_configuration</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"aspirate_flow"</span><span class="p">,</span> <span class="s2">"dispense_flow"</span><span class="p">,</span> <span class="s2">"air_gap"</span><span class="p">)</span>
+    <span class="n">supported_operations</span> <span class="o">=</span> <span class="p">(</span><span class="n">LiquidHandler</span><span class="o">.</span><span class="n">transfer</span><span class="p">,)</span>
+
+
+<span class="n">SOURCE</span> <span class="o">=</span> <span class="n">Zone</span><span class="p">(</span><span class="n">well_ids</span><span class="o">=</span><span class="p">(</span><span class="s2">"well:source"</span><span class="p">,))</span>
+<span class="n">DESTINATION</span> <span class="o">=</span> <span class="n">Zone</span><span class="p">(</span><span class="n">well_ids</span><span class="o">=</span><span class="p">(</span><span class="s2">"well:destination"</span><span class="p">,))</span>
+<span class="n">LOCATIONS</span> <span class="o">=</span> <span class="n">LocationDirectory</span><span class="p">(</span>
+    <span class="n">wells</span><span class="o">=</span><span class="p">(</span><span class="n">Well</span><span class="p">(</span><span class="n">identity</span><span class="o">=</span><span class="s2">"well:source"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"Source"</span><span class="p">),</span> <span class="n">Well</span><span class="p">(</span><span class="n">identity</span><span class="o">=</span><span class="s2">"well:destination"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"Destination"</span><span class="p">))</span>
+<span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">TransferRecordingTarget</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Record JSON with fixed, typed reference facts, never hardware XML."""</span>
+
+    <span class="n">target_id</span> <span class="o">=</span> <span class="s2">"example.transfer-recording/v1"</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">resolve_devices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DeviceBindings</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Bind one logical tool to known source/destination wells and capacity."""</span>
+        <span class="k">return</span> <span class="n">DeviceBindings</span><span class="p">(</span>
+            <span class="n">devices</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">TransferDeviceBinding</span><span class="p">(</span>
+                    <span class="n">binding</span><span class="o">=</span><span class="n">bind_device</span><span class="p">(</span>
+                        <span class="n">logical_id</span><span class="o">=</span><span class="s2">"liquid"</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">BenchLiquidHandler</span><span class="p">(),</span> <span class="n">physical_id</span><span class="o">=</span><span class="s2">"reference:liquid-1"</span>
+                    <span class="p">),</span>
+                    <span class="n">source_wells</span><span class="o">=</span><span class="n">SOURCE</span><span class="p">,</span>
+                    <span class="n">destination_wells</span><span class="o">=</span><span class="n">DESTINATION</span><span class="p">,</span>
+                    <span class="n">usable_capacity</span><span class="o">=</span><span class="mi">1</span> <span class="o">*</span> <span class="n">mL</span><span class="p">,</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Diagnostic</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">"""Reference recording adds no native encoding claims."""</span>
+        <span class="k">return</span> <span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Artifact</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Emit the shared typed semantic contract."""</span>
+        <span class="k">return</span> <span class="n">Artifact</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">to_json</span><span class="p">(</span><span class="n">program</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(),</span> <span class="n">media_type</span><span class="o">=</span><span class="s2">"application/json"</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">".json"</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">build_program</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Program</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Express TransferSample directly, retaining locations as typed inputs."""</span>
+    <span class="k">return</span> <span class="n">Program</span><span class="p">(</span>
+        <span class="n">entry_function_id</span><span class="o">=</span><span class="s2">"transfer"</span><span class="p">,</span>
+        <span class="n">device_types</span><span class="o">=</span><span class="p">(</span><span class="n">BASE_DEVICE_CONTRACT</span><span class="p">,</span> <span class="n">LIQUID_HANDLER_CONTRACT</span><span class="p">),</span>
+        <span class="n">resources</span><span class="o">=</span><span class="p">(</span>
+            <span class="n">DeviceResource</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"liquid"</span><span class="p">,</span> <span class="n">logical_id</span><span class="o">=</span><span class="s2">"liquid"</span><span class="p">,</span> <span class="n">device_type_id</span><span class="o">=</span><span class="n">LIQUID_HANDLER_CONTRACT</span><span class="o">.</span><span class="n">type_id</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">functions</span><span class="o">=</span><span class="p">(</span>
+            <span class="n">FunctionIR</span><span class="p">(</span>
+                <span class="n">node_id</span><span class="o">=</span><span class="s2">"transfer"</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="s2">"TransferSample"</span><span class="p">,</span>
+                <span class="n">variables</span><span class="o">=</span><span class="p">(</span>
+                    <span class="n">Variable</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"source"</span><span class="p">,</span> <span class="n">owner_id</span><span class="o">=</span><span class="s2">"transfer"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"source"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ZoneType</span><span class="p">(),</span> <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">INPUT</span>
+                    <span class="p">),</span>
+                    <span class="n">Variable</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"destination"</span><span class="p">,</span>
+                        <span class="n">owner_id</span><span class="o">=</span><span class="s2">"transfer"</span><span class="p">,</span>
+                        <span class="n">name</span><span class="o">=</span><span class="s2">"destination"</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="n">ZoneType</span><span class="p">(),</span>
+                        <span class="n">role</span><span class="o">=</span><span class="n">VariableRole</span><span class="o">.</span><span class="n">INPUT</span><span class="p">,</span>
+                    <span class="p">),</span>
+                <span class="p">),</span>
+                <span class="n">body</span><span class="o">=</span><span class="p">(</span>
+                    <span class="n">ConfigureProperty</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"set-aspirate"</span><span class="p">,</span>
+                        <span class="n">resource_id</span><span class="o">=</span><span class="s2">"liquid"</span><span class="p">,</span>
+                        <span class="n">property_id</span><span class="o">=</span><span class="n">ASPIRATE_FLOW_ID</span><span class="p">,</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"aspirate"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">FLOW_RATE</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">1e-6</span> <span class="o">/</span> <span class="mi">60</span><span class="p">),</span>
+                    <span class="p">),</span>
+                    <span class="n">ConfigureProperty</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"set-dispense"</span><span class="p">,</span>
+                        <span class="n">resource_id</span><span class="o">=</span><span class="s2">"liquid"</span><span class="p">,</span>
+                        <span class="n">property_id</span><span class="o">=</span><span class="n">DISPENSE_FLOW_ID</span><span class="p">,</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"dispense"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">FLOW_RATE</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">2e-6</span> <span class="o">/</span> <span class="mi">60</span><span class="p">),</span>
+                    <span class="p">),</span>
+                    <span class="n">ConfigureProperty</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"set-gap"</span><span class="p">,</span>
+                        <span class="n">resource_id</span><span class="o">=</span><span class="s2">"liquid"</span><span class="p">,</span>
+                        <span class="n">property_id</span><span class="o">=</span><span class="n">AIR_GAP_ID</span><span class="p">,</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"gap"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">VOLUME</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.05e-6</span><span class="p">),</span>
+                    <span class="p">),</span>
+                    <span class="n">DeviceCommand</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"move"</span><span class="p">,</span>
+                        <span class="n">resource_id</span><span class="o">=</span><span class="s2">"liquid"</span><span class="p">,</span>
+                        <span class="n">operation_id</span><span class="o">=</span><span class="n">TRANSFER_ID</span><span class="p">,</span>
+                        <span class="n">arguments</span><span class="o">=</span><span class="p">(</span>
+                            <span class="n">CommandArgument</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"source"</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"source-ref"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"source"</span><span class="p">)),</span>
+                            <span class="n">CommandArgument</span><span class="p">(</span>
+                                <span class="n">name</span><span class="o">=</span><span class="s2">"destination"</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">Reference</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"destination-ref"</span><span class="p">,</span> <span class="n">symbol_id</span><span class="o">=</span><span class="s2">"destination"</span><span class="p">)</span>
+                            <span class="p">),</span>
+                            <span class="n">CommandArgument</span><span class="p">(</span>
+                                <span class="n">name</span><span class="o">=</span><span class="s2">"volume"</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"volume"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">VOLUME</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mf">0.25e-6</span><span class="p">)</span>
+                            <span class="p">),</span>
+                        <span class="p">),</span>
+                    <span class="p">),</span>
+                    <span class="n">LogValue</span><span class="p">(</span>
+                        <span class="n">node_id</span><span class="o">=</span><span class="s2">"log"</span><span class="p">,</span>
+                        <span class="n">value</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"message"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">"transfer complete"</span><span class="p">),</span>
+                        <span class="n">category</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"category"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">"liquid"</span><span class="p">),</span>
+                        <span class="n">stream</span><span class="o">=</span><span class="n">Literal</span><span class="p">(</span><span class="n">node_id</span><span class="o">=</span><span class="s2">"stream"</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">ScalarType</span><span class="o">.</span><span class="n">TEXT</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s2">"experiment"</span><span class="p">),</span>
+                    <span class="p">),</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".json"</span><span class="p">)</span>
-    <span class="n">path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">to_json</span><span class="p">(</span><span class="n">repository_relative</span><span class="p">(</span><span class="n">AspirationChunk</span><span class="p">()</span><span class="o">.</span><span class="n">to_ir</span><span class="p">())),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span>
-    <span class="n">session</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">(</span><span class="n">from_json</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)))</span>
-    <span class="n">inputs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">Volume</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="n">Volume</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">"volumes"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span> <span class="o">*</span> <span class="n">mL</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">mL</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">mL</span><span class="p">],</span>
-        <span class="s2">"start_idx"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="s2">"start_residual"</span><span class="p">:</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">mL</span><span class="p">,</span>
-        <span class="s2">"max_idx"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-        <span class="s2">"syringe"</span><span class="p">:</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">mL</span><span class="p">,</span>
-        <span class="s2">"airgap"</span><span class="p">:</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">mL</span><span class="p">,</span>
-        <span class="s2">"safety"</span><span class="p">:</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">mL</span><span class="p">,</span>
-        <span class="s2">"extra"</span><span class="p">:</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">mL</span><span class="p">,</span>
-    <span class="p">}</span>
-    <span class="n">first</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">)</span>
-    <span class="n">resumed</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
-        <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="o">**</span><span class="n">inputs</span><span class="p">,</span> <span class="s2">"start_idx"</span><span class="p">:</span> <span class="n">first</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"next_idx"</span><span class="p">],</span> <span class="s2">"start_residual"</span><span class="p">:</span> <span class="n">first</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"next_residual"</span><span class="p">]}</span>
-    <span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">result</span> <span class="ow">in</span> <span class="p">((</span><span class="s2">"First"</span><span class="p">,</span> <span class="n">first</span><span class="p">),</span> <span class="p">(</span><span class="s2">"Resumed"</span><span class="p">,</span> <span class="n">resumed</span><span class="p">)):</span>
-        <span class="n">residual</span><span class="p">,</span> <span class="n">aspirate</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"next_residual"</span><span class="p">],</span> <span class="n">result</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"aspirate"</span><span class="p">]</span>
-        <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s2">"valid"</span><span class="p">]</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">residual</span><span class="p">,</span> <span class="n">Volume</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">aspirate</span><span class="p">,</span> <span class="n">Volume</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">: next=</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s1">'next_idx'</span><span class="p">]</span><span class="si">}</span><span class="s2">, residual=</span><span class="si">{</span><span class="n">residual</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">mL</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> mL, aspirate=</span><span class="si">{</span><span class="n">aspirate</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">mL</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> mL"</span>
-        <span class="p">)</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">TransferRecordingTarget</span><span class="p">()</span>
+    <span class="n">compiled</span> <span class="o">=</span> <span class="n">TransferSample</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
+    <span class="n">program</span> <span class="o">=</span> <span class="n">build_program</span><span class="p">()</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s2">".json"</span><span class="p">)</span>
+    <span class="n">output</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">to_json</span><span class="p">(</span><span class="n">program</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span>
+    <span class="n">restored</span> <span class="o">=</span> <span class="n">from_json</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">restored</span> <span class="o">==</span> <span class="n">program</span>
+    <span class="n">snapshots</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">candidate</span> <span class="ow">in</span> <span class="p">(</span><span class="n">compiled</span><span class="o">.</span><span class="n">semantic_ir</span><span class="p">,</span> <span class="n">compiled</span><span class="o">.</span><span class="n">specialized_ir</span><span class="p">,</span> <span class="n">restored</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">Interpreter</span><span class="p">(</span>
+            <span class="n">candidate</span><span class="p">,</span>
+            <span class="n">environment</span><span class="o">=</span><span class="n">ReferenceEnvironment</span><span class="p">(</span>
+                <span class="n">locations</span><span class="o">=</span><span class="n">LOCATIONS</span><span class="p">,</span>
+                <span class="n">device_bindings</span><span class="o">=</span><span class="n">target</span><span class="o">.</span><span class="n">resolve_devices</span><span class="p">(</span><span class="n">candidate</span><span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">"source"</span><span class="p">:</span> <span class="n">SOURCE</span><span class="p">,</span> <span class="s2">"destination"</span><span class="p">:</span> <span class="n">DESTINATION</span><span class="p">})</span>
+        <span class="n">transfer</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">event</span> <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">events</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">TransferEvent</span><span class="p">))</span>
+        <span class="n">snapshots</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">transfer</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">transfer</span><span class="o">.</span><span class="n">destination</span><span class="p">,</span> <span class="n">transfer</span><span class="o">.</span><span class="n">volume</span><span class="p">,</span> <span class="n">transfer</span><span class="o">.</span><span class="n">configuration</span><span class="p">))</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">resources</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">.</span><span class="n">enabled</span>
+    <span class="k">assert</span> <span class="n">snapshots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">snapshots</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">snapshots</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Transfer: </span><span class="si">{</span><span class="n">SOURCE</span><span class="o">.</span><span class="n">well_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">DESTINATION</span><span class="o">.</span><span class="n">well_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">; </span><span class="si">{</span><span class="n">transfer</span><span class="o">.</span><span class="n">volume</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">mL</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2"> mL"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Reference intent only; native transfer remains gated."</span><span class="p">)</span>
 </code></pre></div>
-<p><a href="../../_generated/examples/developer/aspiration_chunk_ir.py">Download runner</a> ·
-<a href="../../_generated/examples/developer/source_paths.py">Path helper</a> ·
-<a href="../../_generated/examples/aspiration_chunk.py">Download author source</a> ·
-<a href="../../_generated/examples/developer/aspiration_chunk_ir.json">Download JSON</a></p>
+<p>Run <code>uv run python -m examples.developer.transfer_sample_ir</code>. It writes the
+complete <code>transfer_sample_ir.json</code> companion and reports a 0.25 mL transfer from
+<code>well:source</code> to <code>well:destination</code>. The successful transfer is followed by a log.</p>
+<p>Each argument must select one known, allowed well; source and destination must
+differ. Volume and both flows must be positive, air gap nonnegative, and liquid
+plus air gap must fit the explicit usable capacity. Missing facts or invalid
+arguments stop execution before transfer and the following log. No tool,
+channel, rinse setting or calibration is inferred for a real instrument.</p>
+<p>The immutable transfer event records the applied configuration. Later writes
+change saved settings; the next transfer applies them. There is no implicit
+start/stop, inventory simulation, capacity splitting or precision guarantee.</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python, direct IR, JSON v4</td>
+<td>Implemented</td>
+</tr>
+<tr>
+<td>Reference transfer intent</td>
+<td>Implemented with explicit fixed binding and locations</td>
+</tr>
+<tr>
+<td>AutoSuite static transfer generation</td>
+<td>Gated pending verified tool profile and parameter encoding</td>
+</tr>
+<tr>
+<td>Executor / instrument acceptance</td>
+<td>Not verified</td>
+</tr>
+</tbody>
+</table>
+<p><a href="../../_generated/examples/transfer_sample.py">Author Python</a> ·
+<a href="../../_generated/examples/developer/transfer_sample_ir.py">Contributor Python</a> ·
+<a href="../../_generated/examples/developer/transfer_sample_ir.json">Complete JSON</a></p>
 
 
 
@@ -4212,7 +4421,7 @@ There is no liquid-handling driver or simulated fluid transfer.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../runtime-workflows-ir/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Complete workflows from IR">
+          <a href="../transfer-settings/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Transfer settings and typed locations">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
@@ -4222,20 +4431,20 @@ There is no liquid-handling driver or simulated fluid transfer.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Complete workflows from IR
+                Transfer settings and typed locations
               </div>
             </div>
           </a>
         
         
           
-          <a href="../demo-device/" class="md-footer__link md-footer__link--next" aria-label="Next: Independent device">
+          <a href="../numeric-operations/" class="md-footer__link md-footer__link--next" aria-label="Next: Numeric operations">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Independent device
+                Numeric operations
               </div>
             </div>
             <div class="md-footer__button md-icon">
