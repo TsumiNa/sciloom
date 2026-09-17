@@ -84,6 +84,16 @@ Fresh reference sessions specify initialization; actual APP restart and both
 reset settings remain explicit host experiments (class C), never inferred from
 reference success or generated XML. No APP is generated or modified.
 
+## D006 — R1.2 CI portability correction (2026-09-18)
+
+CI on PR #105 passed execution checks but found a changed example report digest
+on Linux: normal source lowering retains absolute checkout paths. The developer
+example now reuses examples/developer/source_paths.repository_relative before
+compile_ir, like existing committed IR examples. A checkout-relocation regression
+checks both complete companions. Production export still hashes exact canonical
+input IR including source metadata; no JSON/API semantics change (class A).
+Version remains 0.5.0. Latest-head CI must pass before merge.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,

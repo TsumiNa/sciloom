@@ -10,13 +10,18 @@ Expected terminal output:
 Complete generated companions are beside this module. No APP is supplied, so
 the report lists the persistent Var requirement and missing deployment facts.
 The reference calls specify SciLoom behavior; no Executor or hardware is run.
+This example normalizes diagnostic paths before compilation so the complete IR
+digest is reproducible in another checkout. The production exporter hashes its
+actual input IR without rewriting source metadata.
 """
 
 from pathlib import Path
 
 from sciloom import Function, Input, Output, Var, runtime
+from sciloom.core.compiler import compile_ir
 from sciloom.core.interpreter import Interpreter
 from sciloom_autosuite import AutoSuiteTarget, write_autosuite_review
+from .source_paths import repository_relative
 
 
 class Accumulator(Function):
@@ -32,7 +37,7 @@ class Accumulator(Function):
 
 if __name__ == "__main__":
     target = AutoSuiteTarget()
-    compiled = Accumulator().compile(target=target)
+    compiled = compile_ir(repository_relative(Accumulator().to_ir()), target=target)
     session = Interpreter(compiled.semantic_ir)
     first = session.run(inputs={"amount": 1}).outputs["result"]
     second = session.run(inputs={"amount": 1}).outputs["result"]

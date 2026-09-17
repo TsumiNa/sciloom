@@ -112,6 +112,18 @@ def test_malformed_selected_ir_is_not_emitted(tmp_path):
     assert not list(tmp_path.iterdir())
 
 
+def test_device_queries_are_not_implicitly_specialized_on_export(tmp_path):
+    from .portability_test import PortableAgitation, autosuite
+
+    target = autosuite()
+    result = PortableAgitation().compile(target=target)
+    with pytest.raises(ValueError, match="DeviceIf"):
+        write_autosuite_review(
+            replace(result, specialized_ir=result.semantic_ir), target=target, path=tmp_path / "out.asfp"
+        )
+    assert not list(tmp_path.iterdir())
+
+
 def test_io_errors_propagate_and_aliasing_paths_are_rejected(tmp_path):
     target = AutoSuiteTarget()
     result = Stateful().compile(target=target)
