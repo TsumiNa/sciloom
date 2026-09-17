@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='utf-8'?>
+<functions>
+  <function typeid="Chemspeed.SATaskFunctionDefinition.1">
+    <description />
+    <name>Accumulator</name>
+    <edittime>0</edittime>
+    <expanded>1</expanded>
+    <functiondata>
+      <inputs>
+        <count>1</count>
+        <item0>
+          <id>{334EBF33-48DF-5FC6-BCD5-35B25A0321B4}</id>
+          <name>amount</name>
+          <variablename>amount</variablename>
+          <variabletype>integer</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item0>
+        <sortType>0</sortType>
+      </inputs>
+      <outputs>
+        <count>1</count>
+        <item0>
+          <id>{F0E3AFDF-6D3E-5BDD-8367-B18890BD34DF}</id>
+          <name>result</name>
+          <variablename>result</variablename>
+          <variabletype>integer</variabletype>
+          <isarray>0</isarray>
+          <expression />
+        </item0>
+        <sortType>0</sortType>
+      </outputs>
+    </functiondata>
+    <id>{DCF7A86D-84D0-5C0A-A534-B0A276E98D39}</id>
+    <components>
+      <component typeid="Chemspeed.SAMacroTask.1">
+        <description />
+        <name>Macro Task</name>
+        <edittime>0</edittime>
+        <expanded>1</expanded>
+        <conditionloop>1</conditionloop>
+        <conditionif />
+        <conditionwhile />
+        <conditiontype>0</conditiontype>
+        <loopvariable>loop</loopvariable>
+        <fragmentvariable>fragment</fragmentvariable>
+        <executionmode>0</executionmode>
+        <sequentialzones>
+          <count>0</count>
+        </sequentialzones>
+        <multicondition>0</multicondition>
+        <multiloop>0</multiloop>
+        <variables sortingType="1">
+          <variable>
+            <name>total</name>
+            <value>
+              <type>3</type>
+              <value>0</value>
+            </value>
+            <siunit>1</siunit>
+            <unit>s</unit>
+            <array>0</array>
+            <creationtime>0</creationtime>
+            <constant>0</constant>
+          </variable>
+        </variables>
+        <id>{37350627-F9A0-527A-ADE7-4D01665E8DDC}</id>
+        <tasks>
+          <task typeid="Chemspeed.SATaskSetVariable.1">
+            <description />
+            <name>Set Variable</name>
+            <edittime>0</edittime>
+            <variablename>total</variablename>
+            <expressiontext>total + amount</expressiontext>
+            <elementselectmode>0</elementselectmode>
+            <elementnumber />
+            <numberofelements />
+            <startindex>0</startindex>
+            <clearvariable>0</clearvariable>
+            <sortwells>0</sortwells>
+            <enumerationtype>0</enumerationtype>
+            <wellsenumeration>0</wellsenumeration>
+            <elementsenumeration>0</elementsenumeration>
+            <id>{27BC3A70-9355-57F4-84C3-8BBD9BFA7351}</id>
+          </task>
+          <task typeid="Chemspeed.SATaskSetVariable.1">
+            <description />
+            <name>Set Variable</name>
+            <edittime>0</edittime>
+            <variablename>result</variablename>
+            <expressiontext>total</expressiontext>
+            <elementselectmode>0</elementselectmode>
+            <elementnumber />
+            <numberofelements />
+            <startindex>0</startindex>
+            <clearvariable>0</clearvariable>
+            <sortwells>0</sortwells>
+            <enumerationtype>0</enumerationtype>
+            <wellsenumeration>0</wellsenumeration>
+            <elementsenumeration>0</elementsenumeration>
+            <id>{D67F7B64-5301-5313-B081-E7559EA7D80D}</id>
+          </task>
+        </tasks>
+      </component>
+    </components>
+  </function>
+</functions>

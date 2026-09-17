@@ -88,6 +88,7 @@ jobs:
       - run: uv run python -m examples.developer.agitation_ir
       - run: uv run python -m examples.developer.list_ir
       - run: uv run python -m examples.developer.reference_environment
+      - run: uv run python -m examples.developer.deployment_review
       - run: uv run python -m examples.developer.logging_ir
       - run: uv run python -m examples.developer.confirmation_ir
       - run: uv run python -m examples.developer.wall_time_ir

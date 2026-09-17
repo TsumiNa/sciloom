@@ -80,11 +80,34 @@ The hash identifies the exact compressed APP bytes. A manually constructed layou
 has unknown provenance by default. The configuration label is only a display
 name, not a unique application identity.
 
-These read-only records do not yet attach settings to `AutoSuiteTarget` or reject
-compilation based on them. In particular, check Macro reset behavior before using
-persistent `Var` state in a native APP. A deployment report's `compatible` status
-means only its checked conditions match; its separate `native_status` remains
-`pending`. See the [settings API](../../api/autosuite.md#read-only-application-settings).
+Pass both records to the target to check deployment conditions:
+
+```python
+from sciloom_autosuite import AutoSuiteTarget, write_autosuite_review
+
+target = AutoSuiteTarget(deployment=deployment, layout=layout)
+compiled = program.compile(target=target)  # Supply devices=... for device resources.
+report = write_autosuite_review(compiled, target=target, path="procedure.asfp")
+print(report.status, report.native_status)
+```
+
+Known product-version or APP-source conflicts reject compilation. A reset-enabled
+APP also rejects programs with internal `Var` fields or saved device configuration:
+their values must persist across calls. SciLoom neither changes the APP nor moves
+state into global variables. Missing settings or provenance give `unknown` status.
+
+For offline review, use `AutoSuiteTarget()` and the same exporter. It writes
+`procedure.asfp` and `procedure.deployment.json`, including state requirements,
+missing facts and hashes of the artifact and canonical specialized IR. The
+exporter rechecks the selected contracts, target restrictions and exact emission
+before writing; a mismatched target, binding or artifact is rejected. Supply the
+target whose settings you intend to assess. `compiled.write(...)` continues to
+write only ASFP. The two review files are not written atomically; IO errors propagate.
+
+A report's `compatible` status means only its checked deployment conditions match;
+its separate `native_status` remains `pending`. It does not certify native lifetime
+behavior or instrument acceptance. See the
+[settings API](../../api/autosuite.md#read-only-application-settings).
 
 ## Compile-time queries
 

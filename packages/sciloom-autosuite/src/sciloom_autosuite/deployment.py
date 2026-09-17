@@ -117,6 +117,8 @@ class AutoSuiteDeploymentReport:
         layout_app_sha256: Layout source provenance when supplied and known.
         requirements: Ordered conditions with affected semantic nodes and paths.
         findings: Incompatibilities or missing facts, separate from requirements.
+        artifact_sha256: Exact artifact digest after checked review export, else None.
+        specialized_ir_sha256: Canonical selected Program digest after export, else None.
 
     Compatible means only the documented checks passed. It is not permission to
     execute hardware or proof of Executor acceptance. Reports are not Program JSON.
@@ -128,6 +130,8 @@ class AutoSuiteDeploymentReport:
     layout_app_sha256: str | None = None
     requirements: tuple[Diagnostic, ...] = ()
     findings: tuple[Diagnostic, ...] = ()
+    artifact_sha256: str | None = None
+    specialized_ir_sha256: str | None = None
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "status", AutoSuiteDeploymentStatus(self.status))
@@ -135,10 +139,10 @@ class AutoSuiteDeploymentReport:
             raise ValueError("Report target_id must be nonempty text.")
         if self.deployment is not None and type(self.deployment) is not AutoSuiteDeployment:
             raise TypeError("Report deployment must be AutoSuiteDeployment or None.")
-        if self.layout_app_sha256 is not None and (
-            type(self.layout_app_sha256) is not str or re.fullmatch(r"[0-9a-f]{64}", self.layout_app_sha256) is None
-        ):
-            raise ValueError("Report layout_app_sha256 must be a lowercase SHA-256 digest or None.")
+        for name in ("layout_app_sha256", "artifact_sha256", "specialized_ir_sha256"):
+            value = getattr(self, name)
+            if value is not None and (type(value) is not str or re.fullmatch(r"[0-9a-f]{64}", value) is None):
+                raise ValueError(f"Report {name} must be a lowercase SHA-256 digest or None.")
         for name in ("requirements", "findings"):
             values = getattr(self, name)
             if type(values) is not tuple or any(type(value) is not Diagnostic for value in values):

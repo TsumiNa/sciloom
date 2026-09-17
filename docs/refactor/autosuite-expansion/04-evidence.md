@@ -25,7 +25,7 @@ No archive, image or raw XML is copied into this tracked plan.
 | Evidence | Established fact | Not established | Owner |
 | --- | --- | --- | --- |
 | Screenshots 18/21, manual §3.5.1 p46 and macro variables p118, primary APP | Reset checkbox checked/disabled; manual defines re-entry reset; primary APP has resetvariables=1 | Actual generated accumulator behavior under Executor | R1 |
-| Existing interpreter accumulator | Same session returns 1 then 2; current target accepts generation | Equivalent native persistence in reset-enabled APP | R1 |
+| Interpreter accumulator and R1 deployment guard | Same session returns 1 then 2; offline generation remains; known reset-enabled persistent programs reject | Equivalent native persistence in reset-enabled APP | R1 |
 | Screenshots 15/16 + test.asfp | Append/Comma/CRLF match exportbehaviour=0/delimitermode=0/endlinecharacter=0 in this sample | Byte encoding, repeated append, overwrite/failure behavior or other profiles | R2 |
 | Screenshot 08 + test.asfp | Visible upper rows are part of 48 rows; UI well numbers are 1-based and XML addresses 0-based | General transfer plan/physical equivalence | R6 |
 | Screenshots 21/22 | Local variable 50°C differs from task's 20°C; native values 323.16/293.16 observed | Reason for apparent 273.16 offset; correct thermal mapping for other profiles | R5 |
@@ -44,6 +44,7 @@ successful-execution golden fixture. Preserve inactive/grey fields as inactive.
 ## Existing gates and receipt requirements
 
 Reuse [failure gate](../../../autosuite/docs/24_RUNTIME_FAILURE_GATE.md),
+[state lifetime](../../../autosuite/docs/33_DEPLOYMENT_STATE_LIFETIME.md),
 [CSV read](../../../autosuite/docs/27_CSV_READ_MAPPING.md),
 [CSV append](../../../autosuite/docs/28_CSV_APPEND_MAPPING.md),
 [well properties](../../../autosuite/docs/31_WELL_PROPERTY_MAPPING.md) and

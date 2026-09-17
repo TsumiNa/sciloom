@@ -1,6 +1,6 @@
 [project]
 name = "SciLoom"
-version = "0.4.0"
+version = "0.5.0"
 description = "SciLoom — programmable scientific automation from one semantic model."
 readme = "README.md"
 requires-python = ">=3.12,<3.15"
@@ -228,6 +228,7 @@ module = [
     "sciloom_autosuite.target_test",
     "sciloom_autosuite.layout_test",
     "sciloom_autosuite.deployment_test",
+    "sciloom_autosuite.review_test",
     "sciloom_autosuite.portability_test",
 ]
 disallow_untyped_defs = false

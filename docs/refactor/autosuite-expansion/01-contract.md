@@ -2,7 +2,8 @@
 
 ## Status and invariants
 
-R1.1 facts/report records and layout provenance are **implemented in this PR**.
+R1 facts/report records, layout provenance, target guards and review export are
+**implemented** (R1.1 merged #104; R1.2 in this PR).
 Other interfaces introduced here are **planned**, not currently importable unless
 explicitly called implemented. Availability is tied to the named PR and its merge,
 not to presence of these examples. Reassess under
@@ -35,13 +36,13 @@ Public imports from sciloom_autosuite:
   emits deterministic report data, not a Program/v4 document.
   Its requirements and findings are immutable tuples of existing Diagnostic
   records; its native_status is always pending. The private shared assessment
-  is implemented, but target integration and review export remain R1.2.
+  is shared by target validation and review export after R1.2.
 - Add `app_sha256: str | None = None` to target-only AutoSuiteLayout.
   from_app computes it from the same exact input bytes as deployment reading;
   manually constructed layouts default to unknown provenance. Do not include
   provenance in semantic JSON, vendor XML or existing identity seeds.
 
-### Planned after R1.2
+### Implemented in R1.2
 
 `AutoSuiteTarget(..., deployment: AutoSuiteDeployment | None = None)`.
 `target.deployment_report(program: Program) -> AutoSuiteDeploymentReport`
@@ -61,7 +62,7 @@ settings do not obstruct programs without that requirement. COMPATIBLE certifies
 only these checked conditions, never Executor acceptance.
 
 Retain offline ASFP generation with UNKNOWN deployment status. Supply a
-target-owned review exporter with this planned signature:
+target-owned review exporter with this signature:
 
 ```python
 from pathlib import Path
@@ -88,7 +89,16 @@ second compiler or a mutable target cache. It must not re-resolve the authored
 Program, introduce an implicit specialization or change CompileResult.write.
 Do not promise atomic multi-file writes; report IO failure normally.
 
-Planned usage after R1.2 (requires a known compatible APP):
+The result does not contain a separate physical-binding snapshot. Check its
+specialized concrete resource contracts against target binding facts, then
+compare full deterministic emission (including profile-dependent identities).
+Reject remaining DeviceIf and invalid selected IR through existing validators.
+The returned report carries optional artifact_sha256 and specialized_ir_sha256;
+ordinary assessment leaves both None. Hash the exact artifact bytes and UTF-8
+canonical to_json(specialized_ir), including supplied source metadata. Refuse an
+output path equal to its sidecar path before writing either file.
+
+Usage after R1.2 (requires a known compatible APP):
 
 ```python
 from sciloom import Function, Input, Output, Var, runtime
