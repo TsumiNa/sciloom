@@ -1,7 +1,7 @@
 """Explicit external-state ownership for deterministic reference execution."""
 
 from dataclasses import dataclass, field
-from typing import TypeAlias, TypeVar
+from typing import Literal, TypeAlias, TypeVar
 
 from sciloom.core.bindings import DeviceBindings
 from sciloom.core.diagnostics import SourceSpan
@@ -12,6 +12,7 @@ from sciloom.units import Duration
 from .acknowledgements import QueuedAcknowledgements
 from .clocks import VirtualClock, WallClock
 from .device_state import DeviceEvent
+from .dialogs import DialogOutcome, QueuedDialogResponses
 from .files import FileService
 from .properties import WellProperties
 from .values import InputScalar, fail
@@ -51,6 +52,36 @@ class AcknowledgementEvent:
     node_id: str
     source: SourceSpan | None
     message: str
+
+
+@dataclass(frozen=True, kw_only=True)
+class DialogEvent:
+    """A consumed response, including failures before any subsequent effects.
+
+    Attributes:
+        node_id: Ordered request occurrence.
+        source: Optional source location.
+        operation: Text or yes/no author operation.
+        message: Captured request text.
+        timeout: Captured positive deadline duration, or None.
+        outcome: Supplied outcome, overridden to TIMED_OUT at/after the deadline.
+        elapsed: Supplied response time; no clock is sampled or advanced.
+        value: Successful text/bool only; None for failed interactions.
+        error_code: Execution failure code, or None for a successful assignment.
+
+    An accepted response with the wrong type retains its response outcome but
+    has no successful value and records dialog_response_type.
+    """
+
+    node_id: str
+    source: SourceSpan | None
+    operation: Literal["request_text", "ask_yes_no"]
+    message: str
+    timeout: Duration | None
+    outcome: DialogOutcome
+    elapsed: Duration
+    value: str | bool | None
+    error_code: str | None
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -172,6 +203,7 @@ ExecutionEvent: TypeAlias = (
     DeviceEvent
     | LogEvent
     | AcknowledgementEvent
+    | DialogEvent
     | WallTimeEvent
     | TimerEvent
     | WaitEvent
@@ -201,6 +233,9 @@ class ReferenceEnvironment:
 
     acknowledgements: QueuedAcknowledgements | None = None
     """Explicit OK responses; absent by default and shared only when supplied."""
+
+    dialogs: QueuedDialogResponses | None = None
+    """Explicit text/yes-no responses, independent of OK acknowledgements."""
 
     wall_clock: WallClock | None = None
     """Explicit aware wall-time provider; never defaults to the host clock."""

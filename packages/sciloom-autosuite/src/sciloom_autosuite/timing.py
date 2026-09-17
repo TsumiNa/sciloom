@@ -5,6 +5,7 @@ from typing import assert_never
 from sciloom.core.diagnostics import Diagnostic
 from sciloom.core.ir import (
     AppendCsv,
+    AskYesNo,
     Assignment,
     Call,
     ConfigureProperty,
@@ -21,6 +22,7 @@ from sciloom.core.ir import (
     ReadCsv,
     ReadWallTime,
     ReadWellProperty,
+    RequestText,
     StartAgitation,
     StartTimer,
     Statement,
@@ -74,6 +76,8 @@ def validate_timer_scopes(program: Program) -> tuple[Diagnostic, ...]:
                     LogValue,
                     Notify,
                     ReadWallTime,
+                    RequestText,
+                    AskYesNo,
                     ReadWellProperty,
                     WriteWellProperty,
                     AppendCsv,

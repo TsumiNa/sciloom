@@ -16,7 +16,7 @@ an explicit developer decision.
 
 | Stage | Outcome | Code status |
 | --- | --- | --- |
-| R2.1 | [Organize native measurement receipts](01-plan-evidence-receipts.md) | Implemented in this PR; review/merge pending |
+| R2.1 | [Organize native measurement receipts](01-plan-evidence-receipts.md) | Merged #106 |
 | R2.2 | [Accept verified native failure propagation](02-plan-failure-unlock.md) | Pending |
 | R2.3 | [Accept verified literal CSV reads](03-plan-csv-read-unlock.md) | Pending |
 | R2.4 | [Accept verified CSV append](04-plan-csv-append-unlock.md) | Pending |

@@ -5,6 +5,7 @@ from typing import assert_never
 from sciloom.core.diagnostics import CompilationError, Diagnostic
 from sciloom.core.ir import (
     AppendCsv,
+    AskYesNo,
     Assignment,
     Call,
     ConfigureProperty,
@@ -22,6 +23,7 @@ from sciloom.core.ir import (
     ReadCsv,
     ReadWallTime,
     ReadWellProperty,
+    RequestText,
     ScalarType,
     StartAgitation,
     StartTimer,
@@ -131,6 +133,18 @@ def statements(
                     _xml("productid"),
                     _xml("id", context.identifier("statement", statement.node_id)),
                     typeid="Chemspeed.SATaskUserDialog.1",
+                )
+            )
+        elif isinstance(statement, (RequestText, AskYesNo)):
+            raise CompilationError(
+                (
+                    Diagnostic(
+                        code="unsupported_dialog_result",
+                        message="Result-bearing dialogs require native result and termination evidence before emission.",
+                        path="$.functions",
+                        node_id=statement.node_id,
+                        source=statement.source,
+                    ),
                 )
             )
         elif isinstance(statement, ReadWallTime):

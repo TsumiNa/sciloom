@@ -136,6 +136,28 @@ Asia/Tokyo, so September 17 16:39 UTC is September 18 01:39 JST. Keep accurate
 dates and state the timezone explicitly. Class A clarification; Version remains
 none and both packages stay 0.5.0. Latest-head checks remain required before merge.
 
+## D010 — R3.1 preflight (2026-09-18)
+
+Baseline e496f577c96a81f6e7e3d2dcaaaaae1d270577d9, packages 0.5.0. R2.1 #106
+is remotely MERGED after argv correction, timezone clarification, resolved
+review and four latest-head CI passes. No native receipt has arrived; conditional
+R2.2–R2.4 stay pending while the accepted independent R3.1 stage proceeds.
+
+Existing Notify is a no-result OK acknowledgement with its own service/event.
+ReadWallTime and CSV establish ordered assignment-result nodes; generic typed
+traversal/schema need no second JSON model. Add independent dialog markers,
+nodes and queue, updating every exhaustive consumer and explicitly rejecting
+AutoSuite generation. The optional queue never prompts or advances virtual time.
+
+Event detail refinement (class B): DialogEvent records operation name, captured
+message/timeout, effective outcome, elapsed duration, successful value and
+optional error_code. A late accepted response becomes TIMED_OUT. A consumed
+wrong-type accepted response retains ACCEPTED as its response outcome but records
+dialog_response_type and no successful value. Consumed failures become observable
+before raising. Missing/exhausted services and invalid arguments consume nothing
+and emit no dialog event. Queue entries are frozen/copied; non-accepted outcomes
+have no value. No fallback, semantic deviation or native claim is introduced.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,

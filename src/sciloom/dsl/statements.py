@@ -38,6 +38,7 @@ from .csv_read import csv_read
 from .device_conditions import device_condition
 from .device_locations import location_scope
 from .device_operations import configure, device_command
+from .dialogs import dialog_statement
 from .expressions import BINARY_OPERATORS, expression, is_expression_call
 from .timing import timing_statement
 from .well_properties import property_statement
@@ -91,6 +92,10 @@ def call(context: LoweringContext, node: ast.Call, targets: Sequence[ast.expr]) 
 def statements(context: LoweringContext, body: list[ast.stmt]) -> tuple[Statement, ...]:
     result: list[Statement] = []
     for node in body:
+        dialog = dialog_statement(context, node)
+        if dialog is not None:
+            result.append(dialog)
+            continue
         property_operation = property_statement(context, node)
         if property_operation is not None:
             result.append(property_operation)

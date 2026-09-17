@@ -5,6 +5,7 @@ from typing import assert_never
 from sciloom.core.diagnostics import Diagnostic
 from sciloom.core.ir import (
     AppendCsv,
+    AskYesNo,
     Assignment,
     Call,
     ConfigureProperty,
@@ -23,6 +24,7 @@ from sciloom.core.ir import (
     ReadWallTime,
     ReadWellProperty,
     Reference,
+    RequestText,
     StartAgitation,
     StartTimer,
     Statement,
@@ -115,6 +117,8 @@ def validate_well_properties(program: Program) -> tuple[Diagnostic, ...]:
                     AppendCsv,
                     ReadCsv,
                     ReadWallTime,
+                    RequestText,
+                    AskYesNo,
                     ListSet,
                     LogValue,
                     Notify,

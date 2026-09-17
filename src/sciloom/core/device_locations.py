@@ -6,6 +6,7 @@ from .bindings import DeviceBindings, DeviceSelectionBinding
 from .diagnostics import Diagnostic
 from .ir import (
     AppendCsv,
+    AskYesNo,
     Assignment,
     Call,
     ConfigureProperty,
@@ -23,6 +24,7 @@ from .ir import (
     ReadCsv,
     ReadWallTime,
     ReadWellProperty,
+    RequestText,
     StartAgitation,
     StartTimer,
     Statement,
@@ -132,6 +134,8 @@ def validate_device_locations(program: Program, bindings: DeviceBindings) -> tup
                     Notify,
                     ReadCsv,
                     ReadWallTime,
+                    RequestText,
+                    AskYesNo,
                     ReadWellProperty,
                     WriteWellProperty,
                     StartTimer,

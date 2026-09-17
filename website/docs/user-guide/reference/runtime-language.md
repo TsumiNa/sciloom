@@ -140,6 +140,7 @@ The [label example](../../examples/prepare-labels.md) shows a complete program.
 | `self.label[zone] = text`, `self.text = self.label.get(zone, default="")` for a declared `WellProperty` | Indexed metadata reads, augmented writes, non-text properties or reads inside larger expressions |
 | `log(value, category=..., stream=...)` | Logging lists, automatic object formatting or using log as a result |
 | `notify(message)` | Timeout, automatic confirmation, cancellation branches or a returned value |
+| `self.text = request_text(message, timeout=...)`; `self.answer = ask_yes_no(message, timeout=...)` | Nested expressions, discarded results, fallback on cancel/Stop/timeout; AutoSuite generation is pending native verification |
 | `self.stamp = now_text(format)` | Clock reads inside larger expressions, runtime format strings |
 | `wait(duration)`, declared Timer `start()` and `wait_until(duration)` | Contact/setpoint waits, automatic stop, shared Timer objects |
 | Whole `if/elif` conditions using `comptime` queries | Combining these queries with `and` / `or` or runtime arguments |

@@ -4,7 +4,8 @@
 
 R1 facts/report records, layout provenance, target guards and review export are
 **implemented** (R1.1 merged #104; R1.2 merged #105). R2.1 receipt tooling is
-implemented in this PR; native acceptance remains pending.
+merged #106. R3.1 dialog semantics are implemented in this PR, pending review/merge;
+all new AutoSuite dialog emission remains gated and native acceptance pending.
 Other interfaces introduced here are **planned**, not currently importable unless
 explicitly called implemented. Availability is tied to the named PR and its merge,
 not to presence of these examples. Reassess under
@@ -188,7 +189,7 @@ behavior cannot preserve the agreed core semantics.
 
 ## R3: Ordered text and yes/no results
 
-### Author API — planned after R3.1
+### Author API — implemented in R3.1
 
 ```python
 from sciloom import Duration
@@ -219,16 +220,32 @@ capture the request, outcome and successful value as immutable records; report
 consumed failed outcomes before raising, but no consumed-response event for
 invalid arguments or absent/exhausted service.
 
-### Reference service — planned after R3.1
+### Reference service — implemented in R3.1
 
 Public imports from sciloom.core.interpreter:
-`QueuedDialogResponses`, `DialogResponse`, `DialogOutcome`.
+`QueuedDialogResponses`, `DialogResponse`, `DialogOutcome`, `DialogEvent`.
 Use distinct outcome values ACCEPTED, CANCELLED, STOPPED, TIMED_OUT.
 A DialogResponse holds outcome, optional str/bool value and nonnegative Duration
 elapsed. Accepted text/bool must match the operation; non-accepted has no value.
 An explicit elapsed time reaching/exceeding timeout terminates, even if a late
 accepted value is supplied. Do not sleep, sample host time, or advance an unrelated
 virtual clock implicitly. ReferenceEnvironment gains optional `dialogs`.
+
+Queue signature: QueuedDialogResponses(responses: Iterable[DialogResponse] = ()).
+Its remaining property counts unused copied entries; respond() consumes exactly
+one or raises LookupError when exhausted. Each frozen DialogResponse accepts
+keyword-only outcome, value=None and elapsed=Duration(seconds=0). Accepted values
+must be exactly str or bool; non-accepted responses must have value=None.
+
+DialogEvent is a frozen record of node_id, source, operation (request_text or
+ask_yes_no), message, timeout, outcome, elapsed, successful value and error_code.
+A supplied accepted response at/after the deadline records TIMED_OUT with no
+value. Wrong-type accepted responses record their ACCEPTED outcome, no successful
+value and dialog_response_type. Other consumed failures record dialog_cancelled,
+dialog_stopped or dialog_timeout. Exhaustion is dialog_response_required;
+missing service uses the existing missing_environment_service diagnostic.
+Invalid timeout is dialog_timeout_value. These failures preserve the destination
+and existing prior effects, without executing following statements.
 
 ```python
 from sciloom import Function, Output, ask_yes_no, request_text, runtime, s
@@ -256,6 +273,11 @@ environment = ReferenceEnvironment(dialogs=QueuedDialogResponses((
 result = Interpreter(IdentifySample().to_ir(), environment=environment).run()
 # Expected outputs: {"barcode": "S-001", "accepted": False}.
 ```
+
+Runnable author declaration: examples/identify_sample.py. Its command verifies
+the current AutoSuite rejection. The developer example
+examples/developer/dialogs_ir.py executes this source and equivalent direct IR
+with explicit responses, writes its complete JSON companion and checks outputs.
 
 Do not merge existing QueuedAcknowledgements into the new service or change
 Notify semantics. Reference response allocation/shared environment rules follow

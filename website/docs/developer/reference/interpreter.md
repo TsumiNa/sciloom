@@ -96,6 +96,49 @@ The [direct IR example](../../examples/confirmation-ir.md) shows JSON restoratio
 and a typed acknowledgement event. This reference behavior does not establish
 that a generated AutoSuite dialog blocks correctly on the target host.
 
+## Text and yes/no responses
+
+`RequestText` and `AskYesNo` consume `DialogResponse` records from an explicit
+`QueuedDialogResponses` service. Supply it as `ReferenceEnvironment(dialogs=...)`:
+
+```python
+from examples.identify_sample import IdentifySample
+from sciloom import s
+from sciloom.core.interpreter import (
+    DialogOutcome, DialogResponse, Interpreter, QueuedDialogResponses, ReferenceEnvironment,
+)
+
+responses = QueuedDialogResponses((
+    DialogResponse(outcome=DialogOutcome.ACCEPTED, value="S-001", elapsed=2 * s),
+    DialogResponse(outcome=DialogOutcome.ACCEPTED, value=False),
+))
+result = Interpreter(
+    IdentifySample().to_ir(), environment=ReferenceEnvironment(dialogs=responses)
+).run()
+assert result.outputs == {"barcode": "S-001", "accepted": False}
+```
+
+Accepted values must match the operation exactly: text or bool. Empty text and
+False are valid results. Cancelled, stopped and timed-out outcomes have no value
+and raise `dialog_cancelled`, `dialog_stopped` or `dialog_timeout`. An accepted
+response at or after the deadline also times out. Each consumed response produces
+an immutable DialogEvent before any following statement; a wrong result type
+records no successful value and raises `dialog_response_type`. Failed requests
+leave their destination unchanged and stop subsequent effects. Earlier effects
+remain; an active device is not implicitly stopped.
+
+Message and timeout expressions evaluate once, in that order, before consuming
+a response. A supplied timeout must be positive. Missing service and exhaustion
+raise `missing_environment_service` and `dialog_response_required`; neither emits
+a consumed-response event. Elapsed time is explicit data and never samples or
+advances a clock. Sharing a queue shares its remaining responses; the constructor
+copies the supplied iterable. A new run restarts the entry, not the failed request.
+
+Run `uv run python -m examples.developer.dialogs_ir` for the direct IR, complete
+JSON v4 companion and source/IR output comparison. AutoSuite compilation rejects
+both result-bearing nodes pending native result and termination verification.
+The existing Notify and acknowledgement service keep their separate contract.
+
 ## Wall-clock input
 
 Provide a WallClock service for ReadWallTime. VirtualWallClock returns the aware

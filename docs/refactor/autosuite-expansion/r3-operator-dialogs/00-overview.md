@@ -16,11 +16,12 @@ an explicit developer decision.
 
 | Stage | Outcome | Code status |
 | --- | --- | --- |
-| R3.1 | [Typed dialog results across source and JSON](01-plan-dialog-semantics.md) | Pending |
+| R3.1 | [Typed dialog results across source and JSON](01-plan-dialog-semantics.md) | Implemented in this PR; review/merge pending |
 | R3.2 | [Map proven operator dialog outcomes](02-plan-native-dialogs.md) | Pending |
 
 Native status: Result, cancel, Stop and timeout behavior pending.
-No stage below is already implemented. Native-unlock prerequisites are distinct
+R3.1 implements source, IR, JSON and reference behavior with explicit target rejection.
+Native-unlock prerequisites are distinct
 from review/merge prerequisites. Finish each PR green and remotely squash merged
 before beginning another; an implemented/gated stage preserves its rejection.
 

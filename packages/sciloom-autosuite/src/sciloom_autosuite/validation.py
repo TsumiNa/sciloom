@@ -5,6 +5,7 @@ from typing import assert_never
 from sciloom.core.diagnostics import Diagnostic
 from sciloom.core.ir import (
     AppendCsv,
+    AskYesNo,
     Assignment,
     Binary,
     BinaryOp,
@@ -28,6 +29,7 @@ from sciloom.core.ir import (
     ReadWallTime,
     ReadWellProperty,
     Reference,
+    RequestText,
     ScalarType,
     StartAgitation,
     StartTimer,
@@ -69,7 +71,10 @@ def validate_runtime_guards(program: Program) -> tuple[Diagnostic, ...]:
         for node, path in iter_nodes(function, f"$.functions[{function_index}]"):
             message = None
             code = "unsupported_runtime_guard"
-            if isinstance(node, ZoneLiteral) and node.well_ids:
+            if isinstance(node, (RequestText, AskYesNo)):
+                code = "unsupported_dialog_result"
+                message = "Text/yes-no results and cancellation/Stop/timeout termination require independent native verification; reference execution is available."
+            elif isinstance(node, ZoneLiteral) and node.well_ids:
                 code = "unsupported_zone_literal"
                 message = "AutoSuite cannot encode opaque well identities as a Zone expression; use zones.find or Zone inputs."
             elif isinstance(node, WellName):
@@ -206,6 +211,11 @@ def validate_array_outputs(program: Program) -> tuple[Diagnostic, ...]:
                         read(expression, assigned)
                 elif isinstance(statement, Notify):
                     read(statement.message, assigned)
+                elif isinstance(statement, (RequestText, AskYesNo)):
+                    read(statement.message, assigned)
+                    if statement.timeout is not None:
+                        read(statement.timeout, assigned)
+                    assigned.add(statement.target.symbol_id)
                 elif isinstance(statement, AppendCsv):
                     read(statement.path, assigned)
                     for value in statement.values:
