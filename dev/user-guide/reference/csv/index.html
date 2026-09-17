@@ -2687,6 +2687,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/transfer-settings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Transfer settings and typed locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/numeric-operations/" class="md-nav__link">
         
   
@@ -4194,8 +4221,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.9.0
-    · <code title="d2032da38053aba54c0e7479a4b638a758af2823">d2032da3</code>
+    · SciLoom 0.10.0
+    · <code title="dd7e4eb816cdc4ab409d5896264c5ec30edec08a">dd7e4eb8</code>
   </p>
 </aside>
 
@@ -4264,6 +4291,10 @@ row, column indices and defaults can use runtime expressions. <code>header</code
 fixed tuple of inline <code>csv.Column</code> declarations, column types and units are
 chosen before compilation. Physical columns require matching units; ordinary
 scalar columns do not accept units.</p>
+<p><code>FlowRate</code> columns accept <code>mL_per_min</code> or <code>m3_per_s</code>; <code>Length</code> columns accept
+<code>mm</code> or <code>metre</code>. Reference reads apply that explicit scale once and return typed
+values; append writes canonical m3/s or metres. Negative finite values are valid
+quantities, with device constraints checked by the operation using them.</p>
 <p>Temperature, temperature-difference and temperature-rate columns are explicitly
 unsupported for reads. The current multiplicative column unit cannot describe
 an affine Celsius conversion. Typed thermal values can be appended in canonical

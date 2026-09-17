@@ -1,0 +1,276 @@
+{
+  "device_types": [
+    {
+      "base_type_ids": [
+        "sciloom.agitator/v1",
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "kind": "CommandContract",
+          "name": "start",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.start/v1"
+        },
+        {
+          "kind": "CommandContract",
+          "name": "stop",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.stop/v1"
+        },
+        {
+          "kind": "CommandContract",
+          "name": "inspect",
+          "parameters": [
+            {
+              "kind": "CommandParameter",
+              "name": "source",
+              "type": {
+                "kind": "ZoneType"
+              }
+            },
+            {
+              "kind": "CommandParameter",
+              "name": "destination",
+              "type": {
+                "kind": "ZoneType"
+              }
+            },
+            {
+              "kind": "CommandParameter",
+              "name": "flow",
+              "type": "flow_rate"
+            }
+          ],
+          "semantic_id": "example.located-agitator.inspect/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "speed",
+          "semantic_id": "sciloom.agitator.speed/v1",
+          "type": "rotational_speed"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.agitator.speed/v1"
+      ],
+      "type_id": "example.located-agitator/v1"
+    },
+    {
+      "base_type_ids": [
+        "example.located-agitator/v1",
+        "sciloom.agitator/v1",
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "kind": "CommandContract",
+          "name": "start",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.start/v1"
+        },
+        {
+          "kind": "CommandContract",
+          "name": "stop",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.stop/v1"
+        },
+        {
+          "kind": "CommandContract",
+          "name": "inspect",
+          "parameters": [
+            {
+              "kind": "CommandParameter",
+              "name": "source",
+              "type": {
+                "kind": "ZoneType"
+              }
+            },
+            {
+              "kind": "CommandParameter",
+              "name": "destination",
+              "type": {
+                "kind": "ZoneType"
+              }
+            },
+            {
+              "kind": "CommandParameter",
+              "name": "flow",
+              "type": "flow_rate"
+            }
+          ],
+          "semantic_id": "example.located-agitator.inspect/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "speed",
+          "semantic_id": "sciloom.agitator.speed/v1",
+          "type": "rotational_speed"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.agitator.speed/v1"
+      ],
+      "type_id": "example.located-recording/v1"
+    },
+    {
+      "base_type_ids": [
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "kind": "CommandContract",
+          "name": "start",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.start/v1"
+        },
+        {
+          "kind": "CommandContract",
+          "name": "stop",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.stop/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "speed",
+          "semantic_id": "sciloom.agitator.speed/v1",
+          "type": "rotational_speed"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.agitator.speed/v1"
+      ],
+      "type_id": "sciloom.agitator/v1"
+    },
+    {
+      "base_type_ids": [],
+      "kind": "DeviceTypeContract",
+      "operations": [],
+      "properties": [],
+      "required_configuration": [],
+      "type_id": "sciloom.device/v1"
+    }
+  ],
+  "entry_function_id": "fn:0",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "arguments": [
+            {
+              "kind": "CommandArgument",
+              "name": "source",
+              "value": {
+                "kind": "Reference",
+                "node_id": "fn:0:node:2",
+                "source": {
+                  "column": 86,
+                  "kind": "SourceSpan",
+                  "line": 43,
+                  "path": "examples/developer/location_command_ir.py"
+                },
+                "symbol_id": "fn:0:var:source"
+              }
+            },
+            {
+              "kind": "CommandArgument",
+              "name": "destination",
+              "value": {
+                "kind": "Reference",
+                "node_id": "fn:0:node:3",
+                "source": {
+                  "column": 40,
+                  "kind": "SourceSpan",
+                  "line": 43,
+                  "path": "examples/developer/location_command_ir.py"
+                },
+                "symbol_id": "fn:0:var:destination"
+              }
+            },
+            {
+              "kind": "CommandArgument",
+              "name": "flow",
+              "value": {
+                "kind": "Literal",
+                "node_id": "fn:0:node:5",
+                "source": {
+                  "column": 63,
+                  "kind": "SourceSpan",
+                  "line": 43,
+                  "path": "examples/developer/location_command_ir.py"
+                },
+                "type": "flow_rate",
+                "value": 1.6666666666666667e-08
+              }
+            }
+          ],
+          "kind": "DeviceCommand",
+          "node_id": "fn:0:node:1",
+          "operation_id": "example.located-agitator.inspect/v1",
+          "resource_id": "resource:device",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 43,
+            "path": "examples/developer/location_command_ir.py"
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "InspectLocations",
+      "node_id": "fn:0",
+      "source": {
+        "column": 4,
+        "kind": "SourceSpan",
+        "line": 42,
+        "path": "examples/developer/location_command_ir.py"
+      },
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "source",
+          "node_id": "fn:0:var:source",
+          "owner_id": "fn:0",
+          "role": "input",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "destination",
+          "node_id": "fn:0:var:destination",
+          "owner_id": "fn:0",
+          "role": "input",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": [
+    {
+      "device_type_id": "example.located-recording/v1",
+      "kind": "DeviceResource",
+      "logical_id": "device",
+      "node_id": "resource:device",
+      "source": null
+    }
+  ]
+}

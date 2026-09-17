@@ -2580,6 +2580,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/transfer-settings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Transfer settings and typed locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/numeric-operations/" class="md-nav__link">
         
   
@@ -4371,8 +4398,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.9.0
-    · <code title="d2032da38053aba54c0e7479a4b638a758af2823">d2032da3</code>
+    · SciLoom 0.10.0
+    · <code title="dd7e4eb816cdc4ab409d5896264c5ec30edec08a">dd7e4eb8</code>
   </p>
 </aside>
 
@@ -4443,7 +4470,9 @@ call arguments but cannot infer arbitrary result tuples here.</p>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">value_type</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span>
-    <span class="n">unit</span><span class="p">:</span> <span class="n">SpeedUnit</span>
+    <span class="n">unit</span><span class="p">:</span> <span class="n">FlowRateUnit</span>
+    <span class="o">|</span> <span class="n">LengthUnit</span>
+    <span class="o">|</span> <span class="n">SpeedUnit</span>
     <span class="o">|</span> <span class="n">VolumeUnit</span>
     <span class="o">|</span> <span class="n">DurationUnit</span>
     <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -4508,7 +4537,7 @@ call arguments but cannot infer arbitrary result tuples here.</p>
                 <code>unit</code>
             </td>
             <td>
-                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.units.SpeedUnit&lt;/span&gt;" href="../units/#sciloom.units.SpeedUnit">SpeedUnit</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.units.VolumeUnit&lt;/span&gt;" href="../units/#sciloom.units.VolumeUnit">VolumeUnit</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.units.DurationUnit&lt;/span&gt;" href="../units/#sciloom.units.DurationUnit">DurationUnit</a> | None</code>
+                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.units.FlowRateUnit&lt;/span&gt;" href="../units/#sciloom.units.FlowRateUnit">FlowRateUnit</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.units.LengthUnit&lt;/span&gt;" href="../units/#sciloom.units.LengthUnit">LengthUnit</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.units.SpeedUnit&lt;/span&gt;" href="../units/#sciloom.units.SpeedUnit">SpeedUnit</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.units.VolumeUnit&lt;/span&gt;" href="../units/#sciloom.units.VolumeUnit">VolumeUnit</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.units.DurationUnit&lt;/span&gt;" href="../units/#sciloom.units.DurationUnit">DurationUnit</a> | None</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -4650,7 +4679,14 @@ Python constructors. Their selectors and defaults are captured at run time.</p>
   </span>
 
 </h3>
-<div class="doc-signature highlight"><pre><span></span><code><span class="n">unit</span><span class="p">:</span> <span class="n">SpeedUnit</span> <span class="o">|</span> <span class="n">VolumeUnit</span> <span class="o">|</span> <span class="n">DurationUnit</span> <span class="o">|</span> <span class="kc">None</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">unit</span><span class="p">:</span> <span class="p">(</span>
+    <span class="n">FlowRateUnit</span>
+    <span class="o">|</span> <span class="n">LengthUnit</span>
+    <span class="o">|</span> <span class="n">SpeedUnit</span>
+    <span class="o">|</span> <span class="n">VolumeUnit</span>
+    <span class="o">|</span> <span class="n">DurationUnit</span>
+    <span class="o">|</span> <span class="kc">None</span>
+<span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
@@ -5368,6 +5404,8 @@ reference file service; these are not recoverable CSV statuses.</p>
         <span class="o">|</span> <span class="n">Duration</span>
         <span class="o">|</span> <span class="n">Temperature</span>
         <span class="o">|</span> <span class="n">TemperatureDifference</span>
+        <span class="o">|</span> <span class="n">FlowRate</span>
+        <span class="o">|</span> <span class="n">Length</span>
         <span class="o">|</span> <span class="n">TemperatureRate</span><span class="p">,</span>
         <span class="o">...</span><span class="p">,</span>
     <span class="p">],</span>
@@ -5436,7 +5474,17 @@ reference file service; these are not recoverable CSV statuses.</p>
 
   &lt;span class=&quot;doc doc-labels&quot;&gt;
       &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="../units/#sciloom.TemperatureDifference">TemperatureDifference</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.TemperatureRate&lt;/span&gt;
+  &lt;/span&gt;" href="../units/#sciloom.TemperatureDifference">TemperatureDifference</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.FlowRate&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../units/#sciloom.FlowRate">FlowRate</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.Length&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../units/#sciloom.Length">Length</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.TemperatureRate&lt;/span&gt;
 
 
   &lt;span class=&quot;doc doc-labels&quot;&gt;
@@ -5520,6 +5568,8 @@ encoding verification.</p>
         <span class="o">|</span> <span class="n">Duration</span>
         <span class="o">|</span> <span class="n">Temperature</span>
         <span class="o">|</span> <span class="n">TemperatureDifference</span>
+        <span class="o">|</span> <span class="n">FlowRate</span>
+        <span class="o">|</span> <span class="n">Length</span>
         <span class="o">|</span> <span class="n">TemperatureRate</span><span class="p">,</span>
         <span class="o">...</span><span class="p">,</span>
     <span class="p">],</span>
@@ -5588,7 +5638,17 @@ encoding verification.</p>
 
   &lt;span class=&quot;doc doc-labels&quot;&gt;
       &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
-  &lt;/span&gt;" href="../units/#sciloom.TemperatureDifference">TemperatureDifference</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.TemperatureRate&lt;/span&gt;
+  &lt;/span&gt;" href="../units/#sciloom.TemperatureDifference">TemperatureDifference</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.FlowRate&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../units/#sciloom.FlowRate">FlowRate</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.Length&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt;" href="../units/#sciloom.Length">Length</a> | <a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.TemperatureRate&lt;/span&gt;
 
 
   &lt;span class=&quot;doc doc-labels&quot;&gt;

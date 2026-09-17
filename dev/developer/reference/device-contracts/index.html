@@ -2712,6 +2712,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/transfer-settings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Transfer settings and typed locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/numeric-operations/" class="md-nav__link">
         
   
@@ -4241,8 +4268,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.9.0
-    · <code title="d2032da38053aba54c0e7479a4b638a758af2823">d2032da3</code>
+    · SciLoom 0.10.0
+    · <code title="dd7e4eb816cdc4ab409d5896264c5ec30edec08a">dd7e4eb8</code>
   </p>
 </aside>
 
@@ -4302,7 +4329,7 @@ profile. AutoSuite thermal profiles remain gated pending native evidence.</p>
 <tr>
 <td>command</td>
 <td>a method decorated with <code>@operation(id=...)</code></td>
-<td>typed positional arguments, no defaults or variadics, returns <code>None</code></td>
+<td>typed positional/keyword parameters, no defaults or variadics, returns <code>None</code></td>
 </tr>
 <tr>
 <td>lifecycle command</td>
@@ -4310,9 +4337,14 @@ profile. AutoSuite thermal profiles remain gated pending native evidence.</p>
 <td>parameterless; optional <code>requires=("property_name", ...)</code></td>
 </tr>
 <tr>
-<td>value types</td>
-<td><code>int</code>, <code>float</code>, <code>bool</code>, <code>str</code>, <code>RotationalSpeed</code>, <code>Volume</code>, <code>Duration</code>, <code>Temperature</code>, <code>TemperatureDifference</code>, <code>TemperatureRate</code>, or a homogeneous list of one of them</td>
-<td>no other Python objects</td>
+<td>property and command value types</td>
+<td><code>int</code>, <code>float</code>, <code>bool</code>, <code>str</code>, <code>RotationalSpeed</code>, <code>Volume</code>, <code>Duration</code>, <code>Temperature</code>, <code>TemperatureDifference</code>, <code>TemperatureRate</code>, <code>FlowRate</code>, <code>Length</code>, or a homogeneous list of one of them</td>
+<td>no arbitrary Python objects</td>
+</tr>
+<tr>
+<td>additional command parameter type</td>
+<td><code>Zone</code></td>
+<td>typed <code>ZoneType</code> in IR; never a property, string-encoded location or <code>list[Zone]</code></td>
 </tr>
 </tbody>
 </table>
@@ -4320,6 +4352,12 @@ profile. AutoSuite thermal profiles remain gated pending native evidence.</p>
 Host access is guarded: reading a device property or calling a runtime method
 from host Python raises <code>TypeError</code>. Registered parameters are written by
 assignment; there are no <code>set_*</code> methods and no getters.</p>
+<p>Command arguments are emitted in declared parameter order, even when keywords
+are written in a different order. A Zone retains ordered opaque well identities.
+The <a href="../../../examples/transfer-settings/#contributor-location-arguments">location-command example</a>
+shows source, typed contract, JSON and specialization. Declaring a signature does
+not define reference semantics: unknown commands still fail before any device
+event, and AutoSuite needs an explicit supported adapter.</p>
 <h2 id="profiles">Profiles</h2>
 <p>A profile is a concrete subclass carrying immutable deployment data (a frozen
 dataclass with fields such as <code>channel</code> or <code>zone</code>) and three explicit capability

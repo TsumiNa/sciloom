@@ -1222,6 +1222,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#flow-and-length-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Flow and length values
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2803,6 +2814,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/transfer-settings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Transfer settings and typed locations
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/numeric-operations/" class="md-nav__link">
         
   
@@ -4306,6 +4344,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#flow-and-length-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Flow and length values
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -4426,8 +4475,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.9.0
-    · <code title="d2032da38053aba54c0e7479a4b638a758af2823">d2032da3</code>
+    · SciLoom 0.10.0
+    · <code title="dd7e4eb816cdc4ab409d5896264c5ec30edec08a">dd7e4eb8</code>
   </p>
 </aside>
 
@@ -4464,6 +4513,10 @@ of the Python script use ordinary Python.</p>
 <tr>
 <td><code>Volume</code>, <code>Duration</code></td>
 <td>Signed, finite quantities, such as <code>2 * mL</code> or <code>1 * minute</code></td>
+</tr>
+<tr>
+<td><code>FlowRate</code>, <code>Length</code></td>
+<td>Signed, finite m3/s and metres; core/reference supported, AutoSuite encoding gated</td>
 </tr>
 <tr>
 <td><code>list[T]</code></td>
@@ -4538,7 +4591,8 @@ this target rejects them. Use <a href="../../troubleshooting/#autosuite-rejects-
 an exact half: <code>round(2.5)</code> is 2, <code>round(3.5)</code> is 4, and <code>round(-2.5)</code> is −2.
 Only the one-argument forms are supported. Imported aliases and <code>math.floor</code>
 work too; a user-defined function with the same name is not a runtime operation.</p>
-<p><code>abs</code> preserves <code>int</code> or <code>float</code>, and also accepts Volume and Duration.
+<p><code>abs</code> preserves <code>int</code> or <code>float</code>, and also accepts signed Volume, Duration,
+FlowRate, Length, TemperatureDifference and TemperatureRate values.
 <code>floor</code> and <code>round</code> return <code>int</code>. Convert a quantity to a number first, for example
 <code>floor(self.amount / mL)</code>. Booleans, text and lists are not numeric arguments.
 Reference inputs and arithmetic results must be finite.</p>
@@ -4656,6 +4710,19 @@ thermal CSV reads are explicitly unsupported until a conversion contract exists.
 AutoSuite compilation rejects thermal types pending verified native encodings
 and range behavior. Core/reference support does not prove vendor conversion or
 physical equivalence. See the <a href="../../../examples/temperature-values/">runnable example</a>.</p>
+<h3 id="flow-and-length-values">Flow and length values</h3>
+<p>Import <code>FlowRate</code>, <code>Length</code>, <code>mL_per_min</code>, <code>m3_per_s</code>, <code>mm</code> and <code>metre</code> from
+<code>sciloom</code>. <code>60 * mL_per_min</code> represents 1e-6 m3/s; <code>2 * mm</code> represents 0.002 m.
+Both support Input/Output/Var, homogeneous lists, like-dimension addition,
+subtraction and comparison, unary signs/magnitude, numeric scaling and ratios.
+Runtime numbers may construct either quantity using a unit. They do not enable
+cross-dimension algebra such as flow × duration.</p>
+<p>Values are signed and finite; device operations impose their own positive-flow
+or allowed-position constraints. Logging and CSV append use canonical units;
+reference CSV reads require explicit matching units. AutoSuite flow/length
+encoding is rejected pending native evidence. The
+<a href="../../../examples/transfer-settings/">settings example</a> computes values without
+moving liquid or assuming a tool, channel, clearance policy or rinse connection.</p>
 <h2 id="text">Text</h2>
 <p>Declare text with <code>Input[str]</code>, <code>Output[str]</code> or an initialized <code>Var[str] = ""</code>.
 Import <code>text</code> from <code>sciloom</code> for the two runtime helpers:</p>
