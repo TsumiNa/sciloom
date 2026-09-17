@@ -33,6 +33,19 @@ Classification: B for private/API-detail choices preserving the accepted intent;
 C for unavailable native profile evidence. No approved semantics were changed.
 No source implementation begins until R0 review and remote merge.
 
+## D003 — R0 review corrections (2026-09-18)
+
+Review 5238315873 (GraphQL PRR_kwDOUVkARs8AAAABODpbYQ) identified a misleading
+standalone transfer signature and requested fixed version transitions in future
+stage plans. The signature now explicitly declares LiquidHandler.transfer with
+self and its operation ID. Each pending stage records Version: none for this
+planning-only revision and a separately labeled implementation expectation.
+Before its implementation PR is reviewed, that stage must replace the decision
+with the actual exact lockstep transition. This follows the user's explicit
+instruction to decide concrete versions after implementation rather than
+preallocate future version numbers; it overrides the review's contrary proposal.
+Classification A/B, no semantic or scope change. Both packages remain 0.3.15.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,

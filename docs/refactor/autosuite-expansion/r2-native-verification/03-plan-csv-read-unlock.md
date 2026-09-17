@@ -47,6 +47,10 @@ native acceptance remains pending and compiler rejection stays enabled.
 
 ## Version
 
-Version: MINOR, enables verified native CSV read forms.
-Keep workspace versions lockstep; choose exact from/to versions from the current baseline after implementation.
-Reassess after final review if the shipped scope changes. No publication.
+Version: none, this revision records a plan and changes no shipped code.
+
+Implementation expectation: MINOR, enables verified native CSV read forms.
+Before the implementation PR is reviewed, replace this planning-only decision
+with the exact lockstep from/to transition based on its actual shipped scope and
+then-current baseline. The user explicitly requested no preallocated future
+version numbers. Reassess after review changes; no publication.

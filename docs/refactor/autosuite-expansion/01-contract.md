@@ -465,9 +465,15 @@ air_gap: Volume. All are required explicitly; no hidden values from screenshots.
 
 ```python
 from sciloom import Volume, Zone
+from sciloom.devices import BaseDevice, operation
 
-def transfer(source: Zone, destination: Zone, volume: Volume) -> None:
-    ...
+class LiquidHandler(BaseDevice):
+    # Method-signature excerpt; required property declarations are specified above.
+    device_type_id = "sciloom.liquid-handler/v1"
+
+    @operation(id="sciloom.liquid-handler.transfer/v1")
+    def transfer(self, source: Zone, destination: Zone, volume: Volume) -> None:
+        ...
 ```
 
 This is an instance device operation, not a global flow helper. It lowers to
