@@ -16,7 +16,8 @@ Product 2.47.1.1 / Swing XL Isynth. The default corpus audit checks this associa
 without rewriting either file. There are 17 `Chemspeed.SATaskLiquidTransfer.1`
 elements: three in application tasks, fourteen in extracted functions.
 
-All 17 name `4Needle Head` / `NeedleTypeStandard`. Their enabled and selected
+All 17 tasks store `4Needle Head` in `needlehead` and `NeedleTypeStandard` in
+`activeneedletype`. Their enabled and selected
 syringe masks agree in this APP, but equality is not a general rule. Counts below
 exclude the `<count>` child of `transferdatas`; each counted entry is a
 `transferdataN` row. `A/E` means the observed `rinsealways` / `rinseatend` values.
