@@ -483,10 +483,10 @@ class Interpreter:
                 outputs = self._call(callee, arguments, depth + 1)
                 for binding in statement.outputs:
                     self._write(binding.target, outputs[binding.parameter_id], frame)
-            elif isinstance(statement, (ConfigureProperty, StartAgitation, StopAgitation)):
+            elif isinstance(statement, (ConfigureProperty, StartAgitation, StopAgitation, DeviceCommand)):
                 value = evaluate(self, statement.value, frame) if isinstance(statement, ConfigureProperty) else None
                 self._record_event(self._devices.apply(statement, value))
-            elif isinstance(statement, (DeviceCommand, DeviceIf)):
+            elif isinstance(statement, DeviceIf):
                 fail("unsupported_operation", f"Cannot execute {type(statement).__name__}.", statement)
             else:
                 assert_never(statement)

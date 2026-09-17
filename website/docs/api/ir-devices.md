@@ -8,6 +8,10 @@ Contracts contain data, never executable Python. Conditions retain both branches
 
 ::: sciloom.core.ir.CommandContract
 
+::: sciloom.core.ir.LifecycleEffect
+
+::: sciloom.core.ir.LifecycleCommandContract
+
 ::: sciloom.core.ir.DeviceTypeContract
 
 ::: sciloom.core.ir.DeviceResource

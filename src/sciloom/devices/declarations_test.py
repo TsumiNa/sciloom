@@ -7,6 +7,7 @@ import pytest
 from sciloom import Agitator, Zone, rpm
 from sciloom.conftest import StubShaker
 from sciloom.core.diagnostics import IRValidationError
+from sciloom.core.ir import LifecycleCommandContract, LifecycleEffect
 from sciloom.core.ir.device_contracts import AGITATOR_CONTRACT
 from .declarations import bind_device, device_contract, operation
 
@@ -97,3 +98,62 @@ def test_zone_values_do_not_expand_device_property_or_command_types():
     for cls in (LocatedProperty, LocatedCommand):
         with pytest.raises(IRValidationError, match="device_contract"):
             device_contract(cls)
+
+
+@pytest.mark.parametrize(
+    "options",
+    [
+        {"requires": ("speed",)},
+        {"lifecycle": "apply_and_enable"},
+        {"lifecycle": LifecycleEffect.DISABLE, "requires": ("speed", "speed")},
+        {"lifecycle": LifecycleEffect.DISABLE, "requires": ["speed"]},
+        {"lifecycle": LifecycleEffect.DISABLE, "requires": (1,)},
+    ],
+)
+def test_invalid_decorator_metadata_rejected(options):
+    with pytest.raises(IRValidationError):
+        operation(id="test.lifecycle/v1", **options)
+
+
+def test_lifecycle_requires_resolves_inherited_properties_without_changing_ancestor_contracts():
+    class Extension(Agitator):
+        device_type_id = "test.requirements/v1"
+
+        @operation(id="test.requirements.halt/v1", lifecycle=LifecycleEffect.DISABLE, requires=("speed",))
+        def halt(self) -> None:
+            pytest.fail("Declaration body must not execute")
+
+    contract = device_contract(Extension)
+    command = contract.operations[-1]
+    assert isinstance(command, LifecycleCommandContract)
+    assert command.required_configuration == AGITATOR_CONTRACT.required_configuration
+    assert contract.operations[:-1] == AGITATOR_CONTRACT.operations
+
+
+@pytest.mark.parametrize("kind", ["argument", "setter", "missing"])
+def test_lifecycle_rejects_uninterpreted_arguments_setters_and_unknown_property_names(kind):
+    class WithArgument(Agitator):
+        device_type_id = "test.argument/v1"
+
+        @operation(id="test.argument.apply/v1", lifecycle=LifecycleEffect.APPLY_AND_ENABLE)
+        def apply(self, ignored: float) -> None: ...
+
+    class WithSetter(Agitator):
+        device_type_id = "test.setter/v1"
+
+        @property
+        def gain(self) -> float:
+            return 1.0
+
+        @gain.setter
+        @operation(id="test.setter.gain/v1", lifecycle=LifecycleEffect.APPLY_AND_ENABLE)
+        def gain(self, value: float) -> None: ...
+
+    class Missing(Agitator):
+        device_type_id = "test.missing/v1"
+
+        @operation(id="test.missing.apply/v1", lifecycle=LifecycleEffect.APPLY_AND_ENABLE, requires=("unknown",))
+        def apply(self) -> None: ...
+
+    with pytest.raises(IRValidationError):
+        device_contract({"argument": WithArgument, "setter": WithSetter, "missing": Missing}[kind])

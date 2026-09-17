@@ -17,7 +17,7 @@ an explicit developer decision.
 | Stage | Outcome | Code status |
 | --- | --- | --- |
 | R3.1 | [Typed dialog results across source and JSON](01-plan-dialog-semantics.md) | Merged #107 |
-| R3.2 | [Map proven operator dialog outcomes](02-plan-native-dialogs.md) | Implemented/gated in this PR; review/merge pending |
+| R3.2 | [Map proven operator dialog outcomes](02-plan-native-dialogs.md) | Merged #108 (implemented/gated) |
 
 Native status: Result, cancel, Stop and timeout behavior pending.
 R3.1 implements source, IR, JSON and reference behavior with explicit target rejection.

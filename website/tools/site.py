@@ -95,6 +95,8 @@ EXAMPLES = (
     "developer/logging_ir.json",
     "developer/demo_device.py",
     "developer/demo_device.json",
+    "developer/lifecycle_commands.py",
+    "developer/lifecycle_commands.json",
     "developer/demo_contribution/__init__.py",
     "developer/source_paths.py",
     "developer/portable_agitation.py",

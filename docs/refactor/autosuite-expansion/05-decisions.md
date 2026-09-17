@@ -202,6 +202,30 @@ and bring the internal reference guide's count/range and supplemental links up
 to date. Class A coverage/navigation corrections; no probe payload, reference
 semantics or native gate changes. Reassessed Version remains none (packages 0.6.0).
 
+## D014 — R4.1 preflight (2026-09-18)
+
+Baseline 94610f7350234f7dbf341e22042b7338e1ef63d5, packages 0.6.0. R3.2 #108
+is remotely MERGED after the three review corrections, 1113 local tests and four
+latest-head CI passes. The preceding turn completed that gate. No native receipt
+arrived; R2 unlocks and result dialogs remain gated while independent R4 proceeds.
+
+Inspected device declarations, typed contracts/schema, binding trust, definite
+configuration analysis, reference state and target rejection paths. Configuration
+analysis currently recognizes only StartAgitation. Add the new contract variant
+without modifying that built-in contract or ordinary command wire records.
+
+Class A: the planned BenchAgitator example omitted the concrete profile's explicit
+required_configuration declaration required by bind_device. Correct the example.
+Class B: neither planned lifecycle effect defines any command-argument meaning;
+both consume saved configuration/state. Initially require an empty typed
+parameters tuple and reject lifecycle arguments, including direct IR. Preserve
+ordinary typed command arguments for R6. This prevents accepting values whose
+effect would otherwise be silently discarded, without changing any accepted
+concrete apply/disable example. Update the authority and R4.1 acceptance first.
+Explicit per-command property requirements remain separate from the concrete
+device's requirements so inherited command IDs retain exactly one signature.
+Class C: native profiles/effects are not unlocked by reference implementation.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,

@@ -50,6 +50,7 @@ to the repository root.
 | [Physical device snapshots](device-locations-ir.md) | Select two controllers while retaining independent applied values and running states |
 | [Well property IR](well-properties-ir.md) | Supply an explicit metadata store and inspect immutable read/write events |
 | [Independent device](demo-device.md) | A new property, command and target outside core |
+| [Explicit lifecycle effects](lifecycle-commands.md) | Typed apply/disable contracts with captured configuration |
 | [Portable agitation](portable-agitation.md) | Device specialization and rebinding the same authored JSON |
 | [Complete workflows from IR](runtime-workflows-ir.md) | Three independent builders, JSON restoration and explicit reference services |
 | [Volume chunk after JSON](aspiration-chunk-ir.md) | Source-derived quantity arithmetic and repeated calls after restoration |

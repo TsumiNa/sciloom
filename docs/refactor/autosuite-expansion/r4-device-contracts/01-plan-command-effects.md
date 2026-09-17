@@ -8,7 +8,7 @@ Explicit lifecycle command contracts while preserving the accepted semantic cont
 
 [Authoritative interface](../01-contract.md#r4-explicit-command-effects-and-typed-configuration).
 R3 implementation PRs merged or completed as implemented/gated. Recheck that R5's planned concrete thermal needs justify each abstraction.
-Current code status: pending. Native status follows the [group overview](00-overview.md)
+Current code status: implemented in this PR; review/merge pending. Native status follows the [group overview](00-overview.md)
 and the [evidence register](../04-evidence.md), not a successful local test.
 
 ## Implementation preflight
@@ -24,6 +24,11 @@ Do not start this PR merely from a stale stage-status table.
 
 Add the lifecycle command-contract variant and decorator options; preserve ordinary command contracts and dedicated agitation nodes. Resolve property requirements, validate inherited/conflicting contracts, analyze definite configuration through branches/calls/loops and execute trusted logical lifecycle effects. Add the independent contributor example from the contract.
 
+Per D014, the two initial lifecycle effects accept no command arguments; reject
+nonempty parameters at declaration and IR validation. Ordinary typed commands
+are unchanged. The concrete contributor profile explicitly declares its required
+configuration, as the existing binding API requires.
+
 ## Non-goals
 
 No method-name inference, dynamic code import, schema migration, arbitrary result values, general plugin registry or unknown command simulation.
@@ -38,6 +43,30 @@ For tools/docs-only scope use relevant tools/docs checks and read-only corpus
 audit when references change. Record actual results, never predicted passes.
 Update the contract's availability and group/main status table before review.
 
+## Implementation and local acceptance
+
+Added LifecycleEffect/LifecycleCommandContract to the existing typed schema and
+operation decorator; the old ordinary command and agitation records are unchanged.
+Requirements resolve to declared property IDs and are checked for writability,
+definite initialization across calls/branches/loops, and again at reference action
+time. Reference effects preserve immutable logical/physical snapshots; unknown
+ordinary commands still reject. Supplied trusted contracts reject forged effects
+and inconsistent ancestry. AutoSuite validation and emission explicitly reject
+new lifecycle commands; no native profile is claimed.
+
+The complete lifecycle_commands contributor example and JSON companion exercise
+capture, reapply and disable using an independent recording target. Tests cover
+missing/conditional configuration, shared and distinct child resources, loops,
+repeated entry state, explicit disable preconditions, malformed declarations/IR,
+specialization, unknown commands and no later actions after failure. Existing
+v4 fixture bytes and old ASFP companions remain unchanged.
+
+Local acceptance: full code/example/tool suite, 98 website tooling checks,
+48 CI example/syntax commands, Ruff check/format, mypy (138 source files), strict
+documentation build, smoke and recipe validation passed. Read-only corpus audit:
+271 files, 127 archive entries, 52 function XML matches, 67 templates. Native
+execution remains unverified. Review and latest-head CI are still required.
+
 ## Review and completion
 
 Review, fix feedback, recheck latest head, squash merge and confirm remote MERGED
@@ -47,10 +76,6 @@ native acceptance remains pending and compiler rejection stays enabled.
 
 ## Version
 
-Version: none, this revision records a plan and changes no shipped code.
-
-Implementation expectation: MINOR, adds typed command effects and contributor declarations.
-Before the implementation PR is reviewed, replace this planning-only decision
-with the exact lockstep from/to transition based on its actual shipped scope and
-then-current baseline. The user explicitly requested no preallocated future
-version numbers. Reassess after review changes; no publication.
+Version: MINOR 0.6.0 → 0.7.0, adds explicit typed lifecycle contracts and contributor
+declarations with defined reference effects. Both packages remain lockstep; no
+release tag or publication. Reassess after review changes.

@@ -6,8 +6,21 @@ from types import MappingProxyType
 from typing import assert_never
 
 from sciloom.core.bindings import DeviceBinding, DeviceBindings, DeviceCandidate, DeviceSelectionBinding
-from sciloom.core.ir import ConfigureProperty, DeviceAt, DeviceResource, Program, StartAgitation, StopAgitation
-from sciloom.core.ir.device_contracts import START_AGITATION_ID, STOP_AGITATION_ID
+from sciloom.core.ir import (
+    ConfigureProperty,
+    DeviceAt,
+    DeviceCommand,
+    DeviceResource,
+    Program,
+    StartAgitation,
+    StopAgitation,
+)
+from sciloom.core.ir.device_contracts import (
+    START_AGITATION_ID,
+    STOP_AGITATION_ID,
+    LifecycleCommandContract,
+    LifecycleEffect,
+)
 from sciloom.core.locations import LocationDirectory, Zone
 from .values import OutputValue, RuntimeValue, coerce, fail, output_value
 
@@ -110,7 +123,9 @@ class DeviceSession:
         self.active[node.resource_id] = (zone, matches[0])
 
     def apply(
-        self, statement: ConfigureProperty | StartAgitation | StopAgitation, value: RuntimeValue | None = None
+        self,
+        statement: ConfigureProperty | StartAgitation | StopAgitation | DeviceCommand,
+        value: RuntimeValue | None = None,
     ) -> DeviceEvent:
         previous = self.states[statement.resource_id]
         binding = self.bindings.get(statement.resource_id)
@@ -129,25 +144,40 @@ class DeviceSession:
             saved = output_value(coerce(value, prop.type, statement), prop.type)
             state = replace(previous, configuration={**previous.configuration, prop.name: saved})
             operation = prop.semantic_id
-        elif isinstance(statement, StartAgitation):
-            if binding is not None and START_AGITATION_ID not in binding.supported_operations:
-                fail("device_capability", "The deployment does not support agitation start.", statement)
-            required = {self.properties[p].name for p in self.contracts[statement.resource_id].required_configuration}
-            if not required <= previous.configuration.keys():
-                fail("device_configuration", "start() requires complete saved configuration.", statement)
-            state = replace(previous, applied_configuration=previous.configuration, enabled=True)
-            operation = START_AGITATION_ID
-            if physical_id is not None:
-                self.physical[physical_id] = PhysicalDeviceState(
-                    applied_configuration=state.configuration, enabled=True
+        elif isinstance(statement, (StartAgitation, StopAgitation, DeviceCommand)):
+            contract = self.contracts[statement.resource_id]
+            required_ids: set[str] = set()
+            if isinstance(statement, DeviceCommand):
+                command = next(op for op in contract.operations if op.semantic_id == statement.operation_id)
+                if not isinstance(command, LifecycleCommandContract):
+                    fail("unsupported_operation", "Cannot execute DeviceCommand.", statement)
+                operation = command.semantic_id
+                effect = command.effect
+                required_ids.update(command.required_configuration)
+            else:
+                operation = START_AGITATION_ID if isinstance(statement, StartAgitation) else STOP_AGITATION_ID
+                effect = (
+                    LifecycleEffect.APPLY_AND_ENABLE
+                    if isinstance(statement, StartAgitation)
+                    else LifecycleEffect.DISABLE
                 )
-        elif isinstance(statement, StopAgitation):
-            if binding is not None and STOP_AGITATION_ID not in binding.supported_operations:
-                fail("device_capability", "The deployment does not support agitation stop.", statement)
-            state = replace(previous, enabled=False)
-            operation = STOP_AGITATION_ID
-            if physical_id is not None:
-                self.physical[physical_id] = replace(self.physical[physical_id], enabled=False)
+            if binding is not None and operation not in binding.supported_operations:
+                fail("device_capability", "The deployment does not support this lifecycle operation.", statement)
+            if effect == LifecycleEffect.APPLY_AND_ENABLE:
+                required_ids.update(contract.required_configuration)
+            required = {self.properties[p].name for p in required_ids}
+            if not required <= previous.configuration.keys():
+                fail("device_configuration", "Device command requires complete saved configuration.", statement)
+            if effect == LifecycleEffect.APPLY_AND_ENABLE:
+                state = replace(previous, applied_configuration=previous.configuration, enabled=True)
+                if physical_id is not None:
+                    self.physical[physical_id] = PhysicalDeviceState(
+                        applied_configuration=state.configuration, enabled=True
+                    )
+            else:
+                state = replace(previous, enabled=False)
+                if physical_id is not None:
+                    self.physical[physical_id] = replace(self.physical[physical_id], enabled=False)
         else:
             assert_never(statement)
         self.states[statement.resource_id] = state

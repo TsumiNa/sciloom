@@ -131,6 +131,7 @@ nav:
       - Complete workflows from IR: examples/runtime-workflows-ir.md
       - Volume chunk after JSON: examples/aspiration-chunk-ir.md
       - Independent device: examples/demo-device.md
+      - Lifecycle effects: examples/lifecycle-commands.md
       - Portable agitation: examples/portable-agitation.md
   - API Reference:
       - Overview: api/index.md

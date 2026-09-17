@@ -273,6 +273,14 @@ Device snapshots separate saved configuration, applied configuration and enabled
 state. Configure captures immediately, start applies complete saved values, and
 stop retains configuration. Events preserve snapshots at each operation.
 
+`DeviceCommand` with a `LifecycleCommandContract` explicitly declares either
+`APPLY_AND_ENABLE` or `DISABLE`. The former checks device-wide and command-specific
+requirements before applying all saved values; the latter checks only explicit
+command requirements and retains both configurations. Both effects are
+parameterless. Missing configuration fails before the action and subsequent
+statements. Ordinary native commands still fail with `unsupported_operation`;
+method names do not select semantics. See [device contracts](device-contracts.md).
+
 For bound reference execution, supply `ReferenceEnvironment(device_bindings=...,
 locations=...)`. `DeviceSelectionBinding` holds immutable candidates; each
 `DeviceCandidate` pairs one existing `DeviceBinding` with its allowed wells.
