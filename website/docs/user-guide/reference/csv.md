@@ -50,6 +50,11 @@ fixed tuple of inline `csv.Column` declarations, column types and units are
 chosen before compilation. Physical columns require matching units; ordinary
 scalar columns do not accept units.
 
+Temperature, temperature-difference and temperature-rate columns are explicitly
+unsupported for reads. The current multiplicative column unit cannot describe
+an affine Celsius conversion. Typed thermal values can be appended in canonical
+kelvin / kelvin-per-second units; this does not enable native AutoSuite CSV I/O.
+
 An empty dataset produces empty lists. Requesting a row beyond the data produces
 EOF. Negative or Boolean indices are invalid, not recoverable file statuses.
 Read an entire result into fields before using it in calculations.

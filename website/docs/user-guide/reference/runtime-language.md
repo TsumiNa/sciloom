@@ -100,6 +100,32 @@ The [quantity example](../../examples/quantity-conversion.md) shows conversion i
 a complete function. A Duration value stores an interval; waiting and timers are
 separate operations.
 
+### Temperature values
+
+Import `Temperature`, `TemperatureDifference`, `TemperatureRate`, `degC`,
+`kelvin`, `delta_degC`, `delta_kelvin`, `degC_per_min` and `kelvin_per_s`
+from `sciloom`. They can be declared in Input/Output/Var and homogeneous lists.
+Absolute values store kelvin (0°C = 273.15 K), differences store signed kelvin,
+and rates store signed K/s. Booleans and nonfinite values are rejected.
+
+| Operation | Result |
+| --- | --- |
+| `20 * degC` | Absolute 293.15 K; source construction requires a numeric literal |
+| Absolute − absolute | TemperatureDifference |
+| Absolute ± difference; difference + absolute | Temperature, rejecting results below 0 K |
+| Same-type comparison | bool |
+| Difference/rate arithmetic and numeric scaling | Same difference/rate type |
+| Difference/rate divided by the same type or its unit | float |
+
+Absolute + absolute, absolute scaling/ratios and cross-dimension multiplication
+are rejected. A runtime numeric field multiplied by `degC` is not an implicit
+cast; supply a typed Temperature input. Signed difference/rate unit construction
+can use runtime numbers. Logging and CSV append retain canonical values, while
+thermal CSV reads are explicitly unsupported until a conversion contract exists.
+AutoSuite compilation rejects thermal types pending verified native encodings
+and range behavior. Core/reference support does not prove vendor conversion or
+physical equivalence. See the [runnable example](../../examples/temperature-values.md).
+
 ## Text
 
 Declare text with `Input[str]`, `Output[str]` or an initialized `Var[str] = ""`.

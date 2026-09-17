@@ -481,7 +481,7 @@ trusted physical identities differ; all physical identity collisions still fail.
 
 ## R5: Physical temperature and a fixed thermal family
 
-### Quantity API — planned after R5.1
+### Quantity API — implemented in R5.1, native encoding gated
 
 Lazy author imports from sciloom:
 `Temperature`, `TemperatureDifference`, `TemperatureRate`,
@@ -507,6 +507,17 @@ Add scalar values `temperature`, `temperature_difference`, `temperature_rate`,
 typed list support and all-consumer handling; unsupported
 AutoSuite uses get explicit diagnostics until mapped.
 
+R5.1 consumer boundary: absolute-unit construction is a numeric literal operation
+in runtime source, not a general numeric-to-temperature cast. There is no
+absolute-temperature ratio or division by an absolute unit. Signed differences
+and rates support same-dimension ratios and division by their own unit, following
+the existing quantity convention. No affine CSV read conversion is introduced:
+all three thermal CSV column types are explicitly rejected in this stage, in
+host descriptors and direct IR as well as source. Logging and CSV append preserve
+canonical K / K/s values. AutoSuite rejects thermal scalar/list values until
+exact native encodings and conversion behavior are established; no guessed
+273.16 adjustment or generic real-number fallback is allowed.
+
 ```python
 from sciloom import Temperature, degC, delta_degC
 
@@ -519,6 +530,13 @@ assert target == Temperature(kelvin=298.15)
 Validate floating results with existing numerical conventions, not cross-vendor
 bit-identical physical claims. Runtime examples cover declared Input/Output/Var
 and JSON as well as these host values.
+
+Runnable author example: `uv run python examples/temperature_values.py` prints
+298.15 K, 5 K and 1 K/s. `uv run python -m examples.developer.temperature_ir`
+generates the complete JSON v4 companion and reference-executes the declared
+Input/Output/Var fields twice, obtaining 5 K then 0 K changes. Direct IR tests
+cover the same typed arithmetic and specialization without a Python frontend.
+These examples do not claim native thermal control.
 
 ### Heater author family — planned after R5.2
 

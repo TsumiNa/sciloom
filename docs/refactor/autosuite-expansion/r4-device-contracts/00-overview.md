@@ -17,7 +17,7 @@ an explicit developer decision.
 | Stage | Outcome | Code status |
 | --- | --- | --- |
 | R4.1 | [Explicit lifecycle command contracts](01-plan-command-effects.md) | Merged #109 |
-| R4.2 | [Preserve typed multi-property backend state](02-plan-multi-property-state.md) | Implemented in this PR; review/merge pending |
+| R4.2 | [Preserve typed multi-property backend state](02-plan-multi-property-state.md) | Merged #110 |
 
 Native status: Native profile support remains bounded; no new physical claims.
 R4.1 provides typed declarations, definite configuration and reference effects;

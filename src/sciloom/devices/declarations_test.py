@@ -4,11 +4,21 @@ from dataclasses import FrozenInstanceError
 
 import pytest
 
-from sciloom import Agitator, Zone, rpm
+from sciloom import Agitator, Temperature, TemperatureDifference, TemperatureRate, Zone, rpm
 from sciloom.conftest import StubShaker
 from sciloom.core.diagnostics import IRValidationError
-from sciloom.core.ir import LifecycleCommandContract, LifecycleEffect
-from sciloom.core.ir.device_contracts import AGITATOR_CONTRACT
+from sciloom.core.ir import (
+    FunctionIR,
+    LifecycleCommandContract,
+    LifecycleEffect,
+    ListType,
+    Program,
+    ScalarType,
+    from_json,
+    to_json,
+)
+from sciloom.core.ir.device_contracts import AGITATOR_CONTRACT, BASE_DEVICE_CONTRACT
+from .base import BaseDevice
 from .declarations import bind_device, device_contract, operation
 
 
@@ -26,6 +36,48 @@ def test_builtin_signatures_and_explicit_profile_capabilities():
         _ = profile.speed
     with pytest.raises(TypeError, match="compiled"):
         profile.start()
+
+
+@pytest.mark.parametrize(
+    "kind,scalar",
+    [
+        (Temperature, ScalarType.TEMPERATURE),
+        (TemperatureDifference, ScalarType.TEMPERATURE_DIFFERENCE),
+        (TemperatureRate, ScalarType.TEMPERATURE_RATE),
+    ],
+)
+@pytest.mark.parametrize("array", [False, True])
+def test_thermal_property_command_declarations_and_json(kind, scalar, array):
+    annotation = list[kind] if array else kind
+
+    class ThermalDeclaration(BaseDevice):
+        device_type_id = "test.thermal-declaration/v1"
+
+        @property
+        def setting(self) -> annotation:
+            pytest.fail("getter must not execute")
+
+        @setting.setter
+        @operation(id="test.thermal-declaration.setting/v1")
+        def setting(self, value: annotation) -> None:
+            pytest.fail("setter must not execute")
+
+        @operation(id="test.thermal-declaration.perform/v1")
+        def perform(self, value: annotation) -> None:
+            pytest.fail("command must not execute")
+
+    contract = device_contract(ThermalDeclaration)
+    expected = ListType(element_type=scalar) if array else scalar
+    assert contract.properties[0].type == expected
+    assert contract.operations[0].parameters[0].type == expected
+    assert contract.operations[0].parameters[0].name == "value"
+    program = Program(
+        entry_function_id="f",
+        functions=(FunctionIR(node_id="f", name="Declarations"),),
+        device_types=(BASE_DEVICE_CONTRACT, contract),
+    )
+    assert from_json(to_json(program)) == program
+    assert device_contract(Agitator) == AGITATOR_CONTRACT
 
 
 def test_mismatched_property_types_and_nonvoid_commands_are_rejected():

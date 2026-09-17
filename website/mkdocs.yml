@@ -99,6 +99,7 @@ nav:
       - Scale values: examples/scale-values.md
       - Prepare labels: examples/prepare-labels.md
       - Quantity conversion: examples/quantity-conversion.md
+      - Temperature values: examples/temperature-values.md
       - Numeric operations: examples/numeric-operations.md
       - Record values: examples/record-values.md
       - Confirm samples: examples/confirm-samples.md

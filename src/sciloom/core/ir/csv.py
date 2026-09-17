@@ -4,7 +4,7 @@ import math
 
 from .expressions import ExpressionChecker
 from .model import AppendCsv, CsvErrorPolicy, CsvReadMode, Expression, FunctionIR, Literal, ReadCsv
-from .types import QUANTITIES, ListType, ScalarType, ValueType, is_assignable
+from .types import QUANTITIES, THERMAL_QUANTITIES, ListType, ScalarType, ValueType, is_assignable
 
 OK = 0
 DEFAULT_USED = 1
@@ -60,6 +60,8 @@ def validate_csv(node: ReadCsv, function: FunctionIR, path: str, checker: Expres
     result_types: list[ValueType] = [ScalarType.INTEGER] if node.error_policy == CsvErrorPolicy.STATUS else []
     for i, column in enumerate(node.columns):
         location = f"{path}.columns[{i}]"
+        if column.type in THERMAL_QUANTITIES:
+            report("unsupported_csv_type", "Thermal CSV reads require an explicit conversion contract.", location, node)
         index(column.index, f"{location}.index")
         if column.unit is not None:
             checker.check(column.unit, function, f"{location}.unit")

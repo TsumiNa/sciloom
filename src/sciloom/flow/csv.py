@@ -11,8 +11,18 @@ from sciloom.core.ir.csv import (
     IO_ERROR as IO_ERROR,
     OK as OK,
 )
-from sciloom.core.ir.types import ScalarType
-from sciloom.units import Duration, DurationUnit, RotationalSpeed, SpeedUnit, Volume, VolumeUnit
+from sciloom.core.ir.types import THERMAL_QUANTITIES, ScalarType
+from sciloom.units import (
+    Duration,
+    DurationUnit,
+    RotationalSpeed,
+    SpeedUnit,
+    Temperature,
+    TemperatureDifference,
+    TemperatureRate,
+    Volume,
+    VolumeUnit,
+)
 from .fields import _default, _value_type
 
 T = TypeVar("T", int, float, bool, str, RotationalSpeed, Volume, Duration)
@@ -54,6 +64,8 @@ class Column(Generic[T]):
         value_type = _value_type("csv.Column", self.value_type)
         if not isinstance(value_type, ScalarType):
             raise TypeError("CSV columns require scalar element types.")
+        if value_type in THERMAL_QUANTITIES:
+            raise ValueError("Thermal CSV reads require an explicit conversion contract.")
         quantity = self.value_type in (RotationalSpeed, Volume, Duration)
         if self.unit is None:
             if quantity:
@@ -147,7 +159,21 @@ def try_read_columns(path: str, *, header: bool, columns: tuple[Column[Any], ...
 
 
 def append_row(
-    path: str, *, values: tuple[int | float | bool | str | RotationalSpeed | Volume | Duration, ...]
+    path: str,
+    *,
+    values: tuple[
+        int
+        | float
+        | bool
+        | str
+        | RotationalSpeed
+        | Volume
+        | Duration
+        | Temperature
+        | TemperatureDifference
+        | TemperatureRate,
+        ...,
+    ],
 ) -> None:
     """Append one ordered scalar row, stopping execution on a file error.
 
@@ -170,7 +196,21 @@ def append_row(
 
 
 def try_append_row(
-    path: str, *, values: tuple[int | float | bool | str | RotationalSpeed | Volume | Duration, ...]
+    path: str,
+    *,
+    values: tuple[
+        int
+        | float
+        | bool
+        | str
+        | RotationalSpeed
+        | Volume
+        | Duration
+        | Temperature
+        | TemperatureDifference
+        | TemperatureRate,
+        ...,
+    ],
 ) -> int:
     """Append one row and assign OK or IO_ERROR to one integer runtime field.
 

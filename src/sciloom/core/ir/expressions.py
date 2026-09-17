@@ -30,7 +30,16 @@ from .model import (
     ZoneLength,
     ZoneLiteral,
 )
-from .types import QUANTITIES, SIGNED_QUANTITIES, ListType, ScalarType, ValueType, ZoneType, is_assignable
+from .types import (
+    MULTIPLICATIVE_QUANTITIES,
+    SIGNED_QUANTITIES,
+    THERMAL_QUANTITIES,
+    ListType,
+    ScalarType,
+    ValueType,
+    ZoneType,
+    is_assignable,
+)
 
 Report = Callable[[str, str, str, Node | None], None]
 
@@ -118,11 +127,16 @@ class ExpressionChecker:
                 ScalarType.TEXT: type(expr.value) is str,
                 ScalarType.VOLUME: type(expr.value) in (int, float),
                 ScalarType.DURATION: type(expr.value) in (int, float),
+                ScalarType.TEMPERATURE_DIFFERENCE: type(expr.value) in (int, float),
+                ScalarType.TEMPERATURE_RATE: type(expr.value) in (int, float),
+                ScalarType.TEMPERATURE: type(expr.value) in (int, float)
+                and isinstance(expr.value, (int, float))
+                and expr.value >= 0,
                 ScalarType.ROTATIONAL_SPEED: type(expr.value) in (int, float)
                 and isinstance(expr.value, (int, float))
                 and expr.value >= 0,
             }[expr.type]
-            if valid and expr.type in SIGNED_QUANTITIES:
+            if valid and expr.type in (*SIGNED_QUANTITIES, ScalarType.TEMPERATURE):
                 assert isinstance(expr.value, (int, float))
                 try:
                     valid = math.isfinite(expr.value)
@@ -181,6 +195,16 @@ class ExpressionChecker:
             )
             return None
         numeric = left in (ScalarType.INTEGER, ScalarType.REAL) and right in (ScalarType.INTEGER, ScalarType.REAL)
+        if op == BinaryOp.SUBTRACT and left == right == ScalarType.TEMPERATURE:
+            return ScalarType.TEMPERATURE_DIFFERENCE
+        if (
+            op in (BinaryOp.ADD, BinaryOp.SUBTRACT)
+            and left == ScalarType.TEMPERATURE
+            and right == ScalarType.TEMPERATURE_DIFFERENCE
+        ):
+            return ScalarType.TEMPERATURE
+        if op == BinaryOp.ADD and left == ScalarType.TEMPERATURE_DIFFERENCE and right == ScalarType.TEMPERATURE:
+            return ScalarType.TEMPERATURE
         if op == BinaryOp.ADD and left == right == ScalarType.TEXT:
             return ScalarType.TEXT
         if op in (BinaryOp.AND, BinaryOp.OR):
@@ -190,19 +214,23 @@ class ExpressionChecker:
             if left == right or numeric:
                 return ScalarType.BOOLEAN
         elif op in (BinaryOp.LESS, BinaryOp.LESS_EQUAL, BinaryOp.GREATER, BinaryOp.GREATER_EQUAL):
-            if numeric or left == right and left in SIGNED_QUANTITIES:
+            if numeric or left == right and left in (*SIGNED_QUANTITIES, *THERMAL_QUANTITIES):
                 return ScalarType.BOOLEAN
         elif op in (BinaryOp.ADD, BinaryOp.SUBTRACT) and left == right and left in SIGNED_QUANTITIES:
             return left
-        elif op == BinaryOp.DIVIDE and left == right and left in QUANTITIES:
+        elif op == BinaryOp.DIVIDE and left == right and left in MULTIPLICATIVE_QUANTITIES:
             return ScalarType.REAL
         elif (
             op in (BinaryOp.MULTIPLY, BinaryOp.DIVIDE)
-            and left in QUANTITIES
+            and left in MULTIPLICATIVE_QUANTITIES
             and right in (ScalarType.INTEGER, ScalarType.REAL)
         ):
             return left
-        elif op == BinaryOp.MULTIPLY and right in QUANTITIES and left in (ScalarType.INTEGER, ScalarType.REAL):
+        elif (
+            op == BinaryOp.MULTIPLY
+            and right in MULTIPLICATIVE_QUANTITIES
+            and left in (ScalarType.INTEGER, ScalarType.REAL)
+        ):
             return right
         elif numeric:
             return ScalarType.REAL if op == BinaryOp.DIVIDE or ScalarType.REAL in (left, right) else ScalarType.INTEGER

@@ -38,8 +38,8 @@ lockstep. No tag, release or package publication is authorized.
 | R1 | Deployment facts and persistent-state checks | [Overview](r1-deployment/00-overview.md) | Merged #104 / #105 | Reset experiment pending |
 | R2 | Evidence receipts and existing capability acceptance | [Overview](r2-native-verification/00-overview.md) | R2.1 merged #106; unlocks pending evidence | Existing failure/CSV gates pending |
 | R3 | Text and yes/no operator results | [Overview](r3-operator-dialogs/00-overview.md) | R3.1 merged #107; R3.2 merged #108 (implemented/gated) | Result/cancel/timeout pending |
-| R4 | Typed command effects and multi-property device state | [Overview](r4-device-contracts/00-overview.md) | R4.1 merged #109; R4.2 implemented, review/merge pending | No new platform claim |
-| R5 | Temperature values and a fixed thermal device | [Overview](r5-thermal-control/00-overview.md) | Pending | Exact thermal profile pending |
+| R4 | Typed command effects and multi-property device state | [Overview](r4-device-contracts/00-overview.md) | R4.1 merged #109; R4.2 merged #110 | No new platform claim |
+| R5 | Temperature values and a fixed thermal device | [Overview](r5-thermal-control/00-overview.md) | R5.1 implemented, review/merge pending; R5.2–R5.3 pending | Exact thermal profile pending |
 | R6 | Location arguments and simple volumetric transfer | [Overview](r6-volumetric-transfer/00-overview.md) | Pending | Exact transfer profile pending |
 | R7 | Integrated source/IR/JSON workflows and status | [Overview](r7-integration/00-overview.md) | Pending | Per capability |
 

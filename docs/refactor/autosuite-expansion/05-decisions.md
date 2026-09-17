@@ -272,6 +272,45 @@ dynamic selection remain rejected. Synthetic configuration transport tests are
 compiler/wire-model evidence only, not new native profile acceptance. The
 authority and R4.2 scope now state these boundaries before implementation.
 
+## D017 — R5.1 preflight (2026-09-18)
+
+Baseline 203df1a38b24cada61887d11fa709f4d17e47906, packages 0.7.1. R4.2 #110
+is remotely MERGED after review 5239498885 (zero actionable/suppressed findings),
+1144 code/tool/example tests, 98 website tests, 48 example commands and all four
+latest-head CI checks. This goal turn made progress completing that gate.
+Created the next branch only after fetching merged main.
+
+Inspected unit values, source unit lowering, field/device declarations, typed
+expression validation, JSON, reference coercion/snapshots, logging/CSV and target
+encoding/guards. Existing multiplicative quantity rules cannot express affine
+temperature safely: absolute subtraction changes dimension, scaling is invalid,
+and a CSV unit represented by one literal cannot encode a Celsius offset.
+
+Class B bounded refinement, recorded in the authority before implementation:
+absolute source unit construction is literal-only; signed difference/rate unit
+ratios follow existing conventions. Thermal CSV reads explicitly reject all
+three new types rather than interpret temperatures as dimensionless numbers.
+Logging and append retain canonical values. No new conversion API or wire model.
+Keep existing quantity wire forms and arithmetic unchanged.
+
+Class C: there is no new native precision/re-export receipt. The observed 273.16
+offset is insufficient to define exact thermal encoding or safe runtime range
+checks. R5.1 therefore implements core/reference values and explicit AutoSuite
+type rejection, as the plan permits; native mapping/profile remains R5.3 and
+gated if evidence is still absent. Core uses 273.15, without vendor adjustment.
+No class D semantic compromise or human decision is required.
+
+## D018 — R5.1 review declaration-path coverage (2026-09-18)
+
+Review 5239643141 has no inline threads and one suppressed actionable comment:
+thermal device declaration mappings lack focused tests. Add six cases covering
+all three scalar types as both properties and command arguments, including
+homogeneous lists. Inspect the actual contributed typed contracts, round-trip
+their complete Program through JSON and retain the built-in agitation contract.
+Declaration bodies must not execute. Class A validation-coverage correction;
+no interface or production behavior changes. Version remains MINOR 0.7.1 → 0.8.0.
+Recheck latest-head CI and every review surface before merge.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,

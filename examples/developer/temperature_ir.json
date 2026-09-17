@@ -1,0 +1,272 @@
+{
+  "device_types": [],
+  "entry_function_id": "fn:0",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "Assignment",
+          "node_id": "fn:0:node:1",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 53,
+            "path": "examples/temperature_values.py"
+          },
+          "target": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:2",
+            "source": {
+              "column": 8,
+              "kind": "SourceSpan",
+              "line": 53,
+              "path": "examples/temperature_values.py"
+            },
+            "symbol_id": "fn:0:var:target"
+          },
+          "value": {
+            "kind": "Binary",
+            "left": {
+              "kind": "Reference",
+              "node_id": "fn:0:node:4",
+              "source": {
+                "column": 22,
+                "kind": "SourceSpan",
+                "line": 53,
+                "path": "examples/temperature_values.py"
+              },
+              "symbol_id": "fn:0:var:initial"
+            },
+            "node_id": "fn:0:node:3",
+            "op": "+",
+            "right": {
+              "kind": "Reference",
+              "node_id": "fn:0:node:5",
+              "source": {
+                "column": 37,
+                "kind": "SourceSpan",
+                "line": 53,
+                "path": "examples/temperature_values.py"
+              },
+              "symbol_id": "fn:0:var:step"
+            },
+            "source": {
+              "column": 22,
+              "kind": "SourceSpan",
+              "line": 53,
+              "path": "examples/temperature_values.py"
+            }
+          }
+        },
+        {
+          "kind": "Assignment",
+          "node_id": "fn:0:node:6",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 54,
+            "path": "examples/temperature_values.py"
+          },
+          "target": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:7",
+            "source": {
+              "column": 8,
+              "kind": "SourceSpan",
+              "line": 54,
+              "path": "examples/temperature_values.py"
+            },
+            "symbol_id": "fn:0:var:change"
+          },
+          "value": {
+            "kind": "Binary",
+            "left": {
+              "kind": "Reference",
+              "node_id": "fn:0:node:9",
+              "source": {
+                "column": 22,
+                "kind": "SourceSpan",
+                "line": 54,
+                "path": "examples/temperature_values.py"
+              },
+              "symbol_id": "fn:0:var:target"
+            },
+            "node_id": "fn:0:node:8",
+            "op": "-",
+            "right": {
+              "kind": "Reference",
+              "node_id": "fn:0:node:10",
+              "source": {
+                "column": 36,
+                "kind": "SourceSpan",
+                "line": 54,
+                "path": "examples/temperature_values.py"
+              },
+              "symbol_id": "fn:0:var:saved"
+            },
+            "source": {
+              "column": 22,
+              "kind": "SourceSpan",
+              "line": 54,
+              "path": "examples/temperature_values.py"
+            }
+          }
+        },
+        {
+          "kind": "Assignment",
+          "node_id": "fn:0:node:11",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 55,
+            "path": "examples/temperature_values.py"
+          },
+          "target": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:12",
+            "source": {
+              "column": 8,
+              "kind": "SourceSpan",
+              "line": 55,
+              "path": "examples/temperature_values.py"
+            },
+            "symbol_id": "fn:0:var:saved"
+          },
+          "value": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:13",
+            "source": {
+              "column": 21,
+              "kind": "SourceSpan",
+              "line": 55,
+              "path": "examples/temperature_values.py"
+            },
+            "symbol_id": "fn:0:var:target"
+          }
+        },
+        {
+          "kind": "Assignment",
+          "node_id": "fn:0:node:14",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 56,
+            "path": "examples/temperature_values.py"
+          },
+          "target": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:15",
+            "source": {
+              "column": 8,
+              "kind": "SourceSpan",
+              "line": 56,
+              "path": "examples/temperature_values.py"
+            },
+            "symbol_id": "fn:0:var:rate"
+          },
+          "value": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:16",
+            "source": {
+              "column": 20,
+              "kind": "SourceSpan",
+              "line": 56,
+              "path": "examples/temperature_values.py"
+            },
+            "symbol_id": "fn:0:var:ramp"
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "TemperatureValues",
+      "node_id": "fn:0",
+      "source": {
+        "column": 4,
+        "kind": "SourceSpan",
+        "line": 52,
+        "path": "examples/temperature_values.py"
+      },
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "initial",
+          "node_id": "fn:0:var:initial",
+          "owner_id": "fn:0",
+          "role": "input",
+          "source": null,
+          "type": "temperature"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "step",
+          "node_id": "fn:0:var:step",
+          "owner_id": "fn:0",
+          "role": "input",
+          "source": null,
+          "type": "temperature_difference"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "ramp",
+          "node_id": "fn:0:var:ramp",
+          "owner_id": "fn:0",
+          "role": "input",
+          "source": null,
+          "type": "temperature_rate"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "target",
+          "node_id": "fn:0:var:target",
+          "owner_id": "fn:0",
+          "role": "output",
+          "source": null,
+          "type": "temperature"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "change",
+          "node_id": "fn:0:var:change",
+          "owner_id": "fn:0",
+          "role": "output",
+          "source": null,
+          "type": "temperature_difference"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "rate",
+          "node_id": "fn:0:var:rate",
+          "owner_id": "fn:0",
+          "role": "output",
+          "source": null,
+          "type": "temperature_rate"
+        },
+        {
+          "initial": {
+            "kind": "Literal",
+            "node_id": "fn:0:var:saved:initial",
+            "source": null,
+            "type": "temperature",
+            "value": 293.15
+          },
+          "kind": "Variable",
+          "name": "saved",
+          "node_id": "fn:0:var:saved",
+          "owner_id": "fn:0",
+          "role": "internal",
+          "source": null,
+          "type": "temperature"
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": []
+}
