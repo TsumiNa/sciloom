@@ -7,7 +7,7 @@ Accept verified native failure propagation while preserving the accepted semanti
 ## Authority and dependencies
 
 [Authoritative interface](../01-contract.md#r2-evidence-and-native-unlocking).
-R2.1 merged; exact capability receipts accepted; no other implementation PR open. 
+R2.1 merged; exact capability receipts accepted; no other implementation PR open.
 Current code status: pending. Native status follows the [group overview](00-overview.md)
 and the [evidence register](../04-evidence.md), not a successful local test.
 
