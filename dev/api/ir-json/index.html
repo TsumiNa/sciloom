@@ -2526,6 +2526,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/temperature-values/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Temperature values
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/numeric-operations/" class="md-nav__link">
         
   
@@ -4151,8 +4178,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.7.1
-    · <code title="203df1a38b24cada61887d11fa709f4d17e47906">203df1a3</code>
+    · SciLoom 0.8.0
+    · <code title="c4abeb82f906b10c3c4a9f13fc3eab0475855247">c4abeb82</code>
   </p>
 </aside>
 
@@ -4160,6 +4187,11 @@
 
 <h1 id="ir-validation-and-json">IR validation and JSON</h1>
 <p>The current interchange contract is <strong>JSON v4</strong>. Import these functions from <code>sciloom.core.ir</code>.</p>
+<p>Thermal scalar vocabulary adds <code>temperature</code>, <code>temperature_difference</code> and
+<code>temperature_rate</code> to existing Literal/Variable/ListType records. Canonical values
+are K, K and K/s respectively. Existing kinds and bytes retain their meaning;
+older readers may explicitly reject the new enum values. See the
+<a href="../../examples/temperature-values/">temperature example</a> for a complete document.</p>
 
 
 <div class="doc doc-object doc-function">

@@ -1208,6 +1208,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Physical quantities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#temperature-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Temperature values
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2732,6 +2749,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/temperature-values/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Temperature values
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/numeric-operations/" class="md-nav__link">
         
   
@@ -4221,6 +4265,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Physical quantities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#temperature-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Temperature values
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -4338,8 +4399,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.7.1
-    · <code title="203df1a38b24cada61887d11fa709f4d17e47906">203df1a3</code>
+    · SciLoom 0.8.0
+    · <code title="c4abeb82f906b10c3c4a9f13fc3eab0475855247">c4abeb82</code>
   </p>
 </aside>
 
@@ -4520,6 +4581,54 @@ invalid values when they occur.</p>
 <p>The <a href="../../../examples/quantity-conversion/">quantity example</a> shows conversion in
 a complete function. A Duration value stores an interval; waiting and timers are
 separate operations.</p>
+<h3 id="temperature-values">Temperature values</h3>
+<p>Import <code>Temperature</code>, <code>TemperatureDifference</code>, <code>TemperatureRate</code>, <code>degC</code>,
+<code>kelvin</code>, <code>delta_degC</code>, <code>delta_kelvin</code>, <code>degC_per_min</code> and <code>kelvin_per_s</code>
+from <code>sciloom</code>. They can be declared in Input/Output/Var and homogeneous lists.
+Absolute values store kelvin (0°C = 273.15 K), differences store signed kelvin,
+and rates store signed K/s. Booleans and nonfinite values are rejected.</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>20 * degC</code></td>
+<td>Absolute 293.15 K; source construction requires a numeric literal</td>
+</tr>
+<tr>
+<td>Absolute − absolute</td>
+<td>TemperatureDifference</td>
+</tr>
+<tr>
+<td>Absolute ± difference; difference + absolute</td>
+<td>Temperature, rejecting results below 0 K</td>
+</tr>
+<tr>
+<td>Same-type comparison</td>
+<td>bool</td>
+</tr>
+<tr>
+<td>Difference/rate arithmetic and numeric scaling</td>
+<td>Same difference/rate type</td>
+</tr>
+<tr>
+<td>Difference/rate divided by the same type or its unit</td>
+<td>float</td>
+</tr>
+</tbody>
+</table>
+<p>Absolute + absolute, absolute scaling/ratios and cross-dimension multiplication
+are rejected. A runtime numeric field multiplied by <code>degC</code> is not an implicit
+cast; supply a typed Temperature input. Signed difference/rate unit construction
+can use runtime numbers. Logging and CSV append retain canonical values, while
+thermal CSV reads are explicitly unsupported until a conversion contract exists.
+AutoSuite compilation rejects thermal types pending verified native encodings
+and range behavior. Core/reference support does not prove vendor conversion or
+physical equivalence. See the <a href="../../../examples/temperature-values/">runnable example</a>.</p>
 <h2 id="text">Text</h2>
 <p>Declare text with <code>Input[str]</code>, <code>Output[str]</code> or an initialized <code>Var[str] = ""</code>.
 Import <code>text</code> from <code>sciloom</code> for the two runtime helpers:</p>

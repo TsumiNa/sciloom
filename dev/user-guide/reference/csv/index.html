@@ -2633,6 +2633,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/temperature-values/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Temperature values
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/numeric-operations/" class="md-nav__link">
         
   
@@ -4140,8 +4167,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.7.1
-    · <code title="203df1a38b24cada61887d11fa709f4d17e47906">203df1a3</code>
+    · SciLoom 0.8.0
+    · <code title="c4abeb82f906b10c3c4a9f13fc3eab0475855247">c4abeb82</code>
   </p>
 </aside>
 
@@ -4210,6 +4237,10 @@ row, column indices and defaults can use runtime expressions. <code>header</code
 fixed tuple of inline <code>csv.Column</code> declarations, column types and units are
 chosen before compilation. Physical columns require matching units; ordinary
 scalar columns do not accept units.</p>
+<p>Temperature, temperature-difference and temperature-rate columns are explicitly
+unsupported for reads. The current multiplicative column unit cannot describe
+an affine Celsius conversion. Typed thermal values can be appended in canonical
+kelvin / kelvin-per-second units; this does not enable native AutoSuite CSV I/O.</p>
 <p>An empty dataset produces empty lists. Requesting a row beyond the data produces
 EOF. Negative or Boolean indices are invalid, not recoverable file statuses.
 Read an entire result into fields before using it in calculations.</p>
