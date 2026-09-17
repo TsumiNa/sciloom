@@ -82,6 +82,7 @@ The 33 reference documents are in one directory, numbered 00–32. This guide is
 ### Runtime validation
 
 - [15 · Executor simulation](15_EXECUTOR_SIMULATION.md)
+- [36 · Result-dialog probes and host acceptance](36_DIALOG_RESULT_PROBES.md)
 
 ## Commands
 

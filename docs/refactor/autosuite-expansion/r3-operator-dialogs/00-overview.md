@@ -16,11 +16,14 @@ an explicit developer decision.
 
 | Stage | Outcome | Code status |
 | --- | --- | --- |
-| R3.1 | [Typed dialog results across source and JSON](01-plan-dialog-semantics.md) | Implemented in this PR; review/merge pending |
-| R3.2 | [Map proven operator dialog outcomes](02-plan-native-dialogs.md) | Pending |
+| R3.1 | [Typed dialog results across source and JSON](01-plan-dialog-semantics.md) | Merged #107 |
+| R3.2 | [Map proven operator dialog outcomes](02-plan-native-dialogs.md) | Implemented/gated in this PR; review/merge pending |
 
 Native status: Result, cancel, Stop and timeout behavior pending.
 R3.1 implements source, IR, JSON and reference behavior with explicit target rejection.
+R3.2 provides thirty native measurement candidates and the complete barcode
+reference workflow. Its [host procedure](../../../../autosuite/docs/36_DIALOG_RESULT_PROBES.md)
+requires receipts before any public native mapping can be unlocked.
 Native-unlock prerequisites are distinct
 from review/merge prerequisites. Finish each PR green and remotely squash merged
 before beginning another; an implemented/gated stage preserves its rejection.

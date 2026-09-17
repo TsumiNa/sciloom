@@ -168,6 +168,32 @@ handbook. Class A diagnostic/documentation correction; nodes, events, codes,
 state retention and native gates are unchanged. Reassessed Version remains
 MINOR 0.5.0 → 0.6.0; latest-head checks and resolved review are required.
 
+## D012 — R3.2 preflight (2026-09-18)
+
+Baseline df426a08e41bbd114f672e8f0922421351c86160, packages 0.6.0. R3.1 #107
+is remotely MERGED after both review corrections, 1089 local tests and four
+latest-head CI passes. The preceding turn made progress by completing that gate.
+No Executor receipt arrived; result-dialog compilation remains rejected.
+
+Read the serialization references, catalog, representative UserDialog template
+and received test.asfp. Its barcode task A81CC6E9-0955-4426-8B55-B0BF65211699
+uses askforinput/text/okstop with a timeout-answer expression. Its checklist
+task DCBC6267-E249-49AB-A45A-6326E5688DA8 uses showmessage/yesnostop and 1/0
+answers. The ASFP hash is 9bce834bdc9981488b7a1612dcc12a390af684825f4c17712d8698bf5122b06a;
+it supplies no product version. These are structural observations, not proof of
+termination or bool equivalence. The primary APP has no result-bearing dialog.
+
+Class C: implement the permitted probe/docs scope, retain all native gates and
+record native status pending. Class B measurement detail: use an explicitly
+supplied source ASFP and exact text/choice task IDs, hash both source bytes and
+selected payloads, and clone only a validated flat UserDialog envelope into
+compiled device-free logging shells. Thirty cases cover text/empty/Yes/No,
+window cancellation, Stop and timeout across entry/child/two-iteration loop.
+Choice probes record native integer 1/0; they do not claim a bool adapter is
+accepted. No portable-node compiler bypass is added. Host receipts must inspect
+all marker/value ordering and re-export the exact candidates. Add the planned
+single-well barcode/property/log reference workflow now; native remains gated.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,

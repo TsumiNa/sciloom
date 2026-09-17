@@ -1,0 +1,163 @@
+{
+  "device_types": [],
+  "entry_function_id": "f",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "Assignment",
+          "node_id": "capture-name",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "name-target",
+            "source": null,
+            "symbol_id": "name"
+          },
+          "value": {
+            "kind": "WellName",
+            "node_id": "well-name",
+            "source": null,
+            "value": {
+              "kind": "Reference",
+              "node_id": "name-well",
+              "source": null,
+              "symbol_id": "well"
+            }
+          }
+        },
+        {
+          "kind": "RequestText",
+          "message": {
+            "kind": "Binary",
+            "left": {
+              "kind": "Literal",
+              "node_id": "prefix",
+              "source": null,
+              "type": "text",
+              "value": "Barcode for "
+            },
+            "node_id": "prompt",
+            "op": "+",
+            "right": {
+              "kind": "Reference",
+              "node_id": "captured-name",
+              "source": null,
+              "symbol_id": "name"
+            },
+            "source": null
+          },
+          "node_id": "request",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "barcode-target",
+            "source": null,
+            "symbol_id": "barcode"
+          },
+          "timeout": {
+            "kind": "Literal",
+            "node_id": "deadline",
+            "source": null,
+            "type": "duration",
+            "value": 30.0
+          }
+        },
+        {
+          "kind": "WriteWellProperty",
+          "node_id": "write",
+          "property": {
+            "kind": "WellPropertySpec",
+            "name": "sample_ID",
+            "type": "text"
+          },
+          "source": null,
+          "value": {
+            "kind": "Reference",
+            "node_id": "write-barcode",
+            "source": null,
+            "symbol_id": "barcode"
+          },
+          "zone": {
+            "kind": "Reference",
+            "node_id": "write-well",
+            "source": null,
+            "symbol_id": "well"
+          }
+        },
+        {
+          "category": {
+            "kind": "Literal",
+            "node_id": "category",
+            "source": null,
+            "type": "text",
+            "value": "samples"
+          },
+          "kind": "LogValue",
+          "node_id": "log",
+          "source": null,
+          "stream": {
+            "kind": "Literal",
+            "node_id": "stream",
+            "source": null,
+            "type": "text",
+            "value": "barcode"
+          },
+          "value": {
+            "kind": "Reference",
+            "node_id": "log-barcode",
+            "source": null,
+            "symbol_id": "barcode"
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "CaptureBarcode",
+      "node_id": "f",
+      "source": null,
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "well",
+          "node_id": "well",
+          "owner_id": "f",
+          "role": "input",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "barcode",
+          "node_id": "barcode",
+          "owner_id": "f",
+          "role": "output",
+          "source": null,
+          "type": "text"
+        },
+        {
+          "initial": {
+            "kind": "Literal",
+            "node_id": "empty-name",
+            "source": null,
+            "type": "text",
+            "value": ""
+          },
+          "kind": "Variable",
+          "name": "well_name",
+          "node_id": "name",
+          "owner_id": "f",
+          "role": "internal",
+          "source": null,
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": []
+}
