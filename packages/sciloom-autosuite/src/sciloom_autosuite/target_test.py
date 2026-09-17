@@ -5,7 +5,54 @@ import pytest
 from sciloom.core.compiler import compile_ir
 from sciloom.core.diagnostics import CompilationError
 from sciloom.core.ir import Call, FunctionIR, Program, from_json, to_json, validate
+from .agitation import AutoSuiteIndividualShaker
+from .deployment import AutoSuiteDeploymentStatus
+from .deployment_test import Configure, Stateful, empty_program, facts
 from .target import AutoSuiteTarget
+
+
+def test_deployment_guards_preserve_offline_output_and_report_state_nodes():
+    offline = Stateful().compile(target=AutoSuiteTarget())
+    compatible = AutoSuiteTarget(deployment=facts())
+    assert Stateful().compile(target=compatible).artifact == offline.artifact
+    assert compatible.deployment_report(offline.specialized_ir).status == AutoSuiteDeploymentStatus.COMPATIBLE
+    assert AutoSuiteTarget().deployment_report(offline.specialized_ir).status == AutoSuiteDeploymentStatus.UNKNOWN
+    unknown = AutoSuiteTarget(deployment=facts(reset=None))
+    assert Stateful().compile(target=unknown).artifact == offline.artifact
+    reset = AutoSuiteTarget(deployment=facts(reset=True))
+    with pytest.raises(CompilationError, match="deployment_variable_reset") as error:
+        Stateful().compile(target=reset)
+    requirements = [d for d in error.value.diagnostics if d.code == "persistent_variable"]
+    assert requirements and requirements[0].node_id == offline.specialized_ir.functions[0].variables[0].node_id
+    assert compile_ir(empty_program(), target=reset).diagnostics == ()
+
+
+def test_known_deployment_mismatch_rejects_stateless_programs():
+    from dataclasses import replace
+
+    from sciloom.core.locations import LocationDirectory
+    from .layout import AutoSuiteLayout
+
+    layout = AutoSuiteLayout(elements=(), wells=(), directory=LocationDirectory(), app_sha256="a" * 64)
+    for target, code in (
+        (AutoSuiteTarget(deployment=facts(version="3.0")), "deployment_version"),
+        (AutoSuiteTarget(deployment=facts(digest="b" * 64), layout=layout), "deployment_source_mismatch"),
+    ):
+        with pytest.raises(CompilationError, match=code):
+            compile_ir(empty_program(), target=target)
+    unknown = AutoSuiteTarget(deployment=facts(), layout=replace(layout, app_sha256=None))
+    assert unknown.deployment_report(empty_program()).status == AutoSuiteDeploymentStatus.UNKNOWN
+    assert compile_ir(empty_program(), target=unknown).diagnostics == ()
+    with pytest.raises(TypeError, match="deployment"):
+        AutoSuiteTarget(deployment={"reset_variables": False})
+
+
+def test_configuration_is_guarded_without_user_vars():
+    target = AutoSuiteTarget(
+        devices={"shaker": AutoSuiteIndividualShaker(zone="bench", device_id="23")}, deployment=facts(reset=True)
+    )
+    with pytest.raises(CompilationError, match="persistent_device_configuration"):
+        Configure().compile(target=target)
 
 
 def test_list_ir_compiles_to_array_parameters():

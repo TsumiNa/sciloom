@@ -12,6 +12,7 @@ from sciloom.core.ir import Binary, BinaryOp, Call, DeviceAt, Program
 from sciloom.core.ir.traversal import iter_nodes
 from .agitation import AutoSuiteIndividualShaker
 from .codegen import lower_asfp
+from .deployment import AutoSuiteDeployment, AutoSuiteDeploymentReport, AutoSuiteDeploymentStatus, _assess_deployment
 from .layout import AutoSuiteLayout
 from .selection import AutoSuiteAgitatorSelection, profile_binding
 from .timing import validate_timer_scopes
@@ -29,9 +30,11 @@ class AutoSuiteTarget:
         devices: Logical paths mapped to fixed shakers or bounded candidate selections.
         layout: Read-only APP deployment facts. Required for candidate selection;
             when supplied, also validates fixed profiles against real well ancestry.
+        deployment: Optional APP settings. Known incompatibilities reject compilation;
+            missing facts retain offline generation with an unknown deployment report.
 
     Raises:
-        TypeError: A binding or layout has an unsupported record type.
+        TypeError: A binding, layout or deployment has an unsupported record type.
         ValueError: A profile/version/path is invalid, physical bindings overlap,
             or layout facts do not resolve the declared controller and wells.
 
@@ -42,12 +45,15 @@ class AutoSuiteTarget:
     version: AutoSuiteVersion = AutoSuiteVersion.V2_47_1_1
     devices: Mapping[str, AutoSuiteIndividualShaker | AutoSuiteAgitatorSelection] = field(default_factory=dict)
     layout: AutoSuiteLayout | None = None
+    deployment: AutoSuiteDeployment | None = None
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "version", AutoSuiteVersion(self.version))
         object.__setattr__(self, "devices", MappingProxyType(dict(self.devices)))
         if self.layout is not None and type(self.layout) is not AutoSuiteLayout:
             raise TypeError("layout must be an AutoSuiteLayout.")
+        if self.deployment is not None and type(self.deployment) is not AutoSuiteDeployment:
+            raise TypeError("deployment must be an AutoSuiteDeployment.")
         device_ids: set[str] = set()
         zones: set[str] = set()
         for name, binding in self.devices.items():
@@ -81,7 +87,7 @@ class AutoSuiteTarget:
         return self.version.value
 
     def validate(self, program: Program) -> tuple[Diagnostic, ...]:
-        """Return platform diagnostics for recursion, Boolean operations and array outputs.
+        """Return platform and deployment diagnostics for specialized IR.
 
         Args:
             program: Structurally valid, specialized semantic IR.
@@ -107,6 +113,11 @@ class AutoSuiteTarget:
         errors.extend(validate_runtime_guards(program))
         errors.extend(validate_timer_scopes(program))
         errors.extend(validate_well_properties(program))
+        deployment = self.deployment_report(program)
+        if deployment.status == AutoSuiteDeploymentStatus.INCOMPATIBLE:
+            errors.extend(deployment.findings)
+            if any(finding.code == "deployment_variable_reset" for finding in deployment.findings):
+                errors.extend(deployment.requirements)
         if any(isinstance(profile, AutoSuiteAgitatorSelection) for profile in self.devices.values()) and not any(
             isinstance(node, DeviceAt) for node, _ in iter_nodes(program)
         ):
@@ -146,6 +157,17 @@ class AutoSuiteTarget:
                     active.add(call.function_id)
                     stack.append((call.function_id, iter(calls[call.function_id])))
         return tuple(errors)
+
+    def deployment_report(self, program: Program) -> AutoSuiteDeploymentReport:
+        """Assess deployment conditions without resolving, specializing or executing.
+
+        Args:
+            program: Validated, already-specialized IR, typically from CompileResult.
+
+        Returns:
+            Requirements and checked facts. Compatible never certifies native execution.
+        """
+        return _assess_deployment(program, version=self.version, deployment=self.deployment, layout=self.layout)
 
     def emit(self, program: Program) -> Artifact:
         """Generate an ASFP artifact from a validated, specialized program.

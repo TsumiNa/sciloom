@@ -1,0 +1,27 @@
+{
+  "artifact_sha256": "8483f33dce80a38c5830f33123e729bcb165782a485dc23a0b3d1fd0eca53296",
+  "deployment": null,
+  "findings": [
+    {
+      "code": "missing_deployment",
+      "message": "No APP was supplied; deployment conditions are unchecked.",
+      "node_id": null,
+      "path": "$.deployment",
+      "source": null
+    }
+  ],
+  "layout_app_sha256": null,
+  "native_status": "pending",
+  "requirements": [
+    {
+      "code": "persistent_variable",
+      "message": "Variable 'total' requires state to persist across calls; Macro re-entry reset must be disabled.",
+      "node_id": "fn:0:var:total",
+      "path": "$.functions[0].variables[1]",
+      "source": null
+    }
+  ],
+  "specialized_ir_sha256": "7b619cae9d6647e0b5cea8787a573a4c15648ac813f4e9396c95489349ea9ac0",
+  "status": "unknown",
+  "target_id": "autosuite-2.47.1.1"
+}

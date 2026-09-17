@@ -60,8 +60,11 @@ and notebook or interactive source support are not yet available.
 
 `AutoSuiteDeployment.from_app` now reads APP product/reset settings and exact-byte
 provenance without modifying the file. Layouts read from APP also retain this
-source hash. Deployment facts and report records are available, but integration
-of reset-setting rejection into `AutoSuiteTarget` is not yet implemented.
+source hash. Passing these facts to `AutoSuiteTarget(deployment=...)` rejects
+known version/provenance conflicts and reset-enabled APPs with persistent state.
+Offline compilation remains available. `write_autosuite_review` exports ASFP
+with a report of missing facts, state requirements and exact artifact/IR hashes;
+its native acceptance status remains pending.
 
 Compilation checks the source, value types, declared device bindings and required
 configuration before generating XML. It does not connect to the instrument or

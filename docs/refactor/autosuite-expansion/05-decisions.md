@@ -62,6 +62,50 @@ inventing another diagnostic model; they stay outside CompileResult.diagnostics.
 Class B detail refinement, no changed intent. Native state experiments remain C
 pending; the current original APP is not modified.
 
+## D005 — R1.2 preflight (2026-09-18)
+
+Baseline f6352d5987a90a9c4276f0e8986873b0d6215b25, packages 0.4.0. R1.1 PR #104
+is remotely MERGED after its version-diagnostic correction, resolved review and
+all four latest-head CI jobs passed. No new native receipt has arrived.
+
+CompileResult stores specialized IR and emitted bytes, not a binding snapshot.
+The exporter therefore checks concrete resource contracts against explicitly
+constructed target binding facts and compares complete deterministic emission
+(whose identity includes every fixed profile) with the supplied artifact. It
+does not call resolve_devices, specialize or compile_ir. It reuses structural,
+binding, configuration, timing, location and target validators on selected IR;
+remaining DeviceIf nodes are rejected. Core CompileResult remains unchanged.
+The returned deployment report gains optional artifact_sha256 and
+specialized_ir_sha256, populated only by checked review export; ordinary reports
+leave these absent values as None. Class B detail refinement preserves intent.
+
+State probes reuse existing source-provenance helpers and manifest conventions.
+Fresh reference sessions specify initialization; actual APP restart and both
+reset settings remain explicit host experiments (class C), never inferred from
+reference success or generated XML. No APP is generated or modified.
+
+## D006 — R1.2 CI portability correction (2026-09-18)
+
+CI on PR #105 passed execution checks but found a changed example report digest
+on Linux: normal source lowering retains absolute checkout paths. The developer
+example now reuses examples/developer/source_paths.repository_relative before
+compile_ir, like existing committed IR examples. A checkout-relocation regression
+checks both complete companions. Production export still hashes exact canonical
+input IR including source metadata; no JSON/API semantics change (class A).
+Version remains 0.5.0. Latest-head CI must pass before merge.
+
+## D007 — R1.2 review of concrete binding checks (2026-09-18)
+
+Review PRR_kwDOUVkARs8AAAABOD5Y_g contained one suppressed finding: allow base
+contract IDs in the exporter's concrete-ID check. That suggestion applies to
+authored binding compatibility, already covered by validate_bindings, but not
+to CompileResult.specialized_ir: specialize explicitly replaces each device
+resource type with binding.contract.type_id. Relaxing the check would admit
+unselected authored IR as a purported selected result. Keep the check and add
+explicit regression assertions showing base-typed authoring compiles, becomes
+concrete and exports successfully, while substituted authored IR rejects before
+writing. Class A clarification; no interface change, version stays 0.5.0.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,
