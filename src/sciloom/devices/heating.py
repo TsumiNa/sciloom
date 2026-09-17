@@ -39,7 +39,9 @@ class Heater(BaseDevice):
     def ramp_rate(self, value: TemperatureRate) -> None:
         """Capture the rate for the next explicit start or reapply."""
 
-    @operation(id="sciloom.heater.start/v1", lifecycle=LifecycleEffect.APPLY_AND_ENABLE)
+    @operation(
+        id="sciloom.heater.start/v1", lifecycle=LifecycleEffect.APPLY_AND_ENABLE, requires=("temperature", "ramp_rate")
+    )
     def start(self) -> None:
         """Apply both saved settings and enable, or reapply while enabled."""
 

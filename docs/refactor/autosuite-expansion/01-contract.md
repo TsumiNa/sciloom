@@ -554,7 +554,9 @@ Stable built-in contract IDs are `sciloom.heater/v1`,
 `sciloom.heater.temperature/v1`, `sciloom.heater.ramp-rate/v1`,
 `sciloom.heater.start/v1` and `sciloom.heater.stop/v1`. Start uses
 `LifecycleCommandContract(APPLY_AND_ENABLE)` and stop uses `DISABLE`; device-wide
-requirements are the two property IDs. Built-in signatures cannot be changed by
+requirements are the two property IDs. Start also explicitly requires those
+same two property IDs, so a derived profile cannot waive the family's mandatory
+settings by narrowing its own device-wide requirements. Built-in signatures cannot be changed by
 JSON or a contributor. Authors extend Heater by subclassing it and registering
 additional capabilities. Binding examples use an explicit reference-only
 contributor class with fixed `DeviceBinding` facts, never an invented AutoSuite

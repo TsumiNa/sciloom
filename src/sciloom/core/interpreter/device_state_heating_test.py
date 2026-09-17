@@ -203,6 +203,46 @@ def test_stop_needs_no_configuration_and_does_not_start():
     assert not state.enabled and state.configuration == state.applied_configuration == {}
 
 
+@pytest.mark.parametrize("writable", [(), ("temperature", "ramp_rate")])
+def test_derived_profile_cannot_waive_heater_start_requirements(writable):
+    class RelaxedProfile(Heater):
+        device_type_id = "test.relaxed-heater/v1"
+        writable_properties = writable
+        required_configuration = ()
+        supported_operations = (Heater.start, Heater.stop)
+
+    if not writable:
+        with pytest.raises(ValueError, match="lifecycle command configuration"):
+            bind_device(logical_id="heater", device=RelaxedProfile(), physical_id="reference:relaxed")
+        return
+
+    class RelaxedTarget(ThermalRecordingTarget):
+        def resolve_devices(self, program):
+            return DeviceBindings(
+                devices=(bind_device(logical_id="heater", device=RelaxedProfile(), physical_id="reference:relaxed"),)
+            )
+
+    target = RelaxedTarget()
+    with pytest.raises(CompilationError, match="device_configuration"):
+        ApplyHeat().compile(target=target)
+    program = ApplyHeat().to_ir()
+    environment = ReferenceEnvironment(device_bindings=target.resolve_devices(program))
+    with pytest.raises(ExecutionError, match="device_configuration"):
+        Interpreter(program, environment=environment).run()
+    assert environment.events == ()
+    # Waiving profile-specific extras remains valid once both family settings exist.
+    compiled = WarmSample().compile(target=target)
+    state = (
+        Interpreter(
+            compiled.specialized_ir,
+            environment=ReferenceEnvironment(clock=VirtualClock(), device_bindings=target.resolve_devices(program)),
+        )
+        .run()
+        .resources["resource:heater"]
+    )
+    assert state.configuration == {"temperature": 20 * degC, "ramp_rate": 1 * degC_per_min}
+
+
 def test_zero_iteration_configuration_does_not_satisfy_start():
     class LoopConfigured(Function):
         heater: Heater

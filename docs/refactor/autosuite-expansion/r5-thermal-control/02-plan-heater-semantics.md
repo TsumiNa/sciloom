@@ -26,6 +26,9 @@ Add Heater family properties and lifecycle contracts, author-to-IR lowering and 
 
 Protect the new built-in signatures in the core directory. Reuse generic R4
 lowering/effects; add no heating-specific node or operation-name inference.
+Start carries both mandatory property IDs as explicit command requirements, so
+derived profiles cannot waive them. Test empty device-wide requirements and
+missing writable capabilities independently.
 Reject thermal candidate selection in shared binding-use validation to retain
 the fixed-only boundary, including subclasses; preserve existing agitation
 selection semantics. Contributor examples remain explicitly reference-only.
@@ -61,12 +64,19 @@ shared and independent children, repeated calls/reapply, immutable snapshots,
 stop retention, explicit clock/failure order, profile extension, mixed shaker
 state and physical-identity collisions. No native behavior is claimed.
 
-Acceptance: 1297 code/tool/example tests, 98 website tests, 52 example/syntax
+Acceptance after review: 1299 code/tool/example tests, 98 website tests, 52 example/syntax
 commands; Ruff check/format (312 files), mypy (141 files), strict documentation,
 smoke and recipe validation passed. Existing ASFP/JSON companions are unchanged.
 Corpus audit remained 271 files / 127 archive entries / 52 function matches /
 67 templates. Public docs also correct the remaining stale R4 statement that
 distinct actuators must have distinct zone names. No raw corpus was modified.
+
+Review 5239812251 identified a derived-profile startup bypass. The protected
+start contract now explicitly requires both family settings; two regressions
+first reproduced the bypass and now verify binding rejection when not writable,
+compile/reference rejection when unconfigured, and valid configured startup.
+The suppressed public-reference findings are corrected in device-contracts.md.
+Version reassessment remains MINOR 0.8.0 → 0.9.0; intended semantics are preserved.
 
 Review, fix feedback, recheck latest head, squash merge and confirm remote MERGED
 before beginning the next implementation PR. Inspect all review surfaces.

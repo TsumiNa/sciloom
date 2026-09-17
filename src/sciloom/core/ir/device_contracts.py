@@ -115,7 +115,12 @@ HEATER_CONTRACT = DeviceTypeContract(
         PropertyContract(semantic_id=HEATER_RAMP_RATE_ID, name="ramp_rate", type=ScalarType.TEMPERATURE_RATE),
     ),
     operations=(
-        LifecycleCommandContract(semantic_id=START_HEATER_ID, name="start", effect=LifecycleEffect.APPLY_AND_ENABLE),
+        LifecycleCommandContract(
+            semantic_id=START_HEATER_ID,
+            name="start",
+            effect=LifecycleEffect.APPLY_AND_ENABLE,
+            required_configuration=(HEATER_TEMPERATURE_ID, HEATER_RAMP_RATE_ID),
+        ),
         LifecycleCommandContract(semantic_id=STOP_HEATER_ID, name="stop", effect=LifecycleEffect.DISABLE),
     ),
     required_configuration=(HEATER_TEMPERATURE_ID, HEATER_RAMP_RATE_ID),

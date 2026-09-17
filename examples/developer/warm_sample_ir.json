@@ -19,7 +19,10 @@
           "kind": "LifecycleCommandContract",
           "name": "start",
           "parameters": [],
-          "required_configuration": [],
+          "required_configuration": [
+            "sciloom.heater.temperature/v1",
+            "sciloom.heater.ramp-rate/v1"
+          ],
           "semantic_id": "sciloom.heater.start/v1"
         },
         {

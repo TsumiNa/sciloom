@@ -339,6 +339,23 @@ contributors demonstrate extension and fixed binding only, not a hardware profil
 AutoSuite thermal values/commands remain rejected. Fixed virtual waiting does
 not establish measured temperature. No class D deviation requires interruption.
 
+## D020 — R5.2 review: inherited startup requirements (2026-09-18)
+
+Review 5239812251 / inline 4040162010 found a concrete bypass: a derived Heater
+can override device-wide required_configuration with an empty tuple. Generic
+APPLY_AND_ENABLE correctly obeys the concrete contract, so the initial family
+declaration would then permit unconfigured startup. Class B correction preserving
+the original mandatory two-setting intent: place temperature/ramp-rate IDs on
+the protected start LifecycleCommandContract as explicit requirements as well.
+Update the authority/scope before code. Existing R4 command/binding validation
+then rejects missing writable settings and unconfigured start, even when the
+derived device-wide list is empty. Do not change older family or generic effect
+semantics. No new compatibility wrapper or JSON model is needed.
+
+Two suppressed comments identify the same stale public device-contract reference.
+Update shipped families, protected IDs and thermal value types there. Reassessed
+Version remains MINOR 0.8.0 → 0.9.0; review fixes preserve the planned API meaning.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,
