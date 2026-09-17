@@ -11,6 +11,11 @@ AGITATOR_TYPE_ID = "sciloom.agitator/v1"
 AGITATION_SPEED_ID = "sciloom.agitator.speed/v1"
 START_AGITATION_ID = "sciloom.agitator.start/v1"
 STOP_AGITATION_ID = "sciloom.agitator.stop/v1"
+HEATER_TYPE_ID = "sciloom.heater/v1"
+HEATER_TEMPERATURE_ID = "sciloom.heater.temperature/v1"
+HEATER_RAMP_RATE_ID = "sciloom.heater.ramp-rate/v1"
+START_HEATER_ID = "sciloom.heater.start/v1"
+STOP_HEATER_ID = "sciloom.heater.stop/v1"
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -100,4 +105,18 @@ AGITATOR_CONTRACT = DeviceTypeContract(
         CommandContract(semantic_id=STOP_AGITATION_ID, name="stop"),
     ),
     required_configuration=(AGITATION_SPEED_ID,),
+)
+
+HEATER_CONTRACT = DeviceTypeContract(
+    type_id=HEATER_TYPE_ID,
+    base_type_ids=(DEVICE_TYPE_ID,),
+    properties=(
+        PropertyContract(semantic_id=HEATER_TEMPERATURE_ID, name="temperature", type=ScalarType.TEMPERATURE),
+        PropertyContract(semantic_id=HEATER_RAMP_RATE_ID, name="ramp_rate", type=ScalarType.TEMPERATURE_RATE),
+    ),
+    operations=(
+        LifecycleCommandContract(semantic_id=START_HEATER_ID, name="start", effect=LifecycleEffect.APPLY_AND_ENABLE),
+        LifecycleCommandContract(semantic_id=STOP_HEATER_ID, name="stop", effect=LifecycleEffect.DISABLE),
+    ),
+    required_configuration=(HEATER_TEMPERATURE_ID, HEATER_RAMP_RATE_ID),
 )

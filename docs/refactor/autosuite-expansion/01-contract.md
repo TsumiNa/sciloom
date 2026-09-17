@@ -538,7 +538,7 @@ Input/Output/Var fields twice, obtaining 5 K then 0 K changes. Direct IR tests
 cover the same typed arithmetic and specialization without a Python frontend.
 These examples do not claim native thermal control.
 
-### Heater author family — planned after R5.2
+### Heater author family — implemented in R5.2, native profile gated
 
 `from sciloom import Heater`; family ownership in sciloom.devices.
 Write-only properties temperature: Temperature and ramp_rate: TemperatureRate;
@@ -549,6 +549,19 @@ ranges are profile evidence, not generic defaults.
 Use new lifecycle contracts with ConfigureProperty/DeviceCommand, not
 device-model-specific IR nodes. No getter, automatic stop at scope exit, dynamic
 thermal selection, feedback or implied reach-temperature.
+
+Stable built-in contract IDs are `sciloom.heater/v1`,
+`sciloom.heater.temperature/v1`, `sciloom.heater.ramp-rate/v1`,
+`sciloom.heater.start/v1` and `sciloom.heater.stop/v1`. Start uses
+`LifecycleCommandContract(APPLY_AND_ENABLE)` and stop uses `DISABLE`; device-wide
+requirements are the two property IDs. Built-in signatures cannot be changed by
+JSON or a contributor. Authors extend Heater by subclassing it and registering
+additional capabilities. Binding examples use an explicit reference-only
+contributor class with fixed `DeviceBinding` facts, never an invented AutoSuite
+profile. Thermal `DeviceSelectionBinding` is explicitly rejected by shared
+binding-use validation before compilation/reference execution, including derived
+heater contracts. This enforces the fixed-only stage without changing generic
+DeviceAt syntax or existing agitation selection.
 
 ```python
 from sciloom import Function, Heater, degC, degC_per_min, runtime, s, wait
@@ -568,6 +581,32 @@ class WarmSample(Function):
 After R5.2 this converts to IR/JSON and reference state/events. The numbers
 illustrate syntax, not a process recipe. Ten seconds does not mean temperature
 was reached. AutoSuite support remains gated until R5.3's exact mapping is proven.
+
+Executable author example: `uv run python examples/warm_sample.py` reports the
+current native profile gate. Contributor/direct-IR example:
+`uv run python -m examples.developer.warm_sample_ir`, whose `BenchHeater` declares
+explicit profile capabilities and `ThermalRecordingTarget` returns one trusted
+fixed binding and JSON output. Its direct Program and the source program produce
+the same saved/applied state with 10 seconds of explicit virtual waiting and a
+final disabled state. The complete JSON companion is `warm_sample_ir.json`.
+
+Minimal contributor declaration and binding (reference-only, runnable in R5.2):
+
+```python
+from typing import ClassVar
+from sciloom import Heater
+from sciloom.devices.declarations import bind_device
+
+class BenchHeater(Heater):
+    device_type_id: ClassVar[str] = "example.bench-heater/v1"
+    writable_properties = ("temperature", "ramp_rate")
+    required_configuration = ("temperature", "ramp_rate")
+    supported_operations = (Heater.start, Heater.stop)
+
+binding = bind_device(logical_id="heater", device=BenchHeater(),
+                      physical_id="reference:heater-1")
+# binding.contract preserves Heater's signatures and both requirements.
+```
 
 ### Native profile entry gate — R5.3
 
