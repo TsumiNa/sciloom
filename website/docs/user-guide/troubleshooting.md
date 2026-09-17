@@ -427,7 +427,7 @@ runtime step failing. The message identifies what to change.
 | A private child name is rejected | Store the child under a public name such as `self.stage` |
 | `devices must contain AutoSuiteIndividualShaker or AutoSuiteAgitatorSelection records` | Use a fixed profile, or an explicit candidate selection with a layout |
 | A binding name is rejected | Use a field name or dotted child path, not an arbitrary label |
-| Two devices have the same ID or zone | Bind separate logical devices to separate hardware, or share one logical reference between steps |
+| Two logical devices have the same physical actuator ID | Bind them to separate hardware, or share one logical reference between steps; a shared zone name alone is not an identity conflict, but layout ancestry must still match |
 | `device_id` is rejected | Supply a positive decimal individual shaker ID; `"0"` is invalid |
 | The zone string is rejected | Supply a nonempty single-line name from the installed configuration |
 | A speed literal is rejected | Use a finite nonnegative number times `rpm` or `rps`; strings and Booleans are invalid |

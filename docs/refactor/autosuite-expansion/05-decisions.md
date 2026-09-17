@@ -238,6 +238,40 @@ example and clarify its scope. Class A documentation correction; no behavior or
 wire change. Reassessed Version remains MINOR 0.6.0 → 0.7.0. Latest-head CI and
 resolved review remain required before merge.
 
+## D016 — R4.2 preflight (2026-09-18)
+
+Baseline da488c4b30c2d99474f2cfc2afa86b0d2e7f7c3d, packages 0.7.0. R4.1 #109
+is remotely MERGED after all handbook feedback, 1140 code/tool/example tests,
+98 website tests and four latest-head CI passes. The previous goal turn made
+progress by completing that gate. The new branch is clean on fetched main.
+
+Inspected private storage, capture, call binding, function list isolation,
+selection ancestry and physical identity checks. Read serialization methods,
+confirmed structures/mappings/goldens, catalog and applicable task templates,
+plus agitation and array mapping evidence. Some representative templates are
+historical minimal forms; existing FIXED/current mappings remain authoritative.
+
+Class B implementation detail: retain scalar/list types per resource/property
+key. Existing array I/O rewriting would otherwise introduce a second output
+buffer and overwrite private device list state at return. Private device arrays
+therefore receive their own whole-list capture/initialization and isolated call
+input/output buffers with normal-return copyback. Preserve existing scalar
+allocation order and identity seeds. No change to public Program or JSON.
+
+Class A correction required by the plan: current target globally rejects repeated
+zone names and core rejects overlapping wells across unrelated logical selections.
+Use trusted physical identity for cross-resource conflicts; retain within-selection
+well disjointness and APP ancestry validation. Different names cannot disguise
+one actuator, and a repeated well alone is not proof of an actuator collision.
+AutoSuite constructor checks reuse the resolved DeviceBindings identity rules
+instead of maintaining a parallel bare-device-number conflict directory.
+No family-prefixed fabricated identities or new plugin protocol is introduced.
+
+Class C: no new native receipt/profile has arrived. New lifecycle emission and
+dynamic selection remain rejected. Synthetic configuration transport tests are
+compiler/wire-model evidence only, not new native profile acceptance. The
+authority and R4.2 scope now state these boundaries before implementation.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,

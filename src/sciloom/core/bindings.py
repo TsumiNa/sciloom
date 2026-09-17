@@ -187,7 +187,6 @@ class DeviceBindings:
         if len(logical) != len(set(logical)):
             raise ValueError("Duplicate device binding logical_id.")
         physical: set[str] = set()
-        wells: set[str] = set()
         for value in self.devices:
             identities = (
                 (value.physical_id,)
@@ -197,11 +196,6 @@ class DeviceBindings:
             if physical.intersection(identities):
                 raise ValueError("Duplicate device binding physical_id.")
             physical.update(identities)
-            if isinstance(value, DeviceSelectionBinding):
-                selected = {well for candidate in value.candidates for well in candidate.wells.well_ids}
-                if wells.intersection(selected):
-                    raise ValueError("Different logical resources cannot share candidate wells.")
-                wells.update(selected)
 
 
 def validate_bindings(program: Program, bindings: DeviceBindings) -> tuple[Diagnostic, ...]:

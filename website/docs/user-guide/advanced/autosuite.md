@@ -51,8 +51,11 @@ two_shakers.asfp
 `"left"` and `"right"` match the Function's field names. Each profile supplies
 a zone name and individual shaker ID from the installed AutoSuite configuration.
 The ID identifies the shaker, not a vial or rack. Two separate logical devices
-cannot bind to the same shaker ID or zone; to share one device between steps,
-use [a shared logical reference](composition.md).
+cannot bind to the same shaker ID; to share one device between steps, use
+[a shared logical reference](composition.md). A zone name alone does not identify
+an actuator. When a layout is supplied, each profile must independently match
+the installed controller and the ancestry of every selected well. Offline
+bindings do not establish that a declared combination fits the real APP.
 
 Bind every declared device, including one its runtime method does not use.
 Remove declarations you no longer need. For a child with a separate device,

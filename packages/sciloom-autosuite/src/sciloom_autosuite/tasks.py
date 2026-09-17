@@ -34,6 +34,7 @@ from sciloom.core.ir import (
     While,
     WriteWellProperty,
 )
+from sciloom.core.ir.device_contracts import AGITATION_SPEED_ID
 from .agitation import agitation_task
 from .context import CodegenContext
 from .encoding import SCALARS, literal_value
@@ -183,20 +184,22 @@ def statements(
             text = value.text if statement.op is None else f"{previous.text} {statement.op.value} ({value.text})"
             result.append(set_variable(context, tag, array, text, identity=statement.node_id, index=captured_index))
         elif isinstance(statement, ConfigureProperty):
+            storage = context.device_state[function.node_id][statement.resource_id, statement.property_id]
             value = plan_expression(context, function, statement.value, tag)
             result.extend(value.prerequisites)
             result.append(
                 set_variable(
                     context,
                     tag,
-                    context.device_state[function.node_id][statement.resource_id].name,
+                    storage.name,
                     value.text,
                     identity=statement.node_id,
+                    array=isinstance(storage.type, ListType),
                 )
             )
         elif isinstance(statement, (StartAgitation, StopAgitation)):
             speed = (
-                context.device_state[function.node_id][statement.resource_id].name
+                context.device_state[function.node_id][statement.resource_id, AGITATION_SPEED_ID].name
                 if isinstance(statement, StartAgitation)
                 else None
             )
@@ -227,11 +230,19 @@ def statements(
                     after.append(set_variable(context, tag, name, temporary, array=True))
                 else:
                     outputs[output.parameter_id] = name
-            for resource_id, storage in context.device_state[statement.function_id].items():
+            for key, storage in context.device_state[statement.function_id].items():
                 assert storage.input_id is not None and storage.output_id is not None
-                caller_name = context.device_state[function.node_id][resource_id].name
-                inputs[storage.input_id] = caller_name
-                outputs[storage.output_id] = caller_name
+                caller_name = context.device_state[function.node_id][key].name
+                if isinstance(storage.type, ListType):
+                    incoming = context.temporary(function, storage.type)
+                    outgoing = context.temporary(function, storage.type)
+                    result.append(set_variable(context, tag, incoming, caller_name, array=True))
+                    inputs[storage.input_id] = incoming
+                    outputs[storage.output_id] = outgoing
+                    after.append(set_variable(context, tag, caller_name, outgoing, array=True))
+                else:
+                    inputs[storage.input_id] = caller_name
+                    outputs[storage.output_id] = caller_name
             result.append(
                 _xml(
                     tag,
