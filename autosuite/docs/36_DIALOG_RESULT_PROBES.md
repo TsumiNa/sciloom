@@ -21,8 +21,9 @@ primary APP supplies ordinary OK dialogs, not this result-dialog evidence.
 Both selected tasks have input validation disabled, post-dialog pause disabled
 and softstopping=0. The older representative UserDialog template instead uses
 softstopping=1 and no result. Do not combine those policies silently. The
-empirical catalog establishes the ordered flat 41-field envelope, not complete
-behavior. Manual 2.47.1.1 §3.6.17 (printed pp. 66–71) permits timeout answers and
+selected tasks and representative template establish the ordered flat 41-field
+envelope; the empirical catalog inventories fields, not their order or behavior.
+Manual 2.47.1.1 §3.6.17 (printed pp. 66–71) permits timeout answers and
 continuation; this is insufficient for SciLoom's fatal timeout requirement.
 
 ## Generate isolated measurements
