@@ -194,6 +194,14 @@ accepted. No portable-node compiler bypass is added. Host receipts must inspect
 all marker/value ordering and re-export the exact candidates. Add the planned
 single-well barcode/property/log reference workflow now; native remains gated.
 
+## D013 — R3.2 review coverage and navigation (2026-09-18)
+
+Review 5239084391 includes three actionable suppressed comments. Add the author
+barcode example to the explicit mypy files, add its public Examples catalog row,
+and bring the internal reference guide's count/range and supplemental links up
+to date. Class A coverage/navigation corrections; no probe payload, reference
+semantics or native gate changes. Reassessed Version remains none (packages 0.6.0).
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,

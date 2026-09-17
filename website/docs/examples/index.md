@@ -20,6 +20,7 @@ to the repository root.
 | [Numeric operations](numeric-operations.md) | Calculate whole portions and an absolute volume difference |
 | [Record values](record-values.md) | Log supplied sample labels and typed volumes |
 | [Confirm samples](confirm-samples.md) | Require OK before recording a ready sample |
+| [Capture a barcode](capture-barcode.md) | Validate one well, capture text and save/log it only after acceptance; native compilation remains gated |
 | [Timestamp a filename](timestamp-path.md) | Capture local wall time once and build a filename |
 | [Timed agitation](timed-agitation.md) | Wait relative to a timer before explicitly stopping agitation |
 | [Read a reagent table](read-reagent-table.md) | Select a heading and aligned typed columns; AutoSuite compilation remains gated |
