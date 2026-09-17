@@ -16,10 +16,10 @@ an explicit developer decision.
 
 | Stage | Outcome | Code status |
 | --- | --- | --- |
-| R7.1 | [Verify complete operator and equipment workflows](01-plan-workflows.md) | Pending |
+| R7.1 | [Verify complete operator and equipment workflows](01-plan-workflows.md) | Implemented; stage PR records review/merge |
 
 Native status: Reported per constituent capability, never inferred from integration tests.
-No stage below is already implemented. Native-unlock prerequisites are distinct
+The three source/direct-IR workflows and mixed source/JSON example pass reference integration. Native-unlock prerequisites are distinct
 from review/merge prerequisites. Finish each PR green and remotely squash merged
 before beginning another; an implemented/gated stage preserves its rejection.
 

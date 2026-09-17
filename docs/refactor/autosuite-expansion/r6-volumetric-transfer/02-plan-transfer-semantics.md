@@ -8,7 +8,7 @@ Bounded reference transfer effect while preserving the accepted semantic contrac
 
 [Authoritative interface](../01-contract.md#r6-location-arguments-and-bounded-transfer).
 R6.1 reviewed and remotely merged.
-Current code status: implemented; review/merge pending. Native status follows the [group overview](00-overview.md)
+Current code status: implemented; merged #115. Native status follows the [group overview](00-overview.md)
 and the [evidence register](../04-evidence.md), not a successful local test.
 
 ## Implementation preflight

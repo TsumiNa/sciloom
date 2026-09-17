@@ -6,7 +6,7 @@ R1 facts/report records, layout provenance, target guards and review export are
 **implemented** (R1.1 merged #104; R1.2 merged #105). R2.1 receipt tooling is
 merged #106; R3.1 dialog semantics merged #107. R3.2 native measurement tooling
 merged #108; R4.1/R4.2 merged #109/#110, R5.1–R5.3 merged #111–#113,
-and R6.1 merged #114. R6.2 merged #115. R6.3 measurement documentation is implemented/gated in this PR, pending review/merge.
+and R6.1 merged #114. R6.2 merged #115. R6.3 measurement documentation merged #116 (implemented/gated). R7 integration is implemented; its stage PR records review/merge.
 New AutoSuite dialog, thermal and transfer emission remains gated and native
 acceptance pending.
 Other interfaces introduced here are **planned**, not currently importable unless
@@ -295,7 +295,7 @@ proven. A timeout-answer text is not an equivalent implementation of fatal
 timeout. Native probes may be generated as measurement artifacts while public
 compilation remains gated. Do not silently reduce the API to a weaker policy.
 
-R3.2 measurement API (implemented in this PR):
+R3.2 measurement API (merged #108, native gated):
 `autosuite.tools.probe_dialog_results.generate(output_dir: Path, *,
 source_asfp: Path, text_task_id: str, choice_task_id: str) -> Path` returns a
 manifest path in a fresh directory outside corpus. It reads an explicit native
@@ -858,6 +858,31 @@ gated if necessary evidence or runtime failure behavior is missing. Multi-row
 packing, dynamic routes, split volumes and gravimetric feedback stay deferred.
 
 ## R7: Integrated results
+
+R7's additional mixed example is implemented as `examples/mixed_equipment.py` with
+`MixedEquipment(Function)`, inputs `source: Input[Zone]` and
+`destination: Input[Zone]`, output `barcode: Output[str]`, and logical
+`heater: Heater`, `shaker: Agitator`, `liquid: LiquidHandler` resources. Its
+imports are from `sciloom`: `Agitator, Function, Heater, Input, LiquidHandler,
+Output, Var, WellProperty, Zone, degC, degC_per_min, log, mL, mL_per_min,
+request_text, rpm, runtime, s, wait, zones`.
+
+It validates the destination before requesting a barcode; acceptance writes
+sample metadata and logs it, then saves all device settings. A shared child
+starts heat/stirring, waits exactly ten seconds, transfers 0.25 mL, explicitly
+stops stirring/heating and logs completion. The parent changes aspirate flow
+from 1 to 3 mL/min before a second child invocation. No stop is synthesized on
+failure. Native compilation must report missing verified profiles/gated effects.
+
+The contributor counterpart `examples/developer/mixed_equipment_ir.py` supplies
+explicit fixed bindings, known wells, capacity, a virtual clock, metadata store
+and queued responses. Its companion is source-derived JSON with repository-relative
+source paths. Expected successful result: barcode `S-001`, two transfer events,
+20 seconds of virtual elapsed time, immutable first/second flow snapshots and
+all actuators explicitly stopped. Cancellation must prevent all device actions;
+a transfer failure preserves earlier effects and prevents later stops/logs.
+Existing manual IR builders remain the direct-IR comparisons for each of the
+three required workflows; no second handwritten mixed-program codec is added.
 
 Publish runnable source examples and developer direct-IR/JSON counterparts for:
 barcode → single-well metadata → log; configured heater → fixed wait → stop;

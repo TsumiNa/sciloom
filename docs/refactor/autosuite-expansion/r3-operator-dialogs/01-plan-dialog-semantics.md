@@ -8,7 +8,7 @@ Typed dialog results across source and JSON while preserving the accepted semant
 
 [Authoritative interface](../01-contract.md#r3-ordered-text-and-yesno-results).
 R2.1 merged. Native implementation does not require CSV unlocking; any necessary failure mechanism requires its own native proof.
-Current code status: implemented in this PR; review/merge pending. Native status follows the [group overview](00-overview.md)
+Current code status: implemented; merged #107. Native status follows the [group overview](00-overview.md)
 and the [evidence register](../04-evidence.md), not a successful local test.
 
 ## Implementation preflight

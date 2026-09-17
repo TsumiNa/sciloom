@@ -18,7 +18,7 @@ an explicit developer decision.
 | --- | --- | --- |
 | R6.1 | [Typed command locations and transfer quantities](01-plan-location-arguments.md) | Merged (#114) |
 | R6.2 | [Bounded reference transfer effect](02-plan-transfer-semantics.md) | Merged (#115) |
-| R6.3 | [Map one evidenced fixed-tool transfer](03-plan-native-transfer.md) | Capture procedure implemented/gated; review/merge pending |
+| R6.3 | [Map one evidenced fixed-tool transfer](03-plan-native-transfer.md) | Merged #116 (capture procedure; native gated) |
 
 Native status: Tool/channel/calibration/rinse profile pending.
 R6.1 provides typed Zone command arguments and flow/length quantities through
