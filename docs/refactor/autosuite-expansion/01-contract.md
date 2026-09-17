@@ -317,7 +317,7 @@ validator must not certify this different interactive suite.
 
 ## R4: Explicit command effects and typed configuration
 
-### Additive device contract — planned after R4.1
+### Additive device contract — implemented in R4.1
 
 Keep existing CommandContract and DeviceCommand fields unchanged. Extend the
 typed operations union with `LifecycleCommandContract`, a new wire kind carrying
@@ -357,11 +357,17 @@ required_configuration. A disabling command has no implicit configuration
 requirement. Using requires without lifecycle is rejected in this first version.
 Ordinary operations keep the exact old contract shape.
 
+The first two lifecycle effects are parameterless: the typed `parameters` field
+must be empty. They apply saved properties or disable the resource; no argument
+has a defined role in either effect. Declarations and direct IR with lifecycle
+arguments are rejected rather than silently ignoring values. Ordinary commands
+retain typed parameters, including the planned R6 transfer arguments.
+
 A claimed lifecycle contract is validated against the supplied trusted binding
 where supplied, just like other device contracts; IDs never import code.
 The effect only specifies logical state, not measured physical success.
 
-### Contributor example — planned after R4.1
+### Contributor example — runnable after R4.1
 
 A contributor extends a family, adds a property and explicit lifecycle command;
 it does not patch BaseDevice or Agitator:
@@ -394,6 +400,7 @@ class AdjustableAgitator(Agitator):
 class BenchAgitator(AdjustableAgitator):
     device_type_id: ClassVar[str] = "example.bench-agitator/v1"
     writable_properties = ("speed", "gain")
+    required_configuration = ("speed", "gain")
     supported_operations = (
         Agitator.start,
         Agitator.stop,
@@ -402,7 +409,7 @@ class BenchAgitator(AdjustableAgitator):
 ```
 
 A minimal independent recording target remains possible without modifying core
-or installing a plugin (complete planned contributor example):
+or installing a plugin (implemented contributor interface):
 
 ```python
 from sciloom.core.bindings import DeviceBindings
@@ -438,6 +445,10 @@ This target records validated intent, not AutoSuite XML or instrument I/O.
 Tests must include ConfigureProperty(speed), ConfigureProperty(gain), apply and
 a changed gain followed by apply; verify complete captured/applied snapshots and
 a JSON-restored program. Unknown ordinary commands still fail reference execution.
+The complete runnable [contributor example](../../../examples/developer/lifecycle_commands.py)
+also defines an explicit DISABLE command, checks capture before a variable change,
+and commits its reproducible JSON companion. Run with
+`uv run python -m examples.developer.lifecycle_commands`.
 
 ### AutoSuite configuration — planned after R4.2
 

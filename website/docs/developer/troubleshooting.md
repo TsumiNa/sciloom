@@ -122,7 +122,8 @@ and configuration pass, definite timer-start analysis, and `Target.validate`.
 | `device_contract` | Serialized device contract differs from the target's trusted contract. | the program's directory disagrees with the binding |
 | `device_contract` | Selected property query differs from the trusted signature. / Selected command query differs from the trusted signature. | a `CanWrite` or `SupportsOperation` query whose signature is not the profile's |
 | `device_capability` | The bound device does not implement this writable property contract. / ... this command contract. / ... does not support this lifecycle operation. | the selected program uses a member the profile does not list |
-| `device_configuration` | start() requires `<property>` to be configured on every reachable path in this invocation. | a `StartAgitation` reachable without its required writes |
+| `device_configuration` | Device command requires `<property>` to be configured on every reachable path in this invocation. | an agitation start or explicit lifecycle command reachable without its required writes |
+| `unsupported_device_command` | Lifecycle contracts define reference effects; AutoSuite needs an explicit verified profile adapter before emission. | a new lifecycle command without an accepted native adapter |
 | `timer_not_started` | Timer must be started on every reachable path in this entry invocation. | start on each relevant path; diagnostics identify each wait needing a start, including waits reached through child calls |
 | `unsupported_timer_scope` | AutoSuite timer starts/resets must share one lexical Macro scope. | keep starts/resets in one scope with waits there or below; moving a start changes timing |
 | `unsupported_runtime_guard` | AutoSuite waits require a literal duration until runtime range failure propagation is verified. | use a bounded literal or reference-execute the dynamic program while the platform gate remains open |
@@ -168,7 +169,7 @@ Raised by the reference interpreter during a run.
 | Code | Message | Cause |
 |---|---|---|
 | `unspecialized_device_condition` | Specialize device conditions before reference execution. | a `DeviceIf` still in the program; use `result.specialized_ir` |
-| `unsupported_operation` | Cannot execute DeviceCommand. | a native command; see [native commands](advanced/native-commands.md) |
+| `unsupported_operation` | Cannot execute DeviceCommand. | an ordinary native command without defined reference effects; explicit lifecycle contracts are executable; see [native commands](advanced/native-commands.md) |
 | `input_binding` | Supply exactly the entry function's named inputs. | a missing or extra input |
 | `runtime_type` | Expected `<type>`, received ... / A rotational-speed input requires a quantity such as 600 * rpm. / A quantity cannot be passed to a scalar input. | an input of the wrong Python type |
 | `uninitialized_read` | Variable `<name>` has no value in this call. | an input or output read before it was bound |
@@ -176,7 +177,7 @@ Raised by the reference interpreter during a run.
 | `index_type`, `index_bounds` | List indices must be integers, excluding bool. / Index ... is outside a list of length ... | an invalid index at run time |
 | `numeric_error` | Arithmetic produced a nonfinite value. / Nonfinite real value. | overflow, division by zero |
 | `invalid_speed` | Rotational speed must be nonnegative. | a negative speed at run time |
-| `device_configuration` | start() requires complete saved configuration. | `start` before every required property was saved |
+| `device_configuration` | Device command requires complete saved configuration. | an agitation start or explicit lifecycle command before its required properties were saved |
 | `timer_not_started` | Timer was not started in this entry invocation. | the actual path missed StartTimer; prior entry invocations do not establish a valid origin |
 | `wait_duration` | Wait duration must be nonnegative. | validate or correct the supplied duration; waits do not accept signed differences below zero |
 | `missing_environment_service` | Reference execution requires the `<service>` environment service. | explicitly supply the needed clock or acknowledgement service; no host service is selected automatically |

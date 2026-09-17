@@ -17,6 +17,7 @@ from sciloom.core.ir import (
     Expression,
     ForEachZone,
     If,
+    LifecycleCommandContract,
     ListGet,
     ListLiteral,
     ListSet,
@@ -67,6 +68,12 @@ def validate_runtime_guards(program: Program) -> tuple[Diagnostic, ...]:
     errors = []
     symbols = {v.node_id: v for f in program.functions for v in f.variables}
     checker = ExpressionChecker(symbols, lambda *args: None)
+    lifecycle_commands = {
+        op.semantic_id
+        for contract in program.device_types
+        for op in contract.operations
+        if isinstance(op, LifecycleCommandContract)
+    }
     for function_index, function in enumerate(program.functions):
         for node, path in iter_nodes(function, f"$.functions[{function_index}]"):
             message = None
@@ -74,6 +81,9 @@ def validate_runtime_guards(program: Program) -> tuple[Diagnostic, ...]:
             if isinstance(node, (RequestText, AskYesNo)):
                 code = "unsupported_dialog_result"
                 message = "Text/yes-no results and cancellation/Stop/timeout termination require independent native verification; reference execution is available."
+            elif isinstance(node, DeviceCommand) and node.operation_id in lifecycle_commands:
+                code = "unsupported_device_command"
+                message = "Lifecycle contracts define reference effects; AutoSuite needs an explicit verified profile adapter before emission."
             elif isinstance(node, ZoneLiteral) and node.well_ids:
                 code = "unsupported_zone_literal"
                 message = "AutoSuite cannot encode opaque well identities as a Zone expression; use zones.find or Zone inputs."

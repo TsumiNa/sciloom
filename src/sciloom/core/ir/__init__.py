@@ -2,7 +2,14 @@
 
 from sciloom.core.diagnostics import Diagnostic, IRValidationError, SourceSpan
 from .codec import from_dict, from_json, to_dict, to_json
-from .device_contracts import CommandContract, CommandParameter, DeviceTypeContract, PropertyContract
+from .device_contracts import (
+    CommandContract,
+    CommandParameter,
+    DeviceTypeContract,
+    LifecycleCommandContract,
+    LifecycleEffect,
+    PropertyContract,
+)
 from .model import (
     AppendCsv,
     AskYesNo,
@@ -103,6 +110,8 @@ __all__ = [
     "TextSplitPart",
     "PropertyContract",
     "CommandContract",
+    "LifecycleCommandContract",
+    "LifecycleEffect",
     "CommandParameter",
     "DeviceTypeContract",
     "DeviceResource",

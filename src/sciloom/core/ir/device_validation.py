@@ -9,6 +9,7 @@ from .device_contracts import (
     BASE_DEVICE_CONTRACT,
     CommandContract,
     DeviceTypeContract,
+    LifecycleCommandContract,
     PropertyContract,
 )
 from .model import DeviceResource, Node, Program
@@ -18,8 +19,8 @@ Report = Callable[[str, str, str, Node | None], None]
 
 def validate_directory(program: Program, report: Report) -> None:
     types: dict[str, DeviceTypeContract] = {}
-    members: dict[str, PropertyContract | CommandContract] = {}
-    builtin_members: tuple[PropertyContract | CommandContract, ...] = (
+    members: dict[str, PropertyContract | CommandContract | LifecycleCommandContract] = {}
+    builtin_members: tuple[PropertyContract | CommandContract | LifecycleCommandContract, ...] = (
         *AGITATOR_CONTRACT.properties,
         *AGITATOR_CONTRACT.operations,
     )
@@ -34,7 +35,10 @@ def validate_directory(program: Program, report: Report) -> None:
         ):
             report("device_contract", "Device ancestry must be distinct and cannot contain itself.", path, None)
         names: set[str] = set()
-        declarations: tuple[PropertyContract | CommandContract, ...] = (*contract.properties, *contract.operations)
+        declarations: tuple[PropertyContract | CommandContract | LifecycleCommandContract, ...] = (
+            *contract.properties,
+            *contract.operations,
+        )
         for member in declarations:
             if not semantic_id(member.semantic_id) or not member.name.isidentifier() or member.name in names:
                 report("device_contract", "Device members need unique names and versioned semantic IDs.", path, None)
@@ -44,12 +48,24 @@ def validate_directory(program: Program, report: Report) -> None:
             if member.semantic_id in builtins and member != builtins[member.semantic_id]:
                 report("device_contract", "Built-in member signatures cannot be redefined.", path, None)
             members[member.semantic_id] = member
-            if isinstance(member, CommandContract):
+            if isinstance(member, (CommandContract, LifecycleCommandContract)):
                 parameter_names = [p.name for p in member.parameters]
                 if len(set(parameter_names)) != len(parameter_names) or any(
                     not n.isidentifier() for n in parameter_names
                 ):
                     report("device_contract", "Command parameter names must be unique identifiers.", path, None)
+            if isinstance(member, LifecycleCommandContract):
+                if member.parameters:
+                    report("device_contract", "Lifecycle effects require parameterless commands.", path, None)
+                if len(set(member.required_configuration)) != len(member.required_configuration) or not set(
+                    member.required_configuration
+                ) <= {p.semantic_id for p in contract.properties}:
+                    report(
+                        "device_contract",
+                        "Command requirements must identify distinct declared properties.",
+                        path,
+                        None,
+                    )
         properties = {p.semantic_id for p in contract.properties}
         if (
             len(set(contract.required_configuration)) != len(contract.required_configuration)
@@ -100,7 +116,7 @@ def semantic_id(value: str) -> bool:
 
 def members_for(
     program: Program, resource: DeviceResource
-) -> tuple[tuple[PropertyContract, ...], tuple[CommandContract, ...]]:
+) -> tuple[tuple[PropertyContract, ...], tuple[CommandContract | LifecycleCommandContract, ...]]:
     """Return the declared interface, including validated inherited signatures."""
     contract = next((c for c in program.device_types if c.type_id == resource.device_type_id), None)
     return (contract.properties, contract.operations) if contract else ((), ())
@@ -108,7 +124,7 @@ def members_for(
 
 def query_members_for(
     program: Program, resource: DeviceResource
-) -> tuple[tuple[PropertyContract, ...], tuple[CommandContract, ...]]:
+) -> tuple[tuple[PropertyContract, ...], tuple[CommandContract | LifecycleCommandContract, ...]]:
     """Capability queries may ask about known compatible extensions.
 
     Querying an optional member does not grant permission to use it. IsDevice

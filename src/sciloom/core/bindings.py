@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 from .diagnostics import Diagnostic
 from .ir import DeviceResource, Program
-from .ir.device_contracts import DeviceTypeContract
+from .ir.device_contracts import DeviceTypeContract, LifecycleCommandContract
 from .ir.device_validation import semantic_id, validate_directory
 from .ir.schema import _convert
 from .locations import Zone
@@ -64,6 +64,13 @@ class DeviceBinding:
                 raise ValueError(f"{name} must identify distinct declared device members.")
         if not set(self.contract.required_configuration) <= set(self.writable_properties):
             raise ValueError("Required device configuration must be writable.")
+        if any(
+            isinstance(op, LifecycleCommandContract)
+            and op.semantic_id in self.supported_operations
+            and not set(op.required_configuration) <= set(self.writable_properties)
+            for op in self.contract.operations
+        ):
+            raise ValueError("Required lifecycle command configuration must be writable.")
 
 
 @dataclass(frozen=True, kw_only=True)

@@ -1,6 +1,7 @@
 """Serializable device interfaces; semantic identifiers never import Python code."""
 
 from dataclasses import dataclass
+from enum import StrEnum
 from typing import ClassVar
 
 from .types import ListType, ScalarType
@@ -44,6 +45,31 @@ class CommandContract:
     parameters: tuple[CommandParameter, ...] = ()
 
 
+class LifecycleEffect(StrEnum):
+    """Defined logical effects, independent of command names and hardware success."""
+
+    APPLY_AND_ENABLE = "apply_and_enable"
+    DISABLE = "disable"
+
+
+@dataclass(frozen=True, kw_only=True)
+class LifecycleCommandContract:
+    """Explicit parameterless command effect and required property semantic IDs.
+
+    Applying also requires the concrete device's required configuration. Disabling
+    has only its explicit requirements and retains saved and applied snapshots.
+    The parameters field must be empty for the two currently defined effects.
+    """
+
+    __ir_kind__: ClassVar[str] = "LifecycleCommandContract"
+
+    semantic_id: str
+    name: str
+    effect: LifecycleEffect
+    parameters: tuple[CommandParameter, ...] = ()
+    required_configuration: tuple[str, ...] = ()
+
+
 @dataclass(frozen=True, kw_only=True)
 class DeviceTypeContract:
     """Versioned device interface and its required configuration.
@@ -60,7 +86,7 @@ class DeviceTypeContract:
     type_id: str
     base_type_ids: tuple[str, ...] = ()
     properties: tuple[PropertyContract, ...] = ()
-    operations: tuple[CommandContract, ...] = ()
+    operations: tuple[CommandContract | LifecycleCommandContract, ...] = ()
     required_configuration: tuple[str, ...] = ()
 
 

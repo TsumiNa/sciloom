@@ -360,6 +360,7 @@ class Text(HTMLParser):
         ("examples/resolve-locations", "resolve_locations"),
         ("examples/zone-ir", "developer/zone_ir"),
         ("examples/demo-device", "developer/demo_device"),
+        ("examples/lifecycle-commands", "developer/lifecycle_commands"),
         ("examples/portable-agitation", "developer/portable_agitation"),
     ),
 )

@@ -21,7 +21,8 @@ declarations become semantic IR. The walkthrough is
 |---|---|---|
 | configuration property | a Python `property` whose setter carries `@operation(id=...)` | the getter declares the type and raises; setter and getter types match; the setter takes one typed value and returns `None` |
 | command | a method decorated with `@operation(id=...)` | typed positional arguments, no defaults or variadics, returns `None` |
-| value types | `int`, `float`, `bool`, `RotationalSpeed`, or a homogeneous list of one of them | no other Python objects |
+| lifecycle command | `@operation(id=..., lifecycle=LifecycleEffect.APPLY_AND_ENABLE)` or `DISABLE` | parameterless; optional `requires=("property_name", ...)` |
+| value types | `int`, `float`, `bool`, `str`, `RotationalSpeed`, `Volume`, `Duration`, or a homogeneous list of one of them | no other Python objects |
 
 The compiler reads declarations statically and never executes their bodies.
 Host access is guarded: reading a device property or calling a runtime method
@@ -60,15 +61,39 @@ Neither the IR nor the compiler knows or special-cases any author subclass.
 
 ## Required configuration
 
-`required_configuration` is enforced at two points, and only two.
-`bind_device` checks that every required property is writable on the profile.
-The compiler's definite-configuration pass proves, on every reachable path
-within one invocation of the entry Function and across calls, that each property
-a `StartAgitation` node requires has been written before it. A generic
-`DeviceCommand` neither requires nor supplies configuration, so a family without
-a dedicated lifecycle node, such as the tutorial's heater, can declare
-`required_configuration` and have it checked for writability, but nothing
-enforces it before `hold` unless the target does so in its own `validate`.
+`bind_device` checks required properties are writable. The compiler proves
+configuration on every reachable path within one entry invocation, across calls
+and loops; it does not assume a previous invocation configured the resource.
+`StartAgitation` uses the concrete device's `required_configuration`.
+
+An explicitly declared lifecycle command uses a new `LifecycleCommandContract`
+inside the existing `DeviceCommand` node:
+
+```python
+from sciloom.core.ir import LifecycleEffect
+from sciloom.devices import operation
+
+@operation(id="example.controller.apply/v1", lifecycle=LifecycleEffect.APPLY_AND_ENABLE)
+def apply(self) -> None:
+    ...
+```
+
+`APPLY_AND_ENABLE` requires the union of the concrete device's configuration
+requirements and the command's explicit `requires` property names. It snapshots
+all saved values and enables or reapplies. `DISABLE` checks only its explicit
+requirements and retains saved and applied values. Writes capture values without
+applying them; no command method name implies an effect. Both effects currently
+require no arguments. Unknown or repeated property names, lifecycle setters and
+`requires` without `lifecycle` are rejected.
+
+Reference execution implements these effects and checks requirements before
+changing state or recording an action. Supplied bindings must exactly match
+serialized contracts; IDs never load Python implementations. A plain
+`CommandContract` still has no reference effect or implicit configuration
+requirements, so ordinary commands remain target-defined. Existing agitation
+nodes and contracts keep their wire forms. See the runnable
+[lifecycle contribution](../../examples/lifecycle-commands.md). AutoSuite rejects
+new lifecycle commands until an explicit profile adapter is verified.
 
 ## Rejections
 

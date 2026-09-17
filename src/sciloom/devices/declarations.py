@@ -8,7 +8,14 @@ from typing import Callable, NoReturn, ParamSpec, get_args, get_origin, get_type
 
 from sciloom.core.bindings import DeviceBinding
 from sciloom.core.diagnostics import Diagnostic, IRValidationError
-from sciloom.core.ir.device_contracts import CommandContract, CommandParameter, DeviceTypeContract, PropertyContract
+from sciloom.core.ir.device_contracts import (
+    CommandContract,
+    CommandParameter,
+    DeviceTypeContract,
+    LifecycleCommandContract,
+    LifecycleEffect,
+    PropertyContract,
+)
 from sciloom.core.ir.device_validation import semantic_id
 from sciloom.core.ir.types import ListType, ScalarType
 from sciloom.units import Duration, RotationalSpeed, Volume
@@ -21,21 +28,33 @@ def _declaration_error(subject: str, message: str) -> NoReturn:
     raise IRValidationError((Diagnostic(code="device_contract", message=message, path=f"$.device.{subject}"),))
 
 
-def operation(*, id: str) -> Callable[[Callable[P, None]], Callable[P, None]]:
+def operation(
+    *, id: str, lifecycle: LifecycleEffect | None = None, requires: tuple[str, ...] = ()
+) -> Callable[[Callable[P, None]], Callable[P, None]]:
     """Register a setter or no-return command, preserving its Python signature.
 
     Args:
         id: Stable namespaced and versioned semantic identity.
+        lifecycle: Optional defined logical effect for a parameterless command.
+        requires: Distinct declared property names required by that effect.
 
     Returns:
         A decorator that registers the method and blocks host execution.
 
     Raises:
-        IRValidationError: The semantic ID is malformed.
+        IRValidationError: The identity, effect or requirements are malformed.
         TypeError: The decorated operation is called by host Python.
     """
     if not semantic_id(id):
         _declaration_error(id, "Operation IDs must be namespaced and versioned.")
+    if lifecycle is not None and not isinstance(lifecycle, LifecycleEffect):
+        _declaration_error(id, "lifecycle must be a LifecycleEffect.")
+    if not isinstance(requires, tuple) or any(
+        not isinstance(name, str) or not name.isidentifier() for name in requires
+    ):
+        _declaration_error(id, "requires must be a tuple of declared property names.")
+    if len(set(requires)) != len(requires) or (requires and lifecycle is None):
+        _declaration_error(id, "Distinct requires are supported only for lifecycle commands.")
 
     def decorate(method: Callable[P, None]) -> Callable[P, None]:
         @wraps(method)
@@ -43,6 +62,8 @@ def operation(*, id: str) -> Callable[[Callable[P, None]], Callable[P, None]]:
             raise TypeError("Device operations belong in compiled @runtime methods.")
 
         setattr(guarded, "__sciloom_operation_id__", id)
+        setattr(guarded, "__sciloom_lifecycle__", lifecycle)
+        setattr(guarded, "__sciloom_requires__", requires)
         return guarded
 
     return decorate
@@ -84,7 +105,8 @@ def device_contract(cls: type[BaseDevice]) -> DeviceTypeContract:
     if not isinstance(type_id, str) or not semantic_id(type_id):
         _declaration_error(cls.__name__, "Each device class requires its own versioned device_type_id.")
     properties = []
-    commands = []
+    commands: list[CommandContract | LifecycleCommandContract] = []
+    lifecycle_methods: list[tuple[str, str, LifecycleEffect, tuple[str, ...]]] = []
     members: dict[str, object] = {}
     for base in reversed(cls.__mro__):
         members.update(vars(base))
@@ -109,6 +131,10 @@ def device_contract(cls: type[BaseDevice]) -> DeviceTypeContract:
             ):
                 _declaration_error(name, "Device commands do not support defaults or variadic arguments.")
             arguments.append(CommandParameter(name=parameter.name, type=value_type(hints.get(parameter.name))))
+        lifecycle = inspect.getattr_static(method, "__sciloom_lifecycle__", None)
+        requires = inspect.getattr_static(method, "__sciloom_requires__", ())
+        if lifecycle is not None and (isinstance(member, property) or arguments):
+            _declaration_error(name, "Lifecycle effects require parameterless commands, not property setters.")
         if isinstance(member, property):
             if len(arguments) != 1 or member.fget is None or len(inspect.signature(member.fget).parameters) != 1:
                 _declaration_error(name, "Device setters require one typed value and a matching getter declaration.")
@@ -118,9 +144,22 @@ def device_contract(cls: type[BaseDevice]) -> DeviceTypeContract:
             if getter_type != arguments[0].type:
                 _declaration_error(name, "Device getter and setter types must match.")
             properties.append(PropertyContract(semantic_id=semantic, name=name, type=getter_type))
+        elif lifecycle is not None:
+            lifecycle_methods.append((semantic, name, lifecycle, requires))
         else:
             commands.append(CommandContract(semantic_id=semantic, name=name, parameters=tuple(arguments)))
     by_name = {p.name: p.semantic_id for p in properties}
+    for semantic, name, lifecycle, requires in lifecycle_methods:
+        if any(prop not in by_name for prop in requires):
+            _declaration_error(name, "requires must list declared property names.")
+        commands.append(
+            LifecycleCommandContract(
+                semantic_id=semantic,
+                name=name,
+                effect=lifecycle,
+                required_configuration=tuple(by_name[prop] for prop in requires),
+            )
+        )
     required = inspect.getattr_static(cls, "required_configuration", ())
     if not isinstance(required, tuple) or any(name not in by_name for name in required):
         _declaration_error(cls.__name__, "required_configuration must list declared property names.")

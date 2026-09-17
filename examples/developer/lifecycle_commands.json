@@ -1,0 +1,401 @@
+{
+  "device_types": [
+    {
+      "base_type_ids": [
+        "sciloom.agitator/v1",
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "kind": "CommandContract",
+          "name": "start",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.start/v1"
+        },
+        {
+          "kind": "CommandContract",
+          "name": "stop",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.stop/v1"
+        },
+        {
+          "effect": "apply_and_enable",
+          "kind": "LifecycleCommandContract",
+          "name": "apply",
+          "parameters": [],
+          "required_configuration": [],
+          "semantic_id": "example.adjustable-agitator.apply/v1"
+        },
+        {
+          "effect": "disable",
+          "kind": "LifecycleCommandContract",
+          "name": "halt",
+          "parameters": [],
+          "required_configuration": [],
+          "semantic_id": "example.adjustable-agitator.halt/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "speed",
+          "semantic_id": "sciloom.agitator.speed/v1",
+          "type": "rotational_speed"
+        },
+        {
+          "kind": "PropertyContract",
+          "name": "gain",
+          "semantic_id": "example.adjustable-agitator.gain/v1",
+          "type": "real"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.agitator.speed/v1",
+        "example.adjustable-agitator.gain/v1"
+      ],
+      "type_id": "example.adjustable-agitator/v1"
+    },
+    {
+      "base_type_ids": [
+        "example.adjustable-agitator/v1",
+        "sciloom.agitator/v1",
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "kind": "CommandContract",
+          "name": "start",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.start/v1"
+        },
+        {
+          "kind": "CommandContract",
+          "name": "stop",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.stop/v1"
+        },
+        {
+          "effect": "apply_and_enable",
+          "kind": "LifecycleCommandContract",
+          "name": "apply",
+          "parameters": [],
+          "required_configuration": [],
+          "semantic_id": "example.adjustable-agitator.apply/v1"
+        },
+        {
+          "effect": "disable",
+          "kind": "LifecycleCommandContract",
+          "name": "halt",
+          "parameters": [],
+          "required_configuration": [],
+          "semantic_id": "example.adjustable-agitator.halt/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "speed",
+          "semantic_id": "sciloom.agitator.speed/v1",
+          "type": "rotational_speed"
+        },
+        {
+          "kind": "PropertyContract",
+          "name": "gain",
+          "semantic_id": "example.adjustable-agitator.gain/v1",
+          "type": "real"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.agitator.speed/v1",
+        "example.adjustable-agitator.gain/v1"
+      ],
+      "type_id": "example.bench-agitator/v1"
+    },
+    {
+      "base_type_ids": [
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "kind": "CommandContract",
+          "name": "start",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.start/v1"
+        },
+        {
+          "kind": "CommandContract",
+          "name": "stop",
+          "parameters": [],
+          "semantic_id": "sciloom.agitator.stop/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "speed",
+          "semantic_id": "sciloom.agitator.speed/v1",
+          "type": "rotational_speed"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.agitator.speed/v1"
+      ],
+      "type_id": "sciloom.agitator/v1"
+    },
+    {
+      "base_type_ids": [],
+      "kind": "DeviceTypeContract",
+      "operations": [],
+      "properties": [],
+      "required_configuration": [],
+      "type_id": "sciloom.device/v1"
+    }
+  ],
+  "entry_function_id": "fn:0",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "Assignment",
+          "node_id": "fn:0:node:1",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 92,
+            "path": "examples/developer/lifecycle_commands.py"
+          },
+          "target": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:2",
+            "source": {
+              "column": 8,
+              "kind": "SourceSpan",
+              "line": 92,
+              "path": "examples/developer/lifecycle_commands.py"
+            },
+            "symbol_id": "fn:0:var:gain"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "fn:0:node:3",
+            "source": {
+              "column": 20,
+              "kind": "SourceSpan",
+              "line": 92,
+              "path": "examples/developer/lifecycle_commands.py"
+            },
+            "type": "real",
+            "value": 1.0
+          }
+        },
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "fn:0:node:4",
+          "property_id": "sciloom.agitator.speed/v1",
+          "resource_id": "resource:agitator",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 93,
+            "path": "examples/developer/lifecycle_commands.py"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "fn:0:node:6",
+            "source": {
+              "column": 30,
+              "kind": "SourceSpan",
+              "line": 93,
+              "path": "examples/developer/lifecycle_commands.py"
+            },
+            "type": "rotational_speed",
+            "value": 10.0
+          }
+        },
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "fn:0:node:7",
+          "property_id": "example.adjustable-agitator.gain/v1",
+          "resource_id": "resource:agitator",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 94,
+            "path": "examples/developer/lifecycle_commands.py"
+          },
+          "value": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:8",
+            "source": {
+              "column": 29,
+              "kind": "SourceSpan",
+              "line": 94,
+              "path": "examples/developer/lifecycle_commands.py"
+            },
+            "symbol_id": "fn:0:var:gain"
+          }
+        },
+        {
+          "kind": "Assignment",
+          "node_id": "fn:0:node:9",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 95,
+            "path": "examples/developer/lifecycle_commands.py"
+          },
+          "target": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:10",
+            "source": {
+              "column": 8,
+              "kind": "SourceSpan",
+              "line": 95,
+              "path": "examples/developer/lifecycle_commands.py"
+            },
+            "symbol_id": "fn:0:var:gain"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "fn:0:node:11",
+            "source": {
+              "column": 20,
+              "kind": "SourceSpan",
+              "line": 95,
+              "path": "examples/developer/lifecycle_commands.py"
+            },
+            "type": "real",
+            "value": 2.0
+          }
+        },
+        {
+          "arguments": [],
+          "kind": "DeviceCommand",
+          "node_id": "fn:0:node:12",
+          "operation_id": "example.adjustable-agitator.apply/v1",
+          "resource_id": "resource:agitator",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 96,
+            "path": "examples/developer/lifecycle_commands.py"
+          }
+        },
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "fn:0:node:13",
+          "property_id": "example.adjustable-agitator.gain/v1",
+          "resource_id": "resource:agitator",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 97,
+            "path": "examples/developer/lifecycle_commands.py"
+          },
+          "value": {
+            "kind": "Reference",
+            "node_id": "fn:0:node:14",
+            "source": {
+              "column": 29,
+              "kind": "SourceSpan",
+              "line": 97,
+              "path": "examples/developer/lifecycle_commands.py"
+            },
+            "symbol_id": "fn:0:var:gain"
+          }
+        },
+        {
+          "arguments": [],
+          "kind": "DeviceCommand",
+          "node_id": "fn:0:node:15",
+          "operation_id": "example.adjustable-agitator.apply/v1",
+          "resource_id": "resource:agitator",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 98,
+            "path": "examples/developer/lifecycle_commands.py"
+          }
+        },
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "fn:0:node:16",
+          "property_id": "example.adjustable-agitator.gain/v1",
+          "resource_id": "resource:agitator",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 99,
+            "path": "examples/developer/lifecycle_commands.py"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "fn:0:node:17",
+            "source": {
+              "column": 29,
+              "kind": "SourceSpan",
+              "line": 99,
+              "path": "examples/developer/lifecycle_commands.py"
+            },
+            "type": "real",
+            "value": 3.0
+          }
+        },
+        {
+          "arguments": [],
+          "kind": "DeviceCommand",
+          "node_id": "fn:0:node:18",
+          "operation_id": "example.adjustable-agitator.halt/v1",
+          "resource_id": "resource:agitator",
+          "source": {
+            "column": 8,
+            "kind": "SourceSpan",
+            "line": 100,
+            "path": "examples/developer/lifecycle_commands.py"
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "Reconfigure",
+      "node_id": "fn:0",
+      "source": {
+        "column": 4,
+        "kind": "SourceSpan",
+        "line": 91,
+        "path": "examples/developer/lifecycle_commands.py"
+      },
+      "variables": [
+        {
+          "initial": {
+            "kind": "Literal",
+            "node_id": "fn:0:var:gain:initial",
+            "source": null,
+            "type": "real",
+            "value": 1.0
+          },
+          "kind": "Variable",
+          "name": "gain",
+          "node_id": "fn:0:var:gain",
+          "owner_id": "fn:0",
+          "role": "internal",
+          "source": null,
+          "type": "real"
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": [
+    {
+      "device_type_id": "example.bench-agitator/v1",
+      "kind": "DeviceResource",
+      "logical_id": "agitator",
+      "node_id": "resource:agitator",
+      "source": null
+    }
+  ]
+}

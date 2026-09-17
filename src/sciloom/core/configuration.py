@@ -35,7 +35,7 @@ from .ir import (
     WriteWellProperty,
     ZoneLiteral,
 )
-from .ir.device_contracts import START_AGITATION_ID, STOP_AGITATION_ID
+from .ir.device_contracts import START_AGITATION_ID, STOP_AGITATION_ID, LifecycleCommandContract, LifecycleEffect
 from .ir.traversal import iter_nodes
 
 Configuration = set[tuple[str, str]]
@@ -84,6 +84,22 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
     if errors:
         return tuple(errors)
 
+    command_requirements: dict[str, Configuration] = {}
+    for node, _ in iter_nodes(program):
+        if isinstance(node, StartAgitation):
+            command_requirements[node.node_id] = {
+                (node.resource_id, p) for p in resources[node.resource_id].contract.required_configuration
+            }
+        elif isinstance(node, DeviceCommand):
+            contract = resources[node.resource_id].contract
+            command = next(op for op in contract.operations if op.semantic_id == node.operation_id)
+            needs: set[str] = set()
+            if isinstance(command, LifecycleCommandContract):
+                needs.update(command.required_configuration)
+                if command.effect == LifecycleEffect.APPLY_AND_ENABLE:
+                    needs.update(contract.required_configuration)
+            command_requirements[node.node_id] = {(node.resource_id, p) for p in needs}
+
     guarantees: dict[str, Configuration] = {f.node_id: set() for f in program.functions}
     requirements: dict[str, Configuration] = {f.node_id: set() for f in program.functions}
 
@@ -93,11 +109,8 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
         for statement in body:
             if isinstance(statement, ConfigureProperty):
                 configured.add((statement.resource_id, statement.property_id))
-            elif isinstance(statement, StartAgitation):
-                needs = {
-                    (statement.resource_id, p) for p in resources[statement.resource_id].contract.required_configuration
-                }
-                required |= needs - configured
+            elif isinstance(statement, (StartAgitation, DeviceCommand)):
+                required |= command_requirements[statement.node_id] - configured
             elif isinstance(statement, Call):
                 required |= requirements[statement.function_id] - configured
                 configured |= guarantees[statement.function_id]
@@ -140,7 +153,6 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
                     StartTimer,
                     WaitUntil,
                     StopAgitation,
-                    DeviceCommand,
                 ),
             ):
                 pass  # These operations neither save nor require device configuration.
@@ -170,12 +182,14 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
     missing = requirements[program.entry_function_id]
     for resource_id, property_id in sorted(missing):
         node, path = next(
-            (n, p) for n, p in iter_nodes(program) if isinstance(n, StartAgitation) and n.resource_id == resource_id
+            (n, p)
+            for n, p in iter_nodes(program)
+            if (resource_id, property_id) in command_requirements.get(n.node_id, set())
         )
         errors.append(
             Diagnostic(
                 code="device_configuration",
-                message=f"start() requires {property_id!r} to be configured on every reachable path in this invocation.",
+                message=f"Device command requires {property_id!r} to be configured on every reachable path in this invocation.",
                 path=path,
                 node_id=node.node_id,
                 source=node.source,
