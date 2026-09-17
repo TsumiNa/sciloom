@@ -3390,6 +3390,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/lifecycle-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Lifecycle effects
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/portable-agitation/" class="md-nav__link">
         
   
@@ -4136,8 +4163,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.6.0
-    · <code title="94610f7350234f7dbf341e22042b7338e1ef63d5">94610f73</code>
+    · SciLoom 0.7.0
+    · <code title="da488c4b30c2d99474f2cfc2afa86b0d2e7f7c3d">da488c4b</code>
   </p>
 </aside>
 
@@ -4224,7 +4251,10 @@
 
 </h2>
 <div class="doc-signature highlight"><pre><span></span><code><span class="nf">operation</span><span class="p">(</span>
-    <span class="o">*</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">lifecycle</span><span class="p">:</span> <span class="n">LifecycleEffect</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">requires</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(),</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="kc">None</span><span class="p">]],</span> <span class="n">Callable</span><span class="p">[</span><span class="n">P</span><span class="p">,</span> <span class="kc">None</span><span class="p">]]</span>
 </code></pre></div>
 
@@ -4258,6 +4288,38 @@
             </td>
             <td>
                 <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>lifecycle</code>
+            </td>
+            <td>
+                  <code><a class="autorefs autorefs-internal" title="&lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;sciloom.core.ir.LifecycleEffect&lt;/span&gt;" href="../ir-devices/#sciloom.core.ir.LifecycleEffect">LifecycleEffect</a> | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Optional defined logical effect for a parameterless command.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>requires</code>
+            </td>
+            <td>
+                  <code><span title="tuple">tuple</span>[<span title="str">str</span>, ...]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Distinct declared property names required by that effect.</p>
+              </div>
+            </td>
+            <td>
+                  <code>()</code>
             </td>
           </tr>
       </tbody>
@@ -4302,7 +4364,7 @@
             </td>
             <td>
               <div class="doc-md-description">
-                <p>The semantic ID is malformed.</p>
+                <p>The identity, effect or requirements are malformed.</p>
               </div>
             </td>
           </tr>

@@ -3417,6 +3417,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/lifecycle-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Lifecycle effects
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/portable-agitation/" class="md-nav__link">
         
   
@@ -3976,8 +4003,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.6.0
-    · <code title="94610f7350234f7dbf341e22042b7338e1ef63d5">94610f73</code>
+    · SciLoom 0.7.0
+    · <code title="da488c4b30c2d99474f2cfc2afa86b0d2e7f7c3d">da488c4b</code>
   </p>
 </aside>
 
@@ -3999,12 +4026,17 @@ and <a href="../advanced/json-interchange/">JSON interchange</a>.</p>
 does; a promise inherited by accident is not a promise. <code>bind_device</code> refuses a
 profile that omits a list. See <a href="../reference/device-contracts/#profiles">device contracts</a>.</p>
 <p><strong>Why is my family's <code>required_configuration</code> not enforced?</strong> The compiler
-enforces definite configuration only where a <code>StartAgitation</code> node requires it;
-a generic <code>DeviceCommand</code> neither requires nor supplies configuration. Enforce
-it in your target's <code>validate</code>. See
+enforces it before <code>StartAgitation</code> and explicit <code>APPLY_AND_ENABLE</code> lifecycle
+commands. The latter also checks the command's <code>requires</code> properties. A <code>DISABLE</code>
+command checks only its explicit requirements. Ordinary <code>CommandContract</code>
+operations have no implicit configuration effect; their target defines any
+additional checks. Declare a lifecycle effect only when it matches the intended
+behavior, as in the <a href="../../examples/lifecycle-commands/">lifecycle example</a>. See
 <a href="../reference/device-contracts/#required-configuration">required configuration</a>.</p>
-<p><strong>Why can't the interpreter run my command?</strong> A native command has meaning only
-on its hardware; the interpreter refuses to invent one. See
+<p><strong>Why can't the interpreter run my command?</strong> Ordinary native commands have no
+defined reference effect, so they raise <code>unsupported_operation</code>. Explicit
+lifecycle contracts and the dedicated agitation nodes do have reference effects;
+that does not prove physical or AutoSuite execution. See
 <a href="../advanced/native-commands/">native commands</a>.</p>
 <p><strong>Reject or adapt?</strong> Reject what your platform cannot do and can prove; let a
 program adapt with a compile-time query when it is genuinely correct on both

@@ -3627,6 +3627,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/lifecycle-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Lifecycle effects
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/portable-agitation/" class="md-nav__link">
         
   
@@ -4375,8 +4402,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.6.0
-    · <code title="94610f7350234f7dbf341e22042b7338e1ef63d5">94610f73</code>
+    · SciLoom 0.7.0
+    · <code title="da488c4b30c2d99474f2cfc2afa86b0d2e7f7c3d">da488c4b</code>
   </p>
 </aside>
 
@@ -4989,8 +5016,13 @@ For differences between device profiles, use
 </tr>
 <tr>
 <td><code>device_configuration</code></td>
-<td>a path reaches <code>start()</code> without assigning <code>speed</code></td>
-<td>configure the required properties on every path before starting</td>
+<td>a path reaches agitation <code>start()</code> or an explicit lifecycle command without its required properties</td>
+<td>configure every required property before the command on every reachable path; apply checks device-wide and command-specific requirements, while disable checks only explicit command requirements</td>
+</tr>
+<tr>
+<td><code>unsupported_device_command</code></td>
+<td>AutoSuite has no verified profile adapter for an explicit lifecycle command</td>
+<td>use the recording target/reference interpreter to check intent; native execution requires a supported adapter and evidence, even when reference execution succeeds</td>
 </tr>
 <tr>
 <td><code>unsupported_operation</code></td>

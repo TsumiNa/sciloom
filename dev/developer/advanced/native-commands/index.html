@@ -1834,10 +1834,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-the-interpreter-refuses-it" class="md-nav__link">
+  <a href="#reference-effects-and-ordinary-native-commands" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Why the interpreter refuses it
+        Reference effects and ordinary native commands
       </span>
     </span>
   </a>
@@ -3489,6 +3489,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/lifecycle-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Lifecycle effects
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/portable-agitation/" class="md-nav__link">
         
   
@@ -4057,10 +4084,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-the-interpreter-refuses-it" class="md-nav__link">
+  <a href="#reference-effects-and-ordinary-native-commands" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Why the interpreter refuses it
+        Reference effects and ordinary native commands
       </span>
     </span>
   </a>
@@ -4094,8 +4121,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.6.0
-    · <code title="94610f7350234f7dbf341e22042b7338e1ef63d5">94610f73</code>
+    · SciLoom 0.7.0
+    · <code title="da488c4b30c2d99474f2cfc2afa86b0d2e7f7c3d">da488c4b</code>
   </p>
 </aside>
 
@@ -4105,8 +4132,9 @@
 <p>Every command declared with <code>@operation</code>, except the two built-in agitation
 lifecycle commands, becomes a <code>DeviceCommand</code> node: a semantic id and typed
 arguments, nothing more. That includes an extension command on an <code>Agitator</code>
-subclass, such as <code>DemoAgitator.calibrate</code>. The node is enough to serialize,
-bind and emit, and not enough to execute.</p>
+subclass, such as <code>DemoAgitator.calibrate</code>. Reference execution depends on the
+declared contract: ordinary native commands have no defined reference effect,
+while explicit lifecycle contracts define apply/disable behavior.</p>
 <h2 id="what-a-command-carries">What a command carries</h2>
 <p>The node records the operation's semantic id and its arguments, each a typed
 expression: scalars, quantities and homogeneous lists, bound positionally or by
@@ -4114,14 +4142,24 @@ keyword the way Python binds them. A profile lists the command in
 <code>supported_operations</code>; the capability check refuses a selected program that
 calls a command its bound profile does not list. The declaration rules are on
 <a href="../../reference/device-contracts/">device contracts</a>.</p>
-<h2 id="why-the-interpreter-refuses-it">Why the interpreter refuses it</h2>
+<h2 id="reference-effects-and-ordinary-native-commands">Reference effects and ordinary native commands</h2>
 <p>The reference interpreter defines SciLoom semantics. Property writes have a
 meaning for every family: the value is saved on the resource. A native command
 has a meaning only on its hardware, so the interpreter raises <code>ExecutionError</code>
 with <code>unsupported_operation</code> rather than invent one, as the tutorial's
-<a href="../../tutorial/execute-what-you-can/">execute what you can</a> page shows. Only
-agitation's <code>start</code> and <code>stop</code> have reference semantics, because they are
-dedicated nodes with a defined effect on saved and applied configuration.</p>
+<a href="../../tutorial/execute-what-you-can/">execute what you can</a> page shows. That
+example's <code>hold</code> and the independent contribution's <code>calibrate</code> are ordinary
+<code>CommandContract</code> operations and still fail with
+<code>unsupported_operation Cannot execute DeviceCommand.</code></p>
+<p>Agitation's dedicated start/stop nodes and explicit <code>LifecycleCommandContract</code>
+operations have defined reference effects. Declare a parameterless command with
+<code>@operation(id=..., lifecycle=LifecycleEffect.APPLY_AND_ENABLE)</code> to apply the
+complete saved configuration and enable, or <code>LifecycleEffect.DISABLE</code> to disable
+while preserving configuration. Explicit property requirements are checked
+before either effect; apply also requires the concrete device's configuration.
+The command name does not choose its effect. See the executable
+<a href="../../../examples/lifecycle-commands/">lifecycle contribution</a> and
+<a href="../../reference/device-contracts/#required-configuration">configuration rules</a>.</p>
 <h2 id="how-autosuite-lowers-device-intent">How AutoSuite lowers device intent</h2>
 <p>The shipped target validates platform restrictions and translates high-level
 operations to a private serialization model. Property writes save configuration,
@@ -4132,9 +4170,11 @@ function return; recovery after exceptional termination is not promised
 equivalent across platforms.</p>
 <p>Typed array encoding covers initialization, I/O binding, copies, lengths and
 checked indexing. A statement the package format has no form for is refused with
-<code>unsupported_operation</code>; today that is any <code>DeviceCommand</code>, because the shipped
-profile declares no commands beyond the agitation lifecycle. Static XML checks do
-not establish Executor acceptance.</p>
+<code>unsupported_operation</code>. The shipped profile declares no commands beyond the
+dedicated agitation lifecycle. New lifecycle <code>DeviceCommand</code> nodes are rejected
+earlier by target validation with <code>unsupported_device_command</code>; direct task
+emission also rejects them. Reference effects do not supply an AutoSuite adapter
+or native evidence. Static XML checks do not establish Executor acceptance.</p>
 
 
 

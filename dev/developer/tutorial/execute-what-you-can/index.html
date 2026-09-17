@@ -3419,6 +3419,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../examples/lifecycle-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Lifecycle effects
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../examples/portable-agitation/" class="md-nav__link">
         
   
@@ -3978,8 +4005,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.6.0
-    · <code title="94610f7350234f7dbf341e22042b7338e1ef63d5">94610f73</code>
+    · SciLoom 0.7.0
+    · <code title="da488c4b30c2d99474f2cfc2afa86b0d2e7f7c3d">da488c4b</code>
   </p>
 </aside>
 
@@ -4026,6 +4053,10 @@ preheat: True {'setpoint': 60.0}
 valid and its artifact was emitted, but its <code>hold</code> is a native command with no
 reference semantics, so the interpreter refuses to run it. Compilation and
 target emission still work; only simulated execution stops.</p>
+<p>This <code>hold</code> uses an ordinary command contract. Explicit parameterless lifecycle
+contracts do define reference apply/disable effects; see the separate
+<a href="../../../examples/lifecycle-commands/">lifecycle contribution</a>. Their availability
+does not assign a meaning to this tutorial's timed <code>hold</code> command.</p>
 <p><code>Preheat</code> writes a property and nothing else. Property writes have reference
 semantics for every family, so the session runs, reports the output, and shows
 the saved configuration on the resource. The interpreter takes the <strong>selected</strong>

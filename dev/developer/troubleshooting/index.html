@@ -3553,6 +3553,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../../examples/lifecycle-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Lifecycle effects
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../examples/portable-agitation/" class="md-nav__link">
         
   
@@ -4224,8 +4251,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.6.0
-    · <code title="94610f7350234f7dbf341e22042b7338e1ef63d5">94610f73</code>
+    · SciLoom 0.7.0
+    · <code title="da488c4b30c2d99474f2cfc2afa86b0d2e7f7c3d">da488c4b</code>
   </p>
 </aside>
 
@@ -4541,8 +4568,13 @@ and configuration pass, definite timer-start analysis, and <code>Target.validate
 </tr>
 <tr>
 <td><code>device_configuration</code></td>
-<td>start() requires <code>&lt;property&gt;</code> to be configured on every reachable path in this invocation.</td>
-<td>a <code>StartAgitation</code> reachable without its required writes</td>
+<td>Device command requires <code>&lt;property&gt;</code> to be configured on every reachable path in this invocation.</td>
+<td>an agitation start or explicit lifecycle command reachable without its required writes</td>
+</tr>
+<tr>
+<td><code>unsupported_device_command</code></td>
+<td>Lifecycle contracts define reference effects; AutoSuite needs an explicit verified profile adapter before emission.</td>
+<td>a new lifecycle command without an accepted native adapter</td>
 </tr>
 <tr>
 <td><code>timer_not_started</code></td>
@@ -4632,7 +4664,7 @@ are verified.</p>
 <tr>
 <td><code>unsupported_operation</code></td>
 <td>Cannot execute DeviceCommand.</td>
-<td>a native command; see <a href="../advanced/native-commands/">native commands</a></td>
+<td>an ordinary native command without defined reference effects; explicit lifecycle contracts are executable; see <a href="../advanced/native-commands/">native commands</a></td>
 </tr>
 <tr>
 <td><code>input_binding</code></td>
@@ -4671,8 +4703,8 @@ are verified.</p>
 </tr>
 <tr>
 <td><code>device_configuration</code></td>
-<td>start() requires complete saved configuration.</td>
-<td><code>start</code> before every required property was saved</td>
+<td>Device command requires complete saved configuration.</td>
+<td>an agitation start or explicit lifecycle command before its required properties were saved</td>
 </tr>
 <tr>
 <td><code>timer_not_started</code></td>
