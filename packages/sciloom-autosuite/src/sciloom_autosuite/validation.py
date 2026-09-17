@@ -40,6 +40,7 @@ from sciloom.core.ir import (
     TextSplitPart,
     Unary,
     UnaryOp,
+    Variable,
     VariableRole,
     Wait,
     WaitUntil,
@@ -51,7 +52,7 @@ from sciloom.core.ir import (
 )
 from sciloom.core.ir.expressions import ExpressionChecker
 from sciloom.core.ir.traversal import iter_nodes
-from sciloom.core.ir.types import QUANTITIES
+from sciloom.core.ir.types import QUANTITIES, THERMAL_QUANTITIES
 
 
 def _safe_speed_factor(value: Expression, op: BinaryOp) -> bool:
@@ -78,7 +79,13 @@ def validate_runtime_guards(program: Program) -> tuple[Diagnostic, ...]:
         for node, path in iter_nodes(function, f"$.functions[{function_index}]"):
             message = None
             code = "unsupported_runtime_guard"
-            if isinstance(node, (RequestText, AskYesNo)):
+            if (
+                isinstance(node, (Variable, Literal, ListLiteral))
+                and (node.type.element_type if isinstance(node.type, ListType) else node.type) in THERMAL_QUANTITIES
+            ):
+                code = "unsupported_temperature_type"
+                message = "Thermal values require verified native encoding, conversion and range behavior; core/reference execution is available."
+            elif isinstance(node, (RequestText, AskYesNo)):
                 code = "unsupported_dialog_result"
                 message = "Text/yes-no results and cancellation/Stop/timeout termination require independent native verification; reference execution is available."
             elif isinstance(node, DeviceCommand) and node.operation_id in lifecycle_commands:

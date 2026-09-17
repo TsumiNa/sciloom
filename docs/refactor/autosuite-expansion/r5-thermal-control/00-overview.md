@@ -16,12 +16,14 @@ an explicit developer decision.
 
 | Stage | Outcome | Code status |
 | --- | --- | --- |
-| R5.1 | [Typed absolute temperature and rates](01-plan-temperature-values.md) | Pending |
+| R5.1 | [Typed absolute temperature and rates](01-plan-temperature-values.md) | Implemented in this PR; review/merge pending |
 | R5.2 | [Fixed heater configuration and lifecycle](02-plan-heater-semantics.md) | Pending |
 | R5.3 | [Bind an evidenced fixed thermal profile](03-plan-native-thermal-profile.md) | Pending |
 
 Native status: Thermal profile and apparent temperature offset unresolved.
-No stage below is already implemented. Native-unlock prerequisites are distinct
+R5.1 provides core/reference thermal values, typed fields/lists and JSON v4;
+AutoSuite explicitly rejects thermal types pending native encoding evidence.
+R5.2 and R5.3 remain pending. Native-unlock prerequisites are distinct
 from review/merge prerequisites. Finish each PR green and remotely squash merged
 before beginning another; an implemented/gated stage preserves its rejection.
 

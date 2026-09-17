@@ -15,11 +15,37 @@ if TYPE_CHECKING:
     from .flow.messages import ask_yes_no, notify, request_text
     from .flow.properties import WellProperty
     from .flow.timing import Timer, now_text, wait
+    from .units import (
+        Temperature,
+        TemperatureDifference,
+        TemperatureRate,
+        degC,
+        degC_per_min,
+        delta_degC,
+        delta_kelvin,
+        kelvin,
+        kelvin_per_s,
+    )
 
 _DSL_EXPORTS = {"Function", "Input", "Output", "Var", "runtime"}
+_THERMAL_EXPORTS = {
+    "Temperature",
+    "TemperatureDifference",
+    "TemperatureRate",
+    "degC",
+    "kelvin",
+    "delta_degC",
+    "delta_kelvin",
+    "degC_per_min",
+    "kelvin_per_s",
+}
 
 
 def __getattr__(name: str) -> Any:
+    if name in _THERMAL_EXPORTS:
+        from . import units
+
+        return getattr(units, name)
     # Importing sciloom.core.ir or the interpreter must not load source analysis.
     if name == "at":
         from .flow.locations import at
@@ -85,6 +111,15 @@ def __getattr__(name: str) -> Any:
 
 
 __all__ = [
+    "Temperature",
+    "TemperatureDifference",
+    "TemperatureRate",
+    "degC",
+    "kelvin",
+    "delta_degC",
+    "delta_kelvin",
+    "degC_per_min",
+    "kelvin_per_s",
     "at",
     "WellProperty",
     "Zone",

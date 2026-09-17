@@ -25,7 +25,7 @@ from sciloom.flow.device_slots import DeviceReference
 # Function is read at runtime below, not only in annotations. Do not move this
 # import behind TYPE_CHECKING: component_paths tests instances with isinstance.
 from sciloom.flow.function import Function
-from sciloom.units import Duration, RotationalSpeed, Volume
+from sciloom.units import Duration, RotationalSpeed, Temperature, TemperatureDifference, TemperatureRate, Volume
 from .context import LoweringContext, ProgramScope
 from .source import runtime_source
 from .statements import statements
@@ -79,13 +79,28 @@ def lower(root: Function) -> Program:
     return package
 
 
-def _initial_scalar(value: bool | int | float | str | RotationalSpeed | Volume | Duration) -> bool | int | float | str:
+def _initial_scalar(
+    value: bool
+    | int
+    | float
+    | str
+    | RotationalSpeed
+    | Volume
+    | Duration
+    | Temperature
+    | TemperatureDifference
+    | TemperatureRate,
+) -> bool | int | float | str:
     if isinstance(value, RotationalSpeed):
         return value.rps
     if isinstance(value, Volume):
         return value.m3
     if isinstance(value, Duration):
         return value.seconds
+    if isinstance(value, (Temperature, TemperatureDifference)):
+        return value.kelvin
+    if isinstance(value, TemperatureRate):
+        return value.kelvin_per_second
     return value
 
 
@@ -117,7 +132,19 @@ def _build_function(context: LoweringContext) -> FunctionIR:
                     node_id=f"{context.symbol(field.name)}:initial",
                     type=field.type,
                     value=_initial_scalar(
-                        cast(bool | int | float | str | RotationalSpeed | Volume | Duration, field.default)
+                        cast(
+                            bool
+                            | int
+                            | float
+                            | str
+                            | RotationalSpeed
+                            | Volume
+                            | Duration
+                            | Temperature
+                            | TemperatureDifference
+                            | TemperatureRate,
+                            field.default,
+                        )
                     ),
                 )
         variables.append(

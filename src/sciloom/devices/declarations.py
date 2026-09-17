@@ -18,7 +18,7 @@ from sciloom.core.ir.device_contracts import (
 )
 from sciloom.core.ir.device_validation import semantic_id
 from sciloom.core.ir.types import ListType, ScalarType
-from sciloom.units import Duration, RotationalSpeed, Volume
+from sciloom.units import Duration, RotationalSpeed, Temperature, TemperatureDifference, TemperatureRate, Volume
 from .base import BaseDevice
 
 P = ParamSpec("P")
@@ -79,6 +79,9 @@ def value_type(annotation: object) -> ScalarType | ListType:
         RotationalSpeed: ScalarType.ROTATIONAL_SPEED,
         Volume: ScalarType.VOLUME,
         Duration: ScalarType.DURATION,
+        Temperature: ScalarType.TEMPERATURE,
+        TemperatureDifference: ScalarType.TEMPERATURE_DIFFERENCE,
+        TemperatureRate: ScalarType.TEMPERATURE_RATE,
     }
     if isinstance(annotation, type) and annotation in scalars:
         return scalars[annotation]

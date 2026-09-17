@@ -17,10 +17,20 @@ class ScalarType(StrEnum):
     ROTATIONAL_SPEED = "rotational_speed"
     VOLUME = "volume"
     DURATION = "duration"
+    TEMPERATURE = "temperature"
+    TEMPERATURE_DIFFERENCE = "temperature_difference"
+    TEMPERATURE_RATE = "temperature_rate"
 
 
-SIGNED_QUANTITIES = (ScalarType.VOLUME, ScalarType.DURATION)
-QUANTITIES = (*SIGNED_QUANTITIES, ScalarType.ROTATIONAL_SPEED)
+THERMAL_QUANTITIES = (ScalarType.TEMPERATURE, ScalarType.TEMPERATURE_DIFFERENCE, ScalarType.TEMPERATURE_RATE)
+SIGNED_QUANTITIES = (
+    ScalarType.VOLUME,
+    ScalarType.DURATION,
+    ScalarType.TEMPERATURE_DIFFERENCE,
+    ScalarType.TEMPERATURE_RATE,
+)
+MULTIPLICATIVE_QUANTITIES = (*SIGNED_QUANTITIES, ScalarType.ROTATIONAL_SPEED)
+QUANTITIES = (*MULTIPLICATIVE_QUANTITIES, ScalarType.TEMPERATURE)
 
 
 @dataclass(frozen=True, kw_only=True)

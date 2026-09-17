@@ -1,9 +1,23 @@
 """Typed runtime logging vocabulary for experiment authors."""
 
-from sciloom.units import Duration, RotationalSpeed, Volume
+from sciloom.units import Duration, RotationalSpeed, Temperature, TemperatureDifference, TemperatureRate, Volume
 
 
-def log(value: bool | int | float | str | RotationalSpeed | Volume | Duration, *, category: str, stream: str) -> None:
+def log(
+    value: bool
+    | int
+    | float
+    | str
+    | RotationalSpeed
+    | Volume
+    | Duration
+    | Temperature
+    | TemperatureDifference
+    | TemperatureRate,
+    *,
+    category: str,
+    stream: str,
+) -> None:
     """Record a value in the generated program's log.
 
     Args:

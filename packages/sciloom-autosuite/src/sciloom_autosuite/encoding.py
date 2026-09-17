@@ -6,6 +6,7 @@ from dataclasses import dataclass
 
 from sciloom.core.diagnostics import CompilationError, Diagnostic
 from sciloom.core.ir import ListLiteral, ListType, Literal, ScalarType, ValueType, Variable, ZoneLiteral, ZoneType
+from sciloom.core.ir.types import THERMAL_QUANTITIES
 from .xml import XmlNode, xml_node as _xml
 
 
@@ -35,7 +36,15 @@ def value_encoding(value_type: ValueType) -> ScalarEncoding:
     if isinstance(value_type, ZoneType):
         return ZONE
     if isinstance(value_type, ListType):
-        return SCALARS[value_type.element_type]
+        value_type = value_type.element_type
+    if value_type in THERMAL_QUANTITIES:
+        raise CompilationError(
+            (
+                Diagnostic(
+                    code="unsupported_temperature_type", message="AutoSuite thermal encoding is not verified.", path="$"
+                ),
+            )
+        )
     return SCALARS[value_type]
 
 
@@ -52,6 +61,8 @@ def literal_value(literal: Literal, *, storage: bool = False) -> str:
     undocumented backslash/apostrophe escape convention in the expression parser.
     """
     value = literal.value
+    if literal.type in THERMAL_QUANTITIES:
+        value_encoding(literal.type)  # Explicitly reject direct backend calls, too.
     if literal.type == ScalarType.TEXT:
         assert isinstance(value, str)
         parts: list[str] = []
@@ -92,7 +103,7 @@ def variable_declaration(variable: Variable, name: str) -> XmlNode:
     assert variable.initial is not None  # guaranteed by shared validation
     if isinstance(variable.type, ListType):
         assert isinstance(variable.initial, ListLiteral)
-        encoding = SCALARS[variable.type.element_type]
+        encoding = value_encoding(variable.type)
         values = []
         for i, element in enumerate(variable.initial.elements):
             assert isinstance(element, Literal)

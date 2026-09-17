@@ -19,7 +19,14 @@ from sciloom.devices.declarations import device_contract
 from sciloom.flow.device_slots import DeviceReference
 from sciloom.flow.function import Function
 from sciloom.flow.properties import WellProperty
-from sciloom.units import DurationUnit, SpeedUnit, VolumeUnit
+from sciloom.units import (
+    DurationUnit,
+    SpeedUnit,
+    TemperatureDifferenceUnit,
+    TemperatureRateUnit,
+    TemperatureUnit,
+    VolumeUnit,
+)
 
 _MISSING = object()
 
@@ -56,7 +63,9 @@ class RuntimeSource:
 
     filename: str = ""
     static_names: Mapping[str, Any] = MappingProxyType({})
-    unit_names: Mapping[str, SpeedUnit | VolumeUnit | DurationUnit] = MappingProxyType({})
+    unit_names: Mapping[
+        str, SpeedUnit | VolumeUnit | DurationUnit | TemperatureUnit | TemperatureDifferenceUnit | TemperatureRateUnit
+    ] = MappingProxyType({})
     allows_len: bool = False
 
 

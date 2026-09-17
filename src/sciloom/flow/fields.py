@@ -13,7 +13,7 @@ from sciloom.core.diagnostics import Diagnostic, IRValidationError
 from sciloom.core.ir import VariableRole
 from sciloom.core.ir.types import ListType, ScalarType, ValueType, ZoneType
 from sciloom.core.locations import Zone
-from sciloom.units import Duration, RotationalSpeed, Volume
+from sciloom.units import Duration, RotationalSpeed, Temperature, TemperatureDifference, TemperatureRate, Volume
 
 
 class _FieldRole(Enum):
@@ -41,6 +41,9 @@ _TYPES = {
     RotationalSpeed: ScalarType.ROTATIONAL_SPEED,
     Volume: ScalarType.VOLUME,
     Duration: ScalarType.DURATION,
+    Temperature: ScalarType.TEMPERATURE,
+    TemperatureDifference: ScalarType.TEMPERATURE_DIFFERENCE,
+    TemperatureRate: ScalarType.TEMPERATURE_RATE,
 }
 
 
@@ -57,8 +60,23 @@ class RuntimeField:
         | RotationalSpeed
         | Volume
         | Duration
+        | Temperature
+        | TemperatureDifference
+        | TemperatureRate
         | Zone
-        | tuple[bool | int | float | str | RotationalSpeed | Volume | Duration, ...]
+        | tuple[
+            bool
+            | int
+            | float
+            | str
+            | RotationalSpeed
+            | Volume
+            | Duration
+            | Temperature
+            | TemperatureDifference
+            | TemperatureRate,
+            ...,
+        ]
         | None
     ) = None
 
@@ -167,6 +185,9 @@ def _default(name: str, value: Any, value_type: ValueType) -> Any:
         ScalarType.ROTATIONAL_SPEED: (RotationalSpeed,),
         ScalarType.VOLUME: (Volume,),
         ScalarType.DURATION: (Duration,),
+        ScalarType.TEMPERATURE: (Temperature,),
+        ScalarType.TEMPERATURE_DIFFERENCE: (TemperatureDifference,),
+        ScalarType.TEMPERATURE_RATE: (TemperatureRate,),
     }[value_type]
     if type(value) not in allowed or (type(value) is float and not math.isfinite(value)):
         _schema_error(name, f"Default must be a finite {value_type.value} value.")
