@@ -58,6 +58,8 @@ def write_autosuite_review(
     errors = validate_bindings(program, bindings)
     if errors:
         raise CompilationError(errors)
+    # specialize replaces authored family types with concrete contract IDs.
+    # Base-type acceptance above checks compatibility, not completed specialization.
     concrete = {binding.logical_id: binding.contract.type_id for binding in bindings.devices}
     if any(
         resource.device_type_id != concrete[resource.logical_id]

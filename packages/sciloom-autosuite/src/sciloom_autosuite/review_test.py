@@ -93,14 +93,18 @@ def test_changed_deployment_is_rechecked_before_any_output(tmp_path):
     assert not list(tmp_path.iterdir())
 
 
-def test_unspecialized_device_contract_is_rejected(tmp_path):
+def test_base_typed_authoring_exports_but_unspecialized_contract_is_rejected(tmp_path):
     target = AutoSuiteTarget(devices={"shaker": AutoSuiteIndividualShaker(zone="bench", device_id="23")})
     result = Configure().compile(target=target)
+    (binding,) = target.resolve_devices(result.semantic_ir).devices
+    assert result.semantic_ir.resources[0].device_type_id in binding.contract.base_type_ids
+    assert result.specialized_ir.resources[0].device_type_id == binding.contract.type_id
+    write_autosuite_review(result, target=target, path=tmp_path / "valid/out.asfp")
     with pytest.raises(ValueError, match="concrete"):
         write_autosuite_review(
-            replace(result, specialized_ir=result.semantic_ir), target=target, path=tmp_path / "out.asfp"
+            replace(result, specialized_ir=result.semantic_ir), target=target, path=tmp_path / "invalid/out.asfp"
         )
-    assert not list(tmp_path.iterdir())
+    assert not (tmp_path / "invalid").exists()
 
 
 def test_malformed_selected_ir_is_not_emitted(tmp_path):
