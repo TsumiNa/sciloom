@@ -22,7 +22,16 @@ Do not infer the meaning of zero gradient or the control-mode enum from labels.
 | --- | --- | --- |
 | `{A6161A56-A9F6-42B2-852D-EEC91CD67D52}` | Zone Sampling1-1; switchon=1; maxwaittime=0; progid Chemspeed.SADeviceThermostat.1; deviceid 0.1; wellid=-1; Temperature=393.16 | Exact entered temperature, live range, gradient behavior or Executor acceptance |
 | `{000F161C-24AA-4FF2-97A6-F23A77D9A67C}` | Same zone/controller; switchon=0; maxwaittime=0; Temperature=293.16 | That the inactive temperature field is a new applied setpoint or that stop preserves device settings |
-| Remaining six tasks | Zone reactor_zone; blank progid/deviceid; Temperature=initial_temp or reaction_temp; maxwaittime=0 or 1800 | How variable zones resolve to installed controllers or whether waiting preserves the new contract |
+| `{64CDB9F8-1730-44CD-AB38-3B16CA417AD2}` | Zone reactor_zone; Temperature=initial_temp; maxwaittime=0 | Controller resolution or execution |
+| `{E46264E3-C349-48B9-8C78-4155DDE4A114}` | Zone reactor_zone; Temperature=initial_temp; maxwaittime=1800 | Controller resolution or waiting semantics |
+| `{D7495915-669B-43BA-A90E-1E62728E4211}` | Zone reactor_zone; Temperature=reaction_temp; maxwaittime=1800 | Controller resolution or waiting semantics |
+| `{D44AB057-461D-4BDA-A9DC-E394409764EF}` | Zone reactor_zone; Temperature=initial_temp; maxwaittime=0 | Controller resolution or execution |
+| `{16AA99A3-618A-41C7-850A-93E6874ECE30}` | Zone reactor_zone; Temperature=initial_temp; maxwaittime=1800 | Controller resolution or waiting semantics |
+| `{D1BBE4A1-90B3-49FC-A9DE-2D4FEB02F69F}` | Zone reactor_zone; Temperature=reaction_temp; maxwaittime=1800 | Controller resolution or waiting semantics |
+
+The six reactor_zone tasks all have switchon=1, blank progid/deviceid and
+wellid=-1. Their shared zero-gradient, mode and unit fields are recorded above.
+Repeated payloads still have distinct task IDs; no function ownership is inferred.
 
 The [Editor archive](34_EDITOR_SCREENSHOT_EVIDENCE.md) separately shows 20°C/50°C
 associated with 293.16/323.16. Its APP/product profile is not supplied. Neither

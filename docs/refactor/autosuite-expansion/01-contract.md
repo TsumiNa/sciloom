@@ -466,9 +466,10 @@ emission still requires R5's explicit profile evidence and remains rejected.
 
 Use explicit typed dispatch for supported profiles/tasks, not a generic dict or
 discovery registry. Do not publish a new profile plugin protocol merely to wrap
-one implementation. R5.3's real second profile validates the needed shared seam;
-its concrete constructor must be specified here after profile evidence is obtained
-and before that implementation begins.
+one implementation. A future evidence-backed thermal profile must validate the
+needed shared seam; R5.3 delivered only capture documentation and did not establish
+a second native profile. Specify its concrete constructor here after profile
+evidence is obtained and before that implementation begins.
 
 Conflict identity is an installed physical actuator, not a well-zone name or
 bare vendor device number. Separate controllers may share a zone; the same

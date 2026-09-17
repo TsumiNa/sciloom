@@ -381,6 +381,16 @@ PR. Core/reference behavior is unchanged and R6 may continue after this PR's
 review/merge gate. Class A: refresh stale overview status sentences and links.
 No class D semantic compromise or human decision is required.
 
+## D022 — R5.3 review: traceable observations and status (2026-09-18)
+
+Review 5239920819 / inline 4040252205 requests the six remaining task IDs and
+their individual payload mappings. Record all eight, preserving repeated payloads
+as distinct tasks. Both suppressed findings are also addressed: update the
+canonical reference guide to 38 documents (00–37), and replace the authority's
+outdated second-native-profile wording with an explicit future requirement.
+Class A documentation corrections; no evidence is promoted to native acceptance.
+Version remains none, packages 0.9.0; recheck links/docs and read-only corpus audit.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,
