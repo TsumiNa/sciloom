@@ -232,7 +232,7 @@ def validate_receipt(*, manifest_path: Path, receipt_path: Path, suite: ProbeSui
             _require(bool(log.read_bytes()), f"{context}: empty native log is inconclusive.")
             command = run.get("command")
             _require(
-                type(command) is list and len(command) >= 7 and all(type(s) is str and s for s in command),
+                type(command) is list and len(command) == 7 and all(type(s) is str and s for s in command),
                 f"{context}: actual Executor argv required.",
             )
             _require(

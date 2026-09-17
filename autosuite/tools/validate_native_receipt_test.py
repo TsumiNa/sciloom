@@ -247,6 +247,21 @@ def test_csv_repeated_runs_require_actual_bytes_and_continuity(tmp_path, change)
         validate_receipt(manifest_path=manifest, receipt_path=receipt, suite=ProbeSuite.CSV_APPEND)
 
 
+@pytest.mark.parametrize("change", ["missing", "extra", "not_list"])
+def test_exact_documented_command_shape_is_required(tmp_path, change):
+    manifest, receipt, payload = synthetic_receipt(tmp_path, ProbeSuite.RUNTIME_FAILURE)
+    run = payload["cases"][0]["runs"][0]
+    if change == "missing":
+        run["command"].pop()
+    elif change == "extra":
+        run["command"].append("/m")
+    else:
+        run["command"] = "AutoSuiteExecutor.exe probe.app /r /sim 100 /s /c"
+    write_json(receipt, payload)
+    with pytest.raises(ValueError, match="actual Executor argv required"):
+        validate_receipt(manifest_path=manifest, receipt_path=receipt, suite=ProbeSuite.RUNTIME_FAILURE)
+
+
 def test_csv_array_lengths_cannot_replace_values(tmp_path):
     manifest, receipt, payload = synthetic_receipt(tmp_path, ProbeSuite.CSV_READ)
     run = next(case for case in payload["cases"] if case["name"] == "recipe_columns")["runs"][0]

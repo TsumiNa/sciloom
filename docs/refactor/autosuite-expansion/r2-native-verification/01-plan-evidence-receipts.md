@@ -55,11 +55,14 @@ native acceptance remains pending and compiler rejection stays enabled.
 
 ## Version
 
-Local acceptance: 30 focused receipt tests; 1046 total core/target/example/tools
+Initial local acceptance: 30 focused receipt tests; 1046 total core/target/example/tools
 tests; 97 website tests; Ruff/format, mypy (132 shipped source files), strict docs
 build, smoke, recipe and read-only corpus audit passed. All 182 local links in
 33 plan/new reference documents resolve. CLI help and synthetic complete/error
 paths ran; no actual host receipt or native pass is claimed.
+
+Review clarification: all 50 tools tests (including 33 receipt cases), Ruff and
+format pass after exact argv-length coverage. Version decision is unchanged.
 
 Version: none, only internal evidence documentation, tests and checkout tooling;
 both distributed packages remain 0.5.0. No native unlock or publication.

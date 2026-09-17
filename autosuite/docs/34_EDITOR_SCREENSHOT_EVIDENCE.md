@@ -1,4 +1,7 @@
-# Editor screenshot evidence, received September 18, 2026
+# Editor screenshot evidence, received September 18, 2026 (JST)
+
+Dates use the working session's Asia/Tokyo timezone (UTC+09:00), which is already
+September 18 while the corresponding GitHub UTC activity is dated September 17.
 
 ## Provenance and limits
 
