@@ -2,6 +2,7 @@
 
 import pytest
 
+from sciloom.core.ir import Program
 from . import AutoSuiteIndividualShaker, AutoSuiteTarget
 
 
@@ -34,11 +35,17 @@ def test_binding_identity_and_physical_aliases_are_unambiguous():
         AutoSuiteTarget(devices={"mixer": "not a binding"})
 
 
-def test_distinct_shakers_cannot_bind_the_same_zone():
+def test_zone_name_is_not_a_physical_actuator_identity():
     first = AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="23")
     second = AutoSuiteIndividualShaker(zone="Heater Shaker 23", device_id="25")
-    with pytest.raises(ValueError, match="same AutoSuite zone"):
-        AutoSuiteTarget(devices={"first": first, "second": second})
+    target = AutoSuiteTarget(devices={"first": first, "second": second})
+    bindings = target.resolve_devices(Program(entry_function_id="unused"))
+    assert {binding.physical_id for binding in bindings.devices} == {
+        "autosuite:individual-shaker:23",
+        "autosuite:individual-shaker:25",
+    }
+    # Offline declarations are not evidence that both profiles fit a real APP;
+    # supplying a layout still checks each controller's actual well ancestry.
 
 
 def test_deployment_records_and_mapping_are_frozen():

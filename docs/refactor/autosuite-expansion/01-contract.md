@@ -450,12 +450,19 @@ also defines an explicit DISABLE command, checks capture before a variable chang
 and commits its reproducible JSON companion. Run with
 `uv run python -m examples.developer.lifecycle_commands`.
 
-### AutoSuite configuration — planned after R4.2
+### AutoSuite configuration — implemented in R4.2
 
 Key saved backend state by (resource_id, property semantic ID), retaining typed
 values and call transport. Keep all private context variables out of Program.
 Generalization must preserve existing agitation ASFP bytes and identity seeds;
 a required serialization behavior change triggers class D review first.
+
+Property storage retains the declared scalar/list type. Whole-list configuration
+is copied on capture and private call transport uses separate input/output arrays
+with copyback after normal return; no caller configuration array becomes an
+aliased mutable argument. Allocation defaults never prove semantic configuration.
+R4.2 generalizes capture and the existing agitation adapter; new lifecycle task
+emission still requires R5's explicit profile evidence and remains rejected.
 
 Use explicit typed dispatch for supported profiles/tasks, not a generic dict or
 discovery registry. Do not publish a new profile plugin protocol merely to wrap
@@ -468,6 +475,9 @@ bare vendor device number. Separate controllers may share a zone; the same
 actuator cannot be bound twice. Preserve current shaker ancestry checks and
 physical-identity spelling for existing profiles. Do not fake independence by
 adding a family prefix without installed-component evidence.
+Candidate well sets must remain disjoint within one logical selection so `at()`
+chooses one controller. Different logical resources may share wells when their
+trusted physical identities differ; all physical identity collisions still fail.
 
 ## R5: Physical temperature and a fixed thermal family
 

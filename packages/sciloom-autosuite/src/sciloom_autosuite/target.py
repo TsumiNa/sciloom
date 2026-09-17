@@ -54,8 +54,7 @@ class AutoSuiteTarget:
             raise TypeError("layout must be an AutoSuiteLayout.")
         if self.deployment is not None and type(self.deployment) is not AutoSuiteDeployment:
             raise TypeError("deployment must be an AutoSuiteDeployment.")
-        device_ids: set[str] = set()
-        zones: set[str] = set()
+        resolved = []
         for name, binding in self.devices.items():
             if (
                 not isinstance(name, str)
@@ -65,15 +64,10 @@ class AutoSuiteTarget:
                 raise ValueError("Device binding names must be logical field/component paths.")
             if type(binding) not in (AutoSuiteIndividualShaker, AutoSuiteAgitatorSelection):
                 raise TypeError("devices must contain AutoSuiteIndividualShaker or AutoSuiteAgitatorSelection records.")
-            profiles = (binding,) if isinstance(binding, AutoSuiteIndividualShaker) else binding.candidates
-            for profile in profiles:
-                if profile.device_id in device_ids:
-                    raise ValueError(f"Distinct resources cannot alias shaker device {profile.device_id}.")
-                if profile.zone in zones:
-                    raise ValueError(f"Distinct resources cannot bind the same AutoSuite zone {profile.zone!r}.")
-                device_ids.add(profile.device_id)
-                zones.add(profile.zone)
-            profile_binding(name, binding, self.layout)
+            resolved.append(profile_binding(name, binding, self.layout))
+        # Typed profile resolution establishes actuator identities. Zone names
+        # and bare vendor numbers are not an independent conflict directory.
+        DeviceBindings(devices=tuple(resolved))
 
     def resolve_devices(self, program: Program) -> DeviceBindings:
         """Translate explicit deployment profiles into trusted, contributor-neutral facts."""

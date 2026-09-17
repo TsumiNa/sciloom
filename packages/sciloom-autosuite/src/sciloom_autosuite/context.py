@@ -34,7 +34,7 @@ class CodegenContext:
         self.package = package
         self.namespace = namespace
         self.resources = resources
-        self.device_state: dict[str, dict[str, DeviceStorage]] = {}
+        self.device_state: dict[str, dict[tuple[str, str], DeviceStorage]] = {}
         self.functions = {function.node_id: function for function in package.functions}
         self.variables = {v.node_id: v for f in package.functions for v in f.variables}
         self.names: dict[str, str] = {}

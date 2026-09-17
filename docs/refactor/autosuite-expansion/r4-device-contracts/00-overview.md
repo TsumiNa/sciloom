@@ -16,13 +16,15 @@ an explicit developer decision.
 
 | Stage | Outcome | Code status |
 | --- | --- | --- |
-| R4.1 | [Explicit lifecycle command contracts](01-plan-command-effects.md) | Implemented in this PR; review/merge pending |
-| R4.2 | [Preserve typed multi-property backend state](02-plan-multi-property-state.md) | Pending |
+| R4.1 | [Explicit lifecycle command contracts](01-plan-command-effects.md) | Merged #109 |
+| R4.2 | [Preserve typed multi-property backend state](02-plan-multi-property-state.md) | Implemented in this PR; review/merge pending |
 
 Native status: Native profile support remains bounded; no new physical claims.
 R4.1 provides typed declarations, definite configuration and reference effects;
 AutoSuite explicitly rejects new lifecycle commands pending profile adapters.
-R4.2 remains pending. Native-unlock prerequisites are distinct
+R4.2 provides typed property storage/transport and physical-identity conflict
+checks, with isolated arrays and unchanged existing agitation bytes.
+Native-unlock prerequisites are distinct
 from review/merge prerequisites. Finish each PR green and remotely squash merged
 before beginning another; an implemented/gated stage preserves its rejection.
 

@@ -64,5 +64,14 @@ def test_overlap_and_differing_capabilities_are_rejected():
             ),
         ),
     )
-    with pytest.raises(ValueError, match="wells"):
-        DeviceBindings(devices=(selection(), other))
+    assert DeviceBindings(devices=(selection(), other)).devices == (selection(), other)
+    alias = replace(
+        other,
+        candidates=(
+            replace(
+                other.candidates[0], binding=replace(other.candidates[0].binding, physical_id=first.binding.physical_id)
+            ),
+        ),
+    )
+    with pytest.raises(ValueError, match="physical_id"):
+        DeviceBindings(devices=(selection(), alias))

@@ -255,7 +255,8 @@ def test_missing_scope_and_nested_selection_through_calls_are_static_errors():
         Interpreter(Caller().to_ir(), environment=env)
 
 
-def test_different_device_scopes_can_nest_and_sessions_do_not_share_physical_state():
+@pytest.mark.parametrize("other_well", ["c", "a"])
+def test_different_device_scopes_can_nest_and_sessions_do_not_share_physical_state(other_well):
     class Two(Function):
         mixer: Agitator
         other: Agitator
@@ -279,16 +280,18 @@ def test_different_device_scopes_can_nest_and_sessions_do_not_share_physical_sta
         candidates=(
             DeviceCandidate(
                 binding=replace(base, logical_id="other", physical_id="test:3"),
-                wells=Zone(well_ids=("c",)),
+                wells=Zone(well_ids=(other_well,)),
             ),
         ),
     )
     env = environment(DeviceBindings(devices=(selection(), other)))
     compiled = Two().compile(target=SelectionTarget(env.device_bindings))
-    inputs = {"first": Zone(well_ids=("a",)), "second": Zone(well_ids=("c",)), "enabled": True}
+    inputs = {"first": Zone(well_ids=("a",)), "second": Zone(well_ids=(other_well,)), "enabled": True}
     started = Interpreter(compiled.specialized_ir, environment=env).run(inputs=inputs)
     fresh = Interpreter(compiled.specialized_ir, environment=env).run(inputs={**inputs, "enabled": False})
     assert started.physical_devices["test:1"].enabled and started.physical_devices["test:3"].enabled
+    assert started.physical_devices["test:1"].applied_configuration == {"speed": 300 * rpm}
+    assert started.physical_devices["test:3"].applied_configuration == {"speed": 450 * rpm}
     assert not any(state.enabled for state in fresh.physical_devices.values())
 
 

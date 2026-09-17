@@ -100,7 +100,7 @@ def test_candidate_identity_checks_reject_aliasing_and_nonshaker_ancestry(tmp_pa
             AutoSuiteAgitatorSelection(candidates=candidates)
     with pytest.raises(TypeError):
         AutoSuiteAgitatorSelection(candidates=("shaker",))
-    with pytest.raises(ValueError, match="alias"):
+    with pytest.raises(ValueError, match="physical_id"):
         AutoSuiteTarget(
             layout=layout, devices={"mixer": AutoSuiteAgitatorSelection(candidates=profiles), "other": profiles[0]}
         )

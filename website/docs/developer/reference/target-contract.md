@@ -73,7 +73,9 @@ and supplies the tuple to `DeviceSelectionBinding(logical_id=..., candidates=...
 Candidates share one concrete contract, ancestor directory and capability sets.
 They have distinct physical identities and disjoint nonempty well sets. The
 selection exposes the common contract/capabilities but has no single `physical_id`.
-Physical candidates cannot overlap across logical resources.
+Physical actuator identities cannot overlap across logical resources. Well sets
+may overlap between different logical selections with distinct trusted actuators;
+within one selection they remain disjoint so a Zone resolves to one controller.
 
 `DeviceAt` captures a Zone for a selection-bound resource. Shared compilation
 checks its scope across function calls; a target must implement it or return an

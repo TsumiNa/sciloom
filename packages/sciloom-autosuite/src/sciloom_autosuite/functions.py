@@ -23,8 +23,18 @@ def build_functions(context: CodegenContext, target: AutoSuiteVersion) -> Serial
         used_names.add(name)
         internal = tuple(v for v in function.variables if v.role == VariableRole.INTERNAL)
         before, after = list(initialize_device_outputs(context, function)), []
+        device_parameters = {
+            identity
+            for storage in context.device_state[function.node_id].values()
+            for identity in (storage.input_id, storage.output_id)
+            if identity is not None
+        }
         for variable in function.variables:
             if not isinstance(variable.type, ListType) or variable.role == VariableRole.INTERNAL:
+                continue
+            if variable.node_id in device_parameters:
+                # Device transport has its own isolated call buffers and entry
+                # copy; a second public-output buffer would overwrite that state.
                 continue
             public_name = context.parameter_names[variable.node_id]
             private_name = context.temporary(function, variable.type)
