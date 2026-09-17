@@ -14,6 +14,8 @@
 
 ::: sciloom.core.interpreter.DeviceEvent
 
+::: sciloom.core.interpreter.TransferEvent
+
 ::: sciloom.core.interpreter.ExecutionEvent
 
 ::: sciloom.core.interpreter.LogEvent

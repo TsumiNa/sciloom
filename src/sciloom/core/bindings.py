@@ -2,9 +2,16 @@
 
 from dataclasses import dataclass
 
+from sciloom.units import Volume
 from .diagnostics import Diagnostic
 from .ir import DeviceResource, Program
-from .ir.device_contracts import DeviceTypeContract, LifecycleCommandContract
+from .ir.device_contracts import (
+    LIQUID_HANDLER_CONTRACT,
+    LIQUID_HANDLER_TYPE_ID,
+    TRANSFER_ID,
+    DeviceTypeContract,
+    LifecycleCommandContract,
+)
 from .ir.device_validation import semantic_id, validate_directory
 from .ir.schema import _convert
 from .locations import Zone
@@ -162,22 +169,99 @@ class DeviceSelectionBinding:
 
 
 @dataclass(frozen=True, kw_only=True)
+class TransferDeviceBinding:
+    """Trusted fixed transfer deployment, outside semantic Program/JSON.
+
+    Args:
+        binding: Fixed LiquidHandler profile supporting the transfer contract.
+        source_wells: Nonempty allowed source well identities.
+        destination_wells: Nonempty allowed destination well identities.
+        usable_capacity: Positive finite capacity, including the configured air gap.
+
+    Raises:
+        TypeError: Facts have the wrong immutable value types.
+        ValueError: The profile lacks transfer/configuration support, allowed
+            wells are empty, or capacity is not positive.
+
+    The contributor must establish tool, calibration and route feasibility before
+    supplying these facts. Reference execution checks allowed well identities
+    against its explicit LocationDirectory. Construction performs no equipment I/O.
+    """
+
+    binding: DeviceBinding
+    source_wells: Zone
+    destination_wells: Zone
+    usable_capacity: Volume
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.binding, DeviceBinding):
+            raise TypeError("TransferDeviceBinding requires a fixed DeviceBinding.")
+        if type(self.source_wells) is not Zone or type(self.destination_wells) is not Zone:
+            raise TypeError("Transfer allowed wells require immutable Zone values.")
+        if type(self.usable_capacity) is not Volume:
+            raise TypeError("Transfer capacity requires a Volume.")
+        if not self.source_wells.well_ids or not self.destination_wells.well_ids:
+            raise ValueError("Transfer allowed well sets must be nonempty.")
+        if self.usable_capacity.m3 <= 0:
+            raise ValueError("Transfer usable capacity must be positive.")
+        if LIQUID_HANDLER_TYPE_ID not in (self.contract.type_id, *self.contract.base_type_ids):
+            raise ValueError("Transfer deployment requires a LiquidHandler contract.")
+        if TRANSFER_ID not in self.supported_operations:
+            raise ValueError("Transfer deployment must support transfer.")
+        if not set(LIQUID_HANDLER_CONTRACT.required_configuration) <= set(self.writable_properties):
+            raise ValueError("Transfer requires all family configuration properties to be writable.")
+
+    @property
+    def logical_id(self) -> str:
+        """Logical resource of the fixed binding."""
+        return self.binding.logical_id
+
+    @property
+    def physical_id(self) -> str:
+        """Actual fixed actuator identity, without an invented family namespace."""
+        return self.binding.physical_id
+
+    @property
+    def contract(self) -> DeviceTypeContract:
+        """Trusted concrete contract."""
+        return self.binding.contract
+
+    @property
+    def base_contracts(self) -> tuple[DeviceTypeContract, ...]:
+        """Complete trusted ancestor directory."""
+        return self.binding.base_contracts
+
+    @property
+    def writable_properties(self) -> tuple[str, ...]:
+        """Writable property semantic identities."""
+        return self.binding.writable_properties
+
+    @property
+    def supported_operations(self) -> tuple[str, ...]:
+        """Explicitly supported command identities."""
+        return self.binding.supported_operations
+
+
+@dataclass(frozen=True, kw_only=True)
 class DeviceBindings:
     """Immutable, conflict-checked collection of trusted device bindings.
 
     Args:
-        devices: Fixed/selection bindings with unique logical and physical identities.
+        devices: Fixed/selection/transfer bindings with unique logical and physical identities.
 
     Raises:
-        TypeError: An entry is not a DeviceBinding or DeviceSelectionBinding.
+        TypeError: An entry is not a supported typed binding record.
         ValueError: Identities or trusted contract definitions conflict."""
 
-    devices: tuple[DeviceBinding | DeviceSelectionBinding, ...] = ()
+    devices: tuple[DeviceBinding | DeviceSelectionBinding | TransferDeviceBinding, ...] = ()
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "devices", tuple(self.devices))
-        if any(not isinstance(value, (DeviceBinding, DeviceSelectionBinding)) for value in self.devices):
-            raise TypeError("DeviceBindings requires DeviceBinding or DeviceSelectionBinding records.")
+        if any(
+            not isinstance(value, (DeviceBinding, DeviceSelectionBinding, TransferDeviceBinding))
+            for value in self.devices
+        ):
+            raise TypeError("DeviceBindings requires fixed, selection or transfer binding records.")
         contracts: dict[str, DeviceTypeContract] = {}
         for binding in self.devices:
             for contract in (*binding.base_contracts, binding.contract):
@@ -190,7 +274,7 @@ class DeviceBindings:
         for value in self.devices:
             identities = (
                 (value.physical_id,)
-                if isinstance(value, DeviceBinding)
+                if isinstance(value, (DeviceBinding, TransferDeviceBinding))
                 else tuple(candidate.binding.physical_id for candidate in value.candidates)
             )
             if physical.intersection(identities):

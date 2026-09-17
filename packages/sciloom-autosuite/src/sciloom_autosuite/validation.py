@@ -50,6 +50,7 @@ from sciloom.core.ir import (
     ZoneGet,
     ZoneLiteral,
 )
+from sciloom.core.ir.device_contracts import TRANSFER_ID
 from sciloom.core.ir.expressions import ExpressionChecker
 from sciloom.core.ir.traversal import iter_nodes
 from sciloom.core.ir.types import QUANTITIES, THERMAL_QUANTITIES
@@ -93,6 +94,9 @@ def validate_runtime_guards(program: Program) -> tuple[Diagnostic, ...]:
             ) in (ScalarType.FLOW_RATE, ScalarType.LENGTH):
                 code = "unsupported_transfer_quantity"
                 message = "Flow/length values require verified native encoding; core/reference execution is available."
+            elif isinstance(node, DeviceCommand) and node.operation_id == TRANSFER_ID:
+                code = "unsupported_device_command"
+                message = "Transfer requires a verified fixed-tool profile, connections and native parameter encoding before emission."
             elif isinstance(node, DeviceCommand) and node.operation_id in lifecycle_commands:
                 code = "unsupported_device_command"
                 message = "Lifecycle contracts define reference effects; AutoSuite needs an explicit verified profile adapter before emission."

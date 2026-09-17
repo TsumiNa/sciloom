@@ -29,6 +29,19 @@ same invocation; compilation does not assume a previous invocation supplied it.
 Property reads and augmented assignments such as `+=` are not supported.
 There is no measured getter, generic duration parameter or timed stop.
 
+## LiquidHandler
+
+Declare `liquid: LiquidHandler` from `sciloom`. Assign `aspirate_flow` and
+`dispense_flow` as FlowRate values, and `air_gap` as a Volume. All three settings
+are required explicitly. `transfer(source: Zone, destination: Zone, volume: Volume)`
+captures one source, one distinct destination and a positive amount, then checks
+the fixed tool's allowed locations and usable capacity before acting.
+
+Reference execution requires explicit locations and a `TransferDeviceBinding`;
+it records ordered intent without modelling liquid inventory or precision.
+Dynamic tool selection and native AutoSuite transfer profiles remain unavailable.
+See the [complete example](../../examples/transfer-sample.md).
+
 ## Heater
 
 Declare `heater: Heater` using `from sciloom import Heater`. Its two write-only

@@ -53,7 +53,11 @@ Existing fixed-shaker and scalar tutorial programs continue to compile.
 are available in source, IR and JSON. The quantities also support reference
 execution, including explicit-unit CSV reads. Native flow/length encoding is
 gated, and an unknown command signature still has no reference effect. This
-foundation alone does not enable a liquid-transfer operation.
+foundation is used by the separately defined
+[single-well transfer effect](../examples/transfer-sample.md): `LiquidHandler`
+provides typed configuration and bounded reference transfer intent with explicit
+locations and tool-capacity facts. Native transfer remains gated pending a
+verified fixed-tool profile.
 
 Contributors can define devices and targets. The developer examples include a
 demonstration target, JSON v4 interchange and a reference interpreter for checking

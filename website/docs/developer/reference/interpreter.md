@@ -37,11 +37,18 @@ assert environment.events == ()  # This calculation has no external events.
 
 `environment.events` returns an immutable history snapshot across all runs using
 that environment. `result.events` remains limited to one successful run.
-`ExecutionEvent` is the union of DeviceEvent, LogEvent, AcknowledgementEvent,
-WallTimeEvent, TimerEvent, WaitEvent and CsvReadEvent. Narrow with
+`ExecutionEvent` is the union of DeviceEvent, TransferEvent, LogEvent,
+AcknowledgementEvent, DialogEvent, WallTimeEvent, TimerEvent, WaitEvent,
+CsvReadEvent, CsvAppendEvent, WellPropertyReadEvent and WellPropertyWriteEvent. Narrow with
 `isinstance(event, LogEvent)` before accessing log-specific fields; device events
 carry state snapshots. A failed run leaves earlier completed events in
 environment history and does not roll back their state changes.
+
+`TransferEvent` contains the captured source/destination Zones, volume, physical
+identity and immutable applied configuration. It records a validated reference
+intent without changing enabled state or modelling liquid inventory. Invalid
+transfers leave no transfer event and stop subsequent effects. See the
+[single-well example](../../examples/transfer-sample.md).
 
 Reuse the same environment to share history explicitly. This does not share
 Function variables or device configurations between Interpreters. Child Function

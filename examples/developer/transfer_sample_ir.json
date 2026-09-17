@@ -1,0 +1,228 @@
+{
+  "device_types": [
+    {
+      "base_type_ids": [],
+      "kind": "DeviceTypeContract",
+      "operations": [],
+      "properties": [],
+      "required_configuration": [],
+      "type_id": "sciloom.device/v1"
+    },
+    {
+      "base_type_ids": [
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "kind": "CommandContract",
+          "name": "transfer",
+          "parameters": [
+            {
+              "kind": "CommandParameter",
+              "name": "source",
+              "type": {
+                "kind": "ZoneType"
+              }
+            },
+            {
+              "kind": "CommandParameter",
+              "name": "destination",
+              "type": {
+                "kind": "ZoneType"
+              }
+            },
+            {
+              "kind": "CommandParameter",
+              "name": "volume",
+              "type": "volume"
+            }
+          ],
+          "semantic_id": "sciloom.liquid-handler.transfer/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "aspirate_flow",
+          "semantic_id": "sciloom.liquid-handler.aspirate-flow/v1",
+          "type": "flow_rate"
+        },
+        {
+          "kind": "PropertyContract",
+          "name": "dispense_flow",
+          "semantic_id": "sciloom.liquid-handler.dispense-flow/v1",
+          "type": "flow_rate"
+        },
+        {
+          "kind": "PropertyContract",
+          "name": "air_gap",
+          "semantic_id": "sciloom.liquid-handler.air-gap/v1",
+          "type": "volume"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.liquid-handler.aspirate-flow/v1",
+        "sciloom.liquid-handler.dispense-flow/v1",
+        "sciloom.liquid-handler.air-gap/v1"
+      ],
+      "type_id": "sciloom.liquid-handler/v1"
+    }
+  ],
+  "entry_function_id": "transfer",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "set-aspirate",
+          "property_id": "sciloom.liquid-handler.aspirate-flow/v1",
+          "resource_id": "liquid",
+          "source": null,
+          "value": {
+            "kind": "Literal",
+            "node_id": "aspirate",
+            "source": null,
+            "type": "flow_rate",
+            "value": 1.6666666666666667e-08
+          }
+        },
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "set-dispense",
+          "property_id": "sciloom.liquid-handler.dispense-flow/v1",
+          "resource_id": "liquid",
+          "source": null,
+          "value": {
+            "kind": "Literal",
+            "node_id": "dispense",
+            "source": null,
+            "type": "flow_rate",
+            "value": 3.3333333333333334e-08
+          }
+        },
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "set-gap",
+          "property_id": "sciloom.liquid-handler.air-gap/v1",
+          "resource_id": "liquid",
+          "source": null,
+          "value": {
+            "kind": "Literal",
+            "node_id": "gap",
+            "source": null,
+            "type": "volume",
+            "value": 5e-08
+          }
+        },
+        {
+          "arguments": [
+            {
+              "kind": "CommandArgument",
+              "name": "source",
+              "value": {
+                "kind": "Reference",
+                "node_id": "source-ref",
+                "source": null,
+                "symbol_id": "source"
+              }
+            },
+            {
+              "kind": "CommandArgument",
+              "name": "destination",
+              "value": {
+                "kind": "Reference",
+                "node_id": "destination-ref",
+                "source": null,
+                "symbol_id": "destination"
+              }
+            },
+            {
+              "kind": "CommandArgument",
+              "name": "volume",
+              "value": {
+                "kind": "Literal",
+                "node_id": "volume",
+                "source": null,
+                "type": "volume",
+                "value": 2.5e-07
+              }
+            }
+          ],
+          "kind": "DeviceCommand",
+          "node_id": "move",
+          "operation_id": "sciloom.liquid-handler.transfer/v1",
+          "resource_id": "liquid",
+          "source": null
+        },
+        {
+          "category": {
+            "kind": "Literal",
+            "node_id": "category",
+            "source": null,
+            "type": "text",
+            "value": "liquid"
+          },
+          "kind": "LogValue",
+          "node_id": "log",
+          "source": null,
+          "stream": {
+            "kind": "Literal",
+            "node_id": "stream",
+            "source": null,
+            "type": "text",
+            "value": "experiment"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "message",
+            "source": null,
+            "type": "text",
+            "value": "transfer complete"
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "TransferSample",
+      "node_id": "transfer",
+      "source": null,
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "source",
+          "node_id": "source",
+          "owner_id": "transfer",
+          "role": "input",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "destination",
+          "node_id": "destination",
+          "owner_id": "transfer",
+          "role": "input",
+          "source": null,
+          "type": {
+            "kind": "ZoneType"
+          }
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": [
+    {
+      "device_type_id": "sciloom.liquid-handler/v1",
+      "kind": "DeviceResource",
+      "logical_id": "liquid",
+      "node_id": "liquid",
+      "source": null
+    }
+  ]
+}

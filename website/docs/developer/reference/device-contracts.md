@@ -3,11 +3,13 @@
 How a device family, a profile and their members are declared, and how those
 declarations become semantic IR. The walkthrough is
 [declare a family](../tutorial/declare-a-family.md); the shipped families and profiles are
-`Agitator` and `Heater`, with the native `AutoSuiteIndividualShaker` profile.
+`Agitator`, `Heater` and `LiquidHandler`, with the native `AutoSuiteIndividualShaker` profile.
 Outside core, `DemoAgitator` appears in the
 [independent contribution example](../../examples/demo-device.md), and the
 [fixed heater example](../../examples/warm-sample.md) supplies a reference-only
-profile. AutoSuite thermal profiles remain gated pending native evidence.
+profile. The [single-well transfer example](../../examples/transfer-sample.md)
+supplies a fixed reference liquid handler. AutoSuite thermal and transfer
+profiles remain gated pending native evidence.
 
 ## Identity
 
@@ -15,7 +17,7 @@ profile. AutoSuite thermal profiles remain gated pending native evidence.
 |---|---|
 | every device class has its own `device_type_id` | a class variable such as `"example.heater/v1"`; a subclass never inherits its parent's |
 | identifiers are namespaced and versioned | `[A-Za-z][A-Za-z0-9_.-]+/v[1-9][0-9]*` |
-| built-in contracts are fixed | redefining `sciloom.device/v1`, `sciloom.agitator/v1` or `sciloom.heater/v1`, or a built-in member signature, is refused |
+| built-in contracts are fixed | redefining `sciloom.device/v1`, `sciloom.agitator/v1`, `sciloom.heater/v1` or `sciloom.liquid-handler/v1`, or a built-in member signature, is refused |
 | `BaseDevice` imposes nothing | no universal start or stop; each family declares its own lifecycle |
 
 ## Properties and commands
@@ -49,7 +51,7 @@ lists:
 | List | Meaning |
 |---|---|
 | `writable_properties` | property names the instrument accepts writes to |
-| `required_configuration` | property names that must be written before the family's lifecycle start |
+| `required_configuration` | property names required before an applying lifecycle command or the defined transfer command |
 | `supported_operations` | command methods the instrument runs |
 
 Capabilities are never inherited: `bind_device` refuses a profile that omits any
@@ -57,6 +59,17 @@ of the three lists, or that names a member the family never declared, with a
 `TypeError`. Every required property must be writable.
 
 ## Declarations become IR
+
+`TransferDeviceBinding` (from `sciloom.core.bindings`) wraps a fixed `DeviceBinding`
+with nonempty `source_wells: Zone`, `destination_wells: Zone` and positive
+`usable_capacity: Volume`. These trusted deployment facts stay outside Program
+and JSON. The known transfer effect checks directory membership at the operation,
+requires all three family settings even when a subclass narrows its own list,
+and also requires any concrete additional settings. LiquidHandler candidate
+bindings are rejected even for configuration-only programs: this initial family
+supports fixed deployment only, just as Heater does. Fixed configuration writes
+remain action-free and require no active selection. Successful `TransferEvent` snapshots preserve configuration and
+update last-applied values without inventing an enabled transition.
 
 | Declaration | Statement in the program | Node |
 |---|---|---|
