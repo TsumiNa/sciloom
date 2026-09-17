@@ -17,3 +17,15 @@ Import these interfaces from `sciloom_autosuite`, the workspace member distribut
 ::: sciloom_autosuite.AutoSuiteElement
 
 ::: sciloom_autosuite.AutoSuiteWell
+
+## Read-only application settings
+
+These records preserve observed settings and review data. They do not certify
+Executor behavior. Reading settings does not yet change AutoSuiteTarget's
+compilation decisions; deployment-aware compilation is a separate integration.
+
+::: sciloom_autosuite.AutoSuiteDeployment
+
+::: sciloom_autosuite.AutoSuiteDeploymentStatus
+
+::: sciloom_autosuite.AutoSuiteDeploymentReport

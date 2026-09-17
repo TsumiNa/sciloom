@@ -58,6 +58,11 @@ and notebook or interactive source support are not yet available.
 
 ## What compilation establishes
 
+`AutoSuiteDeployment.from_app` now reads APP product/reset settings and exact-byte
+provenance without modifying the file. Layouts read from APP also retain this
+source hash. Deployment facts and report records are available, but integration
+of reset-setting rejection into `AutoSuiteTarget` is not yet implemented.
+
 Compilation checks the source, value types, declared device bindings and required
 configuration before generating XML. It does not connect to the instrument or
 prove that the procedure will run correctly on your deployment.

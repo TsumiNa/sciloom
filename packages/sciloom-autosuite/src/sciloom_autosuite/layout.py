@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import gzip
+import hashlib
 import re
 import xml.etree.ElementTree as ET
 import zlib
@@ -68,6 +69,8 @@ class AutoSuiteLayout:
         elements: Installed elements with complete, acyclic parent links.
         wells: Element-local addresses corresponding exactly to directory wells.
         directory: Equipment-independent names and ordered Zone memberships.
+        app_sha256: Exact APP-byte source hash when read from a file; manual
+            layouts default to unknown provenance. Never a semantic identity.
 
     Raises:
         TypeError: Entries are not immutable typed records.
@@ -77,8 +80,13 @@ class AutoSuiteLayout:
     elements: tuple[AutoSuiteElement, ...]
     wells: tuple[AutoSuiteWell, ...]
     directory: LocationDirectory
+    app_sha256: str | None = None
 
     def __post_init__(self) -> None:
+        if self.app_sha256 is not None and (
+            type(self.app_sha256) is not str or re.fullmatch(r"[0-9a-f]{64}", self.app_sha256) is None
+        ):
+            raise ValueError("app_sha256 must be a lowercase SHA-256 digest or None.")
         if type(self.elements) is not tuple or any(type(item) is not AutoSuiteElement for item in self.elements):
             raise TypeError("Layout elements require an immutable tuple of AutoSuiteElement records.")
         if type(self.wells) is not tuple or any(type(item) is not AutoSuiteWell for item in self.wells):
@@ -201,7 +209,10 @@ class AutoSuiteLayout:
                 selected.append(addresses[address])
             zones[name] = Zone(well_ids=tuple(selected))
         return cls(
-            elements=tuple(elements), wells=tuple(wells), directory=LocationDirectory(wells=tuple(labels), zones=zones)
+            elements=tuple(elements),
+            wells=tuple(wells),
+            directory=LocationDirectory(wells=tuple(labels), zones=zones),
+            app_sha256=hashlib.sha256(payload).hexdigest(),
         )
 
 

@@ -61,6 +61,31 @@ and the current dynamic-compilation gate.
 See [AutoSuite compilation](../advanced/autosuite.md) for package handoff and
 target-specific language restrictions.
 
+### Inspect application settings
+
+`AutoSuiteDeployment.from_app(path)` reads the product version, configuration
+label and Macro variable-reset setting without changing the application. Missing
+settings stay `None`; duplicate or malformed reset settings are rejected.
+
+```python
+from sciloom_autosuite import AutoSuiteDeployment, AutoSuiteLayout
+
+deployment = AutoSuiteDeployment.from_app("instrument.app")
+layout = AutoSuiteLayout.from_app("instrument.app")
+assert deployment.app_sha256 == layout.app_sha256
+print(deployment.product_version, deployment.reset_variables)
+```
+
+The hash identifies the exact compressed APP bytes. A manually constructed layout
+has unknown provenance by default. The configuration label is only a display
+name, not a unique application identity.
+
+These read-only records do not yet attach settings to `AutoSuiteTarget` or reject
+compilation based on them. In particular, check Macro reset behavior before using
+persistent `Var` state in a native APP. A deployment report's `compatible` status
+means only its checked conditions match; its separate `native_status` remains
+`pending`. See the [settings API](../../api/autosuite.md#read-only-application-settings).
+
 ## Compile-time queries
 
 | Whole `if` / `elif` condition | Meaning |
