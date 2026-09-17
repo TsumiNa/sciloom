@@ -15,6 +15,12 @@ result 0 for success and 1 for a file error with a log message. It does not map
 the XML number exportbehaviour=0 to a UI label. Repetition in F46 suggests append
 intent, but cannot prove that numeric mapping, physical encoding or termination.
 
+The subsequently received [Editor screenshots](34_EDITOR_SCREENSHOT_EVIDENCE.md)
+15/16 and matching incomplete test.asfp now associate Append, Comma and CRLF
+with the three zero fields **in that sample**. Its September 17 APP and product
+version were not supplied. This label evidence does not establish file bytes,
+repeated preservation, encoding or another profile's enums.
+
 Consequently both public append forms receive `unsupported_csv_append`. The
 try-form removes the default-fatal requirement but does not prove a safe append
 mode or text encoding. There is no flag to bypass the gate. The native probes
@@ -26,7 +32,8 @@ below are measurement artifacts, not portable compiler output.
 | Manual semantics | Append/new/change operations; parent Macro result variable; IO result 1 |
 | Reference execution | UTF-8/comma/CRLF, captured typed row, repeated writes, explicit status and failure; tested through Python/IR/JSON |
 | Static native probes | Six cases preserve the observed envelope and use typed status storage; compared with template 43 |
-| Executor / re-export | Pending; no execution, file bytes, enum mapping or error propagation result asserted |
+| Matching screenshot UI | Append/Comma/CRLF map to zero fields in the incomplete sample; product/profile unknown |
+| Executor / re-export | Pending; no execution, file bytes or error propagation result asserted |
 
 ## Reference contract
 
@@ -52,7 +59,7 @@ uv run python autosuite/tools/probe_csv_append.py --output-dir /tmp/sciloom-appe
 
 Use a fresh scratch directory for generation and a fresh Windows scratch
 directory on the AutoSuite host. Never point these probes at real experiment
-files: the mode is deliberately unknown and might overwrite. Copy only the
+files: the profile's actual mode behavior is unverified and might overwrite. Copy only the
 existing_file.csv seed before its first run; other destinations must be absent.
 Do not create absent-parent for the IO case. Import into a disposable known-good
 application and follow [Executor simulation](15_EXECUTOR_SIMULATION.md).
@@ -73,3 +80,6 @@ the Editor mode label on import/re-export to establish its enum mapping. The
 before ordinary default-fatal append can compile.
 
 No raw corpus file or manifest is changed by generation or comparison.
+
+Use [receipt checks](35_NATIVE_MEASUREMENT_RECEIPTS.md) to associate hashes, seeds
+and two-run continuity. pending_review does not unlock either append policy.

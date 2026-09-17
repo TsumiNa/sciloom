@@ -20,6 +20,11 @@ title names config20260917_FRP_API.app, which was not provided. Its product/prof
 version is unconfirmed. New screenshots do not silently replace the primary APP.
 No archive, image or raw XML is copied into this tracked plan.
 
+[Distilled Editor evidence](../../../autosuite/docs/34_EDITOR_SCREENSHOT_EVIDENCE.md)
+records exact image names/hashes and corrected CSV label associations.
+[Receipt checks](../../../autosuite/docs/35_NATIVE_MEASUREMENT_RECEIPTS.md)
+verify association and completeness only; pending_review is never native verified.
+
 ## Findings requiring action
 
 | Evidence | Established fact | Not established | Owner |

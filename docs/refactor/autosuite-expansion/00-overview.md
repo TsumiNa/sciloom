@@ -7,8 +7,8 @@ plan agreed after the independent review of 33 Editor screenshots and their
 native ASFP. The baseline is main commit
 `28a00c8c57a182f19bab3661a12fc06ee30f74c9`, lockstep version 0.3.15.
 
-**R0 and R1.1 are merged; R1.2 deployment guards are implemented in this PR.**
-R2–R7 remain planned; native verification remains pending.
+**R0 and R1 are merged; R2.1 receipt checks are implemented in this PR.**
+R2 native unlocks and R3–R7 remain planned; native verification remains pending.
 The [contract](01-contract.md) is the single authority for new interfaces.
 The [execution rules](02-execution-rules.md) require reassessment before every
 refactor and PR, and whenever implementation or native evidence contradicts a plan.
@@ -35,8 +35,8 @@ lockstep. No tag, release or package publication is authorized.
 | Refactor | Outcome | Plans | Code status | Native status |
 | --- | --- | --- | --- | --- |
 | R0 | Authoritative plans and reassessment rules | [Planning PR](03-plan-record-contract.md) | Merged, PR #103 | Not applicable |
-| R1 | Deployment facts and persistent-state checks | [Overview](r1-deployment/00-overview.md) | R1.1 merged #104; R1.2 implemented, review/merge pending | Reset experiment pending |
-| R2 | Evidence receipts and existing capability acceptance | [Overview](r2-native-verification/00-overview.md) | Pending | Existing failure/CSV gates pending |
+| R1 | Deployment facts and persistent-state checks | [Overview](r1-deployment/00-overview.md) | Merged #104 / #105 | Reset experiment pending |
+| R2 | Evidence receipts and existing capability acceptance | [Overview](r2-native-verification/00-overview.md) | R2.1 implemented, review/merge pending; unlocks pending evidence | Existing failure/CSV gates pending |
 | R3 | Text and yes/no operator results | [Overview](r3-operator-dialogs/00-overview.md) | Pending | Result/cancel/timeout pending |
 | R4 | Typed command effects and multi-property device state | [Overview](r4-device-contracts/00-overview.md) | Pending | No new platform claim |
 | R5 | Temperature values and a fixed thermal device | [Overview](r5-thermal-control/00-overview.md) | Pending | Exact thermal profile pending |

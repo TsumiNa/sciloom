@@ -99,6 +99,10 @@ does not establish propagation through a child or loop. Repeatability and any
 additional target versions require their own results. Store received evidence
 through the team's human-managed corpus process, never by rewriting originals.
 
+Use [receipt checks](35_NATIVE_MEASUREMENT_RECEIPTS.md) to associate exact
+source/artifact hashes and all controls with received host traces. Successful
+completeness remains pending_review and does not establish fatal propagation.
+
 ## Compiler gate and compatibility
 
 Until those results establish a usable fatal mechanism, new target operations

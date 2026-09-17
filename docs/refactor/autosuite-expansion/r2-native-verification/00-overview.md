@@ -16,13 +16,16 @@ an explicit developer decision.
 
 | Stage | Outcome | Code status |
 | --- | --- | --- |
-| R2.1 | [Organize native measurement receipts](01-plan-evidence-receipts.md) | Pending |
+| R2.1 | [Organize native measurement receipts](01-plan-evidence-receipts.md) | Implemented in this PR; review/merge pending |
 | R2.2 | [Accept verified native failure propagation](02-plan-failure-unlock.md) | Pending |
 | R2.3 | [Accept verified literal CSV reads](03-plan-csv-read-unlock.md) | Pending |
 | R2.4 | [Accept verified CSV append](04-plan-csv-append-unlock.md) | Pending |
 
 Native status: Failure, read and append native gates pending.
-No stage below is already implemented. Native-unlock prerequisites are distinct
+The read-only checker records pending_review for complete receipts. No host
+receipt exists yet; R2.2–R2.4 remain pending, with compiler gates unchanged.
+After R2.1 merge, independent R3.1 proceeds under the accepted sequence.
+Native-unlock prerequisites are distinct
 from review/merge prerequisites. Finish each PR green and remotely squash merged
 before beginning another; an implemented/gated stage preserves its rejection.
 
