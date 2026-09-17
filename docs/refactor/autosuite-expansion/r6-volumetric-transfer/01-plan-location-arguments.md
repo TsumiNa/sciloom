@@ -8,7 +8,7 @@ Typed command locations and transfer quantities while preserving the accepted se
 
 [Authoritative interface](../01-contract.md#r6-location-arguments-and-bounded-transfer).
 R5 implementation PRs merged or implemented/gated. Native transfer requires its own valid profile and proof for any runtime guards used.
-Current code status: implemented; review/merge pending. Native status follows the [group overview](00-overview.md)
+Current code status: implemented; merged #114. Native status follows the [group overview](00-overview.md)
 and the [evidence register](../04-evidence.md), not a successful local test.
 
 ## Implementation preflight

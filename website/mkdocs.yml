@@ -103,6 +103,7 @@ nav:
       - Fixed heater intent: examples/warm-sample.md
       - Transfer settings and typed locations: examples/transfer-settings.md
       - Single-well transfer intent: examples/transfer-sample.md
+      - Operator and equipment workflows: examples/expansion-workflows.md
       - Numeric operations: examples/numeric-operations.md
       - Record values: examples/record-values.md
       - Confirm samples: examples/confirm-samples.md

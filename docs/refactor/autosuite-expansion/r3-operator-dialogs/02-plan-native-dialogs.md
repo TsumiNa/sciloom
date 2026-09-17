@@ -8,7 +8,7 @@ Map proven operator dialog outcomes while preserving the accepted semantic contr
 
 [Authoritative interface](../01-contract.md#r3-ordered-text-and-yesno-results).
 R3.1 reviewed and remotely merged.
-Current code status: implemented/gated; review/merge pending. Native status follows the [group overview](00-overview.md)
+Current code status: implemented/gated; merged #108. Native status follows the [group overview](00-overview.md)
 and the [evidence register](../04-evidence.md), not a successful local test.
 
 ## Implementation preflight

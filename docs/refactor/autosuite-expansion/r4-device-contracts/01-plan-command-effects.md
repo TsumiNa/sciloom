@@ -8,7 +8,7 @@ Explicit lifecycle command contracts while preserving the accepted semantic cont
 
 [Authoritative interface](../01-contract.md#r4-explicit-command-effects-and-typed-configuration).
 R3 implementation PRs merged or completed as implemented/gated. Recheck that R5's planned concrete thermal needs justify each abstraction.
-Current code status: implemented in this PR; review/merge pending. Native status follows the [group overview](00-overview.md)
+Current code status: implemented; merged #109. Native status follows the [group overview](00-overview.md)
 and the [evidence register](../04-evidence.md), not a successful local test.
 
 ## Implementation preflight

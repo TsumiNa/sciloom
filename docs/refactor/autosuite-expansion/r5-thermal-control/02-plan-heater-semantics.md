@@ -8,7 +8,7 @@ Fixed heater configuration and lifecycle while preserving the accepted semantic 
 
 [Authoritative interface](../01-contract.md#r5-physical-temperature-and-a-fixed-thermal-family).
 R5.1 reviewed and remotely merged.
-Current code status: implemented in this PR; review/merge pending. Native status follows the [group overview](00-overview.md)
+Current code status: implemented; merged #112. Native status follows the [group overview](00-overview.md)
 and the [evidence register](../04-evidence.md), not a successful local test.
 
 ## Implementation preflight

@@ -63,6 +63,13 @@ Contributors can define devices and targets. The developer examples include a
 demonstration target, JSON v4 interchange and a reference interpreter for checking
 calculations and state changes. That interpreter does not simulate laboratory hardware.
 
+Text/yes-no result dialogs and fixed heater intent also have typed source,
+IR/JSON and reference semantics. Dialog cancellation/Stop/timeout never supplies
+a fallback result; heater settings apply only on explicit start. Their native
+AutoSuite profiles/termination behavior remain gated. The
+[operator and equipment matrix](../examples/expansion-workflows.md) records each
+layer's actual status, including the mixed three-device workflow.
+
 A visual editor, server, public Application/global API, measured property reads,
 and notebook or interactive source support are not yet available.
 

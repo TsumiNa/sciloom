@@ -31,6 +31,11 @@ to the repository root.
 | [Run a selected shaker](stir-selected-location.md) | Configure, select, start, wait and stop; native emission remains gated |
 | [Label wells and append a log](label-sample-log.md) | Combine confirmation, time, ordered metadata changes and file writes |
 | [Calculate a volume chunk](aspiration-chunk.md) | Calculate capacity, partial fills and a caller-supplied resume point |
+| [Temperature values](temperature-values.md) | Distinguish absolute temperature, differences and rates |
+| [Fixed heater intent](warm-sample.md) | Configure, explicitly start, wait a duration and stop |
+| [Transfer settings](transfer-settings.md) | Calculate typed flow rates and lengths |
+| [Single-well transfer](transfer-sample.md) | Capture one explicit source/destination pair and validate fixed capacity |
+| [Operator and equipment workflows](expansion-workflows.md) | Compose barcode, heater, shaker and transfer operations with shared child configuration |
 
 ## For contributors
 
@@ -54,3 +59,4 @@ to the repository root.
 | [Portable agitation](portable-agitation.md) | Device specialization and rebinding the same authored JSON |
 | [Complete workflows from IR](runtime-workflows-ir.md) | Three independent builders, JSON restoration and explicit reference services |
 | [Volume chunk after JSON](aspiration-chunk-ir.md) | Source-derived quantity arithmetic and repeated calls after restoration |
+| [Expansion integration](expansion-workflows.md) | Direct-IR/source/JSON parity, mixed devices, native gates and review-export conditions |

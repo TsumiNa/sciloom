@@ -493,6 +493,38 @@ or a relaxation of transfer semantics. R7 may proceed after this documentation
 PR is reviewed and merged, using current source/IR/JSON/reference capabilities.
 No class D deviation. Version expectation: none for reference/planning docs.
 
+## D026 — R7 preflight (2026-09-18)
+
+Baseline d23a3a37d3782ad2f4179828d03f4d03fe9b883b, lockstep 0.11.0.
+Previous goal turn made progress: R6.3 #116 remotely merged after review
+5240420164, its wording fix/reply/resolved thread and all four latest-head CI
+jobs 35264465241. Local evidence checks, 56 transfer/gate tests, 98 website tests,
+strict docs and read-only corpus audit passed. Fresh main fetch, clean worktree
+and remote MERGED were checked before this branch.
+
+Read R7's contract/acceptance and inspected actual author/direct-IR examples,
+compiler/specialization, reference events, shared-resource composition and
+deployment review export. Class A: reuse capture_barcode/barcode_ir,
+warm_sample/warm_sample_ir and transfer_sample/transfer_sample_ir rather than
+reimplement their semantics. Add a mixed author procedure with an explicit
+shared child operating fixed heater, shaker and liquid handler; a contributor
+recording example and tests compare source/JSON/effect order and preserved
+configuration. The three existing manual IR builders remain independent oracles.
+
+The planned workflow uses existing typed API and explicit reference services
+without a class B interface change. New example inputs/outputs are recorded in
+the authority before writing examples. Audit/repair stale merged-status wording
+and missing example-index entries; add a concrete delivery matrix and requirement
+evidence map. Verify offline native review exports still carry conditions and
+that gated flows produce no ASFP. Keep examples/corpus/internal plans separated
+in public downloads.
+
+Class C: no new native receipt exists; all result-dialog/thermal/transfer/failure/
+CSV unlocks remain pending. Reference events are not Executor evidence; waits
+remain durations, never temperature measurements. No class D change or new
+production API is needed. Version expectation: none for examples/tests/docs;
+any discovered production defect requires a separately scoped fix.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,

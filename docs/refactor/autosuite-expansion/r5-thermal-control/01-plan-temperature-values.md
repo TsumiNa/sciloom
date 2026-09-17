@@ -8,7 +8,7 @@ Typed absolute temperature and rates while preserving the accepted semantic cont
 
 [Authoritative interface](../01-contract.md#r5-physical-temperature-and-a-fixed-thermal-family).
 R4.2 merged; R5.3 additionally needs exact profile and conversion evidence or must remain gated.
-Current code status: implemented in this PR; review/merge pending. Native status follows the [group overview](00-overview.md)
+Current code status: implemented; merged #111. Native status follows the [group overview](00-overview.md)
 and the [evidence register](../04-evidence.md), not a successful local test.
 
 ## Implementation preflight

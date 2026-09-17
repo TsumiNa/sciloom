@@ -8,7 +8,7 @@ Preserve typed multi-property backend state while preserving the accepted semant
 
 [Authoritative interface](../01-contract.md#r4-explicit-command-effects-and-typed-configuration).
 R4.1 reviewed and remotely merged.
-Current code status: implemented in this PR; review/merge pending. Native status follows the [group overview](00-overview.md)
+Current code status: implemented; merged #110. Native status follows the [group overview](00-overview.md)
 and the [evidence register](../04-evidence.md), not a successful local test.
 
 ## Implementation preflight

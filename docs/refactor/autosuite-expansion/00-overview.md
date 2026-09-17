@@ -7,9 +7,13 @@ plan agreed after the independent review of 33 Editor screenshots and their
 native ASFP. The baseline is main commit
 `28a00c8c57a182f19bab3661a12fc06ee30f74c9`, lockstep version 0.3.15.
 
-**R0–R6.2 implementation stages are merged; R6.3 is implemented/gated in this PR.**
-R2 native unlocks and R7 remain pending; native verification is recorded separately.
+**R0–R6 implementation stages are merged; R7 integration is implemented.**
+R7 review/merge is tracked by its stage PR. Conditional native unlocks remain pending;
+native verification is recorded separately.
 The [contract](01-contract.md) is the single authority for new interfaces.
+The [delivery audit](07-delivery-audit.md) maps the full accepted scope to code,
+tests and remaining native evidence; it does not equate merged code with
+Executor verification.
 The [execution rules](02-execution-rules.md) require reassessment before every
 refactor and PR, and whenever implementation or native evidence contradicts a plan.
 Do not treat an example in this directory as an available API.
@@ -40,8 +44,8 @@ lockstep. No tag, release or package publication is authorized.
 | R3 | Text and yes/no operator results | [Overview](r3-operator-dialogs/00-overview.md) | R3.1 merged #107; R3.2 merged #108 (implemented/gated) | Result/cancel/timeout pending |
 | R4 | Typed command effects and multi-property device state | [Overview](r4-device-contracts/00-overview.md) | R4.1 merged #109; R4.2 merged #110 | No new platform claim |
 | R5 | Temperature values and a fixed thermal device | [Overview](r5-thermal-control/00-overview.md) | R5.1 merged #111; R5.2 merged #112; R5.3 merged #113 (capture procedure; native gated) | Exact thermal profile pending |
-| R6 | Location arguments and simple volumetric transfer | [Overview](r6-volumetric-transfer/00-overview.md) | R6.1 merged #114; R6.2 merged #115; R6.3 capture procedure implemented/gated, review/merge pending | Exact transfer profile pending |
-| R7 | Integrated source/IR/JSON workflows and status | [Overview](r7-integration/00-overview.md) | Pending | Per capability |
+| R6 | Location arguments and simple volumetric transfer | [Overview](r6-volumetric-transfer/00-overview.md) | R6.1 merged #114; R6.2 merged #115; R6.3 merged #116 (capture procedure; native gated) | Exact transfer profile pending |
+| R7 | Integrated source/IR/JSON workflows and status | [Overview](r7-integration/00-overview.md) | Implemented; stage PR records review/merge | Per capability |
 
 Default implementation order:
 R0 → R1.1 → R1.2 → R2.1 → R3.1 → R3.2 → R4.1 → R4.2 →
