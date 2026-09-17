@@ -43,6 +43,9 @@ are indexes; design proposals and validation records retain their historical con
   — implemented source/IR/reference contracts and staged AutoSuite mappings;
   [integration acceptance](refactor/runtime-capabilities/19-plan-integration.md)
   distinguishes completed checks from pending Executor evidence.
+- [AutoSuite deployment, interaction and equipment expansion](refactor/autosuite-expansion/00-overview.md)
+  — accepted R1–R7 plans, with a single interface contract, mandatory implementation
+  reassessment and separate native acceptance gates; new interfaces remain planned.
 
 ## AutoSuite reference
 

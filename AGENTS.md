@@ -337,3 +337,22 @@ The user's version decision for this sequence is lockstep 0.3.x, starting at
 0.3.0 for the first shipped-code change, with no 1.0.0 bump or release publication.
 Collect platform questions in the plan's Q&A; distinguish reference/static checks
 from Executor acceptance and honor the documented runtime-failure evidence gate.
+
+## 12. AutoSuite expansion sequence and plan reassessment
+
+Follow the accepted [AutoSuite expansion plans](docs/refactor/autosuite-expansion/00-overview.md)
+and their [single interface contract](docs/refactor/autosuite-expansion/01-contract.md)
+for deployment checks, operator results, device contracts, thermal control and
+bounded transfer. These APIs remain planned until the named stage lands.
+Before every refactor and PR, and whenever contrary evidence appears, perform
+the [mandatory reassessment](docs/refactor/autosuite-expansion/02-execution-rules.md).
+Inspect current code, versions, predecessor merge and native evidence; record
+differences and update affected plans before changing interfaces. Stop affected
+work and obtain an explicit developer decision for material changes to intent,
+fault behavior, variable lifetime, existing JSON or scope; do not silently
+substitute weaker behavior. Missing native evidence retains the affected compiler
+gate while independently valid work can proceed after sequential review/merge.
+Keep code completion and native verification separate. This new sequence follows
+normal lockstep PATCH/MINOR rules, superseding the prior sequence's 0.3.x exception
+only for new expansion work; breaking changes still require explicit approval.
+No release publication or corpus writes are authorized by the plan.
