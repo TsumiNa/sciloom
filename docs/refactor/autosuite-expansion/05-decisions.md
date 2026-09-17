@@ -450,6 +450,20 @@ Class C: no new native tool/channel/calibration/rinse receipt exists. Keep nativ
 transfer and quantity rejection, and publish only a reference contributor example.
 No class D change to lifetime, fault behavior, old JSON or scope is needed.
 
+### D024 review follow-up
+
+Review 5240288158 was audited across submitted body, all three inline threads
+and general comments; there were no suppressed comments. Fixed the exact Version
+decision format and the public ExecutionEvent handbook (including previously
+omitted dialog/CSV-append/well-property events). Retained the fixed-family
+selection boundary: the authority's initial LiquidHandler availability is fixed
+deployment, matching Heater, rather than dynamic configuration-only support.
+Added an explicit compile/reference regression for config-only candidate rejection
+and fixed-config success, clarified the authority/public guide, and explained
+this intent-preserving decision in the review thread. No new dynamic binding
+variant, runtime behavior or native unlock is introduced. Version remains MINOR
+0.10.0 → 0.11.0, lockstep; review fixes do not alter the capability scope.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,

@@ -65,8 +65,10 @@ with nonempty `source_wells: Zone`, `destination_wells: Zone` and positive
 `usable_capacity: Volume`. These trusted deployment facts stay outside Program
 and JSON. The known transfer effect checks directory membership at the operation,
 requires all three family settings even when a subclass narrows its own list,
-and also requires any concrete additional settings. Dynamic candidate selection
-is rejected. Successful `TransferEvent` snapshots preserve configuration and
+and also requires any concrete additional settings. LiquidHandler candidate
+bindings are rejected even for configuration-only programs: this initial family
+supports fixed deployment only, just as Heater does. Fixed configuration writes
+remain action-free and require no active selection. Successful `TransferEvent` snapshots preserve configuration and
 update last-applied values without inventing an enabled transition.
 
 | Declaration | Statement in the program | Node |

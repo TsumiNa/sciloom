@@ -703,6 +703,11 @@ control no hardware and have complete same-base-name companions.
 
 ### LiquidHandler family — implemented in R6.2, native gated
 
+This first family implementation accepts fixed deployment only. Candidate
+selection bindings are rejected even when the current program only configures
+properties; this is a family availability boundary, matching the fixed Heater
+stage, not an assertion that property writes perform a physical action.
+
 Runnable author example: `uv run python examples/transfer_sample.py` reports
 the native profile gate. Contributor example:
 `uv run python -m examples.developer.transfer_sample_ir` compares source,

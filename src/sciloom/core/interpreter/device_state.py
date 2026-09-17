@@ -40,7 +40,7 @@ class DeviceState:
 
     Attributes:
         configuration: Captured property values keyed by property name.
-        applied_configuration: Complete configuration last applied by start.
+        applied_configuration: Complete configuration last applied by start or transfer.
         enabled: Lifecycle result of the logical resource's last start/stop.
             With runtime selection, inspect physical_devices for every controller.
 
@@ -60,7 +60,8 @@ class PhysicalDeviceState:
     """Applied configuration and lifecycle of one physical controller.
 
     Logical configuration writes do not change this snapshot. A start applies
-    the logical resource's saved values; a stop retains these applied values.
+    the logical resource's saved values; a transfer applies values without
+    changing enabled state. A stop retains these applied values.
     """
 
     applied_configuration: Mapping[str, OutputValue] = field(default_factory=dict)

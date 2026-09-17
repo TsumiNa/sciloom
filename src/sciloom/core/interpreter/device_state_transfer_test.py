@@ -288,6 +288,36 @@ def test_dynamic_tool_selection_rejected_and_native_transfer_gated(profile, scop
     assert "unsupported_device_command" in codes
 
 
+def test_configuration_only_liquid_handler_still_requires_fixed_deployment():
+    program = build_program()
+    program = with_body(program, program.functions[0].body[:3])
+    candidate = bind_device(logical_id="liquid", device=BenchLiquidHandler(), physical_id="tool:1")
+    bindings = DeviceBindings(
+        devices=(
+            DeviceSelectionBinding(
+                logical_id="liquid",
+                candidates=(DeviceCandidate(binding=candidate, wells=SOURCE),),
+            ),
+        )
+    )
+
+    class DynamicTarget(TransferRecordingTarget):
+        def resolve_devices(self, program):
+            return bindings
+
+    with pytest.raises(CompilationError, match="unsupported_transfer_selection"):
+        compile_ir(program, target=DynamicTarget())
+    with pytest.raises(IRValidationError, match="unsupported_transfer_selection"):
+        Interpreter(program, environment=environment(program, device_bindings=bindings))
+    # The family restriction does not make fixed configuration writes require an action.
+    compiled = compile_ir(program, target=TransferRecordingTarget())
+    result = Interpreter(compiled.specialized_ir, environment=environment(program)).run(
+        inputs={"source": SOURCE, "destination": DESTINATION},
+    )
+    assert len(result.events) == 3 and all(isinstance(event, DeviceEvent) for event in result.events)
+    assert not next(iter(result.resources.values())).applied_configuration
+
+
 @pytest.mark.parametrize("loop", [False, True])
 def test_conditional_configuration_not_assumed_from_previous_call(loop):
     class Conditional(Function):

@@ -52,17 +52,18 @@ native acceptance remains pending and compiler rejection stays enabled.
 
 ## Local acceptance (2026-09-18)
 
-49 added focused tests pass; full source/target/examples/tools suite: 1448 passed.
+50 added focused tests pass; full source/target/examples/tools suite: 1449 passed.
 Website tooling: 98 passed; 57 CI example/syntax commands pass and existing
 companions are unchanged. Ruff check/format (326 files), mypy (145 sources),
 strict website build, AutoSuite smoke and recipe validation pass. 180 relative
 plan links and 16 Python contract snippets validate. The API catalogue check
 initially found the missing TransferEvent API entry; it was added and the full
-website suite rerun successfully. No native receipt or Executor result exists.
+website suite rerun successfully. The review follow-up rechecked the full suite (1449), website tools (98), strict
+build, Ruff and mypy. No native receipt or Executor result exists.
 
 ## Version
 
-Version: MINOR, lockstep 0.10.0 → 0.11.0. Adds LiquidHandler,
+Version: MINOR 0.10.0 → 0.11.0, lockstep. Adds LiquidHandler,
 TransferDeviceBinding and bounded TransferEvent reference semantics. Existing
 JSON v4 vocabulary and baseline output remain unchanged. No tag or publication.
 Reassess the decision if review changes the shipped scope.
