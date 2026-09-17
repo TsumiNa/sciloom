@@ -12,6 +12,7 @@ of the Python script use ordinary Python.
 | `str` | Text without implicit numeric conversion or truthiness |
 | `RotationalSpeed` | Nonnegative speed, such as `600 * rpm` or `10 * rps` |
 | `Volume`, `Duration` | Signed, finite quantities, such as `2 * mL` or `1 * minute` |
+| `FlowRate`, `Length` | Signed, finite m3/s and metres; core/reference supported, AutoSuite encoding gated |
 | `list[T]` | One-dimensional list of a supported scalar or quantity type |
 | `Zone` | Ordered unique wells; no list nesting or implicit truthiness; see [locations](zones.md) |
 
@@ -54,7 +55,8 @@ an exact half: `round(2.5)` is 2, `round(3.5)` is 4, and `round(-2.5)` is −2.
 Only the one-argument forms are supported. Imported aliases and `math.floor`
 work too; a user-defined function with the same name is not a runtime operation.
 
-`abs` preserves `int` or `float`, and also accepts Volume and Duration.
+`abs` preserves `int` or `float`, and also accepts signed Volume, Duration,
+FlowRate, Length, TemperatureDifference and TemperatureRate values.
 `floor` and `round` return `int`. Convert a quantity to a number first, for example
 `floor(self.amount / mL)`. Booleans, text and lists are not numeric arguments.
 Reference inputs and arithmetic results must be finite.
@@ -125,6 +127,22 @@ thermal CSV reads are explicitly unsupported until a conversion contract exists.
 AutoSuite compilation rejects thermal types pending verified native encodings
 and range behavior. Core/reference support does not prove vendor conversion or
 physical equivalence. See the [runnable example](../../examples/temperature-values.md).
+
+### Flow and length values
+
+Import `FlowRate`, `Length`, `mL_per_min`, `m3_per_s`, `mm` and `metre` from
+`sciloom`. `60 * mL_per_min` represents 1e-6 m3/s; `2 * mm` represents 0.002 m.
+Both support Input/Output/Var, homogeneous lists, like-dimension addition,
+subtraction and comparison, unary signs/magnitude, numeric scaling and ratios.
+Runtime numbers may construct either quantity using a unit. They do not enable
+cross-dimension algebra such as flow × duration.
+
+Values are signed and finite; device operations impose their own positive-flow
+or allowed-position constraints. Logging and CSV append use canonical units;
+reference CSV reads require explicit matching units. AutoSuite flow/length
+encoding is rejected pending native evidence. The
+[settings example](../../examples/transfer-settings.md) computes values without
+moving liquid or assuming a tool, channel, clearance policy or rinse connection.
 
 ## Text
 

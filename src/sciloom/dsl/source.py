@@ -10,6 +10,8 @@ from typing import Any
 
 from sciloom.units import (
     DurationUnit,
+    FlowRateUnit,
+    LengthUnit,
     SpeedUnit,
     TemperatureDifferenceUnit,
     TemperatureRateUnit,
@@ -47,7 +49,16 @@ def runtime_source(context: LoweringContext) -> ast.FunctionDef:
             for name, value in {**method.__globals__, **bindings.nonlocals}.items()
             if isinstance(
                 value,
-                (SpeedUnit, VolumeUnit, DurationUnit, TemperatureUnit, TemperatureDifferenceUnit, TemperatureRateUnit),
+                (
+                    FlowRateUnit,
+                    LengthUnit,
+                    SpeedUnit,
+                    VolumeUnit,
+                    DurationUnit,
+                    TemperatureUnit,
+                    TemperatureDifferenceUnit,
+                    TemperatureRateUnit,
+                ),
             )
         },
         allows_len=resolved_len is builtins.len,

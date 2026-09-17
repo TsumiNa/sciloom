@@ -632,7 +632,7 @@ validator does not accept this suite.
 
 ## R6: Location arguments and bounded transfer
 
-### Parameters and quantities — planned after R6.1
+### Parameters and quantities — implemented in R6.1, native encoding gated
 
 Expand CommandParameter.type to the existing ValueType union including ZoneType.
 Existing scalar/list contracts encode identically. PropertyContract remains
@@ -647,6 +647,57 @@ quantity conventions. Do not add mass/pressure or broad dimension inference.
 Their ScalarType wire values are `flow_rate` and `length` respectively; canonical
 JSON literal numbers are m3/s and metres, with no display-unit field added to
 existing literals.
+
+R6.1 also supports scalar/list fields, typed log/append values, and reference CSV
+reads with explicit matching flow/length units using the existing multiplicative
+column contract. It adds no dimensional inference (for example flow × time) or
+new CSV API. AutoSuite flow/length encoding remains explicitly rejected pending
+native evidence, including direct emitter calls. Unknown device commands remain
+rejected by reference execution; the defined transfer effect lands in R6.2.
+
+Exact quantity usage (runnable in R6.1):
+
+```python
+from sciloom import FlowRate, Function, Input, Length, Output, mL_per_min, mm, runtime
+
+class TransferSettings(Function):
+    factor: Input[float]
+    flow: Output[FlowRate]
+    clearance: Output[Length]
+
+    @runtime
+    def run(self) -> None:
+        self.flow = self.factor * mL_per_min
+        self.clearance = 2 * mm
+# factor=60 gives 1e-6 m3/s and 0.002 metres in reference execution.
+```
+
+Minimal contributor signature (source/IR/JSON available in R6.1; no execution
+semantics or target support is implied):
+
+```python
+from typing import ClassVar
+from sciloom import Agitator, FlowRate, Zone
+from sciloom.devices import operation
+
+class LocatedAgitator(Agitator):
+    device_type_id: ClassVar[str] = "example.located-agitator/v1"
+
+    @operation(id="example.located-agitator.inspect/v1")
+    def inspect(self, source: Zone, destination: Zone, flow: FlowRate) -> None:
+        ...
+# Parameters have ZoneType(), ZoneType(), ScalarType.FLOW_RATE in that order.
+# They remain typed named DeviceCommand arguments. Zone properties/list[Zone]
+# and unknown-command reference execution are rejected.
+```
+
+Executable examples: `uv run python examples/transfer_settings.py` reports the
+native gate; `uv run python -m examples.developer.transfer_values_ir` generates
+its direct-IR JSON companion and compares source/JSON/specialized results.
+`uv run python -m examples.developer.location_command_ir` supplies a full
+contributor declaration and explicit recording target; it writes JSON in declared
+argument order and demonstrates unknown-command rejection. These examples
+control no hardware and have complete same-base-name companions.
 
 ### LiquidHandler family — planned after R6.2
 

@@ -16,12 +16,14 @@ an explicit developer decision.
 
 | Stage | Outcome | Code status |
 | --- | --- | --- |
-| R6.1 | [Typed command locations and transfer quantities](01-plan-location-arguments.md) | Pending |
+| R6.1 | [Typed command locations and transfer quantities](01-plan-location-arguments.md) | Implemented; review/merge pending |
 | R6.2 | [Bounded reference transfer effect](02-plan-transfer-semantics.md) | Pending |
 | R6.3 | [Map one evidenced fixed-tool transfer](03-plan-native-transfer.md) | Pending |
 
 Native status: Tool/channel/calibration/rinse profile pending.
-No stage below is already implemented. Native-unlock prerequisites are distinct
+R6.1 provides typed Zone command arguments and flow/length quantities through
+source/IR/JSON/reference services. Native encoding is rejected; the transfer
+family/effect remains R6.2. Native-unlock prerequisites are distinct
 from review/merge prerequisites. Finish each PR green and remotely squash merged
 before beginning another; an implemented/gated stage preserves its rejection.
 

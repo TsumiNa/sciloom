@@ -20,10 +20,14 @@ class ScalarType(StrEnum):
     TEMPERATURE = "temperature"
     TEMPERATURE_DIFFERENCE = "temperature_difference"
     TEMPERATURE_RATE = "temperature_rate"
+    FLOW_RATE = "flow_rate"
+    LENGTH = "length"
 
 
 THERMAL_QUANTITIES = (ScalarType.TEMPERATURE, ScalarType.TEMPERATURE_DIFFERENCE, ScalarType.TEMPERATURE_RATE)
 SIGNED_QUANTITIES = (
+    ScalarType.FLOW_RATE,
+    ScalarType.LENGTH,
     ScalarType.VOLUME,
     ScalarType.DURATION,
     ScalarType.TEMPERATURE_DIFFERENCE,

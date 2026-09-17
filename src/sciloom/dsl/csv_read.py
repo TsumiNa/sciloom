@@ -6,7 +6,7 @@ import inspect
 from sciloom.core.ir import CsvColumn, CsvErrorPolicy, CsvReadMode, ReadCsv, ScalarType
 from sciloom.flow import csv
 from sciloom.flow.fields import _value_type
-from sciloom.units import DurationUnit, SpeedUnit, VolumeUnit
+from sciloom.units import DurationUnit, FlowRateUnit, LengthUnit, SpeedUnit, VolumeUnit
 from .context import LoweringContext
 from .expressions import expression, literal
 
@@ -92,7 +92,7 @@ def csv_read(context: LoweringContext, assignment: ast.Assign) -> ReadCsv | None
         if "unit" in keywords:
             unit_value = _metadata_value(context, keywords["unit"])
             if unit_value is not None:
-                if not isinstance(unit_value, (SpeedUnit, VolumeUnit, DurationUnit)):
+                if not isinstance(unit_value, (SpeedUnit, VolumeUnit, DurationUnit, FlowRateUnit, LengthUnit)):
                     context.fail("csv_unit", "CSV unit must be a host SciLoom physical unit.", keywords["unit"])
                 unit = literal(context, keywords["unit"], 1 * unit_value)
         default = expression(context, keywords["default"], scalar) if "default" in keywords else None

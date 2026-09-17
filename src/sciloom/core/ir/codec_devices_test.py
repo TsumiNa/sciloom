@@ -73,21 +73,14 @@ def extension_program():
     )
 
 
-@pytest.mark.parametrize("member_kind", ["property", "command"])
-def test_device_contracts_reject_zone_types_in_ir_json_and_bindings(member_kind):
+def test_device_properties_reject_zone_types_in_ir_json_and_bindings():
     program = extension_program()
     contract = program.device_types[-1]
     document = to_dict(program)
-    if member_kind == "property":
-        bad_contract = replace(
-            contract, properties=(*contract.properties[:-1], replace(contract.properties[-1], type=ZoneType()))
-        )
-        document["device_types"][-1]["properties"][-1]["type"] = {"kind": "ZoneType"}
-    else:
-        command = contract.operations[-1]
-        bad_command = replace(command, parameters=(replace(command.parameters[0], type=ZoneType()),))
-        bad_contract = replace(contract, operations=(*contract.operations[:-1], bad_command))
-        document["device_types"][-1]["operations"][-1]["parameters"][0]["type"] = {"kind": "ZoneType"}
+    bad_contract = replace(
+        contract, properties=(*contract.properties[:-1], replace(contract.properties[-1], type=ZoneType()))
+    )
+    document["device_types"][-1]["properties"][-1]["type"] = {"kind": "ZoneType"}
     bad_program = replace(program, device_types=(*program.device_types[:-1], bad_contract))
     assert any(d.code == "ir_shape" for d in validate(bad_program))
     with pytest.raises(IRValidationError, match="ir_shape"):

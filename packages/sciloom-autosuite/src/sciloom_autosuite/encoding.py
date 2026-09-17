@@ -45,6 +45,16 @@ def value_encoding(value_type: ValueType) -> ScalarEncoding:
                 ),
             )
         )
+    if value_type in (ScalarType.FLOW_RATE, ScalarType.LENGTH):
+        raise CompilationError(
+            (
+                Diagnostic(
+                    code="unsupported_transfer_quantity",
+                    message="AutoSuite flow/length encoding is not verified.",
+                    path="$",
+                ),
+            )
+        )
     return SCALARS[value_type]
 
 
@@ -61,7 +71,7 @@ def literal_value(literal: Literal, *, storage: bool = False) -> str:
     undocumented backslash/apostrophe escape convention in the expression parser.
     """
     value = literal.value
-    if literal.type in THERMAL_QUANTITIES:
+    if literal.type in (*THERMAL_QUANTITIES, ScalarType.FLOW_RATE, ScalarType.LENGTH):
         value_encoding(literal.type)  # Explicitly reject direct backend calls, too.
     if literal.type == ScalarType.TEXT:
         assert isinstance(value, str)

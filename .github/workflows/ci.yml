@@ -103,5 +103,8 @@ jobs:
       - run: uv run python -m examples.developer.temperature_ir
       - run: uv run python examples/warm_sample.py
       - run: uv run python -m examples.developer.warm_sample_ir
+      - run: uv run python examples/transfer_settings.py
+      - run: uv run python -m examples.developer.transfer_values_ir
+      - run: uv run python -m examples.developer.location_command_ir
       - run: uv run python -m examples.developer.portable_agitation
       - run: git diff --exit-code

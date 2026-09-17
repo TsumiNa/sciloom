@@ -9,11 +9,30 @@ from sciloom.core.diagnostics import Diagnostic, ExecutionError
 from sciloom.core.ir.model import ListLiteral, Literal, Node, ZoneLiteral
 from sciloom.core.ir.types import QUANTITIES, ListType, ScalarType, ValueType, ZoneType
 from sciloom.core.locations import Zone
-from sciloom.units import Duration, RotationalSpeed, Temperature, TemperatureDifference, TemperatureRate, Volume
+from sciloom.units import (
+    Duration,
+    FlowRate,
+    Length,
+    RotationalSpeed,
+    Temperature,
+    TemperatureDifference,
+    TemperatureRate,
+    Volume,
+)
 
 ScalarValue = bool | int | float | str
 RuntimeValue = ScalarValue | tuple[ScalarValue, ...] | Zone
-InputScalar = ScalarValue | RotationalSpeed | Volume | Duration | Temperature | TemperatureDifference | TemperatureRate
+InputScalar = (
+    ScalarValue
+    | RotationalSpeed
+    | Volume
+    | Duration
+    | Temperature
+    | TemperatureDifference
+    | FlowRate
+    | Length
+    | TemperatureRate
+)
 # Lists are invariant: spell out homogeneous alternatives so list[float] etc.
 # remain accepted without widening the public API to arbitrary sequences.
 InputValue = (
@@ -28,6 +47,8 @@ InputValue = (
     | list[Duration]
     | list[Temperature]
     | list[TemperatureDifference]
+    | list[FlowRate]
+    | list[Length]
     | list[TemperatureRate]
     | list[InputScalar]
     | tuple[InputScalar, ...]
@@ -81,6 +102,8 @@ def coerce(value: RuntimeValue, scalar: ValueType, node: Node) -> RuntimeValue:
         ScalarType.TEMPERATURE: (int, float),
         ScalarType.TEMPERATURE_DIFFERENCE: (int, float),
         ScalarType.TEMPERATURE_RATE: (int, float),
+        ScalarType.FLOW_RATE: (int, float),
+        ScalarType.LENGTH: (int, float),
     }[scalar]
     if type(value) not in allowed:
         fail("runtime_type", f"Expected {scalar.value}, received {type(value).__name__}.", node)
@@ -158,11 +181,22 @@ def input_value(value: InputValue, value_type: ValueType, node: Node) -> Runtime
         if not isinstance(value, TemperatureDifference):
             fail("runtime_type", "A temperature-difference input requires a TemperatureDifference.", node)
         value = value.kelvin
+    elif value_type == ScalarType.FLOW_RATE:
+        if not isinstance(value, FlowRate):
+            fail("runtime_type", "A flow-rate input requires a FlowRate.", node)
+        value = value.m3_per_second
+    elif value_type == ScalarType.LENGTH:
+        if not isinstance(value, Length):
+            fail("runtime_type", "A length input requires a Length.", node)
+        value = value.metres
     elif value_type == ScalarType.TEMPERATURE_RATE:
         if not isinstance(value, TemperatureRate):
             fail("runtime_type", "A temperature-rate input requires a TemperatureRate.", node)
         value = value.kelvin_per_second
-    elif isinstance(value, (RotationalSpeed, Volume, Duration, Temperature, TemperatureDifference, TemperatureRate)):
+    elif isinstance(
+        value,
+        (RotationalSpeed, Volume, Duration, FlowRate, Length, Temperature, TemperatureDifference, TemperatureRate),
+    ):
         fail("runtime_type", "A quantity cannot be passed to a scalar input.", node)
     if isinstance(value, (list, tuple, Zone)):
         fail("runtime_type", f"Expected {value_type.value}, received {type(value).__name__}.", node)
@@ -204,6 +238,12 @@ def output_value(value: RuntimeValue, value_type: ValueType) -> OutputValue:
     if value_type == ScalarType.TEMPERATURE_DIFFERENCE:
         assert not isinstance(value, str)
         return TemperatureDifference(kelvin=value)
+    if value_type == ScalarType.FLOW_RATE:
+        assert not isinstance(value, str)
+        return FlowRate(m3_per_second=value)
+    if value_type == ScalarType.LENGTH:
+        assert not isinstance(value, str)
+        return Length(metres=value)
     if value_type == ScalarType.TEMPERATURE_RATE:
         assert not isinstance(value, str)
         return TemperatureRate(kelvin_per_second=value)

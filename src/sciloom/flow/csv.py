@@ -15,6 +15,10 @@ from sciloom.core.ir.types import THERMAL_QUANTITIES, ScalarType
 from sciloom.units import (
     Duration,
     DurationUnit,
+    FlowRate,
+    FlowRateUnit,
+    Length,
+    LengthUnit,
     RotationalSpeed,
     SpeedUnit,
     Temperature,
@@ -25,7 +29,7 @@ from sciloom.units import (
 )
 from .fields import _default, _value_type
 
-T = TypeVar("T", int, float, bool, str, RotationalSpeed, Volume, Duration)
+T = TypeVar("T", int, float, bool, str, RotationalSpeed, Volume, Duration, FlowRate, Length)
 
 
 class _Omitted(Enum):
@@ -53,7 +57,7 @@ class Column(Generic[T]):
 
     index: int
     value_type: type[T]
-    unit: SpeedUnit | VolumeUnit | DurationUnit | None = None
+    unit: FlowRateUnit | LengthUnit | SpeedUnit | VolumeUnit | DurationUnit | None = None
     default: T | _Omitted = _Omitted.DEFAULT
 
     def __post_init__(self) -> None:
@@ -66,11 +70,11 @@ class Column(Generic[T]):
             raise TypeError("CSV columns require scalar element types.")
         if value_type in THERMAL_QUANTITIES:
             raise ValueError("Thermal CSV reads require an explicit conversion contract.")
-        quantity = self.value_type in (RotationalSpeed, Volume, Duration)
+        quantity = self.value_type in (RotationalSpeed, Volume, Duration, FlowRate, Length)
         if self.unit is None:
             if quantity:
                 raise ValueError("Physical CSV columns require an explicit matching unit.")
-        elif not isinstance(self.unit, (SpeedUnit, VolumeUnit, DurationUnit)):
+        elif not isinstance(self.unit, (FlowRateUnit, LengthUnit, SpeedUnit, VolumeUnit, DurationUnit)):
             raise TypeError("CSV units must be SciLoom physical units.")
         elif type(1 * self.unit) is not self.value_type:
             raise ValueError("CSV unit does not match the column type.")
@@ -171,6 +175,8 @@ def append_row(
         | Duration
         | Temperature
         | TemperatureDifference
+        | FlowRate
+        | Length
         | TemperatureRate,
         ...,
     ],
@@ -208,6 +214,8 @@ def try_append_row(
         | Duration
         | Temperature
         | TemperatureDifference
+        | FlowRate
+        | Length
         | TemperatureRate,
         ...,
     ],

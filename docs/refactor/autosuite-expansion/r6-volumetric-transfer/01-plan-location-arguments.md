@@ -8,7 +8,7 @@ Typed command locations and transfer quantities while preserving the accepted se
 
 [Authoritative interface](../01-contract.md#r6-location-arguments-and-bounded-transfer).
 R5 implementation PRs merged or implemented/gated. Native transfer requires its own valid profile and proof for any runtime guards used.
-Current code status: pending. Native status follows the [group overview](00-overview.md)
+Current code status: implemented; review/merge pending. Native status follows the [group overview](00-overview.md)
 and the [evidence register](../04-evidence.md), not a successful local test.
 
 ## Implementation preflight
@@ -24,6 +24,11 @@ Do not start this PR merely from a stale stage-status table.
 
 Allow existing ZoneType in CommandParameter while preserving property type boundaries. Add FlowRate and Length values and their narrow arithmetic/unit APIs. Update source declarations, argument validation, specialization and explicit consumer handling without changing old scalar/list serialization.
 
+D023 confirms reference scalar/list, logging and existing explicit-unit CSV
+handling. Native flow/length encoding stays rejected until evidenced; no profile
+or unknown-command effect is fabricated. Source/IR/JSON verify argument order in
+this stage; actual transfer capture and action-order checks belong to R6.2.
+
 ## Non-goals
 
 No list[Zone], arbitrary record/dict parameters, property locations, new result-command framework or string-encoded coordinates.
@@ -38,6 +43,14 @@ For tools/docs-only scope use relevant tools/docs checks and read-only corpus
 audit when references change. Record actual results, never predicted passes.
 Update the contract's availability and group/main status table before review.
 
+Completed local acceptance: 1399 code/tool/example tests, 98 website tests,
+55 CI example/syntax commands, Ruff, formatting, mypy (143 source files), strict
+docs build, AutoSuite smoke and recipe validation. Existing generated examples
+remain byte-identical; new source/direct-IR/contributor JSON companions were
+regenerated. Native quantity/command tests retain explicit rejection. No Executor
+ran. Earlier tests that prohibited Zone command parameters were updated to the
+accepted new boundary while retaining property/list rejections.
+
 ## Review and completion
 
 Review, fix feedback, recheck latest head, squash merge and confirm remote MERGED
@@ -47,10 +60,6 @@ native acceptance remains pending and compiler rejection stays enabled.
 
 ## Version
 
-Version: none, this revision records a plan and changes no shipped code.
-
-Implementation expectation: MINOR, adds typed location command arguments and physical quantities.
-Before the implementation PR is reviewed, replace this planning-only decision
-with the exact lockstep from/to transition based on its actual shipped scope and
-then-current baseline. The user explicitly requested no preallocated future
-version numbers. Reassess after review changes; no publication.
+Version: MINOR 0.9.0 → 0.10.0, adds typed Zone command parameters and public
+FlowRate/Length quantities with source/IR/JSON/reference support. Both packages
+remain lockstep; no tag or publication. Reassess after review fixes.

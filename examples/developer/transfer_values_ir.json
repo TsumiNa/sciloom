@@ -1,0 +1,97 @@
+{
+  "device_types": [],
+  "entry_function_id": "f",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "Assignment",
+          "node_id": "set_flow",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "flow_target",
+            "source": null,
+            "symbol_id": "flow"
+          },
+          "value": {
+            "kind": "Binary",
+            "left": {
+              "kind": "Reference",
+              "node_id": "factor_value",
+              "source": null,
+              "symbol_id": "factor"
+            },
+            "node_id": "scaled",
+            "op": "*",
+            "right": {
+              "kind": "Literal",
+              "node_id": "flow_unit",
+              "source": null,
+              "type": "flow_rate",
+              "value": 1.6666666666666667e-08
+            },
+            "source": null
+          }
+        },
+        {
+          "kind": "Assignment",
+          "node_id": "set_clearance",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "clearance_target",
+            "source": null,
+            "symbol_id": "clearance"
+          },
+          "value": {
+            "kind": "Literal",
+            "node_id": "clearance_value",
+            "source": null,
+            "type": "length",
+            "value": 0.002
+          }
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "TransferSettings",
+      "node_id": "f",
+      "source": null,
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "factor",
+          "node_id": "factor",
+          "owner_id": "f",
+          "role": "input",
+          "source": null,
+          "type": "real"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "flow",
+          "node_id": "flow",
+          "owner_id": "f",
+          "role": "output",
+          "source": null,
+          "type": "flow_rate"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "clearance",
+          "node_id": "clearance",
+          "owner_id": "f",
+          "role": "output",
+          "source": null,
+          "type": "length"
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": []
+}

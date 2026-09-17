@@ -88,6 +88,11 @@ def validate_runtime_guards(program: Program) -> tuple[Diagnostic, ...]:
             elif isinstance(node, (RequestText, AskYesNo)):
                 code = "unsupported_dialog_result"
                 message = "Text/yes-no results and cancellation/Stop/timeout termination require independent native verification; reference execution is available."
+            elif isinstance(node, (Variable, Literal, ListLiteral)) and (
+                node.type.element_type if isinstance(node.type, ListType) else node.type
+            ) in (ScalarType.FLOW_RATE, ScalarType.LENGTH):
+                code = "unsupported_transfer_quantity"
+                message = "Flow/length values require verified native encoding; core/reference execution is available."
             elif isinstance(node, DeviceCommand) and node.operation_id in lifecycle_commands:
                 code = "unsupported_device_command"
                 message = "Lifecycle contracts define reference effects; AutoSuite needs an explicit verified profile adapter before emission."

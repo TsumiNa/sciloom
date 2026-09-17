@@ -36,7 +36,16 @@ from sciloom.core.ir import (
 from sciloom.core.locations import Zone
 from sciloom.flow import csv, text, zones
 from sciloom.flow.timing import now_text
-from sciloom.units import Duration, RotationalSpeed, Temperature, TemperatureDifference, TemperatureRate, Volume
+from sciloom.units import (
+    Duration,
+    FlowRate,
+    Length,
+    RotationalSpeed,
+    Temperature,
+    TemperatureDifference,
+    TemperatureRate,
+    Volume,
+)
 from .context import LoweringContext
 
 BINARY_OPERATORS = {
@@ -245,6 +254,10 @@ def literal(context: LoweringContext, node: ast.AST, value: object) -> Literal:
         return Literal(**context.metadata(node), type=ScalarType.TEMPERATURE, value=value.kelvin)
     if isinstance(value, TemperatureDifference):
         return Literal(**context.metadata(node), type=ScalarType.TEMPERATURE_DIFFERENCE, value=value.kelvin)
+    if isinstance(value, FlowRate):
+        return Literal(**context.metadata(node), type=ScalarType.FLOW_RATE, value=value.m3_per_second)
+    if isinstance(value, Length):
+        return Literal(**context.metadata(node), type=ScalarType.LENGTH, value=value.metres)
     if isinstance(value, TemperatureRate):
         return Literal(**context.metadata(node), type=ScalarType.TEMPERATURE_RATE, value=value.kelvin_per_second)
     scalar = {bool: ScalarType.BOOLEAN, int: ScalarType.INTEGER, float: ScalarType.REAL, str: ScalarType.TEXT}.get(

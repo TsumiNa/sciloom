@@ -50,6 +50,11 @@ fixed tuple of inline `csv.Column` declarations, column types and units are
 chosen before compilation. Physical columns require matching units; ordinary
 scalar columns do not accept units.
 
+`FlowRate` columns accept `mL_per_min` or `m3_per_s`; `Length` columns accept
+`mm` or `metre`. Reference reads apply that explicit scale once and return typed
+values; append writes canonical m3/s or metres. Negative finite values are valid
+quantities, with device constraints checked by the operation using them.
+
 Temperature, temperature-difference and temperature-rate columns are explicitly
 unsupported for reads. The current multiplicative column unit cannot describe
 an affine Celsius conversion. Typed thermal values can be appended in canonical

@@ -18,7 +18,7 @@ an explicit developer decision.
 | --- | --- | --- |
 | R5.1 | [Typed absolute temperature and rates](01-plan-temperature-values.md) | Merged #111 |
 | R5.2 | [Fixed heater configuration and lifecycle](02-plan-heater-semantics.md) | Merged #112 |
-| R5.3 | [Bind an evidenced fixed thermal profile](03-plan-native-thermal-profile.md) | Capture procedure implemented/gated; review/merge pending |
+| R5.3 | [Bind an evidenced fixed thermal profile](03-plan-native-thermal-profile.md) | Merged #113 (capture procedure; native gated) |
 
 Native status: Thermal profile and apparent temperature offset unresolved.
 R5.1 provides core/reference thermal values, typed fields/lists and JSON v4;

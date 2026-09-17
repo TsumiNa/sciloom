@@ -391,6 +391,35 @@ outdated second-native-profile wording with an explicit future requirement.
 Class A documentation corrections; no evidence is promoted to native acceptance.
 Version remains none, packages 0.9.0; recheck links/docs and read-only corpus audit.
 
+## D023 — R6 group / R6.1 preflight (2026-09-18)
+
+Baseline d2032da38053aba54c0e7479a4b638a758af2823, lockstep 0.9.0. Previous goal
+turn made progress: R5.2 #112 and R5.3 #113 are remotely MERGED. R5.3 review
+5239920819 and both suppressed findings were addressed; latest-head CI
+35260216562 passed all four jobs, the thread is resolved, and main was fetched
+before this branch. Local checks included 26 thermal gate tests, 98 website tests,
+strict docs, examples and read-only corpus audit. Native receipts remain absent.
+
+Inspected typed contract/schema conversion, device declaration and argument
+lowering, field defaults, quantity arithmetic, specialization, reference coercion,
+CSV unit scaling and native encoding guards. Existing CommandParameter and
+PropertyContract share scalar/list types, but only command parameters may gain
+ZoneType. The source already orders named arguments by the declared signature;
+keep old wire forms and property boundaries. Class A: reuse those mechanisms.
+
+Class B bounded completion of the quantity contract before code: flow/length
+use existing signed multiplicative arithmetic, scalar/list fields and canonical
+logging/CSV append; explicit matching units also allow reference CSV reads through
+the existing scale-only contract. No new CSV interface or dimensional inference.
+Unknown command reference execution remains rejected in R6.1; argument capture
+and transfer action ordering become executable with R6.2's defined effect.
+
+Class C: native transfer profile/precision/guard evidence is absent. New quantity
+encoding is explicitly rejected in AutoSuite, including direct emitter paths,
+until the evidence-backed adapter stage. Add exact author/contributor examples
+to the authority now and runnable counterparts during R6.1. No placeholder
+LiquidHandler API is shipped before its semantics. No class D deviation.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,
