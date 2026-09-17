@@ -4121,8 +4121,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.7.0
-    · <code title="da488c4b30c2d99474f2cfc2afa86b0d2e7f7c3d">da488c4b</code>
+    · SciLoom 0.7.1
+    · <code title="203df1a38b24cada61887d11fa709f4d17e47906">203df1a3</code>
   </p>
 </aside>
 
@@ -4241,7 +4241,9 @@ and supplies the tuple to <code>DeviceSelectionBinding(logical_id=..., candidate
 Candidates share one concrete contract, ancestor directory and capability sets.
 They have distinct physical identities and disjoint nonempty well sets. The
 selection exposes the common contract/capabilities but has no single <code>physical_id</code>.
-Physical candidates cannot overlap across logical resources.</p>
+Physical actuator identities cannot overlap across logical resources. Well sets
+may overlap between different logical selections with distinct trusted actuators;
+within one selection they remain disjoint so a Zone resolves to one controller.</p>
 <p><code>DeviceAt</code> captures a Zone for a selection-bound resource. Shared compilation
 checks its scope across function calls; a target must implement it or return an
 explicit unsupported diagnostic. The <a href="../../../examples/runtime-workflows-ir/">complete workflow example</a>
