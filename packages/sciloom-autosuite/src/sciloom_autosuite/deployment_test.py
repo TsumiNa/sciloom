@@ -152,6 +152,9 @@ def test_deployment_compatibility_is_not_native_verification():
     incompatible = report(deployment=facts(version="9.9.9"))
     assert incompatible.status == AutoSuiteDeploymentStatus.INCOMPATIBLE
     assert "deployment_version" in {d.code for d in incompatible.findings}
+    version_finding = next(d for d in incompatible.findings if d.code == "deployment_version")
+    assert "'2.47.1.1'" in version_finding.message
+    assert "autosuite-" not in version_finding.message
     mixed = report(deployment=facts(version="9.9.9", reset=None))
     assert mixed.status == AutoSuiteDeploymentStatus.INCOMPATIBLE
     assert {d.code for d in mixed.findings} == {"deployment_version", "unknown_variable_reset"}

@@ -207,6 +207,7 @@ def _assess_deployment(
             )
         )
     else:
+        expected_version = version.value.removeprefix("autosuite-")
         if deployment.product_version is None:
             findings.append(
                 Diagnostic(
@@ -215,12 +216,12 @@ def _assess_deployment(
                     path="$.deployment.product_version",
                 )
             )
-        elif deployment.product_version != version.value.removeprefix("autosuite-"):
+        elif deployment.product_version != expected_version:
             incompatible = True
             findings.append(
                 Diagnostic(
                     code="deployment_version",
-                    message=f"APP product version {deployment.product_version!r} does not match {version.value!r}.",
+                    message=f"APP product version {deployment.product_version!r} does not match expected product version {expected_version!r}.",
                     path="$.deployment.product_version",
                 )
             )

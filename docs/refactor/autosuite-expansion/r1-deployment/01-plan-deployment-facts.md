@@ -46,6 +46,10 @@ files) passed, as did smoke, recipe validation, read-only corpus audit and all
 42 CI example/syntax commands. Existing example companions were unchanged.
 Native reset behavior remains unmeasured. Production target integration is R1.2.
 
+PR #104 review corrected the version diagnostic to show the bare expected native
+product version rather than the internal target ID. Its regression, all 31
+deployment tests, Ruff/format and mypy passed. Scope and version remain unchanged.
+
 Review, fix feedback, recheck latest head, squash merge and confirm remote MERGED
 before beginning the next implementation PR. Inspect all review surfaces.
 An evidence-limited implementation may be complete as implemented/gated, but its
