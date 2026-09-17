@@ -1,0 +1,137 @@
+{
+  "device_types": [
+    {
+      "base_type_ids": [],
+      "kind": "DeviceTypeContract",
+      "operations": [],
+      "properties": [],
+      "required_configuration": [],
+      "type_id": "sciloom.device/v1"
+    },
+    {
+      "base_type_ids": [
+        "sciloom.device/v1"
+      ],
+      "kind": "DeviceTypeContract",
+      "operations": [
+        {
+          "effect": "apply_and_enable",
+          "kind": "LifecycleCommandContract",
+          "name": "start",
+          "parameters": [],
+          "required_configuration": [
+            "sciloom.heater.temperature/v1",
+            "sciloom.heater.ramp-rate/v1"
+          ],
+          "semantic_id": "sciloom.heater.start/v1"
+        },
+        {
+          "effect": "disable",
+          "kind": "LifecycleCommandContract",
+          "name": "stop",
+          "parameters": [],
+          "required_configuration": [],
+          "semantic_id": "sciloom.heater.stop/v1"
+        }
+      ],
+      "properties": [
+        {
+          "kind": "PropertyContract",
+          "name": "temperature",
+          "semantic_id": "sciloom.heater.temperature/v1",
+          "type": "temperature"
+        },
+        {
+          "kind": "PropertyContract",
+          "name": "ramp_rate",
+          "semantic_id": "sciloom.heater.ramp-rate/v1",
+          "type": "temperature_rate"
+        }
+      ],
+      "required_configuration": [
+        "sciloom.heater.temperature/v1",
+        "sciloom.heater.ramp-rate/v1"
+      ],
+      "type_id": "sciloom.heater/v1"
+    }
+  ],
+  "entry_function_id": "warm",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "set-temperature",
+          "property_id": "sciloom.heater.temperature/v1",
+          "resource_id": "heater",
+          "source": null,
+          "value": {
+            "kind": "Literal",
+            "node_id": "temperature",
+            "source": null,
+            "type": "temperature",
+            "value": 293.15
+          }
+        },
+        {
+          "kind": "ConfigureProperty",
+          "node_id": "set-rate",
+          "property_id": "sciloom.heater.ramp-rate/v1",
+          "resource_id": "heater",
+          "source": null,
+          "value": {
+            "kind": "Literal",
+            "node_id": "rate",
+            "source": null,
+            "type": "temperature_rate",
+            "value": 0.016666666666666666
+          }
+        },
+        {
+          "arguments": [],
+          "kind": "DeviceCommand",
+          "node_id": "start",
+          "operation_id": "sciloom.heater.start/v1",
+          "resource_id": "heater",
+          "source": null
+        },
+        {
+          "duration": {
+            "kind": "Literal",
+            "node_id": "duration",
+            "source": null,
+            "type": "duration",
+            "value": 10.0
+          },
+          "kind": "Wait",
+          "node_id": "wait",
+          "source": null
+        },
+        {
+          "arguments": [],
+          "kind": "DeviceCommand",
+          "node_id": "stop",
+          "operation_id": "sciloom.heater.stop/v1",
+          "resource_id": "heater",
+          "source": null
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "WarmSample",
+      "node_id": "warm",
+      "source": null,
+      "variables": []
+    }
+  ],
+  "kind": "Program",
+  "resources": [
+    {
+      "device_type_id": "sciloom.heater/v1",
+      "kind": "DeviceResource",
+      "logical_id": "heater",
+      "node_id": "heater",
+      "source": null
+    }
+  ]
+}

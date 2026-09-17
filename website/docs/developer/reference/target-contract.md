@@ -57,7 +57,12 @@ declared limit is a rejection, never a clamp.
 
 `resolve_devices` returns `DeviceBindings`. Each entry is a fixed `DeviceBinding`
 or a `DeviceSelectionBinding` with explicit candidates. For a fixed profile,
-`bind_device(logical_id=..., device=..., physical_id=...)` builds this record:
+`bind_device(logical_id=..., device=..., physical_id=...)` constructs trusted deployment facts.
+
+The built-in Heater family and its derived contracts currently support fixed
+bindings only. Shared binding-use validation rejects thermal candidate selection
+before compilation or reference execution. The [heater recording example](../../examples/warm-sample.md)
+demonstrates a fixed reference contributor; it is not an AutoSuite profile.
 
 | Field | Meaning |
 |---|---|

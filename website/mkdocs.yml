@@ -100,6 +100,7 @@ nav:
       - Prepare labels: examples/prepare-labels.md
       - Quantity conversion: examples/quantity-conversion.md
       - Temperature values: examples/temperature-values.md
+      - Fixed heater intent: examples/warm-sample.md
       - Numeric operations: examples/numeric-operations.md
       - Record values: examples/record-values.md
       - Confirm samples: examples/confirm-samples.md

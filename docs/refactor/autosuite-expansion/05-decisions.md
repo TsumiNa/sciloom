@@ -311,6 +311,51 @@ Declaration bodies must not execute. Class A validation-coverage correction;
 no interface or production behavior changes. Version remains MINOR 0.7.1 → 0.8.0.
 Recheck latest-head CI and every review surface before merge.
 
+## D019 — R5.2 preflight (2026-09-18)
+
+Baseline c4abeb82f906b10c3c4a9f13fc3eab0475855247, lockstep 0.8.0. Previous goal
+turn made progress: R4.2 #110 and R5.1 #111 are remotely MERGED. R5.1's suppressed
+declaration test finding was fixed, 1279 tests and all four latest-head CI jobs
+passed, with no unresolved thread. Current worktree was clean; R5.2 starts only
+from fetched main after rechecking remote state.
+
+Inspected Heater plan, operation registration/lowering, built-in contract
+protection, definite configuration, fixed/candidate binding validation and
+reference lifecycle snapshots. R4's defined effects already express both heater
+commands and R5.1 supplies both property types. No new task or effect framework
+is needed. Class A: define stable heater IDs in the authority and core, and use
+the existing decorator/contracts without modifying Agitator or BaseDevice.
+
+Class B scope enforcement: generic candidate binding would otherwise make a new
+heater family eligible for dynamic selection automatically. The authority now
+explicitly rejects heater/derived candidate bindings through the existing shared
+binding-use validation, before compilation/reference execution. Fixed binding
+and generic logical lifecycle behavior are retained; agitation selection is
+unchanged. This implements the accepted fixed-only stage without a new capability
+framework or changing prior JSON.
+
+Class C: no new native export/precision receipt is present. Explicit reference
+contributors demonstrate extension and fixed binding only, not a hardware profile.
+AutoSuite thermal values/commands remain rejected. Fixed virtual waiting does
+not establish measured temperature. No class D deviation requires interruption.
+
+## D020 — R5.2 review: inherited startup requirements (2026-09-18)
+
+Review 5239812251 / inline 4040162010 found a concrete bypass: a derived Heater
+can override device-wide required_configuration with an empty tuple. Generic
+APPLY_AND_ENABLE correctly obeys the concrete contract, so the initial family
+declaration would then permit unconfigured startup. Class B correction preserving
+the original mandatory two-setting intent: place temperature/ramp-rate IDs on
+the protected start LifecycleCommandContract as explicit requirements as well.
+Update the authority/scope before code. Existing R4 command/binding validation
+then rejects missing writable settings and unconfigured start, even when the
+derived device-wide list is empty. Do not change older family or generic effect
+semantics. No new compatibility wrapper or JSON model is needed.
+
+Two suppressed comments identify the same stale public device-contract reference.
+Update shipped families, protected IDs and thermal value types there. Reassessed
+Version remains MINOR 0.8.0 → 0.9.0; review fixes preserve the planned API meaning.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,

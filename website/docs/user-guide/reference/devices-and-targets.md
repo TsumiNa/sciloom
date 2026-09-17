@@ -4,7 +4,7 @@ Declare the device your procedure needs; bind it to an instrument when compiling
 
 ## Agitator
 
-`Agitator` is the built-in device family. Declare `shaker: Agitator` in
+`Agitator` is a built-in device family. Declare `shaker: Agitator` in
 the Function. The slot already provides a logical reference; you do not need to
 create an Agitator object. Concrete hardware profiles belong in the target.
 See [lesson 1](../tutorial/first-function.md).
@@ -29,6 +29,21 @@ same invocation; compilation does not assume a previous invocation supplied it.
 Property reads and augmented assignments such as `+=` are not supported.
 There is no measured getter, generic duration parameter or timed stop.
 
+## Heater
+
+Declare `heater: Heater` using `from sciloom import Heater`. Its two write-only
+properties are `temperature: Temperature` and `ramp_rate: TemperatureRate`.
+Configure both before calling `start()`. Assignments capture values without
+changing applied settings; repeated start applies the complete saved configuration.
+`stop()` disables the heater while retaining saved and applied settings.
+
+The core/reference implementation supports fixed bindings only. Candidate
+selection is rejected for Heater and its subclasses. AutoSuite thermal profiles
+remain gated pending native evidence; there is no measured temperature getter,
+automatic stop or wait-to-temperature operation. A fixed `wait(10 * s)` requires
+an explicit reference clock and does not establish that a temperature was reached.
+See the [complete author and contributor example](../../examples/warm-sample.md).
+
 ## Binding names
 
 | Logical device | Key in the target's `devices` |
@@ -49,7 +64,7 @@ See [the complete sharing example](../advanced/composition.md).
 | Import | `from sciloom_autosuite import AutoSuiteIndividualShaker, AutoSuiteTarget` |
 | `AutoSuiteTarget(version=..., devices={...})` | Defaults to `AutoSuiteVersion.V2_47_1_1`, the only supported serialization version |
 | `AutoSuiteIndividualShaker(zone=..., device_id=...)` | Existing zone name and positive decimal individual shaker ID |
-| Separate logical devices | Must have different IDs and zones |
+| Separate logical devices | Must have distinct physical actuator identities; a shared zone name alone is not a conflict |
 | Generated file | UTF-8 XML function package, with an `.asfp` extension |
 | `result.write(path)` | Write bytes, create parent directories and return the path; no extension added |
 
