@@ -3,10 +3,12 @@
 from .acknowledgements import QueuedAcknowledgements
 from .clocks import VirtualClock, VirtualWallClock, WallClock
 from .device_state import DeviceEvent, DeviceState, PhysicalDeviceState
+from .dialogs import DialogOutcome, DialogResponse, QueuedDialogResponses
 from .environment import (
     AcknowledgementEvent,
     CsvAppendEvent,
     CsvReadEvent,
+    DialogEvent,
     ExecutionEvent,
     LogEvent,
     ReferenceEnvironment,
@@ -21,6 +23,10 @@ from .properties import WellProperties
 from .runtime import ExecutionConfig, ExecutionResult, Interpreter
 
 __all__ = [
+    "DialogOutcome",
+    "DialogResponse",
+    "QueuedDialogResponses",
+    "DialogEvent",
     "PhysicalDeviceState",
     "WellProperties",
     "WellPropertyReadEvent",

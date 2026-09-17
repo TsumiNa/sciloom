@@ -5,6 +5,7 @@ from .codec import from_dict, from_json, to_dict, to_json
 from .device_contracts import CommandContract, CommandParameter, DeviceTypeContract, PropertyContract
 from .model import (
     AppendCsv,
+    AskYesNo,
     Assignment,
     Binary,
     BinaryOp,
@@ -39,6 +40,7 @@ from .model import (
     ReadWallTime,
     ReadWellProperty,
     Reference,
+    RequestText,
     Resource,
     StartAgitation,
     StartTimer,
@@ -88,6 +90,8 @@ __all__ = [
     "ReadCsv",
     "LogValue",
     "Notify",
+    "RequestText",
+    "AskYesNo",
     "ReadWallTime",
     "Resource",
     "TimerResource",

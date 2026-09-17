@@ -13,6 +13,10 @@ Import experiment-author interfaces from `sciloom`. See also [units](units.md),
 
 ::: sciloom.notify
 
+::: sciloom.request_text
+
+::: sciloom.ask_yes_no
+
 ::: sciloom.now_text
 
 ::: sciloom.wait

@@ -12,6 +12,10 @@ Construct ordered immutable statements rather than target-specific tasks. IDs id
 
 ::: sciloom.core.ir.Notify
 
+::: sciloom.core.ir.RequestText
+
+::: sciloom.core.ir.AskYesNo
+
 ::: sciloom.core.ir.ReadWallTime
 
 ::: sciloom.core.ir.ReadCsv

@@ -297,6 +297,35 @@ class Notify(Node):
 
 
 @dataclass(frozen=True, kw_only=True)
+class RequestText(Node):
+    """Capture a request and positive optional timeout, then assign accepted text.
+
+    Cancellation, Stop and timeout terminate without changing the destination.
+    Empty accepted text is distinct from an absent response.
+    """
+
+    __ir_kind__: ClassVar[str] = "RequestText"
+
+    target: Reference
+    message: Expression
+    timeout: Expression | None = None
+
+
+@dataclass(frozen=True, kw_only=True)
+class AskYesNo(Node):
+    """Capture a request and positive optional timeout, then assign accepted bool.
+
+    False is a normal No result. Cancellation, Stop and timeout terminate.
+    """
+
+    __ir_kind__: ClassVar[str] = "AskYesNo"
+
+    target: Reference
+    message: Expression
+    timeout: Expression | None = None
+
+
+@dataclass(frozen=True, kw_only=True)
 class ReadWallTime(Node):
     """Read wall time once and assign its formatted text to a declared field.
 
@@ -674,6 +703,8 @@ Statement = (
     Assignment
     | LogValue
     | Notify
+    | RequestText
+    | AskYesNo
     | ReadWallTime
     | ReadCsv
     | AppendCsv

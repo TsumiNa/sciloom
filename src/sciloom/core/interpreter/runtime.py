@@ -10,6 +10,7 @@ from sciloom.core.device_locations import validate_device_locations
 from sciloom.core.diagnostics import IRValidationError
 from sciloom.core.ir import (
     AppendCsv,
+    AskYesNo,
     Assignment,
     Binary,
     Call,
@@ -28,6 +29,7 @@ from sciloom.core.ir import (
     ReadWallTime,
     ReadWellProperty,
     Reference,
+    RequestText,
     ScalarType,
     StartAgitation,
     StartTimer,
@@ -51,8 +53,10 @@ from .clocks import format_wall_time
 from .csv_append import execute_append
 from .csv_read import execute_read
 from .device_state import DeviceSession, DeviceState, PhysicalDeviceState
+from .dialogs import DialogOutcome, DialogResponse, QueuedDialogResponses
 from .environment import (
     AcknowledgementEvent,
+    DialogEvent,
     ExecutionEvent,
     LogEvent,
     ReferenceEnvironment,
@@ -303,6 +307,73 @@ class Interpreter:
                 self._record_event(
                     AcknowledgementEvent(node_id=statement.node_id, source=statement.source, message=message)
                 )
+            elif isinstance(statement, (RequestText, AskYesNo)):
+                message = evaluate(self, statement.message, frame)
+                assert isinstance(message, str)
+                deadline = None
+                if statement.timeout is not None:
+                    seconds = evaluate(self, statement.timeout, frame)
+                    assert isinstance(seconds, (int, float)) and not isinstance(seconds, bool)
+                    if seconds <= 0:
+                        fail("dialog_timeout_value", "Dialog timeout must be a positive finite duration.", statement)
+                    deadline = Duration(seconds=seconds)
+                dialog_responses = _require_service(self.environment.dialogs, "dialogs", statement)
+                if not isinstance(dialog_responses, QueuedDialogResponses):
+                    fail(
+                        "dialog_response_type", "Dialogs require an explicit QueuedDialogResponses service.", statement
+                    )
+                try:
+                    response = dialog_responses.respond()
+                except LookupError:
+                    fail("dialog_response_required", "An explicit dialog response is required to continue.", statement)
+                if type(response) is not DialogResponse:
+                    fail("dialog_response_type", "The dialog service returned an invalid response record.", statement)
+                outcome = response.outcome
+                if deadline is not None and response.elapsed >= deadline:
+                    outcome = DialogOutcome.TIMED_OUT
+                error_code = {
+                    DialogOutcome.CANCELLED: "dialog_cancelled",
+                    DialogOutcome.STOPPED: "dialog_stopped",
+                    DialogOutcome.TIMED_OUT: "dialog_timeout",
+                }.get(outcome)
+                expected = str if isinstance(statement, RequestText) else bool
+                if outcome == DialogOutcome.ACCEPTED and type(response.value) is not expected:
+                    error_code = "dialog_response_type"
+                accepted_value = response.value if error_code is None else None
+                if error_code is None:
+                    assert isinstance(accepted_value, (str, bool))
+                    self._write(statement.target, accepted_value, frame)
+                self._record_event(
+                    DialogEvent(
+                        node_id=statement.node_id,
+                        source=statement.source,
+                        operation="request_text" if isinstance(statement, RequestText) else "ask_yes_no",
+                        message=message,
+                        timeout=deadline,
+                        outcome=outcome,
+                        elapsed=response.elapsed,
+                        value=accepted_value,
+                        error_code=error_code,
+                    )
+                )
+                if error_code is not None:
+                    if error_code == "dialog_response_type":
+                        reason = (
+                            f"Dialog response requires {expected.__name__}, received {type(response.value).__name__}."
+                        )
+                    elif error_code == "dialog_timeout":
+                        reason = "Dialog timed out."
+                        if deadline is not None:
+                            reason += f" Configured timeout: {deadline.seconds:g} s."
+                    elif error_code == "dialog_cancelled":
+                        reason = "The operator cancelled the dialog."
+                    else:
+                        reason = "The operator selected Stop."
+                    fail(
+                        error_code,
+                        reason + " No result was assigned; subsequent statements did not execute.",
+                        statement,
+                    )
             elif isinstance(statement, ReadCsv):
                 execute_read(self, statement, frame)
             elif isinstance(statement, AppendCsv):

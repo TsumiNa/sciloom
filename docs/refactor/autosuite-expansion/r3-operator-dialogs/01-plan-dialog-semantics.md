@@ -8,7 +8,7 @@ Typed dialog results across source and JSON while preserving the accepted semant
 
 [Authoritative interface](../01-contract.md#r3-ordered-text-and-yesno-results).
 R2.1 merged. Native implementation does not require CSV unlocking; any necessary failure mechanism requires its own native proof.
-Current code status: pending. Native status follows the [group overview](00-overview.md)
+Current code status: implemented in this PR; review/merge pending. Native status follows the [group overview](00-overview.md)
 and the [evidence register](../04-evidence.md), not a successful local test.
 
 ## Implementation preflight
@@ -40,6 +40,18 @@ Update the contract's availability and group/main status table before review.
 
 ## Review and completion
 
+Local acceptance (2026-09-18 Asia/Tokyo): 1085 code/example/tools tests,
+97 documentation-tool tests, Ruff checks/format, mypy, strict site build,
+smoke, recipe validation and 45 CI example/syntax commands passed. The initial
+full run caught an omitted analysis-module classification for dsl.dialogs;
+it was registered and the full suite passed after correction. Existing example
+companions and old JSON byte fixtures are unchanged. The two new examples ran
+and their complete direct-IR companion is committed. Native status stays pending.
+
+Review follow-up: distinct failure diagnostics and four no-timeout regressions
+passed the full 1089-test suite, mypy and strict site build. The handbook wording
+was corrected; version scope remains MINOR 0.6.0. Latest-head CI is still required.
+
 Review, fix feedback, recheck latest head, squash merge and confirm remote MERGED
 before beginning the next implementation PR. Inspect all review surfaces.
 An evidence-limited implementation may be complete as implemented/gated, but its
@@ -47,10 +59,6 @@ native acceptance remains pending and compiler rejection stays enabled.
 
 ## Version
 
-Version: none, this revision records a plan and changes no shipped code.
-
-Implementation expectation: MINOR, adds result-bearing operator interactions.
-Before the implementation PR is reviewed, replace this planning-only decision
-with the exact lockstep from/to transition based on its actual shipped scope and
-then-current baseline. The user explicitly requested no preallocated future
-version numbers. Reassess after review changes; no publication.
+Version: MINOR 0.5.0 → 0.6.0, adds typed result-bearing author interactions,
+JSON v4 nodes and explicit reference responses while native emission stays gated.
+Both workspace packages remain lockstep. No release tag or publication.

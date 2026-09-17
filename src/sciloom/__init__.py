@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from .flow.function import Function, runtime
     from .flow.locations import at
     from .flow.logging import log
-    from .flow.messages import notify
+    from .flow.messages import ask_yes_no, notify, request_text
     from .flow.properties import WellProperty
     from .flow.timing import Timer, now_text, wait
 
@@ -53,6 +53,10 @@ def __getattr__(name: str) -> Any:
         from .flow.messages import notify
 
         return notify
+    if name in {"request_text", "ask_yes_no"}:
+        from .flow import messages
+
+        return getattr(messages, name)
     if name == "log":
         from .flow.logging import log
 
@@ -90,6 +94,8 @@ __all__ = [
     "wait",
     "now_text",
     "notify",
+    "request_text",
+    "ask_yes_no",
     "log",
     "text",
     "comptime",

@@ -10,6 +10,7 @@ from .device_validation import is_agitator, members_for, query_members_for, vali
 from .expressions import ExpressionChecker
 from .model import (
     AppendCsv,
+    AskYesNo,
     Assignment,
     BinaryOp,
     Call,
@@ -33,6 +34,7 @@ from .model import (
     ReadCsv,
     ReadWallTime,
     ReadWellProperty,
+    RequestText,
     StartAgitation,
     StartTimer,
     Statement,
@@ -164,6 +166,17 @@ def validate(package: Program) -> tuple[Diagnostic, ...]:
                 message_type = expression(stmt.message, function, f"{p}.message")
                 if message_type is not None and message_type != ScalarType.TEXT:
                     report("notification_type", "Notification messages must be text.", f"{p}.message", stmt)
+            elif isinstance(stmt, (RequestText, AskYesNo)):
+                result_type = ScalarType.TEXT if isinstance(stmt, RequestText) else ScalarType.BOOLEAN
+                for name, value, wanted in (
+                    ("target", stmt.target, result_type),
+                    ("message", stmt.message, ScalarType.TEXT),
+                    ("timeout", stmt.timeout, ScalarType.DURATION),
+                ):
+                    if value is not None:
+                        actual = expression(value, function, f"{p}.{name}")
+                        if actual is not None and actual != wanted:
+                            report("dialog_type", f"Dialog {name} requires {wanted.value}.", f"{p}.{name}", stmt)
             elif isinstance(stmt, ReadCsv):
                 validate_csv(stmt, function, p, checker)
             elif isinstance(stmt, AppendCsv):

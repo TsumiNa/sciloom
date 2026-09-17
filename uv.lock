@@ -615,7 +615,7 @@ wheels = [
 
 [[package]]
 name = "sciloom"
-version = "0.5.0"
+version = "0.6.0"
 source = { editable = "." }
 
 [package.dev-dependencies]
@@ -650,7 +650,7 @@ docs = [
 
 [[package]]
 name = "sciloom-autosuite"
-version = "0.5.0"
+version = "0.6.0"
 source = { editable = "packages/sciloom-autosuite" }
 dependencies = [
     { name = "sciloom" },

@@ -22,6 +22,14 @@
 
 ::: sciloom.core.interpreter.QueuedAcknowledgements
 
+::: sciloom.core.interpreter.DialogOutcome
+
+::: sciloom.core.interpreter.DialogResponse
+
+::: sciloom.core.interpreter.QueuedDialogResponses
+
+::: sciloom.core.interpreter.DialogEvent
+
 ::: sciloom.core.interpreter.WallTimeEvent
 
 ::: sciloom.core.interpreter.WallClock

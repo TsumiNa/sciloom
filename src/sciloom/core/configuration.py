@@ -6,6 +6,7 @@ from .bindings import DeviceBindings
 from .diagnostics import Diagnostic
 from .ir import (
     AppendCsv,
+    AskYesNo,
     Assignment,
     Call,
     ConfigureProperty,
@@ -23,6 +24,7 @@ from .ir import (
     ReadCsv,
     ReadWallTime,
     ReadWellProperty,
+    RequestText,
     StartAgitation,
     StartTimer,
     Statement,
@@ -128,6 +130,8 @@ def validate_device_usage(program: Program, bindings: DeviceBindings) -> tuple[D
                     LogValue,
                     Notify,
                     ReadWallTime,
+                    RequestText,
+                    AskYesNo,
                     ReadWellProperty,
                     WriteWellProperty,
                     AppendCsv,

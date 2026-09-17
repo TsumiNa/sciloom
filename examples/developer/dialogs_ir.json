@@ -1,0 +1,83 @@
+{
+  "device_types": [],
+  "entry_function_id": "f",
+  "format_version": 4,
+  "functions": [
+    {
+      "body": [
+        {
+          "kind": "RequestText",
+          "message": {
+            "kind": "Literal",
+            "node_id": "scan",
+            "source": null,
+            "type": "text",
+            "value": "Scan barcode"
+          },
+          "node_id": "request",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "barcode_target",
+            "source": null,
+            "symbol_id": "barcode"
+          },
+          "timeout": {
+            "kind": "Literal",
+            "node_id": "deadline",
+            "source": null,
+            "type": "duration",
+            "value": 30.0
+          }
+        },
+        {
+          "kind": "AskYesNo",
+          "message": {
+            "kind": "Literal",
+            "node_id": "confirm",
+            "source": null,
+            "type": "text",
+            "value": "Use this sample?"
+          },
+          "node_id": "ask",
+          "source": null,
+          "target": {
+            "kind": "Reference",
+            "node_id": "accepted_target",
+            "source": null,
+            "symbol_id": "accepted"
+          },
+          "timeout": null
+        }
+      ],
+      "kind": "FunctionIR",
+      "name": "IdentifySample",
+      "node_id": "f",
+      "source": null,
+      "variables": [
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "barcode",
+          "node_id": "barcode",
+          "owner_id": "f",
+          "role": "output",
+          "source": null,
+          "type": "text"
+        },
+        {
+          "initial": null,
+          "kind": "Variable",
+          "name": "accepted",
+          "node_id": "accepted",
+          "owner_id": "f",
+          "role": "output",
+          "source": null,
+          "type": "boolean"
+        }
+      ]
+    }
+  ],
+  "kind": "Program",
+  "resources": []
+}

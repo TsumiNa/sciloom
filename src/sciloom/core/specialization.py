@@ -7,6 +7,7 @@ from .bindings import DeviceBindings, validate_bindings
 from .diagnostics import CompilationError, Diagnostic, IRValidationError
 from .ir import (
     AppendCsv,
+    AskYesNo,
     Assignment,
     Call,
     CanWrite,
@@ -25,6 +26,7 @@ from .ir import (
     ReadCsv,
     ReadWallTime,
     ReadWellProperty,
+    RequestText,
     Resource,
     StartAgitation,
     StartTimer,
@@ -133,6 +135,8 @@ def specialize(program: Program, *, bindings: DeviceBindings) -> Program:
                     LogValue,
                     Notify,
                     ReadWallTime,
+                    RequestText,
+                    AskYesNo,
                     ReadWellProperty,
                     WriteWellProperty,
                     AppendCsv,

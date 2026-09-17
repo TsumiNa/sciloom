@@ -35,6 +35,7 @@ ANALYSIS = frozenset(
         "dsl.device_conditions",
         "dsl.device_locations",
         "dsl.device_operations",
+        "dsl.dialogs",
         "dsl.driver",
         "dsl.expressions",
         "dsl.source",
