@@ -4031,8 +4031,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.4.0
-    · <code title="f6352d5987a90a9c4276f0e8986873b0d6215b25">f6352d59</code>
+    · SciLoom 0.5.0
+    · <code title="6126bf7c9351713125601ba8ec224af8b45d3376">6126bf7c</code>
   </p>
 </aside>
 
@@ -4134,8 +4134,11 @@ and notebook or interactive source support are not yet available.</p>
 <h2 id="what-compilation-establishes">What compilation establishes</h2>
 <p><code>AutoSuiteDeployment.from_app</code> now reads APP product/reset settings and exact-byte
 provenance without modifying the file. Layouts read from APP also retain this
-source hash. Deployment facts and report records are available, but integration
-of reset-setting rejection into <code>AutoSuiteTarget</code> is not yet implemented.</p>
+source hash. Passing these facts to <code>AutoSuiteTarget(deployment=...)</code> rejects
+known version/provenance conflicts and reset-enabled APPs with persistent state.
+Offline compilation remains available. <code>write_autosuite_review</code> exports ASFP
+with a report of missing facts, state requirements and exact artifact/IR hashes;
+its native acceptance status remains pending.</p>
 <p>Compilation checks the source, value types, declared device bindings and required
 configuration before generating XML. It does not connect to the instrument or
 prove that the procedure will run correctly on your deployment.</p>

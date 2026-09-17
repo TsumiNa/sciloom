@@ -4120,8 +4120,8 @@
 <aside class="admonition note" aria-label="Documentation version">
   <p>
     <strong>dev</strong>
-    · SciLoom 0.4.0
-    · <code title="f6352d5987a90a9c4276f0e8986873b0d6215b25">f6352d59</code>
+    · SciLoom 0.5.0
+    · <code title="6126bf7c9351713125601ba8ec224af8b45d3376">6126bf7c</code>
   </p>
 </aside>
 
@@ -4256,11 +4256,29 @@ settings stay <code>None</code>; duplicate or malformed reset settings are rejec
 <p>The hash identifies the exact compressed APP bytes. A manually constructed layout
 has unknown provenance by default. The configuration label is only a display
 name, not a unique application identity.</p>
-<p>These read-only records do not yet attach settings to <code>AutoSuiteTarget</code> or reject
-compilation based on them. In particular, check Macro reset behavior before using
-persistent <code>Var</code> state in a native APP. A deployment report's <code>compatible</code> status
-means only its checked conditions match; its separate <code>native_status</code> remains
-<code>pending</code>. See the <a href="../../../api/autosuite/#read-only-application-settings">settings API</a>.</p>
+<p>Pass both records to the target to check deployment conditions:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sciloom_autosuite</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoSuiteTarget</span><span class="p">,</span> <span class="n">write_autosuite_review</span>
+
+<span class="n">target</span> <span class="o">=</span> <span class="n">AutoSuiteTarget</span><span class="p">(</span><span class="n">deployment</span><span class="o">=</span><span class="n">deployment</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">)</span>
+<span class="n">compiled</span> <span class="o">=</span> <span class="n">program</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>  <span class="c1"># Supply devices=... for device resources.</span>
+<span class="n">report</span> <span class="o">=</span> <span class="n">write_autosuite_review</span><span class="p">(</span><span class="n">compiled</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">"procedure.asfp"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">report</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">report</span><span class="o">.</span><span class="n">native_status</span><span class="p">)</span>
+</code></pre></div>
+<p>Known product-version or APP-source conflicts reject compilation. A reset-enabled
+APP also rejects programs with internal <code>Var</code> fields or saved device configuration:
+their values must persist across calls. SciLoom neither changes the APP nor moves
+state into global variables. Missing settings or provenance give <code>unknown</code> status.</p>
+<p>For offline review, use <code>AutoSuiteTarget()</code> and the same exporter. It writes
+<code>procedure.asfp</code> and <code>procedure.deployment.json</code>, including state requirements,
+missing facts and hashes of the artifact and canonical specialized IR. The
+exporter rechecks the selected contracts, target restrictions and exact emission
+before writing; a mismatched target, binding or artifact is rejected. Supply the
+target whose settings you intend to assess. <code>compiled.write(...)</code> continues to
+write only ASFP. The two review files are not written atomically; IO errors propagate.</p>
+<p>A report's <code>compatible</code> status means only its checked deployment conditions match;
+its separate <code>native_status</code> remains <code>pending</code>. It does not certify native lifetime
+behavior or instrument acceptance. See the
+<a href="../../../api/autosuite/#read-only-application-settings">settings API</a>.</p>
 <h2 id="compile-time-queries">Compile-time queries</h2>
 <table>
 <thead>
