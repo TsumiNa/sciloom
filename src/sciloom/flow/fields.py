@@ -13,7 +13,16 @@ from sciloom.core.diagnostics import Diagnostic, IRValidationError
 from sciloom.core.ir import VariableRole
 from sciloom.core.ir.types import ListType, ScalarType, ValueType, ZoneType
 from sciloom.core.locations import Zone
-from sciloom.units import Duration, RotationalSpeed, Temperature, TemperatureDifference, TemperatureRate, Volume
+from sciloom.units import (
+    Duration,
+    FlowRate,
+    Length,
+    RotationalSpeed,
+    Temperature,
+    TemperatureDifference,
+    TemperatureRate,
+    Volume,
+)
 
 
 class _FieldRole(Enum):
@@ -44,6 +53,8 @@ _TYPES = {
     Temperature: ScalarType.TEMPERATURE,
     TemperatureDifference: ScalarType.TEMPERATURE_DIFFERENCE,
     TemperatureRate: ScalarType.TEMPERATURE_RATE,
+    FlowRate: ScalarType.FLOW_RATE,
+    Length: ScalarType.LENGTH,
 }
 
 
@@ -62,6 +73,8 @@ class RuntimeField:
         | Duration
         | Temperature
         | TemperatureDifference
+        | FlowRate
+        | Length
         | TemperatureRate
         | Zone
         | tuple[
@@ -74,6 +87,8 @@ class RuntimeField:
             | Duration
             | Temperature
             | TemperatureDifference
+            | FlowRate
+            | Length
             | TemperatureRate,
             ...,
         ]
@@ -188,6 +203,8 @@ def _default(name: str, value: Any, value_type: ValueType) -> Any:
         ScalarType.TEMPERATURE: (Temperature,),
         ScalarType.TEMPERATURE_DIFFERENCE: (TemperatureDifference,),
         ScalarType.TEMPERATURE_RATE: (TemperatureRate,),
+        ScalarType.FLOW_RATE: (FlowRate,),
+        ScalarType.LENGTH: (Length,),
     }[value_type]
     if type(value) not in allowed or (type(value) is float and not math.isfinite(value)):
         _schema_error(name, f"Default must be a finite {value_type.value} value.")

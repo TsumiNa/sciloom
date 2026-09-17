@@ -21,6 +21,8 @@ from sciloom.flow.function import Function
 from sciloom.flow.properties import WellProperty
 from sciloom.units import (
     DurationUnit,
+    FlowRateUnit,
+    LengthUnit,
     SpeedUnit,
     TemperatureDifferenceUnit,
     TemperatureRateUnit,
@@ -64,7 +66,15 @@ class RuntimeSource:
     filename: str = ""
     static_names: Mapping[str, Any] = MappingProxyType({})
     unit_names: Mapping[
-        str, SpeedUnit | VolumeUnit | DurationUnit | TemperatureUnit | TemperatureDifferenceUnit | TemperatureRateUnit
+        str,
+        FlowRateUnit
+        | LengthUnit
+        | SpeedUnit
+        | VolumeUnit
+        | DurationUnit
+        | TemperatureUnit
+        | TemperatureDifferenceUnit
+        | TemperatureRateUnit,
     ] = MappingProxyType({})
     allows_len: bool = False
 

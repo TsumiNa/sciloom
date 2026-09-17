@@ -603,3 +603,213 @@ degC_per_min = TemperatureRateUnit.CELSIUS_PER_MINUTE
 """Celsius degrees of temperature change per minute."""
 kelvin_per_s = TemperatureRateUnit.KELVIN_PER_SECOND
 """Kelvin of temperature change per second."""
+
+
+@dataclass(frozen=True, kw_only=True)
+class FlowRate:
+    """A signed, finite volumetric flow in cubic metres per second.
+
+    Args:
+        m3_per_second: Canonical value; use the exported units in author programs.
+
+    Raises:
+        TypeError: A value is not numeric or has the wrong dimension.
+        ValueError: A value is nonfinite or cannot be represented.
+    """
+
+    m3_per_second: float
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "m3_per_second", _finite_number(self.m3_per_second))
+
+    def __add__(self, other: FlowRate) -> FlowRate:
+        if not isinstance(other, FlowRate):
+            raise TypeError("Addition requires two FlowRate values.")
+        return FlowRate(m3_per_second=self.m3_per_second + other.m3_per_second)
+
+    def __sub__(self, other: FlowRate) -> FlowRate:
+        if not isinstance(other, FlowRate):
+            raise TypeError("Subtraction requires two FlowRate values.")
+        return FlowRate(m3_per_second=self.m3_per_second - other.m3_per_second)
+
+    def __mul__(self, other: int | float) -> FlowRate:
+        return FlowRate(m3_per_second=self.m3_per_second * _finite_number(other))
+
+    def __rmul__(self, other: int | float) -> FlowRate:
+        return self * other
+
+    @overload
+    def __truediv__(self, other: FlowRate | FlowRateUnit) -> float: ...
+
+    @overload
+    def __truediv__(self, other: int | float) -> FlowRate: ...
+
+    def __truediv__(self, other: FlowRate | FlowRateUnit | int | float) -> FlowRate | float:
+        if isinstance(other, FlowRate):
+            return _finite_number(self.m3_per_second / other.m3_per_second)
+        if isinstance(other, FlowRateUnit):
+            return _finite_number(self.m3_per_second / other.scale)
+        return FlowRate(m3_per_second=self.m3_per_second / _finite_number(other))
+
+    def __pos__(self) -> FlowRate:
+        return self
+
+    def __neg__(self) -> FlowRate:
+        return FlowRate(m3_per_second=-self.m3_per_second)
+
+    def __abs__(self) -> FlowRate:
+        """Return the nonnegative magnitude, retaining the volumetric flow dimension."""
+        return FlowRate(m3_per_second=abs(self.m3_per_second))
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, FlowRate):
+            raise TypeError("Comparison requires two FlowRate values.")
+        return self.m3_per_second == other.m3_per_second
+
+    def __hash__(self) -> int:
+        return hash((FlowRate, self.m3_per_second))
+
+    def __lt__(self, other: FlowRate) -> bool:
+        if not isinstance(other, FlowRate):
+            raise TypeError("Comparison requires two FlowRate values.")
+        return self.m3_per_second < other.m3_per_second
+
+    def __le__(self, other: FlowRate) -> bool:
+        if not isinstance(other, FlowRate):
+            raise TypeError("Comparison requires two FlowRate values.")
+        return self.m3_per_second <= other.m3_per_second
+
+    def __gt__(self, other: FlowRate) -> bool:
+        if not isinstance(other, FlowRate):
+            raise TypeError("Comparison requires two FlowRate values.")
+        return self.m3_per_second > other.m3_per_second
+
+    def __ge__(self, other: FlowRate) -> bool:
+        if not isinstance(other, FlowRate):
+            raise TypeError("Comparison requires two FlowRate values.")
+        return self.m3_per_second >= other.m3_per_second
+
+
+@dataclass(frozen=True, kw_only=True)
+class Length:
+    """A signed, finite length in metres.
+
+    Args:
+        metres: Canonical value; use the exported units in author programs.
+
+    Raises:
+        TypeError: A value is not numeric or has the wrong dimension.
+        ValueError: A value is nonfinite or cannot be represented.
+    """
+
+    metres: float
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "metres", _finite_number(self.metres))
+
+    def __add__(self, other: Length) -> Length:
+        if not isinstance(other, Length):
+            raise TypeError("Addition requires two Length values.")
+        return Length(metres=self.metres + other.metres)
+
+    def __sub__(self, other: Length) -> Length:
+        if not isinstance(other, Length):
+            raise TypeError("Subtraction requires two Length values.")
+        return Length(metres=self.metres - other.metres)
+
+    def __mul__(self, other: int | float) -> Length:
+        return Length(metres=self.metres * _finite_number(other))
+
+    def __rmul__(self, other: int | float) -> Length:
+        return self * other
+
+    @overload
+    def __truediv__(self, other: Length | LengthUnit) -> float: ...
+
+    @overload
+    def __truediv__(self, other: int | float) -> Length: ...
+
+    def __truediv__(self, other: Length | LengthUnit | int | float) -> Length | float:
+        if isinstance(other, Length):
+            return _finite_number(self.metres / other.metres)
+        if isinstance(other, LengthUnit):
+            return _finite_number(self.metres / other.scale)
+        return Length(metres=self.metres / _finite_number(other))
+
+    def __pos__(self) -> Length:
+        return self
+
+    def __neg__(self) -> Length:
+        return Length(metres=-self.metres)
+
+    def __abs__(self) -> Length:
+        """Return the nonnegative magnitude, retaining the length dimension."""
+        return Length(metres=abs(self.metres))
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Length):
+            raise TypeError("Comparison requires two Length values.")
+        return self.metres == other.metres
+
+    def __hash__(self) -> int:
+        return hash((Length, self.metres))
+
+    def __lt__(self, other: Length) -> bool:
+        if not isinstance(other, Length):
+            raise TypeError("Comparison requires two Length values.")
+        return self.metres < other.metres
+
+    def __le__(self, other: Length) -> bool:
+        if not isinstance(other, Length):
+            raise TypeError("Comparison requires two Length values.")
+        return self.metres <= other.metres
+
+    def __gt__(self, other: Length) -> bool:
+        if not isinstance(other, Length):
+            raise TypeError("Comparison requires two Length values.")
+        return self.metres > other.metres
+
+    def __ge__(self, other: Length) -> bool:
+        if not isinstance(other, Length):
+            raise TypeError("Comparison requires two Length values.")
+        return self.metres >= other.metres
+
+
+class FlowRateUnit(Enum):
+    """Explicit scale for constructing a finite volumetric flow rate."""
+
+    MILLILITRES_PER_MINUTE = "mL/min"
+    CUBIC_METRES_PER_SECOND = "m3/s"
+
+    @property
+    def scale(self) -> float:
+        """Canonical cubic metres per second for one unit."""
+        return 1e-6 / 60 if self == FlowRateUnit.MILLILITRES_PER_MINUTE else 1.0
+
+    def __rmul__(self, value: int | float) -> FlowRate:
+        return FlowRate(m3_per_second=_finite_number(value) * self.scale)
+
+
+class LengthUnit(Enum):
+    """Explicit scale for constructing a finite length."""
+
+    MILLIMETRE = "mm"
+    METRE = "m"
+
+    @property
+    def scale(self) -> float:
+        """Canonical metres for one unit."""
+        return 0.001 if self == LengthUnit.MILLIMETRE else 1.0
+
+    def __rmul__(self, value: int | float) -> Length:
+        return Length(metres=_finite_number(value) * self.scale)
+
+
+mL_per_min = FlowRateUnit.MILLILITRES_PER_MINUTE
+"""Millilitres per minute; multiply a number by this unit."""
+m3_per_s = FlowRateUnit.CUBIC_METRES_PER_SECOND
+"""Cubic metres per second; canonical volumetric flow unit."""
+mm = LengthUnit.MILLIMETRE
+"""Millimetres; multiply a number by this unit."""
+metre = LengthUnit.METRE
+"""Metres; canonical length unit."""

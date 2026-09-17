@@ -1,6 +1,15 @@
 """Typed runtime logging vocabulary for experiment authors."""
 
-from sciloom.units import Duration, RotationalSpeed, Temperature, TemperatureDifference, TemperatureRate, Volume
+from sciloom.units import (
+    Duration,
+    FlowRate,
+    Length,
+    RotationalSpeed,
+    Temperature,
+    TemperatureDifference,
+    TemperatureRate,
+    Volume,
+)
 
 
 def log(
@@ -13,6 +22,8 @@ def log(
     | Duration
     | Temperature
     | TemperatureDifference
+    | FlowRate
+    | Length
     | TemperatureRate,
     *,
     category: str,

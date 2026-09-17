@@ -17,8 +17,18 @@ from sciloom.core.ir.device_contracts import (
     PropertyContract,
 )
 from sciloom.core.ir.device_validation import semantic_id
-from sciloom.core.ir.types import ListType, ScalarType
-from sciloom.units import Duration, RotationalSpeed, Temperature, TemperatureDifference, TemperatureRate, Volume
+from sciloom.core.ir.types import ListType, ScalarType, ZoneType
+from sciloom.core.locations import Zone
+from sciloom.units import (
+    Duration,
+    FlowRate,
+    Length,
+    RotationalSpeed,
+    Temperature,
+    TemperatureDifference,
+    TemperatureRate,
+    Volume,
+)
 from .base import BaseDevice
 
 P = ParamSpec("P")
@@ -82,6 +92,8 @@ def value_type(annotation: object) -> ScalarType | ListType:
         Temperature: ScalarType.TEMPERATURE,
         TemperatureDifference: ScalarType.TEMPERATURE_DIFFERENCE,
         TemperatureRate: ScalarType.TEMPERATURE_RATE,
+        FlowRate: ScalarType.FLOW_RATE,
+        Length: ScalarType.LENGTH,
     }
     if isinstance(annotation, type) and annotation in scalars:
         return scalars[annotation]
@@ -133,7 +145,11 @@ def device_contract(cls: type[BaseDevice]) -> DeviceTypeContract:
                 inspect.Parameter.VAR_KEYWORD,
             ):
                 _declaration_error(name, "Device commands do not support defaults or variadic arguments.")
-            arguments.append(CommandParameter(name=parameter.name, type=value_type(hints.get(parameter.name))))
+            annotation = hints.get(parameter.name)
+            parameter_type = (
+                ZoneType() if annotation is Zone and not isinstance(member, property) else value_type(annotation)
+            )
+            arguments.append(CommandParameter(name=parameter.name, type=parameter_type))
         lifecycle = inspect.getattr_static(method, "__sciloom_lifecycle__", None)
         requires = inspect.getattr_static(method, "__sciloom_requires__", ())
         if lifecycle is not None and (isinstance(member, property) or arguments):

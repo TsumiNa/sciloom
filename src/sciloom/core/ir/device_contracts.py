@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from enum import StrEnum
 from typing import ClassVar
 
-from .types import ListType, ScalarType
+from .types import ListType, ScalarType, ValueType
 
 DEVICE_TYPE_ID = "sciloom.device/v1"
 AGITATOR_TYPE_ID = "sciloom.agitator/v1"
@@ -31,12 +31,12 @@ class PropertyContract:
 
 @dataclass(frozen=True, kw_only=True)
 class CommandParameter:
-    """Scalar/list argument of a no-return device command; excludes Zone values."""
+    """Typed scalar, homogeneous list or Zone argument of a no-return command."""
 
     __ir_kind__: ClassVar[str] = "CommandParameter"
 
     name: str
-    type: ScalarType | ListType
+    type: ValueType
 
 
 @dataclass(frozen=True, kw_only=True)

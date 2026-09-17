@@ -127,7 +127,7 @@ def test_unregistered_host_members_are_inspected_without_getattr_execution():
     assert device_contract(Contract).properties == AGITATOR_CONTRACT.properties
 
 
-def test_zone_values_do_not_expand_device_property_or_command_types():
+def test_zone_values_expand_commands_but_not_device_properties():
     class LocatedProperty(Agitator):
         device_type_id = "test.located-property/v1"
 
@@ -147,9 +147,10 @@ def test_zone_values_do_not_expand_device_property_or_command_types():
         def perform(self, location: Zone) -> None:
             pytest.fail("command must not execute")
 
-    for cls in (LocatedProperty, LocatedCommand):
-        with pytest.raises(IRValidationError, match="device_contract"):
-            device_contract(cls)
+    with pytest.raises(IRValidationError, match="device_contract"):
+        device_contract(LocatedProperty)
+    command = next(op for op in device_contract(LocatedCommand).operations if op.name == "perform")
+    assert command.parameters[0].type.value == "zone"
 
 
 @pytest.mark.parametrize(

@@ -17,6 +17,8 @@ if TYPE_CHECKING:
     from .flow.properties import WellProperty
     from .flow.timing import Timer, now_text, wait
     from .units import (
+        FlowRate,
+        Length,
         Temperature,
         TemperatureDifference,
         TemperatureRate,
@@ -26,10 +28,20 @@ if TYPE_CHECKING:
         delta_kelvin,
         kelvin,
         kelvin_per_s,
+        m3_per_s,
+        metre,
+        mL_per_min,
+        mm,
     )
 
 _DSL_EXPORTS = {"Function", "Input", "Output", "Var", "runtime"}
-_THERMAL_EXPORTS = {
+_QUANTITY_EXPORTS = {
+    "FlowRate",
+    "Length",
+    "mL_per_min",
+    "m3_per_s",
+    "mm",
+    "metre",
     "Temperature",
     "TemperatureDifference",
     "TemperatureRate",
@@ -43,7 +55,7 @@ _THERMAL_EXPORTS = {
 
 
 def __getattr__(name: str) -> Any:
-    if name in _THERMAL_EXPORTS:
+    if name in _QUANTITY_EXPORTS:
         from . import units
 
         return getattr(units, name)
@@ -116,6 +128,12 @@ def __getattr__(name: str) -> Any:
 
 
 __all__ = [
+    "FlowRate",
+    "Length",
+    "mL_per_min",
+    "m3_per_s",
+    "mm",
+    "metre",
     "Temperature",
     "TemperatureDifference",
     "TemperatureRate",

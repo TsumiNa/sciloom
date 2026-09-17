@@ -129,6 +129,8 @@ class ExpressionChecker:
                 ScalarType.DURATION: type(expr.value) in (int, float),
                 ScalarType.TEMPERATURE_DIFFERENCE: type(expr.value) in (int, float),
                 ScalarType.TEMPERATURE_RATE: type(expr.value) in (int, float),
+                ScalarType.FLOW_RATE: type(expr.value) in (int, float),
+                ScalarType.LENGTH: type(expr.value) in (int, float),
                 ScalarType.TEMPERATURE: type(expr.value) in (int, float)
                 and isinstance(expr.value, (int, float))
                 and expr.value >= 0,

@@ -49,6 +49,12 @@ reading, a selected shaker and per-well logging with explicit reference services
 They do not produce native ASFP while the relevant target gates remain open.
 Existing fixed-shaker and scalar tutorial programs continue to compile.
 
+[Flow/length settings and typed location command arguments](../examples/transfer-settings.md)
+are available in source, IR and JSON. The quantities also support reference
+execution, including explicit-unit CSV reads. Native flow/length encoding is
+gated, and an unknown command signature still has no reference effect. This
+foundation alone does not enable a liquid-transfer operation.
+
 Contributors can define devices and targets. The developer examples include a
 demonstration target, JSON v4 interchange and a reference interpreter for checking
 calculations and state changes. That interpreter does not simulate laboratory hardware.

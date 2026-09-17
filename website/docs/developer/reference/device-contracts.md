@@ -23,14 +23,22 @@ profile. AutoSuite thermal profiles remain gated pending native evidence.
 | Member | Declaration | Rule |
 |---|---|---|
 | configuration property | a Python `property` whose setter carries `@operation(id=...)` | the getter declares the type and raises; setter and getter types match; the setter takes one typed value and returns `None` |
-| command | a method decorated with `@operation(id=...)` | typed positional arguments, no defaults or variadics, returns `None` |
+| command | a method decorated with `@operation(id=...)` | typed positional/keyword parameters, no defaults or variadics, returns `None` |
 | lifecycle command | `@operation(id=..., lifecycle=LifecycleEffect.APPLY_AND_ENABLE)` or `DISABLE` | parameterless; optional `requires=("property_name", ...)` |
-| value types | `int`, `float`, `bool`, `str`, `RotationalSpeed`, `Volume`, `Duration`, `Temperature`, `TemperatureDifference`, `TemperatureRate`, or a homogeneous list of one of them | no other Python objects |
+| property and command value types | `int`, `float`, `bool`, `str`, `RotationalSpeed`, `Volume`, `Duration`, `Temperature`, `TemperatureDifference`, `TemperatureRate`, `FlowRate`, `Length`, or a homogeneous list of one of them | no arbitrary Python objects |
+| additional command parameter type | `Zone` | typed `ZoneType` in IR; never a property, string-encoded location or `list[Zone]` |
 
 The compiler reads declarations statically and never executes their bodies.
 Host access is guarded: reading a device property or calling a runtime method
 from host Python raises `TypeError`. Registered parameters are written by
 assignment; there are no `set_*` methods and no getters.
+
+Command arguments are emitted in declared parameter order, even when keywords
+are written in a different order. A Zone retains ordered opaque well identities.
+The [location-command example](../../examples/transfer-settings.md#contributor-location-arguments)
+shows source, typed contract, JSON and specialization. Declaring a signature does
+not define reference semantics: unknown commands still fail before any device
+event, and AutoSuite needs an explicit supported adapter.
 
 ## Profiles
 

@@ -10,6 +10,28 @@ per second. Absolute temperature cannot be negative, added to another absolute
 temperature, or scaled. These types support core/reference execution; AutoSuite
 thermal encodings remain gated. See the [temperature example](../examples/temperature-values.md).
 
+`FlowRate` stores signed finite cubic metres per second, and `Length` stores
+signed finite metres. Use `mL_per_min`, `m3_per_s`, `mm` and `metre`; operation
+and deployment contracts impose positive flow or permitted positions separately.
+These values have source/IR/JSON/reference support. Native AutoSuite encoding
+remains gated. See [transfer settings](../examples/transfer-settings.md).
+
+::: sciloom.FlowRate
+
+::: sciloom.Length
+
+::: sciloom.mL_per_min
+
+::: sciloom.m3_per_s
+
+::: sciloom.mm
+
+::: sciloom.metre
+
+::: sciloom.units.FlowRateUnit
+
+::: sciloom.units.LengthUnit
+
 ::: sciloom.Temperature
 
 ::: sciloom.TemperatureDifference

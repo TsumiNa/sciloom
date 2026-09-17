@@ -25,7 +25,16 @@ from sciloom.flow.device_slots import DeviceReference
 # Function is read at runtime below, not only in annotations. Do not move this
 # import behind TYPE_CHECKING: component_paths tests instances with isinstance.
 from sciloom.flow.function import Function
-from sciloom.units import Duration, RotationalSpeed, Temperature, TemperatureDifference, TemperatureRate, Volume
+from sciloom.units import (
+    Duration,
+    FlowRate,
+    Length,
+    RotationalSpeed,
+    Temperature,
+    TemperatureDifference,
+    TemperatureRate,
+    Volume,
+)
 from .context import LoweringContext, ProgramScope
 from .source import runtime_source
 from .statements import statements
@@ -89,6 +98,8 @@ def _initial_scalar(
     | Duration
     | Temperature
     | TemperatureDifference
+    | FlowRate
+    | Length
     | TemperatureRate,
 ) -> bool | int | float | str:
     if isinstance(value, RotationalSpeed):
@@ -99,6 +110,10 @@ def _initial_scalar(
         return value.seconds
     if isinstance(value, (Temperature, TemperatureDifference)):
         return value.kelvin
+    if isinstance(value, FlowRate):
+        return value.m3_per_second
+    if isinstance(value, Length):
+        return value.metres
     if isinstance(value, TemperatureRate):
         return value.kelvin_per_second
     return value
@@ -142,6 +157,8 @@ def _build_function(context: LoweringContext) -> FunctionIR:
                             | Duration
                             | Temperature
                             | TemperatureDifference
+                            | FlowRate
+                            | Length
                             | TemperatureRate,
                             field.default,
                         )
