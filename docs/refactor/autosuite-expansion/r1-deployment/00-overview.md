@@ -17,7 +17,7 @@ an explicit developer decision.
 | Stage | Outcome | Code status |
 | --- | --- | --- |
 | R1.1 | [Read-only deployment facts and reports](01-plan-deployment-facts.md) | Merged #104 |
-| R1.2 | [Enforce known deployment incompatibilities](02-plan-state-guards.md) | Implemented in this PR; review/merge pending |
+| R1.2 | [Enforce known deployment incompatibilities](02-plan-state-guards.md) | Merged #105 |
 
 Native status: Reset=0/1 lifetime experiments pending.
 Four measurement bundles and their host procedure are available; no native

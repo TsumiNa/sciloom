@@ -106,6 +106,24 @@ explicit regression assertions showing base-typed authoring compiles, becomes
 concrete and exports successfully, while substituted authored IR rejects before
 writing. Class A clarification; no interface change, version stays 0.5.0.
 
+## D008 — R2.1 preflight (2026-09-18)
+
+Baseline 6126bf7c9351713125601ba8ec224af8b45d3376, packages 0.5.0. R1.2 PR #105
+is remotely MERGED after review response, regression coverage and all four
+latest-head CI checks. Its local test baseline is now 1016 code/tools tests.
+No Executor receipt or valid new thermal/transfer export has arrived.
+
+Existing failure (9), CSV read (14) and CSV append (6) generators already supply
+case identities, input/artifact hashes and source/version provenance. Reuse those
+case directories and manifest formats. Add one read-only receipt validator,
+not new generators: verify exact manifest/artifact hashes, clean source, lockstep
+versions, APP product/profile association, all cases/controls, commands/logs and
+two CSV runs with complete before/after files. Machine completeness ends at
+pending_review and never changes compiler support. Contradictory observations
+remain evidence for human review; an unobservable/failed control is inconclusive.
+Class B tooling detail, class C for absent host evidence. R2.2–R2.4 stay pending;
+after R2.1 merges proceed to independent R3.1 under the accepted sequence.
+
 ## Required entry for every next preflight
 
 Record date/stage, current main SHA and versions, predecessor merge/CI/review,

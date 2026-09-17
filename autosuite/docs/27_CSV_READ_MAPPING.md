@@ -89,3 +89,7 @@ task is not a replacement for stopping subsequent caller actions.
 
 Collected questions remain RC-QA-001/002/003 in the runtime-capability Q&A. Corpus
 files and their manifest are not changed by the implementation or probe tool.
+
+The [receipt checker](35_NATIVE_MEASUREMENT_RECEIPTS.md) associates original
+input bytes with two native runs, product/profile and full destination arrays.
+Its pending_review result leaves this compilation gate unchanged.

@@ -8,7 +8,7 @@ Organize native measurement receipts while preserving the accepted semantic cont
 
 [Authoritative interface](../01-contract.md#r2-evidence-and-native-unlocking).
 R1.2 merged. Unlock PRs additionally require the receipts below and no other implementation PR open.
-Current code status: pending. Native status follows the [group overview](00-overview.md)
+Current code status: implemented in this PR; review/merge pending. Native status follows the [group overview](00-overview.md)
 and the [evidence register](../04-evidence.md), not a successful local test.
 
 ## Implementation preflight
@@ -40,6 +40,14 @@ Update the contract's availability and group/main status table before review.
 
 ## Review and completion
 
+The checkout-only validate_native_receipt module reuses the existing three case
+directories/manifests; it verifies clean-source association, actual file hashes,
+product/profile, complete controls and two CSV runs with byte continuity. Complete
+receipts remain pending_review; contradictory measurements are retained for human
+review. No compiler source or public author API changes. The receipt format and
+CLI are documented in autosuite/docs/35_NATIVE_MEASUREMENT_RECEIPTS.md; screenshot
+facts and exact image hashes are in 34_EDITOR_SCREENSHOT_EVIDENCE.md.
+
 Review, fix feedback, recheck latest head, squash merge and confirm remote MERGED
 before beginning the next implementation PR. Inspect all review surfaces.
 An evidence-limited implementation may be complete as implemented/gated, but its
@@ -47,10 +55,11 @@ native acceptance remains pending and compiler rejection stays enabled.
 
 ## Version
 
-Version: none, this revision records a plan and changes no shipped code.
+Local acceptance: 30 focused receipt tests; 1046 total core/target/example/tools
+tests; 97 website tests; Ruff/format, mypy (132 shipped source files), strict docs
+build, smoke, recipe and read-only corpus audit passed. All 182 local links in
+33 plan/new reference documents resolve. CLI help and synthetic complete/error
+paths ran; no actual host receipt or native pass is claimed.
 
-Implementation expectation: none, only reference documentation and measurement tooling.
-Before the implementation PR is reviewed, replace this planning-only decision
-with the exact lockstep from/to transition based on its actual shipped scope and
-then-current baseline. The user explicitly requested no preallocated future
-version numbers. Reassess after review changes; no publication.
+Version: none, only internal evidence documentation, tests and checkout tooling;
+both distributed packages remain 0.5.0. No native unlock or publication.

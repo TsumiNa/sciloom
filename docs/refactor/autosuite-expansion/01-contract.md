@@ -3,7 +3,8 @@
 ## Status and invariants
 
 R1 facts/report records, layout provenance, target guards and review export are
-**implemented** (R1.1 merged #104; R1.2 in this PR).
+**implemented** (R1.1 merged #104; R1.2 merged #105). R2.1 receipt tooling is
+implemented in this PR; native acceptance remains pending.
 Other interfaces introduced here are **planned**, not currently importable unless
 explicitly called implemented. Availability is tied to the named PR and its merge,
 not to presence of these examples. Reassess under
@@ -16,7 +17,8 @@ Vendor restrictions stay in target validation; native proof is separate.
 
 ## R1: Deployment conditions and review artifacts
 
-Current: AutoSuiteTarget(version=..., devices=..., layout=...) emits ASFP.
+Current: AutoSuiteTarget(version=..., devices=..., layout=..., deployment=...)
+emits ASFP when validation passes; missing deployment facts retain offline output.
 CompileResult contains original and specialized IR, target identity and Artifact;
 its write method writes only the artifact. Keep these current behaviors.
 
@@ -137,6 +139,46 @@ Reuse existing generators and manifest fields; extend only where a receipt lacks
 a fact needed for acceptance. Receipt validation is tooling, not a runtime
 capability-discovery or bypass system. A caller-supplied receipt cannot change
 AutoSuiteTarget's support set.
+
+### Receipt tooling — implemented in R2.1
+
+Checkout-only API (not a distributed author API):
+
+```python
+from pathlib import Path
+from autosuite.tools.validate_native_receipt import ProbeSuite, validate_receipt
+
+assessment = validate_receipt(
+    manifest_path=Path("scratch/failure/manifest.json"),
+    receipt_path=Path("received/failure/receipt.json"),
+    suite=ProbeSuite.RUNTIME_FAILURE,
+)
+assert assessment.native_status == "pending_review"
+```
+
+Signature: validate_receipt(*, manifest_path: Path, receipt_path: Path,
+suite: ProbeSuite) -> ReceiptAssessment. ProbeSuite has runtime_failure,
+csv_read and csv_append values. ReceiptAssessment holds suite, source_commit,
+product_version, profile, ordered case_names and constant native_status
+pending_review. Invalid/incomplete/inconclusive receipts raise ValueError;
+unreadable files raise OSError. No files are written. A successful check certifies
+association/completeness only, never truth of human-recorded observations.
+
+CLI: `uv run python -m autosuite.tools.validate_native_receipt --suite runtime_failure
+--manifest scratch/failure/manifest.json --receipt received/failure/receipt.json`.
+Exit 0 prints case count and pending_review; invalid receipts exit 2 with a reason.
+The command requires actual host files; an example path is not a supplied receipt.
+
+Receipt format 1 associates the exact manifest hash, source commit, package
+versions, product version/profile and every generated case. Each run references
+hashed original APP, native re-export, log and structured observations, with the
+actual Executor argv and exit code. Observations record ordered markers, native
+result/error, termination, values and notes. Failure controls require their full
+successful sequence plus host.after. CSV cases require two runs and complete
+before/after CSV byte files (null means absent), with original seeds and repeated
+run continuity checked. Keep all native divergences visible for later review.
+The exact receipt fields and host assembly example live in the AutoSuite receipt
+reference added by R2.1; this tool does not synthesize observations.
 
 Failure, CSV literal conversion, per-column status aggregation, append encoding,
 append preservation and fault propagation are independently verified claims.
