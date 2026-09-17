@@ -4,8 +4,9 @@
 
 R1 facts/report records, layout provenance, target guards and review export are
 **implemented** (R1.1 merged #104; R1.2 merged #105). R2.1 receipt tooling is
-merged #106. R3.1 dialog semantics are implemented in this PR, pending review/merge;
-all new AutoSuite dialog emission remains gated and native acceptance pending.
+merged #106; R3.1 dialog semantics merged #107. R3.2 native measurement tooling
+is implemented/gated in this PR, pending review/merge. All new AutoSuite dialog
+emission remains gated and native acceptance pending.
 Other interfaces introduced here are **planned**, not currently importable unless
 explicitly called implemented. Availability is tied to the named PR and its merge,
 not to presence of these examples. Reassess under
@@ -291,6 +292,28 @@ normal/No/cancel/Stop/timeout paths. Keep unsupported variants rejected until
 proven. A timeout-answer text is not an equivalent implementation of fatal
 timeout. Native probes may be generated as measurement artifacts while public
 compilation remains gated. Do not silently reduce the API to a weaker policy.
+
+R3.2 measurement API (implemented in this PR):
+`autosuite.tools.probe_dialog_results.generate(output_dir: Path, *,
+source_asfp: Path, text_task_id: str, choice_task_id: str) -> Path` returns a
+manifest path in a fresh directory outside corpus. It reads an explicit native
+functions package and exact task IDs, requires the observed flat UserDialog
+envelope and text/okstop or 1/0 yesnostop forms, and records exact source/payload
+hashes. It never modifies the source or APP. It emits thirty native ASFP probes
+with entry/child/loop marker controls and pending status. Text probes distinguish
+normal, empty, window cancel, Stop and timeout. Choice probes distinguish Yes,
+No, window cancel, Stop and timeout; they log the observed integer 1/0 encoding,
+not a claimed portable bool result. Two loop iterations require two actions on
+successful controls. Timeout candidates measure native continuation/defaults;
+they do not implement the fatal semantic timeout contract. The host must record
+the source product/profile version separately because ASFP may omit it.
+
+CLI: `uv run python -m autosuite.tools.probe_dialog_results --source-asfp
+received/test.asfp --text-task-id {A81CC6E9-0955-4426-8B55-B0BF65211699}
+--choice-task-id {DCBC6267-E249-49AB-A45A-6326E5688DA8} --output-dir scratch/dialogs`.
+IDs are explicit evidence selectors, not public author API or device bindings.
+Native checks remain manual pending receipts; the existing failure/CSV receipt
+validator must not certify this different interactive suite.
 
 ## R4: Explicit command effects and typed configuration
 

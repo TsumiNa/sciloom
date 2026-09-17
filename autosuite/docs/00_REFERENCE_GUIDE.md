@@ -36,7 +36,7 @@ because they capture distinct configurations and task/version combinations.
 
 ## Reading order
 
-The 33 reference documents are in one directory, numbered 00–32. This guide is
+The 37 reference documents are in one directory, numbered 00–36. This guide is
 00; read the following documents in order or jump to the relevant group.
 
 ### Sources and runtime semantics
@@ -82,6 +82,10 @@ The 33 reference documents are in one directory, numbered 00–32. This guide is
 ### Runtime validation
 
 - [15 · Executor simulation](15_EXECUTOR_SIMULATION.md)
+- [33 · Deployment conditions and state lifetime](33_DEPLOYMENT_STATE_LIFETIME.md)
+- [34 · Editor screenshot evidence](34_EDITOR_SCREENSHOT_EVIDENCE.md)
+- [35 · Native measurement receipts](35_NATIVE_MEASUREMENT_RECEIPTS.md)
+- [36 · Result-dialog probes and host acceptance](36_DIALOG_RESULT_PROBES.md)
 
 ## Commands
 

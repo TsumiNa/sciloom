@@ -102,6 +102,7 @@ nav:
       - Numeric operations: examples/numeric-operations.md
       - Record values: examples/record-values.md
       - Confirm samples: examples/confirm-samples.md
+      - Capture a barcode: examples/capture-barcode.md
       - Timestamp a filename: examples/timestamp-path.md
       - Timed agitation: examples/timed-agitation.md
       - Read a reagent table: examples/read-reagent-table.md

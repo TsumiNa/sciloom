@@ -84,6 +84,7 @@ files = [
     "examples/numeric_operations.py",
     "examples/record_values.py",
     "examples/confirm_samples.py",
+    "examples/capture_barcode.py",
     "examples/timestamp_path.py",
     "examples/timed_agitation.py",
     "examples/read_reagent_table.py",

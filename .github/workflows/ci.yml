@@ -62,6 +62,7 @@ jobs:
       - run: uv run python examples/record_values.py
       - run: uv run python examples/confirm_samples.py
       - run: uv run python examples/identify_sample.py
+      - run: uv run python examples/capture_barcode.py
       - run: uv run python examples/timestamp_path.py
       - run: uv run python examples/timed_agitation.py
       - run: uv run python examples/read_reagent_table.py
@@ -93,6 +94,7 @@ jobs:
       - run: uv run python -m examples.developer.logging_ir
       - run: uv run python -m examples.developer.confirmation_ir
       - run: uv run python -m examples.developer.dialogs_ir
+      - run: uv run python -m examples.developer.barcode_ir
       - run: uv run python -m examples.developer.wall_time_ir
       - run: uv run python -m examples.developer.timing_ir
       - run: uv run python -m examples.developer.demo_device

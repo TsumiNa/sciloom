@@ -25,6 +25,12 @@ records exact image names/hashes and corrected CSV label associations.
 [Receipt checks](../../../autosuite/docs/35_NATIVE_MEASUREMENT_RECEIPTS.md)
 verify association and completeness only; pending_review is never native verified.
 
+[Dialog measurements](../../../autosuite/docs/36_DIALOG_RESULT_PROBES.md) use
+explicit task IDs from the received ASFP, recording text and native integer 1/0
+answers separately. Thirty generated probes cover entry/call/loop controls;
+generation is not an Executor result. Product/profile and all terminal-path
+receipts remain pending; public result-dialog compilation stays rejected.
+
 ## Findings requiring action
 
 | Evidence | Established fact | Not established | Owner |
