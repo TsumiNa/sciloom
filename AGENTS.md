@@ -11,8 +11,16 @@ required repository rules, not optional reference material.
 - Use each file's `applyTo` patterns and `description` to determine its scope.
   Read the full contents of every applicable file before performing the related work.
 - Apply workflow and environment instructions according to the activity being
-  performed, including files without `applyTo`. Read shell-environment rules
-  before terminal work and branch/PR rules before making changes.
+  performed, including files without `applyTo`. Three of them are mandatory
+  extensions of this file for every change:
+  - the [branch and pull request workflow](.github/instructions/branch-and-pr-workflow.instructions.md)
+    before making changes: branch selection, PR scope, check attribution and
+    merge eligibility, refactor sequencing and the version decision;
+  - the [implementation and tests rules](.github/instructions/implementation-and-tests.instructions.md)
+    when implementing or verifying a change: minimal abstraction and scope,
+    colocated tests and verification proportionate to the change type;
+  - the [shell environment rules](.github/instructions/shell-environment.instructions.md)
+    before terminal work.
 - Read and follow the [in-branch API compatibility rules](.github/instructions/in-branch-api-compat.instructions.md)
   before evolving in-progress APIs within a branch or adding compatibility wrappers,
   adapter layers, deprecated aliases or parallel interfaces.
@@ -172,44 +180,50 @@ Prefer corpus-derived templates and explicit typed adapters for device-specific 
 
 ## 8. Tests
 
-Run at minimum:
+Run at minimum, from the repository root and in the order of CI's `check` job:
 
 ```bash
 uv run ruff check
 uv run ruff format --check
+uv run mypy
 uv run pytest src/sciloom packages/sciloom-autosuite/src examples
 uv run pytest autosuite/tools
-uv run mypy
-python autosuite/tools/smoke_test.py
-python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
+uv run python autosuite/tools/smoke_test.py
+uv run python autosuite/recipe/validate_recipe.py autosuite/recipe/input_0908.csv
+uv run python -m compileall -q examples/proposed_frontend
 ```
+
+The `check` job in `.github/workflows/ci.yml` is the authoritative list of
+runnable examples; it runs every one and ends with `git diff --exit-code`, so each
+example must leave its committed companion files unchanged. Author examples run as
+`uv run python examples/<name>.py`, the tutorial lessons as
+`uv run python examples/tutorial/<name>.py` (the completed lesson is
+`examples/stir_rack.py`), and developer examples from the repository root as
+`uv run python -m examples.developer.<name>`. Run the examples a change can affect,
+and add a run line to that job whenever an example is added.
 
 Enable the versioned pre-commit hook once per clone with
 `git config core.hooksPath .githooks`. It runs `ruff check --fix-only` and
 `ruff format` on staged Python files, re-stages them, then runs `ruff check` and
 blocks the commit only when errors remain. CI runs the same two ruff commands.
 
-Run the experiment-author examples with `uv run python examples/function_call.py`
-and `uv run python examples/agitation.py`. Run the list author examples with `uv run python examples/scale_values.py` and
-`uv run python examples/non_zero_array_min.py`. Run
-`uv run python examples/prepare_labels.py` for runtime text and
-`uv run python examples/quantity_conversion.py` for volume/time conversion.
-Run `uv run python examples/numeric_operations.py` for magnitude and floor.
-Run `uv run python -m examples.developer.agitation_ir` from the repository root.
-Run `uv run python -m examples.developer.list_ir` for direct list IR and JSON v4.
-Run `uv run python -m examples.developer.reference_environment` for explicit event-history sharing.
-Run `uv run python examples/record_values.py` and `uv run python -m examples.developer.logging_ir` for typed logging and its JSON/reference events.
-Run `uv run python examples/confirm_samples.py` and `uv run python -m examples.developer.confirmation_ir` for explicit OK acknowledgement. Reference execution requires supplied responses; no response is inferred.
-Run `uv run python examples/timestamp_path.py` and `uv run python -m examples.developer.wall_time_ir` for ordered wall-clock reads. Reference execution requires an explicit aware clock; never sample host time implicitly.
-Run `uv run python examples/timed_agitation.py` and `uv run python -m examples.developer.timing_ir` for Function-owned timers and explicit virtual waiting. Timers are not device bindings. Preserve the target's native scope/range checks and do not move timer starts to manufacture visibility.
-Run each independent user lesson with `uv run python examples/tutorial/start_shaker.py`,
-`uv run python examples/tutorial/control_shaker.py`,
-`uv run python examples/tutorial/choose_stirring_speed.py` and
-`uv run python examples/tutorial/stir_sample_rack.py`; the completed lesson is
-`uv run python examples/stir_rack.py`. Their companions must remain reproducible.
-The AutoSuite smoke check and `python autosuite/tools/audit_corpus.py` (run after
-reference changes) skip their corpus sections when `autosuite/corpus/` is absent,
-so CI exercises only what the repository carries. Syntax-check `examples/proposed_frontend/*.py`. On the AutoSuite host, generated `.app` files must additionally pass Executor simulation. The historical compiler, ASPY inputs and text views have been removed; refactor work starts from the retained XML and semantic documentation.
+Rules the examples exercise:
+
+- Reference execution of an operator confirmation requires supplied responses;
+  no response is inferred.
+- Reference execution of a wall-clock read requires an explicit aware clock;
+  never sample host time implicitly.
+- Function-owned timers are not device bindings. Preserve the target's native
+  scope and range checks, and do not move timer starts to manufacture visibility.
+
+The AutoSuite smoke check and `uv run python autosuite/tools/audit_corpus.py` (run
+after reference changes) skip their corpus sections when `autosuite/corpus/` is
+absent, so CI exercises only what the repository carries. The
+`examples/proposed_frontend/*.py` files are design sketches that are only
+syntax-checked. On the AutoSuite host, generated `.app` files must additionally
+pass Executor simulation. The historical compiler, ASPY inputs and text views have
+been removed; refactor work starts from the retained XML and semantic
+documentation.
 
 ## 9. Documentation location
 
