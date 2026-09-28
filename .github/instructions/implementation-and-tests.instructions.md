@@ -33,7 +33,7 @@ If you find yourself creating a function that only forwards to another function 
 
 This codebase configures behavior through immutable `@dataclass` objects, not ad-hoc dicts or long positional argument lists. `ExecutionConfig` (`src/sciloom/core/interpreter/runtime.py`), `AutoSuiteTarget` and the IR records follow the same conventions.
 
-- Declare the config as `@dataclass(frozen=True, kw_only=True)`. Give optional knobs sensible defaults through `field(default=...)` or `field(default_factory=...)`, so callers pass them by name.
+- Declare the config as `@dataclass(frozen=True, kw_only=True)`. Give optional knobs sensible defaults, plain values or `field(default_factory=...)` for mutable ones, so callers pass them by name.
 - Validate in `__post_init__` and raise `ValueError` for an invalid value or combination, or `TypeError` for a wrong type, with a message that says what is accepted. Do not scatter the same validation across call sites. A frozen dataclass normalizes a field with `object.__setattr__`, as `AutoSuiteTarget` does for its version.
 - Do not accept a plain mapping in place of a config object. Serialized data enters only through its existing validating boundary, such as `from_dict`/`from_json` in `sciloom.core.ir`; do not add a second, handwritten parser.
 - For a closed set of choices, define a `StrEnum` (like `AutoSuiteVersion`) and accept the enum or its string value, normalizing in `__post_init__`.
@@ -111,5 +111,5 @@ Before reporting an implementation as complete, confirm:
 4. No plain mapping stands in for a config object, serialized data enters only through its existing validating boundary, and closed choice sets use a `StrEnum`.
 5. Public APIs are type-hinted, carry English Google-style docstrings, and follow the package ownership in `AGENTS.md` §10.
 6. A `<source>_test.py` file exists next to the changed source and exercises the core path plus the most likely failure patterns.
-7. The new and existing tests for the touched modules pass (`pytest`).
+7. The new and existing tests for the touched modules pass (`uv run pytest <path>`).
 8. The verification report distinguishes passed, caused, pre-existing and not-run checks as Section 4 requires.
