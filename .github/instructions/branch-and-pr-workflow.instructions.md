@@ -1,5 +1,5 @@
 ---
-description: 'Use when starting work on a change, bug fix, refactor, upgrade, or any modification request. Covers when to create a new branch, when to stay on the current branch, when to open a pull request before continuing, how to split a complex refactor into a sequence of independently verifiable PRs, and how to decide the version bump that ends every PR and plan.'
+description: 'Use when starting work on a change, bug fix, refactor, upgrade, or any modification request. Covers when to create a new branch, when to stay on the current branch, when to open a pull request before continuing, how to attribute PR check failures and decide merge eligibility, how to split a complex refactor into a sequence of independently verifiable PRs, and how to decide the version bump that ends every PR and plan.'
 name: 'Branch and Pull Request Workflow'
 applyTo: '**'
 ---
@@ -28,6 +28,64 @@ Check these conditions in order and stop at the first match:
 - When case 3 applies, do not silently keep committing without a PR; open the PR first so the work is reviewable.
 - When case 2 applies, do not open a second PR for the same branch.
 - If it is unclear whether an existing branch is "ahead but unpushed" versus "already has a PR", prefer checking remote state before deciding.
+
+## Review, CI attribution and merge eligibility
+
+These rules apply to every PR, whether or not it belongs to a planned sequence.
+Judge a PR by the behavior and failures attributable to its own diff, not by
+whether every workflow run in the repository's history is green.
+
+### PR checks
+
+- If no PR checks were triggered, the PR has no CI blocker. Do not add, change
+  or repair CI merely to manufacture a passing check for the current PR. Say in
+  the PR description or handoff that there were no applicable or triggered PR
+  checks; never describe that state as "CI passed".
+- A failing check is a **non-blocking pre-existing failure** only when there is
+  concrete evidence that the same failure existed on the PR's base commit or
+  before the PR was opened, and the current diff does not touch the related
+  code, content, tests, workflow, configuration or failure path. Record that
+  evidence in the PR or handoff; do not describe such a failure as successful.
+- A failure **blocks** merging when the PR introduced it, worsened it, changed
+  files that could reasonably affect it, or when its independence from the PR
+  cannot be established. Investigate uncertain attribution before deciding;
+  never treat an unattributed failure as passing.
+- Do not expand the current PR to repair a pre-existing failure owned by another
+  commit or PR. Report it separately; fix it in its own task or PR only when the
+  user authorizes that. When fixing a pre-existing failure is the stated purpose
+  of the current PR, that failure is in scope and the PR must carry
+  proportionate evidence that the fix works.
+
+### Review
+
+- Review the latest head commit and the final diff, not an earlier state.
+- Address every actionable finding that is correct and in scope with a code or
+  documentation change and regression coverage where appropriate.
+- Reply with a concise rationale to a finding that is incorrect or belongs to
+  another scope; do not expand the PR merely to make a comment go away.
+- Resolve a review thread only after its finding is addressed or its disposition
+  is stated in the thread.
+- If a requested automated reviewer is unavailable or has exhausted its quota,
+  perform an independent review of the final diff and record the result.
+  Reviewer unavailability alone is not a merge blocker.
+
+### Before an authorized merge
+
+Confirm, in order:
+
+1. The PR head SHA has not changed since the final checks and review.
+2. The final diff still has one coherent scope.
+3. The local verification that `implementation-and-tests.instructions.md`
+   requires for this change type passed, or anything not run is stated
+   accurately.
+4. Every reported PR check is classified as passing, as a non-blocking
+   pre-existing failure with its evidence, or as blocking.
+5. Every actionable review finding is addressed.
+6. No unresolved review thread still requires a change.
+7. The merge uses the method the user authorized; this repository's convention
+   is squash merge.
+8. Branch protection and repository permissions are not bypassed to force a
+   merge; a configuration-level block is reported instead.
 
 ## Version bump
 
@@ -78,12 +136,19 @@ Treat a change as a **complex refactor** when any of these hold:
 
 For these, decide the PR sequence **before editing any file**. Do not open one branch, start changing things, and look for the seams afterward — by then the diff is already entangled.
 
+A code change whose own documentation, examples or tests are updated alongside it
+is not multi-layer for that reason alone. A large file count, a long document or
+an elaborate page structure does not by itself make a change a complex refactor.
+
 ### Plan first, in the repository
 
-Record the plan under `docs/refactor/<refactor-slug>/` before implementation:
+Record a plan only when the code, architecture, IR/JSON contract, build,
+deployment or tooling change genuinely needs more than one PR; a change that fits
+one reviewable PR needs no plan. Record it under `docs/refactor/<refactor-slug>/`
+before implementation:
 
 - `00-overview.md` — why the refactor exists, the decision with alternatives and consequences, explicit non-goals, and the ordered list of planned PRs.
-- one plan file per planned PR, each with **Goal**, **Scope**, **Non-goals**, **Acceptance** and, last, **Version** sections (see [Version bump](#version-bump); plans that predate that rule gain the section when next updated). Follow the plan-filename convention in `repository-doc-boundaries.instructions.md`; documentation validation enforces it.
+- one plan file per planned PR, each with **Goal**, **Scope**, **Non-goals**, **Acceptance** and, last, **Version** sections (see [Version bump](#version-bump); plans that predate that rule gain the section when next updated). Name them `00-overview.md` and `NN-<slug>.md` in PR order.
 
 If the user requests a complex refactor without a plan, propose the split and get agreement before writing code.
 
@@ -135,11 +200,11 @@ The current PR is a hard gate for every later PR in the plan. Do not create the 
 Before the gate may advance:
 
 1. Finish the current PR's stated scope, run its acceptance checks, then make and apply the version decision (see [Version bump](#version-bump)) as the last change.
-2. Push the complete change and wait for required CI and configured human or automated review. Passing CI alone does not complete the review gate.
+2. Push the complete change and wait for required CI and configured human or automated review. Passing CI alone does not complete the review gate; classify every check and handle reviewer unavailability as [Review, CI attribution and merge eligibility](#review-ci-attribution-and-merge-eligibility) describes.
 3. Inspect every review surface: submitted reviews, inline review threads, and general PR comments.
 4. Address every actionable comment with a code or documentation change and regression coverage where appropriate. If a suggestion should not be implemented, reply with a concrete technical reason instead of silently ignoring it.
 5. Push the follow-up commits, wait for the checks on the latest head commit, reply to each handled thread, and resolve it. Recheck that no new or unresolved review thread remains. If the fixes changed the PR's extent, re-evaluate the version decision (see [Version bump](#version-bump)) before merging.
-6. Squash-merge the PR. Confirm the remote PR state is `MERGED`; a local worktree warning is not evidence that the remote merge failed. Nothing is written back after the merge.
+6. Run the pre-merge confirmation in [Before an authorized merge](#before-an-authorized-merge), then squash-merge the PR. Confirm the remote PR state is `MERGED`; a local worktree warning is not evidence that the remote merge failed. Nothing is written back after the merge.
 7. Fetch the merged default branch, then create the next PR's branch or worktree from that updated default branch. Never base the next stage on the unmerged predecessor branch.
 
 Keep every later plan item pending until the preceding PR has passed this complete gate. If review requests changes or the latest checks fail, remain on the current PR and fix it; do not advance the sequence. A separately submitted refactor-plan PR is subject to the same gate before PR1 starts.
@@ -156,6 +221,8 @@ Keep every later plan item pending until the preceding PR has passed this comple
 - Splitting by file or by commit count rather than by verifiable outcome, producing PRs that individually mean nothing.
 - Starting, branching or implementing a later planned PR before its predecessor is remotely confirmed as merged.
 - Treating green CI as a substitute for waiting for and auditing review feedback.
+- Describing a pre-existing failure, or the absence of triggered checks, as a passing check.
+- Repairing CI or an unrelated pre-existing failure inside the current PR to make it green.
 - Merging while actionable comments or unresolved review threads remain.
 - Advancing from a local branch state without confirming the remote squash merge and updating from the default branch.
 - Bumping MAJOR without explicit human approval, or bumping PATCH for a change that does not justify it.
